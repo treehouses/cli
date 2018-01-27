@@ -77,10 +77,18 @@ EOF
   fi
 }
 
+function rename () {
+  CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
+  echo $1 > /etc/hostname
+  sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\t$1/g" /etc/hosts
+  hostname $1
+}
+
 function help {
   echo "Usage: $0 " >&2
   echo
   echo "   expandfs              expands the partition of the RPI image to the maximum of the SDcard"
+  echo "   rename <hostname>     expands the partition of the RPI image to the maximum of the SDcard"
   echo
   exit 0
 }
@@ -88,6 +96,9 @@ function help {
 case $1 in
   expandfs)
     expandfs
+    ;;
+  rename)
+    rename $2
     ;;
   *)
     help

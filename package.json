@@ -1,0 +1,37 @@
+{
+  "name": "@treehouses/cli",
+  "version": "0.0.2",
+  "description": "Thin command-line interface for Raspberry Pi low level configuration.",
+  "main": "cli.sh",
+  "bin": {
+    "treehouses": "cli.sh"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    "underscore": "^1.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ole-vi/cli.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "keywords": [
+    "raspberry pi ethernet wifi"
+  ],
+  "author": {
+    "name": "OLE virtual intern",
+    "email": "vi@ole.org",
+    "url": "https://open-learning-exchange.github.io"
+  },
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ole-vi/cli/issues",
+    "email": "vi@ole.org"
+  },
+  "homepage": "https://github.com/ole-vi/cli"
+}

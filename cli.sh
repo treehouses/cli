@@ -14,7 +14,7 @@ function expandfs () {
   fi
 
   if [ "$PART_NUM" -ne 2 ]; then
-    echo "Error: Your partition layout is not currently supported by this tool. You are probably using NOOBS, in which case your root filesystem is already expanded anyway." 20 60 2
+    echo "Error: Your partition layout is not currently supported by this tool. You are probably using NOOBS, in which case your root filesystem is already expanded anyway."
     exit 1
   fi
 

@@ -37,13 +37,18 @@ function sshkeyadd () {
   echo "$@"
 }
 
+function version {
+  echo $(npm info '@treehouses/cli' version)
+}
+
 function help {
-  echo "Usage: $(basename $0) " >&2
+  echo "Usage: $(basename $0)"
   echo
   echo "   expandfs                  expands the partition of the RPI image to the maximum of the SDcard"
   echo "   rename <hostname>         changes hostname"
   echo "   password <password>       change the password for 'pi' user"
   echo "   sshkeyadd <public_key>    add a public key to 'pi' and 'root' user's authorized_keys"
+  echo "   version                   returns the version of $(basename $0) command"
   echo
   exit 1
 }

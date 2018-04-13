@@ -2,7 +2,7 @@
 
 function expandfs () {
   # expandfs is way too complex, it should be handled by raspi-config
-  raspi-config --expand-rootfs 2>&1 >/dev/null
+  raspi-config --expand-rootfs >/dev/null 2>/dev/null
   echo "Success: the filesystem will be expanded on the next reboot"
   exit 0
 }

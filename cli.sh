@@ -49,6 +49,7 @@ function help {
   echo "   password <password>       change the password for 'pi' user"
   echo "   sshkeyadd <public_key>    add a public key to 'pi' and 'root' user's authorized_keys"
   echo "   version                   returns the version of $(basename $0) command"
+  echo "   detectrpi                 detects the hardware version of a raspberry pi"
   echo
   exit 1
 }
@@ -59,6 +60,47 @@ function checkroot {
       echo "Error: Must be run with root permissions"
       exit 1
   fi
+}
+
+function detectrpi {
+  declare -A rpimodels
+  rpimodels["Beta"]="BETA"
+  rpimodels["0002"]="RPIB"
+  rpimodels["0003"]="RPIB"
+  rpimodels["0004"]="RPIB"
+  rpimodels["0005"]="RPIB"
+  rpimodels["0006"]="RPIB"
+  rpimodels["0007"]="RPIA"
+  rpimodels["0008"]="RPIA"
+  rpimodels["0009"]="RPIA"
+  rpimodels["000d"]="RPIB"
+  rpimodels["000e"]="RPIB"
+  rpimodels["000f"]="RPIB"
+  rpimodels["0010"]="RPIB+"
+  rpimodels["0011"]="CM"
+  rpimodels["0012"]="RPIA+"
+  rpimodels["0013"]="RPIB+"
+  rpimodels["0014"]="CM"
+  rpimodels["0015"]="RPIA+"
+  rpimodels["a01040"]="RPI2B"
+  rpimodels["a01041"]="RPI2B"
+  rpimodels["a21041"]="RPI2B"
+  rpimodels["a22042"]="RPI2B"
+  rpimodels["900021"]="RPIA+"
+  rpimodels["900032"]="RPIB+"
+  rpimodels["900092"]="RPIZ"
+  rpimodels["900093"]="RPIZ"
+  rpimodels["920093"]="RPIZ"
+  rpimodels["9000c1"]="RPIZW"
+  rpimodels["a02082"]="RPI3B"
+  rpimodels["a020a0"]="CM3"
+  rpimodels["a22082"]="RPI3B"
+  rpimodels["a32082"]="RPI3B"
+  rpimodels["a020d3"]="RPI3B+"
+
+  rpimodel=$(cat /proc/cpuinfo | grep Revision | sed 's/.* //g' | tr -d '\n')
+
+  echo ${rpimodels[$rpimodel]}
 }
 
 
@@ -82,6 +124,9 @@ case $1 in
     ;;
   version)
     version
+    ;;
+  detectrpi)
+    detectrpi
     ;;
   *)
     help

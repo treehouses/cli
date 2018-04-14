@@ -44,12 +44,13 @@ function version {
 function help {
   echo "Usage: $(basename $0)"
   echo
-  echo "   expandfs                  expands the partition of the RPI image to the maximum of the SDcard"
-  echo "   rename <hostname>         changes hostname"
-  echo "   password <password>       change the password for 'pi' user"
-  echo "   sshkeyadd <public_key>    add a public key to 'pi' and 'root' user's authorized_keys"
-  echo "   version                   returns the version of $(basename $0) command"
-  echo "   detectrpi                 detects the hardware version of a raspberry pi"
+  echo "   expandfs                   expands the partition of the RPI image to the maximum of the SDcard"
+  echo "   rename <hostname>          changes hostname"
+  echo "   password <password>        change the password for 'pi' user"
+  echo "   sshkeyadd <public_key>     add a public key to 'pi' and 'root' user's authorized_keys"
+  echo "   version                    returns the version of $(basename $0) command"
+  echo "   detectrpi                  detects the hardware version of a raspberry pi"
+  echo "   wifi <ESSID> [password]    connects to a wifi network"
   echo
   exit 1
 }
@@ -103,6 +104,93 @@ function detectrpi {
   echo ${rpimodels[$rpimodel]}
 }
 
+function restart_wifi {
+  systemctl disable hostapd || true
+  systemctl disable dnsmasq || true
+  service dhcpcd restart || true
+  service hostapd stop || true
+  service dnsmasq stop || true
+  ifup wlan0 || true
+  ifdown wlan0 || true
+  sleep 1
+  ifup wlan0 || true
+}
+
+function wifi {
+  {
+    echo "source /etc/network/interfaces.d/*"
+  } > /etc/network/interfaces
+
+  {
+    echo "allow-hotplug wlan0"
+    echo "auto wlan0"
+    echo "iface wlan0 inet dhcp"
+    echo "    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf"
+  } > /etc/network/interfaces.d/wlan0
+
+  {
+    echo "auto eth0"
+    echo "  allow-hotplug eth0"
+    echo "  iface eth0 inet dhcp"
+  } > /etc/network/interfaces.d/eth0
+
+
+  {
+    echo "hostname"
+    echo "clientid"
+    echo "persistent"
+    echo "option rapid_commit"
+    echo "option domain_name_servers, domain_name, domain_search, host_name"
+    echo "option classless_static_routes"
+    echo "option ntp_servers"
+    echo "option interface_mtu"
+    echo "require dhcp_server_identifier"
+    echo "slaac private"
+    echo "denyinterfaces wlan0 eth0"
+  } > /etc/dhcpcd.conf
+
+
+  echo > /etc/dnsmasq.conf
+
+  {
+    echo '#!/bin/sh -e'
+    echo "_IP=\$(hostname -I) || true"
+    echo "if [ \"\$_IP\" ]; then"
+    echo "  printf \"My IP address is %s\n\" \"\$_IP\""
+    echo "fi"
+    echo "exit 0"
+  } > /etc/rc.local
+
+  wifinetwork=$1
+  wifipassword=$2
+
+  {
+    echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
+    echo "update_config=1"
+    wificountry="US"
+    if [ -r /etc/rpi-wifi-country ];
+    then
+      wificountry=$(cat /etc/rpi-wifi-country)
+    fi
+    echo "country=$wificountry"
+  } > /etc/wpa_supplicant/wpa_supplicant.conf
+
+  if [ -z "$wifipassword" ];
+  then
+    {
+      echo "network={"
+      echo "  ssid=\"$wifinetwork\""
+      echo "  key_mgmt=NONE"
+      echo "}"
+    } >> /etc/wpa_supplicant/wpa_supplicant.conf
+    restart_wifi >/dev/null 2>/dev/null
+    echo "open wifi network"
+  else
+    wpa_passphrase $wifinetwork "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
+    restart_wifi >/dev/null 2>/dev/null
+    echo "password network"
+  fi
+}
 
 case $1 in
   expandfs)
@@ -127,6 +215,10 @@ case $1 in
     ;;
   detectrpi)
     detectrpi
+    ;;
+  wifi)
+    checkroot
+    wifi $2 $3
     ;;
   *)
     help

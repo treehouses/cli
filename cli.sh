@@ -11,6 +11,7 @@ function help {
   echo "   detectrpi                         detects the hardware version of a raspberry pi"
   echo "   wifi <ESSID> [password]           connects to a wifi network"
   echo "   container <none|docker|balena>    enables (and start) the desired container"
+  echo "   bluetooth <on|off>                switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo
   exit 1
 }
@@ -251,6 +252,87 @@ function container {
   fi
 }
 
+function rpi_bluetooth_discoverable {
+  bluetoothctl <<EOF
+    power on
+    discoverable on
+    pairable on
+EOF
+}
+
+function bluetooth {
+  status=$1
+  if [ $status = "on" ]; then
+    {
+      echo "[Unit]"
+      echo "Description=Bluetooth service"
+      echo "Documentation=man:bluetoothd(8)"
+      echo "ConditionPathIsDirectory=/sys/class/bluetooth"
+      echo ""
+      echo "[Service]"
+      echo "Type=dbus"
+      echo "BusName=org.bluez"
+      echo "ExecStart=/usr/lib/bluetooth/bluetoothd -C"
+      echo "ExecStartPost=/usr/bin/sdptool add SP"
+      echo "NotifyAccess=main"
+      echo "#WatchdogSec=10"
+      echo "#Restart=on-failure"
+      echo "CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE"
+      echo "LimitNPROC=1"
+      echo "ProtectHome=true"
+      echo "ProtectSystem=full"
+      echo ""
+      echo "[Install]"
+      echo "WantedBy=bluetooth.target"
+      echo "Alias=dbus-org.bluez.service"
+    } > /etc/systemd/system/dbus-org.bluez.service
+
+    enable_service rpibluetooth
+    restart_service bluetooth
+    restart_service rpibluetooth
+
+    sleep 5 # wait 5 seconds for bluetooth to be completely up
+
+    # put rpi bluetooth on discoverable mode
+    rpi_bluetooth_discoverable >/dev/null 2>/dev/null
+
+    echo "Success: the bluetooth service, and the hotspot service have been started."
+  elif [ $status = "off" ]; then
+    {
+      echo "[Unit]"
+      echo "Description=Bluetooth service"
+      echo "Documentation=man:bluetoothd(8)"
+      echo "ConditionPathIsDirectory=/sys/class/bluetooth"
+      echo ""
+      echo "[Service]"
+      echo "Type=dbus"
+      echo "BusName=org.bluez"
+      echo "ExecStart=/usr/lib/bluetooth/bluetoothd"
+      echo "NotifyAccess=main"
+      echo "#WatchdogSec=10"
+      echo "#Restart=on-failure"
+      echo "CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE"
+      echo "LimitNPROC=1"
+      echo "ProtectHome=true"
+      echo "ProtectSystem=full"
+      echo ""
+      echo "[Install]"
+      echo "WantedBy=bluetooth.target"
+      echo "Alias=dbus-org.bluez.service"
+    } > /etc/systemd/system/dbus-org.bluez.service
+
+    disable_service rpibluetooth
+    stop_service rpibluetooth
+    restart_service bluetooth
+
+    sleep 3 # Wait few seconds for bluetooth to start
+    restart_service bluealsa # restart the bluetooth audio service
+
+    echo "Success: the bluetooth service has been switched to default, and the hotspot service has been stopped."
+  else
+    echo "Error: only 'on', 'off' options are supported";
+  fi
+}
 case $1 in
   expandfs)
     checkroot
@@ -283,8 +365,11 @@ case $1 in
     checkroot
     container $2
     ;;
+  bluetooth)
+    checkroot
+    bluetooth $2
+    ;;
   *)
     help
     ;;
 esac
-

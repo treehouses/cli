@@ -1,5 +1,53 @@
 #!/bin/bash
 
+function help {
+  echo "Usage: $(basename $0)"
+  echo
+  echo "   expandfs                          expands the partition of the RPI image to the maximum of the SDcard"
+  echo "   rename <hostname>                 changes hostname"
+  echo "   password <password>               change the password for 'pi' user"
+  echo "   sshkeyadd <public_key>            add a public key to 'pi' and 'root' user's authorized_keys"
+  echo "   version                           returns the version of $(basename $0) command"
+  echo "   detectrpi                         detects the hardware version of a raspberry pi"
+  echo "   wifi <ESSID> [password]           connects to a wifi network"
+  echo "   container <none|docker|balena>    enables (and start) the desired container"
+  echo
+  exit 1
+}
+
+function start_service {
+  if [ "`systemctl is-active $1`" == "inactive" ]
+  then
+    systemctl start $1 >/dev/null 2>/dev/null
+  fi
+}
+
+function restart_service {
+  systemctl stop $1 >/dev/null 2>/dev/null
+  systemctl start $1 >/dev/null 2>/dev/null
+}
+
+function stop_service {
+  if [ "`systemctl is-active $1`" == "active" ]
+  then
+    systemctl stop $1 >/dev/null 2>/dev/null
+  fi
+}
+
+function enable_service {
+  if [ "`systemctl is-enabled $1`" == "disabled" ]
+  then
+    systemctl enable $1 >/dev/null 2>/dev/null
+  fi
+}
+
+function disable_service {
+  if [ "`systemctl is-enabled $1`" == "enabled" ]
+  then
+    systemctl disable $1 >/dev/null 2>/dev/null
+  fi
+}
+
 function expandfs () {
   # expandfs is way too complex, it should be handled by raspi-config
   raspi-config --expand-rootfs >/dev/null 2>/dev/null
@@ -39,20 +87,6 @@ function sshkeyadd () {
 
 function version {
   echo $(npm info '@treehouses/cli' version)
-}
-
-function help {
-  echo "Usage: $(basename $0)"
-  echo
-  echo "   expandfs                   expands the partition of the RPI image to the maximum of the SDcard"
-  echo "   rename <hostname>          changes hostname"
-  echo "   password <password>        change the password for 'pi' user"
-  echo "   sshkeyadd <public_key>     add a public key to 'pi' and 'root' user's authorized_keys"
-  echo "   version                    returns the version of $(basename $0) command"
-  echo "   detectrpi                  detects the hardware version of a raspberry pi"
-  echo "   wifi <ESSID> [password]    connects to a wifi network"
-  echo
-  exit 1
 }
 
 function checkroot {
@@ -186,9 +220,34 @@ function wifi {
     restart_wifi >/dev/null 2>/dev/null
     echo "open wifi network"
   else
-    wpa_passphrase $wifinetwork "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
+    wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >/dev/null 2>/dev/null
     echo "password network"
+  fi
+}
+
+function container {
+  container=$1
+  if [ $container = "docker" ]; then
+    disable_service balena
+    stop_service balena
+    enable_service docker
+    start_service docker
+    echo "Success: docker has been enabled and started."
+  elif [ $container = "balena" ]; then
+    disable_service docker
+    stop_service docker
+    enable_service balena
+    start_service balena
+    echo "Success: balena has been enabled and started."
+  elif [ $container = "none" ]; then
+    disable_service balena
+    disable_service docker
+    stop_service docker
+    stop_service balena
+    echo "Success: docker and balena have been disabled and stopped."
+  else
+    echo "Error: only 'docker', 'balena', 'none' options are supported";
   fi
 }
 
@@ -219,6 +278,10 @@ case $1 in
   wifi)
     checkroot
     wifi $2 $3
+    ;;
+  container)
+    checkroot
+    container $2
     ;;
   *)
     help

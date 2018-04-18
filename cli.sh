@@ -1,13 +1,20 @@
 #!/bin/bash
 
+SCRIPTPATH=$(realpath "$0")
+SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
+TEMPLATES="$SCRIPTFOLDER/templates"
+
+echo $SCRIPTFOLDER
+echo $TEMPLATES
+
 function help {
-  echo "Usage: $(basename $0)"
+  echo "Usage: $(basename "$0")"
   echo
   echo "   expandfs                          expands the partition of the RPI image to the maximum of the SDcard"
   echo "   rename <hostname>                 changes hostname"
   echo "   password <password>               change the password for 'pi' user"
   echo "   sshkeyadd <public_key>            add a public key to 'pi' and 'root' user's authorized_keys"
-  echo "   version                           returns the version of $(basename $0) command"
+  echo "   version                           returns the version of $(basename "$0") command"
   echo "   detectrpi                         detects the hardware version of a raspberry pi"
   echo "   wifi <ESSID> [password]           connects to a wifi network"
   echo "   container <none|docker|balena>    enables (and start) the desired container"
@@ -17,35 +24,35 @@ function help {
 }
 
 function start_service {
-  if [ "`systemctl is-active $1`" == "inactive" ]
+  if [ "$("systemctl is-active $1")" == "inactive" ]
   then
-    systemctl start $1 >/dev/null 2>/dev/null
+    systemctl start "$1" >/dev/null 2>/dev/null
   fi
 }
 
 function restart_service {
-  systemctl stop $1 >/dev/null 2>/dev/null
-  systemctl start $1 >/dev/null 2>/dev/null
+  systemctl stop "$1" >/dev/null 2>/dev/null
+  systemctl start "$1" >/dev/null 2>/dev/null
 }
 
 function stop_service {
-  if [ "`systemctl is-active $1`" == "active" ]
+  if [ "$("systemctl is-active $1")" == "active" ]
   then
-    systemctl stop $1 >/dev/null 2>/dev/null
+    systemctl stop "$1" >/dev/null 2>/dev/null
   fi
 }
 
 function enable_service {
-  if [ "`systemctl is-enabled $1`" == "disabled" ]
+  if [ "$("systemctl is-enabled $1")" == "disabled" ]
   then
-    systemctl enable $1 >/dev/null 2>/dev/null
+    systemctl enable "$1" >/dev/null 2>/dev/null
   fi
 }
 
 function disable_service {
-  if [ "`systemctl is-enabled $1`" == "enabled" ]
+  if [ "$("systemctl is-enabled $1")" == "enabled" ]
   then
-    systemctl disable $1 >/dev/null 2>/dev/null
+    systemctl disable "$1" >/dev/null 2>/dev/null
   fi
 }
 
@@ -57,10 +64,10 @@ function expandfs () {
 }
 
 function rename () {
-  CURRENT_HOSTNAME=$(cat /etc/hostname | tr -d " \t\n\r")
-  echo $1 > /etc/hostname
-  sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\t$1/g" /etc/hosts
-  hostname $1
+  CURRENT_HOSTNAME=$(< /etc/hostname tr -d " \\t\\n\\r")
+  echo "$1" > /etc/hostname
+  sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\\t$1/g" /etc/hosts
+  hostname "$1"
   echo "Success: the hostname has been modified"
   exit 0
 }
@@ -87,11 +94,11 @@ function sshkeyadd () {
 }
 
 function version {
-  echo $(npm info '@treehouses/cli' version)
+  npm info '@treehouses/cli' version
 }
 
 function checkroot {
-  if [ $(id -u) -ne 0 ];
+  if [ "$(id -u)" -ne 0 ];
   then
       echo "Error: Must be run with root permissions"
       exit 1
@@ -134,7 +141,7 @@ function detectrpi {
   rpimodels["a32082"]="RPI3B"
   rpimodels["a020d3"]="RPI3B+"
 
-  rpimodel=$(cat /proc/cpuinfo | grep Revision | sed 's/.* //g' | tr -d '\n')
+  rpimodel=$(grep Revision /proc/cpuinfo | sed 's/.* //g' | tr -d '\n')
 
   echo ${rpimodels[$rpimodel]}
 }
@@ -152,49 +159,12 @@ function restart_wifi {
 }
 
 function wifi {
-  {
-    echo "source /etc/network/interfaces.d/*"
-  } > /etc/network/interfaces
-
-  {
-    echo "allow-hotplug wlan0"
-    echo "auto wlan0"
-    echo "iface wlan0 inet dhcp"
-    echo "    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf"
-  } > /etc/network/interfaces.d/wlan0
-
-  {
-    echo "auto eth0"
-    echo "  allow-hotplug eth0"
-    echo "  iface eth0 inet dhcp"
-  } > /etc/network/interfaces.d/eth0
-
-
-  {
-    echo "hostname"
-    echo "clientid"
-    echo "persistent"
-    echo "option rapid_commit"
-    echo "option domain_name_servers, domain_name, domain_search, host_name"
-    echo "option classless_static_routes"
-    echo "option ntp_servers"
-    echo "option interface_mtu"
-    echo "require dhcp_server_identifier"
-    echo "slaac private"
-    echo "denyinterfaces wlan0 eth0"
-  } > /etc/dhcpcd.conf
-
-
-  echo > /etc/dnsmasq.conf
-
-  {
-    echo '#!/bin/sh -e'
-    echo "_IP=\$(hostname -I) || true"
-    echo "if [ \"\$_IP\" ]; then"
-    echo "  printf \"My IP address is %s\n\" \"\$_IP\""
-    echo "fi"
-    echo "exit 0"
-  } > /etc/rc.local
+  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
+  cp "$TEMPLATES/network/wlan0/default" /etc/network/interfaces.d/wlan0
+  cp "$TEMPLATES/network/eth0/default" /etc/network/interfaces.d/eth0
+  cp "$TEMPLATES/network/dhcpcd/modular" /etc/dhcpcd.conf
+  cp "$TEMPLATES/network/dnsmasq/default" /etc/dnsmasq.conf
+  cp "$TEMPLATES/rc.local/default" /etc/rc.local
 
   wifinetwork=$1
   wifipassword=$2
@@ -229,19 +199,19 @@ function wifi {
 
 function container {
   container=$1
-  if [ $container = "docker" ]; then
+  if [ "$container" = "docker" ]; then
     disable_service balena
     stop_service balena
     enable_service docker
     start_service docker
     echo "Success: docker has been enabled and started."
-  elif [ $container = "balena" ]; then
+  elif [ "$container" = "balena" ]; then
     disable_service docker
     stop_service docker
     enable_service balena
     start_service balena
     echo "Success: balena has been enabled and started."
-  elif [ $container = "none" ]; then
+  elif [ "$container" = "none" ]; then
     disable_service balena
     disable_service docker
     stop_service docker
@@ -262,30 +232,8 @@ EOF
 
 function bluetooth {
   status=$1
-  if [ $status = "on" ]; then
-    {
-      echo "[Unit]"
-      echo "Description=Bluetooth service"
-      echo "Documentation=man:bluetoothd(8)"
-      echo "ConditionPathIsDirectory=/sys/class/bluetooth"
-      echo ""
-      echo "[Service]"
-      echo "Type=dbus"
-      echo "BusName=org.bluez"
-      echo "ExecStart=/usr/lib/bluetooth/bluetoothd -C"
-      echo "ExecStartPost=/usr/bin/sdptool add SP"
-      echo "NotifyAccess=main"
-      echo "#WatchdogSec=10"
-      echo "#Restart=on-failure"
-      echo "CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE"
-      echo "LimitNPROC=1"
-      echo "ProtectHome=true"
-      echo "ProtectSystem=full"
-      echo ""
-      echo "[Install]"
-      echo "WantedBy=bluetooth.target"
-      echo "Alias=dbus-org.bluez.service"
-    } > /etc/systemd/system/dbus-org.bluez.service
+  if [ "$status" = "on" ]; then
+    cp "$TEMPLATES/bluetooth/hotspot" /etc/systemd/system/dbus-org.bluez.service
 
     enable_service rpibluetooth
     restart_service bluetooth
@@ -297,29 +245,8 @@ function bluetooth {
     rpi_bluetooth_discoverable >/dev/null 2>/dev/null
 
     echo "Success: the bluetooth service, and the hotspot service have been started."
-  elif [ $status = "off" ]; then
-    {
-      echo "[Unit]"
-      echo "Description=Bluetooth service"
-      echo "Documentation=man:bluetoothd(8)"
-      echo "ConditionPathIsDirectory=/sys/class/bluetooth"
-      echo ""
-      echo "[Service]"
-      echo "Type=dbus"
-      echo "BusName=org.bluez"
-      echo "ExecStart=/usr/lib/bluetooth/bluetoothd"
-      echo "NotifyAccess=main"
-      echo "#WatchdogSec=10"
-      echo "#Restart=on-failure"
-      echo "CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE"
-      echo "LimitNPROC=1"
-      echo "ProtectHome=true"
-      echo "ProtectSystem=full"
-      echo ""
-      echo "[Install]"
-      echo "WantedBy=bluetooth.target"
-      echo "Alias=dbus-org.bluez.service"
-    } > /etc/systemd/system/dbus-org.bluez.service
+  elif [ "$status" = "off" ]; then
+    cp "$TEMPLATES/bluetooth/default" /etc/systemd/system/dbus-org.bluez.service
 
     disable_service rpibluetooth
     stop_service rpibluetooth
@@ -340,16 +267,16 @@ case $1 in
     ;;
   rename)
     checkroot
-    rename $2
+    rename "$2"
     ;;
   password)
     checkroot
-    password $2
+    password "$2"
     ;;
   sshkeyadd)
     checkroot
     shift
-    sshkeyadd $@
+    sshkeyadd "$@"
     ;;
   version)
     version
@@ -359,15 +286,15 @@ case $1 in
     ;;
   wifi)
     checkroot
-    wifi $2 $3
+    wifi "$2" "$3"
     ;;
   container)
     checkroot
-    container $2
+    container "$2"
     ;;
   bluetooth)
     checkroot
-    bluetooth $2
+    bluetooth "$2"
     ;;
   *)
     help

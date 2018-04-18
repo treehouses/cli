@@ -17,6 +17,7 @@ function help {
   echo "   container <none|docker|balena>         enables (and start) the desired container"
   echo "   bluetooth <on|off>                     switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
+  echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
   echo
   exit 1
 }
@@ -147,9 +148,9 @@ function detectrpi {
 function restart_wifi {
   systemctl disable hostapd
   systemctl disable dnsmasq
-  service dhcpcd restart
-  service hostapd stop
-  service dnsmasq stop
+  restart_service dhcpcd
+  stop_service hostapd
+  stop_service dnsmasq
   ifup wlan0
   ifdown wlan0
   sleep 1
@@ -278,6 +279,54 @@ function ethernet {
   echo "This pirateship has anchored successfully!"
 }
 
+function restart_hotspot {
+  restart_service dhcpcd
+  ifdown wlan0
+  sleep 1
+  ifup wlan0
+  sysctl net.ipv4.ip_forward=1
+  iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+  iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+  iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
+  restart_service dnsmasq
+  restart_service hostapd
+  enable_service hostapd
+  enable_service dnsmasq
+}
+
+function hotspot {
+  essid=$1
+  password=$2
+  channels=(1 6 11)
+  channel=${channels[$(($RANDOM % ${#channels[@]}))]};
+
+  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces 
+  cp "$TEMPLATES/network/wlan0/hotspot" /etc/network/interfaces.d/wlan0
+  cp "$TEMPLATES/network/dhcpcd/modular" /etc/dhcpcd.conf 
+  cp "$TEMPLATES/network/dnsmasq/hotspot" /etc/dnsmasq.conf 
+  cp "$TEMPLATES/network/hostapd/default" /etc/default/hostapd
+  cp "$TEMPLATES/rc.local/hotspot" /etc/rc.local
+
+  if [ -z "$password" ];
+  then
+    # FIXME: password should be >= 8 characters long
+    # if (password.length < 8) {
+    #   console.log("Error: Password must be over 8 characters long");
+    #   return
+    # };
+    cp "$TEMPLATES/network/hostapd/password" /etc/hostapd/hostapd.conf
+    sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
+    sed -i "s/PASSWORD/$password/g" /etc/hostapd/hostapd.conf
+    sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
+    restart_hotspot >/dev/null 2>/dev/null
+  else 
+    cp "$TEMPLATES/network/hostapd/no_password" /etc/hostapd/hostapd.conf
+    sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
+    sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
+    restart_hotspot >/dev/null 2>/dev/null
+  fi
+}
+
 case $1 in
   expandfs)
     checkroot
@@ -317,6 +366,10 @@ case $1 in
   ethernet)
     checkroot
     ethernet "$2" "$3" "$4" "$5"
+    ;;
+  hotspot)
+    checkroot
+    hotspot "$2" "$3"
     ;;
   *)
     help

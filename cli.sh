@@ -4,9 +4,6 @@ SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 TEMPLATES="$SCRIPTFOLDER/templates"
 
-echo $SCRIPTFOLDER
-echo $TEMPLATES
-
 function help {
   echo "Usage: $(basename "$0")"
   echo
@@ -24,7 +21,7 @@ function help {
 }
 
 function start_service {
-  if [ "$("systemctl is-active $1")" == "inactive" ]
+  if [ "$(systemctl is-active "$1")" = "inactive" ]
   then
     systemctl start "$1" >/dev/null 2>/dev/null
   fi
@@ -36,21 +33,21 @@ function restart_service {
 }
 
 function stop_service {
-  if [ "$("systemctl is-active $1")" == "active" ]
+  if [ "$(systemctl is-active "$1")" = "active" ]
   then
     systemctl stop "$1" >/dev/null 2>/dev/null
   fi
 }
 
 function enable_service {
-  if [ "$("systemctl is-enabled $1")" == "disabled" ]
+  if [ "$(systemctl is-enabled "$1")" = "disabled" ]
   then
     systemctl enable "$1" >/dev/null 2>/dev/null
   fi
 }
 
 function disable_service {
-  if [ "$("systemctl is-enabled $1")" == "enabled" ]
+  if [ "$(systemctl is-enabled "$1")" = "enabled" ]
   then
     systemctl disable "$1" >/dev/null 2>/dev/null
   fi
@@ -260,6 +257,21 @@ function bluetooth {
     echo "Error: only 'on', 'off' options are supported";
   fi
 }
+
+function ethernet {
+  cp "$TEMPLATES/network/eth0/static" /etc/network/interfaces.d/eth0
+  sed -i "s/IPADDRESS/$1/g" /etc/network/interfaces.d/eth0
+  sed -i "s/NETMASK/$2/g" /etc/network/interfaces.d/eth0
+  sed -i "s/GATEWAY/$3/g" /etc/network/interfaces.d/eth0
+  sed -i "s/GATEWAY/$4/g" /etc/network/interfaces.d/eth0
+  ifup eth0 || true
+  ifdown eth0 || true
+  sleep 1
+  ifup eth0 || true
+
+  echo "This pirateship has anchored successfully!"
+}
+
 case $1 in
   expandfs)
     checkroot
@@ -295,6 +307,10 @@ case $1 in
   bluetooth)
     checkroot
     bluetooth "$2"
+    ;;
+  ethernet)
+    checkroot
+    ethernet "$2" "$3" "$4" "$5"
     ;;
   *)
     help

@@ -7,15 +7,16 @@ TEMPLATES="$SCRIPTFOLDER/templates"
 function help {
   echo "Usage: $(basename "$0")"
   echo
-  echo "   expandfs                          expands the partition of the RPI image to the maximum of the SDcard"
-  echo "   rename <hostname>                 changes hostname"
-  echo "   password <password>               change the password for 'pi' user"
-  echo "   sshkeyadd <public_key>            add a public key to 'pi' and 'root' user's authorized_keys"
-  echo "   version                           returns the version of $(basename "$0") command"
-  echo "   detectrpi                         detects the hardware version of a raspberry pi"
-  echo "   wifi <ESSID> [password]           connects to a wifi network"
-  echo "   container <none|docker|balena>    enables (and start) the desired container"
-  echo "   bluetooth <on|off>                switches between bluetooth hotspot mode / regular bluetooth and starts the service"
+  echo "   expandfs                               expands the partition of the RPI image to the maximum of the SDcard"
+  echo "   rename <hostname>                      changes hostname"
+  echo "   password <password>                    change the password for 'pi' user"
+  echo "   sshkeyadd <public_key>                 add a public key to 'pi' and 'root' user's authorized_keys"
+  echo "   version                                returns the version of $(basename "$0") command"
+  echo "   detectrpi                              detects the hardware version of a raspberry pi"
+  echo "   wifi <ESSID> [password]                connects to a wifi network"
+  echo "   container <none|docker|balena>         enables (and start) the desired container"
+  echo "   bluetooth <on|off>                     switches between bluetooth hotspot mode / regular bluetooth and starts the service"
+  echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo
   exit 1
 }
@@ -144,15 +145,15 @@ function detectrpi {
 }
 
 function restart_wifi {
-  systemctl disable hostapd || true
-  systemctl disable dnsmasq || true
-  service dhcpcd restart || true
-  service hostapd stop || true
-  service dnsmasq stop || true
-  ifup wlan0 || true
-  ifdown wlan0 || true
+  systemctl disable hostapd
+  systemctl disable dnsmasq
+  service dhcpcd restart
+  service hostapd stop
+  service dnsmasq stop
+  ifup wlan0
+  ifdown wlan0
   sleep 1
-  ifup wlan0 || true
+  ifup wlan0
 }
 
 function wifi {
@@ -258,16 +259,21 @@ function bluetooth {
   fi
 }
 
+function restart_ethernet {
+  ifup eth0
+  ifdown eth0
+  sleep 1
+  ifup eth0
+}
+
 function ethernet {
+  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/eth0/static" /etc/network/interfaces.d/eth0
   sed -i "s/IPADDRESS/$1/g" /etc/network/interfaces.d/eth0
   sed -i "s/NETMASK/$2/g" /etc/network/interfaces.d/eth0
   sed -i "s/GATEWAY/$3/g" /etc/network/interfaces.d/eth0
   sed -i "s/GATEWAY/$4/g" /etc/network/interfaces.d/eth0
-  ifup eth0 || true
-  ifdown eth0 || true
-  sleep 1
-  ifup eth0 || true
+  restart_ethernet >/dev/null 2>/dev/null
 
   echo "This pirateship has anchored successfully!"
 }

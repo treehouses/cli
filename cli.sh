@@ -73,7 +73,7 @@ function rename () {
 
 function password () {
   echo "pi:$1" | chpasswd
-  echo "password change success"
+  echo "Success: the password has been changed"
   exit 0
 }
 

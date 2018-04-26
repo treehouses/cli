@@ -19,7 +19,7 @@ function help {
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
   echo
-  exit 1
+  exit 0
 }
 
 function start_service {
@@ -100,7 +100,7 @@ function checkroot {
   if [ "$(id -u)" -ne 0 ];
   then
       echo "Error: Must be run with root permissions"
-      exit 1
+      exit 0
   fi
 }
 

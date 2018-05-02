@@ -100,7 +100,7 @@ function checkroot {
   if [ "$(id -u)" -ne 0 ];
   then
       echo "Error: Must be run with root permissions"
-      exit 0
+      exit 1
   fi
 }
 

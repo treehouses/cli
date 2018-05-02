@@ -18,6 +18,7 @@ function help {
   echo "   bluetooth <on|off>                     switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
+  echo "   default                                sets a raspbian back to default configuration"
   echo
   exit 0
 }
@@ -316,6 +317,22 @@ function hotspot {
   fi
 }
 
+function default {
+  cp "$TEMPLATES/network/interfaces/default" "/etc/network/interfaces"
+  cp "$TEMPLATES/network/wpa_supplicant" "/etc/wpa_supplicant/wpa_supplicant.conf"
+  cp "$TEMPLATES/rc.local/default" "/etc/rc.local"
+  cp "$TEMPLATES/network/dnsmasq/default" "/etc/dnsmasq.conf"
+  cp "$TEMPLATES/network/dhcpcd/default" "/etc/dhcpcd.conf"
+  rm -rf /etc/hostapd.conf
+  rm -rf /etc/network/interfaces.d/*
+  rm -rf /etc/rpi-wifi-country
+  rename "raspberrypi" > /dev/null 2>/dev/null
+  systemctl disable hostapd 2>/dev/null
+  systemctl disable dnsmasq 2>/dev/null
+
+  echo 'Success: the rpi has been reset to default'
+}
+
 case $1 in
   expandfs)
     checkroot
@@ -359,6 +376,10 @@ case $1 in
   hotspot)
     checkroot
     hotspot "$2" "$3"
+    ;;
+  default)
+    checkroot
+    default
     ;;
   *)
     help

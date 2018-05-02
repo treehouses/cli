@@ -327,6 +327,27 @@ function hotspot {
   fi
 }
 
+function vnc {
+  status=$1
+  if [ ! -d /usr/share/doc/realvnc-vnc-server ] ; then
+    echo "Error: the vnc server is not installed, to install it run:"
+    echo "apt-get install realvnc-vnc-server"
+    exit 1;
+  fi
+
+  if [ "$status" = "on" ]; then
+    enable_service vncserver-x11-serviced.service
+    start_service vncserver-x11-serviced.service
+    echo "Success: the vnc service has been started and enabled when the system boots"
+  elif [ "$status" = "off" ]; then
+    disable_service vncserver-x11-serviced.service
+    stop_service vncserver-x11-serviced.service
+    echo "Success: the vnc service has been stopped and disabled when the system boots."
+  else
+    echo "Error: only 'on', 'off' options are supported";
+  fi
+}
+
 case $1 in
   expandfs)
     checkroot
@@ -370,6 +391,10 @@ case $1 in
   hotspot)
     checkroot
     hotspot "$2" "$3"
+    ;;
+  vnc)
+    checkroot
+    vnc "$2"
     ;;
   *)
     help

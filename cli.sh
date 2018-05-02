@@ -18,6 +18,7 @@ function help {
   echo "   bluetooth <on|off>                     switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
+  echo "   timezone <timezone>                    sets the timezone of the system"
   echo
   exit 1
 }

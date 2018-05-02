@@ -18,6 +18,7 @@ function help {
   echo "   bluetooth <on|off>                     switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
+  echo "   locale <locale>                        sets the system locale"
   echo
   exit 1
 }
@@ -343,7 +344,7 @@ function locale {
 
   encoding="$(echo $locale_line | cut -f2 -d " ")"
   echo "$locale $encoding" > /etc/locale.gen
-  sed -i "s/^\s*LANG=\S*/LANG=$locale/" /etc/default/locale
+  sed -i "s/^\\s*LANG=\\S*/LANG=$locale/" /etc/default/locale
   dpkg-reconfigure -f noninteractive locales -q 2>/dev/null
   echo "Success: the locale has been changed"
 }

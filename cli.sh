@@ -327,6 +327,21 @@ function hotspot {
   fi
 }
 
+function ssh {
+  status=$1
+  if [ "$status" = "on" ]; then
+    enable_service ssh
+    start_service ssh
+    echo "Success: the ssh service has been started and enabled when the system boots"
+  elif [ "$status" = "off" ]; then
+    disable_service ssh
+    stop_service ssh
+    echo "Success: the ssh service has been stopped and disabled when the system boots."
+  else
+    echo "Error: only 'on', 'off' options are supported";
+  fi
+}
+
 case $1 in
   expandfs)
     checkroot
@@ -370,6 +385,10 @@ case $1 in
   hotspot)
     checkroot
     hotspot "$2" "$3"
+    ;;
+  ssh)
+    checkroot
+    ssh "$2"
     ;;
   *)
     help

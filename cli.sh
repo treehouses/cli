@@ -18,6 +18,7 @@ function help {
   echo "   bluetooth <on|off>                     switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
+  echo "   upgrade                                upgrades $(basename "$0") package using npm"
   echo
   exit 1
 }
@@ -327,6 +328,10 @@ function hotspot {
   fi
 }
 
+function upgrade {
+  npm install -g '@treehouses/cli'
+}
+
 case $1 in
   expandfs)
     checkroot
@@ -370,6 +375,10 @@ case $1 in
   hotspot)
     checkroot
     hotspot "$2" "$3"
+    ;;
+  upgrade)
+    checkroot
+    upgrade
     ;;
   *)
     help

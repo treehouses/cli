@@ -327,6 +327,26 @@ function hotspot {
   fi
 }
 
+function timezone {
+  timezone="$1"
+  if [ -z "$timezone" ];
+  then
+    echo "Error: the timezone is missing"
+    exit 1;
+  fi
+
+  if [ ! -f "/usr/share/zoneinfo/$timezone" ];
+  then
+    echo "Error: the timezone is not supported"
+    exit 1;
+  fi
+
+  rm /etc/localtime
+  echo "$timezone" > /etc/timezone
+  dpkg-reconfigure -f noninteractive tzdata 2>/dev/null
+  echo "Success: the timezone has been set"
+}
+
 case $1 in
   expandfs)
     checkroot
@@ -370,6 +390,10 @@ case $1 in
   hotspot)
     checkroot
     hotspot "$2" "$3"
+    ;;
+  timezone)
+    checkroot
+    timezone "$2"
     ;;
   *)
     help

@@ -221,14 +221,6 @@ function container {
   fi
 }
 
-function rpi_bluetooth_discoverable {
-  bluetoothctl <<EOF
-    power on
-    discoverable on
-    pairable on
-EOF
-}
-
 function bluetooth {
   status=$1
   if [ "$status" = "on" ]; then
@@ -239,9 +231,6 @@ function bluetooth {
     restart_service rpibluetooth
 
     sleep 5 # wait 5 seconds for bluetooth to be completely up
-
-    # put rpi bluetooth on discoverable mode
-    rpi_bluetooth_discoverable >/dev/null 2>/dev/null
 
     echo "Success: the bluetooth service, and the hotspot service have been started."
   elif [ "$status" = "off" ]; then

@@ -7,7 +7,6 @@ ConditionPathIsDirectory=/sys/class/bluetooth
 Type=dbus
 BusName=org.bluez
 ExecStart=/usr/lib/bluetooth/bluetoothd -C
-ExecStartPost=/usr/bin/sdptool add SP
 NotifyAccess=main
 #WatchdogSec=10
 #Restart=on-failure

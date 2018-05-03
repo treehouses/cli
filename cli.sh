@@ -19,6 +19,7 @@ function help {
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
   echo "   default                                sets a raspbian back to default configuration"
+  echo "   upgrade                                upgrades $(basename "$0") package using npm"
   echo
   exit 0
 }
@@ -342,6 +343,10 @@ function default {
   echo 'Success: the rpi has been reset to default'
 }
 
+function upgrade {
+  npm install -g '@treehouses/cli'
+}
+
 case $1 in
   expandfs)
     checkroot
@@ -389,6 +394,10 @@ case $1 in
   default)
     checkroot
     default
+    ;;
+  upgrade)
+    checkroot
+    upgrade
     ;;
   *)
     help

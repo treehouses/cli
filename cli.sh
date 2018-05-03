@@ -18,9 +18,10 @@ function help {
   echo "   bluetooth <on|off>                     switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
+  echo "   default                                sets a raspbian back to default configuration"
   echo "   upgrade                                upgrades $(basename "$0") package using npm"
   echo
-  exit 1
+  exit 0
 }
 
 function start_service {
@@ -222,14 +223,6 @@ function container {
   fi
 }
 
-function rpi_bluetooth_discoverable {
-  bluetoothctl <<EOF
-    power on
-    discoverable on
-    pairable on
-EOF
-}
-
 function bluetooth {
   status=$1
   if [ "$status" = "on" ]; then
@@ -240,9 +233,6 @@ function bluetooth {
     restart_service rpibluetooth
 
     sleep 5 # wait 5 seconds for bluetooth to be completely up
-
-    # put rpi bluetooth on discoverable mode
-    rpi_bluetooth_discoverable >/dev/null 2>/dev/null
 
     echo "Success: the bluetooth service, and the hotspot service have been started."
   elif [ "$status" = "off" ]; then
@@ -328,6 +318,22 @@ function hotspot {
   fi
 }
 
+function default {
+  cp "$TEMPLATES/network/interfaces/default" "/etc/network/interfaces"
+  cp "$TEMPLATES/network/wpa_supplicant" "/etc/wpa_supplicant/wpa_supplicant.conf"
+  cp "$TEMPLATES/rc.local/default" "/etc/rc.local"
+  cp "$TEMPLATES/network/dnsmasq/default" "/etc/dnsmasq.conf"
+  cp "$TEMPLATES/network/dhcpcd/default" "/etc/dhcpcd.conf"
+  rm -rf /etc/hostapd.conf
+  rm -rf /etc/network/interfaces.d/*
+  rm -rf /etc/rpi-wifi-country
+  rename "raspberrypi" > /dev/null 2>/dev/null
+  systemctl disable hostapd 2>/dev/null
+  systemctl disable dnsmasq 2>/dev/null
+
+  echo 'Success: the rpi has been reset to default'
+}
+
 function upgrade {
   npm install -g '@treehouses/cli'
 }
@@ -375,6 +381,10 @@ case $1 in
   hotspot)
     checkroot
     hotspot "$2" "$3"
+    ;;
+  default)
+    checkroot
+    default
     ;;
   upgrade)
     checkroot

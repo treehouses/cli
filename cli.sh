@@ -18,9 +18,12 @@ function help {
   echo "   bluetooth <on|off>                     switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
+  echo "   ssh <on|off>                           enables or disables the ssh service"
   echo "   vnc <on|off>                           enables or disables the vnc server service"
+  echo "   default                                sets a raspbian back to default configuration"
+  echo "   upgrade                                upgrades $(basename "$0") package using npm"
   echo
-  exit 1
+  exit 0
 }
 
 function start_service {
@@ -169,6 +172,15 @@ function wifi {
   wifinetwork=$1
   wifipassword=$2
 
+  if [ -n "$wifipassword" ]
+  then
+    if [ ${#wifipassword} -lt 8 ]
+    then
+      echo "Error: password must have at least 8 characters"
+      exit 1
+    fi
+  fi
+
   {
     echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
     echo "update_config=1"
@@ -222,14 +234,6 @@ function container {
   fi
 }
 
-function rpi_bluetooth_discoverable {
-  bluetoothctl <<EOF
-    power on
-    discoverable on
-    pairable on
-EOF
-}
-
 function bluetooth {
   status=$1
   if [ "$status" = "on" ]; then
@@ -240,9 +244,6 @@ function bluetooth {
     restart_service rpibluetooth
 
     sleep 5 # wait 5 seconds for bluetooth to be completely up
-
-    # put rpi bluetooth on discoverable mode
-    rpi_bluetooth_discoverable >/dev/null 2>/dev/null
 
     echo "Success: the bluetooth service, and the hotspot service have been started."
   elif [ "$status" = "off" ]; then
@@ -310,11 +311,11 @@ function hotspot {
 
   if [ -z "$password" ];
   then
-    # FIXME: password should be >= 8 characters long
-    # if (password.length < 8) {
-    #   console.log("Error: Password must be over 8 characters long");
-    #   return
-    # };
+    if [ ${#password} -lt 8 ]
+    then
+      echo "Error: password must have at least 8 characters"
+      exit 1
+    fi
     cp "$TEMPLATES/network/hostapd/password" /etc/hostapd/hostapd.conf
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/PASSWORD/$password/g" /etc/hostapd/hostapd.conf
@@ -325,6 +326,21 @@ function hotspot {
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
     restart_hotspot >/dev/null 2>/dev/null
+  fi
+}
+
+function ssh {
+  status=$1
+  if [ "$status" = "on" ]; then
+    enable_service ssh
+    start_service ssh
+    echo "Success: the ssh service has been started and enabled when the system boots"
+  elif [ "$status" = "off" ]; then
+    disable_service ssh
+    stop_service ssh
+    echo "Success: the ssh service has been stopped and disabled when the system boots."
+  else
+    echo "Error: only 'on', 'off' options are supported";
   fi
 }
 
@@ -347,6 +363,26 @@ function vnc {
   else
     echo "Error: only 'on', 'off' options are supported";
   fi
+}
+
+function default {
+  cp "$TEMPLATES/network/interfaces/default" "/etc/network/interfaces"
+  cp "$TEMPLATES/network/wpa_supplicant" "/etc/wpa_supplicant/wpa_supplicant.conf"
+  cp "$TEMPLATES/rc.local/default" "/etc/rc.local"
+  cp "$TEMPLATES/network/dnsmasq/default" "/etc/dnsmasq.conf"
+  cp "$TEMPLATES/network/dhcpcd/default" "/etc/dhcpcd.conf"
+  rm -rf /etc/hostapd.conf
+  rm -rf /etc/network/interfaces.d/*
+  rm -rf /etc/rpi-wifi-country
+  rename "raspberrypi" > /dev/null 2>/dev/null
+  systemctl disable hostapd 2>/dev/null
+  systemctl disable dnsmasq 2>/dev/null
+
+  echo 'Success: the rpi has been reset to default'
+}
+
+function upgrade {
+  npm install -g '@treehouses/cli'
 }
 
 case $1 in
@@ -393,9 +429,21 @@ case $1 in
     checkroot
     hotspot "$2" "$3"
     ;;
+  ssh)
+    checkroot
+    ssh "$2"
+    ;;
   vnc)
     checkroot
     vnc "$2"
+    ;;
+  default)
+    checkroot
+    default
+    ;;
+  upgrade)
+    checkroot
+    upgrade
     ;;
   *)
     help

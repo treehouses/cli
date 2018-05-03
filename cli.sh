@@ -19,6 +19,7 @@ function help {
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
   echo "   ssh <on|off>                           enables or disables the ssh service"
+  echo "   vnc <on|off>                           enables or disables the vnc server service"
   echo "   default                                sets a raspbian back to default configuration"
   echo "   upgrade                                upgrades $(basename "$0") package using npm"
   echo
@@ -343,6 +344,27 @@ function ssh {
   fi
 }
 
+function vnc {
+  status=$1
+  if [ ! -d /usr/share/doc/realvnc-vnc-server ] ; then
+    echo "Error: the vnc server is not installed, to install it run:"
+    echo "apt-get install realvnc-vnc-server"
+    exit 1;
+  fi
+
+  if [ "$status" = "on" ]; then
+    enable_service vncserver-x11-serviced.service
+    start_service vncserver-x11-serviced.service
+    echo "Success: the vnc service has been started and enabled when the system boots"
+  elif [ "$status" = "off" ]; then
+    disable_service vncserver-x11-serviced.service
+    stop_service vncserver-x11-serviced.service
+    echo "Success: the vnc service has been stopped and disabled when the system boots."
+  else
+    echo "Error: only 'on', 'off' options are supported";
+  fi
+}
+
 function default {
   cp "$TEMPLATES/network/interfaces/default" "/etc/network/interfaces"
   cp "$TEMPLATES/network/wpa_supplicant" "/etc/wpa_supplicant/wpa_supplicant.conf"
@@ -410,6 +432,10 @@ case $1 in
   ssh)
     checkroot
     ssh "$2"
+    ;;
+  vnc)
+    checkroot
+    vnc "$2"
     ;;
   default)
     checkroot

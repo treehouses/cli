@@ -18,6 +18,7 @@ function help {
   echo "   bluetooth <on|off>                     switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
+  echo "   timezone <timezone>                    sets the timezone of the system"
   echo "   locale <locale>                        sets the system locale"
   echo "   ssh <on|off>                           enables or disables the ssh service"
   echo "   vnc <on|off>                           enables or disables the vnc server service"
@@ -330,6 +331,26 @@ function hotspot {
   fi
 }
 
+function timezone {
+  timezone="$1"
+  if [ -z "$timezone" ];
+  then
+    echo "Error: the timezone is missing"
+    exit 1;
+  fi
+
+  if [ ! -f "/usr/share/zoneinfo/$timezone" ];
+  then
+    echo "Error: the timezone is not supported"
+    exit 1;
+  fi
+
+  rm /etc/localtime
+  echo "$timezone" > /etc/timezone
+  dpkg-reconfigure -f noninteractive tzdata 2>/dev/null
+  echo "Success: the timezone has been set"
+}
+
 function locale {
   locale="$1"
   if [ -z "$locale" ];
@@ -450,6 +471,10 @@ case $1 in
   hotspot)
     checkroot
     hotspot "$2" "$3"
+    ;;
+  timezone)
+    checkroot
+    timezone "$2"
     ;;
   locale)
     checkroot

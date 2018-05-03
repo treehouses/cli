@@ -292,6 +292,7 @@ function hotspot {
 
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces 
   cp "$TEMPLATES/network/wlan0/hotspot" /etc/network/interfaces.d/wlan0
+  cp "$TEMPLATES/network/eth0/default" /etc/network/interfaces.d/eth0
   cp "$TEMPLATES/network/dhcpcd/modular" /etc/dhcpcd.conf 
   cp "$TEMPLATES/network/dnsmasq/hotspot" /etc/dnsmasq.conf 
   cp "$TEMPLATES/network/hostapd/default" /etc/default/hostapd

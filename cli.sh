@@ -158,13 +158,6 @@ function restart_wifi {
 }
 
 function wifi {
-  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
-  cp "$TEMPLATES/network/wlan0/default" /etc/network/interfaces.d/wlan0
-  cp "$TEMPLATES/network/eth0/default" /etc/network/interfaces.d/eth0
-  cp "$TEMPLATES/network/dhcpcd/modular" /etc/dhcpcd.conf
-  cp "$TEMPLATES/network/dnsmasq/default" /etc/dnsmasq.conf
-  cp "$TEMPLATES/rc.local/default" /etc/rc.local
-
   wifinetwork=$1
   wifipassword=$2
 
@@ -176,6 +169,13 @@ function wifi {
       exit 1
     fi
   fi
+
+  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
+  cp "$TEMPLATES/network/wlan0/default" /etc/network/interfaces.d/wlan0
+  cp "$TEMPLATES/network/eth0/default" /etc/network/interfaces.d/eth0
+  cp "$TEMPLATES/network/dhcpcd/modular" /etc/dhcpcd.conf
+  cp "$TEMPLATES/network/dnsmasq/default" /etc/dnsmasq.conf
+  cp "$TEMPLATES/rc.local/default" /etc/rc.local
 
   {
     echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
@@ -307,7 +307,16 @@ function hotspot {
   essid=$1
   password=$2
   channels=(1 6 11)
-  channel=${channels[$(($RANDOM % ${#channels[@]}))]};
+  channel=${channels[$((RANDOM % ${#channels[@]}))]};
+
+  if [ -n "$password" ];
+  then
+    if [ ${#password} -lt 8 ];
+    then
+      echo "Error: password must have at least 8 characters"
+      exit 1
+    fi
+  fi
 
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces 
   cp "$TEMPLATES/network/wlan0/hotspot" /etc/network/interfaces.d/wlan0
@@ -316,13 +325,8 @@ function hotspot {
   cp "$TEMPLATES/network/hostapd/default" /etc/default/hostapd
   cp "$TEMPLATES/rc.local/hotspot" /etc/rc.local
 
-  if [ -z "$password" ];
+  if [ -n "$password" ];
   then
-    if [ ${#password} -lt 8 ]
-    then
-      echo "Error: password must have at least 8 characters"
-      exit 1
-    fi
     cp "$TEMPLATES/network/hostapd/password" /etc/hostapd/hostapd.conf
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/PASSWORD/$password/g" /etc/hostapd/hostapd.conf

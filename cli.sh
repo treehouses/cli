@@ -169,6 +169,15 @@ function wifi {
   wifinetwork=$1
   wifipassword=$2
 
+  if [ -n "$wifipassword" ]
+  then
+    if [ ${#wifipassword} -lt 8 ]
+    then
+      echo "Error: password must have at least 8 characters"
+      exit 1
+    fi
+  fi
+
   {
     echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
     echo "update_config=1"
@@ -299,11 +308,11 @@ function hotspot {
 
   if [ -z "$password" ];
   then
-    # FIXME: password should be >= 8 characters long
-    # if (password.length < 8) {
-    #   console.log("Error: Password must be over 8 characters long");
-    #   return
-    # };
+    if [ ${#password} -lt 8 ]
+    then
+      echo "Error: password must have at least 8 characters"
+      exit 1
+    fi
     cp "$TEMPLATES/network/hostapd/password" /etc/hostapd/hostapd.conf
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/PASSWORD/$password/g" /etc/hostapd/hostapd.conf

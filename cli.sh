@@ -18,8 +18,14 @@ function help {
   echo "   bluetooth <on|off>                     switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
+  echo "   timezone <timezone>                    sets the timezone of the system"
+  echo "   locale <locale>                        sets the system locale"
+  echo "   ssh <on|off>                           enables or disables the ssh service"
+  echo "   vnc <on|off>                           enables or disables the vnc server service"
+  echo "   default                                sets a raspbian back to default configuration"
+  echo "   upgrade                                upgrades $(basename "$0") package using npm"
   echo
-  exit 1
+  exit 0
 }
 
 function start_service {
@@ -230,14 +236,6 @@ function container {
   fi
 }
 
-function rpi_bluetooth_discoverable {
-  bluetoothctl <<EOF
-    power on
-    discoverable on
-    pairable on
-EOF
-}
-
 function bluetooth {
   status=$1
   if [ "$status" = "on" ]; then
@@ -248,9 +246,6 @@ function bluetooth {
     restart_service rpibluetooth
 
     sleep 5 # wait 5 seconds for bluetooth to be completely up
-
-    # put rpi bluetooth on discoverable mode
-    rpi_bluetooth_discoverable >/dev/null 2>/dev/null
 
     echo "Success: the bluetooth service, and the hotspot service have been started."
   elif [ "$status" = "off" ]; then
@@ -340,6 +335,103 @@ function hotspot {
   fi
 }
 
+function timezone {
+  timezone="$1"
+  if [ -z "$timezone" ];
+  then
+    echo "Error: the timezone is missing"
+    exit 1;
+  fi
+
+  if [ ! -f "/usr/share/zoneinfo/$timezone" ];
+  then
+    echo "Error: the timezone is not supported"
+    exit 1;
+  fi
+
+  rm /etc/localtime
+  echo "$timezone" > /etc/timezone
+  dpkg-reconfigure -f noninteractive tzdata 2>/dev/null
+  echo "Success: the timezone has been set"
+}
+
+function locale {
+  locale="$1"
+  if [ -z "$locale" ];
+  then
+    echo "Error: the locale is missing"
+    exit 1
+  fi
+
+  if ! locale_line="$(grep "^$locale " /usr/share/i18n/SUPPORTED)";
+  then
+    echo "Error: the specified locale is not supported"
+    exit 1
+  fi
+
+  encoding="$(echo "$locale_line" | cut -f2 -d " ")"
+  echo "$locale $encoding" > /etc/locale.gen
+  sed -i "s/^\\s*LANG=\\S*/LANG=$locale/" /etc/default/locale
+  dpkg-reconfigure -f noninteractive locales -q 2>/dev/null
+  echo "Success: the locale has been changed"
+}
+
+function ssh {
+  status=$1
+  if [ "$status" = "on" ]; then
+    enable_service ssh
+    start_service ssh
+    echo "Success: the ssh service has been started and enabled when the system boots"
+  elif [ "$status" = "off" ]; then
+    disable_service ssh
+    stop_service ssh
+    echo "Success: the ssh service has been stopped and disabled when the system boots."
+  else
+    echo "Error: only 'on', 'off' options are supported";
+  fi
+}
+
+function vnc {
+  status=$1
+  if [ ! -d /usr/share/doc/realvnc-vnc-server ] ; then
+    echo "Error: the vnc server is not installed, to install it run:"
+    echo "apt-get install realvnc-vnc-server"
+    exit 1;
+  fi
+
+  if [ "$status" = "on" ]; then
+    enable_service vncserver-x11-serviced.service
+    start_service vncserver-x11-serviced.service
+    echo "Success: the vnc service has been started and enabled when the system boots"
+  elif [ "$status" = "off" ]; then
+    disable_service vncserver-x11-serviced.service
+    stop_service vncserver-x11-serviced.service
+    echo "Success: the vnc service has been stopped and disabled when the system boots."
+  else
+    echo "Error: only 'on', 'off' options are supported";
+  fi
+}
+
+function default {
+  cp "$TEMPLATES/network/interfaces/default" "/etc/network/interfaces"
+  cp "$TEMPLATES/network/wpa_supplicant" "/etc/wpa_supplicant/wpa_supplicant.conf"
+  cp "$TEMPLATES/rc.local/default" "/etc/rc.local"
+  cp "$TEMPLATES/network/dnsmasq/default" "/etc/dnsmasq.conf"
+  cp "$TEMPLATES/network/dhcpcd/default" "/etc/dhcpcd.conf"
+  rm -rf /etc/hostapd.conf
+  rm -rf /etc/network/interfaces.d/*
+  rm -rf /etc/rpi-wifi-country
+  rename "raspberrypi" > /dev/null 2>/dev/null
+  systemctl disable hostapd 2>/dev/null
+  systemctl disable dnsmasq 2>/dev/null
+
+  echo 'Success: the rpi has been reset to default'
+}
+
+function upgrade {
+  npm install -g '@treehouses/cli'
+}
+
 case $1 in
   expandfs)
     checkroot
@@ -383,6 +475,30 @@ case $1 in
   hotspot)
     checkroot
     hotspot "$2" "$3"
+    ;;
+  timezone)
+    checkroot
+    timezone "$2"
+    ;;
+  locale)
+    checkroot
+    locale "$2"
+    ;;
+  ssh)
+    checkroot
+    ssh "$2"
+    ;;
+  vnc)
+    checkroot
+    vnc "$2"
+    ;;
+  default)
+    checkroot
+    default
+    ;;
+  upgrade)
+    checkroot
+    upgrade
     ;;
   *)
     help

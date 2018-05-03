@@ -18,6 +18,7 @@ function help {
   echo "   bluetooth <on|off>                     switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
+  echo "   ssh <on|off>                           enables or disables the ssh service"
   echo "   default                                sets a raspbian back to default configuration"
   echo "   upgrade                                upgrades $(basename "$0") package using npm"
   echo
@@ -327,6 +328,21 @@ function hotspot {
   fi
 }
 
+function ssh {
+  status=$1
+  if [ "$status" = "on" ]; then
+    enable_service ssh
+    start_service ssh
+    echo "Success: the ssh service has been started and enabled when the system boots"
+  elif [ "$status" = "off" ]; then
+    disable_service ssh
+    stop_service ssh
+    echo "Success: the ssh service has been stopped and disabled when the system boots."
+  else
+    echo "Error: only 'on', 'off' options are supported";
+  fi
+}
+
 function default {
   cp "$TEMPLATES/network/interfaces/default" "/etc/network/interfaces"
   cp "$TEMPLATES/network/wpa_supplicant" "/etc/wpa_supplicant/wpa_supplicant.conf"
@@ -390,6 +406,10 @@ case $1 in
   hotspot)
     checkroot
     hotspot "$2" "$3"
+    ;;
+  ssh)
+    checkroot
+    ssh "$2"
     ;;
   default)
     checkroot

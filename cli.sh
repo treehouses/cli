@@ -270,18 +270,18 @@ function ethernet {
 }
 
 function restart_hotspot {
-  restart_service dhcpcd
-  ifdown wlan0
-  sleep 1
-  ifup wlan0
-  sysctl net.ipv4.ip_forward=1
-  iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-  iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-  iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
-  restart_service dnsmasq
-  restart_service hostapd
-  enable_service hostapd
-  enable_service dnsmasq
+  restart_service dhcpcd || true
+  ifdown wlan0 || true
+  sleep 1 || true
+  ifup wlan0 || true
+  sysctl net.ipv4.ip_forward=1 || true
+  iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE || true
+  iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT || true
+  iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT || true
+  restart_service dnsmasq || true
+  restart_service hostapd || true
+  enable_service hostapd || true
+  enable_service dnsmasq || true
 }
 
 function hotspot {
@@ -316,6 +316,8 @@ function hotspot {
     sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
     restart_hotspot >/dev/null 2>/dev/null
   fi
+
+  echo "This pirateship has anchored successfully!"
 }
 
 function default {

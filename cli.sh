@@ -29,7 +29,7 @@ function help {
 }
 
 function start_service {
-  if [ "$(systemctl is-active "$1")" = "inactive" ]
+  if [ "$(systemctl is-active "$1" 2>/dev/null)" = "inactive" ]
   then
     systemctl start "$1" >/dev/null 2>/dev/null
   fi
@@ -41,21 +41,21 @@ function restart_service {
 }
 
 function stop_service {
-  if [ "$(systemctl is-active "$1")" = "active" ]
+  if [ "$(systemctl is-active "$1" 2>/dev/null)" = "active" ]
   then
     systemctl stop "$1" >/dev/null 2>/dev/null
   fi
 }
 
 function enable_service {
-  if [ "$(systemctl is-enabled "$1")" = "disabled" ]
+  if [ "$(systemctl is-enabled "$1" 2>/dev/null)" = "disabled" ]
   then
     systemctl enable "$1" >/dev/null 2>/dev/null
   fi
 }
 
 function disable_service {
-  if [ "$(systemctl is-enabled "$1")" = "enabled" ]
+  if [ "$(systemctl is-enabled "$1" 2>/dev/null)" = "enabled" ]
   then
     systemctl disable "$1" >/dev/null 2>/dev/null
   fi
@@ -65,7 +65,6 @@ function expandfs () {
   # expandfs is way too complex, it should be handled by raspi-config
   raspi-config --expand-rootfs >/dev/null 2>/dev/null
   echo "Success: the filesystem will be expanded on the next reboot"
-  exit 0
 }
 
 function rename () {
@@ -74,13 +73,11 @@ function rename () {
   sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\\t$1/g" /etc/hosts
   hostname "$1"
   echo "Success: the hostname has been modified"
-  exit 0
 }
 
 function password () {
   echo "pi:$1" | chpasswd
   echo "Success: the password has been changed"
-  exit 0
 }
 
 function sshkeyadd () {
@@ -425,10 +422,15 @@ function default {
   rm -rf /etc/network/interfaces.d/*
   rm -rf /etc/rpi-wifi-country
   rename "raspberrypi" > /dev/null 2>/dev/null
-  systemctl disable hostapd 2>/dev/null
-  systemctl disable dnsmasq 2>/dev/null
+  bluetooth "off" > /dev/null 2>/dev/null
+  stop_service hostapd
+  stop_service dnsmasq
+  disable_service hostapd
+  disable_service dnsmasq
+  restart_wifi >/dev/null 2>/dev/null
+  restart_ethernet >/dev/null 2>/dev/null
 
-  echo 'Success: the rpi has been reset to default'
+  echo 'Success: the rpi has been reset to default, please reboot your device'
 }
 
 function upgrade {

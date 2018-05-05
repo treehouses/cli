@@ -269,6 +269,18 @@ function restart_ethernet {
   ifup eth0
 }
 
+function ethernet {	
+  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces	
+  cp "$TEMPLATES/network/eth0/static" /etc/network/interfaces.d/eth0	
+  sed -i "s/IPADDRESS/$1/g" /etc/network/interfaces.d/eth0	
+  sed -i "s/NETMASK/$2/g" /etc/network/interfaces.d/eth0	
+  sed -i "s/GATEWAY/$3/g" /etc/network/interfaces.d/eth0	
+  sed -i "s/GATEWAY/$4/g" /etc/network/interfaces.d/eth0	
+  restart_ethernet >/dev/null 2>/dev/null	
+
+  echo "This pirateship has anchored successfully!"	
+}
+
 function restart_hotspot {
   restart_service dhcpcd || true
   ifdown wlan0 || true

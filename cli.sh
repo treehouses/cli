@@ -267,19 +267,7 @@ function restart_ethernet {
   ifdown eth0
   sleep 1
   ifup eth0
-}
-
-function ethernet {
-  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
-  cp "$TEMPLATES/network/eth0/static" /etc/network/interfaces.d/eth0
-  sed -i "s/IPADDRESS/$1/g" /etc/network/interfaces.d/eth0
-  sed -i "s/NETMASK/$2/g" /etc/network/interfaces.d/eth0
-  sed -i "s/GATEWAY/$3/g" /etc/network/interfaces.d/eth0
-  sed -i "s/GATEWAY/$4/g" /etc/network/interfaces.d/eth0
-  restart_ethernet >/dev/null 2>/dev/null
-
-  echo "This pirateship has anchored successfully!"
-}
+}u
 
 function restart_hotspot {
   restart_service dhcpcd || true
@@ -479,6 +467,10 @@ case $1 in
     checkroot
     wifi "$2" "$3"
     ;;
+  staticwifi)
+    checkroot
+    staticwifi "$2" "$3" "$4" "$5"
+    ;;
   container)
     checkroot
     container "$2"
@@ -518,10 +510,6 @@ case $1 in
   upgrade)
     checkroot
     upgrade
-    ;;
-  staticwifi)
-    checkroot
-    staticwifi "$2" "$3" "$4" "$5"
     ;;
   *)
     help

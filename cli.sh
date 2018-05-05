@@ -13,10 +13,11 @@ function help {
   echo "   sshkeyadd <public_key>                   add a public key to 'pi' and 'root' user's authorized_keys"
   echo "   version                                  returns the version of $(basename "$0") command"
   echo "   detectrpi                                detects the hardware version of a raspberry pi"
+  echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
   echo "   wifi <ESSID> [password]                  connects to a wifi network"
+  echo "   staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address"
   echo "   container <none|docker|balena>           enables (and start) the desired container"
   echo "   bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service"
-  echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
   echo "   hotspot <ESSID> [password]               creates a mobile hotspot"
   echo "   timezone <timezone>                      sets the timezone of the system"
   echo "   locale <locale>                          sets the system locale"
@@ -24,7 +25,6 @@ function help {
   echo "   vnc <on|off>                             enables or disables the vnc server service"
   echo "   default                                  sets a raspbian back to default configuration"
   echo "   upgrade                                  upgrades $(basename "$0") package using npm"
-  echo "   staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address"
   echo
   exit 0
 }

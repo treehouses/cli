@@ -267,7 +267,7 @@ function restart_ethernet {
   ifdown eth0
   sleep 1
   ifup eth0
-}u
+}
 
 function restart_hotspot {
   restart_service dhcpcd || true

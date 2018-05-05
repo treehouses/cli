@@ -7,23 +7,24 @@ TEMPLATES="$SCRIPTFOLDER/templates"
 function help {
   echo "Usage: $(basename "$0")"
   echo
-  echo "   expandfs                               expands the partition of the RPI image to the maximum of the SDcard"
-  echo "   rename <hostname>                      changes hostname"
-  echo "   password <password>                    change the password for 'pi' user"
-  echo "   sshkeyadd <public_key>                 add a public key to 'pi' and 'root' user's authorized_keys"
-  echo "   version                                returns the version of $(basename "$0") command"
-  echo "   detectrpi                              detects the hardware version of a raspberry pi"
-  echo "   wifi <ESSID> [password]                connects to a wifi network"
-  echo "   container <none|docker|balena>         enables (and start) the desired container"
-  echo "   bluetooth <on|off>                     switches between bluetooth hotspot mode / regular bluetooth and starts the service"
-  echo "   ethernet <ip> <mask> <gateway> <dns>   configures rpi network interface to a static ip address"
-  echo "   hotspot <ESSID> [password]             creates a mobile hotspot"
-  echo "   timezone <timezone>                    sets the timezone of the system"
-  echo "   locale <locale>                        sets the system locale"
-  echo "   ssh <on|off>                           enables or disables the ssh service"
-  echo "   vnc <on|off>                           enables or disables the vnc server service"
-  echo "   default                                sets a raspbian back to default configuration"
-  echo "   upgrade                                upgrades $(basename "$0") package using npm"
+  echo "   expandfs                                 expands the partition of the RPI image to the maximum of the SDcard"
+  echo "   rename <hostname>                        changes hostname"
+  echo "   password <password>                      change the password for 'pi' user"
+  echo "   sshkeyadd <public_key>                   add a public key to 'pi' and 'root' user's authorized_keys"
+  echo "   version                                  returns the version of $(basename "$0") command"
+  echo "   detectrpi                                detects the hardware version of a raspberry pi"
+  echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
+  echo "   wifi <ESSID> [password]                  connects to a wifi network"
+  echo "   staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address"
+  echo "   container <none|docker|balena>           enables (and start) the desired container"
+  echo "   bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service"
+  echo "   hotspot <ESSID> [password]               creates a mobile hotspot"
+  echo "   timezone <timezone>                      sets the timezone of the system"
+  echo "   locale <locale>                          sets the system locale"
+  echo "   ssh <on|off>                             enables or disables the ssh service"
+  echo "   vnc <on|off>                             enables or disables the vnc server service"
+  echo "   default                                  sets a raspbian back to default configuration"
+  echo "   upgrade                                  upgrades $(basename "$0") package using npm"
   echo
   exit 0
 }
@@ -437,6 +438,19 @@ function upgrade {
   npm install -g '@treehouses/cli'
 }
 
+
+function staticwifi {
+  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
+  cp "$TEMPLATES/network/wlan0/static" /etc/network/interfaces.d/wlan0
+  sed -i "s/IPADDRESS/$1/g" /etc/network/interfaces.d/wlan0
+  sed -i "s/NETMASK/$2/g" /etc/network/interfaces.d/wlan0
+  sed -i "s/GATEWAY/$3/g" /etc/network/interfaces.d/wlan0
+  sed -i "s/GATEWAY/$4/g" /etc/network/interfaces.d/wlan0
+  restart_wifi >/dev/null 2>/dev/null
+
+  echo "This pirateship has anchored successfully!"
+}
+
 case $1 in
   expandfs)
     checkroot
@@ -464,6 +478,10 @@ case $1 in
   wifi)
     checkroot
     wifi "$2" "$3"
+    ;;
+  staticwifi)
+    checkroot
+    staticwifi "$2" "$3" "$4" "$5"
     ;;
   container)
     checkroot

@@ -150,15 +150,15 @@ function detectrpi {
 }
 
 function restart_wifi {
-  systemctl disable hostapd
-  systemctl disable dnsmasq
+  systemctl disable hostapd || true
+  systemctl disable dnsmasq || true
   restart_service dhcpcd
   stop_service hostapd
   stop_service dnsmasq
   ifup wlan0
-  ifdown wlan0
+  ifdown wlan0 || true
   sleep 1
-  ifup wlan0
+  ifup wlan0 || true
 }
 
 function wifi {
@@ -263,10 +263,10 @@ function bluetooth {
 }
 
 function restart_ethernet {
-  ifup eth0
-  ifdown eth0
+  ifup eth0 || true
+  ifdown eth0 || true
   sleep 1
-  ifup eth0
+  ifup eth0 || true
 }
 
 function ethernet {
@@ -445,7 +445,7 @@ function staticwifi {
   sed -i "s/IPADDRESS/$1/g" /etc/network/interfaces.d/wlan0
   sed -i "s/NETMASK/$2/g" /etc/network/interfaces.d/wlan0
   sed -i "s/GATEWAY/$3/g" /etc/network/interfaces.d/wlan0
-  sed -i "s/GATEWAY/$4/g" /etc/network/interfaces.d/wlan0
+  sed -i "s/DNS/$4/g" /etc/network/interfaces.d/wlan0
   restart_wifi >/dev/null 2>/dev/null
 
   echo "This pirateship has anchored successfully!"

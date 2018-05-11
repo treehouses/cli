@@ -155,7 +155,7 @@ function restart_wifi {
   restart_service dhcpcd
   stop_service hostapd
   stop_service dnsmasq
-  ifup wlan0
+  ifup wlan0 || true
   ifdown wlan0 || true
   sleep 1
   ifup wlan0 || true

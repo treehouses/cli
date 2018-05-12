@@ -16,6 +16,7 @@ function help {
   echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
   echo "   wifi <ESSID> [password]                  connects to a wifi network"
   echo "   staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address"
+  echo "              <ESSID> [password]"
   echo "   container <none|docker|balena>           enables (and start) the desired container"
   echo "   bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   hotspot <ESSID> [password]               creates a mobile hotspot"
@@ -150,15 +151,15 @@ function detectrpi {
 }
 
 function restart_wifi {
-  systemctl disable hostapd
-  systemctl disable dnsmasq
+  systemctl disable hostapd || true
+  systemctl disable dnsmasq || true
   restart_service dhcpcd
   stop_service hostapd
   stop_service dnsmasq
-  ifup wlan0
-  ifdown wlan0
+  ifup wlan0 || true
+  ifdown wlan0 || true
   sleep 1
-  ifup wlan0
+  ifup wlan0 || true
 }
 
 function wifi {
@@ -263,10 +264,10 @@ function bluetooth {
 }
 
 function restart_ethernet {
-  ifup eth0
-  ifdown eth0
+  ifup eth0 || true
+  ifdown eth0 || true
   sleep 1
-  ifup eth0
+  ifup eth0 || true
 }
 
 function ethernet {
@@ -275,7 +276,7 @@ function ethernet {
   sed -i "s/IPADDRESS/$1/g" /etc/network/interfaces.d/eth0
   sed -i "s/NETMASK/$2/g" /etc/network/interfaces.d/eth0
   sed -i "s/GATEWAY/$3/g" /etc/network/interfaces.d/eth0
-  sed -i "s/GATEWAY/$4/g" /etc/network/interfaces.d/eth0
+  sed -i "s/DNS/$4/g" /etc/network/interfaces.d/eth0
   restart_ethernet >/dev/null 2>/dev/null
 
   echo "This pirateship has anchored successfully!"
@@ -445,10 +446,46 @@ function staticwifi {
   sed -i "s/IPADDRESS/$1/g" /etc/network/interfaces.d/wlan0
   sed -i "s/NETMASK/$2/g" /etc/network/interfaces.d/wlan0
   sed -i "s/GATEWAY/$3/g" /etc/network/interfaces.d/wlan0
-  sed -i "s/GATEWAY/$4/g" /etc/network/interfaces.d/wlan0
+  sed -i "s/DNS/$4/g" /etc/network/interfaces.d/wlan0
+
+  essid="$5"
+  password="$6"
+
+  if [ -n "$password" ];
+  then
+    if [ ${#password} -lt 8 ];
+    then
+      echo "Error: password must have at least 8 characters"
+      exit 1
+    fi
+  fi
+
+  {
+    echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
+    echo "update_config=1"
+    wificountry="US"
+    if [ -r /etc/rpi-wifi-country ];
+    then
+      wificountry=$(cat /etc/rpi-wifi-country)
+    fi
+    echo "country=$wificountry"
+  } > /etc/wpa_supplicant/wpa_supplicant.conf
+
+  if [ -z "$password" ];
+  then
+    {
+      echo "network={"
+      echo "  ssid=\"$wifinetwork\""
+      echo "  key_mgmt=NONE"
+      echo "}"
+    } >> /etc/wpa_supplicant/wpa_supplicant.conf
+  else
+    wpa_passphrase "$essid" "$password" >> /etc/wpa_supplicant/wpa_supplicant.conf
+  fi
+
   restart_wifi >/dev/null 2>/dev/null
 
-  echo "This pirateship has anchored successfully!"
+  echo "Success: the wifi settings have been changed, a reboot is required in order to see the changes"
 }
 
 case $1 in
@@ -481,7 +518,7 @@ case $1 in
     ;;
   staticwifi)
     checkroot
-    staticwifi "$2" "$3" "$4" "$5"
+    staticwifi "$2" "$3" "$4" "$5" "$6" "$7"
     ;;
   container)
     checkroot

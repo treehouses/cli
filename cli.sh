@@ -485,7 +485,7 @@ function staticwifi {
 
   restart_wifi >/dev/null 2>/dev/null
 
-  echo "This pirateship has anchored successfully!"
+  echo "Success: the wifi settings have been changed, a reboot is required in order to see the changes"
 }
 
 case $1 in

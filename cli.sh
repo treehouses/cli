@@ -380,7 +380,6 @@ function locale {
 }
 
 function checksignal {
-  arrayInfo="$(iwconfig wlan0)
   arrayInfo=$1
    info=$(iwconfig wlan0)
    IFS=$'\n'

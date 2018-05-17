@@ -388,7 +388,8 @@ function checksignal {
    SSID=${arrayInfo:10:100}
    signal=${arrayInfo[6]:30:52}
 
-   echo -e $SSID'\n'$signal
+   echo $SSID
+   echo $signal
 }
 
 function ssh {
@@ -526,7 +527,7 @@ case $1 in
     detectrpi
     ;;
   checksignal)
-    checksignal
+    checksignal "$@"
     ;;
   wifi)
     checkroot

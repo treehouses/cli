@@ -388,8 +388,8 @@ function checksignal {
    SSID=${arrayInfo:10:100}
    signal=${arrayInfo[6]:30:52}
 
-   echo $SSID
-   echo $signal
+   echo "$SSID"
+   echo "$signal"
 }
 
 function ssh {

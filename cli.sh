@@ -381,20 +381,19 @@ function locale {
 
 function checksignal {
   arrayInfo=$1
-   info=$(iwconfig wlan0)
-   IFS=$'\n'
-   read -d '' -r -a arrayInfo <<<"$info"
+  info=$(iwconfig wlan0)
+  IFS=$'\n'
+  read -d '' -r -a arrayInfo <<<"$info"
 
-   SSID=${arrayInfo:10:100}
-   signal=${arrayInfo[6]:30:52}
+  SSID=${arrayInfo:10:100}
+  signal=${arrayInfo[6]:30:52}
 
-   if [[ "${arrayInfo[*]}" == *"ESSID:off/any"* ]]; then
-     echo "you are not on a wireless connection"
-   fi
-
-   else:
-   echo "$SSID"
-   echo "$signal"
+  if [[ "${arrayInfo[*]}" == *"ESSID:off/any"* ]]; then
+   echo "you are not on a wireless connection"
+  else
+    echo "$SSID"
+    echo "$signal"
+  fi
 }
 
 function ssh {

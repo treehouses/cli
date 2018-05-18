@@ -552,7 +552,7 @@ function bridge {
   then
     {
         echo "network={"
-        echo "  ssid=\"$wifinetwork\""
+        echo "  ssid=\"$wifiessid\""
         echo "  key_mgmt=NONE"
         echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf

@@ -389,7 +389,7 @@ function checksignal {
   signal=${arrayInfo[6]:30:52}
 
   if [[ "${arrayInfo[*]}" == *"ESSID:off/any"* ]]; then
-   echo "you are not on a wireless connection"
+    echo "Error: you are not on a wireless connection"
   else
     echo "$SSID"
     echo "$signal"

@@ -507,6 +507,14 @@ function staticwifi {
 # treehouses bridge MyNetwork HotspotNetwork  MyNetworkPassword HotspotPassword
 
 function bridge {
+  case $(detectrpi) in
+    RPI3B|RPIZW)
+      ;;
+    *)
+      echo "Your rpi model is not supported"
+      exit 1;
+  esac
+
   wifiessid="$1"
   hotspotessid="$2"
   wifipassword="$3"

@@ -511,7 +511,6 @@ function bridge {
   hotspotessid="$2"
   wifipassword="$3"
   hotspotpassword="$4"
-  macaddress=$(cat /sys/class/net/wlan0/address)
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
 
@@ -552,7 +551,7 @@ function bridge {
   then
     {
         echo "network={"
-        echo "  ssid=\"$wifinetwork\""
+        echo "  ssid=\"$wifiessid\""
         echo "  key_mgmt=NONE"
         echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
@@ -565,6 +564,8 @@ function bridge {
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
   fi
 
+  enable_service hostapd
+  enable_service dnsmasq
   cp "$TEMPLATES/network/90-wireless.rules" /etc/udev/rules.d/90-wireless.rules
   rm -rf /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
   cp "$TEMPLATES/rc.local/bridge" /etc/rc.local

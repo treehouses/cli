@@ -18,7 +18,7 @@ function help {
   echo "   staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address"
   echo "              <ESSID> [password]"
   echo "   bridge <ESSID> <hotspotESSID>            configures the rpi to bridge the wlan interface over a hotspot"
-  echo "          <password> [hotspotPassword]"
+  echo "          [password] [hotspotPassword]"
   echo "   container <none|docker|balena>           enables (and start) the desired container"
   echo "   bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   hotspot <ESSID> [password]               creates a mobile hotspot"

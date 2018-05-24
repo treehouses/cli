@@ -441,8 +441,12 @@ function default {
   stop_service dnsmasq
   disable_service hostapd
   disable_service dnsmasq
-  restart_wifi >/dev/null 2>/dev/null
-  restart_ethernet >/dev/null 2>/dev/null
+
+  {
+    echo "auto usb0"
+    echo "allow-hotplug usb0"
+    echo "iface usb0 inet ipv4ll"
+  } > /etc/network/interfaces.d/usb0
 
   echo 'Success: the rpi has been reset to default, please reboot your device'
 }

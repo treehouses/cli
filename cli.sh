@@ -5,31 +5,41 @@ SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 TEMPLATES="$SCRIPTFOLDER/templates"
 
 function help {
-  echo "Usage: $(basename "$0")"
-  echo
-  echo "   expandfs                                 expands the partition of the RPI image to the maximum of the SDcard"
-  echo "   rename <hostname>                        changes hostname"
-  echo "   password <password>                      change the password for 'pi' user"
-  echo "   sshkeyadd <public_key>                   add a public key to 'pi' and 'root' user's authorized_keys"
-  echo "   version                                  returns the version of $(basename "$0") command"
-  echo "   detectrpi                                detects the hardware version of a raspberry pi"
-  echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
-  echo "   wifi <ESSID> [password]                  connects to a wifi network"
-  echo "   staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address"
-  echo "              <ESSID> [password]"
-  echo "   bridge <ESSID> <hotspotESSID>            configures the rpi to bridge the wlan interface over a hotspot"
-  echo "          [password] [hotspotPassword]"
-  echo "   container <none|docker|balena>           enables (and start) the desired container"
-  echo "   bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service"
-  echo "   hotspot <ESSID> [password]               creates a mobile hotspot"
-  echo "   timezone <timezone>                      sets the timezone of the system"
-  echo "   locale <locale>                          sets the system locale"
-  echo "   ssh <on|off>                             enables or disables the ssh service"
-  echo "   vnc <on|off>                             enables or disables the vnc server service"
-  echo "   default                                  sets a raspbian back to default configuration"
-  echo "   upgrade                                  upgrades $(basename "$0") package using npm"
-  echo
-  exit 0
+  case $1 in
+    rename)
+      echo "Sets the username of the raspberry pi to the one specified by the user"
+      echo "example:"
+      echo "  $(basename "$0") rename rpi"
+      echo ""
+      echo "this will rename the device to 'rpi'"
+      ;;
+    *)
+      echo "Usage: $(basename "$0")"
+      echo
+      echo "   expandfs                                 expands the partition of the RPI image to the maximum of the SDcard"
+      echo "   rename <hostname>                        changes hostname"
+      echo "   password <password>                      change the password for 'pi' user"
+      echo "   sshkeyadd <public_key>                   add a public key to 'pi' and 'root' user's authorized_keys"
+      echo "   version                                  returns the version of $(basename "$0") command"
+      echo "   detectrpi                                detects the hardware version of a raspberry pi"
+      echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
+      echo "   wifi <ESSID> [password]                  connects to a wifi network"
+      echo "   staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address"
+      echo "              <ESSID> [password]"
+      echo "   bridge <ESSID> <hotspotESSID>            configures the rpi to bridge the wlan interface over a hotspot"
+      echo "          [password] [hotspotPassword]"
+      echo "   container <none|docker|balena>           enables (and start) the desired container"
+      echo "   bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service"
+      echo "   hotspot <ESSID> [password]               creates a mobile hotspot"
+      echo "   timezone <timezone>                      sets the timezone of the system"
+      echo "   locale <locale>                          sets the system locale"
+      echo "   ssh <on|off>                             enables or disables the ssh service"
+      echo "   vnc <on|off>                             enables or disables the vnc server service"
+      echo "   default                                  sets a raspbian back to default configuration"
+      echo "   upgrade                                  upgrades $(basename "$0") package using npm"
+      echo
+      ;;
+  esac
 }
 
 function start_service {
@@ -659,6 +669,9 @@ case $1 in
   bridge)
     checkroot
     bridge "$2" "$3" "$4" "$5"
+    ;;
+  help)
+    help "$2"
     ;;
   *)
     help

@@ -28,6 +28,7 @@ function help {
   echo "   vnc <on|off>                             enables or disables the vnc server service"
   echo "   default                                  sets a raspbian back to default configuration"
   echo "   upgrade                                  upgrades $(basename "$0") package using npm"
+  echo "   checksignal                              check the wifi signal strength of your RPi"
   echo
   exit 0
 }
@@ -386,6 +387,23 @@ function locale {
   echo "Success: the locale has been changed"
 }
 
+function checksignal {
+  arrayInfo=$1
+  info=$(iwconfig wlan0)
+  IFS=$'\n'
+  read -d '' -r -a arrayInfo <<<"$info"
+
+  SSID=${arrayInfo:10:100}
+  signal=${arrayInfo[6]:30:52}
+
+  if [[ "${arrayInfo[*]}" == *"ESSID:off/any"* ]]; then
+    echo "Error: you are not on a wireless connection"
+  else
+    echo "$SSID"
+    echo "$signal"
+  fi
+}
+
 function ssh {
   status=$1
   if [ "$status" = "on" ]; then
@@ -625,6 +643,9 @@ case $1 in
     ;;
   detectrpi)
     detectrpi
+    ;;
+  checksignal)
+    checksignal "$@"
     ;;
   wifi)
     checkroot

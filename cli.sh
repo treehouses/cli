@@ -450,8 +450,6 @@ function default {
         echo "iface usb0 inet ipv4ll"
       } > /etc/network/interfaces.d/usb0
       ;;
-    *)
-      ;;
   esac
 
   echo 'Success: the rpi has been reset to default, please reboot your device'

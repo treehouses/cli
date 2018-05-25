@@ -528,6 +528,24 @@ function bridge {
     exit 1
   fi
 
+  if [ -n "$wifipassword" ];
+  then
+    if [ ${#wifipassword} -lt 8 ];
+    then
+      echo "Error: wifi password must have at least 8 characters"
+      exit 1
+    fi
+  fi
+
+  if [ -n "$hotspotpassword" ];
+  then
+    if [ ${#hotspotpassword} -lt 8 ];
+    then
+      echo "Error: hotspot password must have at least 8 characters"
+      exit 1
+    fi
+  fi
+
   cp "$TEMPLATES/network/dnsmasq/bridge" "/etc/dnsmasq.conf"
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces 
   cp "$TEMPLATES/network/wlan0/bridge" /etc/network/interfaces.d/wlan0

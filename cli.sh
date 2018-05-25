@@ -442,7 +442,6 @@ function default {
   disable_service hostapd
   disable_service dnsmasq
 
-
   case $(detectrpi) in
     RPIZ|RPIZW)
       {

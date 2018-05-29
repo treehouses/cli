@@ -385,13 +385,19 @@ function checksignal {
   IFS=$'\n'
   read -d '' -r -a arrayInfo <<<"$info"
 
-  SSID=${arrayInfo:10:100}
-  signal=${arrayInfo[6]:30:52}
+  wArray=()
+  for ((i=0; i<"${#arrayInfo[*]}"; i++));
+  do
+    if [[ "${arrayInfo[*]}" = *"Signal level"* ]]; then
+      wArray+=("${arrayInfo[i]}")
+    fi
+  done
+
+  signal=${wArray:30:52}
 
   if [[ "${arrayInfo[*]}" == *"ESSID:off/any"* ]]; then
     echo "Error: you are not on a wireless connection"
   else
-    echo "$SSID"
     echo "$signal"
   fi
 }

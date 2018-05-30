@@ -45,7 +45,7 @@ rename - The hostname is a label assigned to the RPI device for identification o
 ethernet and staticwifi - before using these command, I checked that my network follows the ip range from 
                      192.168.0.1 to 192.168.0.254. To change my ip address to 192.168.0.251, I can 
                      issue the command below given that my router is found at 192.168.0.1 and 
-                     that it is also a dns server. Alternatively, you can use Google's dns server, 
-                     which is 8.8.8.8 or 8.8.4.4.  
+                     that it is also a dns server. Alternatively, you can use Quad9 or CloudFlare's dns server, 
+                     which is 9.9.9.9 or 1.1.1.1.
                        > ethernet 192.168.0.251 255.255.255.0 192.168.0.1 192.168.0.1 
 ```

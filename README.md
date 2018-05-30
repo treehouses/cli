@@ -10,7 +10,8 @@ Options:
 
 Commands:
 
-expandfs                                 expands the partition of the RPI image to the maximum of the SDcard   rename <hostname>                        changes hostname
+expandfs                                 expands the partition of the RPI image to the maximum of the SDcard
+rename <hostname>                        changes hostname
 password <password>                      change the password for 'pi' user
 sshkeyadd <public_key>                   add a public key to 'pi' and 'root' user's authorized_keys
 version                                  returns the version of treehouses command

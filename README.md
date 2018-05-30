@@ -1,59 +1,50 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
-{\colortbl;\red255\green255\blue255;\red53\green53\blue53;}
-{\*\expandedcolortbl;;\cssrgb\c27059\c27059\c27059;}
-\margl1440\margr1440\vieww10800\viewh8400\viewkind0
-\deftab560
-\pard\pardeftab560\slleading20\partightenfactor0
+# Usage
 
-\f0\fs24 \cf2 # Usage\
-\
-```\
-Usage: treehouses [options] [command]\
-\
-\
-Options:\
-\
-  -h, --help                              output usage information\
-\
-Commands:\
-\
-expandfs                                 expands the partition of the RPI image to the maximum of the SDcard   rename <hostname>                        changes hostname\
-password <password>                      change the password for 'pi' user\
-sshkeyadd <public_key>                   add a public key to 'pi' and 'root' user's authorized_keys\
-version                                  returns the version of treehouses command\
-detectrpi                                detects the hardware version of a raspberry pi\
-ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address\
-wifi <ESSID> [password]                  connects to a wifi network\
-staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address\
-           <ESSID> [password]\
-bridge <ESSID> <hotspotESSID>            configures the rpi to bridge the wlan interface over a hotspot\
-       <password> [hotspotPassword]\
-container <none|docker|balena>           enables (and start) the desired container\
-bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service\
-hotspot <ESSID> [password]               creates a mobile hotspot\
-timezone <timezone>                      sets the timezone of the system\
-locale <locale>                          sets the system locale\
-ssh <on|off>                             enables or disables the ssh service\
-vnc <on|off>                             enables or disables the vnc server service\
-default                                  sets a raspbian back to default configuration\
-upgrade                                  upgrades treehouses package using npm\
-*                                        temporary catch all\
-```\
-\
-# Additional Notes\
-```\
-wifi - ESSID is the SSID or the network name of your wireless network and password is the password \
-       for the corresponding network.\
-\
-rename - The hostname is a label assigned to the RPI device for identification on a network and \
-         is useful for communication amongst different devices. The default hostname is raspberrypi.\
-\
-ethernet and staticwifi - before using these command, I checked that my network follows the ip range from \
-                     192.168.0.1 to 192.168.0.254. To change my ip address to 192.168.0.251, I can \
-                     issue the command below given that my router is found at 192.168.0.1 and \
-                     that it is also a dns server. Alternatively, you can use Google's dns server, \
-                     which is 8.8.8.8 or 8.8.4.4.  \
-                       > ethernet 192.168.0.251 255.255.255.0 192.168.0.1 192.168.0.1 \
-```\
-}
+```
+Usage: treehouses [options] [command]
+
+
+Options:
+
+  -h, --help                              output usage information
+
+Commands:
+
+expandfs                                 expands the partition of the RPI image to the maximum of the SDcard   rename <hostname>                        changes hostname
+password <password>                      change the password for 'pi' user
+sshkeyadd <public_key>                   add a public key to 'pi' and 'root' user's authorized_keys
+version                                  returns the version of treehouses command
+detectrpi                                detects the hardware version of a raspberry pi
+ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address
+wifi <ESSID> [password]                  connects to a wifi network
+staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address
+           <ESSID> [password]
+bridge <ESSID> <hotspotESSID>            configures the rpi to bridge the wlan interface over a hotspot
+       <password> [hotspotPassword]
+container <none|docker|balena>           enables (and start) the desired container
+bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service
+hotspot <ESSID> [password]               creates a mobile hotspot
+timezone <timezone>                      sets the timezone of the system
+locale <locale>                          sets the system locale
+ssh <on|off>                             enables or disables the ssh service
+vnc <on|off>                             enables or disables the vnc server service
+default                                  sets a raspbian back to default configuration
+upgrade                                  upgrades treehouses package using npm
+*                                        temporary catch all
+```
+
+# Additional Notes
+```
+wifi - ESSID is the SSID or the network name of your wireless network and password is the password 
+       for the corresponding network.
+
+rename - The hostname is a label assigned to the RPI device for identification on a network and 
+         is useful for communication amongst different devices. The default hostname is raspberrypi.
+
+ethernet and staticwifi - before using these command, I checked that my network follows the ip range from 
+                     192.168.0.1 to 192.168.0.254. To change my ip address to 192.168.0.251, I can 
+                     issue the command below given that my router is found at 192.168.0.1 and 
+                     that it is also a dns server. Alternatively, you can use Google's dns server, 
+                     which is 8.8.8.8 or 8.8.4.4.  
+                       > ethernet 192.168.0.251 255.255.255.0 192.168.0.1 192.168.0.1 
+```

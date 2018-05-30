@@ -1,15 +1,12 @@
 # Usage
 
 ```
-Usage: treehouses [command] [options]
+Usage: treehouses [command] ...
 
-
-Options:
-
-  -h, --help                              output usage information
 
 Commands:
 
+help <command>                           gives you a more detailed info about the command or will output this
 expandfs                                 expands the partition of the RPI image to the maximum of the SDcard
 rename <hostname>                        changes hostname
 password <password>                      change the password for 'pi' user

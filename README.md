@@ -1,7 +1,7 @@
 # Usage
 
 ```
-Usage: treehouses [options] [command]
+Usage: treehouses [command] [options]
 
 
 Options:

@@ -29,6 +29,7 @@ function help {
       echo "              <ESSID> [password]"
       echo "   bridge <ESSID> <hotspotESSID>            configures the rpi to bridge the wlan interface over a hotspot"
       echo "          [password] [hotspotPassword]"
+      echo "   checksignal                              check the wifi signal strength of your RPi"
       echo "   container <none|docker|balena>           enables (and start) the desired container"
       echo "   bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service"
       echo "   hotspot <ESSID> [password]               creates a mobile hotspot"
@@ -621,6 +622,17 @@ function bridge {
 }
 
 
+function checksignal {
+  if iwconfig wlan0 | grep -q "ESSID:off/any";
+  then
+    echo "Error: you are not on a wireless connection"
+  else
+    signal=$(iwconfig wlan0 | sed -n 's/.*Signal level=-\(.*\) dBm/\1/p')
+    echo "$signal"
+  fi
+}
+
+
 case $1 in
   expandfs)
     checkroot
@@ -699,6 +711,9 @@ case $1 in
     ;;
   help)
     help "$2"
+    ;;
+  checksignal)
+    checksignal
     ;;
   *)
     help

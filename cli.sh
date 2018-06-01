@@ -623,6 +623,12 @@ function bridge {
 
 
 function checksignal {
+  if iwconfig wlan0 | grep -q "No such device";
+  then
+    echo "Error: no wifi device is present"
+    exit 0
+  fi
+
   if iwconfig wlan0 | grep -q "ESSID:off/any";
   then
     echo "Error: you are not on a wireless connection"

@@ -627,7 +627,7 @@ function checksignal {
   then
     echo "Error: you are not on a wireless connection"
   else
-    signal=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\) dBm/\1/p')
+    signal=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p')
     echo "$signal"
   fi
 }

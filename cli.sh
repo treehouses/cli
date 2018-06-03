@@ -14,10 +14,9 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
-    *)
  case $2 in
  expandfs)
-      echo "expands the partition of the RPI image to the maximum of the SD card"
+      echo "Expands the partition of the RPI image to the maximum of the SD card"
       echo ""
       echo "example:"
       echo "  $(basename "$0") The partition of the SD card in which the RPI image is stored will be expanded"

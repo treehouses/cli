@@ -18,7 +18,7 @@ function help {
       echo "Expands the partition of the RPI image to the maximum of the SD card"
       echo ""
       echo "example:"
-      echo "  $(basename "$0") expandfs"
+      echo " treehouses expandfs"
       echo ""
       echo "The partition of the SD card in which the RPI image is stored will be expanded to match the available space on the SD card"
       ;;
@@ -26,7 +26,7 @@ function help {
       echo "Change the password for 'pi' user"
       echo ""
       echo "example:"
-      echo " $(basename "$0") password ABC "
+      echo " treehouses password ABC "
       echo ""
       echo "The current password of the 'pi' user in the RPI image will be changed to ABC"
       ;;

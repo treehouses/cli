@@ -6,7 +6,17 @@ TEMPLATES="$SCRIPTFOLDER/templates"
 
 function help {
   case $1 in
-    rename)
+    expandfs(
+      echo "expands the partition of the RPI image to the maximum of the SD card"
+      echo ""
+      echo "example:"
+      echo "  $(basename "$0") If SD card used is 16gb it will expand the image size"
+      echo ""
+      echo "to match the available space on the SD card"
+      ;;
+    *)
+    case $2 in
+    rename(
       echo "Sets the hostname of the raspberry pi to the one specified by the user"
       echo ""
       echo "example:"

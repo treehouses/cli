@@ -12,34 +12,25 @@ function help {
       echo "example:"
       echo "  $(basename "$0") rename rpi"
       echo ""
-      echo "this will rename the device to 'rpi'"
+      echo "This will rename the device to 'rpi'"
+      ;;
+    expandfs)
+      echo "Expands the partition of the RPI image to the maximum of the SD card"
+      echo ""
+      echo "example:"
+      echo " treehouses expandfs"
+      echo ""
+      echo "The partition of the SD card in which the RPI image is stored will be expanded to match the available space on the SD card"
+      ;;
+    password)
+      echo "Change the password for 'pi' user"
+      echo ""
+      echo "example:"
+      echo " treehouses password ABC "
+      echo ""
+      echo "The current password of the 'pi' user in the RPI image will be changed to ABC"
       ;;
     *)
-      echo "Usage: $(basename "$0")"
-      echo
-      echo "   expandfs                                 expands the partition of the RPI image to the maximum of the SDcard"
-      echo "   rename <hostname>                        changes hostname"
-      echo "   password <password>                      change the password for 'pi' user"
-      echo "   sshkeyadd <public_key>                   add a public key to 'pi' and 'root' user's authorized_keys"
-      echo "   version                                  returns the version of $(basename "$0") command"
-      echo "   detectrpi                                detects the hardware version of a raspberry pi"
-      echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
-      echo "   wifi <ESSID> [password]                  connects to a wifi network"
-      echo "   staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address"
-      echo "              <ESSID> [password]"
-      echo "   bridge <ESSID> <hotspotESSID>            configures the rpi to bridge the wlan interface over a hotspot"
-      echo "          [password] [hotspotPassword]"
-      echo "   container <none|docker|balena>           enables (and start) the desired container"
-      echo "   bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service"
-      echo "   hotspot <ESSID> [password]               creates a mobile hotspot"
-      echo "   timezone <timezone>                      sets the timezone of the system"
-      echo "   locale <locale>                          sets the system locale"
-      echo "   ssh <on|off>                             enables or disables the ssh service"
-      echo "   vnc <on|off>                             enables or disables the vnc server service"
-      echo "   default                                  sets a raspbian back to default configuration"
-      echo "   upgrade                                  upgrades $(basename "$0") package using npm"
-      echo
-      ;;
   esac
 }
 

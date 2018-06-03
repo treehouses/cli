@@ -10,7 +10,7 @@ function help {
       echo "expands the partition of the RPI image to the maximum of the SD card"
       echo ""
       echo "example:"
-      echo "  $(basename "$0") If SD card used is 16gb it will expand the image size"
+      echo "  $(basename "$0") The partition of the SD card in which the RPI image is stored will be expanded"
       echo ""
       echo "to match the available space on the SD card"
       ;;

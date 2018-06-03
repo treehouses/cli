@@ -5,24 +5,24 @@ SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 TEMPLATES="$SCRIPTFOLDER/templates"
 
 function help {
-  case $1 in
-    expandfs)
-      echo "expands the partition of the RPI image to the maximum of the SD card"
-      echo ""
-      echo "example:"
-      echo "  $(basename "$0") The partition of the SD card in which the RPI image is stored will be expanded"
-      echo ""
-      echo "to match the available space on the SD card"
-      ;;
-    *)
-    case $2 in
-    rename)
+  case $1 in 
+  rename)
       echo "Sets the hostname of the raspberry pi to the one specified by the user"
       echo ""
       echo "example:"
       echo "  $(basename "$0") rename rpi"
       echo ""
       echo "this will rename the device to 'rpi'"
+      ;;
+    *)
+ case $2 in
+ expandfs)
+      echo "expands the partition of the RPI image to the maximum of the SD card"
+      echo ""
+      echo "example:"
+      echo "  $(basename "$0") The partition of the SD card in which the RPI image is stored will be expanded"
+      echo ""
+      echo "to match the available space on the SD card"
       ;;
     *)
       echo "Usage: $(basename "$0")"

@@ -6,7 +6,7 @@ TEMPLATES="$SCRIPTFOLDER/templates"
 
 function help {
   case $1 in
-    expandfs(
+    expandfs)
       echo "expands the partition of the RPI image to the maximum of the SD card"
       echo ""
       echo "example:"
@@ -16,7 +16,7 @@ function help {
       ;;
     *)
     case $2 in
-    rename(
+    rename)
       echo "Sets the hostname of the raspberry pi to the one specified by the user"
       echo ""
       echo "example:"

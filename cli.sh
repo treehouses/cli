@@ -6,13 +6,45 @@ TEMPLATES="$SCRIPTFOLDER/templates"
 
 function help {
   case $1 in
-    rename)
-      echo "Sets the hostname of the raspberry pi to the one specified by the user"
+    expandfs)
+      echo "Expands the partition of the Raspberry Pi image to the maximum of the SD card"
       echo ""
       echo "example:"
-      echo "  $(basename "$0") rename rpi"
+      echo " treehouses expandfs"
       echo ""
-      echo "this will rename the device to 'rpi'"
+      echo "The partition of the SD card in which the Raspberry Pi image is stored will be expanded to match the available space on the SD card. You will need to reboot the Raspberry Pi to make this available."
+      ;;
+    rename)
+      echo "Sets the hostname of the Raspberry Pi to the one specified by the user"
+      echo ""
+      echo "example:"
+      echo " $(basename "$0") rename rpi"
+      echo ""
+      echo "This will rename the device to 'rpi'"
+      ;;
+    password)
+      echo "Change the password for 'pi' user"
+      echo ""
+      echo "example:"
+      echo " treehouses password ABC"
+      echo ""
+      echo "The current password of the 'pi' user in the Raspberry Pi image will be changed to ABC"
+      ;;
+    sshkeyadd)
+      echo "Add a public key to 'pi' and 'root' user's authorized_keys"
+      echo ""
+      echo "example:"
+      echo " treehouses sshkeyadd \"\""
+      echo ""
+      echo "The public key will be added as which will allow the user to access the Raspberry Pi image without login password for both 'pi' and 'root' user."
+      ;;
+    version)
+      echo "Returns the version of $(basename "$0") command"
+      echo ""
+      echo "example:"
+      echo " treehouses version"
+      echo ""
+      echo "Get the version of @treehouses/cli currently installed"
       ;;
     *)
       echo "Usage: $(basename "$0")"

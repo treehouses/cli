@@ -6,13 +6,13 @@ TEMPLATES="$SCRIPTFOLDER/templates"
 
 function help {
   case $1 in
-    rename)
-      echo "Sets the hostname of the raspberry pi to the one specified by the user"
+    sshkeyadd)
+      echo "Add a public key to 'pi' and 'root' user's authorized_keys"
       echo ""
       echo "example:"
-      echo "  $(basename "$0") rename rpi"
+      echo " treehouses sshkeyadd abrbskjbwonbsi "
       echo ""
-      echo "this will rename the device to 'rpi'"
+      echo " The public key will be set as "abrbskjbwonbsi" which will aloww the user to access the rpi image without login password for both "pi" and "root" "
       ;;
     *)
       echo "Usage: $(basename "$0")"

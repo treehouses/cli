@@ -6,6 +6,14 @@ TEMPLATES="$SCRIPTFOLDER/templates"
 
 function help {
   case $1 in
+    expandfs)
+      echo "Expands the partition of the RPI image to the maximum of the SD card"
+      echo ""
+      echo "example:"
+      echo " treehouses expandfs"
+      echo ""
+      echo "The partition of the SD card in which the RPI image is stored will be expanded to match the available space on the SD card"
+      ;;
     rename)
       echo "Sets the hostname of the raspberry pi to the one specified by the user"
       echo ""
@@ -14,13 +22,29 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    password)
+      echo "Change the password for 'pi' user"
+      echo ""
+      echo "example:"
+      echo " treehouses password ABC "
+      echo ""
+      echo "The current password of the 'pi' user in the RPI image will be changed to ABC"
+      ;;
     sshkeyadd)
       echo "Add a public key to 'pi' and 'root' user's authorized_keys"
       echo ""
       echo "example:"
-      echo " treehouses sshkeyadd <public_key> "
+      echo " treehouses sshkeyadd "
       echo ""
       echo " The public key will be set as which will allow the user to access the rpi image without login password for both "pi" and "root". The public key can be set via using ssh-keygen -R "IP address of RPI" (eg: 192.168.1.160) "
+      ;;
+    version)
+      echo "returns the version of $(basename "$0") command"
+      echo ""
+      echo "example:"
+      echo " treehouses version "
+      echo ""
+      echo "It tells you the version of RPI used"
       ;;
     *)
       echo "Usage: $(basename "$0")"

@@ -12,7 +12,7 @@ function help {
       echo "example:"
       echo " treehouses sshkeyadd <public_key> "
       echo ""
-      echo " The public key will be set as <public_key> which will allow the user to access the rpi image without login password for both "pi" and "root". The public key can be set via using ssh-keygen -R "IP address of RPI" (eg: 192.168.1.160) "
+      echo " The public key will be set as which will allow the user to access the rpi image without login password for both "pi" and "root". The public key can be set via using ssh-keygen -R "IP address of RPI" (eg: 192.168.1.160) "
       ;;
     *)
       echo "Usage: $(basename "$0")"

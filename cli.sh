@@ -50,11 +50,74 @@ function help {
       echo "Detects the hardware version of a raspberry pi"
       echo ""
       echo "example:"
-      echo " treehouses detect rpi"
+      echo " treehouses detectrpi"
       echo ""
       echo "Get the model number of raspberry pi being used (eg- rpi 3b)"
       ;;
-    
+    ethernet)
+      echo "Configures rpi network interface to a static ip address"
+      echo ""
+      echo "example:"
+      echo " treehouses ethernet 192.160.1.1 255.255.255.0 10.1.1.2 8.8.8.8"
+      echo ""
+      echo "It will set the rpi ethernet interface to a static ip with ip address 192.160.1.1 mask 255.255.255.0 gateway 10.1.1.2 dns 8.8.8.8"
+      ;;
+    wifi)
+      echo "connects to a wifi network"
+      echo ""
+      echo "example:"
+      echo " treehouses wifi yourwifiname yourwifipassword"
+      echo ""
+      echo "It will connect the rpi to your wifi network"
+      ;;
+    staticwifi)
+      echo "Configures rpi wifi interface to a static ip address"
+      echo ""
+      echo "example:"
+      echo " treehouses staticwifi 192.160.1.1 255.255.255.0 10.1.1.2 8.8.8.8 yourwifiname yourwifipassword"
+      echo ""
+      echo "It will configure the rpi wifi interface to a static ip with ip address 192.160.1.1 mask 255.255.255.0 gateway 10.1.1.2 dns 8.8.8.8"
+      ;;
+    bridge)
+      echo "Configures the rpi to bridge the wlan interface over a hotspot"
+      echo ""
+      echo "example:"
+      echo " treehouses bridge yourwifiname hotspotname yourwifipassword hotspotpassword "
+      echo ""
+      echo "It will configure the rpi wlan interface (ethernet port) to start a hotspot with ESSID as the the hotspotname and the password which you declare in the treehouse bridge command"
+      ;;
+    container)
+      echo "Enables (and start) the desired container"
+      echo ""
+      echo "example:"
+      echo " treehouses container docker"
+      echo ""
+      echo "Docker container will be enabled and start running"
+      ;;
+    bluetooth)
+      echo "Switches between bluetooth hotspot mode / regular bluetooth and starts the service"
+      echo ""
+      echo "example:"
+      echo " treehouses bluetooth on"
+      echo ""
+      echo "It will start regular bluetooth service and the hotspot services. Wait for 5 seconds for bluetooth services to start completely "
+      ;;
+    hotspot)
+      echo "Creates a mobile hotspot"
+      echo ""
+      echo "example:"
+      echo " treehouses hotspotname hotspotpassword"
+      echo ""
+      echo "It will start a mobile hotspot with ESSID and password which you declare in the treehouse bridge command "
+      ;;
+    timezone)
+      echo "sets the timezone of the system"
+      echo ""
+      echo "example:"
+      echo " treehouses timezone Eastern "
+      echo ""
+      echo "It will set the timezone of rpi clock to Eastern Timezone and update the time "
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

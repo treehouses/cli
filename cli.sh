@@ -118,6 +118,46 @@ function help {
       echo ""
       echo "It will set the timezone of rpi clock to Eastern Timezone and update the time "
       ;;
+    locale)
+      echo "sets the system locale"
+      echo ""
+      echo "example:"
+      echo " treehouses locale en_US.UTF-8"
+      echo ""
+      echo "It will set the locale of rpi to USA standard (with 26 characters as per USA standard) with UTF-8 so as to decode the characters and provide backward compatibility with ascii "
+      ;;
+    ssh)
+      echo "enables or disables the ssh service"
+      echo ""
+      echo "example:"
+      echo " treehouses ssh on"
+      echo ""
+      echo "It will configure the ssh (secure shell) service of the rpi to be enabled and running. And it will allow you to connect to your rpi remotely using terminal and thus you will be able to work on a headless rpi "
+      ;;
+    vnc)
+      echo "enables or disables the vnc server service"
+      echo ""
+      echo "example:"
+      echo " treehouses vnc on"
+      echo ""
+      echo "It will configure the vnc (virtual network computing) service of the rpi to be enabled and running. And it will allow you to connect to your rpi remotely using vnc client running on your laptop/pc and thus you will be able to get the graphical display of rpi on your laptop/pc "
+      ;;
+    default)
+      echo "sets a raspbian back to default configuration"
+      echo ""
+      echo "example:"
+      echo " treehouses default "
+      echo ""
+      echo "This will allow you to return back to the original configuration for all the services and settings which were set for the raspbian image when it was first installed. This will not delete any new files you created."
+      ;;
+    upgrade)
+      echo "upgrades $(basename "$0") package using npm"
+      echo ""
+      echo "example:"
+      echo " treehouses upgrade "
+      echo ""
+      echo "This will upgrade the treehouses cli package using npm and you will have the latest version of treehouses cli running on your system."
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

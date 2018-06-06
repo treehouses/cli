@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    version)
+      echo "Returns the version of $(basename "$0") command"
+      echo ""
+      echo "example:"
+      echo " treehouses version"
+      echo ""
+      echo "Get the version of @treehouses/cli currently installed"
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    staticwifi)
+      echo "Configures rpi wifi interface to a static ip address"
+      echo ""
+      echo "example:"
+      echo " treehouses staticwifi 192.160.1.1 255.255.255.0 10.1.1.2 8.8.8.8 yourwifiname yourwifipassword"
+      echo ""
+      echo "It will configure the rpi wifi interface to a static ip with ip address 192.160.1.1 mask 255.255.255.0 gateway 10.1.1.2 dns 8.8.8.8"
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

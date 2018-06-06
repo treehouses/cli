@@ -6,13 +6,157 @@ TEMPLATES="$SCRIPTFOLDER/templates"
 
 function help {
   case $1 in
-    rename)
-      echo "Sets the hostname of the raspberry pi to the one specified by the user"
+    expandfs)
+      echo "Expands the partition of the Raspberry Pi image to the maximum of the SD card"
       echo ""
       echo "example:"
-      echo "  $(basename "$0") rename rpi"
+      echo " treehouses expandfs"
       echo ""
-      echo "this will rename the device to 'rpi'"
+      echo "The partition of the SD card in which the Raspberry Pi image is stored will be expanded to match the available space on the SD card. You will need to reboot the Raspberry Pi to make this available."
+      ;;
+    rename)
+      echo "Sets the hostname of the Raspberry Pi to the one specified by the user"
+      echo ""
+      echo "example:"
+      echo " $(basename "$0") rename rpi"
+      echo ""
+      echo "This will rename the device to 'rpi'"
+      ;;
+    password)
+      echo "Change the password for 'pi' user"
+      echo ""
+      echo "example:"
+      echo " treehouses password ABC"
+      echo ""
+      echo "The current password of the 'pi' user in the Raspberry Pi image will be changed to ABC"
+      ;;
+    sshkeyadd)
+      echo "Add a public key to 'pi' and 'root' user's authorized_keys"
+      echo ""
+      echo "example:"
+      echo " treehouses sshkeyadd \"\""
+      echo ""
+      echo "The public key will be added as which will allow the user to access the Raspberry Pi image without login password for both 'pi' and 'root' user."
+      ;;
+    version)
+      echo "Returns the version of $(basename "$0") command"
+      echo ""
+      echo "example:"
+      echo " treehouses version"
+      echo ""
+      echo "Get the version of @treehouses/cli currently installed"
+      ;;
+    detectrpi)
+      echo "Detects the hardware version of a raspberry pi"
+      echo ""
+      echo "example:"
+      echo " treehouses detectrpi"
+      echo ""
+      echo "Get the model number of raspberry pi being used (eg- rpi 3b)"
+      ;;
+    ethernet)
+      echo "Configures rpi network interface to a static ip address"
+      echo ""
+      echo "example:"
+      echo " treehouses ethernet 192.160.1.1 255.255.255.0 10.1.1.2 8.8.8.8"
+      echo ""
+      echo "It will set the rpi ethernet interface to a static ip with ip address 192.160.1.1 mask 255.255.255.0 gateway 10.1.1.2 dns 8.8.8.8"
+      ;;
+    wifi)
+      echo "connects to a wifi network"
+      echo ""
+      echo "example:"
+      echo " treehouses wifi yourwifiname yourwifipassword"
+      echo ""
+      echo "It will connect the rpi to your wifi network"
+      ;;
+    staticwifi)
+      echo "Configures rpi wifi interface to a static ip address"
+      echo ""
+      echo "example:"
+      echo " treehouses staticwifi 192.160.1.1 255.255.255.0 10.1.1.2 8.8.8.8 yourwifiname yourwifipassword"
+      echo ""
+      echo "It will configure the rpi wifi interface to a static ip with ip address 192.160.1.1 mask 255.255.255.0 gateway 10.1.1.2 dns 8.8.8.8"
+      ;;
+    bridge)
+      echo "Configures the rpi to bridge the wlan interface over a hotspot"
+      echo ""
+      echo "example:"
+      echo " treehouses bridge yourwifiname hotspotname yourwifipassword hotspotpassword "
+      echo ""
+      echo "It will configure the rpi wlan interface (ethernet port) to start a hotspot with ESSID as the the hotspotname and the password which you declare in the treehouse bridge command"
+      ;;
+    container)
+      echo "Enables (and start) the desired container"
+      echo ""
+      echo "example:"
+      echo " treehouses container docker"
+      echo ""
+      echo "Docker container will be enabled and start running"
+      ;;
+    bluetooth)
+      echo "Switches between bluetooth hotspot mode / regular bluetooth and starts the service"
+      echo ""
+      echo "example:"
+      echo " treehouses bluetooth on"
+      echo ""
+      echo "It will start regular bluetooth service and the hotspot services. Wait for 5 seconds for bluetooth services to start completely "
+      ;;
+    hotspot)
+      echo "Creates a mobile hotspot"
+      echo ""
+      echo "example:"
+      echo " treehouses hotspotname hotspotpassword"
+      echo ""
+      echo "It will start a mobile hotspot with ESSID and password which you declare in the treehouse bridge command "
+      ;;
+    timezone)
+      echo "sets the timezone of the system"
+      echo ""
+      echo "example:"
+      echo " treehouses timezone Eastern "
+      echo ""
+      echo "It will set the timezone of rpi clock to Eastern Timezone and update the time "
+      ;;
+    locale)
+      echo "sets the system locale"
+      echo ""
+      echo "example:"
+      echo " treehouses locale en_US.UTF-8"
+      echo ""
+      echo "It will set the locale of rpi to USA standard (with 26 characters as per USA standard) with UTF-8 so as to decode the characters and provide backward compatibility with ascii "
+      ;;
+    ssh)
+      echo "enables or disables the ssh service"
+      echo ""
+      echo "example:"
+      echo " treehouses ssh on"
+      echo ""
+      echo "It will configure the ssh (secure shell) service of the rpi to be enabled and running. And it will allow you to connect to your rpi remotely using terminal and thus you will be able to work on a headless rpi "
+      ;;
+    vnc)
+      echo "enables or disables the vnc server service"
+      echo ""
+      echo "example:"
+      echo " treehouses vnc on"
+      echo ""
+      echo "It will configure the vnc (virtual network computing) service of the rpi to be enabled and running. And it will allow you to connect to your rpi remotely using vnc client running on your laptop/pc and thus you will be able to get the graphical display of rpi on your laptop/pc "
+      ;;
+    default)
+      echo "sets a raspbian back to default configuration"
+      echo ""
+      echo "example:"
+      echo " treehouses default "
+      echo ""
+      echo "This will allow you to return back to the original configuration for all the services and settings which were set for the raspbian image when it was first installed. This will not delete any new files you created."
+      ;;
+    upgrade)
+      echo "upgrades $(basename "$0") package using npm"
+      echo ""
+      echo "example:"
+      echo " treehouses upgrade "
+      echo ""
+      echo "This will upgrade the treehouses cli package using npm and you will have the latest version of treehouses cli running on your system."
       ;;
     *)
       echo "Usage: $(basename "$0")"

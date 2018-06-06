@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    default)
+      echo "sets a raspbian back to default configuration"
+      echo ""
+      echo "example:"
+      echo " treehouses default "
+      echo ""
+      echo "This will allow you to return back to the original configuration for all the services and settings which were set for the raspbian image when it was first installed. This will not delete any new files you created."
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

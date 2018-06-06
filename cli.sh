@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    bluetooth)
+      echo "Switches between bluetooth hotspot mode / regular bluetooth and starts the service"
+      echo ""
+      echo "example:"
+      echo " treehouses bluetooth on"
+      echo ""
+      echo "It will start regular bluetooth service and the hotspot services. Wait for 5 seconds for bluetooth services to start completely "
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

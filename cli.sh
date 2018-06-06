@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    timezone)
+      echo "sets the timezone of the system"
+      echo ""
+      echo "example:"
+      echo " treehouses timezone Eastern "
+      echo ""
+      echo "It will set the timezone of rpi clock to Eastern Timezone and update the time "
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

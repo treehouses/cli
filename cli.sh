@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    locale)
+      echo "sets the system locale"
+      echo ""
+      echo "example:"
+      echo " treehouses locale en_US.UTF-8"
+      echo ""
+      echo "It will set the locale of rpi to USA standard (with 26 characters as per USA standard) with UTF-8 so as to decode the characters and provide backward compatibility with ascii "
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

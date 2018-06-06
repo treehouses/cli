@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    container)
+      echo "Enables (and start) the desired container"
+      echo ""
+      echo "example:"
+      echo " treehouses container docker"
+      echo ""
+      echo "Docker container will be enabled and start running"
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

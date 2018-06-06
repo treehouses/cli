@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    vnc)
+      echo "enables or disables the vnc server service"
+      echo ""
+      echo "example:"
+      echo " treehouses vnc on"
+      echo ""
+      echo "It will configure the vnc (virtual network computing) service of the rpi to be enabled and running. And it will allow you to connect to your rpi remotely using vnc client running on your laptop/pc and thus you will be able to get the graphical display of rpi on your laptop/pc "
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

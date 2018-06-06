@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    hotspot)
+      echo "Creates a mobile hotspot"
+      echo ""
+      echo "example:"
+      echo " treehouses hotspotname hotspotpassword"
+      echo ""
+      echo "It will start a mobile hotspot with ESSID and password which you declare in the treehouse bridge command "
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

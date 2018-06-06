@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    wifi)
+      echo "connects to a wifi network"
+      echo ""
+      echo "example:"
+      echo " treehouses wifi yourwifiname yourwifipassword"
+      echo ""
+      echo "It will connect the rpi to your wifi network"
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

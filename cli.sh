@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    upgrade)
+      echo "upgrades $(basename "$0") package using npm"
+      echo ""
+      echo "example:"
+      echo " treehouses upgrade "
+      echo ""
+      echo "This will upgrade the treehouses cli package using npm and you will have the latest version of treehouses cli running on your system."
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

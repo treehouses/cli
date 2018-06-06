@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    ssh)
+      echo "enables or disables the ssh service"
+      echo ""
+      echo "example:"
+      echo " treehouses ssh on"
+      echo ""
+      echo "It will configure the ssh (secure shell) service of the rpi to be enabled and running. And it will allow you to connect to your rpi remotely using terminal and thus you will be able to work on a headless rpi "
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

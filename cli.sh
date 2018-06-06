@@ -14,6 +14,14 @@ function help {
       echo ""
       echo "this will rename the device to 'rpi'"
       ;;
+    sshkeyadd)
+      echo "Add a public key to 'pi' and 'root' user's authorized_keys"
+      echo ""
+      echo "example:"
+      echo " treehouses sshkeyadd \"\""
+      echo ""
+      echo "The public key will be added as which will allow the user to access the Raspberry Pi image without login password for both 'pi' and 'root' user."
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

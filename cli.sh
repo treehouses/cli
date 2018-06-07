@@ -12,8 +12,7 @@ function help {
       echo ""
       echo "Example:"
       echo "  $(basename "$0") rename rpi"
-      echo ""
-      echo "Change the hostname of the Raspberry Pi to 'rpi'."
+      echo "      Change the hostname of the Raspberry Pi to 'rpi'."
       ;;
     password)
       echo ""
@@ -21,8 +20,7 @@ function help {
       echo ""
       echo "Example:"
       echo "  $(basename "$0") password ABC"
-      echo ""
-      echo "Change the password for 'pi' user to 'ABC'."
+      echo "      Change the password for 'pi' user to 'ABC'."
       ;;
     *)
       echo "Usage: $(basename "$0")"

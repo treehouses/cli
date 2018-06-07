@@ -15,6 +15,9 @@ function help {
       echo "this will rename the device to 'rpi'"
       ;;
     sshkeyadd)
+      echo ""
+      echo "Usage: $(basename "$0") sshkeyadd <public_key>"
+      echo ""
       echo "Add a public key to 'pi' and 'root' user's authorized_keys"
       echo ""
       echo "Example:"

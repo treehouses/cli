@@ -21,7 +21,7 @@ function help {
       echo "Add a public key to 'pi' and 'root' user's authorized_keys"
       echo ""
       echo "Example:"
-      echo "  treehouses sshkeyadd \"\""
+      echo "  $(basename "$0") sshkeyadd \"\""
       echo "      The public key between quotes will be added to authorized_keys so user can access the Raspberry Pi image without login password for both 'pi' and 'root' user."
       ;;
     hotspot)

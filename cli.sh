@@ -15,12 +15,18 @@ function help {
       echo "this will rename the device to 'rpi'"
       ;;
     staticwifi)
-      echo "Configures rpi wifi interface to a static ip address"
       echo ""
-      echo "example:"
-      echo " treehouses staticwifi 192.160.1.1 255.255.255.0 10.1.1.2 8.8.8.8 yourwifiname yourwifipassword"
+      echo "Usage: $(basename "$0") staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]"
       echo ""
-      echo "It will configure the rpi wifi interface to a static ip with ip address 192.160.1.1 mask 255.255.255.0 gateway 10.1.1.2 dns 8.8.8.8"
+      echo "Configures Raspberry Pi's wifi interface to a static ip address"
+      echo ""
+      echo "Examples:"
+      echo "  $(basename "$0") staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home homewifipassword"
+      echo "      Connect to wifi named 'home' with password 'homewifipassword' and set the Raspberry Pi's wifi interface to static with IP address 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      echo ""
+      echo "  $(basename "$0") staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home"
+      echo "      Connect to an open wifi named 'home' and set the Raspberry Pi's wifi interface to static with IP address 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      
       ;;
     *)
       echo "Usage: $(basename "$0")"

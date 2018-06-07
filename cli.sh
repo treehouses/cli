@@ -8,6 +8,8 @@ function help {
   case $1 in
     rename)
       echo ""
+      echo "Usage: $(basename "$0") rename <hostname>"
+      echo ""
       echo "Change the hostname of the Raspberry Pi"
       echo ""
       echo "Example:"
@@ -15,6 +17,8 @@ function help {
       echo "      Change the hostname of the Raspberry Pi to 'rpi'."
       ;;
     password)
+      echo ""
+      echo "Usage: $(basename "$0") password <password>"
       echo ""
       echo "Change the password for 'pi' user"
       echo ""

@@ -15,12 +15,14 @@ function help {
       echo "this will rename the device to 'rpi'"
       ;;
     detectrpi)
-      echo "Detects the hardware version of a raspberry pi"
       echo ""
-      echo "example:"
-      echo " treehouses detectrpi"
+      echo "Usage: $(basename "$0") detectrpi"
       echo ""
-      echo "Get the model number of raspberry pi being used (eg- rpi 3b)"
+      echo "Detect the hardware version of the Raspberry Pi"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") detectrpi"
+      echo "      Get the model number of Raspberry Pi (e.g. RPI3B+)"
       ;;
     *)
       echo "Usage: $(basename "$0")"

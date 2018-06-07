@@ -22,7 +22,7 @@ function help {
       echo ""
       echo "Example:"
       echo "  $(basename "$0") detectrpi"
-      echo "      Get the model number of Raspberry Pi (e.g. RPI3B+)"
+      echo "      Get the model number of Raspberry Pi."
       ;;
     *)
       echo "Usage: $(basename "$0")"

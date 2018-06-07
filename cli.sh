@@ -21,6 +21,19 @@ function help {
       echo "  treehouses sshkeyadd \"\""
       echo "      The public key between quotes will be added to authorized_keys so user can access the Raspberry Pi image without login password for both 'pi' and 'root' user."
       ;;
+    hotspot)
+      echo ""
+      echo "Usage: treehouses hotspot <ESSID> [password]"
+      echo ""
+      echo "Creates a mobile hotspot"
+      echo ""
+      echo "Examples:"
+      echo "  treehouses hotspot hotspotname hotspotpassword"
+      echo "      Create a hotspot with ESSID 'hotspotname' and password 'hotspotpassword'."
+      echo ""
+      echo "  treehouses hotspot hotspotname"
+      echo "      Create an open hotspot with ESSID 'hotspotname'."
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

@@ -15,12 +15,17 @@ function help {
       echo "this will rename the device to 'rpi'"
       ;;
     wifi)
-      echo "connects to a wifi network"
       echo ""
-      echo "example:"
-      echo " treehouses wifi yourwifiname yourwifipassword"
+      echo "Usage: $(basename "$0") wifi <ESSID> [password]"
       echo ""
-      echo "It will connect the rpi to your wifi network"
+      echo "Connect to a wifi network"
+      echo ""
+      echo "Example:"
+      echo "  treehouses wifi home homewifipassword"
+      echo "      Connect to a wifi network named 'home' with password 'homewifipassword'."
+      echo ""
+      echo "  treehouses wifi yourwifiname"
+      echo "      Connect to an open wifi network named 'home'."
       ;;
     *)
       echo "Usage: $(basename "$0")"

@@ -7,20 +7,22 @@ TEMPLATES="$SCRIPTFOLDER/templates"
 function help {
   case $1 in
     rename)
-      echo "Sets the hostname of the raspberry pi to the one specified by the user"
       echo ""
-      echo "example:"
+      echo "Change the hostname of the Raspberry Pi"
+      echo ""
+      echo "Example:"
       echo "  $(basename "$0") rename rpi"
       echo ""
-      echo "this will rename the device to 'rpi'"
+      echo "Change the hostname of the Raspberry Pi to 'rpi'."
       ;;
     password)
+      echo ""
       echo "Change the password for 'pi' user"
       echo ""
-      echo "example:"
-      echo " treehouses password ABC"
+      echo "Example:"
+      echo "  $(basename "$0") password ABC"
       echo ""
-      echo "The current password of the 'pi' user in the Raspberry Pi image will be changed to ABC"
+      echo "Change the password for 'pi' user to 'ABC'."
       ;;
     *)
       echo "Usage: $(basename "$0")"

@@ -21,7 +21,7 @@ function help {
       echo "Return the version of $(basename "$0") command"
       echo ""
       echo "Example:"
-      echo "  treehouses version"
+      echo "  $(basename "$0") version"
       echo "      Return the version of $(basename "$0") currently installed."
       ;;
     *)

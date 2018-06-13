@@ -21,10 +21,10 @@ function help {
       echo "Connect to a wifi network"
       echo ""
       echo "Example:"
-      echo "  treehouses wifi home homewifipassword"
+      echo "  $(basename "$0") wifi home homewifipassword"
       echo "      Connect to a wifi network named 'home' with password 'homewifipassword'."
       echo ""
-      echo "  treehouses wifi yourwifiname"
+      echo "  $(basename "$0") wifi yourwifiname"
       echo "      Connect to an open wifi network named 'home'."
       ;;
     *)

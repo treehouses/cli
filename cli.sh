@@ -124,7 +124,11 @@ function sshkeyadd () {
 }
 
 function version {
-  npm info '@treehouses/cli' version
+  installed_cli_version=$(node -p "require('/usr/lib/node_modules/@treehouses/cli/package.json').version")
+  latest_cli_version=$(npm info '@treehouses/cli' version)
+
+  echo "Installed version: $installed_cli_version"
+  echo "Latest version: $latest_cli_version"
 }
 
 function checkroot {

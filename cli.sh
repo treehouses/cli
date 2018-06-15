@@ -69,6 +69,16 @@ function help {
       echo "  $(basename "$0") detectrpi"
       echo "      Get the model number of Raspberry Pi."
       ;;
+    ethernet)
+      echo ""
+      echo "Usage: $(basename "$0") ethernet <ip> <mask> <gateway> <dns>"
+      echo ""
+      echo "Configure Raspberry Pi's ethernet interface eth0 to a static ip address"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") ethernet 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9"
+      echo "      Set the Raspberry Pi's ethernet interface to static with IP address 192.168.1.101, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

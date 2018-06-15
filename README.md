@@ -45,4 +45,7 @@ ethernet and staticwifi - before using these command, I checked that my network 
                      that it is also a dns server. Alternatively, you can use Quad9 or CloudFlare's dns server, 
                      which is 9.9.9.9 or 1.1.1.1.
                        > ethernet 192.168.0.251 255.255.255.0 192.168.0.1 192.168.0.1 
+
+bridge - uses a small piece of code for /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
+which we got from here https://github.com/peebles/rpi3-wifi-station-ap-stretch
 ```

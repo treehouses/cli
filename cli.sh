@@ -49,6 +49,16 @@ function help {
       echo "  treehouses hotspot hotspotname"
       echo "      Create an open hotspot with ESSID 'hotspotname'."
       ;;
+    version)
+      echo ""
+      echo "Usage: $(basename "$0") version"
+      echo ""
+      echo "Return the version of $(basename "$0") command"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") version"
+      echo "      Return the version of $(basename "$0") currently installed."
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

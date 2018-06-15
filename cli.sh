@@ -26,6 +26,16 @@ function help {
       echo "  $(basename "$0") password ABC"
       echo "      Change the password for 'pi' user to 'ABC'."
       ;;
+    sshkeyadd)
+      echo ""
+      echo "Usage: $(basename "$0") sshkeyadd <public_key>"
+      echo ""
+      echo "Add a public key to 'pi' and 'root' user's authorized_keys"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") sshkeyadd \"\""
+      echo "      The public key between quotes will be added to authorized_keys so user can access the Raspberry Pi image without login password for both 'pi' and 'root' user."
+      ;;
     hotspot)
       echo ""
       echo "Usage: treehouses hotspot <ESSID> [password]"

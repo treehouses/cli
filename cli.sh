@@ -540,7 +540,7 @@ function staticwifi {
 
 function bridge {
   case $(detectrpi) in
-    RPI3B|RPIZW)
+    RPI3B|RPIZW|RPI3B+)
       ;;
     *)
       echo "Your rpi model is not supported"
@@ -580,7 +580,7 @@ function bridge {
 
   cp "$TEMPLATES/network/dnsmasq/bridge" "/etc/dnsmasq.conf"
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces 
-  cp "$TEMPLATES/network/wlan0/bridge" /etc/network/interfaces.d/wlan0
+  cp "$TEMPLATES/network/wlan0/bridge" /etc/network/interfaces.d/ap0
 
   if [ -z "$hotspotpassword" ];
   then
@@ -626,9 +626,8 @@ function bridge {
   enable_service dnsmasq
   cp "$TEMPLATES/network/90-wireless.rules" /etc/udev/rules.d/90-wireless.rules
   rm -rf /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
+  cp "$TEMPLATES/network/10-wpa_supplicant_bridge" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
   cp "$TEMPLATES/rc.local/bridge" /etc/rc.local
-  sysctl -w net.ipv4.ip_forward=1 >/dev/null 2>/dev/null
-  iptables -t nat -A POSTROUTING -s 192.168.2.0/24 ! -d 192.168.2.0/24 -j MASQUERADE
 
   echo "the bridge has been built ;), a reboot is required to apply changes"
 }

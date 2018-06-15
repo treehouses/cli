@@ -92,6 +92,20 @@ function help {
       echo "  $(basename "$0") wifi yourwifiname"
       echo "      Connect to an open wifi network named 'home'."
       ;;
+    staticwifi)
+      echo ""
+      echo "Usage: $(basename "$0") staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]"
+      echo ""
+      echo "Configures Raspberry Pi's wifi interface to a static ip address"
+      echo ""
+      echo "Examples:"
+      echo "  $(basename "$0") staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home homewifipassword"
+      echo "      Connect to wifi named 'home' with password 'homewifipassword' and set the Raspberry Pi's wifi interface to static with IP address 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      echo ""
+      echo "  $(basename "$0") staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home"
+      echo "      Connect to an open wifi named 'home' and set the Raspberry Pi's wifi interface to static with IP address 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

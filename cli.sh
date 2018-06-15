@@ -59,6 +59,16 @@ function help {
       echo "  $(basename "$0") version"
       echo "      Return the version of $(basename "$0") currently installed."
       ;;
+    detectrpi)
+      echo ""
+      echo "Usage: $(basename "$0") detectrpi"
+      echo ""
+      echo "Detect the hardware version of the Raspberry Pi"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") detectrpi"
+      echo "      Get the model number of Raspberry Pi."
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

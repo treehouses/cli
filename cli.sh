@@ -125,10 +125,11 @@ function sshkeyadd () {
 
 function version {
   installed_cli_version=$(node -p "require('$SCRIPTFOLDER/package.json').version")
-  latest_cli_version=$(npm info '@treehouses/cli' version)
+  #latest_cli_version=$(npm info '@treehouses/cli' version)
 
-  echo "Installed version: $installed_cli_version"
-  echo "Latest version: $latest_cli_version"
+  echo $installed_cli_version
+  #echo "Installed version: $installed_cli_version"
+  #echo "Latest version: $latest_cli_version"
 }
 
 function checkroot {

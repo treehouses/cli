@@ -79,6 +79,19 @@ function help {
       echo "  $(basename "$0") ethernet 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9"
       echo "      Set the Raspberry Pi's ethernet interface to static with IP address 192.168.1.101, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
       ;;
+    wifi)
+      echo ""
+      echo "Usage: $(basename "$0") wifi <ESSID> [password]"
+      echo ""
+      echo "Connect to a wifi network"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") wifi home homewifipassword"
+      echo "      Connect to a wifi network named 'home' with password 'homewifipassword'."
+      echo ""
+      echo "  $(basename "$0") wifi yourwifiname"
+      echo "      Connect to an open wifi network named 'home'."
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

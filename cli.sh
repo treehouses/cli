@@ -203,7 +203,7 @@ function sshkeyadd () {
 }
 
 function version {
-  npm info '@treehouses/cli' version
+  node -p "require('$SCRIPTFOLDER/package.json').version"
 }
 
 function checkroot {

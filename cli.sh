@@ -10,11 +10,11 @@ function help {
       echo ""
       echo "Usage: $(basename "$0") rename <hostname>"
       echo ""
-      echo "Changes the hostname of the Raspberry Pi"
+      echo "Changes the hostname"
       echo ""
       echo "Example:"
       echo "  $(basename "$0") rename rpi"
-      echo "      Sets the hostname of the Raspberry Pi to 'rpi'."
+      echo "      Sets the hostname to 'rpi'."
       ;;
     password)
       echo ""
@@ -34,7 +34,7 @@ function help {
       echo ""
       echo "Example:"
       echo "  $(basename "$0") sshkeyadd \"\""
-      echo "      The public key between quotes will be added to authorized_keys so user can access the Raspberry Pi without login password for both 'pi' and 'root' user."
+      echo "      The public key between quotes will be added to authorized_keys so user can login without password for both 'pi' and 'root' user."
       ;;
     hotspot)
       echo ""
@@ -57,27 +57,27 @@ function help {
       echo ""
       echo "Example:"
       echo "  $(basename "$0") version"
-      echo "      Return the version of $(basename "$0") currently installed."
+      echo "      Prints the version of $(basename "$0") currently installed."
       ;;
     detectrpi)
       echo ""
       echo "Usage: $(basename "$0") detectrpi"
       echo ""
-      echo "Detects the hardware version of the Raspberry Pi"
+      echo "Detects the hardware version"
       echo ""
       echo "Example:"
       echo "  $(basename "$0") detectrpi"
-      echo "      Prints the model number of Raspberry Pi."
+      echo "      Prints the model number"
       ;;
     ethernet)
       echo ""
       echo "Usage: $(basename "$0") ethernet <ip> <mask> <gateway> <dns>"
       echo ""
-      echo "Configures Raspberry Pi's ethernet interface eth0 to a static ip address"
+      echo "Configures ethernet interface (eth0) to use a static ip address"
       echo ""
       echo "Example:"
       echo "  $(basename "$0") ethernet 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9"
-      echo "      Sets the Raspberry Pi's ethernet interface to static with IP address 192.168.1.101, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      echo "      Sets the ethernet interface IP address to 192.168.1.101, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
       ;;
     wifi)
       echo ""
@@ -96,14 +96,14 @@ function help {
       echo ""
       echo "Usage: $(basename "$0") staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]"
       echo ""
-      echo "Configures Raspberry Pi's wifi interface to a static ip address"
+      echo "Configures wifi interface (wlan0) to use a static ip address"
       echo ""
       echo "Examples:"
       echo "  $(basename "$0") staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home homewifipassword"
-      echo "      Connects to wifi named 'home' with password 'homewifipassword' and set the Raspberry Pi's wifi interface to static with IP address 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      echo "      Connects to wifi named 'home' with password 'homewifipassword' and sets the wifi interface IP address to 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
       echo ""
       echo "  $(basename "$0") staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home"
-      echo "      Connects to an open wifi named 'home' and set the Raspberry Pi's wifi interface to static with IP address 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      echo "      Connects to an open wifi named 'home' and sets the wifi interface IP address to 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
       
       ;;
     *)

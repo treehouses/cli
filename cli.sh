@@ -15,6 +15,7 @@ function help {
       echo "Example:"
       echo "  $(basename "$0") rename rpi"
       echo "      Sets the hostname to 'rpi'."
+      echo ""
       ;;
     password)
       echo ""
@@ -25,6 +26,7 @@ function help {
       echo "Example:"
       echo "  $(basename "$0") password ABC"
       echo "      Sets the password for 'pi' user to 'ABC'."
+      echo ""
       ;;
     sshkeyadd)
       echo ""
@@ -35,6 +37,7 @@ function help {
       echo "Example:"
       echo "  $(basename "$0") sshkeyadd \"\""
       echo "      The public key between quotes will be added to authorized_keys so user can login without password for both 'pi' and 'root' user."
+      echo ""
       ;;
     hotspot)
       echo ""
@@ -48,6 +51,7 @@ function help {
       echo ""
       echo "  treehouses hotspot hotspotname"
       echo "      Creates an open hotspot with ESSID 'hotspotname'."
+      echo ""
       ;;
     version)
       echo ""
@@ -58,6 +62,7 @@ function help {
       echo "Example:"
       echo "  $(basename "$0") version"
       echo "      Prints the version of $(basename "$0") currently installed."
+      echo ""
       ;;
     detectrpi)
       echo ""
@@ -78,6 +83,7 @@ function help {
       echo "Example:"
       echo "  $(basename "$0") ethernet 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9"
       echo "      Sets the ethernet interface IP address to 192.168.1.101, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      echo ""
       ;;
     wifi)
       echo ""
@@ -91,6 +97,7 @@ function help {
       echo ""
       echo "  $(basename "$0") wifi yourwifiname"
       echo "      Connects to an open wifi network named 'home'."
+      echo ""
       ;;
     staticwifi)
       echo ""
@@ -104,6 +111,7 @@ function help {
       echo ""
       echo "  $(basename "$0") staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home"
       echo "      Connects to an open wifi named 'home' and sets the wifi interface IP address to 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      echo ""
       
       ;;
     *)

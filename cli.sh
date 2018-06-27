@@ -149,6 +149,7 @@ function help {
       echo "  $(basename "$0") vnc off"
       echo "      The VNC service will be disabled."
       echo ""
+      ;;
     ssh)
       echo ""
       echo "Usage: $(basename "$0") ssh <on|off>"

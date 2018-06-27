@@ -143,8 +143,9 @@ function help {
       echo "Sets the system timezone"
       echo ""
       echo "Example:"
-      echo "  $(basename "$0") timezone UTC"
-      echo "      This will set the raspberry pi time to UTC"
+      echo "  $(basename "$0") timezone Etc/GMT-3"
+      echo "      This will set the raspberry pi time to GMT-3"
+      echo "      When using Etc/GMT you can specify the offset, from GMT-14 up to GMT+12"
       echo "      Available timezones are inside /usr/share/zoneinfo/"
       echo ""
       ;;

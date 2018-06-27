@@ -147,6 +147,60 @@ function help {
       echo "      The partition of the SD card in which the raspberry pi image is stored will be expanded to match the available space on the SD card after a reboot"
       echo ""
       ;;
+    vnc)
+      echo ""
+      echo "Usage: $(basename "$0") vnc <on|off>"
+      echo ""
+      echo "Enables or disables the VNC server service"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") vnc on"
+      echo "      The VNC service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using VNC viewer."
+      echo ""
+      echo "  $(basename "$0") vnc off"
+      echo "      The VNC service will be disabled."
+      echo ""
+      ;;
+    ssh)
+      echo ""
+      echo "Usage: $(basename "$0") ssh <on|off>"
+      echo ""
+      echo "Enables or disables the SSH service"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") ssh on"
+      echo "      The SSH service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using SSH."
+      echo ""
+      echo "  $(basename "$0") ssh off"
+      echo "      The SSH service will be disabled."
+      echo ""
+      ;;
+    locale)
+      echo ""
+      echo "Usage: $(basename "$0") locale <locale>"
+      echo ""
+      echo "Sets the system locale"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") local en_US"
+      echo "      This will set the raspberry pi locale to en_US."
+      echo "      The supported languages are in /usr/share/i18n/SUPPORTED"
+      echo ""
+      ;;
+    bluetooth)
+      echo ""
+      echo "Usage: $(basename "$0") bluetooth <on|off>"
+      echo ""
+      echo "Switches between hotspot / regular bluetooth mode"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") bluetooth on"
+      echo "      This will start the bluetooth server, which lets the user control the raspberry pi using the mobile app."
+      echo ""
+      echo "  $(basename "$0") bluetooth off"
+      echo "      This will stop the bluetooth server, and bring everything back to regular mode."
+      echo ""
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

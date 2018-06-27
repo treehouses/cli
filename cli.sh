@@ -7,12 +7,112 @@ TEMPLATES="$SCRIPTFOLDER/templates"
 function help {
   case $1 in
     rename)
-      echo "Sets the hostname of the raspberry pi to the one specified by the user"
       echo ""
-      echo "example:"
+      echo "Usage: $(basename "$0") rename <hostname>"
+      echo ""
+      echo "Changes the hostname"
+      echo ""
+      echo "Example:"
       echo "  $(basename "$0") rename rpi"
+      echo "      Sets the hostname to 'rpi'."
       echo ""
-      echo "this will rename the device to 'rpi'"
+      ;;
+    password)
+      echo ""
+      echo "Usage: $(basename "$0") password <password>"
+      echo ""
+      echo "Changes the password for 'pi' user"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") password ABC"
+      echo "      Sets the password for 'pi' user to 'ABC'."
+      echo ""
+      ;;
+    sshkeyadd)
+      echo ""
+      echo "Usage: $(basename "$0") sshkeyadd <public_key>"
+      echo ""
+      echo "Adds a public key to 'pi' and 'root' user's authorized_keys"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") sshkeyadd \"\""
+      echo "      The public key between quotes will be added to authorized_keys so user can login without password for both 'pi' and 'root' user."
+      echo ""
+      ;;
+    hotspot)
+      echo ""
+      echo "Usage: treehouses hotspot <ESSID> [password]"
+      echo ""
+      echo "Creates a mobile hotspot"
+      echo ""
+      echo "Examples:"
+      echo "  treehouses hotspot hotspotname hotspotpassword"
+      echo "      Creates a hotspot with ESSID 'hotspotname' and password 'hotspotpassword'."
+      echo ""
+      echo "  treehouses hotspot hotspotname"
+      echo "      Creates an open hotspot with ESSID 'hotspotname'."
+      echo ""
+      ;;
+    version)
+      echo ""
+      echo "Usage: $(basename "$0") version"
+      echo ""
+      echo "Returns the version of $(basename "$0") command"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") version"
+      echo "      Prints the version of $(basename "$0") currently installed."
+      echo ""
+      ;;
+    detectrpi)
+      echo ""
+      echo "Usage: $(basename "$0") detectrpi"
+      echo ""
+      echo "Detects the hardware version"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") detectrpi"
+      echo "      Prints the model number"
+      ;;
+    ethernet)
+      echo ""
+      echo "Usage: $(basename "$0") ethernet <ip> <mask> <gateway> <dns>"
+      echo ""
+      echo "Configures ethernet interface (eth0) to use a static ip address"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") ethernet 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9"
+      echo "      Sets the ethernet interface IP address to 192.168.1.101, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      echo ""
+      ;;
+    wifi)
+      echo ""
+      echo "Usage: $(basename "$0") wifi <ESSID> [password]"
+      echo ""
+      echo "Connects to a wifi network"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") wifi home homewifipassword"
+      echo "      Connects to a wifi network named 'home' with password 'homewifipassword'."
+      echo ""
+      echo "  $(basename "$0") wifi yourwifiname"
+      echo "      Connects to an open wifi network named 'home'."
+      echo ""
+      ;;
+    staticwifi)
+      echo ""
+      echo "Usage: $(basename "$0") staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]"
+      echo ""
+      echo "Configures wifi interface (wlan0) to use a static ip address"
+      echo ""
+      echo "Examples:"
+      echo "  $(basename "$0") staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home homewifipassword"
+      echo "      Connects to wifi named 'home' with password 'homewifipassword' and sets the wifi interface IP address to 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      echo ""
+      echo "  $(basename "$0") staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home"
+      echo "      Connects to an open wifi named 'home' and sets the wifi interface IP address to 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
+      echo ""
+      
       ;;
     vnc)
       echo "enables or disables the vnc server service"
@@ -27,8 +127,8 @@ function help {
       echo
       echo "   expandfs                                 expands the partition of the RPI image to the maximum of the SDcard"
       echo "   rename <hostname>                        changes hostname"
-      echo "   password <password>                      change the password for 'pi' user"
-      echo "   sshkeyadd <public_key>                   add a public key to 'pi' and 'root' user's authorized_keys"
+      echo "   password <password>                      changes the password for 'pi' user"
+      echo "   sshkeyadd <public_key>                   adds a public key to 'pi' and 'root' user's authorized_keys"
       echo "   version                                  returns the version of $(basename "$0") command"
       echo "   detectrpi                                detects the hardware version of a raspberry pi"
       echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
@@ -119,7 +219,7 @@ function sshkeyadd () {
 }
 
 function version {
-  npm info '@treehouses/cli' version
+  node -p "require('$SCRIPTFOLDER/package.json').version"
 }
 
 function checkroot {
@@ -535,7 +635,7 @@ function staticwifi {
 
 function bridge {
   case $(detectrpi) in
-    RPI3B|RPIZW)
+    RPI3B|RPIZW|RPI3B+)
       ;;
     *)
       echo "Your rpi model is not supported"
@@ -575,7 +675,7 @@ function bridge {
 
   cp "$TEMPLATES/network/dnsmasq/bridge" "/etc/dnsmasq.conf"
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces 
-  cp "$TEMPLATES/network/wlan0/bridge" /etc/network/interfaces.d/wlan0
+  cp "$TEMPLATES/network/wlan0/bridge" /etc/network/interfaces.d/ap0
 
   if [ -z "$hotspotpassword" ];
   then
@@ -621,9 +721,8 @@ function bridge {
   enable_service dnsmasq
   cp "$TEMPLATES/network/90-wireless.rules" /etc/udev/rules.d/90-wireless.rules
   rm -rf /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
+  cp "$TEMPLATES/network/10-wpa_supplicant_bridge" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
   cp "$TEMPLATES/rc.local/bridge" /etc/rc.local
-  sysctl -w net.ipv4.ip_forward=1 >/dev/null 2>/dev/null
-  iptables -t nat -A POSTROUTING -s 192.168.2.0/24 ! -d 192.168.2.0/24 -j MASQUERADE
 
   echo "the bridge has been built ;), a reboot is required to apply changes"
 }

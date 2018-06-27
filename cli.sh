@@ -18,9 +18,9 @@ function help {
       echo "upgrades $(basename "$0") package using npm"
       echo ""
       echo "example:"
-      echo " treehouses upgrade "
+      echo " $(basename "$0") upgrade "
       echo ""
-      echo "This will upgrade the treehouses cli package using npm and you will have the latest version of treehouses cli running on your system."
+      echo "This will upgrade the $(basename "$0") package using npm and will try to install the latest version of $(basename "$0") running on your system"
       ;;
     *)
       echo "Usage: $(basename "$0")"

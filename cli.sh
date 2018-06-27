@@ -147,7 +147,7 @@ function help {
       echo "      The SSH service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using SSH."
       echo ""
       echo "  $(basename "$0") ssh off"
-      echo "      The VNC service will be disabled."
+      echo "      The SSH service will be disabled."
       echo ""
       ;;
     *)

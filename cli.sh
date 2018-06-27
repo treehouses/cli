@@ -136,6 +136,23 @@ function help {
       echo "    This will upgrade the $(basename "$0") package using npm and will try to install the latest version of $(basename "$0") running on your system"
       echo ""
       ;;
+    bridge)
+      echo ""
+      echo "Usage: $(basename "$0") bridge <WifiESSID> <HotspotESSID> [WifiPassword] [HotspotPassword]"
+      echo ""
+      echo "Bridges the wlan0 interface to ap0, creating a hotspot with desired configuration."
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") bridge MyWifi MyHotspot"
+      echo "      This will connect to 'MyWifi' which is an open essid, and create an open hotspot called 'MyHotspot'"
+      echo ""
+      echo "  $(basename "$0") bridge MyWifi MyHotspot 12345678"
+      echo "      This will connect to 'MyWifi' which has a password '12345678', and create an open hotspot called 'MyHotspot'"
+      echo ""
+      echo "  $(basename "$0") bridge MyWifi MyHotspot 12345678 hotspot123"
+      echo "      This will connect to 'MyWifi' which has a password '12345678', and create a password hotspot called 'MyHotspot' with the password 'hotspot123'"
+      echo ""
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

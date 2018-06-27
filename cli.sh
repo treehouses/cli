@@ -115,6 +115,7 @@ function help {
       
       ;;
     upgrade)
+      echo ""
       echo "Usage: $(basename "$0") upgrade"
       echo "" 
       echo "Upgrades $(basename "$0") package using npm"
@@ -122,6 +123,7 @@ function help {
       echo "Example:"
       echo " $(basename "$0") upgrade"
       echo "    This will upgrade the $(basename "$0") package using npm and will try to install the latest version of $(basename "$0") running on your system"
+      echo ""
       ;;
     *)
       echo "Usage: $(basename "$0")"

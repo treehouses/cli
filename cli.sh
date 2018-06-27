@@ -145,6 +145,7 @@ function help {
       echo "Example:"
       echo "  $(basename "$0") timezone UTC"
       echo "      This will set the raspberry pi time to UTC"
+      echo "      Available timezones are inside /usr/share/zoneinfo/"
       echo ""
       ;;
     *)

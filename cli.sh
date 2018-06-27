@@ -115,12 +115,15 @@ function help {
       
       ;;
     timezone)
-      echo "sets the timezone of the system"
       echo ""
-      echo "example:"
-      echo " treehouses timezone Eastern "
+      echo "Usage: $(basename "$0") timezone <timezone>"
       echo ""
-      echo "It will set the timezone of rpi clock to Eastern Timezone and update the time "
+      echo "Sets the system timezone"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") timezone UTC"
+      echo "      This will set the raspberry pi time to UTC"
+      echo ""
       ;;
     *)
       echo "Usage: $(basename "$0")"

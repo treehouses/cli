@@ -112,7 +112,29 @@ function help {
       echo "  $(basename "$0") staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home"
       echo "      Connects to an open wifi named 'home' and sets the wifi interface IP address to 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
       echo ""
-      
+      ;;
+    default)
+      echo ""
+      echo "Usage: $(basename "$0") default"
+      echo ""
+      echo "Resets the raspberry pi to default"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") default"
+      echo "      This will allow you to return back to the original configuration for all the services and settings which were set for the image when it was first installed."
+      echo "      This will not delete any new files you created."
+      echo ""
+      ;;
+    upgrade)
+      echo ""
+      echo "Usage: $(basename "$0") upgrade"
+      echo "" 
+      echo "Upgrades $(basename "$0") package using npm"
+      echo ""
+      echo "Example:"
+      echo " $(basename "$0") upgrade"
+      echo "    This will upgrade the $(basename "$0") package using npm and will try to install the latest version of $(basename "$0") running on your system"
+      echo ""
       ;;
     vnc)
       echo ""

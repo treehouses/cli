@@ -136,6 +136,34 @@ function help {
       echo "    This will upgrade the $(basename "$0") package using npm and will try to install the latest version of $(basename "$0") running on your system"
       echo ""
       ;;
+    vnc)
+      echo ""
+      echo "Usage: $(basename "$0") vnc <on|off>"
+      echo ""
+      echo "Enables or disables the VNC server service"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") vnc on"
+      echo "      The VNC service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using VNC viewer."
+      echo ""
+      echo "  $(basename "$0") vnc off"
+      echo "      The VNC service will be disabled."
+      echo ""
+      ;;
+    ssh)
+      echo ""
+      echo "Usage: $(basename "$0") ssh <on|off>"
+      echo ""
+      echo "Enables or disables the SSH service"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") ssh on"
+      echo "      The SSH service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using SSH."
+      echo ""
+      echo "  $(basename "$0") ssh off"
+      echo "      The SSH service will be disabled."
+      echo ""
+      ;;
     locale)
       echo ""
       echo "Usage: $(basename "$0") locale <locale>"

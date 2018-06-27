@@ -136,6 +136,17 @@ function help {
       echo "    This will upgrade the $(basename "$0") package using npm and will try to install the latest version of $(basename "$0") running on your system"
       echo ""
       ;;
+    expandfs)
+      echo ""
+      echo "Usage: $(basename "$0") expandfs"
+      echo ""
+      echo "Expands the partition of the raspberry pi image to use the whole disk"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") expandfs"
+      echo "      The partition of the SD card in which the raspberry pi image is stored will be expanded to match the available space on the SD card after a reboot"
+      echo ""
+      ;;
     vnc)
       echo ""
       echo "Usage: $(basename "$0") vnc <on|off>"

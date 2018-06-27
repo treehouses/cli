@@ -115,12 +115,18 @@ function help {
       
       ;;
     ssh)
-      echo "enables or disables the ssh service"
       echo ""
-      echo "example:"
-      echo " treehouses ssh on"
+      echo "Usage: $(basename "$0") ssh <on|off>"
       echo ""
-      echo "It will configure the ssh (secure shell) service of the rpi to be enabled and running. And it will allow you to connect to your rpi remotely using terminal and thus you will be able to work on a headless rpi "
+      echo "Enables or disables the SSH service"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") ssh on"
+      echo "      The SSH service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using SSH."
+      echo ""
+      echo "  $(basename "$0") ssh off"
+      echo "      The VNC service will be disabled."
+      echo ""
       ;;
     *)
       echo "Usage: $(basename "$0")"

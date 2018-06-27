@@ -115,12 +115,18 @@ function help {
       
       ;;
     bluetooth)
-      echo "Switches between bluetooth hotspot mode / regular bluetooth and starts the service"
       echo ""
-      echo "example:"
-      echo " treehouses bluetooth on"
+      echo "Usage: $(basename "$0") bluetooth <on|off>"
       echo ""
-      echo "It will start regular bluetooth service and the hotspot services. Wait for 5 seconds for bluetooth services to start completely "
+      echo "Switches between hotspot / regular bluetooth mode"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") bluetooth on"
+      echo "      This will start the bluetooth server, which lets the user control the raspberry pi using the mobile app."
+      echo ""
+      echo "  $(basename "$0") bluetooth off"
+      echo "      This will stop the bluetooth server, and bring everything back to regular mode."
+      echo ""
       ;;
     *)
       echo "Usage: $(basename "$0")"

@@ -136,6 +136,23 @@ function help {
       echo "    This will upgrade the $(basename "$0") package using npm and will try to install the latest version of $(basename "$0") running on your system"
       echo ""
       ;;
+    container)
+      echo ""
+      echo "Usage: $(basename "$0") container <docker|balena|none>"
+      echo ""
+      echo "Starts the desired container."
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") container docker"
+      echo "      This will start and enable the docker service. The balena service will be stopped and disabled."
+      echo ""
+      echo "  $(basename "$0") container docker"
+      echo "      This will start and enable the balena service. The docker service will be stopped and disabled."
+      echo ""
+      echo "  $(basename "$0") container none"
+      echo "      This will stop and disable the balena and docker service."
+      echo ""
+      ;;
     expandfs)
       echo ""
       echo "Usage: $(basename "$0") expandfs"

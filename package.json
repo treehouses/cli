@@ -1,6 +1,6 @@
 {
   "name": "@treehouses/cli",
-  "version": "0.1.3",
+  "version": "0.2.2",
   "description": "Thin command-line interface for Raspberry Pi low level configuration.",
   "main": "cli.sh",
   "bin": {
@@ -17,7 +17,7 @@
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "keywords": [
-    "raspberry pi ethernet wifi"
+    "raspberry pi", "raspberrypi", "rpi", "ethernet", "wifi", "hotspot", "bridge", "vnc", "bluetooth", "timezone", "locale", "ssh", "container", "docker"
   ],
   "author": {
     "name": "OLE tech team",

@@ -115,12 +115,16 @@ function help {
       
       ;;
     locale)
-      echo "sets the system locale"
       echo ""
-      echo "example:"
-      echo " treehouses locale en_US.UTF-8"
+      echo "Usage: $(basename "$0") locale <locale>"
       echo ""
-      echo "It will set the locale of rpi to USA standard (with 26 characters as per USA standard) with UTF-8 so as to decode the characters and provide backward compatibility with ascii "
+      echo "Sets the system locale"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") local en_US"
+      echo "      This will set the raspberry pi locale to en_US."
+      echo "      The supported languages are in /usr/share/i18n/SUPPORTED"
+      echo ""
       ;;
     *)
       echo "Usage: $(basename "$0")"

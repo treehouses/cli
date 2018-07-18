@@ -287,6 +287,7 @@ function help {
       echo "  rfkill0                  	                Flash on wifi activity  "
       echo "  rfkill1                  	                Flash on bluetooth activity  "
       echo ""
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

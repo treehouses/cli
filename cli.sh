@@ -255,6 +255,38 @@ function help {
       echo "      This will stop the bluetooth server, and bring everything back to regular mode."
       echo ""
       ;;
+    LEDtriggers)
+      echo ""
+      echo "  none                       	              No trigger "
+      echo "  kbd-scrolllock        	                  Keyboard scroll lock  "
+      echo "  kbd-numlock        	                      Keyboard num lock  "
+      echo "  kbd-capslock       	                      Keyboard caps lock  "
+      echo "  kbd-kanalock       	                      Keyboard kana lock  "
+      echo "  kbd-shiftlock        	                    Keyboard shift  "
+      echo "  kbd-altgrlock        	                    Keyboard altgr  "
+      echo "  kbd-ctrllock          	                  Keyboard ctrl  "
+      echo "  kbd-altlock           	                  Keyboard alt  "
+      echo "  kbd-shiftllock       	                    Keyboard left shift  "
+      echo "  kbd-shiftrlock       	                    Keyboard right shift  "
+      echo "  kbd-ctrlllock       	                    Keyboard left ctrl  "
+      echo "  kbd-ctrlrlock      	                      Keyboard right ctrl  "
+      echo "  timer                  	                  Flash at 1 second intervals  "
+      echo "  oneshot              	                    Flash only once  "
+      echo "  heartbeat           	                    Flash like a heartbeat   (1-0-1-00000)  "
+      echo "  backlight             	                  Always on  "
+      echo "  gpio                     	                Flash when a certain GPIO is   high???  "
+      echo "  cpu0                    	                Flash on cpu0 usage  "
+      echo "  cpu1                    	                Flash on cpu1 usage  "
+      echo "  cpu2                    	                Flash on cpu2 usage  "
+      echo "  cpu3                    	                Flash on cpu3 usage  "
+      echo "  default-on          	                    Always on  "
+      echo "  [input]                	                  Default state  "
+      echo "  panic                   	                Flash on kernel panic  "
+      echo "  mmc0                  	                  Flash on mmc0 (primary SD   Card interface) activity  "
+      echo "  mmc1                 	                    Flash on mmc1 (secondary SD   Card interface) activity  "
+      echo "  rfkill0                  	                Flash on wifi activity  "
+      echo "  rfkill1                  	                Flash on bluetooth activity  "
+      echo ""
     *)
       echo "Usage: $(basename "$0")"
       echo
@@ -279,6 +311,7 @@ function help {
       echo "   vnc <on|off>                             enables or disables the vnc server service"
       echo "   default                                  sets a raspbian back to default configuration"
       echo "   upgrade                                  upgrades $(basename "$0") package using npm"
+      echo "   LEDtriggers                              specfic action or commands create a trigger for the rpi 'ack' LEDs"
       echo
       ;;
   esac

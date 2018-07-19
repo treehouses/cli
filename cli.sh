@@ -895,7 +895,7 @@ function sshtunnel {
     portcouchdb=$((portinterval + 84))
 
     if [ ! -f "/root/.ssh/id_rsa" ]; then
-      ssh-keygen -q -N "" > /dev/null < dev/zero
+      ssh-keygen -q -N "" > /dev/null < /dev/zero
     fi
 
     cat /root/.ssh/id_rsa.pub

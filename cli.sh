@@ -279,6 +279,8 @@ function help {
       echo "   vnc <on|off>                             enables or disables the vnc server service"
       echo "   default                                  sets a raspbian back to default configuration"
       echo "   upgrade                                  upgrades $(basename "$0") package using npm"
+      echo "   sshtunnel <add|remove|show>              helps adding an sshtunnel"
+      echo "             <portinterval> [user@host]"
       echo
       ;;
   esac
@@ -869,6 +871,105 @@ function bridge {
   echo "the bridge has been built ;), a reboot is required to apply changes"
 }
 
+function sshtunnel {
+  action="$1"
+  portinterval="$2"
+  host="$3"
+
+  if [ -z "$host" ];
+  then
+    host="ole@pirate.ole.org"
+  fi
+
+  hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
+
+  if [ "$action" = "add" ]; then
+    if [ -z "$portinterval" ];
+    then
+      echo "Error: A port interval is required"
+      exit 1
+    fi
+
+    portssh=$((portinterval + 22))
+    portweb=$((portinterval + 80))
+    portcouchdb=$((portinterval + 84))
+
+    if [ ! -f "/root/.ssh/id_rsa" ]; then
+      ssh-keygen -q -N "" > /dev/null < /dev/zero
+    fi
+
+    cat /root/.ssh/id_rsa.pub
+
+    keys=$(ssh-keyscan -H "$hostname" 2>/dev/null)
+    while read -r key; do
+      if ! grep -q "$key" /root/.ssh/known_hosts 2>/dev/null; then
+          echo "$key" >> /root/.ssh/known_hosts
+      fi
+    done <<< "$keys"
+
+    {
+      echo "#!/bin/bash"
+      echo
+      echo "/usr/bin/autossh -f -T -N -q -4 -M$portinterval -R $portssh:127.0.1.1:22 -R $portcouchdb:127.0.1.1:5984 -R $portweb:127.0.1.1:80 $host"
+    } > /etc/tunnel
+
+    chmod +x /etc/tunnel
+
+    if ! grep -q "\\-f \"/etc/tunnel\"" /etc/rc.local 2>/dev/null; then
+      sed -i 's/^exit 0/if [ -f "\/etc\/tunnel" ];\nthen\n  \/etc\/tunnel\nfi\nexit 0/g' /etc/rc.local
+    fi
+
+    {
+      echo "MAILTO=root"
+      echo "*/5 * * * * root if [ ! "$\(pidof autossh\)" ]; then /etc/tunnel; fi"
+    } > /etc/cron.d/autossh
+  elif [ "$action" = "remove" ]; then
+    if [ -f "/etc/tunnel" ]
+    then
+      rm -rf /etc/tunnel
+    fi
+
+    if [ -f "/etc/cron.d/autossh" ]
+    then
+      rm -rf /etc/cron.d/autossh
+    fi
+
+    pkill -3 autossh
+  elif [ "$action" = "show" ]; then
+    RED='\033[0;31m'
+    GREEN='\033[0;32m'
+    NC='\033[0m'
+
+    if [ -f "/etc/tunnel" ]; then
+      echo -e "[${GREEN}OK${NC}] /etc/tunnel"
+    else
+      echo -e "[${RED}MISSING${NC}] /etc/tunnel"
+    fi
+
+    if [ -f "/etc/cron.d/autossh" ]
+    then
+      echo -e "[${GREEN}OK${NC}] /etc/cron.d/autossh"
+    else
+      echo -e "[${RED}MISSING${NC}] /etc/cron.d/autossh"
+    fi
+
+    if grep -q "\\-f \"/etc/tunnel\"" /etc/rc.local 2>/dev/null; then
+      echo -e "[${GREEN}OK${NC}] /etc/rc.local starts /etc/tunnel if exists"
+    else
+      echo -e "[${RED}MISSING${NC}] /etc/rc.local doesn't start /etc/tunnel if exists"
+    fi
+
+    if [ "$(pidof autossh)" ]
+    then
+      echo -e "[${GREEN}OK${NC}] autossh pid: $(pidof autossh)"
+    else
+      echo -e "[${RED}MISSING${NC}] autossh not running"
+    fi
+  else
+    echo "Error: only 'add', 'remove', 'show' options are supported";
+    exit 1
+  fi
+}
 
 case $1 in
   expandfs)
@@ -946,6 +1047,10 @@ case $1 in
   bridge)
     checkroot
     bridge "$2" "$3" "$4" "$5"
+    ;;
+  sshtunnel)
+    checkroot
+    sshtunnel "$2" "$3" "$4"
     ;;
   help)
     help "$2"

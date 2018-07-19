@@ -962,7 +962,7 @@ function sshtunnel {
     fi
 
     pkill -3 autossh
-    echo -e "${GREEN}Success${NC}"
+    echo -e "${GREEN}Removed${NC}"
   elif [ "$action" = "show" ]; then
     if [ -f "/etc/tunnel" ]; then
       echo -e "[${GREEN}OK${NC}] /etc/tunnel"

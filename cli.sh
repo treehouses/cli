@@ -937,7 +937,7 @@ function sshtunnel {
     {
       echo "#!/bin/bash"
       echo
-      echo "/usr/bin/autossh -f -T -N -q -4 -M$portinterval -R $portssh:127.0.1.1:22 -R $portcouchdb:127.0.1.1:5984 -R $portweb:127.0.1.1:80 $portnewcouchdb:127.0.1.1:2200 $portmunin:127.0.1.1:4949 $host"
+      echo "/usr/bin/autossh -f -T -N -q -4 -M$portinterval -R $portssh:127.0.1.1:22 -R $portcouchdb:127.0.1.1:5984 -R $portweb:127.0.1.1:80 -R $portnewcouchdb:127.0.1.1:2200 -R $portmunin:127.0.1.1:4949 $host"
     } > /etc/tunnel
 
     chmod +x /etc/tunnel
@@ -962,7 +962,7 @@ function sshtunnel {
     fi
 
     pkill -3 autossh
-    echo -e "${GREEN}Success${NC}"
+    echo -e "${GREEN}Removed${NC}"
   elif [ "$action" = "show" ]; then
     if [ -f "/etc/tunnel" ]; then
       echo -e "[${GREEN}OK${NC}] /etc/tunnel"

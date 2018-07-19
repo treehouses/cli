@@ -278,6 +278,7 @@ function help {
       echo "   ssh <on|off>                             enables or disables the ssh service"
       echo "   vnc <on|off>                             enables or disables the vnc server service"
       echo "   default                                  sets a raspbian back to default configuration"
+      echo "   wificountry <country>                    sets the wifi country"
       echo "   upgrade                                  upgrades $(basename "$0") package using npm"
       echo
       ;;
@@ -869,6 +870,28 @@ function bridge {
   echo "the bridge has been built ;), a reboot is required to apply changes"
 }
 
+function wificountry {
+  country=$1
+
+  if [ -e /etc/wpa_supplicant/wpa_supplicant.conf ]; then
+      if grep -q "^country=" /etc/wpa_supplicant/wpa_supplicant.conf ; then
+          sed -i --follow-symlinks "s/^country=.*/country=$country/g" /etc/wpa_supplicant/wpa_supplicant.conf
+      else
+          sed -i --follow-symlinks "1i country=$country" /etc/wpa_supplicant/wpa_supplicant.conf
+      fi
+  else
+      echo "country=$country" > /etc/wpa_supplicant/wpa_supplicant.conf
+  fi
+  iw reg set "$country" 2> /dev/null;
+
+  if [ -f /run/wifi-country-unset ] && hash rfkill 2> /dev/null; then
+      rfkill unblock wifi
+  fi
+
+  echo $country > /etc/rpi-wifi-country
+
+  echo "Success: the wifi country has been set to $country"
+}
 
 case $1 in
   expandfs)
@@ -946,6 +969,10 @@ case $1 in
   bridge)
     checkroot
     bridge "$2" "$3" "$4" "$5"
+    ;;
+  wificountry)
+    checkroot
+    wificountry "$2"
     ;;
   help)
     help "$2"

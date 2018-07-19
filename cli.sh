@@ -888,7 +888,7 @@ function wificountry {
       rfkill unblock wifi
   fi
 
-  echo $country > /etc/rpi-wifi-country
+  echo "$country" > /etc/rpi-wifi-country
 
   echo "Success: the wifi country has been set to $country"
 }

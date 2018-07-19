@@ -869,6 +869,22 @@ function bridge {
   echo "the bridge has been built ;), a reboot is required to apply changes"
 }
 
+function led {
+  color="$1"
+  trigger="$2"
+
+  if [ "$color" = "green" ]; then
+    led="/sys/class/leds/led0"
+  elif [ "$color" = "red" ]; then
+    led="/sys/class/leds/led1"
+  else
+    echo "Error: only 'red', 'green' options are supported";
+    exit 1
+  fi
+
+  echo "$trigger" > "$led/trigger"
+}
+
 
 case $1 in
   expandfs)
@@ -946,6 +962,10 @@ case $1 in
   bridge)
     checkroot
     bridge "$2" "$3" "$4" "$5"
+    ;;
+  led)
+    checkroot
+    led "$2" "$3"
     ;;
   help)
     help "$2"

@@ -67,6 +67,17 @@ function help {
       echo "      Prints the version of $(basename "$0") currently installed."
       echo ""
       ;;
+    imageversion)
+      echo ""
+      echo "Usage: $(basename "$0") imageversion"
+      echo ""
+      echo "Returns the version of $(basename "$0") image which is currently running on RPI"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") imageversion"
+      echo "      Prints the version of $(basename "$0") image currently installed."
+      echo ""
+      ;;
     detectrpi)
       echo ""
       echo "Usage: $(basename "$0") detectrpi"
@@ -288,6 +299,7 @@ function help {
       echo "   password <password>                      changes the password for 'pi' user"
       echo "   sshkeyadd <public_key>                   adds a public key to 'pi' and 'root' user's authorized_keys"
       echo "   version                                  returns the version of $(basename "$0") command"
+      echo "   imageversion                             returns version of the treehouses image installed"
       echo "   detectrpi                                detects the hardware version of a raspberry pi"
       echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
       echo "   wifi <ESSID> [password]                  connects to a wifi network"
@@ -380,6 +392,11 @@ function sshkeyadd () {
 
 function version {
   node -p "require('$SCRIPTFOLDER/package.json').version"
+}
+
+function imageversion {
+    image=$(cat /boot/version)
+    echo $[image]
 }
 
 function checkroot {

@@ -395,8 +395,7 @@ function version {
 }
 
 function imageversion {
-    image=$(cat /boot/version)
-    echo $((image))
+    echo $(cat /boot/version.txt)
 }
 
 function checkroot {

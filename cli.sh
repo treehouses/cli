@@ -71,11 +71,11 @@ function help {
       echo ""
       echo "Usage: $(basename "$0") imageversion"
       echo ""
-      echo "Returns the version of $(basename "$0") image which is currently running on RPI"
+      echo "Returns the version of system image which is currently running on RPI"
       echo ""
       echo "Example:"
       echo "  $(basename "$0") imageversion"
-      echo "      Prints the version of $(basename "$0") image currently installed."
+      echo "      Prints the current version of system image installed."
       echo ""
       ;;
     detectrpi)
@@ -299,7 +299,7 @@ function help {
       echo "   password <password>                      changes the password for 'pi' user"
       echo "   sshkeyadd <public_key>                   adds a public key to 'pi' and 'root' user's authorized_keys"
       echo "   version                                  returns the version of $(basename "$0") command"
-      echo "   imageversion                             returns version of the treehouses image installed"
+      echo "   imageversion                             returns version of the system image installed"
       echo "   detectrpi                                detects the hardware version of a raspberry pi"
       echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
       echo "   wifi <ESSID> [password]                  connects to a wifi network"

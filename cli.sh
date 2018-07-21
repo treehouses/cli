@@ -1032,6 +1032,9 @@ case $1 in
   version)
     version
     ;;
+  imageversion)
+    imageversion
+    ;;
   detectrpi)
     detectrpi
     ;;

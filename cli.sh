@@ -260,7 +260,7 @@ function help {
       ;;
     sshtunnel)
       echo ""
-      echo "Usage: $(basename "$0") sshtunnel <add|remove|show> <portinterval> [host]"
+      echo "Usage: $(basename "$0") sshtunnel <add|remove|show> <portinterval> [user@host]"
       echo ""
       echo "Helps setting up a sshtunnel"
       echo ""

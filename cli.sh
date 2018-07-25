@@ -71,11 +71,11 @@ function help {
       echo ""
       echo "Usage: $(basename "$0") imageversion"
       echo ""
-      echo "Returns the version of system image which is currently running on RPI"
+      echo "Returns the version of the system image which is currently running"
       echo ""
       echo "Example:"
       echo "  $(basename "$0") imageversion"
-      echo "      Prints the current version of system image installed."
+      echo "      Prints the current version of the system image."
       echo ""
       ;;
     detectrpi)

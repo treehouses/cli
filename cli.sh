@@ -67,14 +67,14 @@ function help {
       echo "      Prints the version of $(basename "$0") currently installed."
       echo ""
       ;;
-    imageversion)
+    image)
       echo ""
-      echo "Usage: $(basename "$0") imageversion"
+      echo "Usage: $(basename "$0") image"
       echo ""
       echo "Returns the version of the system image which is currently running"
       echo ""
       echo "Example:"
-      echo "  $(basename "$0") imageversion"
+      echo "  $(basename "$0") image"
       echo "      Prints the current version of the system image."
       echo ""
       ;;
@@ -299,7 +299,7 @@ function help {
       echo "   password <password>                      changes the password for 'pi' user"
       echo "   sshkeyadd <public_key>                   adds a public key to 'pi' and 'root' user's authorized_keys"
       echo "   version                                  returns the version of $(basename "$0") command"
-      echo "   imageversion                             returns version of the system image installed"
+      echo "   image                                    returns version of the system image installed"
       echo "   detectrpi                                detects the hardware version of a raspberry pi"
       echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
       echo "   wifi <ESSID> [password]                  connects to a wifi network"
@@ -394,7 +394,7 @@ function version {
   node -p "require('$SCRIPTFOLDER/package.json').version"
 }
 
-function imageversion {
+function image {
     cat /boot/version.txt
 }
 
@@ -1032,8 +1032,8 @@ case $1 in
   version)
     version
     ;;
-  imageversion)
-    imageversion
+  image)
+    image
     ;;
   detectrpi)
     detectrpi

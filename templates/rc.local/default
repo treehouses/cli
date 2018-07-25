@@ -17,5 +17,10 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
+if [ -f "/etc/tunnel" ];
+then
+  /etc/tunnel
+fi
+
 exit 0
 

@@ -289,6 +289,7 @@ function help {
       echo "  mmc1                 	                    Flash on mmc1 (secondary SD   Card interface) activity  "
       echo "  rfkill0                  	                Flash on wifi activity  "
       echo "  rfkill1                  	                Flash on bluetooth activity  "
+      ;;   
     sshtunnel)
       echo ""
       echo "Usage: $(basename "$0") sshtunnel <add|remove|show> <portinterval> [host]"

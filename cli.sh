@@ -280,6 +280,18 @@ function help {
       echo "      This will run a checklist and report back the results."
       echo ""
       ;;
+    wificountry)
+      echo ""
+      echo "Usage: $(basename "$0") wificountry <country>"
+      echo ""
+      echo "Sets the wireless interface country. Required on rpi 3b+ in order to get wifi working."
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") wificountry US"
+      echo "      This will set the wifi country to 'US'."
+      echo "      This configuration is used in all commands (wifi, bridge, hotspot)."
+      echo ""
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo

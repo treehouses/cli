@@ -291,6 +291,18 @@ function help {
       echo "      This will run a checklist and report back the results."
       echo ""
       ;;
+    wificountry)
+      echo ""
+      echo "Usage: $(basename "$0") wificountry <country>"
+      echo ""
+      echo "Sets the wireless interface country. Required on rpi 3b+ in order to get wifi working."
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") wificountry US"
+      echo "      This will set the wifi country to 'US'."
+      echo "      This configuration is used in all commands (wifi, bridge, hotspot)."
+      echo ""
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo
@@ -315,6 +327,7 @@ function help {
       echo "   ssh <on|off>                             enables or disables the ssh service"
       echo "   vnc <on|off>                             enables or disables the vnc server service"
       echo "   default                                  sets a raspbian back to default configuration"
+      echo "   wificountry <country>                    sets the wifi country"
       echo "   upgrade                                  upgrades $(basename "$0") package using npm"
       echo "   sshtunnel <add|remove|show>              helps adding an sshtunnel"
       echo "             <portinterval> [user@host]"
@@ -1011,6 +1024,29 @@ function sshtunnel {
   fi
 }
 
+function wificountry {
+  country=$1
+
+  if [ -e /etc/wpa_supplicant/wpa_supplicant.conf ]; then
+      if grep -q "^country=" /etc/wpa_supplicant/wpa_supplicant.conf ; then
+          sed -i --follow-symlinks "s/^country=.*/country=$country/g" /etc/wpa_supplicant/wpa_supplicant.conf
+      else
+          sed -i --follow-symlinks "1i country=$country" /etc/wpa_supplicant/wpa_supplicant.conf
+      fi
+  else
+      echo "country=$country" > /etc/wpa_supplicant/wpa_supplicant.conf
+  fi
+  iw reg set "$country" 2> /dev/null;
+
+  if [ -f /run/wifi-country-unset ] && hash rfkill 2> /dev/null; then
+      rfkill unblock wifi
+  fi
+
+  echo "$country" > /etc/rpi-wifi-country
+
+  echo "Success: the wifi country has been set to $country"
+}
+
 case $1 in
   expandfs)
     checkroot
@@ -1090,6 +1126,10 @@ case $1 in
   bridge)
     checkroot
     bridge "$2" "$3" "$4" "$5"
+    ;;
+  wificountry)
+    checkroot
+    wificountry "$2"
     ;;
   sshtunnel)
     checkroot

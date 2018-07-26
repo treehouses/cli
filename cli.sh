@@ -67,6 +67,17 @@ function help {
       echo "      Prints the version of $(basename "$0") currently installed."
       echo ""
       ;;
+    image)
+      echo ""
+      echo "Usage: $(basename "$0") image"
+      echo ""
+      echo "Returns the version of the system image which is currently running"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") image"
+      echo "      Prints the current version of the system image."
+      echo ""
+      ;;
     detectrpi)
       echo ""
       echo "Usage: $(basename "$0") detectrpi"
@@ -260,7 +271,7 @@ function help {
       ;;
     sshtunnel)
       echo ""
-      echo "Usage: $(basename "$0") sshtunnel <add|remove|show> <portinterval> [host]"
+      echo "Usage: $(basename "$0") sshtunnel <add|remove|show> <portinterval> [user@host]"
       echo ""
       echo "Helps setting up a sshtunnel"
       echo ""
@@ -300,6 +311,18 @@ function help {
       echo "      This will set the mode of the green led to heartbeat"
       echo ""
       ;;
+    wificountry)
+      echo ""
+      echo "Usage: $(basename "$0") wificountry <country>"
+      echo ""
+      echo "Sets the wireless interface country. Required on rpi 3b+ in order to get wifi working."
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") wificountry US"
+      echo "      This will set the wifi country to 'US'."
+      echo "      This configuration is used in all commands (wifi, bridge, hotspot)."
+      echo ""
+      ;;
     *)
       echo "Usage: $(basename "$0")"
       echo
@@ -308,6 +331,7 @@ function help {
       echo "   password <password>                      changes the password for 'pi' user"
       echo "   sshkeyadd <public_key>                   adds a public key to 'pi' and 'root' user's authorized_keys"
       echo "   version                                  returns the version of $(basename "$0") command"
+      echo "   image                                    returns version of the system image installed"
       echo "   detectrpi                                detects the hardware version of a raspberry pi"
       echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
       echo "   wifi <ESSID> [password]                  connects to a wifi network"
@@ -323,6 +347,7 @@ function help {
       echo "   ssh <on|off>                             enables or disables the ssh service"
       echo "   vnc <on|off>                             enables or disables the vnc server service"
       echo "   default                                  sets a raspbian back to default configuration"
+      echo "   wificountry <country>                    sets the wifi country"
       echo "   upgrade                                  upgrades $(basename "$0") package using npm"
       echo "   sshtunnel <add|remove|show>              helps adding an sshtunnel"
       echo "             <portinterval> [user@host]"
@@ -401,6 +426,10 @@ function sshkeyadd () {
 
 function version {
   node -p "require('$SCRIPTFOLDER/package.json').version"
+}
+
+function image {
+    cat /boot/version.txt
 }
 
 function checkroot {
@@ -1016,6 +1045,29 @@ function sshtunnel {
   fi
 }
 
+function wificountry {
+  country=$1
+
+  if [ -e /etc/wpa_supplicant/wpa_supplicant.conf ]; then
+      if grep -q "^country=" /etc/wpa_supplicant/wpa_supplicant.conf ; then
+          sed -i --follow-symlinks "s/^country=.*/country=$country/g" /etc/wpa_supplicant/wpa_supplicant.conf
+      else
+          sed -i --follow-symlinks "1i country=$country" /etc/wpa_supplicant/wpa_supplicant.conf
+      fi
+  else
+      echo "country=$country" > /etc/wpa_supplicant/wpa_supplicant.conf
+  fi
+  iw reg set "$country" 2> /dev/null;
+
+  if [ -f /run/wifi-country-unset ] && hash rfkill 2> /dev/null; then
+      rfkill unblock wifi
+  fi
+
+  echo "$country" > /etc/rpi-wifi-country
+
+  echo "Success: the wifi country has been set to $country"
+}
+
 function led {
   color="$1"
   trigger="$2"
@@ -1098,6 +1150,9 @@ case $1 in
   version)
     version
     ;;
+  image)
+    image
+    ;;
   detectrpi)
     detectrpi
     ;;
@@ -1153,6 +1208,10 @@ case $1 in
   bridge)
     checkroot
     bridge "$2" "$3" "$4" "$5"
+    ;;
+  wificountry)
+    checkroot
+    wificountry "$2"
     ;;
   sshtunnel)
     checkroot

@@ -25,6 +25,8 @@ hotspot <ESSID> [password]               creates a mobile hotspot
 timezone <timezone>                      sets the timezone of the system
 locale <locale>                          sets the system locale
 ssh <on|off>                             enables or disables the ssh service
+sshtunnel <add|remove|show>              helps setting up an sshtunnel
+          <portinterval> [user@host]
 vnc <on|off>                             enables or disables the vnc server service
 default                                  sets a raspbian back to default configuration
 upgrade                                  upgrades treehouses package using npm

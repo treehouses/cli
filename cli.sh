@@ -794,8 +794,6 @@ function upgrade {
         echo "$(basename "$0") is already up to date."
     exit
     fi
-    fi
-    if [ "$tag" = "latest" ]; then
     npm install -g '@treehouses/cli@latest'
     elif [ "$tag" = "beta" ]; then
     npm install -g '@treehouses/cli@beta'

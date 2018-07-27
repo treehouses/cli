@@ -785,22 +785,22 @@ function default {
 }
 
 function upgrade {
-    tag=$1
-    if ! [[ "$*" = *"-f"* ]];
-    then
-        last_version=$(npm show @treehouses/cli version)
+  tag=$1
+  if ! [[ "$*" = *"-f"* ]];
+  then
+    last_version=$(npm show @treehouses/cli version)
     if [ "$last_version" = "$(version)" ];
     then
-        echo "$(basename "$0") is already up to date."
-    exit
+      echo "$(basename "$0") is already up to date."
+      exit
     fi
-    npm install -g '@treehouses/cli@latest'
+    npm install -g '@treehouses/cli@'
     elif [ "$tag" = "beta" ]; then
     npm install -g '@treehouses/cli@beta'
     elif [ "$tag" = "test" ]; then
     npm install -g '@treehouses/cli@test'
-    fi
-    exit 1
+  fi
+  exit 1
 }
 
 function staticwifi {

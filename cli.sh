@@ -785,18 +785,25 @@ function default {
 }
 
 function upgrade {
-  if ! [[ "$*" = *"-f"* ]];
-  then
-    last_version=$(npm show @treehouses/cli version)
+    tag=$1
+    if ! [[ "$*" = *"-f"* ]];
+    then
+        last_version=$(npm show @treehouses/cli version)
     if [ "$last_version" = "$(version)" ];
     then
-      echo "$(basename "$0") is already up to date."
-      exit
+        echo "$(basename "$0") is already up to date."
+    exit
     fi
-  fi
-  npm install -g '@treehouses/cli'
+    fi
+    if [ "$tag" = "latest" ]; then
+    npm install -g '@treehouses/cli@latest'
+    elif [ "$tag" = "beta" ]; then
+    npm install -g '@treehouses/cli@beta'
+    elif [ "$tag" = "test" ]; then
+    npm install -g '@treehouses/cli@test'
+    fi
+    exit 1
 }
-
 
 function staticwifi {
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
@@ -1203,6 +1210,7 @@ case $1 in
   upgrade)
     checkroot
     shift
+    tag "$2"
     upgrade "$@"
     ;;
   bridge)

@@ -786,7 +786,11 @@ function default {
 
 function upgrade {
   tag=$1
-  if ! [[ "$*" = *"-f"* ]];
+  if [ "$tag" = "beta" ]; then
+    npm install -g '@treehouses/cli@beta'
+  elif [ "$tag" = "test" ]; then
+    npm install -g '@treehouses/cli@test'
+  elif ! [[ "$*" = *"-f"* ]];
   then
     last_version=$(npm show @treehouses/cli version)
     if [ "$last_version" = "$(version)" ];
@@ -795,10 +799,6 @@ function upgrade {
       exit
     fi
     npm install -g '@treehouses/cli@'
-    elif [ "$tag" = "beta" ]; then
-    npm install -g '@treehouses/cli@beta'
-    elif [ "$tag" = "test" ]; then
-    npm install -g '@treehouses/cli@test'
   fi
   exit 1
 }

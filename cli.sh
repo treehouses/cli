@@ -290,6 +290,9 @@ function help {
       echo "  $(basename "$0") show"
       echo "      This will run a checklist and report back the results."
       echo ""
+      echo "  $(basename "$0") key"
+      echo "      This will show the pbulic key."
+      echo ""
       ;;
     led)
       echo ""
@@ -349,7 +352,7 @@ function help {
       echo "   default                                  sets a raspbian back to default configuration"
       echo "   wificountry <country>                    sets the wifi country"
       echo "   upgrade                                  upgrades $(basename "$0") package using npm"
-      echo "   sshtunnel <add|remove|show>              helps adding an sshtunnel"
+      echo "   sshtunnel <add|remove|show|key>          helps adding an sshtunnel"
       echo "             <portinterval> [user@host]"
       echo "   led [green|red] [mode]                   sets the led mode"
       echo
@@ -1039,6 +1042,11 @@ function sshtunnel {
     else
       echo -e "[${RED}MISSING${NC}] autossh not running"
     fi
+  elif [ "$action" = "key" ]; then
+    if [ ! -f "/root/.ssh/id_rsa" ]; then
+        ssh-keygen -q -N "" > /dev/null < /dev/zero
+    fi
+    cat /root/.ssh/id_rsa.pub
   else
     echo "Error: only 'add', 'remove', 'show' options are supported";
     exit 1

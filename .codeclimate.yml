@@ -1,0 +1,8 @@
+engines:
+  shellcheck:
+    enabled: true
+    checks:
+      SC2034:
+        enabled: false
+      SC2153:
+        enabled: false

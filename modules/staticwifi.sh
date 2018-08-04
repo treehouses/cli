@@ -39,7 +39,7 @@ function staticwifi {
   then
     {
       echo "network={"
-      echo "  ssid=\"$wifinetwork\""
+      echo "  ssid=\"$essid\""
       echo "  key_mgmt=NONE"
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf

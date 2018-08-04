@@ -38,7 +38,7 @@ function help {
     help_default
   else
     if [ "$(type -t "$1_help")" = "function" ]; then
-      $1_help
+      "$1_help"
     else
       help_default
     fi

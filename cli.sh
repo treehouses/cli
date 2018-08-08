@@ -1048,7 +1048,7 @@ function sshtunnel {
     fi
     cat /root/.ssh/id_rsa.pub
   else
-    echo "Error: only 'add', 'remove', 'show' options are supported";
+    echo "Error: only 'add', 'remove', 'show', 'key' options are supported";
     exit 1
   fi
 }

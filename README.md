@@ -30,6 +30,7 @@ sshtunnel <add|remove|show>              helps setting up an sshtunnel
 vnc <on|off>                             enables or disables the vnc server service
 default                                  sets a raspbian back to default configuration
 upgrade                                  upgrades treehouses package using npm
+image                                    returns version of the system image installed
 *                                        temporary catch all
 ```
 

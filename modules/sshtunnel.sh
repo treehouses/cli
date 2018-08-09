@@ -93,15 +93,20 @@ function sshtunnel {
     else
       echo -e "[${RED}MISSING${NC}] autossh not running"
     fi
+  elif [ "$action" = "key" ]; then
+    if [ ! -f "/root/.ssh/id_rsa" ]; then
+        ssh-keygen -q -N "" > /dev/null < /dev/zero
+    fi
+    cat /root/.ssh/id_rsa.pub
   else
-    echo "Error: only 'add', 'remove', 'show' options are supported";
+    echo "Error: only 'add', 'remove', 'show', 'key' options are supported";
     exit 1
   fi
 }
 
 function sshtunnel_help {
   echo ""
-  echo "Usage: $(basename "$0") sshtunnel <add|remove|show> <portinterval> [user@host]"
+  echo "Usage: $(basename "$0") sshtunnel <add|remove|show|key> <portinterval> [user@host]"
   echo ""
   echo "Helps setting up a sshtunnel"
   echo ""
@@ -119,5 +124,8 @@ function sshtunnel_help {
   echo ""
   echo "  $(basename "$0") show"
   echo "      This will run a checklist and report back the results."
+  echo ""
+  echo "  $(basename "$0") key"
+  echo "      This will show the public key."
   echo ""
 }

@@ -17,9 +17,10 @@ do
   while ! ifconfig wlan0 2>/dev/null | grep "inet " -q;
   do
       sleep 1
-      echo "Waiting for wlan0 to have internet."
-  done 
-  echo "wlan0 has internet :)))"
+      echo "Waiting for wlan0 to have an ip."
+  done
+  echo "Ok. wlan0 has an ip"
+
   ips=$(ip r | sed -n '/default .* wlan0 .* metric .*/p' | head -n1 | sed -n 's/metric .*/metric 1/p')
   ip r add $ips
   break

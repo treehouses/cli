@@ -8,3 +8,5 @@ engines:
         enabled: false
       SC2153:
         enabled: false
+      SC2086:
+        enabled: false

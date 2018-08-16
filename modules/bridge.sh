@@ -90,8 +90,9 @@ function bridge {
   rm -rf /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
   cp "$TEMPLATES/network/10-wpa_supplicant_bridge" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
   cp "$TEMPLATES/rc.local/bridge" /etc/rc.local
-  cp "$TEMPLATES/network/up-bridge.sh" /etc/up-bridge.sh
+  cp "$TEMPLATES/network/up-bridge.sh" /etc/network/up-bridge.sh
 
+  sync; sync; sync
   echo "the bridge has been built ;), a reboot is required to apply changes"
 }
 

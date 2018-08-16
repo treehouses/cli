@@ -20,6 +20,8 @@ function default {
   disable_service hostapd
   disable_service dnsmasq
 
+  rm -rf /etc/up-bridge.sh
+
   case $(detectrpi) in
     RPIZ|RPIZW)
       {

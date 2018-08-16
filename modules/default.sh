@@ -15,6 +15,7 @@ function default {
   rm -rf /etc/rpi-wifi-country
   rename "raspberrypi" > /dev/null 2>/dev/null
   bluetooth "off" > /dev/null 2>/dev/null
+  rm -rf /etc/bluetooth-id
   stop_service hostapd
   stop_service dnsmasq
   disable_service hostapd

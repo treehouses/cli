@@ -19,6 +19,8 @@ function bluetooth {
     stop_service rpibluetooth
     restart_service bluetooth
 
+    rm -rf /etc/bluetooth-id
+
     sleep 3 # Wait few seconds for bluetooth to start
     restart_service bluealsa # restart the bluetooth audio service
 

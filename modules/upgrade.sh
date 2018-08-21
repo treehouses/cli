@@ -1,21 +1,27 @@
 #!/bin/bash
 
 function upgrade {
-  if ! [[ "$*" = *"-f"* ]];
+  tag=$1
+  if [ -z "$tag" ];
   then
-    last_version=$(npm show @treehouses/cli version)
-    if [ "$last_version" = "$(version)" ];
-    then
-      echo "$(basename "$0") is already up to date."
-      exit
-    fi
+      if ! [[ "$*" = *"-f"* ]];
+      then
+          last_version=$(npm show @treehouses/cli version)
+          if [ "$last_version" = "$(version)" ];
+          then
+              echo "$(basename "$0") is already up to date."
+              exit
+          fi
+      fi
+      npm install -g '@treehouses/cli@latest'
+  else
+      npm install -g "@treehouses/cli@${tag}"
   fi
-  npm install -g '@treehouses/cli'
 }
 
 function upgrade_help {
   echo ""
-  echo "Usage: $(basename "$0") upgrade [-f]"
+  echo "Usage: $(basename "$0") upgrade [-f] [tag]"
   echo "" 
   echo "Upgrades $(basename "$0") package using npm"
   echo ""
@@ -26,5 +32,8 @@ function upgrade_help {
   echo ""
   echo " $(basename "$0") upgrade -f"
   echo "    This will do the same as upgrade, but the version will not be checked. Meaning that this will force the installation of the latest version"
+  echo ""
+  echo " $(basename "$0") upgrade tag"
+  echo "    This will upgrade the $(basename "$0") package to the version with the specified tag"
   echo ""
 }

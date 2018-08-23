@@ -30,6 +30,8 @@ function help_default {
   echo "   sshtunnel <add|remove|show>              helps adding an sshtunnel"
   echo "             <portinterval> [user@host]"
   echo "   led [green|red] [mode]                   sets the led mode"
+  echo "   rtc <on|off> [rasclock|ds3231]           sets up the rtc clock specified"
+  echo "   ntp <on|off>                             enables or disables the ntp service"
   echo
 }
 

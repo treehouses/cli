@@ -4,6 +4,7 @@ SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 
 source "$SCRIPTFOLDER/modules/globals.sh"
+source "$SCRIPTFOLDER/modules/ap.sh"
 source "$SCRIPTFOLDER/modules/bluetooth.sh"
 source "$SCRIPTFOLDER/modules/bridge.sh"
 source "$SCRIPTFOLDER/modules/container.sh"
@@ -12,7 +13,6 @@ source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/ethernet.sh"
 source "$SCRIPTFOLDER/modules/expandfs.sh"
 source "$SCRIPTFOLDER/modules/help.sh"
-source "$SCRIPTFOLDER/modules/hotspot.sh"
 source "$SCRIPTFOLDER/modules/image.sh"
 source "$SCRIPTFOLDER/modules/led.sh"
 source "$SCRIPTFOLDER/modules/locale.sh"
@@ -80,9 +80,13 @@ case $1 in
     checkroot
     ethernet "$2" "$3" "$4" "$5"
     ;;
+  ap)
+    checkroot
+    ap "$2" "$3" "$4"
+    ;;
   hotspot)
     checkroot
-    hotspot "$2" "$3"
+    ap "local" "$2" "$3"
     ;;
   timezone)
     checkroot

@@ -86,7 +86,7 @@ case $1 in
     ;;
   hotspot)
     checkroot
-    ap "local" "$3" "$4"
+    ap "local" "$2" "$3"
     ;;
   timezone)
     checkroot

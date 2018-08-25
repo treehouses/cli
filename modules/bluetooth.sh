@@ -11,7 +11,7 @@ function bluetooth {
 
     sleep 5 # wait 5 seconds for bluetooth to be completely up
 
-    echo "Success: the bluetooth service, and the hotspot service have been started."
+    echo "Success: the bluetooth service has been started."
   elif [ "$status" = "off" ]; then
     cp "$TEMPLATES/bluetooth/default" /etc/systemd/system/dbus-org.bluez.service
 
@@ -24,7 +24,7 @@ function bluetooth {
     sleep 3 # Wait few seconds for bluetooth to start
     restart_service bluealsa # restart the bluetooth audio service
 
-    echo "Success: the bluetooth service has been switched to default, and the hotspot service has been stopped."
+    echo "Success: the bluetooth service has been switched to default, and the service has been stopped."
   else
     echo "Error: only 'on', 'off' options are supported";
   fi

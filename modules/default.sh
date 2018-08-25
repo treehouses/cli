@@ -22,6 +22,7 @@ function default {
   disable_service dnsmasq
 
   rm -rf /etc/network/up-bridge.sh
+  rm -rf /etc/network/eth0-shared.sh
 
   case $(detectrpi) in
     RPIZ|RPIZW)

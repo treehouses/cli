@@ -77,3 +77,20 @@ function ap_help () {
   echo "      This hotspot will share the ethernet connection when present."
   echo ""
 }
+
+
+function hotspot_help () {
+  echo ""
+  echo "Usage: treehouses hotspot <ESSID> [password]"
+  echo "This command has been deprecated and replaced with 'treehouses ap'"
+  echo ""
+  echo "Creates a mobile hotspot"
+  echo ""
+  echo "Examples:"
+  echo "  treehouses hotspot hotspotname hotspotpassword"
+  echo "      Creates a hotspot with ESSID 'hotspotname' and password 'hotspotpassword'."
+  echo ""
+  echo "  treehouses hotspot hotspotname"
+  echo "      Creates an open hotspot with ESSID 'hotspotname'."
+  echo ""
+}

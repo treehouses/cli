@@ -16,8 +16,10 @@ source "$SCRIPTFOLDER/modules/help.sh"
 source "$SCRIPTFOLDER/modules/image.sh"
 source "$SCRIPTFOLDER/modules/led.sh"
 source "$SCRIPTFOLDER/modules/locale.sh"
+source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
 source "$SCRIPTFOLDER/modules/rename.sh"
+source "$SCRIPTFOLDER/modules/rtc.sh"
 source "$SCRIPTFOLDER/modules/ssh.sh"
 source "$SCRIPTFOLDER/modules/sshkeyadd.sh"
 source "$SCRIPTFOLDER/modules/sshtunnel.sh"
@@ -121,6 +123,14 @@ case $1 in
     ;;
   led)
     led "$2" "$3"
+    ;;
+  rtc)
+    checkroot
+    rtc "$2" "$3"
+    ;;
+  ntp)
+    checkroot
+    ntp "$2"
     ;;
   help)
     help "$2"

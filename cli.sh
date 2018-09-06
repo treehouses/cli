@@ -7,6 +7,7 @@ source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
 source "$SCRIPTFOLDER/modules/bluetooth.sh"
 source "$SCRIPTFOLDER/modules/bridge.sh"
+source "$SCRIPTFOLDER/modules/button.sh"
 source "$SCRIPTFOLDER/modules/container.sh"
 source "$SCRIPTFOLDER/modules/default.sh"
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
@@ -135,6 +136,10 @@ case $1 in
   ntp)
     checkroot
     ntp "$2"
+    ;;
+  button)
+    checkroot
+    button "$2" "$3" "$4"
     ;;
   help)
     help "$2"

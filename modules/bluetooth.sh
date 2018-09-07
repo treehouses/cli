@@ -2,6 +2,7 @@
 
 function bluetooth {
   status=$1
+  removeid=$2
   if [ "$status" = "on" ]; then
     cp "$TEMPLATES/bluetooth/hotspot" /etc/systemd/system/dbus-org.bluez.service
 
@@ -19,7 +20,9 @@ function bluetooth {
     stop_service rpibluetooth
     restart_service bluetooth
 
-    rm -rf /etc/bluetooth-id
+    if [ -z "$removeid" ]; then
+      rm -rf /etc/bluetooth-id
+    fi
 
     sleep 3 # Wait few seconds for bluetooth to start
     restart_service bluealsa # restart the bluetooth audio service

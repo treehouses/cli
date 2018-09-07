@@ -75,7 +75,7 @@ case $1 in
     ;;
   bluetooth)
     checkroot
-    bluetooth "$2"
+    bluetooth "$2" "$3"
     ;;
   ethernet)
     checkroot

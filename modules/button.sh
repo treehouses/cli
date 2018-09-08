@@ -18,7 +18,7 @@ function button {
   elif [ "$mode" = "bluetooth" ]; then
     {
       echo '#!/bin/bash'
-      echo "treehouses bluetooth off"
+      echo "treehouses bluetooth off no"
     } > /etc/gpio-button-action-on.sh
 
     {

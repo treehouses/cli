@@ -13,7 +13,7 @@ function bluetooth {
     sleep 5 # wait 5 seconds for bluetooth to be completely up
 
     echo "Success: the bluetooth service has been started."
-  elif [ "$status" = "off" ] || [ "$status" = "pause"]; then
+  elif [ "$status" = "off" ] || [ "$status" = "pause" ]; then
     cp "$TEMPLATES/bluetooth/default" /etc/systemd/system/dbus-org.bluez.service
 
     disable_service rpibluetooth
@@ -35,7 +35,7 @@ function bluetooth {
 
 function bluetooth_help {
   echo ""
-  echo "Usage: $(basename "$0") bluetooth <on|off>"
+  echo "Usage: $(basename "$0") bluetooth <on|off|pause>"
   echo ""
   echo "Switches between hotspot / regular bluetooth mode"
   echo ""

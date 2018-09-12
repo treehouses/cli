@@ -92,8 +92,17 @@ function bridge {
   cp "$TEMPLATES/rc.local/bridge" /etc/rc.local
   cp "$TEMPLATES/network/up-bridge.sh" /etc/network/up-bridge.sh
 
+  udevadm control --reload
+  udevadm trigger --action=add
+  ifup ap0 > /dev/null
+  systemctl daemon-reload
+  restart_service networking
+  start_service hostapd
+  start_service dnsmasq
+  restart_service dhcpcd
+
   sync; sync; sync
-  echo "the bridge has been built ;), a reboot is required to apply changes"
+  echo "the bridge has been built ;)."
 }
 
 function bridge_help {

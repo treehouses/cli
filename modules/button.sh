@@ -49,20 +49,14 @@ function button {
 
     {
       echo '#!/bin/bash'
-      echo "treehouses wifi \"$extra1\" \"$extra2\""
+      echo "ifdown wlan0 || true"
+      echo "ifdown ap0 || true"
     } > /etc/gpio-button-action-on.sh
 
     {
       echo '#!/bin/bash'
-      echo "source \"$TEMPLATES\"/../modules/globals.sh"
-      echo "cp \"$TEMPLATES/network/interfaces/default\" /etc/network/interfaces"
-      echo "cp \"$TEMPLATES/network/dhcpcd/default\" /etc/dhcpcd.conf"
-      echo "cp \"$TEMPLATES/network/dnsmasq/default\" /etc/dnsmasq.conf"
-      echo "cp \"$TEMPLATES/rc.local/default\" /etc/rc.local"
-      echo "cp \"$TEMPLATES/network/10-wpa_supplicant\" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant"
-      echo "rm -rf /etc/udev/rules.d/90-wireless.rules"
-      echo "cp \"$TEMPLATES/network/wpa_supplicant\" \"/etc/wpa_supplicant/wpa_supplicant.conf\""
-      echo "restart_wifi"
+      echo "ifup wlan0 || true"
+      echo "ifup ap0 || true"
     } > /etc/gpio-button-action-off.sh
 
     cp "$TEMPLATES/gpio-button.service" /etc/systemd/system/

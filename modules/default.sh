@@ -32,9 +32,6 @@ function default {
       ;;
   esac
 
-
-  button off > /dev/null
-
   echo 'Success: the rpi has been reset to default, please reboot your device'
 }
 

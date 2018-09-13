@@ -94,7 +94,6 @@ function bridge {
 
   udevadm control --reload
   udevadm trigger --action=add
-  ifup ap0 > /dev/null
   systemctl daemon-reload
   restart_service networking
   start_service hostapd

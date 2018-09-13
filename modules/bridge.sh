@@ -92,6 +92,8 @@ function bridge {
   cp "$TEMPLATES/rc.local/bridge" /etc/rc.local
   cp "$TEMPLATES/network/up-bridge.sh" /etc/network/up-bridge.sh
 
+  echo "bridge" > /etc/network/mode
+
   sync; sync; sync
   echo "the bridge has been built ;), a reboot is required to apply changes"
 }

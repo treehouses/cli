@@ -49,6 +49,8 @@ function wifi {
     restart_wifi >/dev/null 2>/dev/null
     echo "password network"
   fi
+
+  echo "wifi" > /etc/network/mode
 }
 
 function wifi_help {

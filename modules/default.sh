@@ -23,6 +23,7 @@ function default {
 
   rm -rf /etc/network/up-bridge.sh
   rm -rf /etc/network/eth0-shared.sh
+  rm -rf /etc/network/mode
 
   case $(detectrpi) in
     RPIZ|RPIZW)

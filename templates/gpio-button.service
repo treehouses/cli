@@ -1,0 +1,8 @@
+[Unit]
+Description=Gpio Button Listener
+
+[Service]
+ExecStart=/usr/bin/python "TEMPLATES/gpio-button.py" &
+
+[Install]
+WantedBy=multi-user.target

@@ -1,12 +1,9 @@
 #!/bin/bash
 # treehouses button off                        => disables button ~ it does nothing
 # treehouses button bluetooth                  => bluetooth will be ON when cable is off and OFF when cable is on
-# treehouses button wifi <essid> [password]    => rpi will disconnect from wifi and disconnect when cable is off
 
 function button {
   mode=$1
-  extra1=$2
-  extra2=$3
 
   if [ "$mode" = "off" ]; then
     disable_service gpio-button
@@ -33,45 +30,6 @@ function button {
     restart_service gpio-button
 
     echo "ok. button enabled"
-  elif [ "$mode" = "wifi" ]; then
-    if [ -n "$extra2" ]; then
-      if [ ${#extra2} -lt 8 ]
-      then
-        echo "Error: password must have at least 8 characters"
-        exit 1
-      fi
-    fi
-
-    if [ -z "$extra1" ]; then
-      echo "Error: essid can't be empty"
-      exit 1
-    fi
-
-    {
-      echo '#!/bin/bash'
-      echo "treehouses wifi \"$extra1\" \"$extra2\""
-    } > /etc/gpio-button-action-on.sh
-
-    {
-      echo '#!/bin/bash'
-      echo "source \"$TEMPLATES\"/../modules/globals.sh"
-      echo "cp \"$TEMPLATES/network/interfaces/default\" /etc/network/interfaces"
-      echo "cp \"$TEMPLATES/network/dhcpcd/default\" /etc/dhcpcd.conf"
-      echo "cp \"$TEMPLATES/network/dnsmasq/default\" /etc/dnsmasq.conf"
-      echo "cp \"$TEMPLATES/rc.local/default\" /etc/rc.local"
-      echo "cp \"$TEMPLATES/network/10-wpa_supplicant\" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant"
-      echo "rm -rf /etc/udev/rules.d/90-wireless.rules"
-      echo "cp \"$TEMPLATES/network/wpa_supplicant\" \"/etc/wpa_supplicant/wpa_supplicant.conf\""
-      echo "restart_wifi"
-    } > /etc/gpio-button-action-off.sh
-
-    cp "$TEMPLATES/gpio-button.service" /etc/systemd/system/
-    sed -i "s|TEMPLATES|${TEMPLATES}|g" /etc/systemd/system/gpio-button.service
-    systemctl daemon-reload
-    enable_service gpio-button
-    restart_service gpio-button
-
-    echo "ok. button enabled"
   else
     echo "Unknown option."
   fi
@@ -80,7 +38,7 @@ function button {
 
 function button_help () {
   echo ""
-  echo "Usage: treehouses button <off|bluetooth|wifi> [ESSID] [password]"
+  echo "Usage: treehouses button <off|bluetooth>"
   echo ""
   echo "Gives the gpio pin 18 an action."
   echo "              Pin 1 Pin2"
@@ -114,9 +72,5 @@ function button_help () {
   echo "  treehouses button bluetooth"
   echo "      When the GPIO pin 18 is on the bluetooth will be turned off".
   echo "      Otherwise the bluetooth mode will be changed to hotspot."
-  echo ""
-  echo "  treehouses button wifi <ESSID> [Password]"
-  echo "      When the GPIO pin 18 is on the wifi will be turned off".
-  echo "      Otherwise the raspberry pi will connect to the specified network."
   echo ""
 }

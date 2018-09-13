@@ -139,7 +139,7 @@ case $1 in
     ;;
   button)
     checkroot
-    button "$2" "$3" "$4"
+    button "$2"
     ;;
   help)
     help "$2"

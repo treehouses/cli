@@ -9,6 +9,8 @@ function ethernet {
   sed -i "s/DNS/$4/g" /etc/network/interfaces.d/eth0
   restart_ethernet >/dev/null 2>/dev/null
 
+  echo "static ethernet" > /etc/network/mode
+
   echo "This pirateship has anchored successfully!"
 }
 

@@ -25,8 +25,12 @@ function ap {
   if [ "$mode" = "internet" ]; then
     cp "$TEMPLATES/network/wlan0/hotspot_shared" /etc/network/interfaces.d/wlan0
     cp "$TEMPLATES/network/eth0-shared.sh" /etc/network/eth0-shared.sh
+
+    echo "ap internet" > /etc/network/mode
   elif [ "$mode" = "local" ]; then
     cp "$TEMPLATES/network/wlan0/hotspot" /etc/network/interfaces.d/wlan0
+
+    echo "ap local" > /etc/network/mode
   else
     echo "Error: only 'local' and 'internet' modes are supported".
     exit 0

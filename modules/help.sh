@@ -33,6 +33,8 @@ function help_default {
   echo "   led [green|red] [mode]                   sets the led mode"
   echo "   rtc <on|off> [rasclock|ds3231]           sets up the rtc clock specified"
   echo "   ntp <local|internet>                     enables or disables time through ntp servers"
+  echo "   networkmode                              outputs the current network mode"
+  echo "   button <off|bluetooth>                   gives the gpio pin 18 an action"
   echo
 }
 

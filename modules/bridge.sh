@@ -99,6 +99,7 @@ function bridge {
   start_service hostapd
   start_service dnsmasq
   restart_service dhcpcd
+  echo "bridge" > /etc/network/mode
 
   sync; sync; sync
   echo "the bridge has been built ;)."

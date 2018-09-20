@@ -7,6 +7,7 @@ source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
 source "$SCRIPTFOLDER/modules/bluetooth.sh"
 source "$SCRIPTFOLDER/modules/bridge.sh"
+source "$SCRIPTFOLDER/modules/button.sh"
 source "$SCRIPTFOLDER/modules/container.sh"
 source "$SCRIPTFOLDER/modules/default.sh"
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
@@ -16,6 +17,7 @@ source "$SCRIPTFOLDER/modules/help.sh"
 source "$SCRIPTFOLDER/modules/image.sh"
 source "$SCRIPTFOLDER/modules/led.sh"
 source "$SCRIPTFOLDER/modules/locale.sh"
+source "$SCRIPTFOLDER/modules/networkmode.sh"
 source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
 source "$SCRIPTFOLDER/modules/rename.sh"
@@ -135,6 +137,13 @@ case $1 in
   ntp)
     checkroot
     ntp "$2"
+    ;;
+  networkmode)
+    networkmode
+    ;;
+  button)
+    checkroot
+    button "$2"
     ;;
   help)
     help "$2"

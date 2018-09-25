@@ -35,6 +35,7 @@ function help_default {
   echo "   ntp <local|internet>                     enables or disables time through ntp servers"
   echo "   networkmode                              outputs the current network mode"
   echo "   button <off|bluetooth>                   gives the gpio pin 18 an action"
+  echo "   feedback <message>                       feedback"
   echo
 }
 

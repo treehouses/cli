@@ -6,7 +6,7 @@ function feedback {
   echo "Thanks for the feedback!"
 }
 
-function ssh_help {
+function feedback_help {
   echo ""
   echo "Usage: $(basename "$0") feedback <message>"
   echo ""

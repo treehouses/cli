@@ -98,8 +98,22 @@ function sshtunnel {
         ssh-keygen -q -N "" > /dev/null < /dev/zero
     fi
     cat /root/.ssh/id_rsa.pub
+  elif [ "$action" = "notice" ]; then
+    option="$2"
+    if [ "$option" = "on" ]; then
+      cp "$TEMPLATES/network/tunnel_report.sh" /etc/tunnel_report.sh
+      if [ ! -f "/etc/cron.d/tunnel_report" ]; then
+        echo "*/1 * * * * root if [ -f \"/etc/tunnel\" ]; then /etc/tunnel_report.sh; fi" > /etc/cron.d/tunnel_report
+      fi
+      echo "OK."
+    elif [ "$option" == "off" ]; then
+      rm -rf /etc/tunnel_report.sh /etc/cron.d/tunnel_report || true
+      echo "OK."
+    else
+      echo "Error: only 'on' and 'off' options are supported."
+    fi
   else
-    echo "Error: only 'add', 'remove', 'show', 'key' options are supported";
+    echo "Error: only 'add', 'remove', 'show', 'key', 'notice' options are supported";
     exit 1
   fi
 }

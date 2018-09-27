@@ -100,7 +100,7 @@ function sshtunnel {
     cat /root/.ssh/id_rsa.pub
   elif [ "$action" = "notice" ]; then
     option="$2"
-    if [ "$option" == "on" ]; then
+    if [ "$option" = "on" ]; then
       cp "$TEMPLATES/network/tunnel_report.sh" /etc/tunnel_report.sh
       if [ ! -f "/etc/cron.d/tunnel_report" ]; then
         echo "*/1 * * * * root if [ -f \"/etc/tunnel\" ]; then /etc/tunnel_report.sh; fi" > /etc/cron.d/tunnel_report

@@ -147,7 +147,8 @@ case $1 in
     button "$2"
     ;;
   feedback)
-    feedback "$2"
+    shift
+    feedback "$*"
     ;;
   help)
     help "$2"

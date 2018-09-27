@@ -102,8 +102,8 @@ function sshtunnel {
     option="$2"
     if [ "$option" == "on" ]; then
       cp "$TEMPLATES/network/tunnel_report.sh" /etc/tunnel_report.sh
-      if [ -f "/etc/cron.d/tunnel_report" ]; then
-        echo "*/5 * * * * root if [ ! "$\(pidof autossh\)" ]; then /etc/tunnel_report.sh; fi" > /etc/cron.d/tunnel_report
+      if [ ! -f "/etc/cron.d/tunnel_report" ]; then
+        echo "*/1 * * * * root if [ -f \"/etc/tunnel\" ]; then /etc/tunnel_report.sh; fi" > /etc/cron.d/tunnel_report
       fi
       echo "OK."
     elif [ "$option" == "off" ]; then

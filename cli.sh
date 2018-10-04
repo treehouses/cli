@@ -33,6 +33,7 @@ source "$SCRIPTFOLDER/modules/version.sh"
 source "$SCRIPTFOLDER/modules/vnc.sh"
 source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
+source "$SCRIPTFOLDER/modules/clone.sh"
 
 
 
@@ -149,6 +150,10 @@ case $1 in
   feedback)
     shift
     feedback "$*"
+    ;;
+  clone)
+    checkroot
+    clone
     ;;
   help)
     help "$2"

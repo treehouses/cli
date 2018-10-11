@@ -36,6 +36,7 @@ function help_default {
   echo "   networkmode                              outputs the current network mode"
   echo "   button <off|bluetooth>                   gives the gpio pin 18 an action"
   echo "   feedback <message>                       sends feedback"
+  echo "   restore                                  restores a treehouses image to an SDCard"
   echo
 }
 

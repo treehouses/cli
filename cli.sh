@@ -3,6 +3,7 @@
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 
+source "$SCRIPTFOLDER/modules/_helpers.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
 source "$SCRIPTFOLDER/modules/bluetooth.sh"

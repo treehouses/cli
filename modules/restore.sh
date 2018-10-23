@@ -24,6 +24,6 @@ function restore_help {
   echo "Usage: $(basename "$0")"
   echo ""
   echo "restores a treehouses image to an SDCard"
-  echo "this is the logical brother of 'treehouses clone'"
+  echo "and is the logical brother of 'treehouses clone'"
   echo ""
 }

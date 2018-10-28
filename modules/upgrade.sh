@@ -15,7 +15,11 @@ function upgrade {
       fi
       npm install -g '@treehouses/cli@latest'
   else
-      npm install -g "@treehouses/cli@${tag}"
+      if [[ ${tag} =~ [0-9].*\.[0-9].*\.[0-9].*(-\\w).* ]]; then
+        npm install -g "@treehouses/cli@${tag}"
+      else
+        npm install -g "@treehouses/cli@latest";
+      fi
   fi
 }
 

@@ -12,7 +12,9 @@ GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 prevState = None
 while True:
   state = GPIO.input(18)
+  # sleep in the loop is related to how fast the command in the block run
   if prevState == state:
+    time.sleep(1)
     continue
   elif state == 1:
     print "Pin is on"

@@ -86,7 +86,7 @@ case $1 in
     ;;
   ap)
     checkroot
-    ap "$2" "$3" "$4"
+    ap "$2" "$3" "$4" "$5"
     ;;
   hotspot)
     checkroot

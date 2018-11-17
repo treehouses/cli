@@ -4,6 +4,7 @@ function ap {
   mode=$1
   essid=$2
   password=$3
+  base_ip=$4
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
 
@@ -51,6 +52,15 @@ function ap {
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
     restart_hotspot >/dev/null 2>/dev/null
+  fi
+
+  if [ -n "$base_ip" ];
+  then
+    sed -i "s/BASE_IP/$base_ip/g" /etc/dnsmasq.conf
+    sed -i "s/BASE_IP/$base_ip/g" /etc/network/interfaces.d/wlan0
+  else
+    sed -i "s/BASE_IP/192.168.2/g" /etc/dnsmasq.conf
+    sed -i "s/BASE_IP/192.168.2/g" /etc/network/interfaces.d/wlan0
   fi
 
   echo "This pirateship has anchored successfully!"

@@ -13,6 +13,7 @@ source "$SCRIPTFOLDER/modules/default.sh"
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/ethernet.sh"
 source "$SCRIPTFOLDER/modules/expandfs.sh"
+source "$SCRIPTFOLDER/modules/feedback.sh"
 source "$SCRIPTFOLDER/modules/help.sh"
 source "$SCRIPTFOLDER/modules/image.sh"
 source "$SCRIPTFOLDER/modules/led.sh"
@@ -32,6 +33,7 @@ source "$SCRIPTFOLDER/modules/version.sh"
 source "$SCRIPTFOLDER/modules/vnc.sh"
 source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
+source "$SCRIPTFOLDER/modules/clone.sh"
 
 
 
@@ -144,6 +146,14 @@ case $1 in
   button)
     checkroot
     button "$2"
+    ;;
+  feedback)
+    shift
+    feedback "$*"
+    ;;
+  clone)
+    checkroot
+    clone
     ;;
   help)
     help "$2"

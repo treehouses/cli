@@ -1,9 +1,9 @@
 #!/bin/bash
 
 function ap {
-  mode=$(clean_variable "$1")
-  essid=$(clean_variable "$2")
-  password=$(clean_variable "$3")
+  mode=$(clean_var "$1")
+  essid=$(clean_var "$2")
+  password=$(clean_var "$3")
   base_24=$(echo "${@: -1}" | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}' | awk '{sub(/.$/,""); gsub("--ip=","", $0); print}')
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
@@ -90,7 +90,7 @@ function ap_help () {
   echo "      Creates an open ap with ESSID 'apname'."
   echo "      This hotspot will share the ethernet connection when present."
   echo ""
-  echo "  This command can be used with the argument '--ip=X.X.X.X' to specify the base ip for the clients/ap."
+  echo "  This command can be used with the argument '--ip=x.y.z.w' to specify the base ip (x.y.z) for the clients/ap."
   echo ""
   echo "  treehouses ap internet apname --ip=192.168.2.24"
   echo "      All the clients of this network will have an ip under the network 192.168.2.0"

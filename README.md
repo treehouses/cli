@@ -17,9 +17,9 @@ detectrpi                                detects the hardware version of a raspb
 ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address
 wifi <ESSID> [password]                  connects to a wifi network
 staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address
-          <ESSID> [password]
+           <ESSID> [password]
 bridge <ESSID> <hotspotESSID>            configures the rpi to bridge the wlan interface over a hotspot
-      [password] [hotspotPassword]
+       [password] [hotspotPassword]
 container <none|docker|balena>           enables (and start) the desired container
 bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service
 ap <local|internet> <ESSID> [password]   creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)

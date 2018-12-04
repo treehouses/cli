@@ -86,7 +86,8 @@ case $1 in
     ;;
   ap)
     checkroot
-    ap "$2" "$3" "$4" "$5"
+    shift
+    ap "$@"
     ;;
   hotspot)
     checkroot
@@ -119,7 +120,8 @@ case $1 in
     ;;
   bridge)
     checkroot
-    bridge "$2" "$3" "$4" "$5"
+    shift
+    bridge "$@"
     ;;
   wificountry)
     checkroot

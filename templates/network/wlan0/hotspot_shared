@@ -1,9 +1,9 @@
 # Added by rPi Access Point Setup
 allow-hotplug wlan0
 iface wlan0 inet static
-  address BASE_IP.1
+  address BASE_24.1
   netmask 255.255.255.0
-  network BASE_IP.0
-  broadcast BASE_IP.255
+  network BASE_24.0
+  broadcast BASE_24.255
 
 post-up /etc/network/eth0-shared.sh

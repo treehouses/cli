@@ -4,4 +4,4 @@ bind-interfaces
 server=8.8.8.8
 domain-needed
 bogus-priv
-dhcp-range=192.168.2.1,192.168.2.150,12h
+dhcp-range=BASE_24.1,BASE_24.150,12h

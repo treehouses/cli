@@ -78,3 +78,11 @@ function restart_wifi {
   sleep 1
   ifup wlan0 || true
 }
+
+function clean_var {
+  if echo "$1" | grep -q "\-\-ip="; then
+    echo ""
+  else
+    echo "$1"
+  fi
+}

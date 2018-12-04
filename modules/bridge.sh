@@ -9,10 +9,11 @@ function bridge {
       exit 1;
   esac
 
-  wifiessid="$1"
-  hotspotessid="$2"
-  wifipassword="$3"
-  hotspotpassword="$4"
+  wifiessid=$(clean_var "$1")
+  hotspotessid=$(clean_var "$2")
+  wifipassword=$(clean_var "$3")
+  hotspotpassword=$(clean_var "$4")
+  base_24=$(echo "${@: -1}" | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}' | awk '{sub(/.$/,""); gsub("--ip=","", $0); print}')
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
 
@@ -92,6 +93,15 @@ function bridge {
   cp "$TEMPLATES/rc.local/bridge" /etc/rc.local
   cp "$TEMPLATES/network/up-bridge.sh" /etc/network/up-bridge.sh
 
+  if [ -n "$base_24" ];
+  then
+    sed -i "s/BASE_24/$base_24/g" /etc/dnsmasq.conf
+    sed -i "s/BASE_24/$base_24/g" /etc/network/interfaces.d/ap0
+  else
+    sed -i "s/BASE_24/192.168.2/g" /etc/dnsmasq.conf
+    sed -i "s/BASE_24/192.168.2/g" /etc/network/interfaces.d/ap0
+  fi
+
   echo "bridge" > /etc/network/mode
 
   sync; sync; sync
@@ -116,5 +126,10 @@ function bridge_help {
   echo ""
   echo "  $(basename "$0") bridge MyWifi MyHotspot \"\" 12345678"
   echo "      This will connect to 'MyWifi' which is an open essid, and create a password hotspot called 'MyHotspot' with the password '12345678'"
+  echo ""
+  echo "  This command can be used with the argument '--ip=x.y.z.w' to specify the base ip (x.y.z) for the clients/ap."
+  echo ""
+  echo "  $(basename "$0") bridge MyWifi MyHotspot \"\" 12345678 --ip=192.168.2.2"
+  echo "      All the clients of this network will have an ip under the network 192.168.2.0"
   echo ""
 }

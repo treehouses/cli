@@ -9,10 +9,10 @@ function bridge {
       exit 1;
   esac
 
-  wifiessid=$(clean_variable "$1")
-  hotspotessid=$(clean_variable "$2")
-  wifipassword=$(clean_variable "$3")
-  hotspotpassword=$(clean_variable "$4")
+  wifiessid=$(clean_var "$1")
+  hotspotessid=$(clean_var "$2")
+  wifipassword=$(clean_var "$3")
+  hotspotpassword=$(clean_var "$4")
   base_24=$(echo "${@: -1}" | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}' | awk '{sub(/.$/,""); gsub("--ip=","", $0); print}')
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
@@ -127,7 +127,7 @@ function bridge_help {
   echo "  $(basename "$0") bridge MyWifi MyHotspot \"\" 12345678"
   echo "      This will connect to 'MyWifi' which is an open essid, and create a password hotspot called 'MyHotspot' with the password '12345678'"
   echo ""
-  echo "  This command can be used with the argument '--ip=X.X.X.X' to specify the base ip for the clients/ap."
+  echo "  This command can be used with the argument '--ip=x.y.z.w' to specify the base ip (x.y.z) for the clients/ap."
   echo ""
   echo "  $(basename "$0") bridge MyWifi MyHotspot \"\" 12345678 --ip=192.168.2.2"
   echo "      All the clients of this network will have an ip under the network 192.168.2.0"

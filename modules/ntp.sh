@@ -3,14 +3,14 @@
 function ntp {
   status="$1"
 
-  if [ "$status" = "internet" ]; then
+  if [ "$status" = "internet" ] || [ "$status" = "on" ]; then
     rm -rf /boot/time &> /dev/null
     sed -i "s/server 127\.127\.1\.0//" /etc/ntp.conf
     sed -i "s/fudge 127\.127\.1\.0 stratum 10//" /etc/ntp.conf
     sed -i "s/restrict 192\.168\.0\.0 mask 255\.255\.0\.0 nomodify notrap//" /etc/ntp.conf
 
     echo "Success: please reboot you rpi to apply changes."
-  elif [ "$status" = "local" ]; then
+  elif [ "$status" = "local" ] || [ "$status" = "off" ]; then
     service ntp restart
     date > /boot/time
     hwclock -w
@@ -24,21 +24,21 @@ function ntp {
     } >> /etc/ntp.conf
     echo "Success: please reboot you rpi to apply changes."
   else
-    echo "Error: only on, off options are supported"
+    echo "Error: only on/internet, off/local options are supported"
     exit 0
   fi
 }
 
 function ntp_help {
   echo ""
-  echo "Usage: $(basename "$0") ntp <local|internet>"
+  echo "Usage: $(basename "$0") ntp <on|off>"
   echo ""
   echo "Enables or disables time through ntp servers"
   echo ""
   echo "Example:"
-  echo "  $(basename "$0") ntp internet"
+  echo "  $(basename "$0") ntp on"
   echo "      Enables the ntp service, and uses internet time."
   echo ""
-  echo "  $(basename "$0") ntp local"
+  echo "  $(basename "$0") ntp off"
   echo "      Disables the ntp service, and uses rtc time."
 }

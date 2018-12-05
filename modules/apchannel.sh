@@ -3,7 +3,7 @@
 function apchannel {
   command="$1"
   if [ "$(networkmode)" == "bridge" ] || [ "$(networkmode)" == "ap local" ] || [ "$(networkmode)" == "ap internet" ]; then
-    current_channel=$(cat /etc/hostapd/hostapd.conf | sed -n 's/channel=\(.*\)/\1/p')
+    current_channel=$(sed -n 's/channel=\(.*\)/\1/p' /etc/hostapd/hostapd.conf )
   else
     echo "Error: the current network mode ($(networkmode)) has no config for channel"
     exit 1

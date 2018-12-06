@@ -38,6 +38,7 @@ function help_default {
   echo "   feedback <message>                       sends feedback"
   echo "   clone                                    clones the current SDCard onto a secondary SDCard"
   echo "   restore                                  restores a treehouses image to an SDCard"
+  echo "   burn [device path]                       download and burns the latest treehouses image to the SDcard or specified device"
   echo
 }
 

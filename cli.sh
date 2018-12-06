@@ -155,7 +155,8 @@ case $1 in
     ;;
   clone)
     checkroot
-    clone
+    shift
+    clone "$1"
     ;;
   help)
     help "$2"

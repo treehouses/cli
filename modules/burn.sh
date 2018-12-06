@@ -25,7 +25,7 @@ function burn {
     fi
 
     echo "writing..."
-    zcat "treehouses.img.gz" > "$device"
+    zcat "latest.img.gz" > "$device"
     echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
 }
 

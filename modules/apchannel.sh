@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function apchannel {
-  command="$1"
+  new_channel="$1"
   if [ "$(networkmode)" == "bridge" ] || [ "$(networkmode)" == "ap local" ] || [ "$(networkmode)" == "ap internet" ]; then
     current_channel=$(sed -n 's/channel=\(.*\)/\1/p' /etc/hostapd/hostapd.conf )
   else
@@ -9,30 +9,26 @@ function apchannel {
     exit 1
   fi
 
-  if [ "$command" == "set" ]; then
-    checkroot
-
-    new_channel="$2"
-    if [ "$(echo "$new_channel" | grep -E '^([1-9]|11)$')" == "" ]; then
-      echo "Error: you must specify a channel between 1 and 11"
-      exit 1
-    fi
-
-    sed -i "s/channel=$current_channel/channel=$new_channel/g" /etc/hostapd/hostapd.conf
-    restart_service hostapd
-    echo "Success: the channel has been set to '$new_channel'. Please reboot to apply the changes"
-  else
-    if [ -z "$command" ]; then
+  if [ -z "$new_channel" ]; then
       echo $current_channel;
-    else
-      echo "Error: the argument is not recognized. Only set is known."
-    fi;
+      exit 0
   fi
+
+  checkroot
+
+  if [ "$(echo "$new_channel" | grep -E '^([1-9]|11)$')" == "" ]; then
+    echo "Error: you must specify a channel between 1 and 11"
+    exit 1
+  fi
+
+  sed -i "s/channel=$current_channel/channel=$new_channel/g" /etc/hostapd/hostapd.conf
+  restart_service hostapd
+  echo "Success: the channel has been set to '$new_channel'. Please reboot to apply the changes"
 }
 
 function apchannel_help {
   echo ""
-  echo "Usage: $(basename "$0") apchannel [set] [channel]"
+  echo "Usage: $(basename "$0") apchannel [channel]"
   echo ""
   echo "Prints out or sets the ap channel."
   echo ""
@@ -40,7 +36,7 @@ function apchannel_help {
   echo "  $(basename "$0") apchannel"
   echo "      This will print out the current ap channel"
   echo ""
-  echo "  $(basename "$0") apchannel set 6"
+  echo "  $(basename "$0") apchannel 6"
   echo "      This will set the ap channel to 6."
   echo "      A reboot is required to apply the changes."
   echo ""

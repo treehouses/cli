@@ -156,7 +156,7 @@ case $1 in
     ;;
   apchannel)
     shift
-    apchannel "$1" "$2"
+    apchannel "$1"
     ;;
   clone)
     checkroot

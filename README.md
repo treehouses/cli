@@ -6,6 +6,7 @@ Usage: treehouses [command] ...
 
 Commands:
 
+help [command]                           gives you a more detailed info about the command or will output this
 expandfs                                 expands the partition of the RPI image to the maximum of the SDcard
 rename <hostname>                        changes hostname
 password <password>                      changes the password for 'pi' user
@@ -21,7 +22,6 @@ bridge <ESSID> <hotspotESSID>            configures the rpi to bridge the wlan i
        [password] [hotspotPassword]
 container <none|docker|balena>           enables (and start) the desired container
 bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service
-hotspot <ESSID> [password]               creates a mobile hotspot. this command has been deprecated, please use treehouses ap
 ap <local|internet> <ESSID> [password]   creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
 apchannel [channel]                      sets or prints the current ap channel
 timezone <timezone>                      sets the timezone of the system

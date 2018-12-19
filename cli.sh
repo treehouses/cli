@@ -24,6 +24,7 @@ source "$SCRIPTFOLDER/modules/networkmode.sh"
 source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
 source "$SCRIPTFOLDER/modules/rename.sh"
+source "$SCRIPTFOLDER/modules/restore.sh"
 source "$SCRIPTFOLDER/modules/rtc.sh"
 source "$SCRIPTFOLDER/modules/ssh.sh"
 source "$SCRIPTFOLDER/modules/sshkeyadd.sh"
@@ -157,7 +158,13 @@ case $1 in
     ;;
   clone)
     checkroot
-    clone
+    shift
+    clone "$1"
+    ;;
+  restore)
+    checkroot
+    shift
+    restore "$1"
     ;;
   burn)
     checkroot

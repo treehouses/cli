@@ -89,10 +89,6 @@ case $1 in
     shift
     ap "$@"
     ;;
-  hotspot)
-    checkroot
-    ap "local" "$2" "$3"
-    ;;
   timezone)
     checkroot
     timezone "$2"

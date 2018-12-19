@@ -5,8 +5,10 @@ SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
+source "$SCRIPTFOLDER/modules/apchannel.sh"
 source "$SCRIPTFOLDER/modules/bluetooth.sh"
 source "$SCRIPTFOLDER/modules/bridge.sh"
+source "$SCRIPTFOLDER/modules/burn.sh"
 source "$SCRIPTFOLDER/modules/button.sh"
 source "$SCRIPTFOLDER/modules/container.sh"
 source "$SCRIPTFOLDER/modules/default.sh"
@@ -90,10 +92,6 @@ case $1 in
     shift
     ap "$@"
     ;;
-  hotspot)
-    checkroot
-    ap "local" "$2" "$3"
-    ;;
   timezone)
     checkroot
     timezone "$2"
@@ -154,6 +152,10 @@ case $1 in
     shift
     feedback "$*"
     ;;
+  apchannel)
+    shift
+    apchannel "$1"
+    ;;
   clone)
     checkroot
     shift
@@ -163,6 +165,11 @@ case $1 in
     checkroot
     shift
     restore "$1"
+    ;;
+  burn)
+    checkroot
+    shift
+    burn "$1"
     ;;
   help)
     help "$2"

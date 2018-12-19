@@ -21,6 +21,7 @@ function help_default {
   echo "   bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service"
   echo "   hotspot <ESSID> [password]               creates a mobile hotspot. this command has been deprecated, please use treehouses ap"
   echo "   ap <local|internet> <ESSID> [password]   creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)"
+  echo "   apchannel [channel]                      sets or prints the current ap channel"
   echo "   timezone <timezone>                      sets the timezone of the system"
   echo "   locale <locale>                          sets the system locale"
   echo "   ssh <on|off>                             enables or disables the ssh service"

@@ -5,6 +5,7 @@ SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
+source "$SCRIPTFOLDER/modules/apchannel.sh"
 source "$SCRIPTFOLDER/modules/bluetooth.sh"
 source "$SCRIPTFOLDER/modules/bridge.sh"
 source "$SCRIPTFOLDER/modules/burn.sh"
@@ -149,6 +150,10 @@ case $1 in
   feedback)
     shift
     feedback "$*"
+    ;;
+  apchannel)
+    shift
+    apchannel "$1"
     ;;
   clone)
     checkroot

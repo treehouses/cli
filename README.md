@@ -35,6 +35,7 @@ sshtunnel <add|remove|show>              helps adding an sshtunnel
 led [green|red] [mode]                   sets the led mode
 rtc <on|off> [rasclock|ds3231]           sets up the rtc clock specified
 ntp <local|internet>                     enables or disables time through ntp servers
+burn [device path]                       download and burns the latest treehouses image to the SDcard or specified device
 ```
 
 # Additional Notes

@@ -4,6 +4,7 @@
 function help_default {
   echo "Usage: $(basename "$0")"
   echo
+  echo "   help [command]                           gives you a more detailed info about the command or will output this"
   echo "   expandfs                                 expands the partition of the RPI image to the maximum of the SDcard"
   echo "   rename <hostname>                        changes hostname"
   echo "   password <password>                      changes the password for 'pi' user"
@@ -19,7 +20,6 @@ function help_default {
   echo "          [password] [hotspotPassword]"
   echo "   container <none|docker|balena>           enables (and start) the desired container"
   echo "   bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service"
-  echo "   hotspot <ESSID> [password]               creates a mobile hotspot. this command has been deprecated, please use treehouses ap"
   echo "   ap <local|internet> <ESSID> [password]   creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)"
   echo "   apchannel [channel]                      sets or prints the current ap channel"
   echo "   timezone <timezone>                      sets the timezone of the system"

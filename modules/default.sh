@@ -33,6 +33,7 @@ function default {
       ;;
   esac
 
+  reboot_required
   echo 'Success: the rpi has been reset to default, please reboot your device'
 }
 

@@ -86,3 +86,17 @@ function clean_var {
     echo "$1"
   fi
 }
+
+
+function reboot_required {
+  if [ ! -f "/etc/reboot-required.sh" ]; then
+    cp "$TEMPLATES/reboot-required.sh" /etc/
+    chmod +x /etc/reboot-required.sh
+  fi
+
+  touch "/etc/reboot-required"
+
+  if ! grep -q "@reboot root /etc/reboot-required.sh" "/etc/crontab" 2>/dev/null ; then
+    echo "@reboot root /etc/reboot-required.sh" >> "/etc/crontab"
+  fi
+}

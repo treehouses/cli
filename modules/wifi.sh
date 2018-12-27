@@ -50,6 +50,7 @@ function wifi {
     echo "password network"
   fi
 
+  reboot_required
   echo "wifi" > /etc/network/mode
 }
 

@@ -172,7 +172,7 @@ case $1 in
     shift
     burn "$1"
     ;;
-  reboot)
+  rebootneeded)
     reboot
     ;;
   help)

@@ -1,6 +1,18 @@
 #!/bin/bash
 
 function default {
+  if [ "$1" == "network" ] ; then
+    default_network
+    echo 'Success: the network mode has been reset to default, please reboot your device';
+    exit 0
+  fi
+
+  rename "raspberrypi" > /dev/null 2>/dev/null
+  default_network
+  echo 'Success: the rpi has been reset to default, please reboot your device'
+}
+
+function default_network {
   cp "$TEMPLATES/network/interfaces/default" "/etc/network/interfaces"
   cp "$TEMPLATES/network/wpa_supplicant" "/etc/wpa_supplicant/wpa_supplicant.conf"
   cp "$TEMPLATES/rc.local/default" "/etc/rc.local"
@@ -13,7 +25,7 @@ function default {
   rm -rf /etc/hostapd.conf
   rm -rf /etc/network/interfaces.d/*
   rm -rf /etc/rpi-wifi-country
-  rename "raspberrypi" > /dev/null 2>/dev/null
+
   stop_service hostapd
   stop_service dnsmasq
   disable_service hostapd
@@ -32,20 +44,25 @@ function default {
       } > /etc/network/interfaces.d/usb0
       ;;
   esac
-
+  
   reboot_required
-  echo 'Success: the rpi has been reset to default, please reboot your device'
 }
+
 
 function default_help {
   echo ""
-  echo "Usage: $(basename "$0") default"
+  echo "Usage: $(basename "$0") default [network]"
   echo ""
-  echo "Resets the raspberry pi to default"
+  echo "Resets the raspberry pi to default."
+  echo "You can also just default the network by specifying it."
   echo ""
   echo "Example:"
   echo "  $(basename "$0") default"
   echo "      This will allow you to return back to the original configuration for all the services and settings which were set for the image when it was first installed."
+  echo "      This will not delete any new files you created."
+  echo ""
+  echo "  $(basename "$0") default network"
+  echo "      This will return the network back to the original configuration of when installed."
   echo "      This will not delete any new files you created."
   echo ""
 }

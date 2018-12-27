@@ -111,7 +111,7 @@ case $1 in
     ;;
   default)
     checkroot
-    default
+    default "$2"
     ;;
   upgrade)
     checkroot

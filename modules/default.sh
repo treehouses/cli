@@ -44,6 +44,8 @@ function default_network {
       } > /etc/network/interfaces.d/usb0
       ;;
   esac
+  
+  reboot_needed
 }
 
 

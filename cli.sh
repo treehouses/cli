@@ -23,6 +23,7 @@ source "$SCRIPTFOLDER/modules/locale.sh"
 source "$SCRIPTFOLDER/modules/networkmode.sh"
 source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
+source "$SCRIPTFOLDER/modules/rebootneeded.sh"
 source "$SCRIPTFOLDER/modules/rename.sh"
 source "$SCRIPTFOLDER/modules/restore.sh"
 source "$SCRIPTFOLDER/modules/rtc.sh"
@@ -170,6 +171,9 @@ case $1 in
     checkroot
     shift
     burn "$1"
+    ;;
+  rebootneeded)
+    rebootneeded
     ;;
   help)
     help "$2"

@@ -23,6 +23,7 @@ function apchannel {
 
   sed -i "s/channel=$current_channel/channel=$new_channel/g" /etc/hostapd/hostapd.conf
   restart_service hostapd
+  reboot_needed
   echo "Success: the channel has been set to '$new_channel'. Please reboot to apply the changes"
 }
 

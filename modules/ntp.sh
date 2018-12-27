@@ -9,6 +9,7 @@ function ntp {
     sed -i "s/fudge 127\.127\.1\.0 stratum 10//" /etc/ntp.conf
     sed -i "s/restrict 192\.168\.0\.0 mask 255\.255\.0\.0 nomodify notrap//" /etc/ntp.conf
 
+    reboot_needed
     echo "Success: please reboot you rpi to apply changes."
   elif [ "$status" = "local" ]; then
     service ntp restart
@@ -22,6 +23,8 @@ function ntp {
       echo "fudge 127.127.1.0 stratum 10"
       echo "restrict 192.168.0.0 mask 255.255.0.0 nomodify notrap"
     } >> /etc/ntp.conf
+
+    reboot_needed
     echo "Success: please reboot you rpi to apply changes."
   else
     echo "Error: only on, off options are supported"

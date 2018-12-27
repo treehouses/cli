@@ -59,7 +59,7 @@ function default_help {
   echo "      This will allow you to return back to the original configuration for all the services and settings which were set for the image when it was first installed."
   echo "      This will not delete any new files you created."
   echo ""
-  echo "  $(basename "$0") default network "
+  echo "  $(basename "$0") default network"
   echo "      This will return the network back to the original configuration of when installed."
   echo "      This will not delete any new files you created."
   echo ""

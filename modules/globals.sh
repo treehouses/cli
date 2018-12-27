@@ -86,3 +86,12 @@ function clean_var {
     echo "$1"
   fi
 }
+
+function get_ipv4_ip {
+  interface="$1"
+  if [ "$interface" == "ap0" ]; then
+    echo $(/sbin/ip -o -4 addr list "$interface" | awk '{print $4}' | sed '2d' | cut -d/ -f1)
+  else
+    echo $(/sbin/ip -o -4 addr list "$interface" | awk '{print $4}' | cut -d/ -f1)
+  fi
+}

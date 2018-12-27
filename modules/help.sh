@@ -40,7 +40,7 @@ function help_default {
   echo "   clone [device path]                      clones the current SDCard onto a secondary SDCard or specified device"
   echo "   restore [device path]                    restores a treehouses image to an SDCard or specified device"
   echo "   burn [device path]                       download and burns the latest treehouses image to the SDcard or specified device"
-  echo "   reboot                                   shows if reboot is required to apply changes"
+  echo "   rebootneeded                             shows if reboot is required to apply changes"
   echo
 }
 

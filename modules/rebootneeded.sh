@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function reboot {
+function rebootneeded {
   if [ -f "/etc/reboot-needed" ]; then
     echo "true";
     exit 0
@@ -9,7 +9,7 @@ function reboot {
   echo "false"
 }
 
-function reboot_help {
+function rebootneeded_help {
   echo ""
   echo "Usage: $(basename "$0") rebootneeded"
   echo ""

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function reboot {
-  if [ -f "/etc/reboot-required" ]; then
+  if [ -f "/etc/reboot-needed" ]; then
     echo "true";
     exit 0
   fi

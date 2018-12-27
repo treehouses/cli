@@ -55,7 +55,7 @@ function rtc {
       apt-get --force-yes -y remove fake-hwclock -qq &> /dev/null
       update-rc.d -f fake-hwclock remove &> /dev/null
 
-      reboot_required
+      reboot_needed
       echo "Success: clock changed. Please reboot"
     fi
   elif [ "$status" = "off" ]; then
@@ -69,7 +69,7 @@ function rtc {
     apt-get -y install fake-hwclock -qq &> /dev/null
     update-rc.d -f fake-hwclock defaults &> /dev/null
 
-    reboot_required
+    reboot_needed
     echo "Success: clock changed. Please reboot"
   else
     echo "Error: only on, off options are supported"

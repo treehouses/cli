@@ -51,7 +51,7 @@ function staticwifi {
 
   echo "static wifi" > /etc/network/mode
 
-  reboot_required
+  reboot_needed
   echo "Success: the wifi settings have been changed, a reboot is required in order to see the changes"
 }
 

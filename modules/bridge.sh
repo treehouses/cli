@@ -105,7 +105,7 @@ function bridge {
   echo "bridge" > /etc/network/mode
 
   sync; sync; sync
-  reboot_required
+  reboot_needed
   echo "the bridge has been built ;), a reboot is required to apply changes"
 }
 

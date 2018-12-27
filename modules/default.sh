@@ -45,7 +45,7 @@ function default_network {
       ;;
   esac
   
-  reboot_required
+  reboot_needed
 }
 
 

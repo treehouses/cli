@@ -144,7 +144,7 @@ case $1 in
     ntp "$2"
     ;;
   networkmode)
-    networkmode
+    networkmode "$2"
     ;;
   button)
     checkroot

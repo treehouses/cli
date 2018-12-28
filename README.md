@@ -42,4 +42,5 @@ feedback <message>                       sends feedback
 clone [device path]                      clones the current SDCard onto a secondary SDCard or specified device
 restore [device path]                    restores a treehouses image to an SDCard or specified device
 burn [device path]                       download and burns the latest treehouses image to the SDcard or specified device
+rebootneeded                             shows if reboot is required to apply changes
 ```

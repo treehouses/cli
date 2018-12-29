@@ -17,7 +17,7 @@ function upgrade {
     npm install -g '@treehouses/cli@latest'
   elif [ "$tag" == "--check" ];
   then
-    if [ $(internet) == "false" ];
+    if [ "$(internet)" == "false" ];
     then
       echo "false"
       exit

@@ -17,6 +17,9 @@ function led {
   elif [ "$color" = "red" ]; then
     led="$rLed"
     current="$currentRed"
+  elif [ "$color" = "dance" ]; then
+    checkroot
+    dance > /dev/null
   else
     if [ -z "$color" ]; then
       if [ ! -z "$currentGreen" ]; then
@@ -51,6 +54,7 @@ function led {
 
     echo "$trigger" > "$led/trigger"
     newValue=$(sed 's/.*\[\(.*\)\].*/\1/g' < "$led/trigger")
+    set_brightness "${led: -1}" 1
 
     if [ "$color" = "green" ]; then
       echo -e "$green: $newValue"
@@ -60,9 +64,36 @@ function led {
   fi
 }
 
+function set_brightness {
+  echo "$2" > "/sys/class/leds/led$1/brightness"
+}
+
+function dance {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  led red none
+  set_brightness 1 0
+
+  led green none
+  set_brightness 0 0
+
+  set_brightness 0 1 && sleep 1
+  set_brightness 0 0 && sleep 1
+  set_brightness 0 1 && sleep 2
+  set_brightness 0 0 && sleep 1
+  set_brightness 0 1 && sleep 3
+  set_brightness 0 0 && sleep 1
+  set_brightness 0 1 && sleep 4
+  set_brightness 0 0 && sleep 1
+
+  led red "$current_red"
+  led green "$current_green"
+}
+
 function led_help {
   echo ""
-  echo "Usage: $(basename "$0") led [green|red] [mode]"
+  echo "Usage: $(basename "$0") led [green|red|dance] [mode]"
   echo ""
   echo "Sets or returns the led mode"
   echo ""
@@ -78,5 +109,9 @@ function led_help {
   echo ""
   echo "  $(basename "$0") led green heartbeat"
   echo "      This will set the mode of the green led to heartbeat"
+  echo ""
+  echo "  $(basename "$0") led green dance"
+  echo "      This will do a sequence with the green led"
+  echo "      1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
   echo ""
 }

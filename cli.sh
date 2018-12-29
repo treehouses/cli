@@ -115,7 +115,6 @@ case $1 in
     default "$2"
     ;;
   upgrade)
-    checkroot
     shift
     upgrade "$@"
     ;;

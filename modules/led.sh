@@ -17,6 +17,9 @@ function led {
   elif [ "$color" = "red" ]; then
     led="$rLed"
     current="$currentRed"
+  elif [ "$color" = "dance" ]; then
+    checkroot
+    dance > /dev/null
   else
     if [ -z "$color" ]; then
       if [ ! -z "$currentGreen" ]; then
@@ -51,6 +54,7 @@ function led {
 
     echo "$trigger" > "$led/trigger"
     newValue=$(sed 's/.*\[\(.*\)\].*/\1/g' < "$led/trigger")
+    set_brightness "${led: -1}" 1
 
     if [ "$color" = "green" ]; then
       echo -e "$green: $newValue"
@@ -58,6 +62,33 @@ function led {
       echo -e "$red: $newValue"
     fi
   fi
+}
+
+function set_brightness {
+  echo "$2" > "/sys/class/leds/led$1/brightness"
+}
+
+function dance {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  led red none
+  set_brightness 1 0
+
+  led green none
+  set_brightness 0 0
+
+  set_brightness 0 1 && sleep 1
+  set_brightness 0 0 && sleep 1
+  set_brightness 0 1 && sleep 2
+  set_brightness 0 0 && sleep 1
+  set_brightness 0 1 && sleep 3
+  set_brightness 0 0 && sleep 1
+  set_brightness 0 1 && sleep 4
+  set_brightness 0 0 && sleep 1
+
+  led red "$current_red"
+  led green "$current_green"
 }
 
 function led_help {

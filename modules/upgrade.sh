@@ -2,26 +2,43 @@
 
 function upgrade {
   tag=$1
-  if [ -z "$tag" ];
+  if [ -z "$tag" ] && [ "$tag" != "--check" ];
   then
-      if ! [[ "$*" = *"-f"* ]];
+    checkroot
+    if ! [[ "$*" = *"-f"* ]];
+    then
+      last_version=$(npm show @treehouses/cli version)
+      if [ "$last_version" = "$(version)" ];
       then
-          last_version=$(npm show @treehouses/cli version)
-          if [ "$last_version" = "$(version)" ];
-          then
-              echo "$(basename "$0") is already up to date."
-              exit
-          fi
+          echo "$(basename "$0") is already up to date."
+          exit
       fi
-      npm install -g '@treehouses/cli@latest'
+    fi
+    npm install -g '@treehouses/cli@latest'
+  elif [ "$tag" == "--check" ];
+  then
+    if [ "$(internet)" == "false" ];
+    then
+      echo "false"
+      exit
+    fi
+
+    last_version=$(npm show @treehouses/cli version)
+    if [ "$last_version" = "$(version)" ];
+    then
+      echo "false"
+      exit
+    fi
+
+    echo "true $last_version"
   else
-      npm install -g "@treehouses/cli@${tag}"
+    npm install -g "@treehouses/cli@${tag}"
   fi
 }
 
 function upgrade_help {
   echo ""
-  echo "Usage: $(basename "$0") upgrade [-f] [tag]"
+  echo "Usage: $(basename "$0") upgrade [-f] [tag] [--check]"
   echo "" 
   echo "Upgrades $(basename "$0") package using npm"
   echo ""
@@ -35,5 +52,8 @@ function upgrade_help {
   echo ""
   echo " $(basename "$0") upgrade tag"
   echo "    This will upgrade the $(basename "$0") package to the version with the specified tag"
+  echo ""
+  echo " $(basename "$0") upgrade --check"
+  echo "    checks if there is a new version of the package, outputs false if there isnt, outputs true + version if there is"
   echo ""
 }

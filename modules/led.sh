@@ -93,7 +93,7 @@ function dance {
 
 function led_help {
   echo ""
-  echo "Usage: $(basename "$0") led [green|red] [mode]"
+  echo "Usage: $(basename "$0") led [green|red|dance] [mode]"
   echo ""
   echo "Sets or returns the led mode"
   echo ""
@@ -109,5 +109,9 @@ function led_help {
   echo ""
   echo "  $(basename "$0") led green heartbeat"
   echo "      This will set the mode of the green led to heartbeat"
+  echo ""
+  echo "  $(basename "$0") led green dance"
+  echo "      This will do a sequence with the green led"
+  echo "      1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
   echo ""
 }

@@ -1,0 +1,2 @@
+#!/bin/bash
+node /root/ole/server.js

@@ -8,10 +8,12 @@ function services {
   service_file="$TEMPLATES/services/$service_name/$output"
 
   if [ "$service_name" = "all" ] || [ -z "$service_name" ]; then
-    for service in  $(ls "$TEMPLATES/services/" | xargs -n 1 basename); do
-      available_formats=$(ls "$TEMPLATES/services/$service" | xargs -n 1 basename | tr '\n' "|" | sed '$s/|$//')
+    while IFS= read -r -d '' service
+    do
+      service=$(basename "$service")
+      available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
       echo "$service [$available_formats]"
-    done
+    done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
   else
     if [ -f "$service_file" ]; then
       if [ "$install" = "install" ]; then

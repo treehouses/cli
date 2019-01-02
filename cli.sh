@@ -28,6 +28,7 @@ source "$SCRIPTFOLDER/modules/rebootneeded.sh"
 source "$SCRIPTFOLDER/modules/rename.sh"
 source "$SCRIPTFOLDER/modules/restore.sh"
 source "$SCRIPTFOLDER/modules/rtc.sh"
+source "$SCRIPTFOLDER/modules/services.sh"
 source "$SCRIPTFOLDER/modules/ssh.sh"
 source "$SCRIPTFOLDER/modules/sshkeyadd.sh"
 source "$SCRIPTFOLDER/modules/sshtunnel.sh"
@@ -177,6 +178,10 @@ case $1 in
     ;;
   internet)
     internet
+    ;;
+  services)
+    shift
+    services "$@"
     ;;
   help)
     help "$2"

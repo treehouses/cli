@@ -1,0 +1,10 @@
+#!/bin/bash
+
+sleep 1
+
+if [ -f /srv/planet/pwd/credentials.yml ]; then
+  docker-compose -f /root/planet.yml -f /root/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d
+else
+  docker-compose -f /root/planet.yml -f /root/volumes.yml -p planet up -d
+fi
+

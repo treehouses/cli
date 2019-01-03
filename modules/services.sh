@@ -11,9 +11,12 @@ function services {
     while IFS= read -r -d '' service
     do
       service=$(basename "$service")
-      available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
-      echo "$service [$available_formats]"
+      find_available_formats "$service"
     done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
+  elif [ "$output" = "docker" ]; then
+    docker images | grep "$service_name"
+  elif [ "$output" = "docker-compose" ]; then
+    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p "$service_name" ps --all
   else
     if [ -f "$service_file" ]; then
       if [ "$install" = "install" ]; then
@@ -32,9 +35,21 @@ function services {
         cat "$service_file"
       fi
     else
-      echo "service template not found"
+      if [ -d "$TEMPLATES/services/$service_name" ]; then
+        echo "service format not known, availables:"
+        find_available_formats "$service_name"
+      else
+        echo "service not known"
+        services "all"
+      fi
     fi
   fi
+}
+
+function find_available_formats {
+  service="$1"
+  available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
+  echo "$service [$available_formats]"
 }
 
 function services_help {

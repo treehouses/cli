@@ -1,0 +1,35 @@
+#!/bin/bash
+
+treehouses rename treehouses
+treehouses expandfs
+treehouses button bluetooth
+
+#treehouses wifi <wifiname> [password]
+#treehouses ap internet <hotspotname> [password]
+treehouses ap internet treehouses
+#treehouses ap local <hotspotname> [password]
+#treehouses bridge <wifiname> <hotspotname> [wifipassword] [hotspotpassword]
+
+#have internet and wanna latest planet? - please uncomment
+#docker pull treehouses/planet:latest
+#docker pull treeohuses/planet:db-init
+#docker tag treehouses/planet:latest treehouses/planet:local
+#docker tag treehouses/planet:db-init treehouses/planet:db-init-local
+
+{
+  echo "#!/bin/sh"
+  echo
+  echo "sleep 1"
+  echo
+  echo "if [ -f /srv/planet/pwd/credentials.yml ]; then"
+  echo "  docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d"
+  echo "else"
+  echo "  docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d"
+  echo "fi"
+} > /boot/autorun
+
+mv /srv/tenalp /srv/planet
+
+sync;sync;sync
+
+docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d

@@ -42,6 +42,8 @@ function help_default {
   echo "   burn [device path]                       download and burns the latest treehouses image to the SDcard or specified device"
   echo "   rebootneeded                             shows if reboot is required to apply changes"
   echo "   internet                                 checks if the rpi has access to internet"
+  echo "   services [service_name] [format]         outputs or install the desired service"
+  echo "            [install]                 "
   echo
 }
 

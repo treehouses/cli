@@ -35,6 +35,7 @@ function detectrpi {
   rpimodels["a22082"]="RPI3B"
   rpimodels["a32082"]="RPI3B"
   rpimodels["a020d3"]="RPI3B+"
+  rpimodels["9020e0"]="RPI3A+"
 
   rpimodel=$(grep Revision /proc/cpuinfo | sed 's/.* //g' | tr -d '\n')
 

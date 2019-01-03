@@ -2,7 +2,7 @@
 
 function bridge {
   case $(detectrpi) in
-    RPI3B|RPIZW|RPI3B+)
+    RPI3B|RPIZW|RPI3B+|RPI3A+)
       ;;
     *)
       echo "Your rpi model is not supported"

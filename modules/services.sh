@@ -16,7 +16,7 @@ function services {
   elif [ "$output" = "docker" ]; then
     docker images | grep "$service_name"
   elif [ "$output" = "docker-compose" ]; then
-    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p "$service_name" ps --all
+    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p "$service_name" ps
   else
     if [ -f "$service_file" ]; then
       if [ "$install" = "install" ]; then

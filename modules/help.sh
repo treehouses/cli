@@ -43,8 +43,8 @@ function help_default {
   echo "   rebootneeded                             shows if reboot is required to apply changes"
   echo "   internet                                 checks if the rpi has access to internet"
   echo "   services [service_name] [format]         outputs or install the desired service"
-  echo "            [install]                 "
-  echo "   tor                                      outputs the current tor address"
+  echo "            [install]"
+  echo "   tor [start|stop|add|list|destroy]        deals with services on tor hidden network"
   echo
 }
 

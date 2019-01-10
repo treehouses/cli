@@ -44,6 +44,7 @@ function help_default {
   echo "   internet                                 checks if the rpi has access to internet"
   echo "   services [service_name] [format]         outputs or install the desired service"
   echo "            [install]                 "
+  echo "   tor                                      outputs the current tor address"
   echo
 }
 

@@ -34,6 +34,7 @@ source "$SCRIPTFOLDER/modules/sshkeyadd.sh"
 source "$SCRIPTFOLDER/modules/sshtunnel.sh"
 source "$SCRIPTFOLDER/modules/staticwifi.sh"
 source "$SCRIPTFOLDER/modules/timezone.sh"
+source "$SCRIPTFOLDER/modules/tor.sh"
 source "$SCRIPTFOLDER/modules/upgrade.sh"
 source "$SCRIPTFOLDER/modules/version.sh"
 source "$SCRIPTFOLDER/modules/vnc.sh"
@@ -182,6 +183,10 @@ case $1 in
   services)
     shift
     services "$@"
+    ;;
+  tor)
+    shift
+    tor "$@"
     ;;
   help)
     help "$2"

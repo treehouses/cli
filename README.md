@@ -46,4 +46,5 @@ rebootneeded                             shows if reboot is required to apply ch
 internet                                 checks if the rpi has access to internet
 services [service_name] [format]         outputs or install the desired service
         [install]
+tor [start|stop|add|list|destroy]        deals with services on tor hidden network
 ```

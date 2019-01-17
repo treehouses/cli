@@ -107,6 +107,6 @@ function tor_help {
   echo "      Stops and resets the tor configuration"
   echo ""
   echo "  $(basename "$0") tor notice <on|off>"
-  echo "      Enables or disables the tor address/ports to gitter"
+  echo "      Enables or disables the propagation of the tor address/ports to gitter"
   echo ""
 }

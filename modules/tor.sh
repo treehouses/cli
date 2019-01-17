@@ -58,6 +58,11 @@ function tor {
       chmod 700 /var/lib/tor/treehouses
     fi
 
+    cp "$TEMPLATES/network/tor_report.sh" /etc/tor_report.sh
+    if [ ! -f "/etc/cron.d/tor_report" ]; then
+      echo "*/1 * * * * root if [ -d \"/var/lib/tor/treehouses\" ]; then /etc/tor_report.sh; fi" > /etc/cron.d/tor_report
+    fi
+
     if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
     fi

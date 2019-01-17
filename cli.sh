@@ -185,6 +185,7 @@ case $1 in
     services "$@"
     ;;
   tor)
+    checkroot
     shift
     tor "$@"
     ;;

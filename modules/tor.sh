@@ -17,8 +17,6 @@ function tor {
     echo "local <=> external"
     grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | sed 's/127.0.0.1:/<=> /g'
   elif [ "$1" = "add" ]; then
-    checkroot
-
     if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
     fi
@@ -45,13 +43,13 @@ function tor {
     restart_service tor
     echo "Success: the port has been added"
   elif [ "$1" = "stop" ]; then
-    checkroot
-
     stop_service tor
+
+    rm -rf /etc/tor_report.sh
+    rm -rf /etc/cron.d/tor_report
+
     echo "Success: the tor service has been stopped"
   elif [ "$1" = "start" ]; then
-    checkroot
-
     if [ ! -d "/var/lib/tor/treehouses" ]; then
       mkdir "/var/lib/tor/treehouses"
       chown debian-tor:debian-tor /var/lib/tor/treehouses
@@ -70,11 +68,13 @@ function tor {
     start_service tor
     echo "Success: the tor service has been started"
   elif [ "$1" = "destroy" ]; then
-    checkroot
-
     stop_service tor
     echo > /etc/tor/torrc
     rm -rf /var/lib/tor/treehouses
+
+    rm -rf /etc/tor_report.sh
+    rm -rf /etc/cron.d/tor_report
+
     echo "Success: the tor service has been destroyed"
   else
     echo "Error: only 'list', 'add', 'start', 'stop' and 'destroy' options are supported."

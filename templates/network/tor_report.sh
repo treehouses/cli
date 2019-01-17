@@ -1,7 +1,8 @@
 #!/bin/bash
 
 function report {
-  treehouses feedback "$(treehouses tor)"
+  tor_ports=$(treehouses tor list | sed '1d' | sed "s/ <=> /:/g" | tr "\n" " " | sed 's/.$//')
+  treehouses feedback "$(treehouses tor)\n$tor_ports"
   echo "report"
 }
 

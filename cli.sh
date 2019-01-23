@@ -42,7 +42,7 @@ source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 
-
+check_missing_packages "x"
 
 case $1 in
   expandfs)

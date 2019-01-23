@@ -108,3 +108,19 @@ function get_ipv4_ip {
     /sbin/ip -o -4 addr list "$interface" | awk '{print $4}' | cut -d/ -f1
   fi
 }
+
+function check_missing_packages {
+  missing_deps=()
+  for command in tor curl; do
+    if ! type $command &>/dev/null ; then
+        missing_deps+=( "$command" )
+    fi
+  done
+
+
+  if (( ${#missing_deps[@]} > 0 )) ; then
+      echo "Missing required programs: ${missing_deps[*]}"
+      echo "On Debian/Ubuntu try 'sudo apt install tor curl'"
+      exit 1
+  fi
+}

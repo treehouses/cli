@@ -39,7 +39,22 @@ function detectrpi {
 
   rpimodel=$(grep Revision /proc/cpuinfo | sed 's/.* //g' | tr -d '\n')
 
-  echo ${rpimodels[$rpimodel]}
+  found=0
+  for i in "${!rpimodels[@]}";
+  do
+    if [ "$i" == "$rpimodel" ];
+    then
+      found=1
+      break
+    fi
+  done
+
+  if [ "$found" == 1 ];
+  then
+    echo ${rpimodels[$rpimodel]}
+  else
+    echo "nonrpi"
+  fi
 }
 
 

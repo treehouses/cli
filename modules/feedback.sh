@@ -5,9 +5,9 @@ token="adfab56b2f10b85f94db25f18e51a4b465dbd670"
 function feedback {
   message="$*"
   if [ "$(detectrpi)" != "nonrpi" ]; then
-    body="{\"text\":\"\`$(hostname)\` \`$(curl ifconfig.io -s)\` \`$(treehouses version)\` \`$(treehouses detectrpi)\` \`$(cat /boot/version.txt)\`:\n$message\"}"
+    body="{\"text\":\"\`$(hostname)\` \`$(curl ifconfig.io -s)\` \`$(version)\` \`$(detectrpi)\` \`$(cat /boot/version.txt)\`:\\n$message\"}"
   else
-    body="{\"text\":\"\`$(hostname)\` \`$(curl ifconfig.io -s)\` \`$(treehouses version)\` \`$(treehouses detect)\`:\n$message\"}"
+    body="{\"text\":\"\`$(hostname)\` \`$(curl ifconfig.io -s)\` \`$(version)\` \`$(detect | sed "s/ /\` \`/1")\`:\\n$message\"}"
   fi
 
   curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token" "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" -d  "$body"> /dev/null

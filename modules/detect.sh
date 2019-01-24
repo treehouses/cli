@@ -4,7 +4,11 @@ function detect {
   if [ "$(detectrpi)" != "nonrpi" ]; then
     echo "rpi $(detectrpi)"
   elif [ -d "/vagrant" ]; then
-    echo "vagrant $(cat /boot/version.txt)"
+    if [ -f "/boot/version.txt" ]; then
+      echo "vagrant $(cat /boot/version.txt)"
+    else
+      echo "vagrant other"
+    fi
   else
     echo "other $(uname -m)"
   fi

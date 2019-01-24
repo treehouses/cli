@@ -14,6 +14,7 @@ sshkeyadd <public_key>                   adds a public key to 'pi' and 'root' us
 version                                  returns the version of cli.sh command
 image                                    returns version of the system image installed
 detectrpi                                detects the hardware version of a raspberry pi
+detect                                   detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address
 wifi <ESSID> [password]                  connects to a wifi network
 staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address

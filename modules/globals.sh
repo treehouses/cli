@@ -117,7 +117,6 @@ function check_missing_packages {
     fi
   done
 
-
   if (( ${#missing_deps[@]} > 0 )) ; then
       echo "Missing required programs: ${missing_deps[*]}"
       echo "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"

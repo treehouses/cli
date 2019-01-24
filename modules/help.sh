@@ -12,6 +12,7 @@ function help_default {
   echo "   version                                  returns the version of $(basename "$0") command"
   echo "   image                                    returns version of the system image installed"
   echo "   detectrpi                                detects the hardware version of a raspberry pi"
+  echo "   detect                                   detects the hardware version of any device"
   echo "   ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address"
   echo "   wifi <ESSID> [password]                  connects to a wifi network"
   echo "   staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address"

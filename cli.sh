@@ -12,6 +12,7 @@ source "$SCRIPTFOLDER/modules/burn.sh"
 source "$SCRIPTFOLDER/modules/button.sh"
 source "$SCRIPTFOLDER/modules/container.sh"
 source "$SCRIPTFOLDER/modules/default.sh"
+source "$SCRIPTFOLDER/modules/detect.sh"
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/ethernet.sh"
 source "$SCRIPTFOLDER/modules/expandfs.sh"
@@ -67,6 +68,9 @@ case $1 in
     ;;
   image)
     image
+    ;;
+  detect)
+    detect
     ;;
   detectrpi)
     detectrpi

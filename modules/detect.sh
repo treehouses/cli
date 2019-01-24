@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function detect {
-  if [ $(detectrpi) != "nonrpi" ]; then
+  if [ "$(detectrpi)" != "nonrpi" ]; then
     echo "rpi $(detectrpi)"
   elif [ -d "/vagrant" ]; then
     echo "vagrant $(cat /boot/version.txt)"

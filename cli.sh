@@ -42,7 +42,6 @@ source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 
-
 case $1 in
   expandfs)
     checkroot

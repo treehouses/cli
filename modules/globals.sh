@@ -111,7 +111,7 @@ function get_ipv4_ip {
 
 function check_missing_packages {
   missing_deps=()
-  for command in tor curl; do
+  for command in "$@"; do
     if ! type $command &>/dev/null ; then
         missing_deps+=( "$command" )
     fi
@@ -120,7 +120,7 @@ function check_missing_packages {
 
   if (( ${#missing_deps[@]} > 0 )) ; then
       echo "Missing required programs: ${missing_deps[*]}"
-      echo "On Debian/Ubuntu try 'sudo apt install tor curl'"
+      echo "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
       exit 1
   fi
 }

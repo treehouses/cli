@@ -2,6 +2,8 @@
 
 function sshkey () {
   if [ "$1" == "add" ]; then
+    shift
+
     mkdir -p /root/.ssh /home/pi/.ssh
     chmod 700 /root/.ssh /home/pi/.ssh
 
@@ -43,9 +45,9 @@ function sshkey () {
       echo "Usage: $(basename "$0") sshkey addgithubgroup <organization> <team_name> <access_token>"
       exit 1
     fi
-    teams=$(curl -s -X GET "https://api.github.com/orgs/$2/teams" -H 'Authorization: token $4')
+    teams=$(curl -s -X GET "https://api.github.com/orgs/$2/teams" -H "Authorization: token $4")
     team_id=$(echo "$teams" | jq ".[] | select(.name==\"$3\").id")
-    members=$(curl -s -X GET "https://api.github.com/teams/$team_id/members" -H 'Authorization: token $4' | jq ".[].login" -r)
+    members=$(curl -s -X GET "https://api.github.com/teams/$team_id/members" -H "Authorization: token $4" | jq ".[].login" -r)
     while read -r member; do
       sshkey addgithubusername "$member"
       echo "got $member keys."

@@ -97,7 +97,11 @@ function tor {
       sed -i "/^$value/d" /etc/tor_report_channels.txt
       echo "OK."
     elif [ "$option" = "list" ]; then
-      cat /etc/tor_report_channels.txt
+      if [ -f "/etc/tor_report_channels.txt" ]; then
+        cat /etc/tor_report_channels.txt
+      else
+        echo "No channels found."
+      fi
     elif [ "$option" = "off" ]; then
       rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
       echo "OK."

@@ -2,7 +2,7 @@
 
 function report {
   tor_ports=$(treehouses tor list | sed '1d' | sed "s/ <=> /:/g" | tr "\n" " " | sed 's/.$//')
-  while read channel; do
+  while read -r channel; do
     export gitter_channel="$channel"
     treehouses feedback "$(treehouses tor)\n$tor_ports"
   done < /etc/tor_report_channels.txt

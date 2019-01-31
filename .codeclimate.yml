@@ -10,3 +10,5 @@ engines:
         enabled: false
       SC2086:
         enabled: false
+      SC2154:
+        enabled: false

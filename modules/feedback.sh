@@ -1,6 +1,11 @@
 #!/bin/bash
 
 token="adfab56b2f10b85f94db25f18e51a4b465dbd670"
+channel="https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages"
+# set on ../templates/network/tor_report.sh
+if [ ! -z "$gitter_channel" ]; then
+  channel="$gitter_channel"
+fi
 
 function feedback {
   message="$*"
@@ -10,7 +15,7 @@ function feedback {
     body="{\"text\":\"\`$(hostname)\` \`$(curl ifconfig.io -s)\` \`$(version)\` \`$(detect | sed "s/ /\` \`/1")\`:\\n$message\"}"
   fi
 
-  curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token" "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" -d  "$body"> /dev/null
+  curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token" "$channel" -d  "$body"> /dev/null
   echo "Thanks for the feedback!"
 }
 

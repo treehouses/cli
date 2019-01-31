@@ -100,7 +100,7 @@ function tor {
       if [ -f "/etc/tor_report_channels.txt" ]; then
         cat /etc/tor_report_channels.txt
       else
-        echo "No channels found."
+        echo "No channels found. No message send"
       fi
     elif [ "$option" = "off" ]; then
       rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true

@@ -74,7 +74,7 @@ function tor {
         echo "*/1 * * * * root if [ -d \"/var/lib/tor/treehouses\" ]; then /etc/tor_report.sh; fi" > /etc/cron.d/tor_report
       fi
       if [ ! -f "/etc/tor_report_channels.txt" ]; then
-        touch /etc/tor_report_channels.txt
+        echo "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" >> /etc/tor_report_channels.txt
       fi
       echo "OK."
     elif [ "$option" = "add" ]; then

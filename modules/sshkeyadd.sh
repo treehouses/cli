@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function sshkeyadd () {
-  echo "NOTE: This command has been deprecated and will soon be replaced by `treehouses sshkey add`"
+  echo "NOTE: This command has been deprecated and will soon be replaced by 'treehouses sshkey add'"
   sshkey add "$*"
 }
 
@@ -9,7 +9,7 @@ function sshkeyadd_help () {
   echo ""
   echo "Usage: $(basename "$0") sshkeyadd <public_key>"
   echo ""
-  echo "NOTE: This command has been deprecated and will soon be replaced by `treehouses sshkey add`"
+  echo "NOTE: This command has been deprecated and will soon be replaced by 'treehouses sshkey add'"
   echo ""
   echo "Adds a public key to 'pi' and 'root' user's authorized_keys"
   echo ""

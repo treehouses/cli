@@ -10,6 +10,10 @@ function sshtunnel {
     host="ole@pirate.ole.org"
   fi
 
+  if [ -z "$action" ]; then
+    action="list"
+  fi
+
   hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
 
   if [ "$action" = "add" ]; then
@@ -67,7 +71,28 @@ function sshtunnel {
 
     pkill -3 autossh
     echo -e "${GREEN}Removed${NC}"
-  elif [ "$action" = "show" ]; then
+  elif [ "$action" = "list" ]; then
+    if [ -f "/etc/tunnel" ]; then
+      portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
+      portssh=$((portinterval + 22))
+      portweb=$((portinterval + 80))
+      portcouchdb=$((portinterval + 84))
+      portnewcouchdb=$((portinterval + 82))
+      portmunin=$((portinterval + 49))
+
+      echo "Ports:"
+      echo " local -> external"
+      echo "    22 -> $portssh"
+      echo "    49 -> $portmunin"
+      echo "    80 -> $portweb"
+      echo "    82 -> $portnewcouchdb"
+      echo "    84 -> $portcouchdb"
+      echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
+    else
+      echo "Error: a tunnel has not been set up yet"
+      exit 1
+    fi
+  elif [ "$action" = "check" ]; then
     if [ -f "/etc/tunnel" ]; then
       echo -e "[${GREEN}OK${NC}] /etc/tunnel"
     else
@@ -113,14 +138,14 @@ function sshtunnel {
       echo "Error: only 'on' and 'off' options are supported."
     fi
   else
-    echo "Error: only 'add', 'remove', 'show', 'key', 'notice' options are supported";
+    echo "Error: only 'add', 'remove', 'list', 'check', 'key', 'notice' options are supported";
     exit 1
   fi
 }
 
 function sshtunnel_help {
   echo ""
-  echo "Usage: $(basename "$0") sshtunnel <add|remove|show|key> <portinterval> [user@host]"
+  echo "Usage: $(basename "$0") sshtunnel <add|remove|list|key> <portinterval> [user@host]"
   echo ""
   echo "Helps setting up a sshtunnel"
   echo ""
@@ -136,8 +161,11 @@ function sshtunnel_help {
   echo "  $(basename "$0") sshtunnel remove"
   echo "      This will stop the ssh tunnels and remove the extra files added"
   echo ""
-  echo "  $(basename "$0") sshtunnel show"
-  echo "      This will run a checklist and report back the results."
+  echo "  $(basename "$0") sshtunnel list"
+  echo "      This will output the tunneled ports and to which host"
+  echo ""
+  echo "  $(basename "$0") sshtunnel check"
+  echo "      This will run a checklist and report back the results"
   echo ""
   echo "  $(basename "$0") sshtunnel key"
   echo "      This will show the public key."

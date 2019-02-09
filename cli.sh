@@ -32,6 +32,7 @@ source "$SCRIPTFOLDER/modules/restore.sh"
 source "$SCRIPTFOLDER/modules/rtc.sh"
 source "$SCRIPTFOLDER/modules/services.sh"
 source "$SCRIPTFOLDER/modules/ssh.sh"
+source "$SCRIPTFOLDER/modules/sshkey.sh"
 source "$SCRIPTFOLDER/modules/sshkeyadd.sh"
 source "$SCRIPTFOLDER/modules/sshtunnel.sh"
 source "$SCRIPTFOLDER/modules/staticwifi.sh"
@@ -63,6 +64,11 @@ case $1 in
     checkroot
     shift
     sshkeyadd "$@"
+    ;;
+  sshkey)
+    checkroot
+    shift
+    sshkey "$@"
     ;;
   version)
     version

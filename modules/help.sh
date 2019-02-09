@@ -47,7 +47,7 @@ function help_default {
   echo "            [install]"
   echo "   tor [start|stop|add|list|destroy]        deals with services on tor hidden network"
   echo "   bootoption <console|desktop>             sets the boot mode"
-  echo "        <console autologin|desktop autologin>"
+  echo "              [autologin]"
   echo
 }
 

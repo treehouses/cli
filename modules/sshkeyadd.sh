@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function sshkeyadd () {
-  echo "NOTE: This command has been deprecated and will soon be replaced by 'treehouses sshkey add'"
+  echo "NOTE: This command has been deprecated - please use 'treehouses sshkey add'"
   sshkey add "$*"
 }
 

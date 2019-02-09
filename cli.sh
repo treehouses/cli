@@ -10,6 +10,7 @@ source "$SCRIPTFOLDER/modules/bluetooth.sh"
 source "$SCRIPTFOLDER/modules/bridge.sh"
 source "$SCRIPTFOLDER/modules/burn.sh"
 source "$SCRIPTFOLDER/modules/button.sh"
+source "$SCRIPTFOLDER/modules/bootoption.sh"
 source "$SCRIPTFOLDER/modules/container.sh"
 source "$SCRIPTFOLDER/modules/default.sh"
 source "$SCRIPTFOLDER/modules/detect.sh"
@@ -198,6 +199,11 @@ case $1 in
     checkroot
     shift
     tor "$@"
+    ;;
+  bootoption)
+    checkroot
+    shift
+    bootoption "$*"
     ;;
   help)
     help "$2"

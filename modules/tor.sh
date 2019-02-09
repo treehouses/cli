@@ -71,11 +71,39 @@ function tor {
     if [ "$option" = "on" ]; then
       cp "$TEMPLATES/network/tor_report.sh" /etc/tor_report.sh
       if [ ! -f "/etc/cron.d/tor_report" ]; then
-      echo "*/1 * * * * root if [ -d \"/var/lib/tor/treehouses\" ]; then /etc/tor_report.sh; fi" > /etc/cron.d/tor_report
+        echo "*/1 * * * * root if [ -d \"/var/lib/tor/treehouses\" ]; then /etc/tor_report.sh; fi" > /etc/cron.d/tor_report
+      fi
+      if [ ! -f "/etc/tor_report_channels.txt" ]; then
+        echo "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" >> /etc/tor_report_channels.txt
       fi
       echo "OK."
-    elif [ "$option" == "off" ]; then
-      rm -rf /etc/tor_report.sh /etc/cron.d/tor_report || true
+    elif [ "$option" = "add" ]; then
+      value="$3"
+      if [ -z "$value" ]; then
+        echo "Error: You must specify a channel URL"
+        exit 1
+      fi
+
+      echo "$value" >> /etc/tor_report_channels.txt
+      echo "OK."
+    elif [ "$option" = "delete" ]; then
+      value="$3"
+      if [ -z "$value" ]; then
+        echo "Error: You must specify a channel URL"
+        exit 1
+      fi
+
+      value=$(echo $value | sed 's/\//\\\//g')
+      sed -i "/^$value/d" /etc/tor_report_channels.txt
+      echo "OK."
+    elif [ "$option" = "list" ]; then
+      if [ -f "/etc/tor_report_channels.txt" ]; then
+        cat /etc/tor_report_channels.txt
+      else
+        echo "No channels found. No message send"
+      fi
+    elif [ "$option" = "off" ]; then
+      rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
       echo "OK."
     else
       echo "Error: only 'on' and 'off' options are supported."
@@ -117,7 +145,7 @@ function tor_help {
   echo "  $(basename "$0") tor destroy"
   echo "      Stops and resets the tor configuration"
   echo ""
-  echo "  $(basename "$0") tor notice <on|off>"
+  echo "  $(basename "$0") tor notice <on|off|add|delete|list> [api_url]"
   echo "      Enables or disables the propagation of the tor address/ports to gitter"
   echo ""
 }

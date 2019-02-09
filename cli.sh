@@ -10,6 +10,7 @@ source "$SCRIPTFOLDER/modules/bluetooth.sh"
 source "$SCRIPTFOLDER/modules/bridge.sh"
 source "$SCRIPTFOLDER/modules/burn.sh"
 source "$SCRIPTFOLDER/modules/button.sh"
+source "$SCRIPTFOLDER/modules/bootoption.sh"
 source "$SCRIPTFOLDER/modules/container.sh"
 source "$SCRIPTFOLDER/modules/default.sh"
 source "$SCRIPTFOLDER/modules/detect.sh"
@@ -31,6 +32,7 @@ source "$SCRIPTFOLDER/modules/restore.sh"
 source "$SCRIPTFOLDER/modules/rtc.sh"
 source "$SCRIPTFOLDER/modules/services.sh"
 source "$SCRIPTFOLDER/modules/ssh.sh"
+source "$SCRIPTFOLDER/modules/sshkey.sh"
 source "$SCRIPTFOLDER/modules/sshkeyadd.sh"
 source "$SCRIPTFOLDER/modules/sshtunnel.sh"
 source "$SCRIPTFOLDER/modules/staticwifi.sh"
@@ -62,6 +64,11 @@ case $1 in
     checkroot
     shift
     sshkeyadd "$@"
+    ;;
+  sshkey)
+    checkroot
+    shift
+    sshkey "$@"
     ;;
   version)
     version
@@ -192,6 +199,11 @@ case $1 in
     checkroot
     shift
     tor "$@"
+    ;;
+  bootoption)
+    checkroot
+    shift
+    bootoption "$*"
     ;;
   help)
     help "$2"

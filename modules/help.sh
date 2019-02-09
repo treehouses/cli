@@ -32,7 +32,7 @@ function help_default {
   echo "   default                                  sets a raspbian back to default configuration"
   echo "   wificountry <country>                    sets the wifi country"
   echo "   upgrade                                  upgrades $(basename "$0") package using npm"
-  echo "   sshtunnel <add|remove|show>              helps adding an sshtunnel"
+  echo "   sshtunnel <add|remove|list|check>        helps adding an sshtunnel"
   echo "             <portinterval> [user@host]"
   echo "   led [green|red] [mode]                   sets the led mode"
   echo "   rtc <on|off> [rasclock|ds3231]           sets up the rtc clock specified"

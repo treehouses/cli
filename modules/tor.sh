@@ -105,6 +105,13 @@ function tor {
     elif [ "$option" = "off" ]; then
       rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
       echo "OK."
+    elif [ -z "$option" ]; then
+      if [ -f "/etc/cron.d/tor_report" ]; then
+        status="on"
+      else
+        status="off"
+      fi
+      echo "Status: $status"
     else
       echo "Error: only 'on' and 'off' options are supported."
     fi

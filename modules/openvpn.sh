@@ -4,13 +4,13 @@ function openvpn {
   command="$1"
 
   if [ "$command" == "use" ]; then
-    fName="$2"
-    pwd="$3"
+    filename="$2"
+    password="$3"
 
-    cp "$fName" "/etc/openvpn/openvpn.conf"
-    if [ ! -z "$pwd" ]; then
+    cp "$filename" "/etc/openvpn/openvpn.conf"
+    if [ ! -z "$password" ]; then
       echo "askpass /etc/openvpn/auth.txt" >> "/etc/openvpn/openvpn.conf"
-      echo "$pwd" >> "/etc/openvpn/auth.txt"
+      echo "$password" >> "/etc/openvpn/auth.txt"
       chmod 400 "/etc/openvpn/auth.txt"
     else
       rm -rf "/etc/openvpn/auth.txt"
@@ -32,7 +32,7 @@ function openvpn {
     disable_service "openvpn"
   elif [ "$command" == "load" ]; then
     url="$2"
-    pwd="$3"
+    password="$3"
 
     if [ -f "/tmp/vpn.ovpn" ]; then
       rm -rf "/tmp/vpn.ovpn";
@@ -41,7 +41,7 @@ function openvpn {
     curl -L "$url" -o "/tmp/vpn.ovpn"
 
     if [ -f "/tmp/vpn.ovpn" ]; then
-      openvpn "use" "/tmp/vpn.ovpn" "$pwd"
+      openvpn "use" "/tmp/vpn.ovpn" "$password"
     else
       echo "Error when trying to download the vpn file"
     fi
@@ -63,10 +63,10 @@ function openvpn_help {
   echo ""
   echo "Example:"
   echo "  $(basename "$0") openvpn                        => shows current status"
-  echo "  $(basename "$0") openvpn use <file> [pwd]       => copies the opvn file to the right place"
+  echo "  $(basename "$0") openvpn use <file> [password]  => copies the opvn file to the right place"
   echo "  $(basename "$0") openvpn show                   => shows the cert "
   echo "  $(basename "$0") openvpn delete                 => deletes the cert"
   echo "  $(basename "$0") openvpn on                     => turns on the ovpn service"
   echo "  $(basename "$0") openvpn off                    => turns off the ovpn service"
-  echo "  $(basename "$0") openvpn load <url> [vpn_pwd]  => downloads the cert from a server and uses it"
+  echo "  $(basename "$0") openvpn load <url> [password]  => downloads the cert from a server and uses it"
 }

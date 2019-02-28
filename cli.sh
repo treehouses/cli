@@ -26,6 +26,7 @@ source "$SCRIPTFOLDER/modules/locale.sh"
 source "$SCRIPTFOLDER/modules/networkmode.sh"
 source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
+source "$SCRIPTFOLDER/modules/openvpn.sh"
 source "$SCRIPTFOLDER/modules/rebootneeded.sh"
 source "$SCRIPTFOLDER/modules/rename.sh"
 source "$SCRIPTFOLDER/modules/restore.sh"
@@ -204,6 +205,11 @@ case $1 in
     checkroot
     shift
     bootoption "$*"
+    ;;
+  openvpn)
+    checkroot
+    shift
+    openvpn "$@"
     ;;
   help)
     help "$2"

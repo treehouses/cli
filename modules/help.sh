@@ -50,6 +50,7 @@ function help_default {
   echo "   tor [start|stop|add|list|destroy]        deals with services on tor hidden network"
   echo "   bootoption <console|desktop>             sets the boot mode"
   echo "              [autologin]"
+  echo "   openvpn [use|show|delete|on|off|load]    helps setting up an openvpn client"
   echo
 }
 

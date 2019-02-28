@@ -52,11 +52,12 @@ function openvpn {
     else
       echo "Error when trying to download the vpn file"
     fi
+  elif [ -z "$command" ]; then
+    echo "openvpn service"
+    echo "running: $(systemctl is-active openvpn)"
+    echo "run at boot: $(systemctl is-enabled openvpn)"
   else
-    if [ -z "$1" ]; then
-      ""
-    else 
-      echo "Error: only 'use', 'show', 'delete', 'on', 'off' and 'download' options are supported."
+    echo "Error: only 'use', 'show', 'delete', 'on', 'off' and 'load' options are supported."
   fi
 }
 
@@ -68,11 +69,11 @@ function openvpn_help {
   echo "Helps setting up an openvpn client"
   echo ""
   echo "Example:"
-  echo "  $(basename "$0") openvpn                           => shows current status"
-  echo "  $(basename "$0") openvpn use <file> [pwd]          => copies the opvn file to the right place"
-  echo "  $(basename "$0") openvpn show                      => shows the cert "
-  echo "  $(basename "$0") openvpn delete                    => deletes the cert"
-  echo "  $(basename "$0") openvpn on                        => turns on the ovpn service"
-  echo "  $(basename "$0") openvpn off                       => turns off the ovpn service"
-  echo "  $(basename "$0") openvpn download  <url> [vpn_pwd] => downloads the cert from a server"
+  echo "  $(basename "$0") openvpn                        => shows current status"
+  echo "  $(basename "$0") openvpn use <file> [pwd]       => copies the opvn file to the right place"
+  echo "  $(basename "$0") openvpn show                   => shows the cert "
+  echo "  $(basename "$0") openvpn delete                 => deletes the cert"
+  echo "  $(basename "$0") openvpn on                     => turns on the ovpn service"
+  echo "  $(basename "$0") openvpn off                    => turns off the ovpn service"
+  echo "  $(basename "$0") openvpn load <url> [vpn_pwd]  => downloads the cert from a server and uses it"
 }

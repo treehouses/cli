@@ -1,11 +1,4 @@
 #!/bin/bash
-# treehouses openvpn                  => shows current status
-# treehouses openvpn use <file> [pwd] => copies the opvn file to the right place
-# treehouses openvpn show             => shows the cert 
-# treehouses openvpn delete           => deletes the cert
-# treehouses openvpn on               => turns on the ovpn service
-# treehouses openvpn off              => turns off the ovpn service
-# treehouses openvpn download  <url> [vpn_pwd]=> downloads the cert from a server
 
 function openvpn {
   command="$1"

@@ -37,7 +37,7 @@ function openvpn {
   elif [ "$command" == "off" ]; then
     stop_service "openvpn"
     disable_service "openvpn"
-  elif [ "$command" == "download" ]; then
+  elif [ "$command" == "load" ]; then
     url="$2"
     pwd="$3"
 
@@ -64,7 +64,7 @@ function openvpn {
 
 function openvpn_help {
   echo ""
-  echo "Usage: $(basename "$0") openvpn [use|show|delete|on|off|download]"
+  echo "Usage: $(basename "$0") openvpn [use|show|delete|on|off|load]"
   echo ""
   echo "Helps setting up an openvpn client"
   echo ""

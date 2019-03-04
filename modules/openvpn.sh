@@ -122,4 +122,7 @@ function openvpn_help {
   echo "  $(basename "$0") openvpn on                     => turns on the ovpn service"
   echo "  $(basename "$0") openvpn off                    => turns off the ovpn service"
   echo "  $(basename "$0") openvpn load <url> [password]  => downloads the cert from a server and uses it"
+  echo "  $(basename "$0") openvpn notice <on|off|add|delete|list> [api_url]"
+  echo "    Enables or disables the propagation of the openvpn ip / status to gitter"
+  echo ""
 }

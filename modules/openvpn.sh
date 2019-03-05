@@ -130,7 +130,7 @@ function openvpn_help {
   echo "  $(basename "$0") openvpn use <file> [password]  => copies the opvn file to the right place"
   echo "  $(basename "$0") openvpn show                   => shows the cert "
   echo "  $(basename "$0") openvpn delete                 => deletes the cert"
-  echo "  $(basename "$0") openvpn star                   => turns on the ovpn service"
+  echo "  $(basename "$0") openvpn start                  => turns on the ovpn service"
   echo "  $(basename "$0") openvpn stop                   => turns off the ovpn service"
   echo "  $(basename "$0") openvpn load <url> [password]  => downloads the cert from a server and uses it"
   echo "  $(basename "$0") openvpn notice <on|off|add|delete|list> [api_url]"

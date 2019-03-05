@@ -55,6 +55,6 @@ tor [start|stop|add|list|destroy]        deals with services on tor hidden netwo
 bootoption <console|desktop>             sets the boot mode
           [autologin]
 openvpn [use|show|delete]                helps setting up an openvpn client
-        [notice|on|off|load]
+        [notice|start|stop|load]
 
 ```

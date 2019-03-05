@@ -115,8 +115,10 @@ function tor {
     else
       echo "Error: only 'on' and 'off' options are supported."
     fi
+  elif [ "$1" = "status" ]; then
+    systemctl is-active tor
   else
-    echo "Error: only 'list', 'add', 'start', 'stop', 'notice' and 'destroy' options are supported."
+    echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice' and 'destroy' options are supported."
   fi
 }
 
@@ -154,5 +156,8 @@ function tor_help {
   echo ""
   echo "  $(basename "$0") tor notice <on|off|add|delete|list> [api_url]"
   echo "      Enables or disables the propagation of the tor address/ports to gitter"
+  echo ""
+  echo "  $(basename "$0") tor status"
+  echo "      Outputs the status of the tor service"
   echo ""
 }

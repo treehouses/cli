@@ -12,7 +12,9 @@ help [command]                           gives you a more detailed info about th
 expandfs                                 expands the partition of the RPI image to the maximum of the SDcard
 rename <hostname>                        changes hostname
 password <password>                      changes the password for 'pi' user
-sshkeyadd <public_key>                   adds a public key to 'pi' and 'root' user's authorized_keys
+sshkey <add|list|delete>                 used for adding or removing ssh keys for authentication
+      <addgithubusername|addgithubgroup>
+sshkeyadd <public_key>                   deprecated - please use cli.sh sshkey add
 version                                  returns the version of cli.sh command
 image                                    returns version of the system image installed
 detectrpi                                detects the hardware version of a raspberry pi
@@ -20,9 +22,9 @@ detect                                   detects the hardware version of any dev
 ethernet <ip> <mask> <gateway> <dns>     configures rpi network interface to a static ip address
 wifi <ESSID> [password]                  connects to a wifi network
 staticwifi <ip> <mask> <gateway> <dns>   configures rpi wifi interface to a static ip address
-           <ESSID> [password]
+          <ESSID> [password]
 bridge <ESSID> <hotspotESSID>            configures the rpi to bridge the wlan interface over a hotspot
-       [password] [hotspotPassword]
+      [password] [hotspotPassword]
 container <none|docker|balena>           enables (and start) the desired container
 bluetooth <on|off>                       switches between bluetooth hotspot mode / regular bluetooth and starts the service
 ap <local|internet> <ESSID> [password]   creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
@@ -34,7 +36,7 @@ vnc <on|off>                             enables or disables the vnc server serv
 default                                  sets a raspbian back to default configuration
 wificountry <country>                    sets the wifi country
 upgrade                                  upgrades cli.sh package using npm
-sshtunnel <add|remove|show>              helps adding an sshtunnel
+sshtunnel <add|remove|list|check>        helps adding an sshtunnel
           <portinterval> [user@host]
 led [green|red] [mode]                   sets the led mode
 rtc <on|off> [rasclock|ds3231]           sets up the rtc clock specified
@@ -50,4 +52,9 @@ internet                                 checks if the rpi has access to interne
 services [service_name] [format]         outputs or install the desired service
         [install]
 tor [start|stop|add|list|destroy]        deals with services on tor hidden network
+bootoption <console|desktop>             sets the boot mode
+          [autologin]
+openvpn [use|show|delete]                helps setting up an openvpn client
+        [notice|on|off|load]
+
 ```

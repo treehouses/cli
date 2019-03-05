@@ -21,6 +21,9 @@ function openvpn {
     else
       rm -rf "/etc/openvpn/auth.txt"
     fi
+
+    restart_service "openvpn"
+    enable_service "openvpn"
   elif [ "$command" == "show" ]; then
     if [ -f "/etc/openvpn/openvpn.conf" ]; then
       cat "/etc/openvpn/openvpn.conf"
@@ -51,6 +54,9 @@ function openvpn {
     else
       echo "Error when trying to download the vpn file"
     fi
+
+    restart_service "openvpn"
+    enable_service "openvpn"
   elif [ "$command" = "notice" ]; then
     option="$2"
     if [ "$option" = "on" ]; then
@@ -100,7 +106,6 @@ function openvpn {
     else
       echo "Error: only 'on' and 'off' options are supported."
     fi
-  
   elif [ -z "$command" ]; then
     echo "openvpn service"
     echo "running: $(systemctl is-active openvpn)"

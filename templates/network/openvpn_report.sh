@@ -3,7 +3,7 @@
 function report {
   while read -r channel; do
     export gitter_channel="$channel"
-    treehouses feedback "$(treehouses openvpn | tail -n 1 | tr "\n" "#" | sed 's/#/\\n/g')\nvpn"
+    treehouses feedback "$(treehouses openvpn | tail -n 1 | tr "\n" "#" | sed 's/#/\\n/g')vpn"
   done < /etc/openvpn_report_channels.txt
   echo "report"
 }

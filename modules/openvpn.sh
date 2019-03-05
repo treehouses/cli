@@ -3,7 +3,7 @@
 function openvpn {
   command="$1"
 
-  if ! which openvpn > /dev/null; then
+  if [ ! -f "/usr/sbin/openvpn" ]; then
     echo "Error: couldn't find openvpn installed."
     echo "On debian systems it can be installed by running 'apt-get install openvpn'"
     exit 1

@@ -51,7 +51,7 @@ function help_default {
   echo "   bootoption <console|desktop>             sets the boot mode"
   echo "              [autologin]"
   echo "   openvpn [use|show|delete]                helps setting up an openvpn client"
-  echo "           [notice|on|off|load]"
+  echo "           [notice|start|stop|load]"
   echo
 }
 

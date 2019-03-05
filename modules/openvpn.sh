@@ -33,10 +33,10 @@ function openvpn {
   elif [ "$command" == "delete" ]; then
     rm -rf "/etc/openvpn/openvpn.conf"
     rm -rf "/etc/openvpn/auth.txt"
-  elif [ "$command" == "on" ]; then
+  elif [ "$command" == "start" ]; then
     start_service "openvpn"
     enable_service "openvpn"
-  elif [ "$command" == "off" ]; then
+  elif [ "$command" == "stop" ]; then
     stop_service "openvpn"
     disable_service "openvpn"
   elif [ "$command" == "load" ]; then
@@ -121,7 +121,7 @@ function openvpn {
 
 function openvpn_help {
   echo ""
-  echo "Usage: $(basename "$0") openvpn [use|show|delete|on|off|load]"
+  echo "Usage: $(basename "$0") openvpn [use|show|delete|start|stop|load]"
   echo ""
   echo "Helps setting up an openvpn client"
   echo ""
@@ -130,8 +130,8 @@ function openvpn_help {
   echo "  $(basename "$0") openvpn use <file> [password]  => copies the opvn file to the right place"
   echo "  $(basename "$0") openvpn show                   => shows the cert "
   echo "  $(basename "$0") openvpn delete                 => deletes the cert"
-  echo "  $(basename "$0") openvpn on                     => turns on the ovpn service"
-  echo "  $(basename "$0") openvpn off                    => turns off the ovpn service"
+  echo "  $(basename "$0") openvpn star                   => turns on the ovpn service"
+  echo "  $(basename "$0") openvpn stop                   => turns off the ovpn service"
   echo "  $(basename "$0") openvpn load <url> [password]  => downloads the cert from a server and uses it"
   echo "  $(basename "$0") openvpn notice <on|off|add|delete|list> [api_url]"
   echo "    Enables or disables the propagation of the openvpn ip / status to gitter"

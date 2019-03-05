@@ -35,6 +35,11 @@ function default_network {
   rm -rf /etc/network/eth0-shared.sh
   rm -rf /etc/network/mode
 
+  treehouses tor destroy > /dev/null
+  treehouses tor notice off > /dev/null
+  treehouses openvpn off > /dev/null
+  treehouses openvpn notice off > /dev/null
+
   case $(detectrpi) in
     RPIZ|RPIZW)
       {

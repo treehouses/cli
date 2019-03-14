@@ -114,7 +114,7 @@ function openvpn {
       echo "ip: $(get_ipv4_ip tun0)"
     fi
   else
-    echo "Error: only 'use', 'show', 'delete', 'notice', 'on', 'off' and 'load' options are supported."
+    echo "Error: only 'use', 'show', 'delete', 'notice', 'start', 'stop' and 'load' options are supported."
   fi
 }
 

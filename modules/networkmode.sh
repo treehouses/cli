@@ -22,6 +22,13 @@ function networkmode {
       get_staticnetwork_info "eth0"
     elif [ "$network_mode" == "default" ]; then
       echo "network mode is default."
+      ifaces=(eth0 wlan0)
+      for interface in "${ifaces[@]}"
+      do
+        if [ ! -z "$(get_ipv4_ip "$interface")" ]; then
+          echo "$interface ip: $(get_ipv4_ip "$interface")"
+        fi
+      done
     fi
   else
     echo "$network_mode"

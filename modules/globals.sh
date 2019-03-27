@@ -102,10 +102,12 @@ function reboot_needed {
 
 function get_ipv4_ip {
   interface="$1"
-  if [ "$interface" == "ap0" ]; then
-    /sbin/ip -o -4 addr list "$interface" | awk '{print $4}' | sed '2d' | cut -d/ -f1
-  else
-    /sbin/ip -o -4 addr list "$interface" | awk '{print $4}' | cut -d/ -f1
+  if cat /proc/net/dev | grep -q "$interface:"; then
+    if [ "$interface" == "ap0" ]; then
+      /sbin/ip -o -4 addr list "$interface" | awk '{print $4}' | sed '2d' | cut -d/ -f1
+    else
+      /sbin/ip -o -4 addr list "$interface" | awk '{print $4}' | cut -d/ -f1
+    fi
   fi
 }
 

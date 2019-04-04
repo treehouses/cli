@@ -81,12 +81,12 @@ function sshtunnel {
       portmunin=$((portinterval + 49))
 
       echo "Ports:"
-      echo " local -> external"
-      echo "    22 -> $portssh"
-      echo "    49 -> $portmunin"
-      echo "    80 -> $portweb"
-      echo "    82 -> $portnewcouchdb"
-      echo "    84 -> $portcouchdb"
+      echo " local   -> external"
+      echo "    22   -> $portssh"
+      echo "    80   -> $portweb"
+      echo "    2200 -> $portnewcouchdb"
+      echo "    4949 -> $portmunin"
+      echo "    5984 -> $portcouchdb"
       echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
     else
       echo "Error: a tunnel has not been set up yet"
@@ -130,10 +130,45 @@ function sshtunnel {
       if [ ! -f "/etc/cron.d/tunnel_report" ]; then
         echo "*/1 * * * * root if [ -f \"/etc/tunnel\" ]; then /etc/tunnel_report.sh; fi" > /etc/cron.d/tunnel_report
       fi
+      if [ ! -f "/etc/tunnel_report_channels.txt" ]; then
+        echo "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" >> /etc/tunnel_report_channels.txt
+      fi
       echo "OK."
-    elif [ "$option" == "off" ]; then
-      rm -rf /etc/tunnel_report.sh /etc/cron.d/tunnel_report || true
+    elif [ "$option" = "add" ]; then
+      value="$3"
+      if [ -z "$value" ]; then
+        echo "Error: You must specify a channel URL"
+        exit 1
+      fi
+
+      echo "$value" >> /etc/tunnel_report_channels.txt
       echo "OK."
+    elif [ "$option" = "delete" ]; then
+      value="$3"
+      if [ -z "$value" ]; then
+        echo "Error: You must specify a channel URL"
+        exit 1
+      fi
+
+      value=$(echo $value | sed 's/\//\\\//g')
+      sed -i "/^$value/d" /etc/tunnel_report_channels.txt
+      echo "OK."
+    elif [ "$option" = "list" ]; then
+      if [ -f "/etc/tunnel_report_channels.txt" ]; then
+        cat /etc/tunnel_report_channels.txt
+      else
+        echo "No channels found. No message send"
+      fi
+    elif [ "$option" = "off" ]; then
+      rm -rf /etc/tunnel_report.sh /etc/cron.d/tunnel_report /etc/tunnel_report_channels.txt || true
+      echo "OK."
+    elif [ -z "$option" ]; then
+      if [ -f "/etc/cron.d/tunnel_report" ]; then
+        status="on"
+      else
+        status="off"
+      fi
+      echo "Status: $status"
     else
       echo "Error: only 'on' and 'off' options are supported."
     fi
@@ -145,7 +180,7 @@ function sshtunnel {
 
 function sshtunnel_help {
   echo ""
-  echo "Usage: $(basename "$0") sshtunnel <add|remove|list|key> <portinterval> [user@host]"
+  echo "Usage: $(basename "$0") sshtunnel <add|remove|list|key|notice> <portinterval> [user@host]"
   echo ""
   echo "Helps setting up a sshtunnel"
   echo ""
@@ -153,9 +188,9 @@ function sshtunnel_help {
   echo "  $(basename "$0") sshtunnel add 65400 user@server.org"
   echo "      This will set up autossh with the host 'user@server.org' and open the following tunnels"
   echo "      127.0.1.1:22 -> host:65422"
-  echo "      127.0.1.1:49 -> host:65449"
   echo "      127.0.1.1:80 -> host:65480"
   echo "      127.0.1.1:2200 -> host:65482"
+  echo "      127.0.1.1:4949 -> host:65449"
   echo "      127.0.1.1:5984 -> host:65484"
   echo ""
   echo "  $(basename "$0") sshtunnel remove"
@@ -169,5 +204,8 @@ function sshtunnel_help {
   echo ""
   echo "  $(basename "$0") sshtunnel key"
   echo "      This will show the public key."
+  echo ""
+  echo "  $(basename "$0") sshtunnel notice <on|off|add|delete|list> [api_url]"
+  echo "      Enables or disables the propagation of the sshtunnel ports to gitter"
   echo ""
 }

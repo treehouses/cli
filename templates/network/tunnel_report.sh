@@ -1,9 +1,16 @@
 #!/bin/bash
 
 function report {
-  port=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
-  nmode=$(cat /etc/network/mode 2>/dev/null || echo "default")
-  curl --data-urlencode "message=**$(hostname)** ($(curl ifconfig.io -s)) | port: **$port** | network: **$nmode** | rpi: **$(treehouses detectrpi)** | cli: **$(treehouses version)** | img: **$(cat /boot/version.txt)** | _**$(date "+%F %H:%M:%S UTC" -u)**_" https://webhooks.gitter.im/e/eb6bedd04ecb36255d0a
+  portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
+  portssh=$((portinterval + 22))
+  portweb=$((portinterval + 80))
+  portcouchdb=$((portinterval + 84))
+  portnewcouchdb=$((portinterval + 82))
+  portmunin=$((portinterval + 49))
+  while read -r channel; do
+    export gitter_channel="$channel"
+    treehouses feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$portinterval\n22:$portssh 80:$portweb 2200:$portnewcouchdb 4949:$portmunin 5984:$portcouchdb"
+  done < /etc/tunnel_report_channels.txt
   echo "report"
 }
 

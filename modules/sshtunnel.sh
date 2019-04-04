@@ -123,7 +123,7 @@ function sshtunnel {
         ssh-keygen -q -N "" > /dev/null < /dev/zero
     fi
     cat /root/.ssh/id_rsa.pub
-  elif [ "$1" = "notice" ]; then
+  elif [ "$action" = "notice" ]; then
     option="$2"
     if [ "$option" = "on" ]; then
       cp "$TEMPLATES/network/tunnel_report.sh" /etc/tunnel_report.sh

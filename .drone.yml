@@ -1,0 +1,17 @@
+kind: pipeline
+name: default
+
+steps:
+- name: publish
+  image: plugins/npm
+  settings:
+    username:
+      from_secret: npm_user
+    password:
+      from_secret: npm_password
+    email:
+      from_secret: npm_email
+
+trigger:
+  event:
+  - tag

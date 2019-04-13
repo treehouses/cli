@@ -16,8 +16,8 @@ function tor {
   fi
 
   if [ "$1" = "list" ]; then
-    echo "local <=> external"
-    grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | sed 's/127.0.0.1:/<=> /g'
+    echo "external <=> local"
+    grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\2 <=> \1/g'
   elif [ "$1" = "add" ]; then
     if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
@@ -136,9 +136,9 @@ function tor_help {
   echo "  $(basename "$0") tor list"
   echo "      Outputs the ports that are exposed on the tor network"
   echo "      Example:"
-  echo "        local <=> external"
-  echo "        22    <=> 22"
-  echo "        80    <=> 80"
+  echo "        external <=> local"
+  echo "        22       <=> 22"
+  echo "        80       <=> 80"
   echo "      the port 22 is open and routing the traffic of the local port 22,"
   echo "      the port 80 is open and routing the traffic of the local port 80"
   echo ""

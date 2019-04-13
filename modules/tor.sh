@@ -16,8 +16,8 @@ function tor {
   fi
 
   if [ "$1" = "list" ]; then
-    echo "local <=> external"
-    grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | sed 's/127.0.0.1:/<=> /g'
+    echo "external <=> local"
+    grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\2 <=> \1/g'
   elif [ "$1" = "add" ]; then
     if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc

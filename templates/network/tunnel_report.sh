@@ -9,7 +9,7 @@ function report {
   portmunin=$((portinterval + 49))
   while read -r channel; do
     export gitter_channel="$channel"
-    treehouses feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$portinterval\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date)\` $(treehouses networkmode)"
+    treehouses feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$portinterval\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
   done < /etc/tunnel_report_channels.txt
   echo "report"
 }

@@ -6,12 +6,39 @@ function networkmode {
     network_mode=$(cat "/etc/network/mode")
   fi
 
-  if [ "$1" == "info" ]; then
-    checkroot;
+  interfaces=()
+  case $(detectrpi) in
+    RPI3B|RPI3B+|RPI2B)
+      # this rpis have eth0 and wlan0 by default.
+      if iface_exists "eth1"; then
+        network_mode="external"
+        interfaces+=("eth1")
+      fi
 
+      if iface_exists "wlan1"; then
+        network_mode="external"
+        interfaces+=("wlan1")
+      fi
+    ;;
+    RPIZW|RPI3A+)
+      # this rpis only have wlan0 by default.
+      if iface_exists "eth0"; then
+        network_mode="external"
+        interfaces+=("eth0")
+      fi
+      if iface_exists "wlan1"; then
+        network_mode="external"
+        interfaces+=("wlan1")
+      fi
+    ;;
+  esac
+
+  if [ "$1" == "info" ]; then
     if [ "$network_mode" == "wifi" ]; then
+      checkroot
       get_wpa_supplicant_settings
     elif [ "$network_mode" == "bridge" ]; then
+      checkroot
       echo "wlan0: $(get_wpa_supplicant_settings)"
       echo "ap0: $(get_hostapd_settings)"
     elif [ "$network_mode" == "ap local" ] || [ "$network_mode" == "ap internet" ]; then
@@ -27,6 +54,13 @@ function networkmode {
       do
         if [ ! -z "$(get_ipv4_ip "$interface")" ]; then
           echo "$interface ip: $(get_ipv4_ip "$interface")"
+        fi
+      done
+    else
+      for interface in "${interfaces[@]}"
+      do
+        if [ ! -z "$(get_ipv4_ip "$interface")" ]; then
+          echo "$network_mode $interface ip: $(get_ipv4_ip "$interface")"
         fi
       done
     fi

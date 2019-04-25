@@ -102,12 +102,21 @@ function reboot_needed {
 
 function get_ipv4_ip {
   interface="$1"
-  if grep -q "$interface:" < /proc/net/dev ; then
+  if iface_exists "$interface"; then
     if [ "$interface" == "ap0" ]; then
       /sbin/ip -o -4 addr list "$interface" | awk '{print $4}' | sed '2d' | cut -d/ -f1
     else
       /sbin/ip -o -4 addr list "$interface" | awk '{print $4}' | cut -d/ -f1
     fi
+  fi
+}
+
+function iface_exists {
+  interface="$1"
+  if grep -q "$interface:" < /proc/net/dev ; then
+    return 0
+  else
+    return 1
   fi
 }
 

@@ -8,7 +8,7 @@ function networkmode {
 
   interfaces=()
   case $(detectrpi) in
-    RPI3B|RPI3B+|RPI2B)
+    RPI3B|RPI3B+|RPI2B|RPI4B)
       # this rpis have eth0 and wlan0 by default.
       if iface_exists "eth1"; then
         network_mode="external"

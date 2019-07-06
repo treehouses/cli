@@ -1,6 +1,18 @@
 #!/bin/bash
 
 function default {
+  if [ "$1" == "notice" ] ; then
+    default_notice
+    echo 'Success: the message has been reset to default';
+    exit 0
+  fi
+
+  if [ "$1" == "tunnel" ] ; then
+    default_tunnel
+    echo 'Success: the tunnel mode has been reset to default, please reboot your device';
+    exit 0
+  fi
+
   if [ "$1" == "network" ] ; then
     default_network
     echo 'Success: the network mode has been reset to default, please reboot your device';
@@ -8,6 +20,8 @@ function default {
   fi
 
   rename "raspberrypi" > /dev/null 2>/dev/null
+  default_notice 
+  default_tunnel
   default_network
   echo 'Success: the rpi has been reset to default, please reboot your device'
 }
@@ -35,11 +49,6 @@ function default_network {
   rm -rf /etc/network/eth0-shared.sh
   rm -rf /etc/network/mode
 
-  treehouses tor destroy > /dev/null
-  treehouses tor notice off > /dev/null
-  treehouses openvpn off > /dev/null
-  treehouses openvpn notice off > /dev/null
-
   case $(detectrpi) in
     RPIZ|RPIZW)
       {
@@ -51,6 +60,18 @@ function default_network {
   esac
   
   reboot_needed
+}
+
+function default_tunnel {
+  treehouses tor destroy > /dev/null
+  treehouses openvpn off > /dev/null
+  treehouses sshtunnel remove > /dev/null
+}
+
+function default_notice {
+  treehouses tor notice off > /dev/null
+  treehouses openvpn notice off > /dev/null
+  treehouses sshtunnel notice delete > /dev/null
 }
 
 
@@ -68,6 +89,14 @@ function default_help {
   echo ""
   echo "  $(basename "$0") default network"
   echo "      This will return the network back to the original configuration of when installed."
+  echo "      This will not delete any new files you created."
+  echo ""
+  echo "  $(basename "$0") default tunnel"
+  echo "      This will return the tunnel back to the original configuration of when installed."
+  echo "      This will not delete any new files you created."
+  echo ""
+  echo "  $(basename "$0") default notice"
+  echo "      This will return the message back to its original configuration of when installed."
   echo "      This will not delete any new files you created."
   echo ""
 }

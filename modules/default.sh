@@ -71,7 +71,7 @@ function default_tunnel {
 function default_notice {
   treehouses tor notice off > /dev/null
   treehouses openvpn notice off > /dev/null
-  treehouses sshtunnel notice delete > /dev/null
+  treehouses sshtunnel notice off > /dev/null
 }
 
 

@@ -11,10 +11,16 @@ function vnc {
   if [ "$status" = "on" ]; then
     enable_service vncserver-x11-serviced.service
     start_service vncserver-x11-serviced.service
+    sudo cp -rf ./boot/config.txt ./boot/config.txt.bak
+    sudo echo "hdmi_group=2" >> ./boot/config.txt
+    sudo echo "hdmi_mode=82" >> ./boot/config.txt
+    sudo update-rc.d lightdm enable
     echo "Success: the vnc service has been started and enabled when the system boots"
   elif [ "$status" = "off" ]; then
     disable_service vncserver-x11-serviced.service
     stop_service vncserver-x11-serviced.service
+    sudo cp -rf ./boot/config.txt.bak /boot/config.txt
+    sudo update-rc.d lightdm disable
     echo "Success: the vnc service has been stopped and disabled when the system boots."
   else
     echo "Error: only 'on', 'off' options are supported";

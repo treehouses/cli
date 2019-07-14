@@ -14,6 +14,7 @@ function vnc {
     sudo cp -rf /boot/config.txt /boot/config.txt.bak
     sudo echo "hdmi_group=2" >> /boot/config.txt
     sudo echo "hdmi_mode=82" >> /boot/config.txt
+    sudo echo "hdmi_force_hotplug=1" >> /boot/config.txt
     enable_service lightdm
     start_service lightdm
     reboot_needed

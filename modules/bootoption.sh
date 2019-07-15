@@ -3,20 +3,19 @@
 function bootoption {
   option="$1"
   if [ "$option" = "console" ]; then
-    systemctl set-default multi-user.target > /dev/null
+    systemctl set-default multi-user.target
     ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
-    if [ -f "/etc/systemd/system/getty@tty1.service.d/autologin.conf" ]; then
       rm /etc/systemd/system/getty@tty1.service.d/autologin.conf
     fi
     reboot_needed
     echo "OK: A reboot is required to see the changes"
   elif [ "$option" = "console autologin" ]; then
-    systemctl set-default multi-user.target > /dev/null
+    systemctl set-default multi-user.target
     ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
     cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf << EOF
 [Service]
 ExecStart=
-ExecStart=-/sbin/agetty --autologin $SUDO_USER --noclear %I $TERM
+ExecStart=-/sbin/agetty --autologin $SUDO_USER --noclear %I \$TERM
 EOF
     reboot_needed
     echo "OK: A reboot is required to see the changes"
@@ -24,9 +23,7 @@ EOF
     if [ -e /etc/init.d/lightdm ]; then
       systemctl set-default graphical.target
       ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
-      if [ -f "/etc/systemd/system/getty@tty1.service.d/autologin.conf" ]; then
         rm /etc/systemd/system/getty@tty1.service.d/autologin.conf
-      fi
       sed /etc/lightdm/lightdm.conf -i -e "s/^autologin-user=.*/#autologin-user=/"
       reboot_needed
       echo "OK: A reboot is required to see the changes"
@@ -41,7 +38,7 @@ EOF
       cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf << EOF
 [Service]
 ExecStart=
-ExecStart=-/sbin/agetty --autologin $SUDO_USER --noclear %I $TERM
+ExecStart=-/sbin/agetty --autologin $SUDO_USER --noclear %I \$TERM
 EOF
       sed /etc/lightdm/lightdm.conf -i -e "s/^\(#\|\)autologin-user=.*/autologin-user=$SUDO_USER/"
       reboot_needed

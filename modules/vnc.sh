@@ -11,17 +11,18 @@ function vnc {
   if [ "$status" = "on" ]; then
     enable_service vncserver-x11-serviced.service
     start_service vncserver-x11-serviced.service
-    sudo cp -rf /boot/config.txt /boot/config.txt.bak
-    sudo echo "hdmi_group=2" >> /boot/config.txt
-    sudo echo "hdmi_mode=82" >> /boot/config.txt
-    sudo echo "hdmi_force_hotplug=1" >> /boot/config.txt
+    sudo sed -i '$ a hdmi_group=2' /boot/config.txt
+    sudo sed -i '$ a hdmi_mode=82' /boot/config.txt
+    sudo sed -i 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' /boot/config.txt
     sudo update-rc.d lightdm enable 2
     reboot_needed
     echo "Success: the vnc service has been started and enabled when the system boots"
   elif [ "$status" = "off" ]; then
     disable_service vncserver-x11-serviced.service
-    stop_service vncserver-x11-serviced.service
-    sudo cp -rf /boot/config.txt.bak /boot/config.txt
+    stop_service vncserver-x11-serviced.service    
+    sudo sed -i '/hdmi_group=2/d' /boot/config.txt
+    sudo sed -i '/hdmi_mode=82/d' /boot/config.txt
+    sudo sed -i 's/hdmi_force_hotplug=1/#hdmi_force_hotplug=1/' /boot/config.txt
     sudo update-rc.d lightdm disable 2
     reboot_needed
     echo "Success: the vnc service has been stopped and disabled when the system boots."

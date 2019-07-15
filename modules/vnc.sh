@@ -14,7 +14,7 @@ function vnc {
     sudo sed -i '$ a hdmi_group=2' /boot/config.txt
     sudo sed -i '$ a hdmi_mode=82' /boot/config.txt
     sudo sed -i 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' /boot/config.txt
-    sudo update-rc.d lightdm enable 2
+    sudo systemctl set-default graphical.target
     reboot_needed
     echo "Success: the vnc service has been started and enabled when the system boots"
   elif [ "$status" = "off" ]; then
@@ -23,7 +23,7 @@ function vnc {
     sudo sed -i '/hdmi_group=2/d' /boot/config.txt
     sudo sed -i '/hdmi_mode=82/d' /boot/config.txt
     sudo sed -i 's/hdmi_force_hotplug=1/#hdmi_force_hotplug=1/' /boot/config.txt
-    sudo update-rc.d lightdm disable 2
+    sudo systemctl set-default multi-user.target
     reboot_needed
     echo "Success: the vnc service has been stopped and disabled when the system boots."
   else

@@ -28,7 +28,7 @@ function openvpn {
     if [ -f "/etc/openvpn/openvpn.conf" ]; then
       cat "/etc/openvpn/openvpn.conf"
     else
-      echo "openvpn has not ben set-up yet."
+      echo "openvpn has not been setup yet."
     fi
   elif [ "$command" == "delete" ]; then
     rm -rf "/etc/openvpn/openvpn.conf"

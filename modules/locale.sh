@@ -28,7 +28,7 @@ function locale_help {
   echo "Sets the system locale"
   echo ""
   echo "Example:"
-  echo "  $(basename "$0") local en_US"
+  echo "  $(basename "$0") locale en_US"
   echo "      This will set the raspberry pi locale to en_US."
   echo "      The supported languages are in /usr/share/i18n/SUPPORTED"
   echo ""

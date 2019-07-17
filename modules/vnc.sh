@@ -2,8 +2,8 @@
 
 function vnc {
   status=$1
-  local servicestatus=$(sudo systemctl is-enabled graphical.target)
-  local ipaddress=$(hostname -I)
+  servicestatus=$(sudo systemctl is-enabled graphical.target)
+  ipaddress=$(hostname -I)
   
   # Checks whether we have the required package to run a VNC server
   # Should be there on a stock treehouses install
@@ -24,7 +24,7 @@ function vnc {
     sudo systemctl set-default graphical.target
     reboot_needed
     echo "Success: the vnc service has been started and enabled when the system boots"
-    echo "You can then remotely access the system using a VNC client using the IP address(es): $ipaddress" 
+    echo "You can then remotely access the system with a VNC client using the IP address(es): $ipaddress" 
 
 # Stops the VNC server service, modifies the config.txt to no longer output screen data  if a screen is missing
 # and sets the system to run the console interface on boot 
@@ -45,7 +45,7 @@ function vnc {
       echo "To enable it, use $(basename "$0") vnc on"
     elif [ "$servicestatus" = "indirect" ]; then
       echo "VNC is enabled."
-      echo "You can now remotely access the system using a VNC client using the IP address(es): $ipaddress" 
+      echo "You can now remotely access the system with a VNC client using the IP address(es): $ipaddress" 
       echo "To disable it, use $(basename "$0") vnc off"
     fi
   else

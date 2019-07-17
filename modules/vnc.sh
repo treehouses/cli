@@ -47,7 +47,7 @@ function vnc {
       echo "VNC is enabled."
       echo "You can now remotely access the system using a VNC client using the IP address(es): $ip-address" 
       echo "To disable it, use $(basename "$0") vnc off"
-      
+    fi
   else
     echo "Error: only 'on', 'off' options are supported";
   fi

@@ -53,10 +53,18 @@ function tor {
       chown debian-tor:debian-tor /var/lib/tor/treehouses
       chmod 700 /var/lib/tor/treehouses
     fi
+    
+    if [ ! -f "/var/lib/tor/treehouses/hostname" ]; then
+      touch "/var/lib/tor/treehouses/hostname"
+      chown debian-tor:debian-tor /var/lib/tor/treehouses/hostname
+      chmod 600 /var/lib/tor/treehouses/hostname
+    fi
 
     if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
     fi
+
+    sync;sync;sync
 
     start_service tor
     echo "Success: the tor service has been started"

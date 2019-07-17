@@ -2,8 +2,8 @@
 
 function vnc {
   status=$1
-  service-status=`sudo systemctl is-enabled graphical.target`
-  ip-address=`hostname -I`
+  service-status="$(sudo systemctl is-enabled graphical.target)"
+  ip-address="$(hostname -I)"
   
   # Checks whether we have the required package to run a VNC server
   # Should be there on a stock treehouses install

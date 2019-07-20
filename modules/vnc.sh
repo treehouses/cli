@@ -2,7 +2,8 @@
 
 function vnc {
   status=$1
-  servicestatus=$(sudo systemctl is-enabled graphical.target)
+  bootoptionstatus=$(sudo systemctl is-enabled graphical.target)
+  servicestatus=$(sudo service vncserver-x11-serviced status | grep -q 'running')
   ipaddress=$(hostname -I)
   
   # Checks whether we have the required package to run a VNC server
@@ -40,13 +41,15 @@ function vnc {
  
 # Prints the status of the VNC server, along with advice to enable it or disable it accordingly
   elif [ "$status" = "" ]; then
-    if [ "$servicestatus" = "static" ]; then
+    if [ "$bootoptionstatus" = "static" -a $servicestatus]; then
       echo "VNC is disabled." 
       echo "To enable it, use $(basename "$0") vnc on"
-    elif [ "$servicestatus" = "indirect" ]; then
+    elif [ "$bootoptionstatus" = "indirect" -a ! $servicestatus]; then
       echo "VNC is enabled."
       echo "You can now remotely access the system with a VNC client using the IP address(es): $ipaddress" 
       echo "To disable it, use $(basename "$0") vnc off"
+    else
+      echo "VNC server is not configured correclty. Please try $(basename "$0") vnc on to enable it, or $(basename "$0") vnc off to disable it)
     fi
   else
     echo "Error: only 'on', 'off' options are supported";

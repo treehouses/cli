@@ -41,10 +41,10 @@ function vnc {
  
 # Prints the status of the VNC server, along with advice to enable it or disable it accordingly
   elif [ "$status" = "" ]; then
-    if [ "$bootoptionstatus" = "static" -a "$servicestatus" = true ]; then
+    if [ "$bootoptionstatus" = "static" ] && [ "$servicestatus" = true ]; then
       echo "VNC is disabled." 
       echo "To enable it, use $(basename "$0") vnc on"
-    elif [ "$bootoptionstatus" = "indirect" -a "$servicestatus" = false ]; then
+    elif [ "$bootoptionstatus" = "indirect" ] && [ "$servicestatus" = false ]; then
       echo "VNC is enabled."
       echo "You can now remotely access the system with a VNC client using the IP address(es): $ipaddress" 
       echo "To disable it, use $(basename "$0") vnc off"

@@ -44,7 +44,7 @@ function vnc {
     if [ "$bootoptionstatus" = "static" -a "$servicestatus" = true ]; then
       echo "VNC is disabled." 
       echo "To enable it, use $(basename "$0") vnc on"
-    elif [ "$bootoptionstatus" = "indirect" -a "$servicestatus" = flase ]; then
+    elif [ "$bootoptionstatus" = "indirect" -a "$servicestatus" = false ]; then
       echo "VNC is enabled."
       echo "You can now remotely access the system with a VNC client using the IP address(es): $ipaddress" 
       echo "To disable it, use $(basename "$0") vnc off"

@@ -14,13 +14,13 @@ function vnc {
     isgraphical="Desktop"
   fi
     
-  if [ "$vncservicestatus" ]; then
+  if [ ! "$vncservicestatus" ]; then
     isenabledvnc="running"
     elif [ "$vncservicestatus" ]; then
     isenabledvnc="not running"
   fi
       
-  if [ "$xservicestatus" ]; then
+  if [ ! "$xservicestatus" ]; then
     isenabledx="running"
     elif [ "$xservicestatus" ]; then
     isenabledx="not running"

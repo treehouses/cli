@@ -14,15 +14,15 @@ function vnc {
     isgraphical="Desktop"
   fi
     
-  if [ "$vncservicestatus" = true ]; then
+  if [ "$vncservicestatus" ]; then
     isenabledvnc="running"
-    elif [ "$vncservicestatus" = false ]; then
+    elif [ "$vncservicestatus" ]; then
     isenabledvnc="not running"
   fi
       
-  if [ "$xservicestatus" = true ]; then
+  if [ "$xservicestatus" ]; then
     isenabledx="running"
-    elif [ "$xservicestatus" = false ]; then
+    elif [ "$xservicestatus" ]; then
     isenabledx="not running"
   fi
   
@@ -61,10 +61,10 @@ function vnc {
  
 # Prints the status of the VNC server, along with advice to enable it or disable it accordingly
   elif [ "$status" = "status" ]; then
-    if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = false ] && [ "$xservicestatus" = false ]; then
+    if [ "$bootoptionstatus" = "static" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]; then
       echo "VNC is disabled." 
       echo "To enable it, use $(basename "$0") vnc on"
-    elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = true ] && [ "$xservicestatus" = true ]; then
+    elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" ] && [ "$xservicestatus" ]; then
       echo "VNC is enabled."
       echo "You can now remotely access the system with a VNC client using the IP address(es): $ipaddress" 
       echo "To disable it, use $(basename "$0") vnc off"
@@ -79,7 +79,7 @@ function vnc {
       echo "The VNC service is $isenabledvnc"
       echo "The X window service is $isenabledx"
       echo "In order to access your desktop remotely, the system needs to boot into Desktop, and VNC and X window services need to be running"
-      if [ "$bootoptionstatus" = "static" ] || [ "$vncservicestatus" = false ] || [ "$xservicestatus" = false ]; then
+      if [ "$bootoptionstatus" = "static" ] || [ ! "$vncservicestatus" ] || [ ! "$xservicestatus" ]; then
       echo "Your system is not configured correctly."
       echo "You may try $(basename "$0") vnc on, or attempt to enable any missing service manually"
     fi

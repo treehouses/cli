@@ -15,15 +15,15 @@ function vnc {
   fi
     
   if [ "$vncservicestatus" = "true" ]; then
-    isenabled-vnc="running"
+    isenabledvnc="running"
     elif [ "$vncservicestatus" = "false" ]; then
-    isenabled-vnc="not running"
+    isenabledvnc="not running"
   fi
       
   if [ "$xservicestatus" = "true" ]; then
-    isenabled-x="running"
+    isenabledx="running"
     elif [ "$xservicestatus" = "false" ]; then
-    isenabled-x="not running"
+    isenabledx="not running"
   fi
   
   # Checks whether we have the required package to run a VNC server
@@ -76,8 +76,8 @@ function vnc {
  # Prints the status of the specific VNC related services, along with advice to enable it or disable it accordingly
   elif [ "$status" = "status-service" ]; then
       echo "The system boots into $isgraphical"
-      echo "The VNC service is $isenabled-vnc"
-      echo "The X window service is $isenabled-x"
+      echo "The VNC service is $isenabledvnc"
+      echo "The X window service is $isenabledx"
       echo "In order to access your desktop remotely, the system needs to boot into Desktop and VNC and X window services need to be running"
       if [ "$bootoptionstatus" = "static" ] || [ "$vncservicestatus" = false ] || [ "$xservicestatus" = false ]; then
       echo "Your system is not configured correctly."

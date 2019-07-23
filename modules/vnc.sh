@@ -3,8 +3,28 @@
 function vnc {
   status=$1
   bootoptionstatus=$(sudo systemctl is-enabled graphical.target)
-  servicestatus=$(sudo service vncserver-x11-serviced status | grep -q 'running')
+  vncservicestatus=$(sudo service vncserver-x11-serviced status | grep -q 'running')
+  xservicestatus=$(sudo service lightdm status | grep -q 'running')
   ipaddress=$(hostname -I)
+  
+  # Get the status of each VNC related service for status-service
+  if [ "$bootoptionstatus" = "static" ]; then
+    isgraphical="Console"
+    elif [ "$bootoptionstatus" = "indirect" ]; then
+    isgraphical="Desktop"
+  fi
+    
+  if [ "$vncservicestatus" = "true" ]; then
+    isenabled-vnc="running"
+    elif [ "$vncservicestatus" = "false" ]; then
+    isenabled-vnc="not running"
+  fi
+      
+  if [ "$xservicestatus" = "true" ]; then
+    isenabled-x="running"
+    elif [ "$xservicestatus" = "false" ]; then
+    isenabled-x="not running"
+  fi
   
   # Checks whether we have the required package to run a VNC server
   # Should be there on a stock treehouses install
@@ -40,19 +60,32 @@ function vnc {
     echo "Success: the vnc service has been stopped and disabled when the system boots."
  
 # Prints the status of the VNC server, along with advice to enable it or disable it accordingly
-  elif [ "$status" = "" ]; then
-    if [ "$bootoptionstatus" = "static" ] && [ "$servicestatus" = true ]; then
+  elif [ "$status" = "status" ]; then
+    if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = false ] && [ "$xservicestatus" = false ]; then
       echo "VNC is disabled." 
       echo "To enable it, use $(basename "$0") vnc on"
-    elif [ "$bootoptionstatus" = "indirect" ] && [ "$servicestatus" = false ]; then
+    elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = true ] && [ "$xservicestatus" = true ]; then
       echo "VNC is enabled."
       echo "You can now remotely access the system with a VNC client using the IP address(es): $ipaddress" 
       echo "To disable it, use $(basename "$0") vnc off"
     else
       echo "VNC server is not configured correctly. Please try $(basename "$0") vnc on to enable it, or $(basename "$0") vnc off to disable it."
+      echo "Alternatively, you may try $(basename "$0") vnc status-service to verify the status of each specific required service."
     fi
+    
+ # Prints the status of the specific VNC related services, along with advice to enable it or disable it accordingly
+  elif [ "$status" = "status-service" ]; then
+      echo "The system boots into $(isgraphical)"
+      echo "The VNC service is $(isenabled-vnc)"
+      echo "The X window service is $(isenabled-x)"
+      echo "In order to access your desktop remotely, the system needs to boot into Desktop and VNC and X window services need to be running"
+      if [ "$bootoptionstatus" = "static" ] || [ "$vncservicestatus" = false ] || [ "$xservicestatus" = false ]; then
+      echo "Your system is not configured correctly."
+      echo "You may try $(basename "$0") vnc on, or attempt to enable any missing service manually"
+    fi
+    
   else
-    echo "Error: only 'on', 'off' options are supported";
+    echo "Error: only 'on', 'off', 'status' and 'status-service' options are supported";
   fi
 }
 
@@ -64,8 +97,12 @@ function vnc_help {
   echo "Enables or disables the VNC server service"
   echo ""
   echo "Example:"
-  echo "  $(basename "$0") vnc"
+  echo "  $(basename "$0") vnc status"
   echo "      Prints the status of the VNC server (enabled or disabled)."
+  echo ""
+  echo "Example:"
+  echo "  $(basename "$0") vnc status-full"
+  echo "      Prints the configuration of each required component (boot option, vnc service, x service)."
   echo ""
   echo "  $(basename "$0") vnc on"
   echo "      The VNC service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using VNC viewer."

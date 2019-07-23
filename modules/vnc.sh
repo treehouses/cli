@@ -79,7 +79,7 @@ function vnc {
       echo "The VNC service is $isenabledvnc"
       echo "The X window service is $isenabledx"
       echo "In order to access your desktop remotely, the system needs to boot into Desktop, and VNC and X window services need to be running"
-      if [ "$bootoptionstatus" = "static" ] || [ ! "$vncservicestatus" ] || [ ! "$xservicestatus" ]; then
+      if [ "$bootoptionstatus" = "static" ] || [ "$vncservicestatus" ] || [ "$xservicestatus" ]; then
       echo "Your system is not configured correctly."
       echo "You may try $(basename "$0") vnc on, or attempt to enable any missing service manually"
     fi

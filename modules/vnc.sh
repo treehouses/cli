@@ -5,7 +5,7 @@ function vnc {
   bootoptionstatus=$(sudo systemctl is-enabled graphical.target)
   vncservicestatus=$(sudo service vncserver-x11-serviced status | grep -q 'running')
   xservicestatus=$(sudo service lightdm status | grep -q 'running')
-  ipaddress=$(hostname -I)
+  ipaddress=$(sudo /usr/lib/vnc/get_primary_ip4)
   
   # Get the status of each VNC related service for status-service
   if [ "$bootoptionstatus" = "static" ]; then
@@ -45,7 +45,7 @@ function vnc {
     sudo systemctl set-default graphical.target
     reboot_needed
     echo "Success: the vnc service has been started and enabled when the system boots"
-    echo "You can then remotely access the system with a VNC client using the IP address(es): $ipaddress" 
+    echo "You can then remotely access the system with a VNC client using the IP address: $ipaddress" 
 
 # Stops the VNC server service, modifies the config.txt to no longer output screen data  if a screen is missing
 # and sets the system to run the console interface on boot 
@@ -66,7 +66,7 @@ function vnc {
       echo "To enable it, use $(basename "$0") vnc on"
     elif [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]; then
       echo "VNC is enabled."
-      echo "You can now remotely access the system with a VNC client using the IP address(es): $ipaddress" 
+      echo "You can now remotely access the system with a VNC client using the IP address: $ipaddress" 
       echo "To disable it, use $(basename "$0") vnc off"
     else
       echo "VNC server is not configured correctly. Please try $(basename "$0") vnc on to enable it, or $(basename "$0") vnc off to disable it."

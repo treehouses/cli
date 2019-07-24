@@ -36,9 +36,18 @@ function vnc {
   # Checks whether we have the required package to run a VNC server
   # Should be there on a stock treehouses install
   if [ ! -d /usr/share/doc/realvnc-vnc-server ] ; then
-    echo "Error: the vnc server is not installed, to install it run:"
-    echo "apt-get install realvnc-vnc-server"
-    exit 1;
+    echo "Error: the vnc server is not installed."
+    while true; do
+      read -n 1 -pr "Do you want to install the prerequisite packages for VNC? (y/n)" answer
+      case "$answer" in
+        "y"* ) apt-get upgrade;
+               apt-get install realvnc-vnc-server -y;;
+        "n"* ) echo "To install them manually, run:";
+               echo "apt-get install realvnc-vnc-server";
+               exit 1;;
+        * ) echo "Please answer (y)es or (n)o.";;
+      esac
+    done
   fi
 
 # Starts the VNC server service, modifies the config.txt to output screen data even if a screen is missing
@@ -65,7 +74,7 @@ function vnc {
     if [ ! -d /usr/share/doc/websockify ] || [ ! -d /usr/share/doc/novnc ]; then
     echo "Error: noVNC and/or websockify are not installed."
       while true; do
-        read -n 1 -p "Do you want to install the prerequisite packages for noVNC? (y/n)" answer
+        read -n 1 -pr "Do you want to install the prerequisite packages for noVNC? (y/n)" answer
         case "$answer" in
           "y"* ) apt-get upgrade;
                   apt-get install websockify novnc -y;;

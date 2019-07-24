@@ -50,9 +50,13 @@ function vnc {
     done
   fi
 
+
+case "$status" in
+
 # Starts the VNC server service, modifies the config.txt to output screen data even if a screen is missing
 # and sets the system to run the desktop graphical interface on boot
-  if [ "$status" = "on" ]; then
+  "on");
+  
     enable_service vncserver-x11-serviced.service
     start_service vncserver-x11-serviced.service
     grep -qF 'hdmi_group=2' '/boot/config.txt' || echo 'hdmi_group=2' | tee -a '/boot/config.txt'
@@ -65,12 +69,12 @@ function vnc {
     reboot_needed
     echo "Success: the vnc service has been started and enabled when the system boots."
     echo "You can then remotely access the system with a VNC client using the IP address: $ipaddress" 
-    
+    ;;
 # Does what "vnc on" does, plus changes the authentication scheme for noVNC
 # and starts a websocket on port 6080 to tunnel the vnc connection
-  elif [ "$status" = "html-on" ]; then
+  "html-on");
   
-    # Checks if the required packages are installed
+      # Checks if the required packages are installed
     if [ ! -d /usr/share/doc/websockify ] || [ ! -d /usr/share/doc/novnc ]; then
     echo "Error: noVNC and/or websockify are not installed."
       while true; do
@@ -107,19 +111,22 @@ function vnc {
     echo "You can then remotely access the system with a VNC client using the link:" 
     echo "$ipaddress:6080/vnc.html"
     echo "Password is raspberry"
- 
+    ;;
+    
 # Prints the link to the system for access via HTML; Paste this to a browser
-elif [ "$status" = "html-link" ]; then   
+"html-link");
+
     if [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]  && [ "$websockifystatus" != 0 ]; then
     echo "$ipaddress:6080/vnc.html"
     else
     echo "VNC and/or HTML capabilities are not enabled. Try running:"
     echo "$(basename "$0") vnc html-link"
     fi
+    ;;
     
 # Stops the VNC server service, modifies the config.txt to no longer output screen data  if a screen is missing
 # and sets the system to run the console interface on boot 
-  elif [ "$status" = "off" ]; then
+"off");
     disable_service vncserver-x11-serviced.service
     stop_service vncserver-x11-serviced.service    
     sed -i '/hdmi_group=2/d' /boot/config.txt
@@ -131,9 +138,11 @@ elif [ "$status" = "html-link" ]; then
     systemctl set-default multi-user.target
     reboot_needed
     echo "Success: the vnc service has been stopped and disabled when the system boots."
- 
+    ;;
+    
 # Prints the status of the VNC server, along with advice to enable it or disable it accordingly
-  elif [ "$status" = "status" ]; then
+"status");
+
     if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" ] && [ "$xservicestatus" ] && [ "$websockifystatus" = 0 ]; then
       echo "VNC is disabled." 
       echo "To enable it, use $(basename "$0") vnc on"
@@ -152,9 +161,10 @@ elif [ "$status" = "html-link" ]; then
       echo "VNC server is not configured correctly. Please try $(basename "$0") vnc on to enable it, or $(basename "$0") vnc off to disable it."
       echo "Alternatively, you may try $(basename "$0") vnc status-service to verify the status of each specific required service."
     fi
+    ;;
     
  # Prints the status of the specific VNC related services, along with advice to enable it or disable it accordingly
-  elif [ "$status" = "status-service" ]; then
+ "status-service");
       echo "The system boots into $isgraphical"
       echo "The VNC service is $isenabledvnc"
       echo "The X window service is $isenabledx"
@@ -165,10 +175,39 @@ elif [ "$status" = "html-link" ]; then
       echo "Your system is not configured correctly."
       echo "You may try $(basename "$0") vnc on, or attempt to enable any missing service manually"
     fi
+    ;;
+ 
+ "help");
+    # Prints the options for the "vnc" command
+    echo ""
+    echo "Usage: $(basename "$0") vnc <on|html-on|off|status|status-service>"
+    echo ""
+    echo "Enables or disables the VNC server service"
+    echo ""
+    echo "Example:"
+    echo "  $(basename "$0") vnc status"
+    echo "      Prints the status of the VNC server (enabled or disabled)."
+    echo ""
+    echo "Example:"
+    echo "  $(basename "$0") vnc status-service"
+    echo "      Prints the configuration of each required component (boot option, vnc service, x service)."
+    echo ""
+    echo "  $(basename "$0") vnc on"
+    echo "      The VNC service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using VNC viewer."
+    echo "      This will disable html, if it is active."
+    echo ""
+    echo "  $(basename "$0") vnc html-on"
+    echo "      The VNC service will be enabled, with html. This will allow devices on your network to be able to connect to the raspberry pi using an HTML browser."
+    echo "      Password for the VNC server is raspberry"
+    echo ""
+    echo "  $(basename "$0") vnc off"
+    echo "      VNC services will be disabled."
+    ;;
     
-  else
-    echo "Error: only 'on', 'html-on' 'off', 'status' and 'status-service' options are supported";
-  fi
+ *);
+    echo "Error: only 'on', 'html-on' 'off', 'status', 'status-service' and 'help' options are supported";
+    exit 1;
+    ;;
 }
 
 # Prints the options for the "vnc" command

@@ -87,7 +87,7 @@ function vnc {
     reboot_needed
     echo "Success: the vnc html-enabled service has been started and enabled when the system boots."
     echo "You can then remotely access the system with a VNC client using the link:" 
-    echo "$(ipaddress):6080/vnc.html" 
+    echo "$ipaddress:6080/vnc.html" 
 
 # Stops the VNC server service, modifies the config.txt to no longer output screen data  if a screen is missing
 # and sets the system to run the console interface on boot 
@@ -116,7 +116,7 @@ function vnc {
       echo "To disable it, use $(basename "$0") vnc off"
     elif [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]  && [ "$websockifystatus" != 0 ]; then
       echo "VNC is enabled with HTML capabilities."
-      echo "You can now remotely access the system with an HTML browser using the link: $(ipaddress):6080/vnc.html"
+      echo "You can now remotely access the system with an HTML browser using the link: $ipaddress:6080/vnc.html"
       echo "To keep vnc enabled and accessable by a VNC viewer, but not HTML, use $(basename "$0") vnc on"
       echo "To disable vnc altogether, use $(basename "$0") vnc off"
     else

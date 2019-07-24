@@ -29,7 +29,7 @@ function vnc {
   
   if [ "$websockifystatus" != 0 ]; then
     isenabledws="running"
-    elif [ "$xservicestatus" = 0]; then
+    elif [ "$websockifystatus" = 0 ]; then
     isenabledws="not running"
   fi
   
@@ -62,7 +62,7 @@ function vnc {
   if [ "$status" = "html on" ]; then
   
     # Checks if the required packages are installed
-    if [[ ! -d /usr/share/doc/websockify ] || [ ! -d /usr/share/doc/novnc ]; then
+    if [ ! -d /usr/share/doc/websockify ] || [ ! -d /usr/share/doc/novnc ]; then
     echo "Error: noVNC and/or websockify are not installed."
     echo "To install them, run:"
     echo "apt-get install websockify novnc"

@@ -95,7 +95,7 @@ elif [ "$status" = "html-link" ]; then
     echo "$ipaddress:6080/vnc.html"
     else
     echo "VNC and/or HTML capabilities are not enabled. Try running:"
-    echo "$(basename "$0") vnc status"
+    echo "$(basename "$0") vnc html-link"
     fi
     
 # Stops the VNC server service, modifies the config.txt to no longer output screen data  if a screen is missing

@@ -59,7 +59,7 @@ function vnc {
     
 # Does what "vnc on" does, plus changes the authentication scheme for noVNC
 # and starts a websocket on port 6080 to tunnel the vnc connection
-  elif [ "$status" = "html on" ]; then
+  elif [ "$status" = "html-on" ]; then
   
     # Checks if the required packages are installed
     if [ ! -d /usr/share/doc/websockify ] || [ ! -d /usr/share/doc/novnc ]; then
@@ -112,7 +112,7 @@ function vnc {
     elif [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]  && [ "$websockifystatus" = 0 ]; then
       echo "VNC is enabled without HTML capabilities."
       echo "You can now remotely access the system with a VNC client using the IP address: $ipaddress"  
-      echo "To enable HTML and access your system from a browser, use $(basename "$0") vnc html on"
+      echo "To enable HTML and access your system from a browser, use $(basename "$0") vnc html-on"
       echo "To disable it, use $(basename "$0") vnc off"
     elif [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]  && [ "$websockifystatus" != 0 ]; then
       echo "VNC is enabled with HTML capabilities."
@@ -138,14 +138,14 @@ function vnc {
     fi
     
   else
-    echo "Error: only 'on', 'html on' 'off', 'status' and 'status-service' options are supported";
+    echo "Error: only 'on', 'html-on' 'off', 'status' and 'status-service' options are supported";
   fi
 }
 
 # Prints the options for the "vnc" command
 function vnc_help {
   echo ""
-  echo "Usage: $(basename "$0") vnc <on|html on|off|status|status-service>"
+  echo "Usage: $(basename "$0") vnc <on|html-on|off|status|status-service>"
   echo ""
   echo "Enables or disables the VNC server service"
   echo ""
@@ -161,7 +161,7 @@ function vnc_help {
   echo "      The VNC service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using VNC viewer."
   echo "      This will disable html, if it is active."
   echo ""
-  echo "  $(basename "$0") vnc html on"
+  echo "  $(basename "$0") vnc html-on"
   echo "      The VNC service will be enabled, with html. This will allow devices on your network to be able to connect to the raspberry pi using an HTML browser."
   echo ""
   echo "  $(basename "$0") vnc off"

@@ -39,8 +39,8 @@ function vnc {
   if [ "$status" = "on" ]; then
     enable_service vncserver-x11-serviced.service
     start_service vncserver-x11-serviced.service
-    sudo sed -i '$ a hdmi_group=2' /boot/config.txt
-    sudo sed -i '$ a hdmi_mode=82' /boot/config.txt
+    sudo grep -qF 'hdmi_group=2' '/boot/config.txt' || echo 'hdmi_group=2' | sudo tee -a '/boot/config.txt'
+    sudo grep -qF 'hdmi_mode=82' '/boot/config.txt' || echo 'hdmi_mode=82' | sudo tee -a '/boot/config.txt'
     sudo sed -i 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' /boot/config.txt
     sudo systemctl set-default graphical.target
     reboot_needed

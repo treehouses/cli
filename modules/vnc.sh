@@ -129,7 +129,9 @@ function vnc {
       echo "The system boots into $isgraphical"
       echo "The VNC service is $isenabledvnc"
       echo "The X window service is $isenabledx"
-      echo "In order to access your desktop remotely, the system needs to boot into Desktop, and VNC and X window services need to be running"
+      echo "The websockify service is $isenabledws"
+      echo "In order to access your desktop via a VNC viewer, the system needs to boot into Desktop, and VNC and X window services need to be running"
+      echo "To access it through html (a web browser), the websockify service needs to run along the aforementioned services."
       if [ "$bootoptionstatus" = "static" ] || [ "$vncservicestatus" ] || [ "$xservicestatus" ]; then
       echo "Your system is not configured correctly."
       echo "You may try $(basename "$0") vnc on, or attempt to enable any missing service manually"

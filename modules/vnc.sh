@@ -59,7 +59,7 @@ function vnc {
     
 # Does what "vnc on" does, plus changes the authentication scheme for noVNC
 # and starts a websocket on port 6080 to tunnel the vnc connection
-  if [ "$status" = "html on" ]; then
+  elif [ "$status" = "html on" ]; then
   
     # Checks if the required packages are installed
     if [ ! -d /usr/share/doc/websockify ] || [ ! -d /usr/share/doc/novnc ]; then

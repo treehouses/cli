@@ -127,7 +127,8 @@ case "$status" in
     
 # Stops the VNC server service, modifies the config.txt to no longer output screen data  if a screen is missing
 # and sets the system to run the console interface on boot 
-"off");
+"off")
+
     disable_service vncserver-x11-serviced.service
     stop_service vncserver-x11-serviced.service    
     sed -i '/hdmi_group=2/d' /boot/config.txt
@@ -166,6 +167,7 @@ case "$status" in
     
  # Prints the status of the specific VNC related services, along with advice to enable it or disable it accordingly
  "status-service")
+ 
       echo "The system boots into $isgraphical"
       echo "The VNC service is $isenabledvnc"
       echo "The X window service is $isenabledx"
@@ -178,8 +180,9 @@ case "$status" in
     fi
     ;;
  
+ # Prints the options for the "vnc" command
  "help")
-    # Prints the options for the "vnc" command
+ 
     echo ""
     echo "Usage: $(basename "$0") vnc <on|html-on|off|status|status-service>"
     echo ""

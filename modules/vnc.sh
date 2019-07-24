@@ -65,14 +65,13 @@ function vnc {
     if [ ! -d /usr/share/doc/websockify ] || [ ! -d /usr/share/doc/novnc ]; then
     echo "Error: noVNC and/or websockify are not installed."
       while true; do
-        read -n 1 -p "Do you want to install the prerequisite packages for noVNC? (y/n) " answer
-        case $answer in
-          [Yy]* ) apt-get upgrade;
-                  apt-get install websockify novnc -y;
-                  break;;
-          [Nn]* ) echo "To install them manually, run:";
+        read -n 1 -p "Do you want to install the prerequisite packages for noVNC? (y/n)" answer
+        case "$answer" in
+          "y"* ) apt-get upgrade;
+                  apt-get install websockify novnc -y;;
+          "n"* ) echo "To install them manually, run:";
                   echo "apt-get install websockify novnc";
-                  exit 1;;;
+                  exit 1;;
           * ) echo "Please answer (y)es or (n)o.";;
         esac
       done

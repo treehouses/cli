@@ -64,9 +64,18 @@ function vnc {
     # Checks if the required packages are installed
     if [ ! -d /usr/share/doc/websockify ] || [ ! -d /usr/share/doc/novnc ]; then
     echo "Error: noVNC and/or websockify are not installed."
-    echo "To install them, run:"
-    echo "apt-get install websockify novnc"
-    exit 1;
+      while true; do
+        read -n 1 -p "Do you want to install the prerequisite packages for noVNC? (y/n) " answer
+        case $answer in
+          [Yy]* ) apt-get upgrade;
+                  apt-get install websockify novnc -y;
+                  break;;
+          [Nn]* ) echo "To install them manually, run:";
+                  echo "apt-get install websockify novnc";
+                  exit 1;;;
+          * ) echo "Please answer (y)es or (n)o.";;
+        esac
+      done
     fi
     
     # Similar to vnc on, starting services
@@ -78,6 +87,7 @@ function vnc {
     systemctl set-default graphical.target
     
     # Changing authentication scheme for noVNC
+    # Password is "raspberry"
     grep -qF 'Authentication=VncAuth' '/root/.vnc/config.d/vncserver-x11' || echo 'Authentication=VncAuth' | tee -a '/root/.vnc/config.d/vncserver-x11'
     grep -qF 'Password=4428a3faa46efad1' '/root/.vnc/config.d/vncserver-x11' || echo 'Password=4428a3faa46efad1' | tee -a '/root/.vnc/config.d/vncserver-x11'
     
@@ -87,7 +97,8 @@ function vnc {
     reboot_needed
     echo "Success: the vnc html-enabled service has been started and enabled when the system boots."
     echo "You can then remotely access the system with a VNC client using the link:" 
-    echo "$ipaddress:6080/vnc.html" 
+    echo "$ipaddress:6080/vnc.html"
+    echo "Password is raspberry"
  
 # Prints the link to the system for access via HTML; Paste this to a browser
 elif [ "$status" = "html-link" ]; then   
@@ -126,6 +137,7 @@ elif [ "$status" = "html-link" ]; then
     elif [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]  && [ "$websockifystatus" != 0 ]; then
       echo "VNC is enabled with HTML capabilities."
       echo "You can now remotely access the system with an HTML browser using the link: $ipaddress:6080/vnc.html"
+      echo "Password is raspberry"
       echo "To keep vnc enabled and accessable by a VNC viewer, but not HTML, use $(basename "$0") vnc on"
       echo "To disable vnc altogether, use $(basename "$0") vnc off"
     else
@@ -172,6 +184,7 @@ function vnc_help {
   echo ""
   echo "  $(basename "$0") vnc html-on"
   echo "      The VNC service will be enabled, with html. This will allow devices on your network to be able to connect to the raspberry pi using an HTML browser."
+  echo "      Password for the VNC server is raspberry"
   echo ""
   echo "  $(basename "$0") vnc off"
   echo "      VNC services will be disabled."

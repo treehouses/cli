@@ -88,6 +88,14 @@ function vnc {
     echo "Success: the vnc html-enabled service has been started and enabled when the system boots."
     echo "You can then remotely access the system with a VNC client using the link:" 
     echo "$ipaddress:6080/vnc.html" 
+ 
+# Prints the link to the system for access via HTML; Paste this to a browser
+elif [ "$status" = "html-link" ]; then   
+    if [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]  && [ "$websockifystatus" != 0 ]; then
+    echo "$ipaddress:6080/vnc.html"
+    else
+    echo "VNC and/or HTML capabilities are not enabled. Try running:"
+    echo "$(basename "$0") vnc status"
 
 # Stops the VNC server service, modifies the config.txt to no longer output screen data  if a screen is missing
 # and sets the system to run the console interface on boot 

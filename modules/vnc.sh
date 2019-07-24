@@ -76,6 +76,7 @@ case "$status" in
   "html-on")
   
       # Checks if the required packages are installed
+      # and prompts to install them if not
     if [ ! -d /usr/share/doc/websockify ] || [ ! -d /usr/share/doc/novnc ]; then
     echo "Error: noVNC and/or websockify are not installed."
       while true; do
@@ -120,8 +121,8 @@ case "$status" in
     if [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]  && [ "$websockifystatus" != 0 ]; then
     echo "$ipaddress:6080/vnc.html"
     else
-    echo "VNC and/or HTML capabilities are not enabled. Try running:"
-    echo "$(basename "$0") vnc html-link"
+    echo "VNC and/or HTML capabilities are not enabled. Try running first:"
+    echo "$(basename "$0") vnc html-on"
     fi
     ;;
     
@@ -202,6 +203,10 @@ case "$status" in
     echo ""
     echo "  $(basename "$0") vnc html-on"
     echo "      The VNC service will be enabled, with html. This will allow devices on your network to be able to connect to the raspberry pi using an HTML browser."
+    echo "      Password for the VNC server is raspberry"
+    echo ""
+    echo "  $(basename "$0") vnc html-link"
+    echo "      Provides a link to paste it into your browser."
     echo "      Password for the VNC server is raspberry"
     echo ""
     echo "  $(basename "$0") vnc off"

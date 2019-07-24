@@ -106,15 +106,15 @@ function vnc {
  
 # Prints the status of the VNC server, along with advice to enable it or disable it accordingly
   elif [ "$status" = "status" ]; then
-    if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" ] && [ "$xservicestatus" ] && [ "$websockifystatus" = 0]; then
+    if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" ] && [ "$xservicestatus" ] && [ "$websockifystatus" = 0 ]; then
       echo "VNC is disabled." 
       echo "To enable it, use $(basename "$0") vnc on"
-    elif [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]  && [ "$websockifystatus" = 0]; then
+    elif [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]  && [ "$websockifystatus" = 0 ]; then
       echo "VNC is enabled without HTML capabilities."
       echo "You can now remotely access the system with a VNC client using the IP address: $ipaddress"  
       echo "To enable HTML and access your system from a browser, use $(basename "$0") vnc html on"
       echo "To disable it, use $(basename "$0") vnc off"
-    elif [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]  && [ "$websockifystatus" != 0]; then
+    elif [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]  && [ "$websockifystatus" != 0 ]; then
       echo "VNC is enabled with HTML capabilities."
       echo "You can now remotely access the system with an HTML browser using the link: $(ipaddress):6080/vnc.html"
       echo "To keep vnc enabled and accessable by a VNC viewer, but not HTML, use $(basename "$0") vnc on"

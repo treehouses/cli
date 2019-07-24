@@ -55,7 +55,7 @@ case "$status" in
 
 # Starts the VNC server service, modifies the config.txt to output screen data even if a screen is missing
 # and sets the system to run the desktop graphical interface on boot
-  "on");
+  "on")
   
     enable_service vncserver-x11-serviced.service
     start_service vncserver-x11-serviced.service
@@ -70,9 +70,10 @@ case "$status" in
     echo "Success: the vnc service has been started and enabled when the system boots."
     echo "You can then remotely access the system with a VNC client using the IP address: $ipaddress" 
     ;;
+    
 # Does what "vnc on" does, plus changes the authentication scheme for noVNC
 # and starts a websocket on port 6080 to tunnel the vnc connection
-  "html-on");
+  "html-on")
   
       # Checks if the required packages are installed
     if [ ! -d /usr/share/doc/websockify ] || [ ! -d /usr/share/doc/novnc ]; then
@@ -114,7 +115,7 @@ case "$status" in
     ;;
     
 # Prints the link to the system for access via HTML; Paste this to a browser
-"html-link");
+"html-link")
 
     if [ "$bootoptionstatus" = "indirect" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]  && [ "$websockifystatus" != 0 ]; then
     echo "$ipaddress:6080/vnc.html"
@@ -141,7 +142,7 @@ case "$status" in
     ;;
     
 # Prints the status of the VNC server, along with advice to enable it or disable it accordingly
-"status");
+"status")
 
     if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" ] && [ "$xservicestatus" ] && [ "$websockifystatus" = 0 ]; then
       echo "VNC is disabled." 
@@ -164,7 +165,7 @@ case "$status" in
     ;;
     
  # Prints the status of the specific VNC related services, along with advice to enable it or disable it accordingly
- "status-service");
+ "status-service")
       echo "The system boots into $isgraphical"
       echo "The VNC service is $isenabledvnc"
       echo "The X window service is $isenabledx"
@@ -177,7 +178,7 @@ case "$status" in
     fi
     ;;
  
- "help");
+ "help")
     # Prints the options for the "vnc" command
     echo ""
     echo "Usage: $(basename "$0") vnc <on|html-on|off|status|status-service>"
@@ -204,7 +205,7 @@ case "$status" in
     echo "      VNC services will be disabled."
     ;;
     
- *);
+ *)
     echo "Error: only 'on', 'html-on' 'off', 'status', 'status-service' and 'help' options are supported";
     exit 1;
     ;;

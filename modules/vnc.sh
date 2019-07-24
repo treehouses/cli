@@ -212,6 +212,9 @@ case "$status" in
     echo "Error: only 'on', 'html-on' 'off', 'status', 'status-service' and 'help' options are supported";
     exit 1;
     ;;
+    
+ esac
+ 
 }
 
 # Prints the options for the "vnc" command

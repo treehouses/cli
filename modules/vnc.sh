@@ -96,7 +96,8 @@ elif [ "$status" = "html-link" ]; then
     else
     echo "VNC and/or HTML capabilities are not enabled. Try running:"
     echo "$(basename "$0") vnc status"
-
+    fi
+    
 # Stops the VNC server service, modifies the config.txt to no longer output screen data  if a screen is missing
 # and sets the system to run the console interface on boot 
   elif [ "$status" = "off" ]; then

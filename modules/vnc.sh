@@ -2,11 +2,11 @@
 
 function vnc {
   status=$1
-  bootoptionstatus=$(sudo systemctl is-enabled graphical.target)
-  vncservicestatus=$(sudo service vncserver-x11-serviced status | grep -q 'running')
-  xservicestatus=$(sudo service lightdm status | grep -q 'running')
+  bootoptionstatus=$(systemctl is-enabled graphical.target)
+  vncservicestatus=$(service vncserver-x11-serviced status | grep -q 'running')
+  xservicestatus=$(service lightdm status | grep -q 'running')
   websockifystatus=$(pgrep -cw websockify)
-  ipaddress=$(sudo /usr/lib/vnc/get_primary_ip4)
+  ipaddress=$(/usr/lib/vnc/get_primary_ip4)
   
   # Get the status of each VNC related service for status-service
   if [ "$bootoptionstatus" = "static" ]; then
@@ -46,13 +46,13 @@ function vnc {
   if [ "$status" = "on" ]; then
     enable_service vncserver-x11-serviced.service
     start_service vncserver-x11-serviced.service
-    sudo grep -qF 'hdmi_group=2' '/boot/config.txt' || echo 'hdmi_group=2' | sudo tee -a '/boot/config.txt'
-    sudo grep -qF 'hdmi_mode=82' '/boot/config.txt' || echo 'hdmi_mode=82' | sudo tee -a '/boot/config.txt'
-    sudo sed -i 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' /boot/config.txt
-    sudo sed -i '/Authentication=VncAuth/d' /root/.vnc/config.d/vncserver-x11
-    sudo sed -i '/Password=4428a3faa46efad1/d' /root/.vnc/config.d/vncserver-x11
-    sudo sed -i '/websockify -D --web=/usr/share/novnc/ 6080 localhost:5901/d' /etc/rc.local
-    sudo systemctl set-default graphical.target
+    grep -qF 'hdmi_group=2' '/boot/config.txt' || echo 'hdmi_group=2' | tee -a '/boot/config.txt'
+    grep -qF 'hdmi_mode=82' '/boot/config.txt' || echo 'hdmi_mode=82' | tee -a '/boot/config.txt'
+    sed -i 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' /boot/config.txt
+    sed -i '/Authentication=VncAuth/d' /root/.vnc/config.d/vncserver-x11
+    sed -i '/Password=4428a3faa46efad1/d' /root/.vnc/config.d/vncserver-x11
+    sed -i '/websockify -D --web=/usr/share/novnc/ 6080 localhost:5901/d' /etc/rc.local
+    systemctl set-default graphical.target
     reboot_needed
     echo "Success: the vnc service has been started and enabled when the system boots."
     echo "You can then remotely access the system with a VNC client using the IP address: $ipaddress" 
@@ -72,18 +72,18 @@ function vnc {
     # Similar to vnc on, starting services
     enable_service vncserver-x11-serviced.service
     start_service vncserver-x11-serviced.service
-    sudo grep -qF 'hdmi_group=2' '/boot/config.txt' || echo 'hdmi_group=2' | sudo tee -a '/boot/config.txt'
-    sudo grep -qF 'hdmi_mode=82' '/boot/config.txt' || echo 'hdmi_mode=82' | sudo tee -a '/boot/config.txt'
-    sudo sed -i 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' /boot/config.txt
-    sudo systemctl set-default graphical.target
+    grep -qF 'hdmi_group=2' '/boot/config.txt' || echo 'hdmi_group=2' | tee -a '/boot/config.txt'
+    grep -qF 'hdmi_mode=82' '/boot/config.txt' || echo 'hdmi_mode=82' | tee -a '/boot/config.txt'
+    sed -i 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' /boot/config.txt
+    systemctl set-default graphical.target
     
     # Changing authentication scheme for noVNC
-    sudo grep -qF 'Authentication=VncAuth' '/root/.vnc/config.d/vncserver-x11' || echo 'Authentication=VncAuth' | sudo tee -a '/root/.vnc/config.d/vncserver-x11'
-    sudo grep -qF 'Password=4428a3faa46efad1' '/root/.vnc/config.d/vncserver-x11' || echo 'Password=4428a3faa46efad1' | sudo tee -a '/root/.vnc/config.d/vncserver-x11'
+    grep -qF 'Authentication=VncAuth' '/root/.vnc/config.d/vncserver-x11' || echo 'Authentication=VncAuth' | tee -a '/root/.vnc/config.d/vncserver-x11'
+    grep -qF 'Password=4428a3faa46efad1' '/root/.vnc/config.d/vncserver-x11' || echo 'Password=4428a3faa46efad1' | tee -a '/root/.vnc/config.d/vncserver-x11'
     
     # Starting the websocket daemon on startup
-    sudo sed -i 's/exit 0/websockify -D --web=/usr/share/novnc/ 6080 localhost:5901/' /etc/rc.local
-    sudo sed -i '$ a exit 0' /etc/rc.local
+    sed -i 's/exit 0/websockify -D --web=/usr/share/novnc/ 6080 localhost:5901/' /etc/rc.local
+    sed -i '$ a exit 0' /etc/rc.local
     reboot_needed
     echo "Success: the vnc html-enabled service has been started and enabled when the system boots."
     echo "You can then remotely access the system with a VNC client using the link:" 
@@ -103,13 +103,13 @@ elif [ "$status" = "html-link" ]; then
   elif [ "$status" = "off" ]; then
     disable_service vncserver-x11-serviced.service
     stop_service vncserver-x11-serviced.service    
-    sudo sed -i '/hdmi_group=2/d' /boot/config.txt
-    sudo sed -i '/hdmi_mode=82/d' /boot/config.txt 
-    sudo sed -i 's/hdmi_force_hotplug=1/#hdmi_force_hotplug=1/' /boot/config.txt
-    sudo sed -i '/Authentication=VncAuth/d' /root/.vnc/config.d/vncserver-x11
-    sudo sed -i '/Password=4428a3faa46efad1/d' /root/.vnc/config.d/vncserver-x11
-    sudo sed -i '/websockify -D --web=/usr/share/novnc/ 6080 localhost:5901/d' /etc/rc.local
-    sudo systemctl set-default multi-user.target
+    sed -i '/hdmi_group=2/d' /boot/config.txt
+    sed -i '/hdmi_mode=82/d' /boot/config.txt 
+    sed -i 's/hdmi_force_hotplug=1/#hdmi_force_hotplug=1/' /boot/config.txt
+    sed -i '/Authentication=VncAuth/d' /root/.vnc/config.d/vncserver-x11
+    sed -i '/Password=4428a3faa46efad1/d' /root/.vnc/config.d/vncserver-x11
+    sed -i '/websockify -D --web=/usr/share/novnc/ 6080 localhost:5901/d' /etc/rc.local
+    systemctl set-default multi-user.target
     reboot_needed
     echo "Success: the vnc service has been stopped and disabled when the system boots."
  

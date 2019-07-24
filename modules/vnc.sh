@@ -5,7 +5,7 @@ function vnc {
   bootoptionstatus=$(sudo systemctl is-enabled graphical.target)
   vncservicestatus=$(sudo service vncserver-x11-serviced status | grep -q 'running')
   xservicestatus=$(sudo service lightdm status | grep -q 'running')
-  websockifystatus=$(ps -ef |grep -v grep |grep -cw websockify)
+  websockifystatus=$(pgrep -cw websockify)
   ipaddress=$(sudo /usr/lib/vnc/get_primary_ip4)
   
   # Get the status of each VNC related service for status-service

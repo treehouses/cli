@@ -14,14 +14,14 @@ function coralenv {
                sudo apt upgrade;
                sudo apt install -y python3-coral-enviro;
                reboot_needed;
-                  while reboot_needed; do
-                    read -n 1 -pr "Would you like to reboot now? (y/n)" answerreboot;
-                    case "$answerreboot" in
-                      "y"* ) reboot;;;
-                      "n"* ) exit 1;;;
-                      * ) exit 1;;;
+                 while reboot_needed; do
+                   read -n 1 -pr "Would you like to reboot now? (y/n)" answerreboot;
+                     case "$answerreboot" in
+                       "y"* ) reboot;;
+                       "n"* ) exit 1;;
+                      * ) exit 1;;
                      esac
-                    done
+                 done
                exit 1;;
         "n"* ) echo "To install them manually, run:";    
                echo "echo "\""deb https://packages.cloud.google.com/apt coral-cloud-stable main"\"" | sudo tee /etc/apt/sources.list.d/coral-cloud.list"

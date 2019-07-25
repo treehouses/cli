@@ -14,9 +14,9 @@ function coralenv {
                sudo apt upgrade;
                sudo apt install -y python3-coral-enviro;
                reboot_needed;
-                  while reboot_needed; do;
+                  while reboot_needed; do
                     read -n 1 -pr "Would you like to reboot now? (y/n)" answerreboot;
-                    case "$answerreboot" in;
+                    case "$answerreboot" in
                       "y"* ) reboot;;;
                       "n"* ) exit 1;;;
                       * ) exit 1;;;

@@ -215,7 +215,7 @@ case $1 in
   coralenv)
     checkroot
     shift
-    coralenv "$2"
+    coralenv "$@"
     ;;
   help)
     help "$2"

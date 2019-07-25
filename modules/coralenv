@@ -20,6 +20,7 @@ function coralenv {
                       "y"* ) reboot;;;
                       "n"* ) exit 1;;;
                       * ) exit 1;;;
+                     esac
                     done
                exit 1;;
         "n"* ) echo "To install them manually, run:";    

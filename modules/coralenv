@@ -17,9 +17,9 @@ function coralenv {
                   while reboot_needed; do
                     read -n 1 -pr "Would you like to reboot now? (y/n)" answerreboot;
                     case "$answerreboot" in
-                      "y"* ) reboot;;;
-                      "n"* ) exit 1;;;
-                      * ) exit 1;;;
+                      "y"* ) reboot;;
+                      "n"* ) exit 1;;
+                      * ) exit 1;;
                     done;
                exit 1;;
         "n"* ) echo "To install them manually, run:";    

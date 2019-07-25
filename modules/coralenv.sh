@@ -4,7 +4,7 @@ function coralenv {
   param=$1
   
   if [ ! -d /usr/share/doc/python3-coral-enviro ] ; then
-    warn "Error: the python environment is not installed"
+    warn "Error: the Coral python environment is not installed"
     while true; do
       read -n 1 -pr "Do you want to install the prerequisite packages for the Coral Environmental Board? (y/n)" answer
       case "$answer" in

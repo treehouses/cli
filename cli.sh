@@ -45,6 +45,7 @@ source "$SCRIPTFOLDER/modules/vnc.sh"
 source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
+source "$SCRIPTFOLDER/modules/coralenv.sh"
 
 
 
@@ -210,6 +211,11 @@ case $1 in
     checkroot
     shift
     openvpn "$@"
+    ;;
+  coralenv)
+    checkroot
+    shift
+    coralenv "$2"
     ;;
   help)
     help "$2"

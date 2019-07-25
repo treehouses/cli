@@ -64,7 +64,7 @@ case "$status" in
     sed -i 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' /boot/config.txt
     sed -i '/Authentication=VncAuth/d' /root/.vnc/config.d/vncserver-x11
     sed -i '/Password=4428a3faa46efad1/d' /root/.vnc/config.d/vncserver-x11
-    sed -i '/websockify -D --web=/usr/share/novnc/ 6080 localhost:5901/d' /etc/rc.local
+    sed -i '/websockify -D --web=\/usr\/share\/novnc\/ 6080 localhost:5901/d' /etc/rc.local
     systemctl set-default graphical.target
     reboot_needed
     echo "Success: the vnc service has been started and enabled when the system boots."
@@ -106,7 +106,7 @@ case "$status" in
     grep -qF 'Password=4428a3faa46efad1' '/root/.vnc/config.d/vncserver-x11' || echo 'Password=4428a3faa46efad1' | tee -a '/root/.vnc/config.d/vncserver-x11'
     
     # Starting the websocket daemon on startup
-    sed -i 's/exit 0/websockify -D --web=/usr/share/novnc/ 6080 localhost:5901/' /etc/rc.local
+    sed -i 's/exit 0/websockify -D --web=\/usr\/share\/novnc\/ 6080 localhost:5901/' /etc/rc.local
     sed -i '$ a exit 0' /etc/rc.local
     reboot_needed
     echo "Success: the vnc html-enabled service has been started and enabled when the system boots."
@@ -137,7 +137,7 @@ case "$status" in
     sed -i 's/hdmi_force_hotplug=1/#hdmi_force_hotplug=1/' /boot/config.txt
     sed -i '/Authentication=VncAuth/d' /root/.vnc/config.d/vncserver-x11
     sed -i '/Password=4428a3faa46efad1/d' /root/.vnc/config.d/vncserver-x11
-    sed -i '/websockify -D --web=/usr/share/novnc/ 6080 localhost:5901/d' /etc/rc.local
+    sed -i '/websockify -D --web=\/usr\/share\/novnc\/ 6080 localhost:5901/d' /etc/rc.local
     systemctl set-default multi-user.target
     reboot_needed
     echo "Success: the vnc service has been stopped and disabled when the system boots."

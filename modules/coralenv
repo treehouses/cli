@@ -24,7 +24,7 @@ function coralenv {
                  done
                exit 1;;
         "n"* ) echo "To install them manually, run:";    
-               echo "echo "\""deb https://packages.cloud.google.com/apt coral-cloud-stable main"\"" | sudo tee /etc/apt/sources.list.d/coral-cloud.list"
+               echo "echo \"deb https://packages.cloud.google.com/apt coral-cloud-stable main\" | sudo tee /etc/apt/sources.list.d/coral-cloud.list"
                echo "curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -"
                echo "sudo apt update"
                echo "sudo apt upgrade"

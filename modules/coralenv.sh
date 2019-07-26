@@ -9,10 +9,10 @@ function coralenv {
       read -n 1 -pr "Do you want to install the prerequisite packages for the Coral Environmental Board? (y/n)" answer
       case "$answer" in
         "y"* ) echo "deb https://packages.cloud.google.com/apt coral-cloud-stable main" | tee /etc/apt/sources.list.d/coral-cloud.list;
-               curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -;
-               sudo apt update;
-               sudo apt upgrade;
-               sudo apt install -y python3-coral-enviro;
+               curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -;
+               apt update;
+               apt upgrade;
+               apt install -y python3-coral-enviro;
                reboot_needed;
                  while reboot_needed; do
                    read -n 1 -pr "Would you like to reboot now? (y/n)" answerreboot;

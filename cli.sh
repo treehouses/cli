@@ -210,7 +210,7 @@ case $1 in
   openvpn)
     checkroot
     shift
-    openvpn "$*"
+    openvpn "$@"
     ;;
   coralenv)
     checkroot

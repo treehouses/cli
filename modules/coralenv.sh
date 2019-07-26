@@ -35,29 +35,33 @@ function coralenv {
     done
   fi
 
+if [ -f /sys/bus/iio/devices/iio:device0 ]; then # Checks if board is attached
+
+case "$param" in
+
 # Start the demo until next reboot
-  if [ "$param" = "demo-on" ]; then
-    nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>/dev/null &
-    echo "Success: the Coral Environmental board is now displaying sensor information."
-    echo "The board's display will turn off on reboot." 
+ "demo-on" )
+    nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>/dev/null &;
+    echo "Success: the Coral Environmental board is now displaying sensor information.";
+    echo "The board's display will turn off on reboot.";;
 
 # Starts the demo, and activates it on reboot
-  elif [ "$param" = "demo-always-on" ]; then
-    nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>/dev/null &
-    sed -i 's/exit 0/nohup python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&>\/dev\/null \&/g' /etc/rc.local
-    sed -i '$ a exit 0' /etc/rc.local
-    echo "Success: the Coral Environmental board is now displaying sensor information."
-    echo "The board's display will persist on reboot." 
+  "demo-always-on" )
+    nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>/dev/null &;
+    sed -i 's/exit 0/nohup python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&>\/dev\/null \&/g' /etc/rc.local;
+    sed -i '$ a exit 0' /etc/rc.local;
+    echo "Success: the Coral Environmental board is now displaying sensor information.";
+    echo "The board's display will persist on reboot." ;;
  
 # Stops the demo and deactivates it on reboot
-  elif [ "$param" = "demo-off" ]; then
-     sed -i '/nohup python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&>\/dev\/null \&/d' /etc/rc.local
-     pkill enviro_demo    
-     echo "Success: the Coral Environmental board demo is now stopped."
-     echo "The board's display will turn off on reboot." 
+  "demo-off" )
+     sed -i '/nohup python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&>\/dev\/null \&/d' /etc/rc.local;
+     pkill enviro_demo;
+     echo "Success: the Coral Environmental board demo is now stopped.";
+     echo "The board's display will turn off on reboot." ;
     
 # Prints the help page.
-  elif [ "$param" = "help" ]; then
+ "help" )
     echo ""
     echo "Usage: $(basename "$0") coralenv <demo-on|demo-always-on|demo-off|help>"
     echo ""
@@ -79,8 +83,13 @@ function coralenv {
     echo "  $(basename "$0") coralenv help"
     echo "      This help."
   
-  else
+  * )
     echo "Error: only 'demo-on', 'demo-always-on', 'demo-off' and 'help' options are supported";
+    
+    esac
+    
+  else echo "Coral Environmmental Board not detected" && exit 1
+  
   fi
 }
 

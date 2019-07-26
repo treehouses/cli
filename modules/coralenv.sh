@@ -36,22 +36,22 @@ function coralenv {
   fi
 
 # Start the demo until next reboot
-  if [ "$param" = "demoon" ]; then
-    python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py & 
+  if [ "$param" = "demo-on" ]; then
+    nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>/dev/null &
     echo "Success: the Coral Environmental board is now displaying sensor information."
     echo "The board's display will turn off on reboot." 
 
 # Starts the demo, and activates it on reboot
-  elif [ "$param" = "demoalwayson" ]; then
+  elif [ "$param" = "demo-always-on" ]; then
     nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>/dev/null &
-    sed -i 's/exit 0/python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&/' /etc/rc.local
+    sed -i 's/exit 0/nohup python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&>\/dev\/null \&/g' /etc/rc.local
     sed -i '$ a exit 0' /etc/rc.local
     echo "Success: the Coral Environmental board is now displaying sensor information."
     echo "The board's display will persist on reboot." 
  
 # Stops the demo and deactivates it on reboot
-  elif [ "$param" = "demooff" ]; then
-     sed -i '/python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&/d' /etc/rc.local
+  elif [ "$param" = "demo-off" ]; then
+     sed -i '/nohup python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&>\/dev\/null \&/d' /etc/rc.local
      pkill enviro_demo    
      echo "Success: the Coral Environmental board demo is now stopped."
      echo "The board's display will turn off on reboot." 
@@ -59,49 +59,49 @@ function coralenv {
 # Prints the help page.
   elif [ "$param" = "help" ]; then
     echo ""
-    echo "Usage: $(basename "$0") coralenv <demoon|demoalwayson|demooff|help>"
+    echo "Usage: $(basename "$0") coralenv <demo-on|demo-always-on|demo-off|help>"
     echo ""
     echo "Controls the Environmental Board"
     echo ""
     echo "Example:"
-    echo "  $(basename "$0") coralenv demoon"
+    echo "  $(basename "$0") coralenv demo-on"
     echo "      Starts the Coral Environmental board demo."
     echo "      The Coral Environmental board will be displaying sensor information."
     echo "      The board's display will turn off on reboot."
     echo ""
-    echo "  $(basename "$0") coralenv demoalwayson"
+    echo "  $(basename "$0") coralenv demo-always-on"
     echo "      Starts the Coral Environmental board demo."
     echo "      The board's display will persist on reboot."
     echo ""
-    echo "  $(basename "$0") coralenv demooff"
+    echo "  $(basename "$0") coralenv demo-off"
     echo "      Stops the demo and the board's display will turn off on reboot."
     echo ""
     echo "  $(basename "$0") coralenv help"
     echo "      This help."
   
   else
-    echo "Error: only 'demoon', 'demoalwayson', 'demoalwaysoff' and 'help' options are supported";
+    echo "Error: only 'demo-on', 'demo-always-on', 'demo-off' and 'help' options are supported";
   fi
 }
 
 # Prints the options for the "coralenv" command
 function coralenv_help {
   echo ""
-  echo "Usage: $(basename "$0") coralenv <demoon|demoalwayson|demooff|help>"
+  echo "Usage: $(basename "$0") coralenv <demo-on|demo-always-on|demo-off|help>"
   echo ""
   echo "Controls the Environmental Board"
   echo ""
   echo "Example:"
-  echo "  $(basename "$0") coralenv demoon"
+  echo "  $(basename "$0") coralenv demo-on"
   echo "      Starts the Coral Environmental board demo."
   echo "      The Coral Environmental board will be displaying sensor information."
   echo "      The board's display will turn off on reboot."
   echo ""
-  echo "  $(basename "$0") coralenv demoalwayson"
+  echo "  $(basename "$0") coralenv demo-always-on"
   echo "      Starts the Coral Environmental board demo."
   echo "      The board's display will persist on reboot."
   echo ""
-  echo "  $(basename "$0") coralenv demooff"
+  echo "  $(basename "$0") coralenv demo-off"
   echo "      Stops the demo and the board's display will turn off on reboot."
   echo ""
   echo "  $(basename "$0") coralenv help"

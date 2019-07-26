@@ -6,7 +6,7 @@ function coralenv {
   if [ ! -d /usr/share/doc/python3-coral-enviro ] ; then
     warn "Error: the Coral python environment is not installed"
     while true; do
-      read -n 1 -pr "Do you want to install the prerequisite packages for the Coral Environmental Board? (y/n)" answer
+      read -n 1 -pr "Do you want to install the prerequisite packages for the Coral Environmental Board? (y/n)" answer # TODO envelop in its own function
       case "$answer" in
         "y"*)
           echo "deb https://packages.cloud.google.com/apt coral-cloud-stable main" | tee /etc/apt/sources.list.d/coral-cloud.list;

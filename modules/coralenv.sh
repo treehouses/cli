@@ -43,7 +43,7 @@ function coralenv {
 
 # Starts the demo, and activates it on reboot
   elif [ "$param" = "demoalwayson" ]; then
-    daemon python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py > /dev/null
+    nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>/dev/null &
     sed -i 's/exit 0/python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&/' /etc/rc.local
     sed -i '$ a exit 0' /etc/rc.local
     echo "Success: the Coral Environmental board is now displaying sensor information."

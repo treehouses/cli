@@ -37,21 +37,21 @@ function coralenv {
 
 # Start the demo until next reboot
   if [ "$param" = "demoon" ]; then
-    python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py && 
+    python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py & 
     echo "Success: the Coral Environmental board is now displaying sensor information."
     echo "The board's display will turn off on reboot." 
 
 # Starts the demo, and activates it on reboot
   elif [ "$param" = "demoalwayson" ]; then
-    python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &&
-    sed -i 's/exit 0/python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&\&/' /etc/rc.local
+    daemon python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py > /dev/null
+    sed -i 's/exit 0/python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&/' /etc/rc.local
     sed -i '$ a exit 0' /etc/rc.local
     echo "Success: the Coral Environmental board is now displaying sensor information."
     echo "The board's display will persist on reboot." 
  
 # Stops the demo and deactivates it on reboot
   elif [ "$param" = "demooff" ]; then
-     sed -i '/python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&\&/d' /etc/rc.local
+     sed -i '/python3 \/usr\/lib\/python3\/dist-packages\/coral\/enviro\/enviro_demo\.py \&/d' /etc/rc.local
      pkill enviro_demo    
      echo "Success: the Coral Environmental board demo is now stopped."
      echo "The board's display will turn off on reboot." 

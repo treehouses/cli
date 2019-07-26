@@ -35,7 +35,7 @@ function coralenv {
     done
   fi
 
-if [ -f /sys/bus/iio/devices/iio:device0 ]; then # Checks if board is attached
+if [ -e /sys/bus/iio/devices/iio:device0 ]; then # Checks if board is attached
 
 case "$param" in
 

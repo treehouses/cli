@@ -36,7 +36,7 @@ if [ -e /sys/bus/iio/devices/iio:device0 ]; then # Checks if board is attached
       echo "The board's display will turn off on reboot."
       ;;
     "install") # Installs the prequisite packages
-      echo "deb https://packages.cloud.google.com/apt coral-cloud-stable main" | tee /etc/apt/sources.list.d/coral-cloud.list;
+      grep -qF 'deb https://packages.cloud.google.com/apt coral-cloud-stable main' '/etc/apt/sources.list.d/treehouses.list' || echo 'deb https://packages.cloud.google.com/apt coral-cloud-stable main' | tee -a '/etc/apt/sources.list.d/treehouses.list'
       curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -;
       apt update;
       apt install -y python3-coral-enviro;

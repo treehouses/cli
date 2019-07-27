@@ -52,6 +52,8 @@ function help_default {
   echo "              [autologin]"
   echo "   openvpn [use|show|delete]                helps setting up an openvpn client"
   echo "           [notice|start|stop|load]"
+  echo "   coralenv [install|demo-on|demo-off]      plays with the coral environmental board"
+  echo "            [demo-always-on]"
   echo
 }
 

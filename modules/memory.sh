@@ -34,7 +34,7 @@ function memory_used {
   free | grep Mem | cut -c 20-31 > u
   free | grep Mem | cut -c 56-72 > bc
   echo "$((u + bc))"
-  ubc = $(echo)
+  ubc=$(echo)
 }
 
 function memory_free {

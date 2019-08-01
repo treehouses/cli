@@ -30,6 +30,9 @@ function sshkey () {
     fi
     sed -i "/^$2/d" /home/pi/.ssh/authorized_keys
     sed -i "/^$2/d" /root/.ssh/authorized_keys
+  elif [ "$1" == "deleteall" ]; then
+    rm /home/pi/.ssh/authorized_keys
+    rm /root/.ssh/authorized_keys
   elif [ "$1" == "addgithubusername" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing argument"

@@ -33,7 +33,7 @@ function memory_total {
 function memory_used {
   u=$(free | grep Mem | cut -c 20-31)
   bc=$(free | grep Mem | cut -c 56-72)
-  ubc=$(($u + $bc))
+  ubc=$(($u+$bc))
 }
 
 function memory_free {

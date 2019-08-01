@@ -27,16 +27,16 @@ function memory {
 }
 
 function memory_total {
-  t=$(free | grep Mem | cut -c 13-19)
+  t=$(free | grep -i Mem | awk '{printf $2}')
 }
 
 function memory_used {
-  u=$(free | grep Mem | cut -c 20-31)
-  bc=$(free | grep Mem | cut -c 56-72)
+  u=$(free | grep -i Mem | awk '{printf $3}')
+  bc=$(free | grep -i Mem | awk '{printf $6}')
   ubc=$((u+bc))
 }
 
 function memory_free {
-  f=$(free | grep Mem | cut -c 32-43)
+  f=$(free | grep -i Mem | awk '{printf $4}')
 }
 

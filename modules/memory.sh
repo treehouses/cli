@@ -37,7 +37,6 @@ function memory_used {
 }
 
 function memory_free {
-  free | grep Mem | cut -c 32-43
   f=$(free | grep Mem | cut -c 32-43)
 }
 

@@ -12,7 +12,7 @@ help [command]                           gives you a more detailed info about th
 expandfs                                 expands the partition of the RPI image to the maximum of the SDcard
 rename <hostname>                        changes hostname
 password <password>                      changes the password for 'pi' user
-sshkey <add|list|delete>                 used for adding or removing ssh keys for authentication
+sshkey <add|list|delete|deleteall>       used for adding or removing ssh keys for authentication
       <addgithubusername|addgithubgroup>
 sshkeyadd <public_key>                   deprecated - please use cli.sh sshkey add
 version                                  returns the version of cli.sh command

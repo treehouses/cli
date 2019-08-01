@@ -8,7 +8,7 @@ function help_default {
   echo "   expandfs                                 expands the partition of the RPI image to the maximum of the SDcard"
   echo "   rename <hostname>                        changes hostname"
   echo "   password <password>                      changes the password for 'pi' user"
-  echo "   sshkey <add|list|delete>                 used for adding or removing ssh keys for authentication"
+  echo "   sshkey <add|list|delete|deleteall>       used for adding or removing ssh keys for authentication"
   echo "          <addgithubusername|addgithubgroup>"
   echo "   sshkeyadd <public_key>                   deprecated - please use $(basename "$0") sshkey add"
   echo "   version                                  returns the version of $(basename "$0") command"

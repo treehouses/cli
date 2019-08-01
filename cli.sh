@@ -218,6 +218,11 @@ case $1 in
     shift
     coralenv "$@"
     ;;
+    memory)
+    checkroot
+    shift
+    memory "$@"
+    ;;
   help)
     help "$2"
     ;;

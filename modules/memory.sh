@@ -3,7 +3,7 @@
 function memory {
   if [ "$1" == "total" ] ; then
     memory_total
-    echo "Your rpi has $(free) B of total memory";
+    echo "Your rpi has  B of total memory";
     exit 0
   fi
 
@@ -24,14 +24,15 @@ function memory {
 }
 
 function memory_total {
-  free
+  free | grep Mem | cut -c 13-19
 }
 
 function memory_used {
-  free
+  free | grep Mem | cut -c 20-31
+  free | grep Mem | cut -c 56-72
 }
 
 function memory_free {
-  free
+  free | grep Mem | cut -c 32-43
 }
 

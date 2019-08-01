@@ -23,7 +23,7 @@ function memory {
   memory_used
   memory_free
   
-  echo "Your rpi has $(free) B of total memory with $(free) B used and $(free) B avalaible"
+  echo "Your rpi has $((t)) B of total memory with $((ubc)) B used and $((f)) B avalaible"
 }
 
 function memory_total {
@@ -33,7 +33,8 @@ function memory_total {
 function memory_used {
   free | grep Mem | cut -c 20-31 > u
   free | grep Mem | cut -c 56-72 > bc
-  ubc = echo "$((u + bc))"
+  echo "$((u + bc))"
+  ubc = $(echo)
 }
 
 function memory_free {

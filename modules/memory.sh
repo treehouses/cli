@@ -27,17 +27,21 @@ function memory {
 }
 
 function memory_total {
-  free | grep Mem | cut -c 13-19 > t
+  free | grep Mem | cut -c 13-19
+  t=$(free | grep Mem | cut -c 13-19)
 }
 
 function memory_used {
-  free | grep Mem | cut -c 20-31 > u
-  free | grep Mem | cut -c 56-72 > bc
+  free | grep Mem | cut -c 20-31
+  free | grep Mem | cut -c 56-72
+  u=$(free | grep Mem | cut -c 20-31)
+  bc=$(free | grep Mem | cut -c 56-72)
   echo "$((u + bc))"
   ubc=$(echo)
 }
 
 function memory_free {
-  free | grep Mem | cut -c 32-43 > f
+  free | grep Mem | cut -c 32-43
+  f=$(free | grep Mem | cut -c 32-43)
 }
 

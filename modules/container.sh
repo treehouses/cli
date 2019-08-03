@@ -35,7 +35,7 @@ function container_help {
   echo "  $(basename "$0") container docker"
   echo "      This will start and enable the docker service. The balena service will be stopped and disabled."
   echo ""
-  echo "  $(basename "$0") container docker"
+  echo "  $(basename "$0") container balena"
   echo "      This will start and enable the balena service. The docker service will be stopped and disabled."
   echo ""
   echo "  $(basename "$0") container none"

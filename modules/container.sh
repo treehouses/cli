@@ -64,7 +64,7 @@ function container_help {
   echo ""
   echo "Example:"
   echo "  $(basename "$0") container"
-  echo "      This will identify whether the docker service, the balena service or no container service is currently running"
+  echo "      This will identify whether docker, balena or none of the services is currently running."
   echo ""
   echo "  $(basename "$0") container docker"
   echo "      This will start and enable the docker service. The balena service will be stopped and disabled."

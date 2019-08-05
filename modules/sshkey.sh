@@ -30,6 +30,9 @@ function sshkey () {
     fi
     sed -i "/^$2/d" /home/pi/.ssh/authorized_keys
     sed -i "/^$2/d" /root/.ssh/authorized_keys
+  elif [ "$1" == "deleteall" ]; then
+    rm /home/pi/.ssh/authorized_keys
+    rm /root/.ssh/authorized_keys
   elif [ "$1" == "addgithubusername" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing argument"
@@ -70,6 +73,9 @@ function sshkey_help () {
   echo ""
   echo "  $(basename "$0") sshkey delete \"<key>\""
   echo "      Deletes the specified public key"
+  echo ""
+  echo "  $(basename "$0") sshkey deleteall"
+  echo "      Deletes all ssh keys"
   echo ""
   echo "  $(basename "$0") sshkey addgithubusername <username>"
   echo "      Downloads the public keys of the github username and adds them to authorized_keys"

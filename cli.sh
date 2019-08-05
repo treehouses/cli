@@ -23,6 +23,7 @@ source "$SCRIPTFOLDER/modules/help.sh"
 source "$SCRIPTFOLDER/modules/image.sh"
 source "$SCRIPTFOLDER/modules/led.sh"
 source "$SCRIPTFOLDER/modules/locale.sh"
+source "$SCRIPTFOLDER/modules/memory.sh"
 source "$SCRIPTFOLDER/modules/networkmode.sh"
 source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
@@ -216,6 +217,10 @@ case $1 in
     checkroot
     shift
     coralenv "$@"
+    ;;
+  memory)
+    shift
+    memory "$@"
     ;;
   help)
     help "$2"

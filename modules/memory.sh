@@ -40,23 +40,3 @@ function memory_free {
   f=$(free | grep -i Mem | awk '{printf $4}')
 }
 
-function memory_help {
-  echo ""
-  echo "Usage: $(basename "$0") memory [total|used|free]"
-  echo ""
-  echo "Displays the various values for total, used, and free RAM memory."
-  echo ""
-  echo "Example:"
-  echo "  $(basename "$0") memory"
-  echo "      This will display in a single sentence 3 different RAM memory values in bytes for total, used and free memory."
-  echo ""
-  echo "  $(basename "$0") memory total"
-  echo "      This will return the numerical value for the total memory (value in bytes)."
-  echo ""
-  echo "  $(basename "$0") memory used"
-  echo "      This will return the numerical value for the used memory (value in bytes)."
-  echo ""
-  echo "  $(basename "$0") memory free"
-  echo "      This will return the numerical value for the remaining free memory (value in bytes)."
-  echo ""
-}

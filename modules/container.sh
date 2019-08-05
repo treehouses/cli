@@ -16,22 +16,22 @@ if [ "$1" == "docker" ] ; then
     exit 0
   fi
   
-  if [ "systemctl is-enabled docker" == "enabled" ] ; then
+  if [ "$(systemctl is-enabled docker)" == "enabled" ] ; then
     echo "docker";
     exit 0
   fi
   
-  if [ "systemctl is-enabled balena" == "enabled" ] ; then
+  if [ "$(systemctl is-enabled balena)" == "enabled" ] ; then
     echo "balena";
     exit 0
   fi
   
-  if [ "systemctl is-enabled docker" == "disabled" ] ; then
+  if [ "$(systemctl is-enabled docker)" == "disabled" ] ; then
     echo "none";
     exit 0
   fi
   
-  if [ "systemctl is-enabled balena" == "disabled" ] ; then
+  if [ "$(systemctl is-enabled balena)" == "disabled" ] ; then
     echo "none";
     exit 0
   fi

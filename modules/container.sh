@@ -26,12 +26,7 @@ if [ "$1" == "docker" ] ; then
     exit 0
   fi
   
-  if [ "$(systemctl is-enabled docker)" == "disabled" ] ; then
-    echo "none";
-    exit 0
-  fi
-  
-  if [ "$(systemctl is-enabled balena)" == "disabled" ] ; then
+  if [ "$(systemctl is-enabled docker)" == "disabled" ] && [ "$(systemctl is-enabled balena)" == "disabled" ] ; then
     echo "none";
     exit 0
   fi

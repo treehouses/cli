@@ -14,7 +14,6 @@ rename <hostname>                        changes hostname
 password <password>                      changes the password for 'pi' user
 sshkey <add|list|delete|deleteall>       used for adding or removing ssh keys for authentication
       <addgithubusername|addgithubgroup>
-sshkeyadd <public_key>                   deprecated - please use cli.sh sshkey add
 version                                  returns the version of cli.sh command
 image                                    returns version of the system image installed
 detectrpi                                detects the hardware version of a raspberry pi

@@ -35,7 +35,6 @@ source "$SCRIPTFOLDER/modules/rtc.sh"
 source "$SCRIPTFOLDER/modules/services.sh"
 source "$SCRIPTFOLDER/modules/ssh.sh"
 source "$SCRIPTFOLDER/modules/sshkey.sh"
-source "$SCRIPTFOLDER/modules/sshkeyadd.sh"
 source "$SCRIPTFOLDER/modules/sshtunnel.sh"
 source "$SCRIPTFOLDER/modules/staticwifi.sh"
 source "$SCRIPTFOLDER/modules/timezone.sh"
@@ -62,11 +61,6 @@ case $1 in
   password)
     checkroot
     password "$2"
-    ;;
-  sshkeyadd)
-    checkroot
-    shift
-    sshkeyadd "$@"
     ;;
   sshkey)
     checkroot

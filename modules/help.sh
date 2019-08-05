@@ -10,7 +10,6 @@ function help_default {
   echo "   password <password>                      changes the password for 'pi' user"
   echo "   sshkey <add|list|delete|deleteall>       used for adding or removing ssh keys for authentication"
   echo "          <addgithubusername|addgithubgroup>"
-  echo "   sshkeyadd <public_key>                   deprecated - please use $(basename "$0") sshkey add"
   echo "   version                                  returns the version of $(basename "$0") command"
   echo "   image                                    returns version of the system image installed"
   echo "   detectrpi                                detects the hardware version of a raspberry pi"

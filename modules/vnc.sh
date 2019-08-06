@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function vnc {
-  status=$1
+  option=$1
   bootoptionstatus=$(systemctl is-enabled graphical.target)
   vncservicestatus=$(service vncserver-x11-serviced status | grep -q 'running')
   xservicestatus=$(service lightdm status | grep -q 'running')
@@ -33,7 +33,7 @@ function vnc {
     exit 1;
   fi
 
-case "$status" in
+case "$option" in
   "")
     if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" ] && [ "$xservicestatus" ]; then
       echo "VNC is disabled." 

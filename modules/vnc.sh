@@ -3,8 +3,8 @@
 function vnc {
   option=$1
   bootoptionstatus=$(systemctl is-enabled graphical.target)
-  vncservicestatus=$(service vncserver-x11-serviced status | grep -q 'running')
-  xservicestatus=$(service lightdm status | grep -q 'running')
+  vncservicestatus=$(systemctl is-active vncserver-x11-serviced)
+  xservicestatus=$(systemctl is-active lightdm)
   ipaddress=$(/usr/lib/vnc/get_primary_ip4)
 
   # Get the status of each VNC related service for status-service
@@ -12,18 +12,6 @@ function vnc {
     isgraphical="Console"
   elif [ "$bootoptionstatus" = "indirect" ]; then
     isgraphical="Desktop"
-  fi
-
-  if [ "$vncservicestatus" ]; then
-    isenabledvnc="running"
-  else
-    isenabledvnc="not running"
-  fi
-
-  if [ "$xservicestatus" ]; then
-    isenabledx="running"
-  else
-    isenabledx="not running"
   fi
 
   # Checks whether we have the required package to run a VNC server
@@ -35,10 +23,10 @@ function vnc {
 
 case "$option" in
   "")
-    if [ "$bootoptionstatus" = "static" ] && [ ! "$vncservicestatus" ] && [ ! "$xservicestatus" ]; then
+    if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "inactive" ]; then
       echo "VNC is disabled." 
       echo "To enable it, use $(basename "$0") vnc on"
-    elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" ] && [ "$xservicestatus" ]; then
+    elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "active" ]; then
       echo "You can now remotely access the system with a VNC client using the IP address: $ipaddress"
       echo "To disable it, use $(basename "$0") vnc off"
     else
@@ -55,6 +43,7 @@ case "$option" in
     systemctl set-default graphical.target
     reboot_needed
     echo "Success: the vnc service has been started and enabled when the system boots."
+    echo "Please reboot the system for changes to take effect."
     echo "You can then remotely access the system with a VNC client using the IP address: $ipaddress" 
     ;;
   "off")
@@ -66,13 +55,14 @@ case "$option" in
     systemctl set-default multi-user.target
     reboot_needed
     echo "Success: the vnc service has been stopped and disabled when the system boots."
+    echo "Please reboot the system for changes to take effect."
     ;;
   "info")
     echo "The system boots into $isgraphical"
-    echo "The VNC service is $isenabledvnc"
-    echo "The X window service is $isenabledx"
+    echo "The VNC service is $vncservicestatus"
+    echo "The X window service is $xservicestatus"
     echo "In order to access your desktop via a VNC viewer, the system needs to boot into Desktop, and VNC and X window services need to be running"
-    if [ "$bootoptionstatus" = "static" ] || [ ! "$vncservicestatus" ] || [ ! "$xservicestatus" ]; then
+    if [ "$bootoptionstatus" = "static" ] || [ "$vncservicestatus" = "inactive" ] || [ "$xservicestatus" = "inactive" ]; then
       echo "Your system is not configured correctly."
       echo "You may try $(basename "$0") vnc on, or attempt to enable any missing service manually"
     fi

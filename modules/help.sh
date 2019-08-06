@@ -28,7 +28,7 @@ function help_default {
   echo "   timezone <timezone>                      sets the timezone of the system"
   echo "   locale <locale>                          sets the system locale"
   echo "   ssh <on|off>                             enables or disables the ssh service"
-  echo "   vnc <on|off>                             enables or disables the vnc server service"
+  echo "   vnc [on|off|info]                        enables or disables the vnc server service"
   echo "   default                                  sets a raspbian back to default configuration"
   echo "   wificountry <country>                    sets the wifi country"
   echo "   upgrade                                  upgrades $(basename "$0") package using npm"

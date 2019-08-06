@@ -16,12 +16,14 @@ function vnc {
 
   if [ "$vncservicestatus" ]; then
     isenabledvnc="not running"
-    else isenabledvnc="running"
+  else
+    isenabledvnc="running"
   fi
 
   if [ "$xservicestatus" ]; then
     isenabledx="not running"
-    else isenabledx="running"
+  else
+    isenabledx="running"
   fi
 
   # Checks whether we have the required package to run a VNC server

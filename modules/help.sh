@@ -8,9 +8,8 @@ function help_default {
   echo "   expandfs                                 expands the partition of the RPI image to the maximum of the SDcard"
   echo "   rename <hostname>                        changes hostname"
   echo "   password <password>                      changes the password for 'pi' user"
-  echo "   sshkey <add|list|delete>                 used for adding or removing ssh keys for authentication"
+  echo "   sshkey <add|list|delete|deleteall>       used for adding or removing ssh keys for authentication"
   echo "          <addgithubusername|addgithubgroup>"
-  echo "   sshkeyadd <public_key>                   deprecated - please use $(basename "$0") sshkey add"
   echo "   version                                  returns the version of $(basename "$0") command"
   echo "   image                                    returns version of the system image installed"
   echo "   detectrpi                                detects the hardware version of a raspberry pi"
@@ -47,11 +46,14 @@ function help_default {
   echo "   internet                                 checks if the rpi has access to internet"
   echo "   services [service_name] [format]         outputs or install the desired service"
   echo "            [install]"
-  echo "   tor [start|stop|add|list|destroy]        deals with services on tor hidden network"
+  echo "   tor [start|stop|add|list|notice|destroy] deals with services on tor hidden network"
   echo "   bootoption <console|desktop>             sets the boot mode"
   echo "              [autologin]"
   echo "   openvpn [use|show|delete]                helps setting up an openvpn client"
   echo "           [notice|start|stop|load]"
+  echo "   coralenv [install|demo-on|demo-off]      plays with the coral environmental board"
+  echo "            [demo-always-on]"
+  echo "   memory [total|used|free]                 displays the total memory of the device, the memory used as well as the available free memory"
   echo
 }
 

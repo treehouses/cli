@@ -23,6 +23,7 @@ source "$SCRIPTFOLDER/modules/help.sh"
 source "$SCRIPTFOLDER/modules/image.sh"
 source "$SCRIPTFOLDER/modules/led.sh"
 source "$SCRIPTFOLDER/modules/locale.sh"
+source "$SCRIPTFOLDER/modules/memory.sh"
 source "$SCRIPTFOLDER/modules/networkmode.sh"
 source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
@@ -34,7 +35,6 @@ source "$SCRIPTFOLDER/modules/rtc.sh"
 source "$SCRIPTFOLDER/modules/services.sh"
 source "$SCRIPTFOLDER/modules/ssh.sh"
 source "$SCRIPTFOLDER/modules/sshkey.sh"
-source "$SCRIPTFOLDER/modules/sshkeyadd.sh"
 source "$SCRIPTFOLDER/modules/sshtunnel.sh"
 source "$SCRIPTFOLDER/modules/staticwifi.sh"
 source "$SCRIPTFOLDER/modules/timezone.sh"
@@ -45,6 +45,7 @@ source "$SCRIPTFOLDER/modules/vnc.sh"
 source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
+source "$SCRIPTFOLDER/modules/coralenv.sh"
 
 
 
@@ -60,11 +61,6 @@ case $1 in
   password)
     checkroot
     password "$2"
-    ;;
-  sshkeyadd)
-    checkroot
-    shift
-    sshkeyadd "$@"
     ;;
   sshkey)
     checkroot
@@ -210,6 +206,15 @@ case $1 in
     checkroot
     shift
     openvpn "$@"
+    ;;
+  coralenv)
+    checkroot
+    shift
+    coralenv "$@"
+    ;;
+  memory)
+    shift
+    memory "$@"
     ;;
   help)
     help "$2"

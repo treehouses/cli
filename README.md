@@ -1,6 +1,6 @@
 # npm i @treehouses/cli
 
-[![Build Status](https://travis-ci.org/treehouses/cli.svg?branch=master)](https://travis-ci.org/treehouses/cli)  [![npm version](https://badge.fury.io/js/%40treehouses%2Fcli.svg)](https://www.npmjs.com/package/%40treehouses%2Fcli) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/treehouses/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/treehouses/cli.svg?branch=master)](https://travis-ci.org/treehouses/cli)  [![npm version](https://badge.fury.io/js/%40treehouses%2Fcli.svg)](https://www.npmjs.com/package/%40treehouses%2Fcli) ![npm](https://img.shields.io/npm/dw/@treehouses/cli) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/treehouses/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ```
 Usage: treehouses [command] ...
@@ -12,9 +12,8 @@ help [command]                           gives you a more detailed info about th
 expandfs                                 expands the partition of the RPI image to the maximum of the SDcard
 rename <hostname>                        changes hostname
 password <password>                      changes the password for 'pi' user
-sshkey <add|list|delete>                 used for adding or removing ssh keys for authentication
+sshkey <add|list|delete|deleteall>       used for adding or removing ssh keys for authentication
       <addgithubusername|addgithubgroup>
-sshkeyadd <public_key>                   deprecated - please use cli.sh sshkey add
 version                                  returns the version of cli.sh command
 image                                    returns version of the system image installed
 detectrpi                                detects the hardware version of a raspberry pi
@@ -51,10 +50,12 @@ rebootneeded                             shows if reboot is required to apply ch
 internet                                 checks if the rpi has access to internet
 services [service_name] [format]         outputs or install the desired service
         [install]
-tor [start|stop|add|list|destroy]        deals with services on tor hidden network
+tor [start|stop|add|list|notice|destroy] deals with services on tor hidden network
 bootoption <console|desktop>             sets the boot mode
           [autologin]
 openvpn [use|show|delete]                helps setting up an openvpn client
         [notice|start|stop|load]
-
+coralenv [install|demo-on|demo-off]      plays with the coral environmental board
+         [demo-always-on]
+memory [total|used|free]                 displays the total memory of the device, the memory used as well as the available free memory 
 ```

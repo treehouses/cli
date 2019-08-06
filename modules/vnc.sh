@@ -29,6 +29,8 @@ case "$option" in
     elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "active" ]; then
       echo "You can now remotely access the system with a VNC client using the IP address: $ipaddress"
       echo "To disable it, use $(basename "$0") vnc off"
+    elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
+      echo "Please reboot your system."
     else
       echo "VNC server is not configured correctly. Please try $(basename "$0") vnc on to enable it, or $(basename "$0") vnc off to disable it."
       echo "Alternatively, you may try $(basename "$0") vnc status-service to verify the status of each specific required service."
@@ -62,6 +64,9 @@ case "$option" in
     echo "The VNC service is $vncservicestatus"
     echo "The X window service is $xservicestatus"
     echo "In order to access your desktop via a VNC viewer, the system needs to boot into Desktop, and VNC and X window services need to be running"
+    if [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
+      echo "Please reboot your system."
+    fi
     if [ "$bootoptionstatus" = "static" ] || [ "$vncservicestatus" = "inactive" ] || [ "$xservicestatus" = "inactive" ]; then
       echo "Your system is not configured correctly."
       echo "You may try $(basename "$0") vnc on, or attempt to enable any missing service manually"

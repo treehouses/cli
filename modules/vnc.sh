@@ -31,6 +31,8 @@ case "$option" in
       echo "To disable it, use $(basename "$0") vnc off"
     elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
       echo "Please reboot your system."
+    elif [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "active" ]; then
+      echo "Please reboot your system."
     else
       echo "VNC server is not configured correctly. Please try $(basename "$0") vnc on to enable it, or $(basename "$0") vnc off to disable it."
       echo "Alternatively, you may try $(basename "$0") vnc status-service to verify the status of each specific required service."
@@ -67,9 +69,8 @@ case "$option" in
     if [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
       echo "Please reboot your system."
     fi
-    if [ "$bootoptionstatus" = "static" ] || [ "$vncservicestatus" = "inactive" ] || [ "$xservicestatus" = "inactive" ]; then
-      echo "Your system is not configured correctly."
-      echo "You may try $(basename "$0") vnc on, or attempt to enable any missing service manually"
+    if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "active" ]; then
+      echo "Please reboot your system."
     fi
     ;; 
  *)

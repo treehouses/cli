@@ -29,18 +29,9 @@ function vnc {
   # Checks whether we have the required package to run a VNC server
   # Should be there on a stock treehouses install
   if [ ! -d /usr/share/doc/realvnc-vnc-server ] ; then
-    echo "Error: the vnc server is not installed."
-    while true; do
-      read -n 1 -pr "Do you want to install the prerequisite packages for VNC? (y/n)" answer
-      case "$answer" in
-        "y"* ) apt-get upgrade;
-               apt-get install realvnc-vnc-server -y;;
-        "n"* ) echo "To install them manually, run:";
-               echo "apt-get install realvnc-vnc-server";
-               exit 1;;
-        * ) echo "Please answer (y)es or (n)o.";;
-      esac
-    done
+    echo "Error: the vnc server is not installed, to install it run:"\
+    echo "apt-get install realvnc-vnc-server"
+    exit 1;
   fi
 
 

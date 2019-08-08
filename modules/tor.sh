@@ -37,9 +37,9 @@ function tor {
 
     existing_port=$(grep -Poi "^HiddenServicePort $local_port .*" /etc/tor/torrc)
     if [ ! -z "$existing_port" ]; then
-      sed -i "s/$existing_port/HiddenServicePort $local_port 127.0.0.1:$external_port/g" /etc/tor/torrc
+      sed -i "s/$existing_port/HiddenServicePort $external_port 127.0.0.1:$local_port /g" /etc/tor/torrc
     else
-      echo "HiddenServicePort $local_port 127.0.0.1:$external_port" >> /etc/tor/torrc
+      echo "HiddenServicePort $external_port 127.0.0.1:$local_port " >> /etc/tor/torrc
     fi
 
     restart_service tor
@@ -142,8 +142,9 @@ function tor_help {
   echo "      the port 22 is open and routing the traffic of the local port 22,"
   echo "      the port 80 is open and routing the traffic of the local port 80"
   echo ""
-  echo "  $(basename "$0") tor add <localPort> [externalPort]"
-  echo "      Adds the desired local port to be accesible from the tor network"
+  echo "  $(basename "$0") tor add <port> [localport]"
+  echo "      Adds the desired port to be accessible from the tor network"
+  echo "      Redirects localport to (tor) port"
   echo ""
   echo "  $(basename "$0") tor start"
   echo "      Setups and starts the tor service"

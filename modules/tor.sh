@@ -23,16 +23,16 @@ function tor {
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
     fi
 
-    local_port="$2"
-    external_port="$3"
+    external_port="$2"
+    local_port="$3"
 
-    if [ -z "$local_port" ]; then
-      echo "Error: you must specify a local port"
+    if [ -z "$external_port" ]; then
+      echo "Error: you must specify a external port"
       exit 
     fi
 
-    if [ -z "$external_port" ]; then
-      external_port="$local_port"
+    if [ -z "$local_port" ]; then
+      local_port="$external_port"
     fi
 
     existing_port=$(grep -Poi "^HiddenServicePort $local_port .*" /etc/tor/torrc)

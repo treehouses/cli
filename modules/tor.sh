@@ -17,29 +17,29 @@ function tor {
 
   if [ "$1" = "list" ]; then
     echo "external <=> local"
-    grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\2 <=> \1/g'
+    grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g'
   elif [ "$1" = "add" ]; then
     if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
     fi
 
-    local_port="$2"
-    external_port="$3"
+    port="$2"
+    local_port="$3"
 
-    if [ -z "$local_port" ]; then
-      echo "Error: you must specify a local port"
+    if [ -z "$port" ]; then
+      echo "Error: you must specify a port"
       exit 
     fi
 
-    if [ -z "$external_port" ]; then
-      external_port="$local_port"
+    if [ -z "$local_port" ]; then
+      local_port="$port"
     fi
 
     existing_port=$(grep -Poi "^HiddenServicePort $local_port .*" /etc/tor/torrc)
     if [ ! -z "$existing_port" ]; then
-      sed -i "s/$existing_port/HiddenServicePort $external_port 127.0.0.1:$local_port /g" /etc/tor/torrc
+      sed -i "s/$existing_port/HiddenServicePort $port 127.0.0.1:$local_port/g" /etc/tor/torrc
     else
-      echo "HiddenServicePort $external_port 127.0.0.1:$local_port " >> /etc/tor/torrc
+      echo "HiddenServicePort $port 127.0.0.1:$local_port " >> /etc/tor/torrc
     fi
 
     restart_service tor

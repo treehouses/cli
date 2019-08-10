@@ -84,7 +84,7 @@ function get_ap_settings {
   else
     echo " sharing internet"
   fi
-  echo -n "eth0: ip: $(get_ipv4_ip eth0),"
+  echo "eth0: ip: $(get_ipv4_ip eth0)"
 }
 
 function get_staticnetwork_info {

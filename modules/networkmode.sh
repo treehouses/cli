@@ -79,11 +79,16 @@ function get_ap_settings {
   else
     echo -n "wlan0: ap essid: $(get_ap_name), ap has password, ip: $(get_ipv4_ip wlan0),"
   fi
-
   if [ "$1" == "ap local" ]; then
     echo " not sharing internet"
   else
     echo " sharing internet"
+  fi
+  iseth0=$(get_ipv4_ip eth0)
+  if [ -z "$iseth0" ]; then
+    echo "eth0: no uplink, maybe ethernet cable is unplugged?"
+  else
+    echo "eth0: ip: $iseth0"
   fi
 }
 

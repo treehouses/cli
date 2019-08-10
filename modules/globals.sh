@@ -104,9 +104,9 @@ function get_ipv4_ip {
   interface="$1"
   if iface_exists "$interface"; then
     if [ "$interface" == "ap0" ]; then
-      /sbin/ip -o -4 addr list "$interface" | awk '{print $4}' | sed '2d' | cut -d/ -f1
+      /sbin/ip -o -4 addr list "$interface" | grep -v "avahi" | awk '{print $4}' | sed '2d' | cut -d/ -f1
     else
-      /sbin/ip -o -4 addr list "$interface" | awk '{print $4}' | cut -d/ -f1
+      /sbin/ip -o -4 addr list "$interface" | grep -v "avahi" | awk '{print $4}' | cut -d/ -f1
     fi
   fi
 }

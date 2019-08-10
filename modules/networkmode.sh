@@ -75,13 +75,11 @@ function get_ap_name {
 
 function get_ap_settings {
   if ! grep -q "wpa_passphrase=*" "/etc/hostapd/hostapd.conf"; then
-    echo -n "wlan0: ap essid: $(get_ap_name), ap has no password, ip: $(get_ipv4_ip wlan0),"
-    echo -n "eth0: ip: $(get_ipv4_ip eth0),"
+    echo "wlan0: ap essid: $(get_ap_name), ap has no password, ip: $(get_ipv4_ip wlan0),"
   else
-    echo -n "wlan0: ap essid: $(get_ap_name), ap has password, ip: $(get_ipv4_ip wlan0),"
-    echo -n "eth0: ip: $(get_ipv4_ip eth0),"
+    echo "wlan0: ap essid: $(get_ap_name), ap has password, ip: $(get_ipv4_ip wlan0),"
   fi
-
+  echo -n "eth0: ip: $(get_ipv4_ip eth0),"
   if [ "$1" == "ap local" ]; then
     echo " not sharing internet"
   else

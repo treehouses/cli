@@ -86,7 +86,7 @@ function get_ap_settings {
   fi
   iseth0=$(get_ipv4_ip eth0)
   if [ -z "$iseth0" ]; then
-    echo "no uplink, maybe ethernet is unplugged?"
+    echo "eth0: no uplink, maybe ethernet cable is unplugged?"
   else
     echo "eth0: ip: $iseth0"
   fi

@@ -84,7 +84,12 @@ function get_ap_settings {
   else
     echo " sharing internet"
   fi
-  echo "eth0: ip: $(get_ipv4_ip eth0)"
+  iseth0=$(get_ipv4_ip eth0)
+  if [ "$iseth0" == "" ]; then
+    echo "eth0: ip: $iseth0"
+  else
+    echo "no uplink, maybe ethernet is unplugged?"
+  fi
 }
 
 function get_staticnetwork_info {

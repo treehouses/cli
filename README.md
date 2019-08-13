@@ -14,7 +14,6 @@ rename <hostname>                        changes hostname
 password <password>                      changes the password for 'pi' user
 sshkey <add|list|delete|deleteall>       used for adding or removing ssh keys for authentication
       <addgithubusername|addgithubgroup>
-sshkeyadd <public_key>                   deprecated - please use cli.sh sshkey add
 version                                  returns the version of cli.sh command
 image                                    returns version of the system image installed
 detectrpi                                detects the hardware version of a raspberry pi
@@ -32,7 +31,7 @@ apchannel [channel]                      sets or prints the current ap channel
 timezone <timezone>                      sets the timezone of the system
 locale <locale>                          sets the system locale
 ssh <on|off>                             enables or disables the ssh service
-vnc <on|off>                             enables or disables the vnc server service
+vnc [on|off|info]                        enables or disables the vnc server service
 default                                  sets a raspbian back to default configuration
 wificountry <country>                    sets the wifi country
 upgrade                                  upgrades cli.sh package using npm

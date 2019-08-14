@@ -106,9 +106,9 @@ function tor {
       rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
       echo "OK."
     elif [ "$option" = "now" ]; then
-       echo "$(treehouses tor)\n$tor_ports\n\"
+       echo "$(treehouses tor)\n$tor_ports\n\`"
        grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g'
-       echo "$(date -u +"%Y-%m-%d %H:%M:%S %Z")\"
+       echo "$(date -u +"%Y-%m-%d %H:%M:%S %Z")\`"
        echo "$(treehouses networkmode)"
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tor_report" ]; then

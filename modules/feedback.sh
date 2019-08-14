@@ -9,16 +9,20 @@ fi
 
 function feedback {
   message="$*"
-  if [ "$(detectrpi)" != "nonrpi" ]; then
-    body="{\"text\":\"\`$(hostname)\` \`$(curl ifconfig.io -s)\` \`$(version)\` \`$(detectrpi)\` \`$(cat /boot/version.txt)\`:\\n$message\"}"
-  else
-    body="{\"text\":\"\`$(hostname)\` \`$(curl ifconfig.io -s)\` \`$(version)\` \`$(detect | sed "s/ /\` \`/1")\`:\\n$message\"}"
-  fi
+  if ! [[ -z "$message" ]]; then
+    if [ "$(detectrpi)" != "nonrpi" ]; then
+      body="{\"text\":\"\`$(hostname)\` \`$(curl ifconfig.io -s)\` \`$(version)\` \`$(detectrpi)\` \`$(cat /boot/version.txt)\`:\\n$message\"}"
+    else
+      body="{\"text\":\"\`$(hostname)\` \`$(curl ifconfig.io -s)\` \`$(version)\` \`$(detect | sed "s/ /\` \`/1")\`:\\n$message\"}"
+    fi
 
-  curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token" "$channel" -d  "$body"> /dev/null
-  echo "Thanks for the feedback!"
+	  curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token" "$channel" -d  "$body"> /dev/null
+    echo "Thanks for the feedback!"
+ else
+   echo "No feedback was submitted."
+ fi
 }
-
+ss
 function feedback_help {
   echo ""
   echo "Usage: $(basename "$0") feedback <message>"

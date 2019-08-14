@@ -106,14 +106,8 @@ function tor {
       rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
       echo "OK."
     elif [ "$option" = "now" ]; then
-       cp "$TEMPLATES/network/tor_report.sh" /etc/tor_report.sh
-      if [ ! -f "/etc/cron.d/tor_report" ]; then
-        echo "*/1 * * * * root if [ -d \"/var/lib/tor/treehouses\" ]; then /etc/tor_report.sh; fi" > /etc/cron.d/tor_report
-      fi
-      if [ ! -f "/etc/tor_report_channels.txt" ]; then
-        echo "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" >> /etc/tor_report_channels.txt
-      fi
-      echo "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" >> /etc/tor_report_channels.txt
+       export gitter_channel="$channel"
+       treehouses feedback "$(treehouses tor)\n$tor_ports\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tor_report" ]; then
         status="on"

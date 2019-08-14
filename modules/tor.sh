@@ -106,7 +106,8 @@ function tor {
       rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
       echo "OK."
     elif [ "$option" = "now" ]; then
-      echo "tor is currently on " 
+      cp "$TEMPLATES/network/tor_report.sh" /etc/tor_report.sh
+      echo "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" >> /etc/tor_report_channels.txt
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tor_report" ]; then
         status="on"

@@ -1,9 +1,10 @@
 #!/bin/bash
 
 function report {
+  tor_ports=$(treehouses tor list | sed '1d' | sed "s/ <=> /:/g" | tr "\n" " " | sed 's/.$//')
   while read -r channel; do
     export gitter_channel="$channel"
-    treehouses feedback "$(treehouses tor)\n$(treehouses tor list | sed '1d' | sed "s/ <=> /:/g" | tr "\n" " " | sed 's/.$//')\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+    treehouses feedback "$(treehouses tor)\n$tor_ports\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
   done < /etc/tor_report_channels.txt
   echo "report"
 }

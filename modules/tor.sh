@@ -157,7 +157,7 @@ function tor_help {
   echo "  $(basename "$0") tor destroy"
   echo "      Stops and resets the tor configuration"
   echo ""
-  echo "  $(basename "$0") tor notice <on|off|add|delete|list> [api_url]"
+  echo "  $(basename "$0") tor notice <on|off|now|add|delete|list> [api_url]"
   echo "      Enables or disables the propagation of the tor address/ports to gitter"
   echo ""
   echo "  $(basename "$0") tor status"

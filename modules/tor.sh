@@ -106,7 +106,7 @@ function tor {
       rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
       echo "OK."
     elif [ "$option" = "now" ]; then
-       echo "$(treehouses tor)\n$(treehouses tor list | sed '1d' | sed "s/ <=> /:/g" | tr "\n" " " | sed 's/.$//')\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\`$(treehouses networkmode)"
+       printf "$(treehouses tor)\n$(treehouses tor list | sed '1d' | sed "s/ <=> /:/g" | tr "\n" " " | sed 's/.$//')\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\`$(treehouses networkmode)"
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tor_report" ]; then
         status="on"

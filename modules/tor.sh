@@ -105,6 +105,8 @@ function tor {
     elif [ "$option" = "off" ]; then
       rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
       echo "OK."
+    elif [ "$option" = "now" ]; then
+       treehouses feedback "$(treehouses tor)\n$(treehouses tor list | sed '1d' | sed "s/ <=> /:/g" | tr "\n" " " | sed 's/.$//')\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tor_report" ]; then
         status="on"
@@ -155,7 +157,7 @@ function tor_help {
   echo "  $(basename "$0") tor destroy"
   echo "      Stops and resets the tor configuration"
   echo ""
-  echo "  $(basename "$0") tor notice <on|off|add|delete|list> [api_url]"
+  echo "  $(basename "$0") tor notice <on|off|now|add|delete|list> [api_url]"
   echo "      Enables or disables the propagation of the tor address/ports to gitter"
   echo ""
   echo "  $(basename "$0") tor status"

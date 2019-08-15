@@ -22,7 +22,7 @@ function feedback {
    echo "No feedback was submitted."
  fi
 }
-ss
+
 function feedback_help {
   echo ""
   echo "Usage: $(basename "$0") feedback <message>"

@@ -213,7 +213,7 @@ function sshtunnel_help {
   echo "  $(basename "$0") sshtunnel key"
   echo "      This will show the public key."
   echo ""
-  echo "  $(basename "$0") sshtunnel notice <on|off|add|delete|list> [api_url]"
+  echo "  $(basename "$0") sshtunnel notice <on|off|add|delete|list|now> [api_url]"
   echo "      Enables or disables the propagation of the sshtunnel ports to gitter"
   echo ""
 }

@@ -20,7 +20,7 @@
     "raspberry pi", "raspberrypi", "rpi", "bluetooth", "ethernet", "wifi", "hotspot", "bridge", "vnc", "ntp", "timezone", "rtc", "ssh", "backup", "clone", "sshkey", "sshtunnel", "tor", "openvpn", "services", "container", "docker", "balena", "coral"
   ],
   "author": {
-    "name": "OLE Systems Engineering Team",
+    "name": "OLE treehouses team",
     "email": "vi@treehouses.io",
     "url": "https://treehouses.io"
   },

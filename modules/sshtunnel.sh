@@ -162,6 +162,14 @@ function sshtunnel {
     elif [ "$option" = "off" ]; then
       rm -rf /etc/tunnel_report.sh /etc/cron.d/tunnel_report /etc/tunnel_report_channels.txt || true
       echo "OK."
+    elif [ "$option" = "now" ]; then
+      portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
+      portssh=$((portinterval + 22))
+      portweb=$((portinterval + 80))
+      portcouchdb=$((portinterval + 84))
+      portnewcouchdb=$((portinterval + 82))
+      portmunin=$((portinterval + 49))
+      treehouses feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$portinterval\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tunnel_report" ]; then
         status="on"
@@ -205,7 +213,7 @@ function sshtunnel_help {
   echo "  $(basename "$0") sshtunnel key"
   echo "      This will show the public key."
   echo ""
-  echo "  $(basename "$0") sshtunnel notice <on|off|add|delete|list> [api_url]"
+  echo "  $(basename "$0") sshtunnel notice <on|off|add|delete|list|now> [api_url]"
   echo "      Enables or disables the propagation of the sshtunnel ports to gitter"
   echo ""
 }

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function internet {
-  if wget -q --spider -T 3 https://www.google.com; then
+  if wget -q --spider -T 3 --no-check-certificate https://www.google.com; then
     echo "true"
     exit 0
   fi

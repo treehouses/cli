@@ -36,6 +36,7 @@ default                                  sets a raspbian back to default configu
 wificountry <country>                    sets the wifi country
 upgrade                                  upgrades cli.sh package using npm
 sshtunnel <add|remove|list|check>        helps adding an sshtunnel
+          <key|notice>
           <portinterval> [user@host]
 led [green|red] [mode]                   sets the led mode
 rtc <on|off> [rasclock|ds3231]           sets up the rtc clock specified

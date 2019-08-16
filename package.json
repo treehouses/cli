@@ -17,7 +17,7 @@
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "keywords": [
-    "raspberry pi", "raspberrypi", "rpi", "ethernet", "wifi", "hotspot", "bridge", "vnc", "bluetooth", "timezone", "locale", "ssh", "container", "docker"
+    "backup", "balena", "bluetooth", "bridge", "clone", "container", "coral", "docker", "ethernet", "hotspot", "ntp", "openvpn", "raspberry pi", "raspberrypi", "rpi", "rtc", "tor", "services", "ssh", "sshkey", "sshtunnel", "timezone", "vnc", "wifi",
   ],
   "author": {
     "name": "OLE tech team",

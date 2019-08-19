@@ -41,7 +41,7 @@ function sshkey () {
     fi
 
     keys=$(curl -s "https://github.com/$2.keys")
-    if [ ! -z $keys ]; then
+    if [ ! -z "$keys" ]; then
       keys=$(sed 's#$# '$2'#' <<< $keys)
       sshkey add "$keys"
     fi
@@ -56,7 +56,6 @@ function sshkey () {
     members=$(curl -s -X GET "https://api.github.com/teams/$team_id/members" -H "Authorization: token $4" | jq ".[].login" -r)
     while read -r member; do
       sshkey addgithubusername "$member"
-      echo "got $member keys."
     done <<< "$members"
   fi
 }

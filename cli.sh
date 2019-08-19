@@ -102,6 +102,7 @@ case $1 in
     bluetooth "$2"
     ;;
   ethernet)
+    checkrpi
     checkroot
     ethernet "$2" "$3" "$4" "$5"
     ;;
@@ -147,7 +148,6 @@ case $1 in
     wificountry "$2"
     ;;
   sshtunnel)
-    checkrpi
     checkroot
     sshtunnel "$2" "$3" "$4"
     ;;
@@ -204,7 +204,6 @@ case $1 in
     rebootneeded
     ;;
   internet)
-    checkrpi
     internet
     ;;
   services)
@@ -217,6 +216,7 @@ case $1 in
     tor "$@"
     ;;
   bootoption)
+    checkrpi
     checkroot
     shift
     bootoption "$*"

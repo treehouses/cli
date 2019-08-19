@@ -1,6 +1,11 @@
 #!/bin/bash
 
 function sshtunnel {
+
+  if [ ! -f "/root/.ssh/id_rsa" ] && ["$action" != "add"]
+  echo "Error: no ssh tunnel has been set up."
+  echo "Run '$(basename "$0") sshtunnel add to add a key for the tunnel."
+  fi
   action="$1"
   portinterval="$2"
   host="$3"

@@ -41,6 +41,7 @@ function sshkey () {
     fi
 
     keys=$(curl -s "https://github.com/$2.keys")
+    keys=$(sed 's#$# '$2'#' <<< $keys)
     sshkey add "$keys"
   elif [ "$1" == "addgithubgroup" ]; then
     if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then

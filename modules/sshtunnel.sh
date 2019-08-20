@@ -1,11 +1,6 @@
 #!/bin/bash
 
 function sshtunnel {
-
-  if [ ! -f "/root/.ssh/id_rsa" ] && [ "$action" != "add" ]; then
-  echo "Error: no ssh tunnel has been set up."
-  echo "Run '$(basename "$0") sshtunnel add to add a key for the tunnel."
-  fi
   action="$1"
   portinterval="$2"
   host="$3"
@@ -168,6 +163,10 @@ function sshtunnel {
       rm -rf /etc/tunnel_report.sh /etc/cron.d/tunnel_report /etc/tunnel_report_channels.txt || true
       echo "OK."
     elif [ "$option" = "now" ]; then
+      if [ ! -f "/root/.ssh/id_rsa" ] && [ "$action" != "add" ]; then
+      echo "Error: no ssh tunnel has been set up."
+      echo "Run '$(basename "$0") sshtunnel add to add a key for the tunnel."
+      fi
       portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
       portssh=$((portinterval + 22))
       portweb=$((portinterval + 80))

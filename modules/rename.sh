@@ -2,9 +2,8 @@
 
 function rename () {
   if
-    [ "$(expr "$1" : ".*[!@#\$%^\&*()_+].*")" -gt 0 ] || #checks for special characters
-    echo "$1" | grep -E '[ "]' >/dev/null || #Checks for spaces
-    [[ ${#1} -gt "64" ]]|| #Checks for length greater than 64
+    ! [[ "$1" =~ ^[[:alnum:]]*$ ]] || #checks for special characters and spaces
+    [[ ${#1} -gt "64" ]] || #Checks for length greater than 64
     [ -z "$1" ]; #Checks if variable is empty
   then
     echo "Unsuccessful: Make sure to remove special characters and spaces."

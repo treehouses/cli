@@ -29,18 +29,16 @@ _treehouses_complete()
   networkmode_cmds="info"
   ntp_cmds="local internet"
   openvpn_cmds="use show delete notice start stop load"
-  openvpn_notice_cmds="on off add delete list"
   rtc_cmds="on off"
   rtc_on_cmds="ds3231 rasclock"
 
-  # services_cmds="" Think about it, a little bit complicated
+# services_cmds="" Think about it, a little bit complicated
 
   sshkey_cmds="add list delete deleteal addgithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
-  sshtunnel_notice_cmds="on off add delete list"
   tor_cmds="start stop add list notice destroy"
-  tor_notice_cmds="on off add delete list"
+  notice_cmds="on off add delete list"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 
@@ -67,7 +65,7 @@ vnc_cmds="on off info"
         COMPREPLY=( $(compgen -W "$bluetooth_cmds" -- $cur) )
         ;;
       "bootoption")
-        COMPREPLY=( $(compgen -W "$bootoption_cmds" -- $cur) ) #go to -eq 3
+        COMPREPLY=( $(compgen -W "$bootoption_cmds" -- $cur) )
         ;;
       "button")
         COMPREPLY=( $(compgen -W "$button_cmds" -- $cur) )
@@ -94,7 +92,7 @@ vnc_cmds="on off info"
         COMPREPLY=( $(compgen -W "$ntp_cmds" -- $cur) )
         ;;
       "openvpn")
-        COMPREPLY=( $(compgen -W "$openvpn_cmds" -- $cur) ) #go to -eq 3
+        COMPREPLY=( $(compgen -W "$openvpn_cmds" -- $cur) ) 
         ;;
       "rtc")
         COMPREPLY=( $(compgen -W "$rtc_cmds" -- $cur) )
@@ -106,10 +104,10 @@ vnc_cmds="on off info"
         COMPREPLY=( $(compgen -W "$ssh_cmds" -- $cur) )
         ;;
       "sshtunnel")
-        COMPREPLY=( $(compgen -W "$sshtunnel_cmds" -- $cur) ) #go to -eq 3
+        COMPREPLY=( $(compgen -W "$sshtunnel_cmds" -- $cur) ) 
         ;;
       "tor")
-        COMPREPLY=( $(compgen -W "$tor_cmds" -- $cur) ) #go to -eq 3
+        COMPREPLY=( $(compgen -W "$tor_cmds" -- $cur) ) 
         ;;
       "vnc")
         COMPREPLY=( $(compgen -W "$vnc_cmds" -- $cur) )
@@ -120,8 +118,14 @@ vnc_cmds="on off info"
   elif [ $COMP_CWORD -eq 3 ]
   then
     case "$prev" in
-      "public-url")
-        COMPREPLY=( $(compgen -W "$device_public_url_cmds" -- $cur) )
+      "console")
+        COMPREPLY=( $(compgen -W "$bootoption_second_cmds" -- $cur) )
+        ;;
+      "desktop")
+        COMPREPLY=( $(compgen -W "$bootoption_second_cmds" -- $cur) )
+        ;;
+      "notice")
+        COMPREPLY=( $(compgen -W "$notice_cmds" -- $cur) )
         ;;
       "*")
         ;;

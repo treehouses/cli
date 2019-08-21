@@ -61,7 +61,7 @@ function sshtunnel {
       echo "MAILTO=root"
       echo "*/5 * * * * root if [ ! "$\(pidof autossh\)" ]; then /etc/tunnel; fi"
     } > /etc/cron.d/autossh
-  elif [ "$action" = "remove" ]; then
+  elif [ "$1" = "remove" ]; then
     if [ -f "/etc/tunnel" ]
     then
       rm -rf /etc/tunnel

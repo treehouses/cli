@@ -1,27 +1,25 @@
 #!/bin/bash
 
 function sshtunnel {
-
-  if [ ! -f "/root/.ssh/id_rsa" ] && ["$action" != "add"]
-  echo "Error: no ssh tunnel has been set up."
-  echo "Run '$(basename "$0") sshtunnel add to add a key for the tunnel."
-  fi
-  action="$1"
-  portinterval="$2"
-  host="$3"
-
-  if [ -z "$host" ];
+  if [ ! -f "/root/.ssh/id_rsa" ] && [ "$1" != "add" ]; then
+    echo "Error: no tunnel has been set up."
+    echo "Run '$(basename "$0") sshtunnel add' to add a key for the tunnel."
+    exit 0
+  fi      
+  
+  if [ -z "$3" ];
   then
-    host="ole@pirate.ole.org"
+    "$3" = "ole@pirate.ole.org"
   fi
 
-  if [ -z "$action" ]; then
-    action="list"
+  if [ -z "$1" ]; then
+    "$1" = "list"
   fi
 
-  hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
-
-  if [ "$action" = "add" ]; then
+  hostname=$(echo "$3" | tr "@" \\n | sed -n 2p)
+  portinterval="$2"
+  
+  if [ "$1" = "add" ]; then
     if [ -z "$portinterval" ];
     then
       echo "Error: A port interval is required"
@@ -76,7 +74,7 @@ function sshtunnel {
 
     pkill -3 autossh
     echo -e "${GREEN}Removed${NC}"
-  elif [ "$action" = "list" ]; then
+  elif [ "$1" = "list" ]; then
     if [ -f "/etc/tunnel" ]; then
       portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
       portssh=$((portinterval + 22))
@@ -97,7 +95,7 @@ function sshtunnel {
       echo "Error: a tunnel has not been set up yet"
       exit 1
     fi
-  elif [ "$action" = "check" ]; then
+  elif [ "$1" = "check" ]; then
     if [ -f "/etc/tunnel" ]; then
       echo -e "[${GREEN}OK${NC}] /etc/tunnel"
     else
@@ -123,12 +121,12 @@ function sshtunnel {
     else
       echo -e "[${RED}MISSING${NC}] autossh not running"
     fi
-  elif [ "$action" = "key" ]; then
+  elif [ "$1" = "key" ]; then
     if [ ! -f "/root/.ssh/id_rsa" ]; then
         ssh-keygen -q -N "" > /dev/null < /dev/zero
     fi
     cat /root/.ssh/id_rsa.pub
-  elif [ "$action" = "notice" ]; then
+  elif [ "$1" = "notice" ]; then
     option="$2"
     if [ "$option" = "on" ]; then
       cp "$TEMPLATES/network/tunnel_report.sh" /etc/tunnel_report.sh

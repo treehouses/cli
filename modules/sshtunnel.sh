@@ -165,7 +165,7 @@ function sshtunnel {
     elif [ "$option" = "now" ]; then
       if [ ! -f "/root/.ssh/id_rsa" ] && [ "$action" != "add" ]; then
       echo "Error: no tunnel has been set up."
-      echo "Run '$(basename "$0")' sshtunnel add to add a key for the tunnel."
+      echo "Run '$(basename "$0") sshtunnel add' to add a key for the tunnel."
       else
       portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
       portssh=$((portinterval + 22))

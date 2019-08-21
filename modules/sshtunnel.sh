@@ -1,6 +1,11 @@
 #!/bin/bash
 
 function sshtunnel {
+  if [ ! -f "/root/.ssh/id_rsa" ] && [ "$action" != "add" ]; then
+      echo "Error: no tunnel has been set up."
+      echo "Run '$(basename "$0") sshtunnel add' to add a key for the tunnel."
+      exit
+  fi      
   action="$1"
   portinterval="$2"
   host="$3"
@@ -163,10 +168,6 @@ function sshtunnel {
       rm -rf /etc/tunnel_report.sh /etc/cron.d/tunnel_report /etc/tunnel_report_channels.txt || true
       echo "OK."
     elif [ "$option" = "now" ]; then
-      if [ ! -f "/root/.ssh/id_rsa" ] && [ "$action" != "add" ]; then
-      echo "Error: no tunnel has been set up."
-      echo "Run '$(basename "$0") sshtunnel add' to add a key for the tunnel."
-      else
       portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
       portssh=$((portinterval + 22))
       portweb=$((portinterval + 80))
@@ -174,7 +175,6 @@ function sshtunnel {
       portnewcouchdb=$((portinterval + 82))
       portmunin=$((portinterval + 49))
       treehouses feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$portinterval\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
-      fi
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tunnel_report" ]; then
         status="on"

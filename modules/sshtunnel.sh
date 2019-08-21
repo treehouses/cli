@@ -7,9 +7,9 @@ function sshtunnel {
     exit 0
   fi      
   
-  if [ -z "$3" ];
   host = "$3"
-  then
+  
+  if [ -z "$host" ]; then
     host = "ole@pirate.ole.org"
   fi
 

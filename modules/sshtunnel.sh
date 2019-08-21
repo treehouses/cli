@@ -1,24 +1,25 @@
 #!/bin/bash
 
 function sshtunnel {
-  host = "$3"
-  if [ ! -f "/root/.ssh/id_rsa" ] && [ "$1" != "add" ]; then
+  if [ ! -f "/root/.ssh/id_rsa" ] && [ "$action" != "add" ]; then
     echo "Error: no tunnel has been set up."
     echo "Run '$(basename "$0") sshtunnel add' to add a key for the tunnel."
     exit 0
   fi      
-  
-  if [ -z "$host" ]; then
-    host = "ole@pirate.ole.org"
+  portinterval="$2"
+  host="$3"
+
+  if [ -z "$host" ];
+  then
+    host="ole@pirate.ole.org"
   fi
 
   if [ -z "$1" ]; then
-    "$1" = "list"
+    "$1" ="list"
   fi
 
   hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
-  portinterval="$2"
-  
+
   if [ "$1" = "add" ]; then
     if [ -z "$portinterval" ];
     then

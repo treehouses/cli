@@ -8,15 +8,16 @@ function sshtunnel {
   fi      
   
   if [ -z "$3" ];
+  host = "$3"
   then
-    "$3" = "ole@pirate.ole.org"
+    host = "ole@pirate.ole.org"
   fi
 
   if [ -z "$1" ]; then
     "$1" = "list"
   fi
 
-  hostname=$(echo "$3" | tr "@" \\n | sed -n 2p)
+  hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
   portinterval="$2"
   
   if [ "$1" = "add" ]; then

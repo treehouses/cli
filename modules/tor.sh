@@ -7,12 +7,12 @@ function tor {
     echo "Error: the tor service has not been configured."
     echo "Run '$(basename "$0") tor start' to configure it."
     echo "Or '$(basename "$0") add [localPort]' to add a port and be able to use the service"
-    exit
+    exit 1
   fi
 
   if [ -z "$1" ]; then
     cat "/var/lib/tor/treehouses/hostname"
-    exit
+    exit 0
   fi
 
   if [ "$1" = "list" ]; then
@@ -28,12 +28,12 @@ function tor {
 
     if [ -z "$port" ]; then
       echo "Error: you must specify a port"
-      exit 
+      exit 1
     fi
 
     if  ! [[ "$port" =~ ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
       echo "Error: is not a port"
-      exit
+      exit 1
     fi
 
     if [ -z "$local_port" ]; then

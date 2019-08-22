@@ -26,9 +26,14 @@ function tor {
     port="$2"
     local_port="$3"
 
-    if [ -z "$port" ] && [ declare -i "$port" ] ; then
+    if [ -z "$port" ]; then
       echo "Error: you must specify a port"
       exit 
+    fi
+    
+    if [ "$port" != [[:digi:]] ]; then
+      echo "Error: wrong port synthax"
+      exit
     fi
 
     if [ -z "$local_port" ]; then

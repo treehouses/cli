@@ -26,7 +26,7 @@ function tor {
     port="$2"
     local_port="$3"
 
-    if [ -z "$port" ] && [ "$port" != [:digit:] ]; then
+    if [ -z "$port" ] && [ "$port" != [[:digit:]] ]; then
       echo "Error: you must specify a port"
       exit 
     fi

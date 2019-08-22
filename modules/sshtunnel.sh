@@ -1,11 +1,7 @@
 #!/bin/bash
 
 function sshtunnel {
-  if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
-    echo "Error: no tunnel has been set up."
-    echo "Run '$(basename "$0") sshtunnel add' to add a key for the tunnel."
-    exit 0
-  fi      
+  action="$1"
   portinterval="$2"
   host="$3"
 
@@ -14,13 +10,13 @@ function sshtunnel {
     host="ole@pirate.ole.org"
   fi
 
-  if [ -z "$1" ]; then
-    "$1" ="list"
+  if [ -z "$action" ]; then
+    action="list"
   fi
 
   hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
 
-  if [ "$1" = "add" ]; then
+  if [ "$action" = "add" ]; then
     if [ -z "$portinterval" ];
     then
       echo "Error: A port interval is required"
@@ -62,7 +58,7 @@ function sshtunnel {
       echo "MAILTO=root"
       echo "*/5 * * * * root if [ ! "$\(pidof autossh\)" ]; then /etc/tunnel; fi"
     } > /etc/cron.d/autossh
-  elif [ "$1" = "remove" ]; then
+  elif [ "$action" = "remove" ]; then
     if [ -f "/etc/tunnel" ]
     then
       rm -rf /etc/tunnel
@@ -75,7 +71,7 @@ function sshtunnel {
 
     pkill -3 autossh
     echo -e "${GREEN}Removed${NC}"
-  elif [ "$1" = "list" ]; then
+  elif [ "$action" = "list" ]; then
     if [ -f "/etc/tunnel" ]; then
       portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
       portssh=$((portinterval + 22))
@@ -96,7 +92,7 @@ function sshtunnel {
       echo "Error: a tunnel has not been set up yet"
       exit 1
     fi
-  elif [ "$1" = "check" ]; then
+  elif [ "$action" = "check" ]; then
     if [ -f "/etc/tunnel" ]; then
       echo -e "[${GREEN}OK${NC}] /etc/tunnel"
     else
@@ -122,12 +118,12 @@ function sshtunnel {
     else
       echo -e "[${RED}MISSING${NC}] autossh not running"
     fi
-  elif [ "$1" = "key" ]; then
+  elif [ "$action" = "key" ]; then
     if [ ! -f "/root/.ssh/id_rsa" ]; then
         ssh-keygen -q -N "" > /dev/null < /dev/zero
     fi
     cat /root/.ssh/id_rsa.pub
-  elif [ "$1" = "notice" ]; then
+  elif [ "$action" = "notice" ]; then
     option="$2"
     if [ "$option" = "on" ]; then
       cp "$TEMPLATES/network/tunnel_report.sh" /etc/tunnel_report.sh

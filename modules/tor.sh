@@ -31,7 +31,7 @@ function tor {
       exit 
     fi
     
-    if [ "$port" != [[:digit:]]* ]; then
+    if  ! [[ "$port" =~ ^[[:digit:]]*$ ]]; then
       echo "Error: wrong port synthax"
       exit
     fi

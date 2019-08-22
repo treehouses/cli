@@ -65,7 +65,6 @@ case $1 in
     password "$2"
     ;;
   sshkey)
-    checkrpi
     checkroot
     shift
     sshkey "$@"

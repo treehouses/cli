@@ -7,10 +7,12 @@ function sshkey () {
     mkdir -p /root/.ssh /home/pi/.ssh
     chmod 700 /root/.ssh /home/pi/.ssh
 
-    echo "$@" >> /home/pi/.ssh/authorized_keys
-    chmod 600 /home/pi/.ssh/authorized_keys
-    chown -R pi:pi /home/pi/.ssh
-
+    if [ "$(detectrpi)" != "nonrpi" ]; then
+      echo "$@" >> /home/pi/.ssh/authorized_keys
+      chmod 600 /home/pi/.ssh/authorized_keys
+      chown -R pi:pi /home/pi/.ssh
+    fi
+    
     echo "$@" >> /root/.ssh/authorized_keys
     chmod 600 /root/.ssh/authorized_keys
 
@@ -21,7 +23,10 @@ function sshkey () {
     cat /root/.ssh/authorized_keys
 
     echo "==== pi keys ===="
-    cat /home/pi/.ssh/authorized_keys
+    if [ "$(detectrpi)" != "nonrpi" ]; then
+      cat /home/pi/.ssh/authorized_keys
+    fi
+
   elif [ "$1" == "delete" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing argument"
@@ -29,10 +34,17 @@ function sshkey () {
       exit 1
     fi
     sed -i "/^$2/d" /home/pi/.ssh/authorized_keys
-    sed -i "/^$2/d" /root/.ssh/authorized_keys
+
+    if [ "$(detectrpi)" != "nonrpi" ]; then
+      sed -i "/^$2/d" /root/.ssh/authorized_keys
+    fi
+
   elif [ "$1" == "deleteall" ]; then
     rm /home/pi/.ssh/authorized_keys
-    rm /root/.ssh/authorized_keys
+    if [ "$(detectrpi)" != "nonrpi" ]; then
+      rm /root/.ssh/authorized_keys
+    fi
+
   elif [ "$1" == "addgithubusername" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing argument"

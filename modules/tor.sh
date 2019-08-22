@@ -25,9 +25,8 @@ function tor {
 
     port="$2"
     local_port="$3"
-    declare -i "$2"
 
-    if [ -z "$port" ]; then
+    if [ -z "$port" ] && [ declare -i "$port" ] ; then
       echo "Error: you must specify a port"
       exit 
     fi

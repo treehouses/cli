@@ -1,9 +1,9 @@
 language: node_js
 node_js:
-- '6'
-install:
+- '10'
+before_install:
 - npm install -g auto-changelog
-scripts:
+install:
 - auto-changelog
 - ls -al
 - cat CHANGELOG.md

@@ -1,6 +1,12 @@
 language: node_js
 node_js:
 - '6'
+install:
+- npm install -g auto-changelog
+scripts:
+- auto-changelog
+- ls -al
+- cat CHANGELOG.md
 deploy:
   provider: npm
   email: vi@ole.org

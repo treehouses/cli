@@ -1,9 +1,11 @@
 language: node_js
 node_js:
 - '6'
+before_install:
+- apt-get install shellcheck
 script:
-# Fail if any of these files have warnings
-- shellcheck myscripts/*.sh
+- shellcheck *.sh
+- shellcheck modules/*.sh
 deploy:
   provider: npm
   email: vi@ole.org

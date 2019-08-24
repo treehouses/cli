@@ -92,6 +92,7 @@ case $1 in
     staticwifi "$2" "$3" "$4" "$5" "$6" "$7"
     ;;
   container)
+    checkrpi
     checkroot
     container "$2"
     ;;

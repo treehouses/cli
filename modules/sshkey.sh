@@ -7,32 +7,33 @@ function sshkey () {
     mkdir -p /root/.ssh /home/pi/.ssh
     chmod 700 /root/.ssh /home/pi/.ssh
 
-    if [ "$(detectrpi)" != "nonrpi" ]; then
-      echo "$@" >> /home/pi/.ssh/authorized_keys
-      chmod 600 /home/pi/.ssh/authorized_keys
-      chown -R pi:pi /home/pi/.ssh
-    fi
+    echo "$@" >> /home/pi/.ssh/authorized_keys
+    chmod 600 /home/pi/.ssh/authorized_keys      
+    chown -R pi:pi /home/pi/.ssh
     
-    echo "$@" >> /root/.ssh/authorized_keys
-    chmod 600 /root/.ssh/authorized_keys
+    if [ "$(detectrpi)" != "nonrpi" ]; then
+      echo "$@" >> /root/.ssh/authorized_keys
+      chmod 600 /root/.ssh/authorized_keys
+    fi
 
     echo "====== Added to 'pi' and 'root' user's authorized_keys ======"
     echo "$@"
   elif [ "$1" == "list" ]; then
     echo "==== root keys ===="
-    cat /root/.ssh/authorized_keys
+    if [ "$(detectrpi)" != "nonrpi" ]; then
+      cat /root/.ssh/authorized_keys
+    fi
 
     echo "==== pi keys ===="
-    if [ "$(detectrpi)" != "nonrpi" ]; then
-      cat /home/pi/.ssh/authorized_keys
-    fi
+    cat /home/pi/.ssh/authorized_keys
 
   elif [ "$1" == "delete" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing argument"
       echo "Usage: $(basename "$0") sshkey delete \"<key>\""
       exit 1
-    fi
+    fi  
+
     sed -i "/^$2/d" /home/pi/.ssh/authorized_keys
 
     if [ "$(detectrpi)" != "nonrpi" ]; then

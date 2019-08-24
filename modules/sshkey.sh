@@ -3,20 +3,18 @@
 function sshkey () {
   if [ "$1" == "add" ]; then
     shift
-
-    mkdir -p /root/.ssh /home/pi/.ssh
-    chmod 700 /root/.ssh /home/pi/.ssh
-
-    echo "$@" >> /home/pi/.ssh/authorized_keys
-    chmod 600 /home/pi/.ssh/authorized_keys
-    chown -R pi:pi /home/pi/.ssh
-    
+    echo "$@" >> /root/.ssh/authorized_keys
+    chmod 600 /root/.ssh/authorized_keys    
     if [ "$(detectrpi)" != "nonrpi" ]; then
-      echo "$@" >> /root/.ssh/authorized_keys
-      chmod 600 /root/.ssh/authorized_keys
+      mkdir -p /root/.ssh /home/pi/.ssh
+      chmod 700 /root/.ssh /home/pi/.ssh
+      echo "$@" >> /home/pi/.ssh/authorized_keys
+      chmod 600 /home/pi/.ssh/authorized_keys
+      chown -R pi:pi /home/pi/.ssh
+      echo "====== Added to 'pi' and 'root' user's authorized_keys ======"
+    else
+      echo "====== Added to 'root' user's authorized_keys ======"
     fi
-
-    echo "====== Added to 'pi' and 'root' user's authorized_keys ======"
     echo "$@"
   elif [ "$1" == "list" ]; then
     echo "==== root keys ===="

@@ -18,39 +18,32 @@ function sshkey () {
     echo "$@"
   elif [ "$1" == "list" ]; then
     echo "==== root keys ===="
+    cat /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then
-      cat /root/.ssh/authorized_keys
+      echo "==== pi keys ===="
+      cat /home/pi/.ssh/authorized_keys
     fi
-
-    echo "==== pi keys ===="
-    cat /home/pi/.ssh/authorized_keys
-
   elif [ "$1" == "delete" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing argument"
       echo "Usage: $(basename "$0") sshkey delete \"<key>\""
       exit 1
     fi  
-
-    sed -i "/^$2/d" /home/pi/.ssh/authorized_keys
-
+    sed -i "/^$2/d" /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then
-      sed -i "/^$2/d" /root/.ssh/authorized_keys
+      sed -i "/^$2/d" /home/pi/.ssh/authorized_keys
     fi
-
   elif [ "$1" == "deleteall" ]; then
-    rm /home/pi/.ssh/authorized_keys
+    rm /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then
-      rm /root/.ssh/authorized_keys
+      rm /home/pi/.ssh/authorized_keys
     fi
-
   elif [ "$1" == "addgithubusername" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing argument"
       echo "Usage: $(basename "$0") sshkey addgithubusername <username>"
       exit 1
     fi
-
     keys=$(curl -s "https://github.com/$2.keys")
     sshkey add "$keys"
   elif [ "$1" == "addgithubgroup" ]; then

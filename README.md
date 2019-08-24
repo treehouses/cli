@@ -1,6 +1,9 @@
 # npm i @treehouses/cli
 
-[![Build Status](https://travis-ci.org/treehouses/cli.svg?branch=master)](https://travis-ci.org/treehouses/cli)  [![npm version](https://badge.fury.io/js/%40treehouses%2Fcli.svg)](https://www.npmjs.com/package/%40treehouses%2Fcli) ![npm](https://img.shields.io/npm/dw/@treehouses/cli) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/treehouses/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/treehouses/cli.svg?branch=master)](https://travis-ci.org/treehouses/cli)
+[![npm version](https://badge.fury.io/js/%40treehouses%2Fcli.svg)](https://www.npmjs.com/package/%40treehouses%2Fcli)
+[![npm](https://img.shields.io/npm/dw/@treehouses/cli)](https://www.npmjs.com/package/%40treehouses%2Fcli)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/treehouses/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ```
 Usage: treehouses [command] ...
@@ -35,8 +38,8 @@ vnc [on|off|info]                        enables or disables the vnc server serv
 default                                  sets a raspbian back to default configuration
 wificountry <country>                    sets the wifi country
 upgrade                                  upgrades cli.sh package using npm
-sshtunnel <add|remove|list|check>        helps adding an sshtunnel
-          <portinterval> [user@host]
+sshtunnel <add|remove|list|check|notice> helps adding an sshtunnel
+          <key|portinterval> [user@host]
 led [green|red] [mode]                   sets the led mode
 rtc <on|off> [rasclock|ds3231]           sets up the rtc clock specified
 ntp <local|internet>                     enables or disables time through ntp servers

@@ -1,6 +1,9 @@
 language: node_js
 node_js:
 - '6'
+script:
+# Fail if any of these files have warnings
+- shellcheck myscripts/*.sh
 deploy:
   provider: npm
   email: vi@ole.org

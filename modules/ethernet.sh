@@ -2,22 +2,7 @@
 
 function ethernet {
 
-  if [ -z "1" ]; then
-    echo "Error: argument(s) missing"
-    exit 1
-  fi
-  
-  if [ -z "2" ]; then
-    echo "Error: argument(s) missing"
-    exit 1
-  fi
-
-  if [ -z "3" ]; then
-    echo "Error: argument(s) missing"
-    exit 1
-  fi
-  
-  if [ -z "4" ]; then
+  if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
     echo "Error: argument(s) missing"
     exit 1
   fi

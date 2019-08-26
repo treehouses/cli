@@ -2,7 +2,7 @@
 
 function rename () {
   if
-    [[ ${1:01} == "-" ]] || #checks beginning for "-"
+    [[ ${1:0:1} == "-" ]] || #checks beginning for "-"
     [[ ${1: -1} == "-" ]] || #checks end for "-"
     ! [[ "$1" =~ ^[[:alnum:]"-"]*$ ]] || #checks for special characters and spaces excluding "-"
     [[ ${#1} -gt "64" ]] || #Checks for length greater than 64

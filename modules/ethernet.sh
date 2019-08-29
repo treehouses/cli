@@ -1,6 +1,12 @@
 #!/bin/bash
 
 function ethernet {
+
+  if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
+    echo "Error: argument(s) missing"
+    exit 1
+  fi
+
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/eth0/static" /etc/network/interfaces.d/eth0
   sed -i "s/IPADDRESS/$1/g" /etc/network/interfaces.d/eth0

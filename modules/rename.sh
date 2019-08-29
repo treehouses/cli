@@ -1,13 +1,14 @@
 #!/bin/bash
 
 function rename () {
+
   if
     [[ ${1:0:1} == "-" ]] || #checks beginning for "-"
     [[ ${1: -1} == "-" ]] || #checks end for "-"
     ! [[ "$1" =~ ^[[:alnum:]"-"]*$ ]] || #checks for special characters and spaces excluding "-"
     [[ ${#1} -gt "64" ]] || #Checks for length greater than 64
-    [ -z "$1" ]; #Checks if variable is empty
-    [ ! -z "$2" ]; #Checks for another variable technicaly = space in our case 
+    [ -z "$1" ] || #Checks if variable is empty
+    [ ! -z "$2" ];
   then
     echo "Unsuccessful: Make sure to remove special characters and spaces."
   else

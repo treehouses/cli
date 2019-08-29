@@ -2,9 +2,9 @@
 
 function rename () { 
 
-  if [ -n "$1"]; then
+  if [ -n "$1" ]; then
      space="$2"
-     if [ -n "space"]; then
+     if [ -n "space" ]; then
      echo "Unsuccessful: Make sure to remove space."
      fi
   fi

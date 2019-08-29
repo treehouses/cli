@@ -2,15 +2,21 @@
 
 function rename () { 
 
+  if [ -n "$1"]; then
+     space="$2"
+     if [ -n "space"]; then
+     echo "Unsuccessful: Make sure to remove space."
+     fi
+  fi
+
   if
     [[ ${1:0:1} == "-" ]] || #checks beginning for "-"
     [[ ${1: -1} == "-" ]] || #checks end for "-"
     ! [[ "$1" =~ ^[[:alnum:]"-"]*$ ]] || #checks for special characters and spaces excluding "-"
     [[ ${#1} -gt "64" ]] || #Checks for length greater than 64
-    [ -z "$1" ] || #Checks if variable is empty
-    [ -n "$2" ];
+    [ -z "$1" ]; #Checks if variable is empty
   then
-    echo "Unsuccessful: Make sure to remove special characters and spaces."
+    echo "Unsuccessful: Make sure to remove special characters."
   else
     CURRENT_HOSTNAME=$(< /etc/hostname tr -d " \\t\\n\\r")
     echo "$1" > /etc/hostname

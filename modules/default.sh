@@ -14,6 +14,7 @@ function default {
   fi
 
   if [ "$1" == "network" ] ; then
+    checkrpi
     default_network
     echo 'Success: the network mode has been reset to default, please reboot your device';
     exit 0

@@ -2,8 +2,9 @@
 
 function rename () { 
 
-  if [ -n "$2"]; then
-     echo " $2 "
+  if [ -n "$1"]; then
+     option=$2
+     echo " $option "
   fi
   
   if [[ "$#" -ne 1 ]]; then

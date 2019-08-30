@@ -2,10 +2,10 @@
 
 function rename () { 
 
-  #if [ -n "$1" ]; then
-  #   option=$2
-  #   echo " $option "
-  #fi
+  if [ -n "$1" ]; then
+     shift
+     echo " $1 "
+  fi
   
   #if [[ "$#" -ne 1 ]]; then
   #  echo "Illegal number of parameters"

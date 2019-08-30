@@ -2,30 +2,29 @@
 
 function rename () { 
 
-  #if [[ $# -gt "2" ]]; then
-   #  echo "Unsuccessful: Make sure to remove space."
-     echo " $# "
-  #fi
+  if [ -n "$2"]; then
+     echo " $2 "
+  fi
   
   if [[ "$#" -ne 1 ]]; then
     echo "Illegal number of parameters"
   fi
 
-#  if
-   # [[ ${1:0:1} == "-" ]] || #checks beginning for "-"
-   # [[ ${1: -1} == "-" ]] || #checks end for "-"
-   # ! [[ "$1" =~ ^[[:alnum:]"-"]*$ ]] || #checks for special characters and spaces excluding "-"
-   # [[ ${#1} -gt "64" ]] || #Checks for length greater than 64
-   # [ -z "$1" ]; #Checks if variable is empty
-#  then
+  if
+    [[ ${1:0:1} == "-" ]] || #checks beginning for "-"
+    [[ ${1: -1} == "-" ]] || #checks end for "-"
+    ! [[ "$1" =~ ^[[:alnum:]"-"]*$ ]] || #checks for special characters and spaces excluding "-"
+    [[ ${#1} -gt "64" ]] || #Checks for length greater than 64
+    [ -z "$1" ]; #Checks if variable is empty
+  then
     echo "Unsuccessful: Make sure to remove special characters."
-#  else
-   # CURRENT_HOSTNAME=$(< /etc/hostname tr -d " \\t\\n\\r")
-    #echo "$1" > /etc/hostname
-    #sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\\t$1/g" /etc/hosts
-   # hostname "$1"
+  else
+    CURRENT_HOSTNAME=$(< /etc/hostname tr -d " \\t\\n\\r")
+    echo "$1" > /etc/hostname
+    sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\\t$1/g" /etc/hosts
+    hostname "$1"
     echo "Success: the hostname has been modified"
-#  fi
+  fi
 }
 
 function rename_help () {

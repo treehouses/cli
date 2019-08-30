@@ -2,9 +2,7 @@
 
 function rename () { 
 
-  if [ -n "$1" ]; then
-     space="$2"
-     if [ ! -z "$space" ]; then
+  if [ ARG_MAX > 1]; then
      echo "Unsuccessful: Make sure to remove space."
      fi
   fi

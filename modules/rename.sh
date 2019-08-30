@@ -22,9 +22,9 @@ function rename () {
     echo "Unsuccessful: Make sure to remove special characters."
   else
     CURRENT_HOSTNAME=$(< /etc/hostname tr -d " \\t\\n\\r")
-    echo "$1" > /etc/hostname
+    echo "$#" > /etc/hostname
     sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\\t$1/g" /etc/hosts
-    hostname "$1"
+    hostname "$#"
     echo "Success: the hostname has been modified"
   fi
 }

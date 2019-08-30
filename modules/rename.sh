@@ -7,6 +7,10 @@ function rename () {
    getconf ARG_MAX
      echo " $N "
   #fi
+  
+  if [ "$#" -ne 1 ]; then
+    echo "Illegal number of parameters"
+  fi
 
   if
     [[ ${1:0:1} == "-" ]] || #checks beginning for "-"

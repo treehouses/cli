@@ -2,9 +2,10 @@
 
 function rename () { 
 
-  if [[ $# -gt "2" ]]; then
-     echo "Unsuccessful: Make sure to remove space."
-  fi
+  #if [[ $# -gt "2" ]]; then
+   #  echo "Unsuccessful: Make sure to remove space."
+     echo " $# "
+  #fi
 
   if
     [[ ${1:0:1} == "-" ]] || #checks beginning for "-"

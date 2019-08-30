@@ -4,7 +4,7 @@ function rename () {
 
   #if [[ $# -gt "2" ]]; then
    #  echo "Unsuccessful: Make sure to remove space."
-     echo " $# "
+     echo " $@ "
   #fi
 
   if

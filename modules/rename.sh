@@ -2,7 +2,7 @@
 
 function rename () { 
 
-  if [ -n "$1"]; then
+  if [ -n "$1" ]; then
      option=$2
      echo " $option "
   fi

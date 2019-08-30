@@ -4,8 +4,7 @@ function rename () {
 
   #if [[ $# -gt "2" ]]; then
    #  echo "Unsuccessful: Make sure to remove space."
-   getconf ARG_MAX
-     echo " $N "
+     echo " $# "
   #fi
   
   if [[ "$#" -ne 1 ]]; then
@@ -24,7 +23,7 @@ function rename () {
     CURRENT_HOSTNAME=$(< /etc/hostname tr -d " \\t\\n\\r")
     echo "$1" > /etc/hostname
     sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\\t$1/g" /etc/hosts
-    hostname "$1"
+   # hostname "$1"
     echo "Success: the hostname has been modified"
   fi
 }

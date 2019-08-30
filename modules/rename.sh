@@ -2,19 +2,9 @@
 
 function rename () { 
 
-  if [ -n "$1" ]; then
-     echo "Positional Parameters"
-echo '$0 = ' $0
-echo '$1 = ' $1
-echo '$2 = ' $2
-echo '$3 = ' $3
-  fi
-  
   #if [[ "$#" -ne 1 ]]; then
   #  echo "Illegal number of parameters"
   #fi
-  
-  echo "$1 $2 $3"
 
   if
     [[ ${1:0:1} == "-" ]] || #checks beginning for "-"
@@ -29,7 +19,7 @@ echo '$3 = ' $3
     echo "$1" > /etc/hostname
     sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\\t$1/g" /etc/hosts
     hostname "$1"
-    echo "Success: the hostname has been modified"
+    echo "Success: the hostname has been modified to $1"
   fi
 }
 

@@ -8,7 +8,7 @@ function rename () {
      echo " $N "
   #fi
   
-  if [ "$#" -ne 1 ]; then
+  if [[ "$#" -ne 1 ]]; then
     echo "Illegal number of parameters"
   fi
 
@@ -22,9 +22,9 @@ function rename () {
     echo "Unsuccessful: Make sure to remove special characters."
   else
     CURRENT_HOSTNAME=$(< /etc/hostname tr -d " \\t\\n\\r")
-    echo "$#" > /etc/hostname
+    echo "$1" > /etc/hostname
     sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\\t$1/g" /etc/hosts
-    hostname "$#"
+    hostname "$1"
     echo "Success: the hostname has been modified"
   fi
 }

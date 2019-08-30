@@ -5,7 +5,7 @@ function rename () {
   #if [[ $# -gt "2" ]]; then
    #  echo "Unsuccessful: Make sure to remove space."
    getconf ARG_MAX
-     echo " $@ "
+     echo " $N "
   #fi
 
   if

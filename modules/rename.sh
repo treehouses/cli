@@ -19,8 +19,8 @@ function rename () {
     [ -z "$1" ]; #Checks if variable is empty
   then
     echo "Unsuccessful: Make sure to remove special characters."
-    echo "$1"
     printf "$1"
+    echo "$1"    
   else
     CURRENT_HOSTNAME=$(< /etc/hostname tr -d " \\t\\n\\r")
     echo "$1" > /etc/hostname

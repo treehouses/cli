@@ -2,14 +2,14 @@
 
 function rename () { 
 
-  if [ -n "$1" ]; then
-     option=$2
-     echo " $option "
-  fi
+  #if [ -n "$1" ]; then
+  #   option=$2
+  #   echo " $option "
+  #fi
   
-  if [[ "$#" -ne 1 ]]; then
-    echo "Illegal number of parameters"
-  fi
+  #if [[ "$#" -ne 1 ]]; then
+  #  echo "Illegal number of parameters"
+  #fi
 
   if
     [[ ${1:0:1} == "-" ]] || #checks beginning for "-"
@@ -19,6 +19,8 @@ function rename () {
     [ -z "$1" ]; #Checks if variable is empty
   then
     echo "Unsuccessful: Make sure to remove special characters."
+    echo "$1"
+    printf "$1"
   else
     CURRENT_HOSTNAME=$(< /etc/hostname tr -d " \\t\\n\\r")
     echo "$1" > /etc/hostname

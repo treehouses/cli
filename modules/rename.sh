@@ -2,7 +2,7 @@
 
 function rename () { 
 
-  if [ $# > 1 ]; then
+  if [ $# -gt 1 ]; then
      echo "Unsuccessful: Make sure to remove space."
   fi
 

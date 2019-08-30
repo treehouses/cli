@@ -2,7 +2,7 @@
 
 function rename () { 
 
-  if [ ARG_MAX > 1 ]; then
+  if [ ARG_MAX > 2 ]; then
      echo "Unsuccessful: Make sure to remove space."
   fi
 

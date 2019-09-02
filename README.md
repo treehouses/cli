@@ -61,4 +61,5 @@ openvpn [use|show|delete]                helps setting up an openvpn client
 coralenv [install|demo-on|demo-off]      plays with the coral environmental board
          [demo-always-on]
 memory [total|used|free]                 displays the total memory of the device, the memory used as well as the available free memory 
+temperature [celsius]                    displays raspberry pi's CPU temperature
 ```

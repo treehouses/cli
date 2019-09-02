@@ -8,7 +8,7 @@ function temperature () {
   case "$1" in
     "") echo $number"°C"
     ;;
-    "celsius") echo $number0
+    "celsius") echo $number
     ;;
   esac
 }

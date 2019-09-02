@@ -24,6 +24,7 @@ source "$SCRIPTFOLDER/modules/image.sh"
 source "$SCRIPTFOLDER/modules/led.sh"
 source "$SCRIPTFOLDER/modules/locale.sh"
 source "$SCRIPTFOLDER/modules/memory.sh"
+source "$SCRIPTFOLDER/modules/temperature.sh"
 source "$SCRIPTFOLDER/modules/networkmode.sh"
 source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
@@ -235,6 +236,9 @@ case $1 in
   memory)
     shift
     memory "$@"
+    ;;
+  temperature)
+    checkrpi
     ;;
   help)
     help "$2"

@@ -239,6 +239,7 @@ case $1 in
     ;;
   temperature)
     checkrpi
+    temperature "$2"
     ;;
   help)
     help "$2"

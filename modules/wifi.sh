@@ -1,6 +1,11 @@
 #!/bin/bash
 
 function wifi {
+
+  if [ -z "$1" ]; then
+    echo "Error: name of the network missing"
+    exit 1
+  fi
   wifinetwork=$1
   wifipassword=$2
 

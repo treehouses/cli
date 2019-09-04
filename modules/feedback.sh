@@ -8,19 +8,31 @@ if [ ! -z "$gitter_channel" ]; then
 fi
 
 function feedback {
-  message="$*"
-  if ! [[ -z "$message" ]]; then
-    if [ "$(detectrpi)" != "nonrpi" ]; then
-      body="{\"text\":\"\`$(hostname)\` \`$(curl ifconfig.io -s)\` \`$(version)\` \`$(detectrpi)\` \`$(cat /boot/version.txt)\`:\\n$message\"}"
+  ip_4="ip4 "
+  ip_6="ip6 "
+  ip_address=$(curl ifconfig.io -s)
+  if [[ $ip_address == *"DOCTYPE"* ]]; then
+	  echo "ifconfig.io is down, please execute 'treehouses feedback' later"  
+  else
+    if [[ $ip_address == *":"* ]]; then
+      ip_address="${ip_6}${ip_address}"
     else
-      body="{\"text\":\"\`$(hostname)\` \`$(curl ifconfig.io -s)\` \`$(version)\` \`$(detect | sed "s/ /\` \`/1")\`:\\n$message\"}"
+      ip_address="${ip_4}${ip_address}"
     fi
-
-	  curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token" "$channel" -d  "$body"> /dev/null
-    echo "Thanks for the feedback!"
- else
-   echo "No feedback was submitted."
- fi
+    
+    message="$*"
+    if ! [[ -z "$message" ]]; then
+      if [ "$(detectrpi)" != "nonrpi" ]; then
+        body="{\"text\":\"\`$(hostname)\` \`$ip_address\` \`$(version)\` \`$(detectrpi)\` \`$(cat /boot/version.txt)  \`:\\n$message\"}"
+      else
+        body="{\"text\":\"\`$(hostname)\` \`$ip_address\` \`$(version)\` \`$(detect | sed "s/ /\` \`/1")\`:\\n$message\"}"
+      fi
+      curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token"   "$channel" -d  "$body"> /dev/null
+      echo "Thanks for the feedback!"
+    else
+       echo "No feedback was submitted."
+    fi
+  fi
 }
 
 function feedback_help {

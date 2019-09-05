@@ -45,7 +45,7 @@ function tor {
       exit 1
     fi
 
-    existing_port=$(grep -Poi "^HiddenServicePort $local_port .*" /etc/tor/torrc)
+    existing_port=$(grep -Poi "^HiddenServicePort $port .*" /etc/tor/torrc)
     if [ ! -z "$existing_port" ]; then
       sed -i "s/$existing_port/HiddenServicePort $port 127.0.0.1:$local_port/g" /etc/tor/torrc
     else

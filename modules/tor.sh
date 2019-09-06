@@ -89,11 +89,6 @@ function tor {
       echo "OK."
     elif [ "$option" = "add" ]; then
       value="$3"
-      if [ -n "$4" ]; then
-	echo "Error: Synthax error"
-	exit 1
-      fi
-
       if [ -z "$value" ]; then
         echo "Error: You must specify a channel URL"
         exit 1

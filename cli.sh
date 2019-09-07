@@ -3,6 +3,7 @@
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 
+source "$SCRIPTFOLDER/modules/detectrpi.sh" 
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
 source "$SCRIPTFOLDER/modules/apchannel.sh"
@@ -14,7 +15,6 @@ source "$SCRIPTFOLDER/modules/bootoption.sh"
 source "$SCRIPTFOLDER/modules/container.sh"
 source "$SCRIPTFOLDER/modules/default.sh"
 source "$SCRIPTFOLDER/modules/detect.sh"
-source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/ethernet.sh"
 source "$SCRIPTFOLDER/modules/expandfs.sh"
 source "$SCRIPTFOLDER/modules/feedback.sh"
@@ -24,6 +24,7 @@ source "$SCRIPTFOLDER/modules/image.sh"
 source "$SCRIPTFOLDER/modules/led.sh"
 source "$SCRIPTFOLDER/modules/locale.sh"
 source "$SCRIPTFOLDER/modules/memory.sh"
+source "$SCRIPTFOLDER/modules/temperature.sh"
 source "$SCRIPTFOLDER/modules/networkmode.sh"
 source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
@@ -51,6 +52,7 @@ source "$SCRIPTFOLDER/modules/coralenv.sh"
 
 case $1 in
   expandfs)
+    checkrpi
     checkroot
     expandfs
     ;;
@@ -59,6 +61,7 @@ case $1 in
     rename "$2"
     ;;
   password)
+    checkrpi
     checkroot
     password "$2"
     ;;
@@ -80,26 +83,32 @@ case $1 in
     detectrpi
     ;;
   wifi)
+    checkrpi
     checkroot
     wifi "$2" "$3"
     ;;
   staticwifi)
+    checkrpi
     checkroot
     staticwifi "$2" "$3" "$4" "$5" "$6" "$7"
     ;;
   container)
+    checkrpi
     checkroot
     container "$2"
     ;;
   bluetooth)
+    checkrpi
     checkroot
     bluetooth "$2"
     ;;
   ethernet)
+    checkrpi
     checkroot
     ethernet "$2" "$3" "$4" "$5"
     ;;
   ap)
+    checkrpi
     checkroot
     shift
     ap "$@"
@@ -129,11 +138,13 @@ case $1 in
     upgrade "$@"
     ;;
   bridge)
+    checkrpi
     checkroot
     shift
     bridge "$@"
     ;;
   wificountry)
+    checkrpi
     checkroot
     wificountry "$2"
     ;;
@@ -142,13 +153,16 @@ case $1 in
     sshtunnel "$2" "$3" "$4"
     ;;
   led)
+    checkrpi
     led "$2" "$3"
     ;;
   rtc)
+    checkrpi
     checkroot
     rtc "$2" "$3"
     ;;
   ntp)
+    checkrpi
     checkroot
     ntp "$2"
     ;;
@@ -156,6 +170,7 @@ case $1 in
     networkmode "$2"
     ;;
   button)
+    checkrpi
     checkroot
     button "$2"
     ;;
@@ -164,20 +179,24 @@ case $1 in
     feedback "$*"
     ;;
   apchannel)
+    checkrpi
     shift
     apchannel "$1"
     ;;
   clone)
+    checkrpi
     checkroot
     shift
     clone "$1"
     ;;
   restore)
+    checkrpi
     checkroot
     shift
     restore "$1"
     ;;
   burn)
+    checkrpi
     checkroot
     shift
     burn "$1"
@@ -198,6 +217,7 @@ case $1 in
     tor "$@"
     ;;
   bootoption)
+    checkrpi
     checkroot
     shift
     bootoption "$*"
@@ -208,6 +228,7 @@ case $1 in
     openvpn "$@"
     ;;
   coralenv)
+    checkrpi
     checkroot
     shift
     coralenv "$@"
@@ -215,6 +236,10 @@ case $1 in
   memory)
     shift
     memory "$@"
+    ;;
+  temperature)
+    checkrpi
+    temperature "$2"
     ;;
   help)
     help "$2"

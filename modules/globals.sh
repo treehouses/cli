@@ -45,6 +45,14 @@ function checkroot {
   fi
 }
 
+function checkrpi {
+  if [ "$(detectrpi)" == "nonrpi" ]; 
+  then
+    echo "Error: Must be run with rpi system"
+    exit 1
+  fi
+}
+
 function restart_hotspot {
   restart_service dhcpcd || true
   ifdown wlan0 || true

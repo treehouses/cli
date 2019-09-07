@@ -40,7 +40,12 @@ function tor {
       local_port="$port"
     fi
 
-    existing_port=$(grep -Poi "^HiddenServicePort $local_port .*" /etc/tor/torrc)
+    if  ! [[ "$local_port" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
+      echo "Error: is not a port"
+      exit 1
+    fi
+
+    existing_port=$(grep -Poi "^HiddenServicePort $port .*" /etc/tor/torrc)
     if [ ! -z "$existing_port" ]; then
       sed -i "s/$existing_port/HiddenServicePort $port 127.0.0.1:$local_port/g" /etc/tor/torrc
     else

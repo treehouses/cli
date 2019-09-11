@@ -55,9 +55,18 @@ function tor {
     restart_service tor
     echo "Success: the port has been added"
   elif [ "$1" = "delete" ]; then
+    if [ -z "$2" ]; then
+      echo "Error: no port entered"
+      exit 1
+    fi
+
+    if  ! [[ "$2" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
+      echo "Error: $2 is not a port"
+      exit 1
+    fi
     echo "Port $2 has been deleted"
-    rm -rf /etc/tor/torrc
-    
+    sed -i "/^$2/d" /etc/tor/torrc
+
   elif [ "$1" = "stop" ]; then
     stop_service tor
     echo "Success: the tor service has been stopped"

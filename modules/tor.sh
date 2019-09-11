@@ -65,7 +65,7 @@ function tor {
       exit 1
     fi
     echo "Port $2 has been deleted"
-    sed -i '/$2/d' /etc/tor/torrc
+    sed -i "/$2/d" /etc/tor/torrc
 
   elif [ "$1" = "stop" ]; then
     stop_service tor

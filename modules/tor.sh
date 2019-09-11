@@ -55,7 +55,7 @@ function tor {
     restart_service tor
     echo "Success: the port has been added"
   elif [ "$1" = "delete" ]; then
-    echo "Port $port has been deleted"
+    echo "Port $2 has been deleted"
     rm -rf /etc/tor/torrc
     
   elif [ "$1" = "stop" ]; then

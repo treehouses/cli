@@ -64,8 +64,15 @@ function tor {
       echo "Error: $2 is not a port"
       exit 1
     fi
-    echo "Port $2 has been deleted"
+
+    if [ "$2" != "existing_port" ]; then
+      echo "Port $2 is not assigned"
+      exit 0
+    fi
+
     sed -i "/$2/d" /etc/tor/torrc
+    echo "Port $2 has been deleted"
+
 
   elif [ "$1" = "stop" ]; then
     stop_service tor

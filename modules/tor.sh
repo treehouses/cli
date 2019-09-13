@@ -71,7 +71,7 @@ function tor {
       exit 0
     fi
 
-    sed -i "/$2/d" /etc/tor/torrc
+    sed -i "/^$2 /d" /etc/tor/torrc
     echo "Port $2 has been deleted"
 
 

@@ -54,6 +54,32 @@ function tor {
 
     restart_service tor
     echo "Success: the port has been added"
+  elif [ "$1" = "delete" ]; then
+    if [ -z "$2" ]; then
+      echo "Error: no port entered"
+      exit 1
+    fi
+
+    if  ! [[ "$2" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
+      echo "Error: $2 is not a port"
+      exit 1
+    fi
+
+    if ! grep -wq "HiddenServicePort $2" /etc/tor/torrc ; then
+      echo "Port $2 is not assigned"
+      exit 0
+    fi
+
+    sed -i "/^HiddenServicePort $2 /d" /etc/tor/torrc
+    echo "Port $2 has been deleted"
+elif [ "$1" = "deleteall" ]; then
+    if [ -n "$2" ]; then
+      echo "Error: wrong synthax"
+      exit 1
+    fi
+
+    sed -i "/^HiddenServicePort $* /d" /etc/tor/torrc
+    echo "All port have been deleted"
   elif [ "$1" = "stop" ]; then
     stop_service tor
     echo "Success: the tor service has been stopped"
@@ -130,7 +156,7 @@ function tor {
   elif [ "$1" = "status" ]; then
     systemctl is-active tor
   else
-    echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice' and 'destroy' options are supported."
+    echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy' and 'delete' options are supported."
   fi
 }
 
@@ -157,6 +183,9 @@ function tor_help {
   echo "  $(basename "$0") tor add <port> [localport]"
   echo "      Adds the desired port to be accessible from the tor network"
   echo "      Redirects localport to (tor) port"
+  echo ""
+  echo "  $(basename "$0") tor delete <port> [localport]"
+  echo "      Deletes the desired port from the tor network"
   echo ""
   echo "  $(basename "$0") tor start"
   echo "      Setups and starts the tor service"

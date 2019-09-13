@@ -65,10 +65,10 @@ function tor {
       exit 1
     fi
 
-    #if [ "$2" != "existing_port" ]; then
-    #  echo "Port $2 is not assigned"
-    #  exit 0
-    #fi
+    if [ "$2" != "$existing_port" ]; then
+      echo "Port $2 is not assigned"
+      exit 0
+    fi
 
     sed -i "/^HiddenServicePort $2 /d" /etc/tor/torrc
     echo "Port $2 has been deleted"

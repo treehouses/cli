@@ -46,7 +46,6 @@ function tor {
     fi
 
     existing_port=$(grep -Poi "^HiddenServicePort $port .*" /etc/tor/torrc)
-    echo " $existing_port"
     if [ ! -z "$existing_port" ]; then
       sed -i "s/$existing_port/HiddenServicePort $port 127.0.0.1:$local_port/g" /etc/tor/torrc
     else
@@ -66,10 +65,10 @@ function tor {
       exit 1
     fi
 
-    if [ "$2" != "existing_port" ]; then
-      echo "Port $2 is not assigned"
-      exit 0
-    fi
+    #if [ "$2" != "existing_port" ]; then
+    #  echo "Port $2 is not assigned"
+    #  exit 0
+    #fi
 
     sed -i "/^HiddenServicPort $2 /d" /etc/tor/torrc
     echo "Port $2 has been deleted"

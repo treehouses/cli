@@ -71,8 +71,8 @@ function tor {
     fi
 
     sed -i "/^HiddenServicePort $2 /d" /etc/tor/torrc
+    restart_service tor
     echo "Port $2 has been deleted"
-
 
   elif [ "$1" = "stop" ]; then
     stop_service tor

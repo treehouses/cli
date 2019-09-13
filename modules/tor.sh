@@ -78,7 +78,7 @@ elif [ "$1" = "deleteall" ]; then
       exit 1
     fi
 
-    sed -i "/^HiddenServicePort $* /d" /etc/tor/torrc
+    sed -i "/^HiddenServicePort /d" /etc/tor/torrc
     echo "All port have been deleted"
   elif [ "$1" = "stop" ]; then
     stop_service tor

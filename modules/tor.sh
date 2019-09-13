@@ -65,7 +65,7 @@ function tor {
       exit 1
     fi
 
-    if [ "$2" != "$existing_port" ]; then
+    if [ -z "HiddenServicePort $port 127.0.0.1:$local_port " /etc/tor/torrc ]; then
       echo "Port $2 is not assigned"
       exit 0
     fi

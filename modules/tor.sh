@@ -65,7 +65,7 @@ function tor {
       exit 1
     fi
 
-    if ! grep -Pq "HiddenServicePort $2" /etc/tor/torrc ; then
+    if ! grep -wq "HiddenServicePort $2" /etc/tor/torrc ; then
       echo "Port $2 is not assigned"
       exit 0
     fi

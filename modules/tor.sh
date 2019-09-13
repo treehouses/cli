@@ -65,7 +65,7 @@ function tor {
       exit 1
     fi
 
-    if ! grep -Pq "^HiddenServicePort .*" "/etc/tor/torrc"; then
+    if ! grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g'; then
       echo "Port $2 is not assigned"
       exit 0
     fi

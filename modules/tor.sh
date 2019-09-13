@@ -150,7 +150,7 @@ function tor {
   elif [ "$1" = "status" ]; then
     systemctl is-active tor
   else
-    echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice' and 'destroy' options are supported."
+    echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy' and 'delete' options are supported."
   fi
 }
 
@@ -177,6 +177,9 @@ function tor_help {
   echo "  $(basename "$0") tor add <port> [localport]"
   echo "      Adds the desired port to be accessible from the tor network"
   echo "      Redirects localport to (tor) port"
+  echo ""
+  echo "  $(basename "$0") tor delete <port> [localport]"
+  echo "      Deletes the desired port from the tor network"
   echo ""
   echo "  $(basename "$0") tor start"
   echo "      Setups and starts the tor service"

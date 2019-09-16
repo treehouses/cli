@@ -47,7 +47,7 @@ function help_default {
   echo "   services [service_name] [format]          outputs or install the desired service"
   echo "            [install]"
   echo "   tor [start|stop|add|delete|list]          deals with services on tor hidden network"
-  echo "       [notice|destroy]"
+  echo "       [notice|destroy|deleteall]"
   echo "   bootoption <console|desktop> [autologin]  sets the boot mode"
   echo "   openvpn [use|show|delete]                 helps setting up an openvpn client"
   echo "           [notice|start|stop|load]"

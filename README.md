@@ -54,7 +54,7 @@ internet                                  checks if the rpi has access to intern
 services [service_name] [format]          outputs or install the desired service
          [install]
 tor [start|stop|add|delete|list]          deals with services on tor hidden network
-    [notice|destroy]
+    [notice|destroy|deleteall]
 bootoption <console|desktop> [autologin]  sets the boot mode
 openvpn [use|show|delete]                 helps setting up an openvpn client
         [notice|start|stop|load]

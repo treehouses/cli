@@ -73,7 +73,15 @@ function tor {
     sed -i "/^HiddenServicePort $2 /d" /etc/tor/torrc
     restart_service tor
     echo "Port $2 has been deleted"
+  elif [ "$1" = "deleteall" ]; then
+    if [ -n "$2" ]; then
+      echo "Error: wrong synthax"
+      exit 1
+    fi
 
+    sed -i "/^HiddenServicePort /d" /etc/tor/torrc
+    restart_service tor
+    echo "All ports have been deleted"
   elif [ "$1" = "stop" ]; then
     stop_service tor
     echo "Success: the tor service has been stopped"
@@ -150,7 +158,7 @@ function tor {
   elif [ "$1" = "status" ]; then
     systemctl is-active tor
   else
-    echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy' and 'delete' options are supported."
+    echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy', 'delete' and 'deleteall' options are supported."
   fi
 }
 
@@ -180,6 +188,9 @@ function tor_help {
   echo ""
   echo "  $(basename "$0") tor delete <port> [localport]"
   echo "      Deletes the desired port from the tor network"
+  echo ""
+  echo "  $(basename "$0") tor deleteall"
+  echo "      Deletes all local ports from the tor network"
   echo ""
   echo "  $(basename "$0") tor start"
   echo "      Setups and starts the tor service"

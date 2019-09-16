@@ -80,7 +80,7 @@ function tor {
     fi
 
     sed -i "/^HiddenServicePort /d" /etc/tor/torrc
-    echo "All port have been deleted"
+    echo "All ports have been deleted"
   elif [ "$1" = "stop" ]; then
     stop_service tor
     echo "Success: the tor service has been stopped"

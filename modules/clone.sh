@@ -32,6 +32,16 @@ function clone {
 
     fi
 
+    if [ -f "/etc/reboot-needed" ]; then
+        echo "Cloning completed.";
+        echo "A reboot is needed. Would you like to reboot now?"
+           select yn in "Yes" "No"; do
+              case $yn in
+                 Yes ) echo "Rebooting"; sleep 2 ; reboot; break;;
+                 No ) exit;;
+              esac
+           done
+    fi
 }
 
 function clone_help {

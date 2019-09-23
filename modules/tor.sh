@@ -23,19 +23,17 @@ function tor {
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
     fi
 
-  if [ "$#" -lt 4 ] ; then
-   for port in $3 $4;
-   do
-    if  [ ! "$port" -eq "$port" ] ; then 
-     echo "Port number has to be number"
-     exit 0
-    else
-     port="$2" # internal port 
-     local_port="$3" # external port 
-   done
-
-  fi	    
-
+    if [ "$#" -lt 4 ] ; then
+      for port in $3 $4; do
+        if  [ ! "$port" -eq "$port" ] ; then 
+          echo "Port number has to be number"
+          exit 0
+        else
+          port="$2" # internal port
+          local_port="$3" # external port
+        fi
+      done
+    fi
 
     if [ -z "$port" ]; then
       echo "Error: you must specify a port"

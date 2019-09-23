@@ -19,14 +19,28 @@ function tor {
     echo "external <=> local"
     grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g'
   elif [ "$1" = "add" ]; then
-   if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
+    if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
     fi
 
+<<<<<<< HEAD
    if [ "$#" -gt 3 ] ; then
      echo "Please enter two ports or less only"
      exit 1;
    fi	    
+=======
+    if [ "$#" -lt 4 ] ; then
+      for port in $3 $4; do
+        if  [ ! "$port" -eq "$port" ] ; then 
+          echo "Port number has to be number"
+          exit 0
+        else
+          port="$2" # internal port
+          local_port="$3" # external port
+        fi
+      done
+    fi
+>>>>>>> f127cd3bdc3fa8b629be2577f7917ee1e84a21d4
 
     if [ -z "$port" ]; then
       echo "Error: you must specify a port"

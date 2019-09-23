@@ -23,12 +23,11 @@ function tor {
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
     fi
 
-<<<<<<< HEAD
    if [ "$#" -gt 3 ] ; then
      echo "Please enter two ports or less only"
      exit 1;
    fi	    
-=======
+
     if [ "$#" -lt 4 ] ; then
       for port in $3 $4; do
         if  [ ! "$port" -eq "$port" ] ; then 

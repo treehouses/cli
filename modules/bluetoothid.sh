@@ -29,5 +29,6 @@ function bluetoothid_help () {
   echo ""
   echo "Example:"
   echo "  $(basename "$0") bluetoothid hostid"
-  echo "      treehouses-9012" ;
+  echo "      treehouses-9012"
+  echo ""
 }

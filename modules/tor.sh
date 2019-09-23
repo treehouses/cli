@@ -10,6 +10,8 @@ function tor {
     exit 1
   fi
 
+  port="$2"
+  local_port="$3" 
   if [ -z "$1" ]; then
     cat "/var/lib/tor/treehouses/hostname"
     exit 0
@@ -22,6 +24,9 @@ function tor {
     if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
     fi
+
+    port="$2"
+    local_port="$3"
 
     if [ "$#" -gt 3 ] ; then
       echo "Please enter two ports or less only"

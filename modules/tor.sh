@@ -22,10 +22,15 @@ function tor {
     if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
     fi
-
+    
+    if [ "$#" -gt 3 ] ; then
+      echo "Please enter two ports or less only"
+      exit 1;
+    fi	
+    
     port="$2"
     local_port="$3"
-
+ 
     if [ -z "$port" ]; then
       echo "Error: you must specify a port"
       exit 1

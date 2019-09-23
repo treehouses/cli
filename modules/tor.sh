@@ -14,7 +14,7 @@ function tor {
     cat "/var/lib/tor/treehouses/hostname"
     exit 0
   fi
-
+	# viewing ports
   if [ "$1" = "list" ]; then
     echo "external <=> local"
     grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g'
@@ -23,8 +23,28 @@ function tor {
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
     fi
 
-    port="$2"
-    local_port="$3"
+
+    #### 
+    # check if you have less then  arguments. Example, treehosues tor add 22 80
+    if [ "$#" -lt 4 ] ; then
+	for port in $3 $4;
+	do
+		if  [ ! "$port" -eq "$port" ] ; then 
+			echo "Port number has to be number"
+			exit 0
+		else
+ 			port="$2" # internal port 
+    			local_port="$3" # external port 
+		fi
+
+	done
+    fi	    
+
+    ####
+
+
+
+
 
     if [ -z "$port" ]; then
       echo "Error: you must specify a port"
@@ -51,9 +71,9 @@ function tor {
     else
       echo "HiddenServicePort $port 127.0.0.1:$local_port " >> /etc/tor/torrc
     fi
-
     restart_service tor
     echo "Success: the port has been added"
+
   elif [ "$1" = "delete" ]; then
     if [ -z "$2" ]; then
       echo "Error: no port entered"

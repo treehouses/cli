@@ -21,13 +21,13 @@ function bluetoothid () {
 }
 
 function bluetoothid_help () {
-  echo ;
-  echo "        Usage: $(basename "$0") bluetoothid [hostid]" ;
-  echo ;
-  echo "                Displays Raspberry Pi's Bluetooth Host Number." ;
-  echo "          Optionally displays Networkname and ID as recieved through pairing." ;
-  echo ;
-  echo "        Example:" ; "   $(basename "$0") bluetoothid hostid" ;
-  echo ;
-  echo "                treehouses-9012" ;
+  echo ""
+  echo "Usage: $(basename "$0") bluetoothid <hostid>"
+  echo ""
+  echo "Displays Raspberry Pi's Bluetooth Host Number."
+  echo "Optionally displays Networkname and ID as recieved through pairing."
+  echo ""
+  echo "Example:"
+  echo "  $(basename "$0") bluetoothid hostid"
+  echo "      treehouses-9012" ;
 }

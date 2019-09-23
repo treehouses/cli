@@ -103,7 +103,7 @@ case $1 in
     checkroot
     bluetooth "$2"
     ;;
- bluetoothid)
+  bluetoothid)
     checkrpi
     bluetoothid "$2"
     ;;

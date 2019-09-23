@@ -10,8 +10,6 @@ function tor {
     exit 1
   fi
 
-  port="$2"
-  local_port="$3" 
   if [ -z "$1" ]; then
     cat "/var/lib/tor/treehouses/hostname"
     exit 0

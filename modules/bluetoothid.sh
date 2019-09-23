@@ -2,27 +2,28 @@
 #print id code of bluetooth, subfunction prints hostname and bluetooth id
 
 function bluetoothid () {
-  #echo the id of the bluetooth
-  bid=$(cat /etc/bluetooth-id)
-  id=${bid}
+  #check if bluetooth has an id
+  btidfile=/etc/bluetooth-id
+  if [ ! -f "${btidfile}" ]; then
+    return 1
+  fi
 
-  #echo network name with bluetooth id
-  nname=$(uname -n)
-  name=${nname}
+  bid=$(cat ${btidfile})  #get id of the bluetooth
+  nname=$(uname -n)  #get network name
 
   case "$1" in
     "")
-      echo "Raspberry Pi's ID is: ${id}"
+      echo "Bluetooth ID is: ${bid}"
       ;;
     "hostid")
-      echo "Raspberry Pi's network Host ID is: ${name}-${id}"
+      echo "Bluetooth's Network Host ID is: ${nname}-${bid}"
       ;;
   esac
 }
 
 function bluetoothid_help () {
   echo ""
-  echo "Usage: $(basename "$0") bluetoothid <hostid>"
+  echo "Usage: $(basename "$0") bluetoothid [hostid]"
   echo ""
   echo "Displays Raspberry Pi's Bluetooth Host Number."
   echo "Optionally displays Networkname and ID as recieved through pairing."

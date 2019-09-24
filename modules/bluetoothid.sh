@@ -5,6 +5,7 @@ function bluetoothid () {
   #check if bluetooth has an id
   btidfile=/etc/bluetooth-id
   if [ ! -f "${btidfile}" ]; then
+    echo "No ID. Bluetooth service is not on."
     return 1
   fi
 

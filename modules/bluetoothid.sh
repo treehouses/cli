@@ -19,6 +19,9 @@ function bluetoothid () {
     "hostid")
       echo "Bluetooth's Network Host ID is: ${nname}-${bid}"
       ;;
+    *)
+      echo "Argument not valid; leave blank or use \"hostid\""
+      ;;
   esac
 }
 

@@ -3,10 +3,6 @@
 function tor {
   check_missing_packages "tor" "curl"
 
-   if [ -z "$1" ]; then
-    cat "/var/lib/tor/treehouses/hostname"
-    exit 0
-  fi
   if { [ ! -d "/var/lib/tor/treehouses" ] || [ ! -f "/var/lib/tor/treehouses/hostname" ]; } && [ "$1" != "start" ] && [ "$1" != "add" ]; then
     echo "Error: the tor service has not been configured."
     echo "Run '$(basename "$0") tor start' to configure it."

@@ -14,10 +14,10 @@ function bluetoothid () {
 
   case "$1" in
     "")
-      echo "Bluetooth ID is: ${bid}"
+      echo "${nname}-${bid}"
       ;;
-    "hostid")
-      echo "Bluetooth's Network Host ID is: ${nname}-${bid}"
+    "number")
+      echo "${bid}"
       ;;
     *)
       echo "Argument not valid; leave blank or use \"hostid\""
@@ -27,13 +27,15 @@ function bluetoothid () {
 
 function bluetoothid_help () {
   echo ""
-  echo "Usage: $(basename "$0") bluetoothid [hostid]"
+  echo "Usage: $(basename "$0") bluetoothid [number]"
   echo ""
-  echo "Displays Raspberry Pi's Bluetooth Host Number."
-  echo "Optionally displays Networkname and ID as recieved through pairing."
+  echo "Displays Raspberry Pi's Bluetooth Host ID and Number."
+  echo "Optionally displays Bluetooth ID individually."
   echo ""
   echo "Example:"
-  echo "  $(basename "$0") bluetoothid hostid"
+  echo "  $(basename "$0") bluetoothid"
   echo "      treehouses-9012"
+  echo "  $(basename "$0") bluetoothid number"
+  echo "      9012"
   echo ""
 }

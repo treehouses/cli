@@ -22,7 +22,7 @@ function help_default {
   echo "          [password] [hotspotPassword]"
   echo "   container <none|docker|balena>            enables (and start) the desired container"
   echo "   bluetooth <on|off>                        switches between bluetooth hotspot mode / regular bluetooth and starts the service"
-  echo "   bluetoothid [hostid]                      displays the 4 random digits attached to the bluetooth id"
+  echo "   bluetoothid [number]                      displays the 4 random digits attached to the bluetooth id"
   echo "   ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)"
   echo "   apchannel [channel]                       sets or prints the current ap channel"
   echo "   timezone <timezone>                       sets the timezone of the system"

@@ -1,5 +1,4 @@
 #!/bin/bash
-#print id code of bluetooth, subfunction prints hostname and bluetooth id
 
 function bluetoothid () {
   #check if bluetooth has an id

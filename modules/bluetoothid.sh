@@ -20,7 +20,8 @@ function bluetoothid () {
       echo "${bid}"
       ;;
     *)
-      echo "Argument not valid; leave blank or use \"hostid\""
+      echo "Argument not valid; leave blank or use \"number\""
+      exit 1
       ;;
   esac
 }
@@ -29,8 +30,8 @@ function bluetoothid_help () {
   echo ""
   echo "Usage: $(basename "$0") bluetoothid [number]"
   echo ""
-  echo "Displays Raspberry Pi's Bluetooth Host ID and Number."
-  echo "Optionally displays Bluetooth ID individually."
+  echo "Displays the bluetooth network name with the 4 random digits attached."
+  echo "Optionally displays Bluetooth ID individually with the use of argument [number]."
   echo ""
   echo "Example:"
   echo "  $(basename "$0") bluetoothid"

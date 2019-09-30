@@ -23,7 +23,7 @@ function tor {
   fi
 
   if [ "$1" = "list" ]; then
-    if [ "$#" > 0 ]; then
+    if [ "$#" > 1 ]; then
     echo "Error: please enter list command only"
 
     echo "external <=> local"
@@ -65,6 +65,10 @@ function tor {
     restart_service tor
     echo "Success: the port has been added"
   elif [ "$1" = "delete" ]; then
+    if [ "$#" -gt 2 ]; then
+      echo "Error: please enter 3 arguments or less"
+      exit 1
+    fi
     if [ -z "$2" ]; then
       echo "Error: no port entered"
       exit 1
@@ -93,6 +97,11 @@ function tor {
     restart_service tor
     echo "All ports have been deleted"
   elif [ "$1" = "stop" ]; then
+    if [ -n  ]; then
+	    echo "Error: please type argument stop only"
+	    exit 1
+    fi
+
     stop_service tor
     echo "Success: the tor service has been stopped"
   elif [ "$1" = "start" ]; then
@@ -172,6 +181,7 @@ function tor {
     if [ "$#"-gt 1 ] ; then
       echo "Error: please type in the list command only"
       exit 1
+    fi
     systemctl is-active tor
   else
     echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy', 'delete' and 'deleteall' options are supported."

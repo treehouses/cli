@@ -24,7 +24,7 @@ function tor {
 
   if [ "$1" = "list" ]; then
     if [ "$#" -gt 1 ]; then
-      echo "Error: please use list as argument only"
+      echo "Error: please use 'list' argument only"
       exit 1 
     fi
     echo "external <=> local"
@@ -89,9 +89,6 @@ function tor {
     restart_service tor
     echo "Port $2 has been deleted"
   elif [ "$1" = "deleteall" ]; then
-    if [ -z "$2" ]; then
-	echo "Error: please use deleteall as argument only"
-    fi
     if [ -n "$2" ]; then
       echo "Error: wrong synthax"
       exit 1
@@ -170,7 +167,7 @@ function tor {
       echo "OK."
     elif [ "$option" = "list" ]; then
       if [ "$#" -gt 1 ]; then
-	 echo "Error: please type in list argument only"
+	 echo "Error: please type in 'list' argument only"
 	 exit 1
       fi
       if [ -f "/etc/tor_report_channels.txt" ]; then
@@ -195,7 +192,7 @@ function tor {
     fi
   elif [ "$1" = "status" ]; then
     if [ "$#" -gt 1 ] ; then
-      echo "Error: please type in the status command only"
+      echo "Error: please type in the 'status' argument only"
       exit 1
     fi
     systemctl is-active tor

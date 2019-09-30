@@ -243,7 +243,8 @@ case $1 in
     temperature "$2"
     ;;
   speedtest)
-    speedtest
+    shift
+    speedtest "$@"
     ;;
   help)
     help "$2"

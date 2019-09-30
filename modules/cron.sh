@@ -40,7 +40,7 @@ function cron {
          esac
          cron_entry="$schedule root $cmd"
          echo "$cron_entry" >> $cron_job_file
-         echo "added '$cron_entry' "
+         echo "added '$cron_entry'"
          ;;
           
       "list")
@@ -49,7 +49,7 @@ function cron {
             id=1
             while read -r entry; do
                 echo "$id - $entry"
-                id=$(($id+1))
+                id=$((id + 1))
             done < $cron_job_file
          else
              echo "No cron job found"
@@ -58,8 +58,8 @@ function cron {
       "delete")
           if [ -f $cron_job_file ]; then
               id=$2
-              max_id=$"`cat $cron_job_file |wc -l`"
-              if [ $id -eq 0 -o $id -gt $max_id ]; then
+              max_id="$(wc -l < $cron_job_file)"
+              if [ $id -eq 0 ] || [ $id -gt $max_id ]; then
                   echo "Invalid ID"
                   exit 1
               fi
@@ -70,7 +70,8 @@ function cron {
           fi
           ;;
       "deleteall")
-         echo "" > $cron_job_file 
+          rm -f $cron_job_file
+         echo "All cron jobs deleted"
          ;;
       *)
          cron_help
@@ -80,20 +81,30 @@ function cron {
 }
 
 function cron_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") cron <add|list|delete|deleteall>"
-  echo ""
-  echo "Users can execute scheduled commands, such as adding a monthly task, deleting tasks, listing all the scheduled tasks and deleting all the scheduled tasks"
-  echo ""
+  echo
+  echo "Adds, lists, or deletes cron jobs"
+  echo 
+  echo "Options:"
+  echo "  add <hourly|daily|weekly|monthly|yearly> <command>, add a cron job"
+  echo "  list, list all cron jobs." 
+  echo "  delete <ID>, delete a cron job" 
+  echo "  deleteall, delete all cron jobs" 
+  echo
   echo "Example:"
-  echo "  $(basename "$0") cron add yearly "echo 'happy birthday, Mike!'""
-  echo "  This will schedule a yearly task on the designated date,(e.g March 10th),it will echo 'happy birthday, Mike!'"  
-  echo ""
-  echo "  $(basename "$0") cron list"
-  echo "      This will list all commands user has scheduled."
-  echo "  $(basename "$0") cron delete 2"
-  echo "      This will delete 2nd commands user has scheduled."
-  echo "  $(basename "$0") cron deleteall"
-  echo "      This will delete all commands user has scheduled."
-  echo ""
+  echo "  # $(basename "$0") cron add yearly \"/bin/df -h >> /var/log/disk.log\""
+  echo "  added '30 0 1 1 * root /bin/df -h >> /var/log/disk.log'"
+
+  echo 
+  echo "  # $(basename "$0") cron list"
+  echo "  ID --- CRON JOB"
+  echo "  1 - 30 0 1 1 * root /bin/df -h >> /var/log/disk.log"
+  echo
+  echo "  # $(basename "$0") cron delete 1"
+  echo "  Cron job ID 1 deleted."
+  echo
+  echo "  # $(basename "$0") cron deleteall"
+  echo "  All cron jobs deleted"
+  echo 
 }

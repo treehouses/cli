@@ -12,7 +12,7 @@ function tor {
 
   if [ "$1" = 'add' ] || [ "$1" = 'delete' ]; then
     if [ "$#" -gt 3 ] ; then
-      echo "Error: please enter less then 4 arguments"
+      echo "Error: please enter 3 arguments or less"
       exit 1
     fi
   fi	  
@@ -23,6 +23,9 @@ function tor {
   fi
 
   if [ "$1" = "list" ]; then
+    if [ "$#" > 0 ]; then
+    echo "Error: please enter list command only"
+
     echo "external <=> local"
     grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g'
   elif [ "$1" = "add" ]; then
@@ -112,6 +115,9 @@ function tor {
 
     echo "Success: the tor service has been destroyed"
   elif [ "$1" = "notice" ]; then
+    if [ $# -gt 3 ]; then 
+      echo "Error: please only input only 3 arugments or less" 
+    fi  
     option="$2"
     if [ "$option" = "on" ]; then
       cp "$TEMPLATES/network/tor_report.sh" /etc/tor_report.sh
@@ -163,6 +169,9 @@ function tor {
       echo "Error: only 'on' and 'off' options are supported."
     fi
   elif [ "$1" = "status" ]; then
+    if [ "$#"-gt 1 ] ; then
+      echo "Error: please type in the list command only"
+      exit 1
     systemctl is-active tor
   else
     echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy', 'delete' and 'deleteall' options are supported."

@@ -194,7 +194,7 @@ function tor {
       echo "Error: only 'add', 'delete', 'on' and 'off' options are supported."
     fi
   elif [ "$1" = "status" ]; then
-    if [ "$#" -gt 2 ] ; then
+    if [ "$#" -gt 1 ] ; then
       echo "Error: please type in the status command only"
       exit 1
     fi

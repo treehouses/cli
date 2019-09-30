@@ -170,7 +170,7 @@ function tor {
       sed -i "/^$value/d" /etc/tor_report_channels.txt
       echo "OK."
     elif [ "$option" = "list" ]; then
-      if [ "$#" -gt 1 ]; then
+      if [ -n "$3" ]; then
 	 echo "Error: please type in 'list' argument only"
 	 exit 1
       fi

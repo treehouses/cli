@@ -11,8 +11,8 @@ function tor {
   fi
 
   if [ "$1" = 'add' ] || [ "$1" = 'delete' ]; then
-    if [ "$#" -gt 3 ] ; then
-      echo "Error: please enter 3 arguments or less"
+    if [ "$#" -gt 2 ] ; then
+      echo "Error: please enter one port number"
       exit 1
     fi
   fi	  
@@ -98,7 +98,7 @@ function tor {
     restart_service tor
     echo "All ports have been deleted"
   elif [ "$1" = "stop" ]; then
-    if [ -z $2"" ]; then
+    if [ -n "$2" ]; then
 	    echo "Error: please type argument stop only"
 	    exit 1
     fi
@@ -106,6 +106,10 @@ function tor {
     stop_service tor
     echo "Success: the tor service has been stopped"
   elif [ "$1" = "start" ]; then
+    if [ -n "$2" ]; then
+      echo "Error: please use 'start' as argument only"
+      exit 1
+    fi
     if [ ! -d "/var/lib/tor/treehouses" ]; then
       mkdir "/var/lib/tor/treehouses"
       chown debian-tor:debian-tor /var/lib/tor/treehouses

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-
+function speedtest {
+  /usr/bin/speedtest "$@"
+}
 function speedtest_help {
 
   echo ""

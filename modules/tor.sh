@@ -23,9 +23,10 @@ function tor {
   fi
 
   if [ "$1" = "list" ]; then
-    if [ "$#" > 1 ]; then
-    echo "Error: please enter list command only"
-
+    if [ "$#" -gt 1 ]; then
+      echo "Error: please use list as argument only"
+      exit 1 
+    fi
     echo "external <=> local"
     grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g'
   elif [ "$1" = "add" ]; then
@@ -42,7 +43,7 @@ function tor {
     fi
 
     if  ! [[ "$port" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
-      echo "Error: is not a port"
+      echo "Error: $port is not a port"
       exit 1
     fi
 
@@ -66,7 +67,7 @@ function tor {
     echo "Success: the port has been added"
   elif [ "$1" = "delete" ]; then
     if [ "$#" -gt 2 ]; then
-      echo "Error: please enter 3 arguments or less"
+      echo "Error: please type in one port number"
       exit 1
     fi
     if [ -z "$2" ]; then
@@ -88,6 +89,9 @@ function tor {
     restart_service tor
     echo "Port $2 has been deleted"
   elif [ "$1" = "deleteall" ]; then
+    if [ -z "$2" ]; then
+	echo "Error: please use deleteall as argument only"
+    fi
     if [ -n "$2" ]; then
       echo "Error: wrong synthax"
       exit 1
@@ -97,7 +101,7 @@ function tor {
     restart_service tor
     echo "All ports have been deleted"
   elif [ "$1" = "stop" ]; then
-    if [ -n  ]; then
+    if [ -z $2"" ]; then
 	    echo "Error: please type argument stop only"
 	    exit 1
     fi
@@ -118,17 +122,21 @@ function tor {
     start_service tor
     echo "Success: the tor service has been started"
   elif [ "$1" = "destroy" ]; then
+    if [ -z "$2" ]; then
+      echo "Error: please use destroy as argument only"
+    fi
     stop_service tor
     echo > /etc/tor/torrc
     rm -rf /var/lib/tor/treehouses
 
     echo "Success: the tor service has been destroyed"
   elif [ "$1" = "notice" ]; then
-    if [ $# -gt 3 ]; then 
-      echo "Error: please only input only 3 arugments or less" 
-    fi  
     option="$2"
     if [ "$option" = "on" ]; then
+      if [ -z "$3" ]; then
+        echo "Error: please use notice on only" 
+	exit 1
+      fi
       cp "$TEMPLATES/network/tor_report.sh" /etc/tor_report.sh
       if [ ! -f "/etc/cron.d/tor_report" ]; then
         echo "*/1 * * * * root if [ -d \"/var/lib/tor/treehouses\" ]; then /etc/tor_report.sh; fi" > /etc/cron.d/tor_report
@@ -138,6 +146,10 @@ function tor {
       fi
       echo "OK."
     elif [ "$option" = "add" ]; then
+      if [ -z "$4" ]; then
+        echo "Error: please use notice add only"
+	exit 1
+      fi
       value="$3"
       if [ -z "$value" ]; then
         echo "Error: You must specify a channel URL"
@@ -157,6 +169,10 @@ function tor {
       sed -i "/^$value/d" /etc/tor_report_channels.txt
       echo "OK."
     elif [ "$option" = "list" ]; then
+      if [ "$#" -gt 1 ]; then
+	 echo "Error: please type in list argument only"
+	 exit 1
+      fi
       if [ -f "/etc/tor_report_channels.txt" ]; then
         cat /etc/tor_report_channels.txt
       else
@@ -175,11 +191,11 @@ function tor {
       fi
       echo "Status: $status"
     else
-      echo "Error: only 'on' and 'off' options are supported."
+      echo "Error: only 'add', 'delete', 'on' and 'off' options are supported."
     fi
   elif [ "$1" = "status" ]; then
-    if [ "$#"-gt 1 ] ; then
-      echo "Error: please type in the list command only"
+    if [ "$#" -gt 2 ] ; then
+      echo "Error: please type in the status command only"
       exit 1
     fi
     systemctl is-active tor

@@ -13,7 +13,6 @@ function cron {
              cron_help
              exit 1
          fi
-         # create cron job entry
          # minutes hours days months weeks
          # e.g hourly "30 * * * * root /home/pi/backup.sh >> /home/pi/backup.log"
          schedule=""

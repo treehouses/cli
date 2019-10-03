@@ -10,6 +10,13 @@ function tor {
     exit 1
   fi
 
+  if [ "$1" = 'list' ] || [ "$1" = 'start' ] || [ "$1" = 'stop' ] || [ "$1" = 'destroy' ] || [ "$1" = 'deleteall' ]; then
+    if [ "$#" -gt 1 ] ; then
+      echo "Error: too much arguments"
+      exit 1
+    fi
+  fi
+
   if [ "$1" = 'add' ] || [ "$1" = 'delete' ]; then
     if [ "$#" -gt 2 ] ; then
       echo "Error: please enter one port number"
@@ -23,10 +30,6 @@ function tor {
   fi
 
   if [ "$1" = "list" ]; then
-    if [ "$#" -gt 1 ]; then
-      echo "Error: please use 'list' argument only"
-      exit 1 
-    fi
     echo "external <=> local"
     grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g'
   elif [ "$1" = "add" ]; then
@@ -66,10 +69,6 @@ function tor {
     restart_service tor
     echo "Success: the port has been added"
   elif [ "$1" = "delete" ]; then
-    if [ "$#" -gt 2 ]; then
-      echo "Error: please type in one port number"
-      exit 1
-    fi
     if [ -z "$2" ]; then
       echo "Error: no port entered"
       exit 1
@@ -89,27 +88,13 @@ function tor {
     restart_service tor
     echo "Port $2 has been deleted"
   elif [ "$1" = "deleteall" ]; then
-    if [ -n "$2" ]; then
-      echo "Error: wrong synthax"
-      exit 1
-    fi
-
     sed -i "/^HiddenServicePort /d" /etc/tor/torrc
     restart_service tor
     echo "All ports have been deleted"
   elif [ "$1" = "stop" ]; then
-    if [ -n "$2" ]; then
-	    echo "Error: please type argument stop only"
-	    exit 1
-    fi
-
     stop_service tor
     echo "Success: the tor service has been stopped"
   elif [ "$1" = "start" ]; then
-    if [ -n "$2" ]; then
-      echo "Error: please use 'start' as argument only"
-      exit 1
-    fi
     if [ ! -d "/var/lib/tor/treehouses" ]; then
       mkdir "/var/lib/tor/treehouses"
       chown debian-tor:debian-tor /var/lib/tor/treehouses
@@ -123,9 +108,6 @@ function tor {
     start_service tor
     echo "Success: the tor service has been started"
   elif [ "$1" = "destroy" ]; then
-    if [ -z "$2" ]; then
-      echo "Error: please use destroy as argument only"
-    fi
     stop_service tor
     echo > /etc/tor/torrc
     rm -rf /var/lib/tor/treehouses

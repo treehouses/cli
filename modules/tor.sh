@@ -10,7 +10,7 @@ function tor {
     exit 1
   fi
 
-  if [ "$1" = 'list' ] || [ "$1" = 'start' ] || [ "$1" = 'stop' ] || [ "$1" = 'destroy' ] || [ "$1" = 'deleteall' ]; then
+  if [ "$1" = 'list' ] || [ "$1" = 'start' ] || [ "$1" = 'stop' ] || [ "$1" = 'destroy' ] || [ "$1" = 'status' ] || [ "$1" = 'deleteall' ]; then
     if [ "$#" -gt 1 ] ; then
       echo "Error: too much arguments"
       exit 1
@@ -177,10 +177,6 @@ function tor {
       echo "Error: only 'add', 'delete', 'on' and 'off' options are supported."
     fi
   elif [ "$1" = "status" ]; then
-    if [ "$#" -gt 1 ] ; then
-      echo "Error: please type in the 'status' argument only"
-      exit 1
-    fi
     systemctl is-active tor
   else
     echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy', 'delete' and 'deleteall' options are supported."

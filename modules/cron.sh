@@ -1,109 +1,75 @@
 #!/bin/bash
 function cron {
+  #option- add, list, edit, delete
   option="$1"
-  #option- add, list, delete, deleteall
-  cron_job_file=/etc/cron.d/treehouses
+  cron_job_file=/tmp/treehouse_cron_job
   case "$option" in
       "add")
-         freq="$2"
-         # freq- hourly daily weekly monthly yearly
-         cmd="$3"
-         #validate cmd
-         if [ -z "$cmd" ]; then
-             cron_help
-             exit 1
-         fi
-         # minutes hours days months weeks
-         # e.g hourly "30 * * * * root /home/pi/backup.sh >> /home/pi/backup.log"
-         schedule=""
-         case "$freq" in
-             "hourly")
-                 schedule="30 * * * *"
-                 ;;
-             "daily")
-                 schedule="30 0 * * *"
-                 ;;
-             "monthly")
-                 schedule="30 0 1 * *"
-                 ;;
-             "weekly")
-                 schedule="30 0 * * 6"
-                 ;;
-             "yearly")
-                 schedule="30 0 1 1 *"
-                 ;;
-             *)
-                 cron_help
-                 exit 1
-                 ;;
-         esac
-         cron_entry="$schedule root $cmd"
-         echo "$cron_entry" >> $cron_job_file
-         echo "added '$cron_entry'"
-         ;;
-          
-      "list")
-         if [ -f $cron_job_file ]; then
-            echo "ID --- CRON JOB"
-            id=1
-            while read -r entry; do
-                echo "$id - $entry"
-                id=$((id + 1))
-            done < $cron_job_file
-         else
-             echo "No cron job found"
-         fi
-         ;;
-      "delete")
-          if [ -f $cron_job_file ]; then
-              id=$2
-              max_id="$(wc -l < $cron_job_file)"
-              if [ $id -eq 0 ] || [ $id -gt $max_id ]; then
-                  echo "Invalid ID"
-                  exit 1
-              fi
-              sed -i "$id d" $cron_job_file
-              echo "Cron job ID $id deleted."
-          else
-              echo "No cron job found"
+          # freq- hourly daily weekly monthly yearly
+          freq="$2"
+          # validate freq
+          if [ "$freq" != "hourly" ] && [ "$freq" != "daily" ] \
+              && [ "$freq" != "weekly" ] && [ "$freq" != "yearly" ] \
+              && [ "$freq" != "monthly" ]; then
+              cron_help
+              exit 1
           fi
-          ;;
-      "deleteall")
+          cmd="$3"
+          # validate cmd
+          if [ -z "$cmd" ]; then
+              crontab_help
+              exit 1
+          fi
+          if crontab -l &>/dev/null; then
+              crontab -l > $cron_job_file
+          fi
+          cron_entry="@$freq $cmd"
+          echo "$cron_entry" >> $cron_job_file
+          crontab $cron_job_file
           rm -f $cron_job_file
-         echo "All cron jobs deleted"
-         ;;
+          echo "added '$cron_entry'"
+          ;;
+      "list")
+          crontab -l
+          ;;
+      "delete")
+          crontab -r
+          echo "Cron job deleted."
+          ;;
+      "edit")
+          crontab -e
+          ;;
       *)
-         cron_help
-         exit 1
-         ;;
+          cron_help
+          exit 1
+          ;;
   esac
 }
 
 function cron_help {
   echo
-  echo "Usage: $(basename "$0") cron <add|list|delete|deleteall>"
+  echo "Usage: $(basename "$0") cron <add|list|edit|delete>"
   echo
-  echo "Adds, lists, or deletes cron jobs"
-  echo 
+  echo "Adds, lists, edits, or deletes cron jobs"
+  echo
   echo "Options:"
   echo "  add <hourly|daily|weekly|monthly|yearly> <command>, add a cron job"
-  echo "  list, list all cron jobs." 
-  echo "  delete <ID>, delete a cron job" 
-  echo "  deleteall, delete all cron jobs" 
+  echo "  list, list cron jobs."
+  echo "  edit, edit cron jobs"
+  echo "  delete, delete cron jobs"
   echo
   echo "Example:"
   echo "  # $(basename "$0") cron add yearly \"/bin/df -h >> /var/log/disk.log\""
-  echo "  added '30 0 1 1 * root /bin/df -h >> /var/log/disk.log'"
-
-  echo 
+  echo "  added '@yearly /bin/df -h >> /var/log/disk.log'"
+  echo
   echo "  # $(basename "$0") cron list"
-  echo "  ID --- CRON JOB"
-  echo "  1 - 30 0 1 1 * root /bin/df -h >> /var/log/disk.log"
+  echo "  @yearly /bin/df -h >> /var/log/disk.log"
   echo
-  echo "  # $(basename "$0") cron delete 1"
-  echo "  Cron job ID 1 deleted."
+  echo "  # $(basename "$0") cron edit"
+  echo "  crontab: installing new crontab"
   echo
-  echo "  # $(basename "$0") cron deleteall"
-  echo "  All cron jobs deleted"
-  echo 
+  echo "  # $(basename "$0") cron delete"
+  echo "  Cron job deleted."
+  echo
+  echo
 }

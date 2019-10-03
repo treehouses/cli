@@ -32,16 +32,22 @@ function clone {
 
     fi
 
-    if [ -f "/etc/reboot-needed" ]; then
-        echo "Cloning completed.";
-        echo "A reboot is needed. Would you like to reboot now?"
-           select yn in "Yes" "No"; do
-              case $yn in
-                 Yes ) echo "Rebooting"; sleep 2 ; reboot; break;;
-                 No ) exit;;
-              esac
-           done
-    fi
+    echo "A reboot is needed to re-enable write permissions to OS. Reboot now?"
+    Selection=("Yes" "No")
+    select opt in "${Selection[@]}"
+      do
+        case $opt in
+        "Yes")
+          echo "Rebooting" && sleep 2 && reboot
+          ;;
+        "No")
+          break
+          ;;
+        *)
+          echo "Enter \"1\" or \"2\""
+          ;;
+        esac
+      done
 }
 
 function clone_help {

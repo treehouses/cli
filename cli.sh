@@ -48,6 +48,7 @@ source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
+source "$SCRIPTFOLDER/modules/cron.sh"
 
 
 
@@ -245,6 +246,11 @@ case $1 in
   temperature)
     checkrpi
     temperature "$2"
+    ;;
+  cron)
+    checkroot
+    shift
+    cron "$1" "$2" "$3"
     ;;
   help)
     help "$2"

@@ -29,11 +29,13 @@ function tor {
     if [ "$2" = 'on' ] || [ "$2" = 'off' ] || [ "$2" = 'now' ]; then 
       echo 'Error: please enter too many arguments '
       exit 1
+  # notice add|delete
     elif [ "$2" = 'add' ] || [ "$2" = 'delete' ]; then
-      if [ -n "$3" ] ; then
+      if [ ! -n "$3" ] ; then
         echo 'Error: please enter url for add or delete '
 	exit 1
       fi
+    fi
   fi
 
   if [ -z "$1" ]; then

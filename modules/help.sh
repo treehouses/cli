@@ -56,6 +56,7 @@ function help_default {
   echo "            [demo-always-on]"
   echo "   memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory"
   echo "   temperature [celsius]                     displays raspberry pi's CPU temperature"
+  echo "   speedtest                                 tests internet download and upload speed"
   echo
 }
 

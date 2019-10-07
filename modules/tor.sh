@@ -11,7 +11,7 @@ function tor {
   fi
 
   if [ "$1" = 'list' ] || [ "$1" = 'start' ] || [ "$1" = 'stop' ] || [ "$1" = 'destroy' ] || [ "$1" = 'status' ] || [ "$1" = 'deleteall' ]; then
-    if [ "$#" -gt 1 ] ; then
+    if [ "$#" -gt 1 ]; then
       echo "Error: too much arguments"
       exit 1
     fi
@@ -25,11 +25,15 @@ function tor {
   fi	  
 
   # notice on|off|now|list
-  # notice add|delete|
-  if [ "$1" = 'notice'] ; then
-    if [ "$2" = 'on' ] || [ "$2" = 'off' ] || [ "2" = 'now' ]; then 
-      echo 'Error: please enter less then '
-    fi
+  if [ "$1" = 'notice' ]; then
+    if [ "$2" = 'on' ] || [ "$2" = 'off' ] || [ "$2" = 'now' ]; then 
+      echo 'Error: please enter too many arguments '
+      exit 1
+    elif [ "$2" = 'add' ] || [ "$2" = 'delete' ]; then
+      if [ -n "$3" ] ; then
+        echo 'Error: please enter url for add or delete '
+	exit 1
+      fi
   fi
 
   if [ -z "$1" ]; then

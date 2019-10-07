@@ -1,20 +1,35 @@
 #!/bin/bash
 
-function memory {
+function memory_total() {
+  option=$1
+  case $option in 
+    '-g')
+      t=$(free -g | grep -i Mem | awk '{printf $2}')
+      ;;
+    '-m')
+      t=$(free -m | grep -i Mem | awk '{printf $2}')
+      ;;
+    *)
+      t=$(free | grep -i Mem | awk '{printf $2}')
+      ;;
+  esac
+}
+
+function memory() {
   if [ "$1" == "total" ] ; then
-    memory_total
+    memory_total $2
     echo "$((t))";
     exit 0
   fi
 
   if [ "$1" == "used" ] ; then
-    memory_used
+    memory_used $2
     echo "$((ubc))";
     exit 0
   fi
 
   if [ "$1" == "free" ] ; then
-    memory_free
+    memory_free $2
     echo "$((f))";
     exit 0
   fi
@@ -22,18 +37,28 @@ function memory {
   memory_total
   memory_used
   memory_free
-  
   echo "Your rpi has $((t)) bytes of total memory with $((ubc)) bytes used and $((f)) bytes avalaible"
 }
 
-function memory_total {
-  t=$(free | grep -i Mem | awk '{printf $2}')
-}
-
 function memory_used {
-  u=$(free | grep -i Mem | awk '{printf $3}')
-  bc=$(free | grep -i Mem | awk '{printf $6}')
-  ubc=$((u+bc))
+  option=$1
+  case $option in 
+    '-g')
+      u=$(free -g | grep -i Mem | awk '{printf $3}')
+      bc=$(free -g | grep -i Mem | awk '{printf $6}')
+      ubc=$((u+bc))
+      ;;
+    '-m')
+      u=$(free -m | grep -i Mem | awk '{printf $3}')
+      bc=$(free -m | grep -i Mem | awk '{printf $6}')
+      ubc=$((u+bc))
+      ;;
+    *)
+      u=$(free | grep -i Mem | awk '{printf $3}')
+      bc=$(free | grep -i Mem | awk '{printf $6}')
+      ubc=$((u+bc))
+      ;;
+  esac
 }
 
 function memory_free {

@@ -64,15 +64,16 @@ function memory_used {
 function memory_free {
   option=$1 
   case $option in
-  '-g')
-    f=$(free -g | grep -i Mem | awk '{printf $4}')
+    '-g')
+      f=$(free -g | grep -i Mem | awk '{printf $4}')
+      ;;
+    '-m')
+      f=$(free -m | grep -i Mem | awk '{printf $4}')
+      ;;
+     *)
+      f=$(free -m | grep -i Mem | awk '{printf $4}')
     ;;
-  '-m')
-    f=$(free -m | grep -i Mem | awk '{printf $4}')
-    ;;
-  *)
-    f=$(free -m | grep -i Mem | awk '{printf $4}')
-    ;;
+  esac
 }
 
 function memory_help {

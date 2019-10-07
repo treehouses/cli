@@ -62,14 +62,24 @@ function memory_used {
 }
 
 function memory_free {
-  f=$(free | grep -i Mem | awk '{printf $4}')
+  option=$1 
+  case $option in
+  '-g')
+    f=$(free -g | grep -i Mem | awk '{printf $4}')
+    ;;
+  '-m')
+    f=$(free -m | grep -i Mem | awk '{printf $4}')
+    ;;
+  *)
+    f=$(free -m | grep -i Mem | awk '{printf $4}')
+    ;;
 }
 
 function memory_help {
   echo ""
-  echo "Usage: $(basename "$0") memory [total|used|free]"
+  echo "Usage: $(basename "$0") memory [total|used|free] [-g|-m]"
   echo ""
-  echo "Displays the various values for total, used, and free RAM memory."
+  echo "Displays the various values for total, used, and free RAM memory. '-g' option will give a gigabyte output, and '-m' option will give a megabyte output"
   echo ""
   echo "Example:"
   echo "  $(basename "$0") memory"

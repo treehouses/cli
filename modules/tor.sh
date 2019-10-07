@@ -24,6 +24,14 @@ function tor {
     fi
   fi	  
 
+  # notice on|off|now|list
+  # notice add|delete|
+  if [ "$1" = 'notice'] ; then
+    if [ "$2" = 'on' ] || [ "$2" = 'off' ] || [ "2" = 'now' ]; then 
+      echo 'Error: please enter less then '
+    fi
+  fi
+
   if [ -z "$1" ]; then
     cat "/var/lib/tor/treehouses/hostname"
     exit 0

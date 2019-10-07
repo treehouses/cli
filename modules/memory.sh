@@ -16,6 +16,13 @@ function memory_total() {
 }
 
 function memory() {
+  if [ -n "$2" ]; then 
+    if [ ! "$2" == '-g' ] && [ ! "$2" == '-m' ]; then 
+      echo "Error: only '-g' or '-m' argument accepted "
+      exit 1
+    fi
+  fi
+
   if [ "$1" == "total" ] ; then
     memory_total $2
     echo "$((t))";
@@ -62,25 +69,14 @@ function memory_used {
 }
 
 function memory_free {
-  option=$1 
-  case $option in
-    '-g')
-      f=$(free -g | grep -i Mem | awk '{printf $4}')
-      ;;
-    '-m')
-      f=$(free -m | grep -i Mem | awk '{printf $4}')
-      ;;
-     *)
-      f=$(free -m | grep -i Mem | awk '{printf $4}')
-    ;;
-  esac
+  f=$(free | grep -i Mem | awk '{printf $4}')
 }
 
 function memory_help {
   echo ""
-  echo "Usage: $(basename "$0") memory [total|used|free] [-g|-m]"
+  echo "Usage: $(basename "$0") memory [total|used|free]"
   echo ""
-  echo "Displays the various values for total, used, and free RAM memory. '-g' option will give a gigabyte output, and '-m' option will give a megabyte output"
+  echo "Displays the various values for total, used, and free RAM memory."
   echo ""
   echo "Example:"
   echo "  $(basename "$0") memory"

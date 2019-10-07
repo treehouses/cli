@@ -4,7 +4,8 @@ function memory_total() {
   option=$1
   case $option in 
     '-g')
-      t=$(free -g | grep -i Mem | awk '{printf $2}')
+      t_M=$(free -m | grep -i Mem | awk '{printf $2}')
+      t=$(echo "scale=2;$t_M/1024" | bc)
       ;;
     '-m')
       t=$(free -m | grep -i Mem | awk '{printf $2}')
@@ -25,26 +26,36 @@ function memory() {
 
   if [ "$1" == "total" ] ; then
     memory_total $2
-    echo "$((t))";
+    echo "$t";
     exit 0
   fi
 
   if [ "$1" == "used" ] ; then
     memory_used $2
-    echo "$((ubc))";
+    echo "$ubc";
     exit 0
   fi
 
   if [ "$1" == "free" ] ; then
     memory_free $2
-    echo "$((f))";
+    echo "$f";
     exit 0
   fi
 
-  memory_total
+  memory_total 
   memory_used
   memory_free
-  echo "Your rpi has $((t)) bytes of total memory with $((ubc)) bytes used and $((f)) bytes avalaible"
+  option=$1
+  case $option in
+    '-g')
+      echo "Your rpi has $t gigabytes of total memory with $ubc gigabytes used and $f gigabytes avalaible"
+      ;;
+    '-m')
+      echo "Your rpi has $t megabytes of total memory with $ubc megabytes used and $f megabytes avalaible"
+      ;;
+    *)
+      echo "Your rpi has $t megabytes of total memory with $ubc megabytes used and $f megabytes avalaible"
+  esac
 }
 
 function memory_used {
@@ -74,7 +85,7 @@ function memory_free {
 
 function memory_help {
   echo ""
-  echo "Usage: $(basename "$0") memory [total|used|free]"
+  echo "Usage: $(basename "$0") memory [total|used|free] "
   echo ""
   echo "Displays the various values for total, used, and free RAM memory."
   echo ""

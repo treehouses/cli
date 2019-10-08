@@ -5,10 +5,10 @@
 function cron {
 
   #files
-  cronjobs=/tmp/cronjoblist.sh
-  makecronlist=$(touch $cronjobs)
-  logfile=/var/log/uptime.log
-  makelogfile=$(touch $logfile)
+  cronjobs=./cronjoblist.sh
+  makecronlist=$(sudo touch $cronjobs)
+  logfile=./uptime.log
+  makelogfile=$(sudo touch $logfile)
 
   #Make files if not found
   if [ ! -f ${logfile} ]; then
@@ -16,36 +16,29 @@ function cron {
   fi
   if [ ! -f ${cronjobs} ]; then
     ${makecronlist}
+    echo "#!/bin/bash/" >> ${cronjobs}
   fi
 
   #commands
   cronlist=$(crontab -l)
   cronjoblist=$(cat ${cronjobs})
-  grepreboot=$(${cronjoblist} | grep reboot)
-  greptor=$(${cronjoblist} | grep tor)
-  greptimelog=$(${cronjoblist} | grep uptime.log)
+  grepreboot=$(${cronlist} | grep reboot)
+  greptor=$(${cronlist} | grep tor)
+  greptimelog=$(${cronlist} | grep uptime.log)
 
   #cron specific commands
-  start0Wcron=$((crontab -l ; echo "@daily reboot now") 2>&1 | sort | uniq | crontab -)
-  stop0Wcron=$((crontab -l ; echo "@daily reboot now") 2>&1 | grep -v reboot | sort | uniq | crontab -)
-  starttorcron=$((crontab -l ; echo "0 */72 * * * treehouses tor notice now") 2>&1 | sort | uniq | crontab -)
-  stoptorcron=$((crontab -l ; echo "0 */72 * * * treehouses tor notice now") 2>&1 | grep -v tor | sort | uniq | crontab -)
-  starttimestamp=$((crontab -l ; echo "15 * * * * date >> /var/log/uptime.log") 2>&1 | sort | uniq | crontab -)
-  stoptimestamp=$((crontab -l ; echo "15 * * * * date >> /var/log/uptime.log") 2>&1 | grep -v uptime.log |  sort | uniq | crontab -)
-
-#  #Make files if not found
-#  if [ ! -f ${logfile} ]; then
-#    ${makelogfile}
-#  fi
-#  if [ ! -f ${cronjobs} ]; then
-#    ${makecronlist}
-#  fi
+  start0Wcron=$(echo "@daily reboot now" >> cronjoblist.sh)
+  stop0Wcron=$(sed -i -e '/reboot/d' cronjoblist.sh)
+  starttorcron=$(echo "0 */72 * * * treehouses tor notice now" >> cronjoblist.sh)
+  stoptorcron=$(sed -i -e '/tor/d' cronjoblist.sh)
+  starttimestamp=$(echo "15 * * * * date >> /var/log/uptime.log" >> cronjoblist.sh)
+  stoptimestamp=$(sed -i -e '/date/d' cronjoblist.sh)
 
   options="$1"
   case "$options" in
     "") #lists current cron tasks
         echo "List of cron jobs:"
-      if [ ${cronjoblist}==null ]; then
+      if [ $(crontab -l | wc -c) -eq 0 ]; then
         echo "The system has no cron jobs" ; echo
       else
         echo ${cronjoblist} ; echo
@@ -75,10 +68,10 @@ function cron {
     "timestamp") #adds/removes timestamp logging every 15 minutes
       if [ ${greptimelog}==null ]; then
         ${timestamp}
-        echo "\"uptime.log\" created in /var/log/ and will timestamp every 15 minutes" ; echo
+        echo "/var/log/uptime.log will have a timestamp every 15 minutes" ; echo
       elif [ ${greptimelog} ]; then
         ${untimestamp}
-        echo "cron timestamping stopped and \"uptime.log\" removed from /var/log/" ; echo
+        echo "cron timestamping stopped" ; echo
       fi
       ;;
 
@@ -91,12 +84,10 @@ function cron {
 
 function cron_help {
   echo
-  echo "Usage: $(basename "$0") cron [0W|tor|timestamp]                   lists all active cron jobs [adds job to cron, or removes it if active]"
-  echo "  Options:"
+  echo "Usage: $(basename "$0") cron [0W|tor|timestamp]                   lists all active cron jobs [adds job to cron, or removes it i$  echo "  Options:"
   echo "    0W           Creates a daily reboot task; Needed for RPi Zero W"
   echo "    tor          Sends \"tor notice now\" every 72 hours"
   echo "    timestamp    Creates /var/log/uptime.log, logging every 15 minutes"
-  echo
   echo
   echo "Examples:"
   echo "$(basename "$0") cron"

@@ -48,7 +48,7 @@ source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
-
+source "$SCRIPTFOLDER/modules/discover.sh"
 
 
 case $1 in
@@ -87,6 +87,10 @@ case $1 in
     checkrpi
     checkroot
     wifi "$2" "$3"
+    ;;
+  discover)
+    detectrpi
+    discover $2
     ;;
   staticwifi)
     checkrpi

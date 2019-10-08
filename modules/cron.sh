@@ -4,6 +4,7 @@
 
 function cron {
   logfile=/var/log/uptime.log
+  cronjoblist=$(crontab -l)
   options="$1"
   if [ ! -f ${logfile} ]; then
     touch ${logfile}
@@ -11,18 +12,20 @@ function cron {
   case "$options" in
     "") #lists current cron tasks
         echo "List of cron jobs:"
-      if [ ! ${cron-task-list-is-empty} ]; then
+      if [ ${cronjoblist}==null ]; then
         echo "The system has no cron jobs" ; echo
       else
+        ${cronjoblist}
       fi
+      ;;
 
     "0W") #adds a daily reboot to system - RPi 0's will benefit from this
       if [ ${no-timestamp-crontab} ]; then
         $("(crontab -l ; echo \"@daily reboot now\") 2>&1 | grep -v \"no crontab\" | sort | uniq | crontab -")
-          echo "  \"Daily Reboot\" cron job established" ; echo
+        echo "\"Daily Reboot\" cron job established" ; echo
       elif [ ${timestamp-crontab-exists} ]; then
         $("(crontab -l ; echo \"@daily reboot now\") 2>&1 | grep -v \"no crontab\" | grep -v reboot |  sort | uniq | crontab -")
-        echo "ron timestamping stopped and \"uptimelog.txt\" removed from /tmp/" ; echo
+        echo "\"Daily Reboot\" cron job removed" ; echo
       fi
       echo "\"uptimelog.txt\" created in /tmp/ and will timestamp every 15 minutes" ; echo
       echo "Daily reboot added to system"

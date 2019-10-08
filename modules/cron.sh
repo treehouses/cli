@@ -5,6 +5,9 @@
 function cron {
   logfile=/var/log/uptime.log
   cronjoblist=$(crontab -l)
+  grepreboot=$(grep reboot)
+  greptor=$(grep tor)
+  greptimelog=$(grep uptime.log)
   options="$1"
   if [ ! -f ${logfile} ]; then
     touch ${logfile}
@@ -15,46 +18,38 @@ function cron {
       if [ ${cronjoblist}==null ]; then
         echo "The system has no cron jobs" ; echo
       else
-        ${cronjoblist}
+        ${cronjoblist} ; echo
       fi
       ;;
 
-    "0W") #adds a daily reboot to system - RPi 0's will benefit from this
-      if [ ${no-timestamp-crontab} ]; then
+    "0W") #adds/removes a daily reboot to system - RPi 0's will benefit from this
+      if [ ! ${grepreboot} ]; then
         $("(crontab -l ; echo \"@daily reboot now\") 2>&1 | grep -v \"no crontab\" | sort | uniq | crontab -")
         echo "\"Daily Reboot\" cron job established" ; echo
-      elif [ ${timestamp-crontab-exists} ]; then
+      elif [ ${grepreboot} ]; then
         $("(crontab -l ; echo \"@daily reboot now\") 2>&1 | grep -v \"no crontab\" | grep -v reboot |  sort | uniq | crontab -")
         echo "\"Daily Reboot\" cron job removed" ; echo
       fi
-      echo "\"uptimelog.txt\" created in /tmp/ and will timestamp every 15 minutes" ; echo
-      echo "Daily reboot added to system"
       ;;
 
-    "tor") #executes 'tor notice now' every 3 days
-      if [ ${no-timestamp-crontab} ]; then
+    "tor") #add/removes execution of 'tor notice now' every 3 days
+      if [ ! ${greptor} ]; then
         $("(crontab -l ; echo \"0 */72 * * * treehouses tor notice now\") 2>&1 | grep -v \"no crontab\" | sort | uniq | crontab -")
-        echo "\"uptimelog.txt\" created in /tmp/ and will timestamp every 15 minutes" ; echo
-      elif [ ${timestamp-crontab-exists} ]; then
+          echo "\"treehouses tor notice now\" will now execute every 72 hours"
+      elif [ ${greptor} ]; then
         $("(crontab -l ; echo \"0 */72 * * * treehouses tor notice now\") 2>&1 | grep -v \"no crontab\" | grep -v tor | sort | uniq | crontab -")
-        echo "cron timestamping stopped and \"uptimelog.txt\" removed from /tmp/" ; echo
+          echo "\"treehouses tor notice now\" will no longer execute every 72 hours"
       fi
-      echo "\"uptimelog.txt\" created in /tmp/ and will timestamp every 15 minutes" ; echo
-
-      echo "\"tor notice now\" will now execute every 3 days" ; echo
       ;;
 
-    "timestamp") #timestamp every 15 minutes logged
-      #Add 15 m timestamp to cron
-      if [ ${no-timestamp-crontab} ]; then
-        $("(crontab -l ; echo \"15 * * * * date >> /home/pi/log.txt\") 2>&1 | grep -v \"no crontab\" | sort | uniq | crontab -")
-        echo "\"uptimelog.txt\" created in /tmp/ and will timestamp every 15 minutes" ; echo
-      elif [ ${timestamp-crontab-exists} ]; then
-      #Remove 15 m timestamp from cron
-        $("(crontab -l ; echo \"15 * * * * date >> /home/pi/log.txt\") 2>&1 | grep -v \"no crontab\" | grep -v log.txt |  sort | uniq | crontab -")
-        echo "cron timestamping stopped and \"uptimelog.txt\" removed from /tmp/" ; echo
+    "timestamp") #adds/removes timestamp logging every 15 minutes
+      if [ ! ${greptimelog} ]; then
+        $("(crontab -l ; echo \"15 * * * * date >> /var/log/uptime.log\") 2>&1 | grep -v \"no crontab\" | sort | uniq | crontab -")
+        echo "\"uptime.log\" created in /var/log/ and will timestamp every 15 minutes" ; echo
+      elif [ ${greptimelog} ]; then
+        $("(crontab -l ; echo \"15 * * * * date >> /var/log/uptime.log\") 2>&1 | grep -v \"no crontab\" | grep -v uptime.log |  sort | uniq | crontab -")
+        echo "cron timestamping stopped and \"uptime.log\" removed from /var/log/" ; echo
       fi
-      echo "\"uptimelog.txt\" created in /tmp/ and will timestamp every 15 minutes" ; echo
       ;;
 
     *) #prompts help for bad inputs

@@ -14,6 +14,7 @@ function discover_help {
   echo ""
   echo "Example:"
   echo " $(basename "$0") discover 192.168.7.151"
+  echo " $(basename "$0") discover https://google.com"
   echo ""
 
 }

@@ -3,7 +3,7 @@
 function cron {
   options="$1"
   case "$options" in
-    "") #lists current cron tasks
+    ""|"list") #lists current cron tasks
         echo "List of cron jobs:"
       if [[ $(crontab -l | wc -c) -eq 0 ]]; then
         echo "The system has no cron jobs"
@@ -57,8 +57,9 @@ function cron {
 
 function cron_help {
   echo
-  echo "Usage: $(basename "$0") cron [0W|tor|timestamp]                   lists all active cron jobs [adds job to cron, or removes it if present]"
+  echo "Usage: $(basename "$0") cron [list|0W|tor|timestamp]                   lists all active cron jobs [adds job to cron, or removes it if present]"
   echo "  Options:"
+  echo "    list         Lists all cron jobs"
   echo "    0W           Creates a daily reboot task; Needed for RPi Zero W"
   echo "    tor          Sends \"tor notice now\" every 72 hours"
   echo "    timestamp    Creates /var/log/uptime.log, logging every 15 minutes"

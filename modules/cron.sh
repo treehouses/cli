@@ -39,11 +39,11 @@ function cron {
         echo "created \"uptime.log\" in /var/log/"
       fi
 
-      if [[ $(crontab -l | grep date) != "15 * * * * date >> /var/log/uptime.log" ]]; then
-        (crontab -l ; echo "15 * * * * date >> /var/log/uptime.log") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
+      if [[ $(crontab -l | grep date) != "*/15 * * * * date >> /var/log/uptime.log" ]]; then
+        (crontab -l ; echo "*/15 * * * * date >> /var/log/uptime.log") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
         echo "\"timestamp /var/log/uptime.log every 15 minutes\" cron job established"
-      elif [[ $(crontab -l | grep date) == "15 * * * * date >> /var/log/uptime.log" ]]; then
-        (crontab -l ; echo "15 * * * * date >> /var/log/uptime.log") 2>&1 | grep -v "no crontab" | grep -v "date" | sort | uniq | crontab -
+      elif [[ $(crontab -l | grep date) == "*/15 * * * * date >> /var/log/uptime.log" ]]; then
+        (crontab -l ; echo "*/15 * * * * date >> /var/log/uptime.log") 2>&1 | grep -v "no crontab" | grep -v "date" | sort | uniq | crontab -
         echo "timestamping cron job removed"
       fi
       ;;
@@ -74,18 +74,29 @@ function cron {
 
 function cron_help {
   echo
-  echo "Usage: $(basename "$0") cron [list|0W|tor|timestamp]                   lists all active cron jobs [adds job to cron, or removes it if present]"
-  echo "  Options:"
-  echo "    list         Lists all cron jobs"
-  echo "    0W           Creates a daily reboot task; Needed for RPi Zero W"
-  echo "    tor          Sends \"tor notice now\" every 72 hours"
-  echo "    timestamp    Creates /var/log/uptime.log, logging every 15 minutes"
+  echo "Usage: $(basename "$0") cron [options]    lists all active cron jobs [adds job to cron, or removes it if present]"
   echo
+  echo "Options:"
+  echo "  list         Lists all cron jobs"
+  echo "  add "<* * * * * script>"         "
+  echo "  0W           Creates a daily reboot task; Needed for RPi Zero W"
+  echo "  tor          Sends \"tor notice now\" every 72 hours"
+  echo "  timestamp    Creates /var/log/uptime.log, logging every 15 minutes"
+  echo
+# * * * * * command to execute
+# │ │ │ │ │
+# │ │ │ │ └───────────── day of the week (* | #/# | 0 - 6) (Sunday to Saturday; 7 is also Sunday on some systems)
+# │ │ │ └───────────── month (* | #/# | 1 - 12)
+# │ │ └───────────── day of the month (* | #/# | 1 - 31)
+# │ └───────────── hour (* | #/# | 0 - 23)
+# └───────────── minute (* | #/# | 0 - 59)
+
+
   echo "Examples:"
   echo "  $(basename "$0") cron"
   echo "    List of cron jobs:"
   echo "    0 */72 * * * treehouses tor notice now"
-  echo "    15 * * * * date >> /var/log/uptime.log"
+  echo "    */15 * * * * date >> /var/log/uptime.log"
   echo "    @daily reboot now"
   echo
   echo "  $(basename "$0") cron 0W"
@@ -95,3 +106,11 @@ function cron_help {
   echo "    \"timestamp /var/log/uptime.log every 15 minutes\" cron job established"
   echo
 }
+
+# * * * * * command to execute
+# │ │ │ │ │
+# │ │ │ │ └───────────── day of the week (* | #/# | 0 - 6) (Sunday to Saturday; 7 is also Sunday on some systems)
+# │ │ │ └───────────── month (* | #/# | 1 - 12)
+# │ │ └───────────── day of the month (* | #/# | 1 - 31)
+# │ └───────────── hour (* | #/# | 0 - 23)
+# └───────────── minute (* | #/# | 0 - 59)

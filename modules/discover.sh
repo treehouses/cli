@@ -1,7 +1,7 @@
 function discover {
 
   ip=$1
-  nmap $ip
+  nmap -v -A $ip
   
 
 }
@@ -14,7 +14,7 @@ function discover_help {
   echo ""
   echo "Example:"
   echo " $(basename "$0") discover 192.168.7.151"
-  echo " $(basename "$0") discover https://google.com"
+  echo " $(basename "$0") discover scanme.nmap.org"
   echo ""
 
 }

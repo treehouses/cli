@@ -48,6 +48,23 @@ function cron {
       fi
       ;;
 
+    "add")
+      #add user's cron job to crontab
+      cronjob="$2"
+      if [[ $(crontab -l | grep "$2") != "$2" ]]; then
+        (crontab -l ; echo "$2") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
+        echo "\"$2\" cron job added"
+      elif [[ $(crontab -l | grep "$2") == "$2" ]]; then
+        echo "cron job \"$2\" already established" ; echo "run \"$(basename "$0") help cron\" for more commands"
+      fi
+      ;;
+
+    "delete")
+      ;;
+
+    "deleteall")
+      ;;
+
     *) #prompts help for bad inputs
       cron_help
       exit 1

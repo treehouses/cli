@@ -3,7 +3,7 @@
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 
-source "$SCRIPTFOLDER/modules/detectrpi.sh" 
+source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
 source "$SCRIPTFOLDER/modules/apchannel.sh"
@@ -252,7 +252,7 @@ case $1 in
     speedtest "$@"
     ;;
   cron)
-    cron "$2"
+    cron "$2" "$3"
     ;;
   help)
     help "$2"

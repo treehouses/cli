@@ -48,6 +48,7 @@ source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
+source "$SCRIPTFOLDER/modules/speedtest.sh"
 source "$SCRIPTFOLDER/modules/cron.sh"
 
 
@@ -245,6 +246,10 @@ case $1 in
   temperature)
     checkrpi
     temperature "$2"
+    ;;
+  speedtest)
+    shift
+    speedtest "$@"
     ;;
   cron)
     cron "$2"

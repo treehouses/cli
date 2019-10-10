@@ -43,7 +43,7 @@ _treehouses_complete()
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 
-  vnc_cmds="on off info"
+vnc_cmds="on off info"
 
 
   COMPREPLY=()

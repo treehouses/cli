@@ -23,7 +23,7 @@ _treehouses_complete()
               coralenv default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
               rebootneeded rename restore rtc services ssh sshkey sshtunnel staticwifi \
-              timezone tor upgrade version vnc wifi wificountry" 
+              temperature timezone tor upgrade version vnc wifi wificountry" 
   led_cmds="green red mode"
   memory_cmds="total used free"
   networkmode_cmds="info"

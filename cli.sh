@@ -49,7 +49,7 @@ source "$SCRIPTFOLDER/modules/wificountry.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
-
+source "$SCRIPTFOLDER/modules/discover.sh"
 
 
 case $1 in
@@ -112,6 +112,10 @@ case $1 in
     checkrpi
     checkroot
     ethernet "$2" "$3" "$4" "$5"
+    ;;
+  discover)
+    checkrpi
+    discover "$2" "$3"
     ;;
   ap)
     checkrpi

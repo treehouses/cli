@@ -64,5 +64,6 @@ coralenv [install|demo-on|demo-off]       plays with the coral environmental boa
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory 
 temperature [celsius]                     displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
-cron [list|0W|tor|timestamp]              lists all active cron jobs [adds job to cron, or removes it if active]
+cron [list|0W|tor|timestamp]              lists all active cron jobs [lists jobs|adds premade job or removes it if active]
+     [add <*>|delete <*>|deleteall]       [add custom cron job|delete custom cron job|deletes all cron jobs]
 ```

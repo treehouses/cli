@@ -60,9 +60,23 @@ function cron {
       ;;
 
     "delete")
+      #search for and delete line with it
+      if [[ $(crontab -l | grep "$2") != "$2" ]]; then
+        echo "Could not find a job containing \"$2\" to delete"
+      elif [[ $(crontab -l | grep "$2") == "$2" ]]; then
+        (crontab -l ; echo "$2") 2>&1 | grep -v "no crontab" | grep -v "$2" | sort | uniq | crontab -
+        echo "cron job(s) containing \"$2\" deleted"
+      fi
       ;;
 
     "deleteall")
+      if [[ $(crontab -l | wc -c) -eq 0 ]]; then
+        (crontab -l ; echo "$2") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
+        echo "There are no cron jobs to delete"
+      else
+        (crontab -l ; echo *) 2>&1 | grep -v * | crontab -
+        echo "All cron jobs deleted"
+      fi
       ;;
 
     *) #prompts help for bad inputs
@@ -77,21 +91,27 @@ function cron_help {
   echo "Usage: $(basename "$0") cron [options]    lists all active cron jobs [adds job to cron, or removes it if present]"
   echo
   echo "Options:"
-  echo "  list         Lists all cron jobs"
-  echo "  add "<* * * * * script>"         "
-  echo "  0W           Creates a daily reboot task; Needed for RPi Zero W"
-  echo "  tor          Sends \"tor notice now\" every 72 hours"
-  echo "  timestamp    Creates /var/log/uptime.log, logging every 15 minutes"
+  echo "  list                        Lists all cron jobs"
+  echo "  add <\"cron job\">            See \"HOW TO ADD A CRON JOB\" below"
+  echo "  0W                          Creates a daily reboot task; Needed for RPi Zero W"
+  echo "  tor                         Sends \"tor notice now\" every 72 hours"
+  echo "  timestamp                   Creates /var/log/uptime.log, logging every 15 minutes"
+  echo "  delete <\"word/phrase\">      Deletes the cron job matching the word or phrase in quotes"
+  echo "  deleteall                   Deletes all cron jobs"
   echo
-# * * * * * command to execute
-# │ │ │ │ │
-# │ │ │ │ └───────────── day of the week (* | #/# | 0 - 6) (Sunday to Saturday; 7 is also Sunday on some systems)
-# │ │ │ └───────────── month (* | #/# | 1 - 12)
-# │ │ └───────────── day of the month (* | #/# | 1 - 31)
-# │ └───────────── hour (* | #/# | 0 - 23)
-# └───────────── minute (* | #/# | 0 - 59)
-
-
+  echo
+  echo "HOW TO ADD A CRON JOB:"
+  echo "  Set the frequency (shown below) of when you want the job to execute followed by the command"
+  echo "  Example: $(basename "$0") cron add \"*/15 6-8 * 3 * uname\""
+  echo "           This will execute \"uname\" at every 15th minute within the hours of 6 through 8 in March"
+  echo "  Frequency Method: * * * * * command-to-execute"
+  echo "                    │ │ │ │ │"
+  echo "                    │ │ │ │ └── day of the week    (* | #/# | 0 - 6 or Sun to Sat)"
+  echo "                    │ │ │ └──── month              (* | #/# | 1 - 12)"
+  echo "                    │ │ └────── day of the month   (* | #/# | 1 - 31)"
+  echo "                    │ └──────── hour               (* | #/# | 0 - 23)"
+  echo "                    └────────── minute             (* | #/# | 0 - 59)"
+  echo
   echo "Examples:"
   echo "  $(basename "$0") cron"
   echo "    List of cron jobs:"
@@ -102,15 +122,7 @@ function cron_help {
   echo "  $(basename "$0") cron 0W"
   echo "    \"Daily Reboot\" cron job removed"
   echo
-  echo "  $(basename "$0") cron timestamp"
-  echo "    \"timestamp /var/log/uptime.log every 15 minutes\" cron job established"
+  echo "  $(basename "$0") cron delete \"uname -n\""
+  echo "    cron job(s) containing \"uname -n\" deleted"
   echo
 }
-
-# * * * * * command to execute
-# │ │ │ │ │
-# │ │ │ │ └───────────── day of the week (* | #/# | 0 - 6) (Sunday to Saturday; 7 is also Sunday on some systems)
-# │ │ │ └───────────── month (* | #/# | 1 - 12)
-# │ │ └───────────── day of the month (* | #/# | 1 - 31)
-# │ └───────────── hour (* | #/# | 0 - 23)
-# └───────────── minute (* | #/# | 0 - 59)

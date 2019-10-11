@@ -29,14 +29,16 @@ function sshkey () {
       echo "Usage: $(basename "$0") sshkey delete \"<key>\""
       exit 1
     fi  
-    sed -i "/^$2/d" /root/.ssh/authorized_keys
+    sed -i "\|$2|d" /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then
-      sed -i "/^$2/d" /home/pi/.ssh/authorized_keys
+      sed -i "\|$2|d" /home/pi/.ssh/authorized_keys
     fi
   elif [ "$1" == "deleteall" ]; then
     rm /root/.ssh/authorized_keys
+    echo "All sshkeys are deleted."
     if [ "$(detectrpi)" != "nonrpi" ]; then
       rm /home/pi/.ssh/authorized_keys
+      echo "All sshkeys are deleted."
     fi
   elif [ "$1" == "addgithubusername" ]; then
     if [ -z "$2" ]; then

@@ -71,10 +71,9 @@ function cron {
 
     "deleteall")
       if [[ $(crontab -l | wc -c) -eq 0 ]]; then
-        (crontab -l ; echo "$2") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
         echo "There are no cron jobs to delete"
       else
-        (crontab -l ; echo *) 2>&1 | grep -v * | crontab -
+        crontab -r
         echo "All cron jobs deleted"
       fi
       ;;

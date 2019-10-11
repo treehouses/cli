@@ -38,7 +38,7 @@ function sshkey () {
     if [ "$(detectrpi)" != "nonrpi" ]; then
       rm /home/pi/.ssh/authorized_keys
     fi
-    echo "All sshkeys are deleted."
+    echo "all sshkeys are deleted."
   elif [ "$1" == "addgithubusername" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing argument"

@@ -49,6 +49,7 @@ source "$SCRIPTFOLDER/modules/wificountry.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
+source "$SCRIPTFOLDER/modules/uptimes.sh"
 
 
 
@@ -250,6 +251,9 @@ case $1 in
   speedtest)
     shift
     speedtest "$@"
+    ;;
+  uptimes)
+    uptimes
     ;;
   help)
     help "$2"

@@ -64,4 +64,6 @@ coralenv [install|demo-on|demo-off]       plays with the coral environmental boa
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory 
 temperature [celsius]                     displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
+uptimes                                   tells the range between the system was down
+                                          and time since the system is running
 ```

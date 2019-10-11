@@ -85,7 +85,7 @@ function memory_free {
 
 function memory_help {
   echo ""
-  echo "Usage: $(basename "$0") memory [total|used|free] "
+  echo "Usage: $(basename "$0") memory [total|used|free] [-g|-m]"
   echo ""
   echo "Displays the various values for total, used, and free RAM memory."
   echo ""

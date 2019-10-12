@@ -53,7 +53,7 @@ function memory() {
       ;;
     *)
       if [ ! -n "$1" ]; then
-        option='-m'
+        option=''
       else 
 	if [ ! "$1" == 'total' ] && [ ! "$1" == 'used' ] && [ ! "$1" == 'free' ]; then    
           echo "Error: Ony '-g' and '-m' argument accepted"

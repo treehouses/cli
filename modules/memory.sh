@@ -92,7 +92,19 @@ function memory_used {
 }
 
 function memory_free {
-  f=$(free | grep -i Mem | awk '{printf $4}')
+  option=$1
+  case $option in 
+    '-g')
+      f_G=$(free -m | grep -i Mem | awk '{printf $4}')
+      f=$(echo "scale=2;$f_G/1024" | bc)
+      ;;
+    '-m')
+      f=$(free -m | grep -i Mem | awk '{printf $4}')
+      ;; 
+    *)
+      f=$(free | grep -i Mem | awk '{printf $4}')
+      ;;
+  esac
 }
 
 function memory_help {

@@ -3,7 +3,7 @@
 function clone {
     device="$1"
     if [ -z "$device" ]; then
-        device="/dev/sdb"
+      device="/dev/sdb"
     fi
 
     a=$(fdisk -l |grep /dev/mmcblk0: | grep -P '\d+ (?=bytes)' -o)
@@ -13,41 +13,23 @@ function clone {
     #echo "$b - /dev/sdb"
 
     if [ -z "$a" ] || [ -z "$b" ]; then
-        echo "Error: the device $device wasn't detected"
-        return 1
+      echo "Error: the device $device wasn't detected"
+      return 1
     fi
 
-
-
     if [ $b -lt $a ]; then
-        echo "Error: the device $device is not big enough"
-        return 1
+      echo "Error: the device $device is not big enough"
+      return 1
     fi
 
     if [ $a -eq $b ] || [ $a -lt $b ]; then
-
-        echo "copying...."
-        echo u > /proc/sysrq-trigger
-        dd if=/dev/mmcblk0 bs=1M of="$device"
-
+      echo "copying...."
+      echo u > /proc/sysrq-trigger
+      dd if=/dev/mmcblk0 bs=1M of="$device"
     fi
 
-    echo "A reboot is needed to re-enable write permissions to OS. Reboot now?"
-    Selection=("Yes" "No")
-    select opt in "${Selection[@]}"
-      do
-        case $opt in
-        "Yes")
-          echo "Rebooting" && sleep 2 && reboot
-          ;;
-        "No")
-          break
-          ;;
-        *)
-          echo "Enter \"1\" or \"2\""
-          ;;
-        esac
-      done
+    echo ; echo "A reboot is needed to re-enable write permissions to OS."
+    echo "Rebooting in 5 seconds; ctrl+c to cancel reboot." && sleep 2 && reboot
 }
 
 function clone_help {

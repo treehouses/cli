@@ -29,7 +29,7 @@ function clone {
     fi
 
     echo ; echo "A reboot is needed to re-enable write permissions to OS."
-    echo "Rebooting in 5 seconds; ctrl+c to cancel reboot." && sleep 2 && reboot
+    echo "Rebooting in 5 seconds; ctrl+c to cancel reboot." && sleep 5 && reboot
 }
 
 function clone_help {

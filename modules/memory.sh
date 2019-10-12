@@ -52,14 +52,17 @@ function memory() {
       echo "Your rpi has $t megabytes of total memory with $ubc megabytes used and $f megabytes avalaible"
       ;;
     *)
-     if [ ! "$1" == '-m' ] &&  [ ! "$1" == '-g' ]  && [ ! "$1" == 'total' ] && [ ! "$1" == 'used' ] && [ ! "$1" == 'free' ]; then    
-        echo "Error: Ony '-g' and '-m' argument accepted"
-        exit 1
-     fi
-
-      memory_total '-m'
-      memory_used '-m' 
-      memory_free '-m' 
+      if [ ! -n "$1" ]; then
+        option='-m'
+      else 
+	if [ ! "$1" == 'total' ] && [ ! "$1" == 'used' ] && [ ! "$1" == 'free' ]; then    
+          echo "Error: Ony '-g' and '-m' argument accepted"
+          exit 1
+	fi
+      fi
+      memory_total "$option"
+      memory_used "$option"
+      memory_free "$option" 
       echo "Your rpi has $t megabytes of total memory with $ubc megabytes used and $f megabytes avalaible"
   esac
 }
@@ -84,7 +87,7 @@ function memory_used {
     *)
       u=$(free | grep -i Mem | awk '{printf $3}')
       bc=$(free | grep -i Mem | awk '{printf $6}')
-      ubc=$((u+bc | bc))
+      ubc=$((u+bc ) | bc )
       ;;
   esac
 }

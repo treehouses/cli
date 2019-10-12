@@ -63,7 +63,7 @@ function memory() {
       memory_total "$option"
       memory_used "$option"
       memory_free "$option" 
-      echo "Your rpi has $t megabytes of total memory with $ubc megabytes used and $f megabytes avalaible"
+      echo "Your rpi has $t bytes of total memory with $ubc bytes used and $f bytes avalaible"
   esac
 }
 

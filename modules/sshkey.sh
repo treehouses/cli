@@ -33,6 +33,7 @@ function sshkey () {
     if [ "$(detectrpi)" != "nonrpi" ]; then
       sed -i "\|$2|d" /home/pi/.ssh/authorized_keys
     fi
+    echo "$2 is deleted."
   elif [ "$1" == "deleteall" ]; then
     rm /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then

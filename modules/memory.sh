@@ -75,9 +75,8 @@ function memory_used {
       u=$(echo "scale=2;$u_M/1024" | bc)
       bc_M=$(free -m | grep -i Mem | awk '{printf $6}')
       bc=$(echo "scale=2;$bc_M/1024" | bc)
-      echo $u
-      echo $bc
-      ubc=$(( u+bc ) | bc )
+      ubc=u+bc|bc
+      #ubc=$( (u+bc) | bc )
       ;;
     '-m')
       u=$(free -m | grep -i Mem | awk '{printf $3}')
@@ -87,7 +86,7 @@ function memory_used {
     *)
       u=$(free | grep -i Mem | awk '{printf $3}')
       bc=$(free | grep -i Mem | awk '{printf $6}')
-      ubc=$((u+bc ) | bc )
+      ubc=$((u+bc))
       ;;
   esac
 }

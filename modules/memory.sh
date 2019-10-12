@@ -17,14 +17,8 @@ function memory_total() {
 }
 
 function memory() {
-  if [ -n "$2" ]; then 
-    if [ ! "$2" == '-g' ] && [ ! "$2" == '-m' ]; then 
-      echo "Error: only '-g' or '-m' argument accepted "
-      exit 1
-    fi
-  fi
 
-  if [ "$1" == "total" ] ; then
+    if [ "$1" == "total" ] ; then
     memory_total $2
     echo "$t";
     exit 0
@@ -41,19 +35,31 @@ function memory() {
     echo "$f";
     exit 0
   fi
+    
 
-  memory_total 
-  memory_used
-  memory_free
-  option=$1
-  case $option in
+ option=$1
+ case $option in
     '-g')
+      memory_total '-g'
+      memory_used '-g' 
+      memory_free '-g' 
       echo "Your rpi has $t gigabytes of total memory with $ubc gigabytes used and $f gigabytes avalaible"
       ;;
     '-m')
+      memory_total '-m'
+      memory_used '-m' 
+      memory_free '-m' 
       echo "Your rpi has $t megabytes of total memory with $ubc megabytes used and $f megabytes avalaible"
       ;;
     *)
+     if [ ! "$1" == '-m' ] &&  [ ! "$1" == '-g' ]  && [ ! "$1" == 'total' ] && [ ! "$1" == 'used' ] && [ ! "$1" == 'free' ]; then    
+        echo "Error: Ony '-g' and '-m' argument accepted"
+        exit 1
+     fi
+
+      memory_total '-m'
+      memory_used '-m' 
+      memory_free '-m' 
       echo "Your rpi has $t megabytes of total memory with $ubc megabytes used and $f megabytes avalaible"
   esac
 }
@@ -62,9 +68,13 @@ function memory_used {
   option=$1
   case $option in 
     '-g')
-      u=$(free -g | grep -i Mem | awk '{printf $3}')
-      bc=$(free -g | grep -i Mem | awk '{printf $6}')
-      ubc=$((u+bc))
+      u_M=$(free -m | grep -i Mem | awk '{printf $3}')
+      u=$(echo "scale=2;$u_M/1024" | bc)
+      bc_M=$(free -m | grep -i Mem | awk '{printf $6}')
+      bc=$(echo "scale=2;$bc_M/1024" | bc)
+      echo $u
+      echo $bc
+      ubc=$(( u+bc ) | bc )
       ;;
     '-m')
       u=$(free -m | grep -i Mem | awk '{printf $3}')
@@ -74,7 +84,7 @@ function memory_used {
     *)
       u=$(free | grep -i Mem | awk '{printf $3}')
       bc=$(free | grep -i Mem | awk '{printf $6}')
-      ubc=$((u+bc))
+      ubc=$((u+bc | bc))
       ;;
   esac
 }
@@ -93,6 +103,11 @@ function memory_help {
   echo "  $(basename "$0") memory"
   echo "      This will display in a single sentence 3 different RAM memory values in bytes for total, used and free memory."
   echo ""
+  echo "  $(basename "$0") memory -g"
+  echo "      This will display in a single sentence 3 different RAM memory values in bytes for total, used and free memory."
+  echo ""
+
+
   echo "  $(basename "$0") memory total"
   echo "      This will return the numerical value for the total memory (value in bytes)."
   echo ""

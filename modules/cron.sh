@@ -61,8 +61,8 @@ function cron {
 
     "delete")
       #search for and delete line with it
-      deleteme=$(crontab -l | grep "$2")
-      if [[ ! $(crontab -l | grep "$2") ]]; then
+      crontab -l | grep -q "$2"
+      if [ $? -eq 1 ] ; then
         echo "Could not find a job containing \"$2\" to delete"
       else
         (crontab -l ; echo "$2") 2>&1 | grep -v "no crontab" | grep -v "$2" | sort | uniq | crontab -

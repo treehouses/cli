@@ -16,8 +16,8 @@ function reboot () {
       ;;
     "cron")
       #add user's cron job to crontab
-      if [[ $(crontab -l | grep "$2") != "$2" ]]; then
-        (crontab -l ; echo "$2") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
+      if [[ $(crontab -l | grep "$2 reboot now" ) != "$2" ]]; then
+        (crontab -l ; echo "$2 reboot now") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
         echo "cron job with frequency \"$2\" added"
       elif [[ $(crontab -l | grep "$2") == "$2" ]]; then
         echo "cron job \"$2\" already established" ; echo "run \"$(basename "$0") help cron\" for cron commands"

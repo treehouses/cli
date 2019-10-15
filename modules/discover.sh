@@ -5,7 +5,7 @@ function discover {
   /usr/bin/nmap "$@"
 
   option=$1
-  if [ $option = "ip" ] || [ $option = "ping" ]
+  if [ $option = "ip" ] || [ $option = "ping" ] || [ $option = "ports" ]
   then
     ip=$2
   fi
@@ -26,9 +26,11 @@ function discover {
       ;;
     ports)
       nmap --open $ip
+      ;;
     *)
       echo "Unknown operation provided." 1>&2
       discover_help
+      ;;
   esac
 
 }

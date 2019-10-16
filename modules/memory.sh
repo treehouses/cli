@@ -56,7 +56,7 @@ function memory() {
         option=''
       else 
 	if [ ! "$1" == 'total' ] && [ ! "$1" == 'used' ] && [ ! "$1" == 'free' ]; then    
-          echo "Error: Ony '-g' and '-m' argument accepted"
+          echo "error: only '-g' and '-m' argument accepted (check 'treehouses memory --help')"
           exit 1
 	fi
       fi
@@ -119,8 +119,6 @@ function memory_help {
   echo "  $(basename "$0") memory -g"
   echo "      This will display in a single sentence 3 different RAM memory values in bytes for total, used and free memory."
   echo ""
-
-
   echo "  $(basename "$0") memory total"
   echo "      This will return the numerical value for the total memory (value in bytes)."
   echo ""
@@ -129,5 +127,8 @@ function memory_help {
   echo ""
   echo "  $(basename "$0") memory free"
   echo "      This will return the numerical value for the remaining free memory (value in bytes)."
+  echo ""
+  echo "  $(basename "$0") memory free -g"
+  echo "      This will return the numerical value for the remaining free memory (value in megabytes)."
   echo ""
 }

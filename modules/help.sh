@@ -57,7 +57,7 @@ function help_default {
   echo "   memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory"
   echo "   temperature [celsius]                     displays raspberry pi's CPU temperature"
   echo "   speedtest                                 tests internet download and upload speed"
-  echo "   uptimes                                   displays the system uptime and range between it was down" 
+  echo "   uptimes                                   displays the system uptime and time range between which it was down" 
   echo
 }
 

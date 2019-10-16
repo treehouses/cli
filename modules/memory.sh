@@ -43,13 +43,13 @@ function memory() {
       memory_total '-g'
       memory_used '-g' 
       memory_free '-g' 
-      echo "Your rpi has $t gigabytes of total memory with $ubc gigabytes used and $f gigabytes avalaible"
+      echo "Your rpi has $t gigabytes of total memory with $ubc gigabytes used and $f gigabytes available"
       ;;
     '-m')
       memory_total '-m'
       memory_used '-m' 
       memory_free '-m' 
-      echo "Your rpi has $t megabytes of total memory with $ubc megabytes used and $f megabytes avalaible"
+      echo "Your rpi has $t megabytes of total memory with $ubc megabytes used and $f megabytes available"
       ;;
     *)
       if [ ! -n "$1" ]; then
@@ -63,7 +63,7 @@ function memory() {
       memory_total "$option"
       memory_used "$option"
       memory_free "$option" 
-      echo "Your rpi has $t bytes of total memory with $ubc bytes used and $f bytes avalaible"
+      echo "Your rpi has $t bytes of total memory with $ubc bytes used and $f bytes available"
   esac
 }
 

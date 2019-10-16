@@ -31,7 +31,7 @@ source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
 source "$SCRIPTFOLDER/modules/openvpn.sh"
 source "$SCRIPTFOLDER/modules/rebootneeded.sh"
-source "$SCRIPTFOLDER/modules/reboot.sh"
+source "$SCRIPTFOLDER/modules/reboots.sh"
 source "$SCRIPTFOLDER/modules/rename.sh"
 source "$SCRIPTFOLDER/modules/restore.sh"
 source "$SCRIPTFOLDER/modules/rtc.sh"
@@ -211,8 +211,8 @@ case $1 in
   rebootneeded)
     rebootneeded
     ;;
-  reboot)
-    reboot "$2" "$3"
+  reboots)
+    reboots "$2" "$3"
     ;;
   internet)
     internet

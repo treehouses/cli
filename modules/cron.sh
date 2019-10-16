@@ -13,11 +13,11 @@ function cron {
       ;;
 
     "0W") #adds/removes a daily reboot to system - RPi 0's will benefit from this
-      if [[ $(crontab -l | grep "@daily") != "@daily reboot now" ]]; then
-        (crontab -l ; echo "@daily reboot now") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
+      if [[ $(crontab -l | grep "@daily") != "@daily reboot" ]]; then
+        (crontab -l ; echo "@daily reboot") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
         echo "\"Daily Reboot\" cron job established"
-      elif [[ $(crontab -l | grep "@daily") == "@daily reboot now" ]]; then
-        (crontab -l ; echo "@daily reboot now") 2>&1 | grep -v "no crontab" | grep -v "@daily" | sort | uniq | crontab -
+      elif [[ $(crontab -l | grep "@daily") == "@daily reboot" ]]; then
+        (crontab -l ; echo "@daily reboot") 2>&1 | grep -v "no crontab" | grep -v "@daily" | sort | uniq | crontab -
         echo "\"Daily Reboot\" cron job removed"
       fi
       ;;
@@ -117,7 +117,7 @@ function cron_help {
   echo "    List of cron jobs:"
   echo "    0 */72 * * * treehouses tor notice now"
   echo "    */15 * * * * date >> /var/log/uptime.log"
-  echo "    @daily reboot now"
+  echo "    @daily reboot"
   echo
   echo "  $(basename "$0") cron 0W"
   echo "    \"Daily Reboot\" cron job removed"

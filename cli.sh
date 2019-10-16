@@ -212,7 +212,7 @@ case $1 in
     rebootneeded
     ;;
   reboot)
-    reboot "$2"
+    reboot "$2" "$3"
     ;;
   internet)
     internet

@@ -24,11 +24,16 @@ function sshkey () {
       cat /home/pi/.ssh/authorized_keys
     fi
   elif [ "$1" == "delete" ]; then
-    if [[ "$2" == "" ||  "$2" == "ssh-rsa" ]]; then
+    if [ -z "$2" == "" ]; then
       echo "Error: missing argument"
       echo "Usage: $(basename "$0") sshkey delete \"<key>\""
       exit 1
-    fi  
+    fi
+     if [ "$2" == "ssh-rsa" ]; then
+      echo "Error: missing qoutes"
+      echo "Usage: $(basename "$0") sshkey delete \"<key>\""
+      exit 1
+    fi
     sed -i "\|$2|d" /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then
       sed -i "\|$2|d" /home/pi/.ssh/authorized_keys

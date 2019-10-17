@@ -5,10 +5,10 @@ _treehouses_complete()
   local cur prev
 
   # Valid top-level completions
-  commands="ap apchannel bluetooth bootoption bridge burn button clone container \ 
+  commands="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
               coralenv default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
-              rebootneeded rename restore rtc services ssh sshkey sshtunnel staticwifi \
+              reboot rebootneeded rename restore rtc services ssh sshkey sshtunnel staticwifi \
               timezone tor upgrade version vnc wifi wificountry" 
        	
   ap_cmdas="local internet"
@@ -19,10 +19,10 @@ _treehouses_complete()
   button_cmds="off bluetooth"
   container_cmds="none docker balena"
   coralenv_cmds="install demo-on demo-off demo-always-on"
-  help_cmds="ap apchannel bluetooth bootoption bridge burn button clone container \ 
+  help_cmds="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
               coralenv default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
-              rebootneeded rename restore rtc services ssh sshkey sshtunnel staticwifi \
+              reboot rebootneeded rename restore rtc services ssh sshkey sshtunnel staticwifi \
               timezone tor upgrade version vnc wifi wificountry" 
   led_cmds="green red mode"
   memory_cmds="total used free"
@@ -39,6 +39,7 @@ _treehouses_complete()
   sshtunnel_cmds="add remove list key notice"
   tor_cmds="start stop add list notice destroy"
   notice_cmds="on off add delete list"
+  reboots_cmds="now in cron daily weekly monthly"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 
@@ -64,6 +65,9 @@ vnc_cmds="on off info"
       "bluetooth")
         COMPREPLY=( $(compgen -W "$bluetooth_cmds" -- $cur) )
         ;;
+      "bluetoothid")
+        COMPREPLY=( $(compgen -W "$bluetoothid_cmds" -- $cur) )
+        ;;	
       "bootoption")
         COMPREPLY=( $(compgen -W "$bootoption_cmds" -- $cur) )
         ;;
@@ -97,7 +101,9 @@ vnc_cmds="on off info"
       "rtc")
         COMPREPLY=( $(compgen -W "$rtc_cmds" -- $cur) )
         ;;
-      "sshkey")
+      "reboots")
+        COMPREPLY=( $(compgen -W "$reboots_cmds" -- $cur) )
+        ;;      "sshkey")
         COMPREPLY=( $(compgen -W "$sshkey_cmds" -- $cur) )
         ;;
       "ssh")

@@ -8,9 +8,8 @@ _treehouses_complete()
   commands="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
               coralenv default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
-              reboot rebootneeded rename restore rtc services ssh sshkey sshtunnel staticwifi \
-              timezone tor upgrade version vnc wifi wificountry" 
-       	
+              rebootneeded reboots rename restore rtc services ssh sshkey sshtunnel staticwifi \
+              temperature timezone tor upgrade version vnc wifi wificountry" 
   ap_cmdas="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
   bluetooth_cmds="on off pause"
@@ -22,8 +21,8 @@ _treehouses_complete()
   help_cmds="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
               coralenv default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
-              reboot rebootneeded rename restore rtc services ssh sshkey sshtunnel staticwifi \
-              timezone tor upgrade version vnc wifi wificountry" 
+              rebootneeded reboots rename restore rtc services ssh sshkey sshtunnel staticwifi \
+              temperature timezone tor upgrade version vnc wifi wificountry" 
   led_cmds="green red mode"
   memory_cmds="total used free"
   networkmode_cmds="info"
@@ -37,6 +36,7 @@ _treehouses_complete()
   sshkey_cmds="add list delete deleteal addgithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
+  temperature_cmds="celsius"
   tor_cmds="start stop add list notice destroy"
   notice_cmds="on off add delete list"
   reboots_cmds="now in cron daily weekly monthly"
@@ -103,7 +103,8 @@ vnc_cmds="on off info"
         ;;
       "reboots")
         COMPREPLY=( $(compgen -W "$reboots_cmds" -- $cur) )
-        ;;      "sshkey")
+        ;;
+      "sshkey")
         COMPREPLY=( $(compgen -W "$sshkey_cmds" -- $cur) )
         ;;
       "ssh")
@@ -111,6 +112,9 @@ vnc_cmds="on off info"
         ;;
       "sshtunnel")
         COMPREPLY=( $(compgen -W "$sshtunnel_cmds" -- $cur) ) 
+        ;;
+      "temperature")
+        COMPREPLY=( $(compgen -W "$temperature_cmds" -- $cur) ) 
         ;;
       "tor")
         COMPREPLY=( $(compgen -W "$tor_cmds" -- $cur) ) 

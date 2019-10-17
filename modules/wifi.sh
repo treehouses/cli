@@ -69,6 +69,6 @@ function wifi_help {
   echo "      Connects to a wifi network named 'home' with password 'homewifipassword'."
   echo ""
   echo "  $(basename "$0") wifi yourwifiname"
-  echo "      Connects to an open wifi network named 'home'."
+  echo "      Connects to an open wifi network named 'yourwifiname'."
   echo ""
 }

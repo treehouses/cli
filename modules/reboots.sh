@@ -3,8 +3,9 @@
 function reboots {
   case "$1" in
     "")
-      echo "No timeframe selected" ; echo
-      reboots_help
+      echo "No timeframe selected. For how to use \"reboots\" run: $(basename "$0") help reboots"
+      echo ; echo "Tasks scheduled:"
+      crontab -l
       ;;
     "now")
       echo "Rebooting now."

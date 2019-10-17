@@ -29,7 +29,7 @@ function sshkey () {
       echo "Usage: $(basename "$0") sshkey delete \"<key>\""
       exit 1
     fi
-     if [ "$2" == "ssh-rsa" ]; then
+    if [ "$2" == "ssh-rsa" ]; then
       echo "Error: missing qoutes"
       echo "Usage: $(basename "$0") sshkey delete \"<key>\""
       exit 1

@@ -6,6 +6,10 @@ function help_default {
   echo
   echo "   help [command]                            gives you a more detailed info about the command or will output this"
   echo
+  # device hardware
+  # device software
+  # network
+  # 
   echo "   ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)"
   echo "   apchannel [channel]                       sets or prints the current ap channel"
   echo "   bluetooth <on|off>                        switches between bluetooth hotspot mode / regular bluetooth and starts the service"

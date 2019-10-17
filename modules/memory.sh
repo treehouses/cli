@@ -101,8 +101,12 @@ function memory_free {
     '-m')
       f=$(free -m | grep -i Mem | awk '{printf $4}')
       ;; 
-    *)
+    '')
       f=$(free | grep -i Mem | awk '{printf $4}')
+      ;;
+    *)
+      echo "error: only '-g' and '-m' argument accepted (check 'treehouses memory --help')"
+      exit 1  
       ;;
   esac
 }

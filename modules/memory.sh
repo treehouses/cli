@@ -51,19 +51,15 @@ function memory() {
       memory_free '-m' 
       echo "Your rpi has $t megabytes of total memory with $ubc megabytes used and $f megabytes available"
       ;;
-    *)
-      if [ ! -n "$1" ]; then
-        option=''
-      else 
-	if [ ! "$1" == 'total' ] && [ ! "$1" == 'used' ] && [ ! "$1" == 'free' ]; then    
-          echo "error: only '-g' and '-m' argument accepted (check 'treehouses memory --help')"
-          exit 1
-	fi
-      fi
+    '')
       memory_total "$option"
       memory_used "$option"
       memory_free "$option" 
       echo "Your rpi has $t bytes of total memory with $ubc bytes used and $f bytes available"
+      ;;
+    *)
+        echo "error: only '-g' and '-m' argument accepted (check 'treehouses memory --help')"
+        exit 1  
   esac
 }
 
@@ -82,10 +78,15 @@ function memory_used {
       bc=$(free -m | grep -i Mem | awk '{printf $6}')
       ubc=$((u+bc))
       ;;
-    *)
+
+    '')
       u=$(free | grep -i Mem | awk '{printf $3}')
       bc=$(free | grep -i Mem | awk '{printf $6}')
       ubc=$((u+bc))
+      ;;
+     *)
+      echo "error: only '-g' and '-m' argument accepted (check 'treehouses memory --help')"
+      exit 1  
       ;;
   esac
 }

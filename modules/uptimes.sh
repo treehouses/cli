@@ -20,7 +20,6 @@ function uptimes_help(){
   echo ""
   echo "Example:"
   echo " $(basename "$0") uptimes"
-  echo "    This will display since when the system is running"
-  echo "    If the system was down it will also display the time range between which the system was down"
+  echo "    displays the system uptime and time range between which it was down"
   echo ""
 }

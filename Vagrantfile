@@ -21,7 +21,7 @@ Vagrant.configure(2) do |config|
     cli.vm.hostname = "cli"
 
     cli.vm.provider "virtualbox" do |vb|
-      vb.name = "cli.
+      vb.name = "cli"
     end
 
     cli.vm.provider "virtualbox" do |vb|

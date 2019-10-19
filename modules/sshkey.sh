@@ -51,6 +51,47 @@ function sshkey () {
       keys=$(sed 's#$# '$2'#' <<< $keys)
       sshkey add "$keys"
     fi
+  elif [ "$1" == "deletegithubusername" ]; then
+  	if [ -z "$2" ]; then
+  		echo "Error: missing argument"
+  		echo "Usage: $(basename "$0") sshkey delete \"<key>\""
+  		exit 1
+  	fi
+  	if [ "$(detectrpi)" = "nonrpi" ]; then
+  		if ! [ -s /root/.ssh/authorized_keys ]; then
+  			echo "The list of keys is empty."
+  		else
+  			while IFS= read -r line
+  			do
+  				x=$(echo $line | cut -d' ' -f3)
+  				if [[ $x == $2 ]]; then
+  					sed -i "\|$2|d" /root/.ssh/authorized_keys
+  					echo "Key(s) for $2 successfully deleted"
+  					break
+  				else
+  					echo "No keys for this user were found."
+  					break
+  				fi
+  			done < "/root/.ssh/authorized_keys"
+  		fi
+  	else
+  		if ! [ -s /root/.ssh/authorized_keys ]; then
+  			echo "The list of keys is empty."
+  		else
+  			while IFS= read -r line
+  			do
+  				x=$(echo $line | cut -d' ' -f3)
+  				if [[ $x == $2 ]]; then
+  					sed -i "\|$2|d" /home/pi/.ssh/authorized_keys
+  					echo "Key(s) for $2 successfully deleted"
+  					break
+  				else
+  					echo "No keys for this user were found."
+  					break
+  				fi
+  			done < "/home/pi/.ssh/authorized_keys"
+  		fi
+  	fi
   elif [ "$1" == "addgithubgroup" ]; then
     if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
       echo "Error: missing arguments"

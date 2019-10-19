@@ -14,7 +14,7 @@ function memory_total() {
       t=$(free | grep -i Mem | awk '{printf $2}')
       ;;
     *)
-      echo "error: only '-g' and '-m' argument accepted (check 'treehouses --help memory')"
+      echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory')"
       exit 1  
       ;;
   esac

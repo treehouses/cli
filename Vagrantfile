@@ -14,7 +14,7 @@ Vagrant.configure(2) do |config|
   BOX = "treehouses/buster64"
   BOX_VERSION = "0.12.1"
 
-  config.vm.define "cli., autostart: false do |dev|
+  config.vm.define "cli" do |cli|
     cli.vm.box = BOX
     cli.vm.box_version = BOX_VERSION
 

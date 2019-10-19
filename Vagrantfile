@@ -34,6 +34,8 @@ Vagrant.configure(2) do |config|
     cli.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
     cli.vm.provision "shell", inline: <<-SHELL
+      ln -sr /vagrant /root/cli
+      ln -sr /vagrant /home/vagrant/cli
     SHELL
 
     # Run binding on each startup make sure the mount is available on VM restart

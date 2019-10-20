@@ -37,6 +37,7 @@ _treehouses_complete()
   sshkey_cmds="add list delete deleteal addgithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
+  temperature_cmds="celsius"
   tor_cmds="start stop add list notice destroy"
   notice_cmds="on off add delete list"
 
@@ -105,6 +106,9 @@ vnc_cmds="on off info"
         ;;
       "sshtunnel")
         COMPREPLY=( $(compgen -W "$sshtunnel_cmds" -- $cur) ) 
+        ;;
+      "temperature")
+        COMPREPLY=( $(compgen -W "$temperature_cmds" -- $cur) ) 
         ;;
       "tor")
         COMPREPLY=( $(compgen -W "$tor_cmds" -- $cur) ) 

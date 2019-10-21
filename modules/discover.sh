@@ -56,11 +56,8 @@ function discover {
     *)
       echo "Unknown operation provided." 1>&2
       discover_help
-<<<<<<< HEAD
       exit 1
-=======
       ;;
->>>>>>> 9581309d6c9f3f58586900ddf2f535b9fcaf52ee
   esac
 
 }

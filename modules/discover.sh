@@ -12,8 +12,12 @@ function discover {
   fi 
 
   option=$1
+<<<<<<< HEAD
 
   if [ $option = "scan" ] || [ $option = "ping" ] || [ $option = "ports" ]
+=======
+  if [ $option = "ip" ] || [ $option = "ping" ] || [ $option = "ports" ]
+>>>>>>> 9581309d6c9f3f58586900ddf2f535b9fcaf52ee
   then
     if [ -z $2 ]
     then 
@@ -55,7 +59,11 @@ function discover {
     *)
       echo "Unknown operation provided." 1>&2
       discover_help
+<<<<<<< HEAD
       exit 1
+=======
+      ;;
+>>>>>>> 9581309d6c9f3f58586900ddf2f535b9fcaf52ee
   esac
 
 }

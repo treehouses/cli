@@ -115,7 +115,8 @@ case $1 in
     ;;
   discover)
     checkrpi
-    discover "$2" "$3"
+    shift
+    discover "$@"
     ;;
   ap)
     checkrpi

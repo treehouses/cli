@@ -49,7 +49,7 @@ button <off|bluetooth>                    gives the gpio pin 18 an action
 feedback <message>                        sends feedback
 clone [device path]                       clones the current SDCard onto a secondary SDCard or specified device
 restore [device path]                     restores a treehouses image to an SDCard or specified device
-burn [device path]                        download and burns the latest treehouses image to the SDcard or specified device
+burn [device path|list]                   download and burns the latest treehouses image to the SDcard or specified device/list devices
 rebootneeded                              shows if reboot is required to apply changes
 internet                                  checks if the rpi has access to internet
 services [service_name] [format]          outputs or install the desired service

@@ -1,13 +1,18 @@
 #!/bin/bash
 
 function burn {
-    device="$1"
-    if [ -z "$device" ]; then
+  option="$1"
+  if [ $option = "list" ]
+  then
+    lsblk
+  else
+    if [ -z "$option" ]
+    then
         device="/dev/sdb"
     fi
 
-    if [ ! -b "$device" ]; then
-        echo "Error: the device $device wasn't detected"
+    if [ ! -b "$option" ]; then
+        echo "Error: the device $option wasn't detected"
         exit 1
     fi
 
@@ -25,8 +30,9 @@ function burn {
     fi
 
     echo "writing..."
-    zcat "latest.img.gz" > "$device"
+    zcat "latest.img.gz" > "$option"
     echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
+  fi
 }
 
 

@@ -42,7 +42,7 @@ function help_default {
   echo "   feedback <message>                        sends feedback"
   echo "   clone [device path]                       clones the current SDCard onto a secondary SDCard or specified device"
   echo "   restore [device path]                     restores a treehouses image to an SDCard or specified device"
-  echo "   burn [device path]                        download and burns the latest treehouses image to the SDcard or specified device"
+  echo "   burn [device path|list]                   download and burns the latest treehouses image to the SDcard or specified device/lists disks"
   echo "   rebootneeded                              shows if reboot is required to apply changes"
   echo "   internet                                  checks if the rpi has access to internet"
   echo "   services [service_name] [format]          outputs or install the desired service"

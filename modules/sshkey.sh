@@ -64,7 +64,7 @@ function sshkey () {
   			while IFS= read -r line
   			do
   				x=$(echo $line | cut -d' ' -f3)
-  				if [[ $x == $2 ]]; then
+  				if [[ $x == "$2" ]]; then
   					sed -i "\|$2|d" /root/.ssh/authorized_keys
   					echo "Key(s) for $2 successfully deleted"
   					break
@@ -81,7 +81,7 @@ function sshkey () {
   			while IFS= read -r line
   			do
   				x=$(echo $line | cut -d' ' -f3)
-  				if [[ $x == $2 ]]; then
+  				if [[ $x == "$2" ]]; then
   					sed -i "\|$2|d" /home/pi/.ssh/authorized_keys
   					echo "Key(s) for $2 successfully deleted"
   					break

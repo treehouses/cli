@@ -2,16 +2,35 @@
 
 function discover {
   check_missing_packages "nmap"
-  /usr/bin/nmap "$@"
+  #/usr/bin/nmap "$@"
+  
+  if [ "$#" -gt 2 ]
+  then 
+    echo "Too many arguments."
+    discover_help
+    exit 1
+  fi 
 
   option=$1
-  if [ $option = "ip" ] || [ $option = "ping" ]
+
+  if [ $option = "scan" ] || [ $option = "ping" ] || [ $option = "ports" ]
   then
+    if [ -z $2 ]
+    then 
+      echo "You need to provide an IP address or URL for this command".
+      exit 1
+    fi
     ip=$2
   fi
-
+  
   case $option in
     rpi)
+      if [ $# -gt 1 ]
+      then
+        echo "Too many arguments."
+        discover_help
+        exit 1
+      fi
       nmap --iflist | grep DC:A6:32
       nmap --iflist | grep B8:27:EB
       ;;
@@ -19,6 +38,12 @@ function discover {
       nmap -v -A -T4  $ip
       ;;
     interface)
+      if [ $# -gt 1 ]
+      then
+        echo "Too many arguments."
+        discover_help
+        exit 1
+      fi 
       nmap --iflist
       ;; 
     ping)
@@ -26,9 +51,11 @@ function discover {
       ;;
     ports)
       nmap --open $ip
+      ;;
     *)
       echo "Unknown operation provided." 1>&2
       discover_help
+      exit 1
   esac
 
 }
@@ -43,7 +70,7 @@ function discover_help {
   echo "Example:"
   echo " $(basename "$0") discover rpi"
   echo "    Detects raspberry pis on the network."
-  echo " $(basename "$0") discover ip 192.168.7.149"
+  echo " $(basename "$0") discover scan 192.168.7.149"
   echo "    Performs a network scan of the provided ip address."
   echo " $(basename "$0") discover scan scanme.nmap.org"
   echo "    Performs a network scan of the provided url."

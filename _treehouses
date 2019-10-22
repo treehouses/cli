@@ -8,8 +8,9 @@ _treehouses_complete()
   commands="ap apchannel bluetooth bootoption bridge burn button clone container \ 
               coralenv default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
-              rebootneeded rename restore rtc services ssh sshkey sshtunnel staticwifi \
+              rebootneeded rename restore rtc services speedtest ssh sshkey sshtunnel staticwifi \
               temperature timezone tor upgrade uptimes version vnc wifi wificountry" 
+
        	
   ap_cmdas="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
@@ -23,6 +24,9 @@ _treehouses_complete()
               coralenv default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
               rebootneeded rename restore rtc services ssh sshkey sshtunnel staticwifi \
+              temperature timezone tor upgrade uptimes version vnc wifi wificountry" 
+
+              rebootneeded rename restore rtc services speedtest ssh sshkey sshtunnel staticwifi \
               temperature timezone tor upgrade uptimes version vnc wifi wificountry" 
   led_cmds="green red mode"
   memory_cmds="total used free"

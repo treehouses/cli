@@ -61,35 +61,39 @@ function sshkey () {
   		if ! [ -s /root/.ssh/authorized_keys ]; then
   			echo "The list of keys is empty."
   		else
+        y=0
   			while IFS= read -r line
   			do
   				x=$(echo $line | cut -d' ' -f3)
   				if [[ $x == "$2" ]]; then
-  					sed -i "\|$2|d" /root/.ssh/authorized_keys
-  					echo "Key(s) for $2 successfully deleted"
-  					break
-  				else
-  					echo "No keys for this user were found."
-  					break
-  				fi
+  					sed -i "\|$line|d" /root/.ssh/authorized_keys
+  					y=$(( $y+1 ))
+          fi
   			done < "/root/.ssh/authorized_keys"
-  		fi
-  	else
+        if [ $y == "0" ]; then
+          echo "No keys were found for $2"
+  	    else
+          echo "$y key(s) were deleted for $2"
+        fi
+      fi
+    else
   		if ! [ -s /root/.ssh/authorized_keys ]; then
   			echo "The list of keys is empty."
   		else
+        y=0
   			while IFS= read -r line
   			do
   				x=$(echo $line | cut -d' ' -f3)
   				if [[ $x == "$2" ]]; then
-  					sed -i "\|$2|d" /home/pi/.ssh/authorized_keys
-  					echo "Key(s) for $2 successfully deleted"
-  					break
-  				else
-  					echo "No keys for this user were found."
-  					break
+  					sed -i "\|$line|d" /home/pi/.ssh/authorized_keys
+            y=$(( $y+1 ))
   				fi
   			done < "/home/pi/.ssh/authorized_keys"
+        if [ $y == "0" ]; then
+          echo "No keys were found for $2"
+        else
+          echo "$y key(s) were deleted for $2"
+        fi
   		fi
   	fi
   elif [ "$1" == "addgithubgroup" ]; then

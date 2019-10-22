@@ -52,50 +52,50 @@ function sshkey () {
       sshkey add "$keys"
     fi
   elif [ "$1" == "deletegithubusername" ]; then
-  	if [ -z "$2" ]; then
-  		echo "Error: missing argument"
-  		echo "Usage: $(basename "$0") sshkey delete \"<key>\""
-  		exit 1
-  	fi
-  	if [ "$(detectrpi)" = "nonrpi" ]; then
-  		if ! [ -s /root/.ssh/authorized_keys ]; then
-  			echo "The list of keys is empty."
-  		else
+    if [ -z "$2" ]; then
+      echo "Error: missing argument"
+      echo "Usage: $(basename "$0") sshkey delete \"<key>\""
+      exit 1
+    fi
+    if [ "$(detectrpi)" = "nonrpi" ]; then
+      if ! [ -s /root/.ssh/authorized_keys ]; then
+        echo "The list of keys is empty."
+      else
         y=0
-  			while IFS= read -r line
-  			do
-  				x=$(echo $line | cut -d' ' -f3)
-  				if [[ $x == "$2" ]]; then
-  					sed -i "\|$line|d" /root/.ssh/authorized_keys
-  					y=$(( $y+1 ))
+        while IFS= read -r line
+        do
+          x=$(echo $line | cut -d' ' -f3)
+	  if [[ $x == "$2" ]]; then
+            sed -i "\|$line|d" /root/.ssh/authorized_keys
+	    y=$(( $y+1 ))
           fi
-  			done < "/root/.ssh/authorized_keys"
-        if [ $y == "0" ]; then
-          echo "No keys were found for $2"
-  	    else
-          echo "$y key(s) were deleted for $2"
-        fi
-      fi
-    else
-  		if ! [ -s /root/.ssh/authorized_keys ]; then
-  			echo "The list of keys is empty."
-  		else
-        y=0
-  			while IFS= read -r line
-  			do
-  				x=$(echo $line | cut -d' ' -f3)
-  				if [[ $x == "$2" ]]; then
-  					sed -i "\|$line|d" /home/pi/.ssh/authorized_keys
-            y=$(( $y+1 ))
-  				fi
-  			done < "/home/pi/.ssh/authorized_keys"
+        done < "/root/.ssh/authorized_keys"
         if [ $y == "0" ]; then
           echo "No keys were found for $2"
         else
           echo "$y key(s) were deleted for $2"
         fi
-  		fi
-  	fi
+      fi
+    else
+      if ! [ -s /root/.ssh/authorized_keys ]; then
+        echo "The list of keys is empty."
+      else
+        y=0
+  	while IFS= read -r line
+  	do
+  	  x=$(echo $line | cut -d' ' -f3)
+  	  if [[ $x == "$2" ]]; then
+            sed -i "\|$line|d" /home/pi/.ssh/authorized_keys
+            y=$(( $y+1 ))
+  	  fi
+        done < "/home/pi/.ssh/authorized_keys"
+        if [ $y == "0" ]; then
+          echo "No keys were found for $2"
+        else
+          echo "$y key(s) were deleted for $2"
+        fi
+      fi
+    fi
   elif [ "$1" == "addgithubgroup" ]; then
     if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
       echo "Error: missing arguments"

@@ -67,7 +67,7 @@ function sshkey () {
           x=$(echo $line | cut -d' ' -f3)
 	  if [[ $x == "$2" ]]; then
             sed -i "\|$line|d" /root/.ssh/authorized_keys
-	    y=(( $y+1 ))
+	    y=$(( y+1 ))
           fi
         done < "/root/.ssh/authorized_keys"
         if [ $y == "0" ]; then
@@ -86,7 +86,7 @@ function sshkey () {
   	  x=$(echo $line | cut -d' ' -f3)
   	  if [[ $x == "$2" ]]; then
             sed -i "\|$line|d" /home/pi/.ssh/authorized_keys
-            y=(( $y+1 ))
+            y=$(( y+1 ))
   	  fi
         done < "/home/pi/.ssh/authorized_keys"
         if [ $y == "0" ]; then

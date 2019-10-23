@@ -1,4 +1,4 @@
-# npm i @treehouses/cli
+# npm i -g --unsafe-perm @treehouses/cli
 
 [![Build Status](https://travis-ci.org/treehouses/cli.svg?branch=master)](https://travis-ci.org/treehouses/cli)
 [![npm version](https://badge.fury.io/js/%40treehouses%2Fcli.svg)](https://www.npmjs.com/package/%40treehouses%2Fcli)

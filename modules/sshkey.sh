@@ -77,7 +77,7 @@ function sshkey () {
         fi
       fi
     else
-      if ! [ -s /root/.ssh/authorized_keys ]; then
+      if ! [ -s /home/pi/.ssh/authorized_keys ]; then
         echo "The list of keys is empty."
       else
         y=0

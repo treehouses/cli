@@ -15,7 +15,7 @@ function delgituserfromfile () {
     if [ "$y" == "0" ]; then
       echo "No keys were found for $1"
     else
-      echo "$y key(s) were deleted for $1"
+      echo "$y key(s) were deleted from $2"
     fi
   fi
 }

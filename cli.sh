@@ -113,16 +113,15 @@ case $1 in
     checkroot
     ethernet "$2" "$3" "$4" "$5"
     ;;
-  discover)
-    checkrpi
-    shift
-    discover "$@"
-    ;;
   ap)
     checkrpi
     checkroot
     shift
     ap "$@"
+    ;;
+  discover)
+    shift
+    discover "$@"
     ;;
   timezone)
     checkroot

@@ -1,24 +1,23 @@
 #!/bin/bash
 
 function delgituserfromfile () {
-      if ! [ -s "$2" ]; then
-        echo "The list of keys is empty."
-      else
-        y=0
-        while IFS= read -r line
-        do
-          x=$(echo $line | cut -d' ' -f3)
-	  if [[ "$x" == "$1" ]]; then
-            sed -i "\|$line|d" "$2"
-	    y=$(( y+1 ))
-          fi
-        done < "$2"
-        if [ "$y" == "0" ]; then
-          echo "No keys were found for $1"
-        else
-          echo "$y key(s) were deleted for $1"
-        fi
+  if ! [ -s "$2" ]; then
+    echo "The list of keys is empty."
+  else
+    y=0
+    while IFS= read -r line ; do
+      x=$(echo $line | cut -d' ' -f3)
+      if [[ "$x" == "$1" ]]; then
+        sed -i "\|$line|d" "$2"
+        y=$(( y+1 ))
       fi
+    done < "$2"
+    if [ "$y" == "0" ]; then
+      echo "No keys were found for $1"
+    else
+      echo "$y key(s) were deleted for $1"
+    fi
+  fi
 }
 
 function sshkey () {

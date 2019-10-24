@@ -28,16 +28,23 @@ function sshkey () {
       echo "Error: missing argument"
       echo "Usage: $(basename "$0") sshkey delete \"<key>\""
       exit 1
-    fi  
-    sed -i "/^$2/d" /root/.ssh/authorized_keys
-    if [ "$(detectrpi)" != "nonrpi" ]; then
-      sed -i "/^$2/d" /home/pi/.ssh/authorized_keys
     fi
+    if [ "$2" == "ssh-rsa" ]; then
+      echo "Error: missing qoutes"
+      echo "Usage: $(basename "$0") sshkey delete \"<key>\""
+      exit 1
+    fi
+    sed -i "\|$2|d" /root/.ssh/authorized_keys
+    if [ "$(detectrpi)" != "nonrpi" ]; then
+      sed -i "\|$2|d" /home/pi/.ssh/authorized_keys
+    fi
+    echo "$2 is deleted."
   elif [ "$1" == "deleteall" ]; then
     rm /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then
       rm /home/pi/.ssh/authorized_keys
     fi
+    echo "all sshkeys are deleted."
   elif [ "$1" == "addgithubusername" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing argument"

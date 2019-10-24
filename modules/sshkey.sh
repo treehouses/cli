@@ -1,5 +1,26 @@
 #!/bin/bash
 
+function delgituserfromfile () {
+      if ! [ -s "$2" ]; then
+        echo "The list of keys is empty."
+      else
+        y=0
+        while IFS= read -r line
+        do
+          x=$(echo $line | cut -d' ' -f3)
+	  if [[ "$x" == "$1" ]]; then
+            sed -i "\|$line|d" "$2"
+	    y=$(( y+1 ))
+          fi
+        done < "$2"
+        if [ "$y" == "0" ]; then
+          echo "No keys were found for $1"
+        else
+          echo "$y key(s) were deleted for $1"
+        fi
+      fi
+}
+
 function sshkey () {
   if [ "$1" == "add" ]; then
     shift
@@ -54,47 +75,12 @@ function sshkey () {
   elif [ "$1" == "deletegithubusername" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing argument"
-      echo "Usage: $(basename "$0") sshkey delete \"<key>\""
+      echo "Usage: $(basename "$0") sshkey deletegithubusername \"<username>\""
       exit 1
     fi
-    if [ "$(detectrpi)" = "nonrpi" ]; then
-      if ! [ -s /root/.ssh/authorized_keys ]; then
-        echo "The list of keys is empty."
-      else
-        y=0
-        while IFS= read -r line
-        do
-          x=$(echo $line | cut -d' ' -f3)
-	  if [[ $x == "$2" ]]; then
-            sed -i "\|$line|d" /root/.ssh/authorized_keys
-	    y=$(( y+1 ))
-          fi
-        done < "/root/.ssh/authorized_keys"
-        if [ $y == "0" ]; then
-          echo "No keys were found for $2"
-        else
-          echo "$y key(s) were deleted for $2"
-        fi
-      fi
-    else
-      if ! [ -s /home/pi/.ssh/authorized_keys ]; then
-        echo "The list of keys is empty."
-      else
-        y=0
-  	while IFS= read -r line
-  	do
-  	  x=$(echo $line | cut -d' ' -f3)
-  	  if [[ $x == "$2" ]]; then
-            sed -i "\|$line|d" /home/pi/.ssh/authorized_keys
-            y=$(( y+1 ))
-  	  fi
-        done < "/home/pi/.ssh/authorized_keys"
-        if [ $y == "0" ]; then
-          echo "No keys were found for $2"
-        else
-          echo "$y key(s) were deleted for $2"
-        fi
-      fi
+    delgituserfromfile "$2" "/root/.ssh/authorized_keys"
+    if [ "$(detectrpi)" != "nonrpi" ]; then
+      delgituserfromfile "$2" "/home/pi/.ssh/authorized_keys"
     fi
   elif [ "$1" == "addgithubgroup" ]; then
     if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then

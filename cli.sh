@@ -46,6 +46,7 @@ source "$SCRIPTFOLDER/modules/version.sh"
 source "$SCRIPTFOLDER/modules/vnc.sh"
 source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
+source "$SCRIPTFOLDER/modules/wifistatus.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
@@ -153,6 +154,9 @@ case $1 in
     checkrpi
     checkroot
     wificountry "$2"
+    ;;
+  wifistatus)
+    wifistatus
     ;;
   sshtunnel)
     checkroot

@@ -50,7 +50,7 @@ source "$SCRIPTFOLDER/modules/wifistatus.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
-
+source "$SCRIPTFOLDER/modules/discover.sh"
 
 
 case $1 in
@@ -119,6 +119,10 @@ case $1 in
     checkroot
     shift
     ap "$@"
+    ;;
+  discover)
+    shift
+    discover "$@"
     ;;
   timezone)
     checkroot

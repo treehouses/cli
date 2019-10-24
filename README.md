@@ -22,6 +22,8 @@ image                                     returns version of the system image in
 detectrpi                                 detects the hardware version of a raspberry pi
 detect                                    detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
+discover <rpi|scan|interface|ping|ports>  performs network scan and discovers all raspberry pis on the network
+         [ipaddress|url]
 wifi <ESSID> [password]                   connects to a wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]

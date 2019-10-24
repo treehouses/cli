@@ -3,6 +3,7 @@
 function delgituserfromfile () {
   if ! [ -s "$2" ]; then
     echo "The list of keys is empty."
+    exit 0
   else
     y=0
     while IFS= read -r line ; do
@@ -13,7 +14,7 @@ function delgituserfromfile () {
       fi
     done < "$2"
     if [ "$y" == "0" ]; then
-      echo "No keys were found for $1"
+      echo "No keys were found in $2"
     else
       echo "$y key(s) were deleted from $2"
     fi

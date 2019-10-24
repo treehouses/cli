@@ -25,22 +25,22 @@ function wifistatus {
         signal=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p' | sed -e 's/Signal level=//g' | sed -e 's/dBm//g')
         signalStrength=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p' | sed -e 's/Signal level=//g')
         echo "Signal strength is $signalStrength"
-        if [ "$signal" -gt -40 -a "$signal" -lt -29 ] ; then
+        if [ "$signal" -gt -40 ] && [ "$signal" -lt -29 ] ; then
           echo "You have a perfect signal"
         fi
-        if [ "$signal" -gt -50 -a "$signal" -lt -39 ] ; then
+        if [ "$signal" -gt -50 ] && [ "$signal" -lt -39 ] ; then
           echo "You have an excellent signal"
         fi
-        if [ "$signal" -gt -60 -a "$signal" -lt -49 ] ; then
+        if [ "$signal" -gt -60 ] && [ "$signal" -lt -49 ] ; then
           echo "You have a good signal"
         fi
-        if [ "$signal" -gt -70 -a "$signal" -lt -59 ] ; then
+        if [ "$signal" -gt -70 ] && [ "$signal" -lt -59 ] ; then
           echo "You have an okay signal"
         fi
-        if [ "$signal" -gt -80 -a "$signal" -lt -69 ] ; then
+        if [ "$signal" -gt -80 ] && [ "$signal" -lt -69 ] ; then
           echo "You have a poor signal"
         fi
-        if [ "$signal" -gt -90 -a "$signal" -lt -79 ] ; then
+        if [ "$signal" -gt -90 ] && [ "$signal" -lt -79 ] ; then
           echo "You have a bad signal"
         fi
       fi

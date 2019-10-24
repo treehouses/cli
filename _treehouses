@@ -34,7 +34,7 @@ _treehouses_complete()
 
 # services_cmds="" Think about it, a little bit complicated
 
-  sshkey_cmds="add list delete deleteal addgithubusername addgithubgroup"
+  sshkey_cmds="add list delete deleteal addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
   temperature_cmds="celsius"

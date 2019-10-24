@@ -1,5 +1,26 @@
 #!/bin/bash
 
+function deleteuserfromfile () {
+  if ! [ -s "$2" ]; then
+    echo "The list of keys is empty."
+    exit 0
+  else
+    y=0
+    while IFS= read -r line ; do
+      x=$(echo $line | cut -d' ' -f3)
+      if [[ "$x" == "$1" ]]; then
+        sed -i "\|$line|d" "$2"
+        y=$(( y+1 ))
+      fi
+    done < "$2"
+    if [ "$y" == "0" ]; then
+      echo "No keys were found in $2"
+    else
+      echo "$y key(s) were deleted from $2"
+    fi
+  fi
+}
+
 function sshkey () {
   if [ "$1" == "add" ]; then
     shift
@@ -56,6 +77,16 @@ function sshkey () {
       keys=$(sed 's#$# '$2'#' <<< $keys)
       sshkey add "$keys"
     fi
+  elif [ "$1" == "deletegithubusername" ]; then
+    if [ -z "$2" ]; then
+      echo "Error: missing argument"
+      echo "Usage: $(basename "$0") sshkey deletegithubusername \"<username>\""
+      exit 1
+    fi
+    deleteuserfromfile "$2" "/root/.ssh/authorized_keys"
+    if [ "$(detectrpi)" != "nonrpi" ]; then
+      deleteuserfromfile "$2" "/home/pi/.ssh/authorized_keys"
+    fi
   elif [ "$1" == "addgithubgroup" ]; then
     if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
       echo "Error: missing arguments"
@@ -92,6 +123,9 @@ function sshkey_help () {
   echo ""
   echo "  $(basename "$0") sshkey addgithubusername <username>"
   echo "      Downloads the public keys of the github username and adds them to authorized_keys"
+  echo ""
+  echo "  $(basename "$0") sshkey deletegithubusername <username>"
+  echo "      Deletes all ssh keys related to this user"
   echo ""
   echo "  $(basename "$0") sshkey addgithubgroup <organization> <team_name> <access_token>"
   echo "      Downloads the public keys of the group members and adds them to authorized_keys"

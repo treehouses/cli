@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function delgituserfromfile () {
+function deleteuserfromfile () {
   if ! [ -s "$2" ]; then
     echo "The list of keys is empty."
     exit 0
@@ -78,9 +78,9 @@ function sshkey () {
       echo "Usage: $(basename "$0") sshkey deletegithubusername \"<username>\""
       exit 1
     fi
-    delgituserfromfile "$2" "/root/.ssh/authorized_keys"
+    deleteuserfromfile "$2" "/root/.ssh/authorized_keys"
     if [ "$(detectrpi)" != "nonrpi" ]; then
-      delgituserfromfile "$2" "/home/pi/.ssh/authorized_keys"
+      deleteuserfromfile "$2" "/home/pi/.ssh/authorized_keys"
     fi
   elif [ "$1" == "addgithubgroup" ]; then
     if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then

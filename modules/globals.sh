@@ -1,5 +1,6 @@
 #!/bin/bash
 TEMPLATES="$SCRIPTFOLDER/templates"
+LOGFILE="/var/log/treehouses.log"
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
@@ -7,33 +8,33 @@ NC='\033[0m'
 function start_service {
   if [ "$(systemctl is-active "$1" 2>/dev/null)" = "inactive" ]
   then
-    systemctl start "$1" >/dev/null 2>/dev/null
+    systemctl start "$1" &>>${LOGFILE}
   fi
 }
 
 function restart_service {
-  systemctl stop "$1" >/dev/null 2>/dev/null
-  systemctl start "$1" >/dev/null 2>/dev/null
+  systemctl stop "$1" &>>${LOGFILE}
+  systemctl start "$1" &>>${LOGFILE}
 }
 
 function stop_service {
   if [ "$(systemctl is-active "$1" 2>/dev/null)" = "active" ]
   then
-    systemctl stop "$1" >/dev/null 2>/dev/null
+    systemctl stop "$1" &>>${LOGFILE}
   fi
 }
 
 function enable_service {
   if [ "$(systemctl is-enabled "$1" 2>/dev/null)" = "disabled" ]
   then
-    systemctl enable "$1" >/dev/null 2>/dev/null
+    systemctl enable "$1" &>>${LOGFILE}
   fi
 }
 
 function disable_service {
   if [ "$(systemctl is-enabled "$1" 2>/dev/null)" = "enabled" ]
   then
-    systemctl disable "$1" >/dev/null 2>/dev/null
+    systemctl disable "$1" &>>${LOGFILE}
   fi
 }
 

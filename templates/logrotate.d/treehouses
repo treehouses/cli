@@ -1,0 +1,7 @@
+/var/log/treehouses.log {
+    size 32k
+    rotate 2
+    compress
+    copytruncate
+}
+

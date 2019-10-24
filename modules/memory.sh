@@ -20,53 +20,6 @@ function memory_total() {
   esac
 }
 
-function memory() {
-
-    if [ "$1" == "total" ] ; then
-    memory_total $2
-    echo "$t";
-    exit 0
-  fi
-
-  if [ "$1" == "used" ] ; then
-    memory_used $2
-    echo "$ubc";
-    exit 0
-  fi
-
-  if [ "$1" == "free" ] ; then
-    memory_free $2
-    echo "$f";
-    exit 0
-  fi
-    
-
- option=$1
- case $option in
-    '-g')
-      memory_total '-g'
-      memory_used '-g' 
-      memory_free '-g' 
-      echo "Your rpi has $t gigabytes of total memory with $ubc gigabytes used and $f gigabytes available"
-      ;;
-    '-m')
-      memory_total '-m'
-      memory_used '-m' 
-      memory_free '-m' 
-      echo "Your rpi has $t megabytes of total memory with $ubc megabytes used and $f megabytes available"
-      ;;
-    '')
-      memory_total "$option"
-      memory_used "$option"
-      memory_free "$option" 
-      echo "Your rpi has $t bytes of total memory with $ubc bytes used and $f bytes available"
-      ;;
-    *)
-        echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory )"
-        exit 1  
-  esac
-}
-
 function memory_used {
   option=$1
   case $option in 
@@ -112,6 +65,53 @@ function memory_free {
       echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory')"
       exit 1  
       ;;
+  esac
+}
+
+function memory() {
+
+    if [ "$1" == "total" ] ; then
+    memory_total $2
+    echo "$t";
+    exit 0
+  fi
+
+  if [ "$1" == "used" ] ; then
+    memory_used $2
+    echo "$ubc";
+    exit 0
+  fi
+
+  if [ "$1" == "free" ] ; then
+    memory_free $2
+    echo "$f";
+    exit 0
+  fi
+    
+
+ option=$1
+ case $option in
+    '-g')
+      memory_total '-g'
+      memory_used '-g' 
+      memory_free '-g' 
+      echo "Your rpi has $t gigabytes of total memory with $ubc gigabytes used and $f gigabytes available"
+      ;;
+    '-m')
+      memory_total '-m'
+      memory_used '-m' 
+      memory_free '-m' 
+      echo "Your rpi has $t megabytes of total memory with $ubc megabytes used and $f megabytes available"
+      ;;
+    '')
+      memory_total "$option"
+      memory_used "$option"
+      memory_free "$option" 
+      echo "Your rpi has $t bytes of total memory with $ubc bytes used and $f bytes available"
+      ;;
+    *)
+        echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory )"
+        exit 1  
   esac
 }
 

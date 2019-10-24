@@ -28,6 +28,7 @@ discover <rpi|scan|interface|ping|ports>  performs network scan and discovers al
 wifi <ESSID> [password]                   connects to a wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]
+wifistatus                                displays signal strength in dBm and layman nomenclature
 bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot
        [password] [hotspotPassword]
 container <none|docker|balena>            enables (and start) the desired container

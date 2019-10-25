@@ -70,7 +70,7 @@ function reboots_help {
   echo ""
   echo "  Usage: $(basename "$0") reboots <now|in|cron|daily|weekly|monthly>"
   echo ""
-  echo "  Reboots system at selected time"
+  echo "  Reboots system at selected time and removes it if reboot task already active"
   echo ""
   echo "  Example:"
   echo "  $(basename "$0") reboots daily"

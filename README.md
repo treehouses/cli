@@ -51,7 +51,7 @@ clone [device path]                       clones the current SDCard onto a secon
 restore [device path]                     restores a treehouses image to an SDCard or specified device
 burn [device path]                        download and burns the latest treehouses image to the SDcard or specified device
 rebootneeded                              shows if reboot is required to apply changes
-reboots <now|in|cron>                     reboots at given frequency
+reboots <now|in|cron>                     reboots at given frequency | removes it if reboot task active
         <daily|weekly|monthly>
 internet                                  checks if the rpi has access to internet
 services [service_name] [format]          outputs or install the desired service

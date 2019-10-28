@@ -10,6 +10,10 @@ function wifistatus {
   #   bad=(-80 -81 -82 -83 -84 -85 -86 -87 -88 -89 -90)
 
   case "$1" in
+    #display strength of signal in dBm and layman terms
+    signal=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p' | sed -e 's/Signal level=//g' | sed -e 's/dBm//g')
+    signalStrength=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p' | sed -e 's/Signal level=//g')
+
     "")
       #check if device has wifi
       if iwconfig wlan0 2>&1 | grep -q "No such device"; then
@@ -21,9 +25,6 @@ function wifistatus {
       if iwconfig wlan0 | grep -q "ESSID:off/any"; then
         echo "Error: you are not on a wireless connection"
       else
-        #display strength of signal in dBm and layman terms
-        signal=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p' | sed -e 's/Signal level=//g' | sed -e 's/dBm//g')
-        signalStrength=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p' | sed -e 's/Signal level=//g')
         echo "Signal strength is $signalStrength"
         if [ "$signal" -gt -40 ] && [ "$signal" -lt -24 ] ; then
           echo "You have a perfect signal"
@@ -45,6 +46,31 @@ function wifistatus {
         fi
       fi
       ;;
+
+    "simple")
+      	if [ "$signal" -gt -40 ] && [ "$signal" -lt -24 ] ; then
+          echo "You have a perfect signal"
+        fi
+        if [ "$signal" -gt -50 ] && [ "$signal" -lt -39 ] ; then
+          echo "You have an excellent signal"
+        fi
+        if [ "$signal" -gt -60 ] && [ "$signal" -lt -49 ] ; then
+          echo "You have a good signal"
+        fi
+        if [ "$signal" -gt -70 ] && [ "$signal" -lt -59 ] ; then
+          echo "You have an okay signal"
+        fi
+        if [ "$signal" -gt -80 ] && [ "$signal" -lt -69 ] ; then
+          echo "You have a poor signal"
+        fi
+        if [ "$signal" -gt -90 ] && [ "$signal" -lt -79 ] ; then
+          echo "You have a bad signal"
+        fi
+	;;
+
+    "dbm")
+	echo "$signal"
+	;;
 
     "*")
       wifistatus_help

@@ -160,7 +160,8 @@ case $1 in
     wificountry "$2"
     ;;
   wifistatus)
-    wifistatus
+    checkrpi
+    wifistatus "$2"
     ;;
   sshtunnel)
     checkroot

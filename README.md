@@ -15,8 +15,7 @@ help [command]                            gives you a more detailed info about t
 expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
 rename <hostname>                         changes hostname
 password <password>                       changes the password for 'pi' user
-sshkey <add|list|delete|deleteall>        used for adding or removing ssh keys for authentication
-       <addgithubusername|addgithubgroup>
+sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
 version                                   returns the version of cli.sh command
 image                                     returns version of the system image installed
 detectrpi                                 detects the hardware version of a raspberry pi

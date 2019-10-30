@@ -51,6 +51,19 @@ function sshkey () {
       keys=$(sed 's#$# '$2'#' <<< $keys)
       sshkey add "$keys"
     fi
+  elif [ "$1" == "github" ] && ["$2" == "teamadd"]; then
+    if [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
+      echo "Error: missing arguments"
+      echo "Usage: $(basename "$0") sshkey addgithubgroup <organization> <team_name> <access_token>"
+      exit 1
+    fi
+    teams=$(curl -s -X GET "https://api.github.com/orgs/$2/teams" -H "Authorization: token $4")
+    team_id=$(echo "$teams" | jq ".[] | select(.name==\"$3\").id")
+    members=$(curl -s -X GET "https://api.github.com/teams/$team_id/members" -H "Authorization: token $4" | jq ".[].login" -r)
+    while read -r member; do
+      sshkey addgithubusername "$member"
+    done <<< "$members"
+#DEPRECATED####
   elif [ "$1" == "addgithubgroup" ]; then
     if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
       echo "Error: missing arguments"
@@ -65,7 +78,7 @@ function sshkey () {
     done <<< "$members"
   fi
 }
-
+###############
 function sshkey_help () {
   echo ""
   echo "Usage: $(basename "$0") sshkey <add|list|delete|addgithubusername|addgithubgroup>"

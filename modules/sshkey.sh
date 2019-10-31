@@ -49,7 +49,7 @@ function sshkey () {
   elif [ "$1" == "github" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing arguments"
-      echo "Usage: $(basename "$0") sshkey github <adduser> <deleteuser> <teamadd>"
+      echo "Usage: $(basename "$0") sshkey github <adduser|deleteuser|addteam>"
       exit 1
     fi
     if [ "$2" == "adduser" ]; then

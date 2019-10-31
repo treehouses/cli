@@ -1,25 +1,5 @@
 #!/bin/bash
 
-function deleteuserfromfile () {
-  if ! [ -s "$2" ]; then
-    echo "The list of keys is empty."
-    exit 0
-  else
-    y=0
-    while IFS= read -r line ; do
-      x=$(echo $line | cut -d' ' -f3)
-      if [[ "$x" == "$1" ]]; then
-        sed -i "\|$line|d" "$2"
-        y=$(( y+1 ))
-      fi
-    done < "$2"
-    if [ "$y" == "0" ]; then
-      echo "No keys were found in $2"
-    else
-      echo "$y key(s) were deleted from $2"
-    fi
-  fi
-}
 
 function sshkey () {
   if [ "$1" == "add" ]; then
@@ -83,10 +63,20 @@ function sshkey () {
       echo "Usage: $(basename "$0") sshkey deletegithubusername \"<username>\""
       exit 1
     fi
-    deleteuserfromfile "$2" "/root/.ssh/authorized_keys"
-    if [ "$(detectrpi)" != "nonrpi" ]; then
-      deleteuserfromfile "$2" "/home/pi/.ssh/authorized_keys"
-    fi
+    githubusername="$2"
+    auth_files="/root/.ssh/authorized_keys /home/pi/.ssh/authorized_keys"
+    for file in $auth_files; do
+      if [ -f "$file" ]; then
+        if grep -q " $githubusername$" $file; then
+          sed -i "/ $githubusername$/d" $file
+	  echo "$githubusername's key(s) deleted from $file"
+        else
+          echo "$githubusername does not exist"
+        fi
+      else
+        echo "$file does not exist."
+      fi
+    done
   elif [ "$1" == "addgithubgroup" ]; then
     if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
       echo "Error: missing arguments"

@@ -70,14 +70,13 @@ function sshkey () {
         sshkey add "$keys"
       fi
   #  DELETEUSER NOT YET MERGED TO MASTER
-  #  elif ["$2" == "deleteuser"]; then
+  #  elif [ "$2" == "deleteuser" ]; then
   #    if [ -z "$3" ]; then
   #      echo "Error: missing argument"
   #      echo "Usage: $(basename "$0") sshkey deleteuser <username>"
   #      exit 1
   #   *deleteuser code goes here*
-      fi
-    elif ["$2" == "teamadd"]; then
+    elif [ "$2" == "teamadd" ]; then
       if [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
       echo "Error: missing arguments"
       echo "Usage: $(basename "$0") sshkey github teamadd <organization> <team_name> <access_token>"

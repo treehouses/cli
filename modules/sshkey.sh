@@ -124,7 +124,7 @@ function sshkey_help () {
   echo "  $(basename "$0") sshkey deleteall"
   echo "      Deletes all ssh keys"
   echo ""
-  echo "  $(basename "$0") sshkey github add|delete <username>"
+  echo "  $(basename "$0") sshkey github adduser|deleteuser <username>"
   echo "      Downloads or deletes the public keys of the github username from/to the authorized_keys file."
   echo ""
   echo "  $(basename "$0") sshkey github teamadd <organization> <team_name> <access_token>"

@@ -3,7 +3,7 @@
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 
-source "$SCRIPTFOLDER/modules/detectrpi.sh" 
+source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
 source "$SCRIPTFOLDER/modules/apchannel.sh"
@@ -51,7 +51,7 @@ source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
 source "$SCRIPTFOLDER/modules/discover.sh"
-
+source "$SCRIPTFOLDER/modules/camera.sh"
 
 case $1 in
   expandfs)
@@ -258,6 +258,10 @@ case $1 in
   speedtest)
     shift
     speedtest "$@"
+    ;;
+  camera)
+    checkrpi
+    camera "$2" "$3"
     ;;
   help)
     help "$2"

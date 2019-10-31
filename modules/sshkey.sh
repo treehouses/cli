@@ -58,15 +58,15 @@ function sshkey () {
       echo "Error: missing arguments"
       echo "Usage: $(basename "$0") sshkey github <adduser> <deleteuser> <teamadd>"
     fi
-    if [ "$2" == "adduser" ]; then
-      if [ -z "$3" ]; then
+    if [ "$3" == "adduser" ]; then
+      if [ -z "$4" ]; then
         echo "Error: missing argument"
         echo "Usage: $(basename "$0") sshkey adduser <username>"
         exit 1
       fi
-      keys=$(curl -s "https://github.com/$2.keys")
+      keys=$(curl -s "https://github.com/$3.keys")
       if [ ! -z "$keys" ]; then
-        keys=$(sed 's#$# '$2'#' <<< $keys)
+        keys=$(sed 's#$# '$3'#' <<< $keys)
         sshkey add "$keys"
       fi
   #  DELETEUSER NOT YET MERGED TO MASTER
@@ -82,9 +82,9 @@ function sshkey () {
       echo "Usage: $(basename "$0") sshkey github teamadd <organization> <team_name> <access_token>"
       exit 1
       fi
-      teams=$(curl -s -X GET "https://api.github.com/orgs/$2/teams" -H "Authorization: token $4")
-      team_id=$(echo "$teams" | jq ".[] | select(.name==\"$3\").id")
-      members=$(curl -s -X GET "https://api.github.com/teams/$team_id/members" -H "Authorization: token $4" | jq ".[].login" -r)
+      teams=$(curl -s -X GET "https://api.github.com/orgs/$3/teams" -H "Authorization: token $5")
+      team_id=$(echo "$teams" | jq ".[] | select(.name==\"$4\").id")
+      members=$(curl -s -X GET "https://api.github.com/teams/$team_id/members" -H "Authorization: token $5" | jq ".[].login" -r)
       while read -r member; do
         sshkey addgithubusername "$member"
       done <<< "$members"

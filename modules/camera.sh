@@ -4,6 +4,7 @@
 #    treehouses camera saveat "directory"
 #    treehouses camera fliph
 #    treehouses camera flipv
+#  add reboot needed and if statement checks for it
 
 function camera {
   directory="/home/pi/Pictures/"
@@ -13,7 +14,7 @@ function camera {
         sed -i "s/start_x=0/start_x=1/g" /boot/config.txt
         echo "Camera settings have been enabled. A reboot is needed in order to use the camera."
       else
-        echo "Camera is already enabled. Use `$(basename "$0") camera capture` to take a photo."
+        echo "Camera is already enabled. Use \"$(basename "$0") camera capture\" to take a photo."
         echo "If you are having issues using the camera, try rebooting."
       fi
       ;;
@@ -31,7 +32,7 @@ function camera {
       if grep "start_x=0" /boot/config.txt ; then
         echo "You need to enable AND reboot first in order to take pictures."
       else
-        echo "Camera is capturing and storying a time-stamped photo in ${directory}."
+        echo "Camera is capturing and storing a time-stamped photo in ${directory}."
         raspistill -n -o "${directory}$(basename "$0")_$(date +"%Y-%m-%d_%H:%M:%S").jpg"
       fi
       ;;
@@ -55,12 +56,12 @@ echo "         $(basename "$0") camera [capture]       captures and stores a pic
 echo ""
 echo "  Example:"
 echo "    $(basename "$0") camera on"
-echo "      Camera settings have been enabled. A reboot is needed in order to use the camera"
+echo "      Camera settings have been enabled. A reboot is needed in order to use the camera."
 echo ""
 echo "    $(basename "$0") camera on"
-echo "      Camera is already enabled. Use `$(basename "$0") camera capture` to take a photo."
+echo "      Camera is already enabled. Use \"$(basename "$0") camera capture\" to take a photo."
 echo ""
 echo "    $(basename "$0") camera capture"
-echo "      Camera is capturing and storying a time-stamped photo in /home/pi/Pictures."
+echo "      Camera is capturing and storing a time-stamped photo in ${directory}."
 echo ""
 }

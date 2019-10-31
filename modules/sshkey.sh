@@ -75,6 +75,7 @@ function sshkey () {
         echo "Error: missing argument"
         echo "Usage: $(basename "$0") sshkey deleteuser <username>"
         exit 1
+      fi
       deleteuserfromfile "$2" "/root/.ssh/authorized_keys"
       if [ "$(detectrpi)" != "nonrpi" ]; then
         deleteuserfromfile "$2" "/home/pi/.ssh/authorized_keys"

@@ -46,10 +46,11 @@ source "$SCRIPTFOLDER/modules/version.sh"
 source "$SCRIPTFOLDER/modules/vnc.sh"
 source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
+source "$SCRIPTFOLDER/modules/wifistatus.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
-
+source "$SCRIPTFOLDER/modules/discover.sh"
 
 
 case $1 in
@@ -119,6 +120,10 @@ case $1 in
     shift
     ap "$@"
     ;;
+  discover)
+    shift
+    discover "$@"
+    ;;
   timezone)
     checkroot
     timezone "$2"
@@ -153,6 +158,10 @@ case $1 in
     checkrpi
     checkroot
     wificountry "$2"
+    ;;
+  wifistatus)
+    checkrpi
+    wifistatus "$2"
     ;;
   sshtunnel)
     checkroot

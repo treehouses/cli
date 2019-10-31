@@ -57,9 +57,10 @@ function sshkey () {
     if [ -z "$2" ]; then
       echo "Error: missing arguments"
       echo "Usage: $(basename "$0") sshkey github <adduser> <deleteuser> <teamadd>"
+      exit 1
     fi
-    if [ "$3" == "adduser" ]; then
-      if [ -z "$4" ]; then
+    if [ "$2" == "adduser" ]; then
+      if [ -z "$3" ]; then
         echo "Error: missing argument"
         echo "Usage: $(basename "$0") sshkey adduser <username>"
         exit 1
@@ -69,18 +70,20 @@ function sshkey () {
         keys=$(sed 's#$# '$3'#' <<< $keys)
         sshkey add "$keys"
       fi
-  #  DELETEUSER NOT YET MERGED TO MASTER
-  #  elif [ "$2" == "deleteuser" ]; then
-  #    if [ -z "$3" ]; then
-  #      echo "Error: missing argument"
-  #      echo "Usage: $(basename "$0") sshkey deleteuser <username>"
-  #      exit 1
-  #   *deleteuser code goes here*
+    elif [ "$2" == "deleteuser" ]; then
+      if [ -z "$3" ]; then
+        echo "Error: missing argument"
+        echo "Usage: $(basename "$0") sshkey deleteuser <username>"
+        exit 1
+      deleteuserfromfile "$2" "/root/.ssh/authorized_keys"
+      if [ "$(detectrpi)" != "nonrpi" ]; then
+        deleteuserfromfile "$2" "/home/pi/.ssh/authorized_keys"
+      fi
     elif [ "$2" == "teamadd" ]; then
       if [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
-      echo "Error: missing arguments"
-      echo "Usage: $(basename "$0") sshkey github teamadd <organization> <team_name> <access_token>"
-      exit 1
+        echo "Error: missing arguments"
+        echo "Usage: $(basename "$0") sshkey github teamadd <organization> <team_name> <access_token>"
+        exit 1
       fi
       teams=$(curl -s -X GET "https://api.github.com/orgs/$3/teams" -H "Authorization: token $5")
       team_id=$(echo "$teams" | jq ".[] | select(.name==\"$4\").id")

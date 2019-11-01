@@ -10,12 +10,17 @@ function camera {
   directory="/home/pi/Pictures/"
   case "$1" in
     "on")
-      if grep "start_x=0" /boot/config.txt ; then
-        sed -i "s/start_x=0/start_x=1/g" /boot/config.txt
-        echo "Camera settings have been enabled. A reboot is needed in order to use the camera."
+      if grep "# Enable Camera" /boot/config.txt ; then
+        if grep "start_x=0" /boot/config.txt ; then
+          sed -i "s/start_x=0/start_x=1/g" /boot/config.txt
+          echo "Camera settings have been enabled. A reboot is needed in order to use the camera."
+        else
+          echo "Camera is already enabled. Use \"$(basename "$0") camera capture\" to take a photo."
+          echo "If you are having issues using the camera, try rebooting."
+        fi
       else
-        echo "Camera is already enabled. Use \"$(basename "$0") camera capture\" to take a photo."
-        echo "If you are having issues using the camera, try rebooting."
+        echo -en "# Enable Camera\nstart_x=1\n" >> /boot/config.txt
+        echo "Camera has been enabled. Restart to initialize it."
       fi
       ;;
 
@@ -29,11 +34,17 @@ function camera {
       ;;
 
     "capture")
-      if grep "start_x=0" /boot/config.txt ; then
-        echo "You need to enable AND reboot first in order to take pictures."
+      if [ -d "${directory}" ]; then
+        if grep "start_x=0" /boot/config.txt ; then
+          echo "You need to enable AND reboot first in order to take pictures."
+        else
+          echo "Camera is capturing and storing a time-stamped photo in ${directory}."
+          raspistill -n -o "${directory}$(basename "$0")_$(date +"%Y-%m-%d_%H:%M:%S").jpg"
+        fi
       else
-        echo "Camera is capturing and storing a time-stamped photo in ${directory}."
-        raspistill -n -o "${directory}$(basename "$0")_$(date +"%Y-%m-%d_%H:%M:%S").jpg"
+        mkdir ${directory}
+        echo "Directory not found. Creating ${directory}"
+        camera "$1"
       fi
       ;;
 

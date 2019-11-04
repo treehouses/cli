@@ -8,6 +8,7 @@ source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
 source "$SCRIPTFOLDER/modules/apchannel.sh"
 source "$SCRIPTFOLDER/modules/bluetooth.sh"
+source "$SCRIPTFOLDER/modules/bluetoothid.sh"
 source "$SCRIPTFOLDER/modules/bridge.sh"
 source "$SCRIPTFOLDER/modules/burn.sh"
 source "$SCRIPTFOLDER/modules/button.sh"
@@ -45,9 +46,11 @@ source "$SCRIPTFOLDER/modules/version.sh"
 source "$SCRIPTFOLDER/modules/vnc.sh"
 source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
+source "$SCRIPTFOLDER/modules/wifistatus.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
-
+source "$SCRIPTFOLDER/modules/speedtest.sh"
+source "$SCRIPTFOLDER/modules/discover.sh"
 
 
 case $1 in
@@ -102,6 +105,10 @@ case $1 in
     checkroot
     bluetooth "$2"
     ;;
+  bluetoothid)
+    checkrpi
+    bluetoothid "$2"
+    ;;
   ethernet)
     checkrpi
     checkroot
@@ -112,6 +119,10 @@ case $1 in
     checkroot
     shift
     ap "$@"
+    ;;
+  discover)
+    shift
+    discover "$@"
     ;;
   timezone)
     checkroot
@@ -147,6 +158,10 @@ case $1 in
     checkrpi
     checkroot
     wificountry "$2"
+    ;;
+  wifistatus)
+    checkrpi
+    wifistatus "$2"
     ;;
   sshtunnel)
     checkroot
@@ -240,6 +255,10 @@ case $1 in
   temperature)
     checkrpi
     temperature "$2"
+    ;;
+  speedtest)
+    shift
+    speedtest "$@"
     ;;
   help)
     help "$2"

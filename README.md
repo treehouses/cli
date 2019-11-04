@@ -1,4 +1,4 @@
-# npm i @treehouses/cli
+# npm i -g --unsafe-perm @treehouses/cli
 
 [![Build Status](https://travis-ci.org/treehouses/cli.svg?branch=master)](https://travis-ci.org/treehouses/cli)
 [![npm version](https://badge.fury.io/js/%40treehouses%2Fcli.svg)](https://www.npmjs.com/package/%40treehouses%2Fcli)
@@ -15,20 +15,23 @@ help [command]                            gives you a more detailed info about t
 expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
 rename <hostname>                         changes hostname
 password <password>                       changes the password for 'pi' user
-sshkey <add|list|delete|deleteall>        used for adding or removing ssh keys for authentication
-       <addgithubusername|addgithubgroup>
+sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
 version                                   returns the version of cli.sh command
 image                                     returns version of the system image installed
 detectrpi                                 detects the hardware version of a raspberry pi
 detect                                    detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
+discover <rpi|scan|interface|ping|ports>  performs network scan and discovers all raspberry pis on the network
+         [ipaddress|url]
 wifi <ESSID> [password]                   connects to a wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]
+wifistatus                                displays signal strength in dBm and layman nomenclature
 bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot
        [password] [hotspotPassword]
 container <none|docker|balena>            enables (and start) the desired container
 bluetooth <on|off>                        switches between bluetooth hotspot mode / regular bluetooth and starts the service
+bluetoothid [number]                      displays the bluetooth network name with the 4 random digits attached
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
 apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system
@@ -62,4 +65,5 @@ coralenv [install|demo-on|demo-off]       plays with the coral environmental boa
          [demo-always-on]
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory 
 temperature [celsius]                     displays raspberry pi's CPU temperature
+speedtest                                 tests internet download and upload speed
 ```

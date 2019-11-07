@@ -41,7 +41,6 @@ function sshkey () {
     else
       echo "$2 not found in root keys."
     fi
-
     if [ "$(detectrpi)" != "nonrpi" ]; then
       if grep -Fxq "$2" /home/pi/.ssh/authorized_keys; then
         sed -i "/\b$2\b/d" /home/pi/.ssh/authorized_keys

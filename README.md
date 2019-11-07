@@ -49,7 +49,7 @@ ntp <local|internet>                      enables or disables time through ntp s
 networkmode                               outputs the current network mode
 button <off|bluetooth>                    gives the gpio pin 18 an action
 feedback <message>                        sends feedback
-clone [device path]                       clones the current SDCard onto a secondary SDCard or specified device
+clone [device path|--reboot]                       clones the current SDCard onto a secondary SDCard or specified device
 restore [device path]                     restores a treehouses image to an SDCard or specified device
 burn [device path]                        download and burns the latest treehouses image to the SDcard or specified device
 rebootneeded                              shows if reboot is required to apply changes

@@ -1,11 +1,39 @@
 #!/bin/bash
 
 function clone {
-  device="$1"
+	
+	if [ "$#" -gt 2 ]; then
+		echo "Too many arguments."
+		exit 1
+	fi
+	
+  if [ $2 ]; then
+		if [ $2 = "--reboot" ]; then
+			option=$2
+			device=$1
+			reboot=true
+		elif [ $1 = "--reboot" ]; then
+			option=$1
+			device=$2
+			#reboot=true
+		else 
+			echo "Incorrect command supplied"
+			exit 1
+		fi
+	elif [ $1 ]; then
+		if [ $1 = "--reboot" ]; then
+			option=$1
+			#reboot=true
+		else
+			device=$1
+		fi
+	fi
+			
+
   if [ -z "$device" ]; then
     device="/dev/sdb"
   fi
-
+	
   a=$(fdisk -l |grep /dev/mmcblk0: | grep -P '\d+ (?=bytes)' -o)
   #echo "$a - /dev/mmcblk0"
 
@@ -27,8 +55,14 @@ function clone {
     echo u > /proc/sysrq-trigger
     dd if=/dev/mmcblk0 bs=1M of="$device"
   fi
-
-  echo ; echo "A reboot is needed to re-enable write permissions to OS."
+	
+	
+	if [ -z $option ]; then
+  	echo ; echo "A reboot is needed to re-enable write permissions to OS."
+		exit 0
+	else
+		sudo reboot
+	fi
 }
 
 function clone_help {
@@ -42,5 +76,14 @@ function clone_help {
   echo "      Will clone the current system to /dev/sdb (by default)."
   echo ""
   echo "  $(basename "$0") clone /dev/sda"
-  echo "      Will clone the current system to /dev/sda"
+  echo "      Will clone the current system to /dev/sda."
+	echo ""
+	echo "	$(basename "$@") clone --reboot"	
+	echo " 			Will clone the current system to /dev/sdb and then reboot."
+	echo ""
+	echo "	$(basename "$@") clone --reboot /dev/sda"
+	echo "			Will clone the current system to /dev/sda and then reboot."
+	echo ""
+	echo "	$(basename "$@") clone /dev/sda --reboot"
+	echo "			Will clone the current system to /dev/sda and then reboot."
 }

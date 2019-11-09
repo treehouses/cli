@@ -53,7 +53,7 @@ function clone {
     dd if=/dev/mmcblk0 bs=1M of="$device"
   fi
   if [ -z $option ]; then
-    echo ; echo "A reboot is needed to re-enable write permissions to OS."
+    echo "A reboot is needed to re-enable write permissions to OS."
     exit 0
   else
     sudo reboot

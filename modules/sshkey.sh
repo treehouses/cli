@@ -178,7 +178,7 @@ function sshkey_help () {
   echo "      (DEPRECATED) Downloads the public keys of the github username and adds them to authorized_keys"
   echo ""
   echo "  $(basename "$0") sshkey deletegithubusername <username>"
-  echo "      Deletes all ssh keys related to this user"
+  echo "      (DEPRECATED) Deletes all ssh keys related to this user"
   echo ""
   echo "  $(basename "$0") sshkey addgithubgroup <organization> <team_name> <access_token>"
   echo "      (DEPRECATED) Downloads the public keys of the group members and adds them to authorized_keys"

@@ -50,17 +50,13 @@ function camera {
       ;;
 
     "capture")
-      if [ -d "${directory}" ]; then
-        if grep "start_x=0" /boot/config.txt ; then
-          echo "You need to enable AND reboot first in order to take pictures."
-        else
-          echo "Camera is capturing and storing a time-stamped photo in ${directory}."
-          raspistill -e png -n -o "${directory}$(basename "$0")-${timestamp}.png"
-        fi
+      mkdir -p ${directory}
+      if grep "start_x=0" /boot/config.txt ; then
+        echo "You need to enable AND reboot first in order to take pictures."
+	exit 1
       else
-        mkdir ${directory}
-        echo "Directory not found. Creating ${directory}"
-        camera "$1"
+        echo "Camera is capturing and storing a time-stamped photo in ${directory}."
+        raspistill -e png -n -o "${directory}$(basename "$0")-${timestamp}.png"
       fi
       ;;
 

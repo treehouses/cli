@@ -1,14 +1,30 @@
 #!/bin/bash
 
-# potential improvements:
-#    treehouses camera saveat "directory"
-#    treehouses camera fliph
-#    treehouses camera flipv
-#  add reboot needed and if statement checks for it
-
 function camera {
   directory="/home/pi/Pictures/"
+  timestamp=$(date +"%Y%m%d-%H%M%S")
   case "$1" in
+    "")
+	  if grep "# Enable Camera" /boot/config.txt ; then
+        if grep "start_x=0" /boot/config.txt ; then
+          echo "Config file has Camera settings which are currently disabled. Use \"$(basename "$0") help camera\" for more commands."
+        elif grep "start_x=1" /boot/config.txt ; then
+          echo "Config file has Camera settings which are currently enabled. Use \"$(basename "$0") help camera\" for more commands."
+        else
+		  echo "Error encountered. Run \"$(basename "$0") help camera\" for more commands."
+		  exit 1
+		fi
+      else
+        {
+		  "# Enable Camera
+		  start_x=0
+		  "
+		} >> /boot/config.txt
+        echo "Config file was not initialized for a Camera." 
+		echo "Run \"$(basename "$0") camera on\" and reboot to enable the camera for use."
+      fi
+      ;;
+
     "on")
       if grep "# Enable Camera" /boot/config.txt ; then
         if grep "start_x=0" /boot/config.txt ; then
@@ -19,8 +35,8 @@ function camera {
           echo "If you are having issues using the camera, try rebooting."
         fi
       else
-        echo -en "# Enable Camera\nstart_x=1\n" >> /boot/config.txt
-        echo "Camera has been enabled. Restart to initialize it."
+	    echo "Config settings have not been initialized for a Camera."
+	    echo "Run \"$(basename "$0") camera\" to initialize for camera use."		
       fi
       ;;
 
@@ -39,18 +55,13 @@ function camera {
           echo "You need to enable AND reboot first in order to take pictures."
         else
           echo "Camera is capturing and storing a time-stamped photo in ${directory}."
-          raspistill -n -o "${directory}$(basename "$0")_$(date +"%Y-%m-%d_%H:%M:%S").jpg"
+          raspistill -e png -n -o "${directory}$(basename "$0")-${timestamp}.png"
         fi
       else
         mkdir ${directory}
         echo "Directory not found. Creating ${directory}"
         camera "$1"
       fi
-      ;;
-
-    "")
-      camera_help
-      exit 0
       ;;
 
     "*")
@@ -62,15 +73,19 @@ function camera {
 
 function camera_help {
 echo ""
-echo "  Usage: $(basename "$0") camera <on|off>        enables or disables camera for [capture] use"
-echo "         $(basename "$0") camera [capture]       captures and stores a picture from camera onto pi's Desktop"
+echo "  Usage: $(basename "$0") camera [on|off|capture]      displays status of camera, enables or disables camera,"
+echo "                                                       captures and stores a picture from camera into pi's `Pictures` directory"
 echo ""
 echo "  Example:"
-echo "    $(basename "$0") camera on"
-echo "      Camera settings have been enabled. A reboot is needed in order to use the camera."
+echo "    $(basename "$0") camera"
+echo "      Config file has Camera settings which are currently disabled. Use \"$(basename "$0") help camera\" for more commands."
 echo ""
 echo "    $(basename "$0") camera on"
 echo "      Camera is already enabled. Use \"$(basename "$0") camera capture\" to take a photo."
+echo "      If you are having issues using the camera, try rebooting."
+echo ""
+echo "    $(basename "$0") camera off"
+echo "      Camera has been disabled. Reboot needed for settings to take effect."
 echo ""
 echo "    $(basename "$0") camera capture"
 echo "      Camera is capturing and storing a time-stamped photo in ${directory}."

@@ -261,7 +261,7 @@ case $1 in
     ;;
   camera)
     checkrpi
-    camera "$2" "$3"
+    camera "$2"
     ;;
   help)
     help "$2"

@@ -68,6 +68,6 @@ coralenv [install|demo-on|demo-off]       plays with the coral environmental boa
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory 
 temperature [celsius]                     displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
-camera <on|off>                           enables or disables camera for [capture] use
-       [capture]                          captures and stores a picture from camera onto pi's Desktop
+camera [on|off|capture]                   displays status of camera, enables or disables camera,
+                                          captures and stores a picture from camera into pi's `Pictures` directory
 ```

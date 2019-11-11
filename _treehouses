@@ -17,6 +17,7 @@ _treehouses_complete()
   bootoption_cmds="console desktop"
   bootoption_second_cmds="autologin"
   button_cmds="off bluetooth"
+  camera_cmds="on off capture"
   container_cmds="none docker balena"
   coralenv_cmds="install demo-on demo-off demo-always-on"
   help_cmds="ap apchannel bluetooth bootoption bridge burn button camera clone container \
@@ -141,6 +142,5 @@ vnc_cmds="on off info"
         ;;
     esac
   fi
-
 }
 	complete -F _treehouses_complete treehouses

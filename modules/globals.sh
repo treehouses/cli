@@ -46,7 +46,7 @@ function checkroot {
 }
 
 function checkrpi {
-	vagrant_var=$(uname -ar | cut -d ' ' -f 2) # check if it is a vagrant box 
+  vagrant_var=$(uname -ar | cut -d ' ' -f 2) # check if it is a vagrant box 
   if [[ "$(detectrpi)" == "nonrpi"  &&  ! "$vagrant_var" == "template" ]]; 
   then
     echo "Error: Must be run with rpi system"

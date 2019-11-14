@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 function help_default {
   echo "Usage: $(basename "$0")"
   echo
@@ -59,6 +58,8 @@ function help_default {
   echo "   memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory"
   echo "   temperature [celsius]                     displays raspberry pi's CPU temperature"
   echo "   speedtest                                 tests internet download and upload speed"
+  echo "   cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs"
+  echo "        [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)"
   echo
 }
 

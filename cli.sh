@@ -3,7 +3,7 @@
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 
-source "$SCRIPTFOLDER/modules/detectrpi.sh" 
+source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
 source "$SCRIPTFOLDER/modules/apchannel.sh"
@@ -50,6 +50,7 @@ source "$SCRIPTFOLDER/modules/wifistatus.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
+source "$SCRIPTFOLDER/modules/cron.sh"
 source "$SCRIPTFOLDER/modules/discover.sh"
 
 
@@ -259,6 +260,10 @@ case $1 in
   speedtest)
     shift
     speedtest "$@"
+    ;;
+  cron)
+    checkroot
+    cron "$2" "$3"
     ;;
   help)
     help "$2"

@@ -5,8 +5,8 @@ _treehouses_complete()
   local cur prev
 
   # Valid top-level completions
-  commands="ap apchannel bluetooth bootoption bridge burn button clone container \
-              coralenv default detect detectrpi ethernet expandfs feedback help \
+  commands="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
+              coralenv cron default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
               rebootneeded rename restore rtc services speedtest ssh sshkey sshtunnel staticwifi \
               temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
@@ -19,8 +19,8 @@ _treehouses_complete()
   button_cmds="off bluetooth"
   container_cmds="none docker balena"
   coralenv_cmds="install demo-on demo-off demo-always-on"
-  help_cmds="ap apchannel bluetooth bootoption bridge burn button clone container \
-              coralenv default detect detectrpi ethernet expandfs feedback help \
+  help_cmds="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
+              coralenv cron default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
               rebootneeded rename restore rtc services speedtest ssh sshkey sshtunnel staticwifi \
               temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
@@ -34,6 +34,7 @@ _treehouses_complete()
 
 # services_cmds="" Think about it, a little bit complicated
 
+  cron_cmds="list 0W tor timestamp add delete deleteall"
   sshkey_cmds="add list delete deleteal addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
@@ -76,6 +77,9 @@ vnc_cmds="on off info"
         ;;
       "coralenv")
         COMPREPLY=( $(compgen -W "$coralenv_cmds" -- $cur) )
+        ;;
+      "cron")
+        COMPREPLY=( $(compgen -W "$cron_cmds" -- $cur) )
         ;;
       "help")
         COMPREPLY=( $(compgen -W "$help_cmds" -- $cur) )

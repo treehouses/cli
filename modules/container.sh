@@ -15,8 +15,8 @@ function container_check {
 }
 
 function container {
-container_check
-if [ "$1" == "docker" ] ; then
+  container_check
+  if [ "$1" == "docker" ] ; then
     container_docker;
     exit 0
   fi

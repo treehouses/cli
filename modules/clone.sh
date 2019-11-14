@@ -77,9 +77,9 @@ function clone_help {
 	echo "  $(basename "$0") clone /dev/sda"
 	echo "      Will clone the current system to /dev/sda."
 	echo ""
-	echo "  $(basename "$@") clone --reboot"	
+	echo "  $(basename "$0") clone --reboot"	
 	echo "      Will clone the current system to /dev/sdb and then reboot."
 	echo ""
-	echo "  $(basename "$@") clone /dev/sda --reboot"
+	echo "  $(basename "$0") clone /dev/sda --reboot"
 	echo "       Will clone the current system to /dev/sda and then reboot."
 }

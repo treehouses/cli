@@ -1,13 +1,13 @@
 #!/bin/bash
 
 function container_check {
-  if [ $(which balena) ]; then
+  if [ "$(which balena)" ]; then
 	  echo 'balena is installed'
   else
 	  echo 'balean is not installed'
   fi
 
-  if [ $(which docker) ]; then
+  if [ "$(which docker)" ]; then
 	  echo 'docker is installed'
   else
 	  echo 'docker is not installed'

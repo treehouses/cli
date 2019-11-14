@@ -252,6 +252,7 @@ case $1 in
     speedtest "$@"
     ;;
   cron)
+    checkroot
     cron "$2" "$3"
     ;;
   help)

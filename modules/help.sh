@@ -42,7 +42,7 @@ function help_default {
   echo "   networkmode                               outputs the current network mode"
   echo "   button <off|bluetooth>                    gives the gpio pin 18 an action"
   echo "   feedback <message>                        sends feedback"
-  echo "   clone [device path|--reboot]              clones the current SDCard onto a secondary SDCard or specified device"
+  echo "   clone [device path]                       clones the current SDCard onto a secondary SDCard or specified device"
   echo "   restore [device path]                     restores a treehouses image to an SDCard or specified device"
   echo "   burn [device path]                        download and burns the latest treehouses image to the SDcard or specified device"
   echo "   rebootneeded                              shows if reboot is required to apply changes"

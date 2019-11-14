@@ -1,7 +1,6 @@
 #!/bin/bash
 
 function clone {
-<<<<<<< HEAD
 	if [ "$#" -gt 2 ]; then
 		echo "Too many arguments."
 		exit 1
@@ -25,46 +24,12 @@ function clone {
 		else
 			device=$1
 		fi
-		fi
-
-=======
-  if [ "$#" -gt 2 ]; then
-    echo "Too many arguments."
-    exit 1
-  fi
-  if [ $2 ]; then
-    if [ $2 = "--reboot" ]; then
-      option=$2
-      device=$1
-      reboot=true
-    elif [ $1 = "--reboot" ]; then
-      option=$1
-      device=$2
-      #reboot=true
-    else 
-      echo "Incorrect command supplied"
-      exit 1
-    fi
-  elif [ $1 ]; then
-    if [ $1 = "--reboot" ]; then
-      option=$1
-      #reboot=true
-    else
-      device=$1
-    fi
-  fi
-
-  if [ -z "$device" ]; then
-    device="/dev/sdb"
-  fi
-
-  a=$(fdisk -l |grep /dev/mmcblk0: | grep -P '\d+ (?=bytes)' -o)
-  #echo "$a - /dev/mmcblk0"
->>>>>>> b31bf01bbae22e9568b178468d44b95ae0267f9a
+	fi
 
 		if [ -z "$device" ]; then
 			device="/dev/sdb"
 		fi
+
 
 		a=$(fdisk -l |grep /dev/mmcblk0: | grep -P '\d+ (?=bytes)' -o)
 		#echo "$a - /dev/mmcblk0"
@@ -72,7 +37,6 @@ function clone {
 		b=$(fdisk -l |grep "$device": | grep -P '\d+ (?=bytes)' -o)
 		#echo "$b - /dev/sdb"
 
-<<<<<<< HEAD
 		if [ -z "$a" ] || [ -z "$b" ]; then
 			echo "Error: the device $device wasn't detected"
 			return 1
@@ -97,11 +61,12 @@ function clone {
 		else
 			echo "A reboot is needed to re-enable write permissions to OS."
 		fi
-	}
+}
+
 
 function clone_help {
 	echo ""
-	echo "Usage: $(basename "$0") burn [device path]"
+	echo "Usage: $(basename "$0") clone [device path]"
 	echo ""
 	echo "clones your treehouses image to an SDCard"
 	echo ""
@@ -112,45 +77,9 @@ function clone_help {
 	echo "  $(basename "$0") clone /dev/sda"
 	echo "      Will clone the current system to /dev/sda."
 	echo ""
-	echo "	$(basename "$@") clone --reboot"	
-	echo " 			Will clone the current system to /dev/sdb and then reboot."
+	echo "  $(basename "$@") clone --reboot"	
+	echo "      Will clone the current system to /dev/sdb and then reboot."
 	echo ""
-	echo "	$(basename "$@") clone --reboot /dev/sda"
-	echo "			Will clone the current system to /dev/sda and then reboot."
-	echo ""
-	echo "	$(basename "$@") clone /dev/sda --reboot"
-	echo "			Will clone the current system to /dev/sda and then reboot."
-=======
-  if [ $a -eq $b ] || [ $a -lt $b ]; then
-    echo "copying...."
-    echo u > /proc/sysrq-trigger
-    dd if=/dev/mmcblk0 bs=1M of="$device"
-  fi
-  if [ -z $option ]; then
-    echo "A reboot is needed to re-enable write permissions to OS."
-    exit 0
-  else
-    sudo reboot
-  fi
-}
-
-function clone_help {
-  echo ""
-  echo "Usage: $(basename "$0") clone [device path]"
-  echo ""
-  echo "clones your treehouses image to an SDCard"
-  echo ""
-  echo "Example:"
-  echo "  $(basename "$0") clone"
-  echo "      Will clone the current system to /dev/sdb (by default)."
-  echo ""
-  echo "  $(basename "$0") clone /dev/sda"
-  echo "      Will clone the current system to /dev/sda."
-  echo ""
-  echo "  $(basename "$@") clone --reboot"	
-  echo "      Will clone the current system to /dev/sdb and then reboot."
-  echo ""
-  echo "  $(basename "$@") clone /dev/sda --reboot"
-  echo "       Will clone the current system to /dev/sda and then reboot."
->>>>>>> b31bf01bbae22e9568b178468d44b95ae0267f9a
+	echo "  $(basename "$@") clone /dev/sda --reboot"
+	echo "       Will clone the current system to /dev/sda and then reboot."
 }

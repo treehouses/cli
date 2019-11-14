@@ -11,7 +11,6 @@ function clone {
 			device=$1
 			reboot=true
 		elif [ $1 = "--reboot" ]; then
-			option=$1
 			device=$2
 			reboot=true
 		else 
@@ -19,9 +18,9 @@ function clone {
 			exit 1
 		fi
 	elif [ $1 ]; then
-		if [ $1 = "--reboot" ]; then
-			option=$1
-			#reboot=true
+		if [ $1 = "--reboot" ]; then	
+			echo "reboot set"
+			reboot=true
 		else
 			device=$1
 		fi
@@ -50,16 +49,17 @@ function clone {
 
 		if [ $a -eq $b ] || [ $a -lt $b ]; then
 			echo "copying...."
-		#	echo u > /proc/sysrq-trigger
-		#	dd if=/dev/mmcblk0 bs=1M of="$device"
+			echo u > /proc/sysrq-trigger
+			dd if=/dev/mmcblk0 bs=1M of="$device"
 		fi
 
 
-		if [ -z $option ]; then
-			echo ; echo "A reboot is needed to re-enable write permissions to OS."
-			exit 0
+
+		if [ $reboot ]; then
+			echo "Now rebooting..."
+			sudo reboot		
 		else
-			sudo reboot
+			echo "A reboot is needed to re-enable write permissions to OS."
 		fi
 	}
 

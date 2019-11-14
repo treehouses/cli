@@ -202,7 +202,7 @@ case $1 in
     checkrpi
     checkroot
     shift
-    clone "$1" "$2"
+    clone "$@"
     ;;
   restore)
     checkrpi

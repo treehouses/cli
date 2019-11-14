@@ -54,7 +54,7 @@ function cron {
         (crontab -l ; echo "0 */72 * * * treehouses tor notice now") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
         echo "\"treehouses tor notice now\" cron job established"
       elif [[ $(crontab -l | grep tor) == "0 */72 * * * treehouses tor notice now" ]]; then
-         (crontab -l ; echo "0 */72 * * * treehouses tor notice now") 2>&1 | grep -v "no crontab" | grep -v "tor" | sort | uniq | crontab -
+        (crontab -l ; echo "0 */72 * * * treehouses tor notice now") 2>&1 | grep -v "no crontab" | grep -v "tor" | sort | uniq | crontab -
         echo "\"treehouses tor notice now\" cron job removed"
       fi
       ;;

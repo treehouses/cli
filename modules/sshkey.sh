@@ -37,16 +37,16 @@ function sshkey () {
     fi
     if grep -Fxq "$2" /root/.ssh/authorized_keys; then
       sed -i "\:$2:d" /root/.ssh/authorized_keys
-      echo "$2 deleted from root keys."
+      echo "Key deleted from root keys."
     else
-      echo "$2 not found in root keys."
+      echo "Key not found in root keys."
     fi
     if [ "$(detectrpi)" != "nonrpi" ]; then
       if grep -Fxq "$2" /home/pi/.ssh/authorized_keys; then
         sed -i "\:$2:d" /home/pi/.ssh/authorized_keys
-        echo "$2 deleted from pi keys."
+        echo "Key deleted from pi keys."
       else
-        echo "$2 not found in pi keys."
+        echo "Key not found in pi keys."
       fi
     fi
   elif [ "$1" == "deleteall" ]; then

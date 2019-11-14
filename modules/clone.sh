@@ -1,23 +1,21 @@
 #!/bin/bash
 
 function clone {
-	
 	if [ "$#" -gt 2 ]; then
 		echo "Too many arguments."
 		exit 1
 	fi
-	
-  if [ $2 ]; then
+
+	if [ $2 ]; then
 		if [ $2 = "--reboot" ]; then
-			option=$2
 			device=$1
 			reboot=true
 		elif [ $1 = "--reboot" ]; then
 			option=$1
 			device=$2
-			#reboot=true
+			reboot=true
 		else 
-			echo "Incorrect command supplied"
+			echo "Incorrect command"
 			exit 1
 		fi
 	elif [ $1 ]; then
@@ -27,56 +25,56 @@ function clone {
 		else
 			device=$1
 		fi
-	fi
-			
+		fi
 
-  if [ -z "$device" ]; then
-    device="/dev/sdb"
-  fi
-	
-  a=$(fdisk -l |grep /dev/mmcblk0: | grep -P '\d+ (?=bytes)' -o)
-  #echo "$a - /dev/mmcblk0"
 
-  b=$(fdisk -l |grep "$device": | grep -P '\d+ (?=bytes)' -o)
-  #echo "$b - /dev/sdb"
+		if [ -z "$device" ]; then
+			device="/dev/sdb"
+		fi
 
-  if [ -z "$a" ] || [ -z "$b" ]; then
-    echo "Error: the device $device wasn't detected"
-    return 1
-  fi
+		a=$(fdisk -l |grep /dev/mmcblk0: | grep -P '\d+ (?=bytes)' -o)
+		#echo "$a - /dev/mmcblk0"
 
-  if [ $b -lt $a ]; then
-    echo "Error: the device $device is not big enough"
-    return 1
-  fi
+		b=$(fdisk -l |grep "$device": | grep -P '\d+ (?=bytes)' -o)
+		#echo "$b - /dev/sdb"
 
-  if [ $a -eq $b ] || [ $a -lt $b ]; then
-    echo "copying...."
-    echo u > /proc/sysrq-trigger
-    dd if=/dev/mmcblk0 bs=1M of="$device"
-  fi
-	
-	
-	if [ -z $option ]; then
-  	echo ; echo "A reboot is needed to re-enable write permissions to OS."
-		exit 0
-	else
-		sudo reboot
-	fi
-}
+		if [ -z "$a" ] || [ -z "$b" ]; then
+			echo "Error: the device $device wasn't detected"
+			return 1
+		fi
+
+		if [ $b -lt $a ]; then
+			echo "Error: the device $device is not big enough"
+			return 1
+		fi
+
+		if [ $a -eq $b ] || [ $a -lt $b ]; then
+			echo "copying...."
+		#	echo u > /proc/sysrq-trigger
+		#	dd if=/dev/mmcblk0 bs=1M of="$device"
+		fi
+
+
+		if [ -z $option ]; then
+			echo ; echo "A reboot is needed to re-enable write permissions to OS."
+			exit 0
+		else
+			sudo reboot
+		fi
+	}
 
 function clone_help {
-  echo ""
-  echo "Usage: $(basename "$0") burn [device path]"
-  echo ""
-  echo "clones your treehouses image to an SDCard"
-  echo ""
-  echo "Example:"
-  echo "  $(basename "$0") clone"
-  echo "      Will clone the current system to /dev/sdb (by default)."
-  echo ""
-  echo "  $(basename "$0") clone /dev/sda"
-  echo "      Will clone the current system to /dev/sda."
+	echo ""
+	echo "Usage: $(basename "$0") burn [device path]"
+	echo ""
+	echo "clones your treehouses image to an SDCard"
+	echo ""
+	echo "Example:"
+	echo "  $(basename "$0") clone"
+	echo "      Will clone the current system to /dev/sdb (by default)."
+	echo ""
+	echo "  $(basename "$0") clone /dev/sda"
+	echo "      Will clone the current system to /dev/sda."
 	echo ""
 	echo "	$(basename "$@") clone --reboot"	
 	echo " 			Will clone the current system to /dev/sdb and then reboot."

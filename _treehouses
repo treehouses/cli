@@ -8,9 +8,9 @@ _treehouses_complete()
   commands="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
               coralenv cron default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
-              rebootneeded rename restore rtc services ssh sshkey sshtunnel staticwifi \
-              temperature timezone tor upgrade version vnc wifi wificountry" 
-       	
+              rebootneeded rename restore rtc services speedtest ssh sshkey sshtunnel staticwifi \
+              temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
+
   ap_cmdas="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
   bluetooth_cmds="on off pause"
@@ -22,8 +22,8 @@ _treehouses_complete()
   help_cmds="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
               coralenv cron default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
-              rebootneeded rename restore rtc services ssh sshkey sshtunnel staticwifi \
-              temperature timezone tor upgrade version vnc wifi wificountry" 
+              rebootneeded rename restore rtc services speedtest ssh sshkey sshtunnel staticwifi \
+              temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
   led_cmds="green red mode"
   memory_cmds="total used free"
   networkmode_cmds="info"
@@ -35,7 +35,7 @@ _treehouses_complete()
 # services_cmds="" Think about it, a little bit complicated
 
   cron_cmds="list 0W tor timestamp add delete deleteall"
-  sshkey_cmds="add list delete deleteal addgithubusername addgithubgroup"
+  sshkey_cmds="add list delete deleteal addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
   temperature_cmds="celsius"
@@ -58,10 +58,10 @@ vnc_cmds="on off info"
   then
     case "$prev" in
       "ap")
-        COMPREPLY=( $(compgen -W "$ap_cmds" -- $cur) ) 
+        COMPREPLY=( $(compgen -W "$ap_cmds" -- $cur) )
         ;;
       "apchannel")
-        COMPREPLY=( $(compgen -W "$apchannel_cmds" -- $cur) ) #cannot ascending order 
+        COMPREPLY=( $(compgen -W "$apchannel_cmds" -- $cur) ) #cannot ascending order
         ;;
       "bluetooth")
         COMPREPLY=( $(compgen -W "$bluetooth_cmds" -- $cur) )
@@ -97,7 +97,7 @@ vnc_cmds="on off info"
         COMPREPLY=( $(compgen -W "$ntp_cmds" -- $cur) )
         ;;
       "openvpn")
-        COMPREPLY=( $(compgen -W "$openvpn_cmds" -- $cur) ) 
+        COMPREPLY=( $(compgen -W "$openvpn_cmds" -- $cur) )
         ;;
       "rtc")
         COMPREPLY=( $(compgen -W "$rtc_cmds" -- $cur) )
@@ -109,16 +109,19 @@ vnc_cmds="on off info"
         COMPREPLY=( $(compgen -W "$ssh_cmds" -- $cur) )
         ;;
       "sshtunnel")
-        COMPREPLY=( $(compgen -W "$sshtunnel_cmds" -- $cur) ) 
+        COMPREPLY=( $(compgen -W "$sshtunnel_cmds" -- $cur) )
         ;;
       "temperature")
-        COMPREPLY=( $(compgen -W "$temperature_cmds" -- $cur) ) 
+        COMPREPLY=( $(compgen -W "$temperature_cmds" -- $cur) )
         ;;
       "tor")
-        COMPREPLY=( $(compgen -W "$tor_cmds" -- $cur) ) 
+        COMPREPLY=( $(compgen -W "$tor_cmds" -- $cur) )
         ;;
       "vnc")
         COMPREPLY=( $(compgen -W "$vnc_cmds" -- $cur) )
+        ;;
+      "wifistatus")
+        COMPREPLY=( $(compgen -W "$wifistatus_cmds" -- $cur) )
         ;;
       "*")
         ;;
@@ -141,4 +144,4 @@ vnc_cmds="on off info"
   fi
 
 }
-	complete -F _treehouses_complete treehouses 
+	complete -F _treehouses_complete treehouses

@@ -3,14 +3,14 @@
 set -x
 function container_check {
     which balena
-    if [ $? = 0 ]; then
+    if [ "$?" = 0 ]; then
       echo 'balena is installed'
     else
       echo 'balean is not installed'
     fi
 
     which docker
-    if [ $? = 0 ]; then
+    if [ "$?" = 0 ]; then
       echo 'docker is installed'
     else
       echo 'docker is not installed'

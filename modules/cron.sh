@@ -3,7 +3,7 @@
 function cron {
   options="$1"
   case "$options" in
-    ""|"list" ) #lists current cron tasks
+    ""|"list") #lists current cron tasks
         echo "List of cron jobs:"
       if [[ $(crontab -l | wc -c) -eq 0 ]]; then
         echo "The system has no cron jobs"
@@ -11,8 +11,7 @@ function cron {
         crontab -l
       fi
       ;;
-    "add")
-      #add user's cron job to crontab
+    "add") #add user's cron job to crontab
       cronjob="$2"
       if [[ $(crontab -l | grep "$2") != "$2" ]]; then
         (crontab -l ; echo "$2") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
@@ -22,8 +21,7 @@ function cron {
         echo "run \"$(basename "$0") help cron\" for more commands"
       fi
       ;;
-    "delete")
-      #search for and delete line with it
+    "delete") #search for and delete line with it
       crontab -l | grep -q "$2"
       if [ $? -eq 1 ] ; then
         echo "Could not find a job containing \"$2\" to delete"

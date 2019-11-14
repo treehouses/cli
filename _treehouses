@@ -41,7 +41,6 @@ _treehouses_complete()
   temperature_cmds="celsius"
   tor_cmds="start stop add list notice destroy"
   notice_cmds="on off add delete list"
-  reboots_cmds="now in cron daily weekly monthly"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 
@@ -67,9 +66,6 @@ vnc_cmds="on off info"
       "bluetooth")
         COMPREPLY=( $(compgen -W "$bluetooth_cmds" -- $cur) )
         ;;
-      "bluetoothid")
-        COMPREPLY=( $(compgen -W "$bluetoothid_cmds" -- $cur) )
-        ;;	
       "bootoption")
         COMPREPLY=( $(compgen -W "$bootoption_cmds" -- $cur) )
         ;;
@@ -105,9 +101,6 @@ vnc_cmds="on off info"
         ;;
       "rtc")
         COMPREPLY=( $(compgen -W "$rtc_cmds" -- $cur) )
-        ;;
-      "reboots")
-        COMPREPLY=( $(compgen -W "$reboots_cmds" -- $cur) )
         ;;
       "sshkey")
         COMPREPLY=( $(compgen -W "$sshkey_cmds" -- $cur) )

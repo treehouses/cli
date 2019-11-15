@@ -26,7 +26,16 @@ function discover {
     fi
     ip=$2
   fi
-  
+  if [ $option = "mac" ]; then
+    if [[ "$2" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]]
+    then
+        echo "Valid mac address"
+    else
+        echo "Invalid mac address, please input again"
+        exit 1
+    fi
+    mac=$2
+  fi
   case $option in
     rpi)
       nmap --iflist | grep DC:A6:32
@@ -43,6 +52,15 @@ function discover {
       ;;
     ports)
       nmap --open $ip
+      ;;
+    mac)
+      mac_ip=$(arp -n |grep -i "$mac" |awk '{print $1}')
+      if [ -z "$mac_ip" ]
+      then
+        echo " We can't find  ip address with this mac address since it is not on arp table."
+      else
+        echo " $mac_ip"
+      fi
       ;;
     *)
       echo "Unknown operation provided." 1>&2
@@ -72,5 +90,7 @@ function discover_help {
   echo "    Displays servers and devices running on network provided."
   echo " $(basename "$0") discover ports 192.168.7.149"
   echo "    Displays open ports."
+  echo " $(basename "$0") discover mac b8:29:eb:9f:24:8b "
+  echo "    find the ip address of mac address."
   echo ""
 }

@@ -6,7 +6,7 @@ _treehouses_complete()
 
   # Valid top-level completions
   commands="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
-              coralenv cron default detect detectrpi ethernet expandfs feedback help \
+              coralenv cron default detect detectrpi discover ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
               rebootneeded rename restore rtc services speedtest ssh sshkey sshtunnel staticwifi \
               temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
@@ -20,7 +20,7 @@ _treehouses_complete()
   container_cmds="none docker balena"
   coralenv_cmds="install demo-on demo-off demo-always-on"
   help_cmds="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
-              coralenv cron default detect detectrpi ethernet expandfs feedback help \
+              coralenv cron default detect detectrpi discover ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
               rebootneeded rename restore rtc services speedtest ssh sshkey sshtunnel staticwifi \
               temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
@@ -80,6 +80,9 @@ vnc_cmds="on off info"
         ;;
       "cron")
         COMPREPLY=( $(compgen -W "$cron_cmds" -- $cur) )
+        ;;
+      "discover")
+        COMPREPLY=( $(compgen -W "$discover_cmds" -- $cur) )
         ;;
       "help")
         COMPREPLY=( $(compgen -W "$help_cmds" -- $cur) )

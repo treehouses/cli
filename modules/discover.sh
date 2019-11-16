@@ -27,11 +27,8 @@ function discover {
     ip=$2
   fi
   if [ $option = "mac" ]; then
-    if [[ "$2" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]]
-    then
-        echo "Valid mac address"
-    else
-        echo "Invalid mac address, please input again"
+    if ! [[ "$2" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]]; then
+        echo "Invalid mac address"
         exit 1
     fi
     mac=$2
@@ -90,7 +87,7 @@ function discover_help {
   echo "    Displays servers and devices running on network provided."
   echo " $(basename "$0") discover ports 192.168.7.149"
   echo "    Displays open ports."
-  echo " $(basename "$0") discover mac b8:29:eb:9f:24:8b "
+  echo " $(basename "$0") discover mac b8:29:eb:9f:42:8b "
   echo "    find the ip address of mac address."
   echo ""
 }

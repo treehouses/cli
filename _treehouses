@@ -41,6 +41,7 @@ _treehouses_complete()
   temperature_cmds="celsius"
   tor_cmds="start stop add list notice destroy"
   notice_cmds="on off add delete list"
+  discover_cmds="rpi scan interface ping ports mac"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 

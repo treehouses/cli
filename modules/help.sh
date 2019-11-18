@@ -60,8 +60,7 @@ function help_default {
   echo "   memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory"
   echo "   temperature [celsius]                     displays raspberry pi's CPU temperature"
   echo "   speedtest                                 tests internet download and upload speed"
-  echo "   camera [on|off|capture]                   displays status of camera, enables or disables camera,"
-  echo "                                             captures and stores a picture from camera into pi's `Pictures` directory"
+  echo "   camera [on|off|capture]                   enables camera, disables camera, captures png photo"
   echo
 }
 

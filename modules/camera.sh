@@ -4,6 +4,7 @@ function camera {
   directory="/home/pi/Pictures/"
   timestamp=$(date +"%Y%m%d-%H%M%S")
   config="/boot/config.txt"
+  configtemp="/boot/config.temp"
   savetype="png"
 
   case "$1" in
@@ -17,10 +18,11 @@ function camera {
 
     "on")
       if ! grep -q "start_x=1" ${config} ; then
-        echo "start_x=1" >> ${config}
+        cat ${config} > ${configtemp}
+        echo "start_x=1" >> ${configtemp}
+        cat ${configtemp} > ${config}
         echo "Camera settings have been enabled. A reboot is needed in order to use the camera."
-      fi
-      if grep "start_x=1" ${config} ; then
+      elif grep -q "start_x=1" ${config} ; then
         echo "Camera is already enabled. Use \"$(basename "$0") camera capture\" to take a photo."
         echo "If you are having issues using the camera, try rebooting."
       else
@@ -30,7 +32,7 @@ function camera {
 
     "off")
       if grep -q "start_x=1" ${config} ; then
-        sed '/start_x=1/d' ${config}
+        sed -i '/start_x=1/d' ${config}
         echo "Camera has been disabled. Reboot needed for settings to take effect."
       elif ! grep -q "start_x=1" ${config} ; then
         echo "Camera is already disabled. If camera is still enabled, try rebooting."
@@ -44,7 +46,7 @@ function camera {
       if ! grep -q "start_x=1" ${config} ; then
         echo "You need to enable AND reboot first in order to take pictures."
       else
-        echo "Camera is capturing and storing a time-stamped png photo in ${directory}."
+        echo "Camera is capturing and storing a time-stamped ${savetype} photo in ${directory}."
         raspistill -e ${savetype} -n -o "${directory}$(basename "$0")-${timestamp}.png"
       fi
     ;;

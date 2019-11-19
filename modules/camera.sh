@@ -3,10 +3,12 @@
 function camera {
   directory="/home/pi/Pictures/"
   timestamp=$(date +"%Y%m%d-%H%M%S")
+  config="/boot/config.txt"
+  savetype="png"
 
   case "$1" in
     "")
-      if grep "start_x=1" /boot/config.txt ; then
+      if grep -q "start_x=1" ${config} ; then
           echo "Config file has Camera settings which are currently enabled. Use \"$(basename "$0") help camera\" for more commands."
       else
           echo "Config file has Camera settings which are currently disabled. Use \"$(basename "$0") help camera\" for more commands."
@@ -14,40 +16,36 @@ function camera {
     ;;
 
     "on")
-      if grep ! [ ( echo /boot/config.txt ; grep "start_x=1" ) ] ; then
-        echo "start_x=1" >> /boot/config.txt
+      if ! grep -q "start_x=1" ${config} ; then
+        echo "start_x=1" >> ${config}
         echo "Camera settings have been enabled. A reboot is needed in order to use the camera."
-      elif [ ( echo /boot/config.txt ; grep "start_x=1" ) ]
+      fi
+      if grep "start_x=1" ${config} ; then
         echo "Camera is already enabled. Use \"$(basename "$0") camera capture\" to take a photo."
         echo "If you are having issues using the camera, try rebooting."
       else
         echo "Something went wrong."
-        camera_help()
-        exit 1
       fi
     ;;
 
     "off")
-      if grep "start_x=1" /boot/config.txt ; then
-        echo /boot/config.txt ; grep -v "start_x=1"
+      if grep -q "start_x=1" ${config} ; then
+        sed '/start_x=1/d' ${config}
         echo "Camera has been disabled. Reboot needed for settings to take effect."
-      elif grep ! [ ( echo /boot/config.txt ; grep "start_x=1" ) ] ; then
+      elif ! grep -q "start_x=1" ${config} ; then
         echo "Camera is already disabled. If camera is still enabled, try rebooting."
       else
         echo "Something went wrong."
-        camera_help()
-        exit 1
       fi
     ;;
 
     "capture")
       mkdir -p ${directory}
-      if grep ! [ ( echo /boot/config.txt ; grep "start_x=1" ) ] ; then
+      if ! grep -q "start_x=1" ${config} ; then
         echo "You need to enable AND reboot first in order to take pictures."
-        exit 1
       else
         echo "Camera is capturing and storing a time-stamped png photo in ${directory}."
-        raspistill -e png -n -o "${directory}$(basename "$0")-${timestamp}.png"
+        raspistill -e ${savetype} -n -o "${directory}$(basename "$0")-${timestamp}.png"
       fi
     ;;
 

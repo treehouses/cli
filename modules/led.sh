@@ -91,32 +91,67 @@ function dance {
   led green "$current_green"
 }
 
+function christmas{
+  current_red=$(led "red")
+  current_green=$(led "green")
+
+  led red none 
+  set_brightness 1 0
+
+  led green none
+  set_brightness 0 1 && sleep 1
+  set_brightness 0 0 && sleep 1
+
+  led red none
+  set_brightness 1 0 && sleep 2
+  set_brightness 0 0 && sleep 1
+
+  led green none
+  set_brightness 0 1 && sleep 1
+  set_brightness 0 0 && sleep 1
+
+  led red none
+  set_brightness 1 0 && sleep 2
+  set_brightness 0 0 && sleep 1
+  set_brightness 1 0 && sleep 3
+  
+  led red "$current_red"
+  led green "$current_green"
+
+}
+
 function led_help {
-  echo ""
+  echo 
   echo "Usage: $(basename "$0") led [green|red|dance] [mode]"
-  echo ""
+  echo 
   echo "Sets or returns the led mode"
-  echo ""
+  echo 
   echo "This will help a user to identify a raspberry pi (if a user is working on many of raspberry pis)"
-  echo ""
+  echo 
+  echo "options of modes:"
+  echo "  default-on    set LEDs to turn on"
+  echo "  heartbeat     set LEDs to heartbeat pattern"
+  echo "  dance         set green LED to dance pattern and it will set it back to default-on"
+  echo "  christmas     set LEDs to christmas pattern"
+  echo
   echo "Example:"
   echo "  $(basename "$0") led"
   echo "      This will return the status of the green/red (if present) leds"
-  echo ""
+  echo 
   echo "  $(basename "$0") led red"
   echo "      This will return the status of the red led"
-  echo ""
+  echo 
   echo "  $(basename "$0") led red heartbeat"
   echo "      This will set the mode of the red led to heartbeat"
-  echo ""
+  echo 
   echo "  $(basename "$0") led green heartbeat"
   echo "      This will set the mode of the green led to heartbeat"
-  echo ""
+  echo 
   echo "  $(basename "$0") led red default-on"
   echo "      This will set the mode of the red led to default-on"
-  echo ""
+  echo 
   echo "  $(basename "$0") led dance"
   echo "      This will do a sequence with the green led"
   echo "      1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
-  echo ""
+  echo 
 }

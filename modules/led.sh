@@ -94,20 +94,6 @@ function dance {
   led green "$current_green"
 }
 
-function christmas {
-  current_red=$(led "red")
-  current_green=$(led "green")
-  
-  set_brightness 1 0
-  set_brightness 0 1
-  set_brightness 1 0
-  set_brightness 0 1
-
-  led red "$current_red"
-  led green "$current_green"
-
-}
-
 function led_help {
   echo
   echo "Usage: $(basename "$0") led [green|red|dance] [mode]"
@@ -119,8 +105,6 @@ function led_help {
   echo "options of modes:"
   echo "  default-on    set LEDs to turn on"
   echo "  heartbeat     set LEDs to heartbeat pattern"
-  echo "  dance         set green LED to dance pattern and it will set it back to default-on"
-  echo "  christmas     set LEDs to christmas pattern"
   echo
   echo "Example:"
   echo "  $(basename "$0") led"

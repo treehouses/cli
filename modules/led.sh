@@ -91,7 +91,7 @@ function dance {
   led green "$current_green"
 }
 
-function christmas{
+function christmas {
   current_red=$(led "red")
   current_green=$(led "green")
 

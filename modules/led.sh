@@ -116,7 +116,11 @@ function christmas {
   led red none
   set_brightness 1 0 && sleep 2
   set_brightness 0 0 && sleep 1
-  set_brightness 1 0 && sleep 3
+  set_brightness 1 0 && sleep 1
+  
+  led green none
+  set_brightness 0 1 && sleep 1
+  set_brightness 0 0 && sleep 1
   
   led red "$current_red"
   led green "$current_green"

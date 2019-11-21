@@ -98,20 +98,12 @@ function christmas {
   current_red=$(led "red")
   current_green=$(led "green")
 
-  led red none 
-  set_brightness 1 0
-
   led green none
-  set_brightness 0 1 && sleep 1
-  set_brightness 0 0 && sleep 1
+  led red timer
+  led green timer
 
-  led red none
-  set_brightness 1 0 && sleep 2
-  set_brightness 0 0 && sleep 1
 
-  led green none
-  set_brightness 0 1 && sleep 1
-  set_brightness 0 0 && sleep 1
+  sleep 10
 
   led red "$current_red"
   led green "$current_green"

@@ -20,9 +20,6 @@ function led {
   elif [ "$color" = "dance" ]; then
     checkroot
     dance > /dev/null
-  elif [ "$color" = "christmas" ]; then
-    checkroot
-    christmas > /dev/null
   else
     if [ -z "$color" ]; then
       if [ ! -z "$currentGreen" ]; then

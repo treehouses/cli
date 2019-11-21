@@ -99,14 +99,18 @@ function led_help {
   echo
   echo "This will help a user to identify a raspberry pi (if a user is working on many of raspberry pis)"
   echo
+  echo " Where to find mode: root@treehouses:/sys/class/leds/led0# cat trigger "
+  echo
   echo " OPTIONS OF MODES: "
-  echo "  default-on                 set LEDs to turn on"
+  echo "  default-on                 turn LEDs on"
+  echo "  oneshot                    turn LEDs on"
   echo "  heartbeat                  set LEDs to heartbeat pattern"
   echo "  timer                      set green LED to flash at a 1-second interval"
   echo "  cpu0                       set LEDs to CPU activity"
   echo "  gpio                       controlled through GPIO "
   echo "  input                      under-voltage detection"
   echo "  backlight                  turn off LEDs"
+  echo "  none                       set LEDs to none"
   echo "  kbd-[numlock|capslock|etc] set LEDs when keyboard key is hit"
   echo
   echo "Example:"

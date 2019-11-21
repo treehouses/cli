@@ -20,6 +20,9 @@ function led {
   elif [ "$color" = "dance" ]; then
     checkroot
     dance > /dev/null
+  elif [ "$color" = "christmas" ]; then
+    checkroot
+    christmas > /dev/null
   else
     if [ -z "$color" ]; then
       if [ ! -z "$currentGreen" ]; then
@@ -89,6 +92,30 @@ function dance {
 
   led red "$current_red"
   led green "$current_green"
+}
+
+function christmas {
+  current_red=$(led "red")
+  current_green=$(led "green")
+
+  led red none 
+  set_brightness 1 0
+
+  led green none
+  set_brightness 0 1 && sleep 1
+  set_brightness 0 0 && sleep 1
+
+  led red none
+  set_brightness 1 0 && sleep 2
+  set_brightness 0 0 && sleep 1
+
+  led green none
+  set_brightness 0 1 && sleep 1
+  set_brightness 0 0 && sleep 1
+
+  led red "$current_red"
+  led green "$current_green"
+
 }
 
 function led_help {

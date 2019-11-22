@@ -20,6 +20,9 @@ function led {
   elif [ "$color" = "dance" ]; then
     checkroot
     dance > /dev/null
+  elif [ "$color" = "new_year" ]; then
+    checkroot
+    new_year > /dev/null
   else
     if [ -z "$color" ]; then
       if [ ! -z "$currentGreen" ]; then
@@ -89,6 +92,41 @@ function dance {
 
   led red "$current_red"
   led green "$current_green"
+}
+
+function new_year {
+
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  set_brightness 0 0 && set_brightness 1 0
+  sleep 1
+
+  counter=0
+  while [ $counter -le 2 ]
+  do
+    set_brightness 1 0 && set_brightness 0 1
+    sleep 0.5
+    set_brightness 1 1 && set_brightness 0 0
+    sleep 0.5
+    counter=$(( $counter + 1 ))
+  done
+
+  set_brightness 1 0 && set_brightness 0 0
+  sleep 0.5
+
+  counter=0
+  while [ $counter -le 2 ]
+  do
+    set_brightness 1 1 && set_brightness 0 1
+    sleep 0.5
+    set_brightness 1 0 && set_brightness 0 0
+    sleep 0.5
+    counter=$(( $counter + 1 ))
+  done
+
+  led green "$current_green"
+  led red "$current_red"
 }
 
 function led_help {

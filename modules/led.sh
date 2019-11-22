@@ -19,7 +19,7 @@ function led {
   elif [ "$color" = "red" ]; then
     led="$rLed"
     current="$currentRed"
-  elif [ "color" = "both" ]; then
+  elif [ "$color" = "both" ]; then
     led="$bLed"
     current="$bothcurrent"
   elif [ "$color" = "dance" ]; then

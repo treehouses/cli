@@ -21,6 +21,8 @@ function led {
     led="$rLed"
     current="$currentRed"
   elif [ "$color" = "both" ]; then
+    checkroot
+    both > /dev/null
     led="$bLed"
     current="$bothcurrent"
   elif [ "$color" = "dance" ]; then

@@ -8,7 +8,7 @@ function led {
   rLed="/sys/class/leds/led1"
   currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>/dev/null < "$gLed/trigger")
   currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>/dev/null < "$rLed/trigger")
-bothcurrent="${currentGreen} ${currentRed}"
+  bothcurrent="${currentGreen} ${currentRed}"
   green="${GREEN}green led${NC}"
   red="${RED}red led${NC}"
 
@@ -97,13 +97,16 @@ function dance {
 
 function led_help {
   echo ""
-  echo "Usage: $(basename "$0") led [green|red|dance] [mode]"
+  echo "Usage: $(basename "$0") led [green|red|both|dance] [mode]"
   echo ""
   echo "Sets or returns the led mode"
   echo ""
   echo "Example:"
   echo "  $(basename "$0") led"
   echo "      This will return the status of the green/red (if present) leds"
+  echo ""
+  echo "  $(basename "$0") led both"
+  echo "      This will return the status of both green/red (if present) leds"
   echo ""
   echo "  $(basename "$0") led red"
   echo "      This will return the status of the green led"
@@ -113,6 +116,9 @@ function led_help {
   echo ""
   echo "  $(basename "$0") led green heartbeat"
   echo "      This will set the mode of the green led to heartbeat"
+  echo ""
+  echo "  $(basename "$0") led both none"
+  echo "      This will set the mode of the both leds to none"
   echo ""
   echo "  $(basename "$0") led dance"
   echo "      This will do a sequence with the green led"

@@ -109,7 +109,7 @@ function new_year {
     sleep 0.5
     set_brightness 1 1 && set_brightness 0 0
     sleep 0.5
-    counter=$(( $counter + 1 ))
+    counter=$(( counter + 1 ))
   done
 
   set_brightness 1 0 && set_brightness 0 0
@@ -122,7 +122,7 @@ function new_year {
     sleep 0.5
     set_brightness 1 0 && set_brightness 0 0
     sleep 0.5
-    counter=$(( $counter + 1 ))
+    counter=$(( counter + 1 ))
   done
 
   led green "$current_green"

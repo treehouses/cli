@@ -120,9 +120,6 @@ function led_help {
   echo "  $(basename "$0") led red"
   echo "      This will return the status of the red led"
   echo
-  echo "  $(basename "$0") led red heartbeat"
-  echo "      This will set the mode of the red led to heartbeat"
-  echo
   echo "  $(basename "$0") led green heartbeat"
   echo "      This will set the mode of the green led to heartbeat"
   echo

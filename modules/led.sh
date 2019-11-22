@@ -18,8 +18,10 @@ function led {
     led="$rLed"
     current="$currentRed"
   elif [ "$color" = "both" ]; then
-    led red $trigger
-    led green $trigger
+    led="$gLed"
+    current="$currentGreen"
+    led="$rLed"
+    current="$currentRed"
   elif [ "$color" = "dance" ]; then
     checkroot
     dance > /dev/null

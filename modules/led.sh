@@ -6,10 +6,8 @@ function led {
 
   gLed="/sys/class/leds/led0"
   rLed="/sys/class/leds/led1"
-  bLed=( "${gLed}" "${rLed}")
   currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>/dev/null < "$gLed/trigger")
   currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>/dev/null < "$rLed/trigger")
-  bothcurrent="${currentGreen} ${currentRed}"
   green="${GREEN}green led${NC}"
   red="${RED}red led${NC}"
 
@@ -20,8 +18,8 @@ function led {
     led="$rLed"
     current="$currentRed"
   elif [ "$color" = "both" ]; then
-    led="$bLed"
-    current="$bothcurrent"
+    led green $trigger
+    led red $trigger
   elif [ "$color" = "dance" ]; then
     checkroot
     dance > /dev/null

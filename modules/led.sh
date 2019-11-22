@@ -12,7 +12,8 @@ function led {
   bothcurrent="${currentGreen} ${currentRed}"
   green="${GREEN}green led${NC}"
   red="${RED}red led${NC}"
-
+  both="${green} ${red}"
+  
   if [ "$color" = "green" ]; then
     led="$gLed"
     current="$currentGreen"

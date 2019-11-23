@@ -18,7 +18,9 @@ function led {
     led="$rLed"
     current="$currentRed"
   elif [ "$color" = "both" ]; then
+    echo -e "$green: "
     led green $trigger
+    echo -e "$red: "
     led red $trigger
     exit 0
   elif [ "$color" = "dance" ]; then

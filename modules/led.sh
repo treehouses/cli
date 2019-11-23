@@ -20,7 +20,7 @@ function led {
   elif [ "$color" = "dance" ]; then
     checkroot
     dance > /dev/null
-  elif [ "$color" = "new_year" ]; then
+  elif [ "$color" = "newyear" ]; then
     checkroot
     newyear > /dev/null
   else
@@ -94,7 +94,7 @@ function dance {
   led green "$current_green"
 }
 
-function new_year {
+function newyear {
 
   current_green=$(led "green")
   current_red=$(led "red")

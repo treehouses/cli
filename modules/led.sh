@@ -22,7 +22,7 @@ function led {
     dance > /dev/null
   elif [ "$color" = "new_year" ]; then
     checkroot
-    new_year > /dev/null
+    newyear > /dev/null
   else
     if [ -z "$color" ]; then
       if [ ! -z "$currentGreen" ]; then

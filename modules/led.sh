@@ -116,28 +116,45 @@ function christmas {
 
 function led_help {
   echo ""
-  echo "Usage: $(basename "$0") led [green|red|dance|christmas] [mode]"
-  echo ""
+  echo "Usage: $(basename "$0") led [green|red] [mode]"
+  echo "       $(basename "$0") led [dance|christmas]"
+  echo
   echo "Sets or returns the led mode"
-  echo ""
+  echo
+  echo "This will help a user to identify a raspberry pi (if a user is working on many of raspberry pis)"
+  echo
+  echo " Where to find all modes: cat /sys/class/leds/led0/trigger"
+  echo
+  echo " OPTIONS OF MODES: "
+  echo "  default-on                 turns LED on"
+  echo "  oneshot                    turns LED on once"
+  echo "  heartbeat                  sets LED to heartbeat pattern"
+  echo "  timer                      sets LED to flash at a 1-second interval"
+  echo "  cpu0                       sets LED to CPU activity"
+  echo "  gpio                       controlled through GPIO "
+  echo "  input                      under-voltage detection"
+  echo "  backlight                  turns off LED"
+  echo "  none                       sets LED to none"
+  echo "  kbd-[numlock|capslock|etc] sets LED when keyboard key is hit"
+  echo
   echo "Example:"
   echo "  $(basename "$0") led"
   echo "      This will return the status of the green/red (if present) leds"
-  echo ""
+  echo
   echo "  $(basename "$0") led red"
-  echo "      This will return the status of the green led"
-  echo ""
-  echo "  $(basename "$0") led red heartbeat"
-  echo "      This will set the mode of the red led to heartbeat"
-  echo ""
+  echo "      This will return the status of the red led"
+  echo
   echo "  $(basename "$0") led green heartbeat"
   echo "      This will set the mode of the green led to heartbeat"
-  echo ""
+  echo
+  echo "  $(basename "$0") led red default-on"
+  echo "      This will set the mode of the red led to default-on"
+  echo
   echo "  $(basename "$0") led dance"
   echo "      This will do a sequence with the green led"
   echo "      1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
-  echo ""
+  echo
   echo "  $(basename "$0") led christmas"
   echo "      This will set the mode of the led to christmas"
-  echo ""
+  echo 
 }

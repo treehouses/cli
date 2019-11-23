@@ -20,6 +20,9 @@ function led {
   elif [ "$color" = "dance" ]; then
     checkroot
     dance > /dev/null
+  elif [ "$color" = "thanksgiving" ]; then
+    checkroot
+    thanksgiving > /dev/null
   elif [ "$color" = "christmas" ]; then
     checkroot
     christmas > /dev/null
@@ -97,6 +100,50 @@ function dance {
   led green "$current_green"
 }
 
+function thanksgiving {
+  current_red=$(led "red")
+  current_green=$(led "green")
+
+  for i in {0..1}
+  do
+    set_brightness 0 0 && sleep 0.5    # green off
+    set_brightness 0 1 && sleep 0.5    # green on
+  done
+
+  for i in {0..1}
+  do
+    set_brightness 1 0 && sleep 0.5    # red off
+    set_brightness 1 1 && sleep 0.5    # red on
+  done
+
+  set_brightness 0 0
+  for i in {0..1}
+  do
+    set_brightness 1 0 && sleep 0.25
+    set_brightness 1 1 && sleep 0.25
+  done
+  set_brightness 0 1 && sleep 0.5
+
+  set_brightness 1 0
+  for i in {0..1}
+  do 
+    set_brightness 0 0 && sleep 0.25
+    set_brightness 0 1 && sleep 0.25
+  done
+  set_brightness 1 1 && sleep 0.5
+
+  for i in {0..3}
+  do
+    set_brightness 1 0
+    set_brightness 0 0 && sleep 0.25
+    set_brightness 1 1
+    set_brightness 0 1 && sleep 0.25
+  done
+
+  led red "$current_red"
+  led green "$current_green"
+}
+
 function christmas {
   current_red=$(led "red")
   current_green=$(led "green")
@@ -152,9 +199,9 @@ function newyear {
 }
 
 function led_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") led [green|red] [mode]"
-  echo "       $(basename "$0") led [dance|christmas|newyear]"
+  echo "       $(basename "$0") led [dance|thanksgiving|christmas|newyear]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -190,6 +237,9 @@ function led_help {
   echo "  $(basename "$0") led dance"
   echo "      This will do a sequence with the green led"
   echo "      1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
+  echo 
+  echo "  $(basename "0") led thanksgiving"
+  echo "      This will do a sequence with the green and red led"
   echo
   echo "  $(basename "$0") led christmas"
   echo "      This will set the mode of the led to christmas"

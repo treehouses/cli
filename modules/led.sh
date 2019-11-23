@@ -118,7 +118,6 @@ function christmas {
 }
 
 function newyear {
-
   current_green=$(led "green")
   current_red=$(led "red")
 

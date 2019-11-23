@@ -131,7 +131,8 @@ function new_year {
 
 function led_help {
   echo ""
-  echo "Usage: $(basename "$0") led [green|red|dance] [mode]"
+  echo "Usage: $(basename "$0") led [green|red] [mode]"
+  echo "       $(basename "$0") led [dance|newyear]"
   echo ""
   echo "Sets or returns the led mode"
   echo ""

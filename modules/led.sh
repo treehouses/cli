@@ -112,7 +112,6 @@ function christmas {
 
   led red "$current_red"
   led green "$current_green"
-
 }
 
 function led_help {

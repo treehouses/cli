@@ -99,7 +99,7 @@ function led_help {
   echo
   echo "This will help a user to identify a raspberry pi (if a user is working on many of raspberry pis)"
   echo
-  echo " Where to find mode: root@treehouses:/sys/class/leds/led0# cat trigger "
+  echo " Where to find all modes: cat /sys/class/leds/led0/trigger"
   echo
   echo " OPTIONS OF MODES: "
   echo "  default-on                 turn LEDs on"

@@ -24,7 +24,7 @@ _treehouses_complete()
               image internet led locale memory networkmode ntp  openvpn password \
               rebootneeded rename restore rtc services speedtest ssh sshkey sshtunnel staticwifi \
               temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
-  led_cmds="green red mode"
+  led_cmds="green red mode new_year "
   memory_cmds="total used free"
   networkmode_cmds="info"
   ntp_cmds="local internet"

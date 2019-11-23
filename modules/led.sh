@@ -142,6 +142,7 @@ function thanksgiving {
 
   led red "$current_red"
   led green "$current_green"
+}
 
 function christmas {
   current_red=$(led "red")

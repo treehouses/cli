@@ -20,6 +20,9 @@ function led {
   elif [ "$color" = "dance" ]; then
     checkroot
     dance > /dev/null
+  elif [ "$color" = "christmas" ]; then
+    checkroot
+    christmas > /dev/null
   else
     if [ -z "$color" ]; then
       if [ ! -z "$currentGreen" ]; then
@@ -91,9 +94,30 @@ function dance {
   led green "$current_green"
 }
 
+function christmas {
+  current_red=$(led "red")
+  current_green=$(led "green")
+
+  led green none
+  led red none
+  sleep 1
+  
+  led red timer
+  led green timer
+  sleep 8
+
+  led green none
+  led red none
+  sleep 1
+
+  led red "$current_red"
+  led green "$current_green"
+}
+
 function led_help {
-  echo
-  echo "Usage: $(basename "$0") led [green|red|dance] [mode]"
+  echo ""
+  echo "Usage: $(basename "$0") led [green|red] [mode]"
+  echo "       $(basename "$0") led [dance|christmas]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -130,4 +154,7 @@ function led_help {
   echo "      This will do a sequence with the green led"
   echo "      1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
   echo
+  echo "  $(basename "$0") led christmas"
+  echo "      This will set the mode of the led to christmas"
+  echo 
 }

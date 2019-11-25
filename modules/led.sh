@@ -17,6 +17,10 @@ function led {
   elif [ "$color" = "red" ]; then
     led="$rLed"
     current="$currentRed"
+  elif [ "$color" = "both" ]; then
+    led green $trigger
+    led red $trigger
+    exit 0
   elif [ "$color" = "dance" ]; then
     checkroot
     dance > /dev/null
@@ -52,7 +56,11 @@ function led {
   fi
 
   if [ -z "$trigger" ]; then
-    echo "$current"
+    if [ $led = $gLed ]; then
+      echo -e "$green: $currentGreen"
+    elif [ $led = $rLed ]; then
+      echo -e "$red: $currentRed"
+    fi
   else
     checkroot
 
@@ -200,7 +208,7 @@ function newyear {
 
 function led_help {
   echo
-  echo "Usage: $(basename "$0") led [green|red] [mode]"
+  echo "Usage: $(basename "$0") led [green|red|both] [mode]"
   echo "       $(basename "$0") led [dance|thanksgiving|christmas|newyear]"
   echo
   echo "Sets or returns the led mode"
@@ -225,6 +233,9 @@ function led_help {
   echo "  $(basename "$0") led"
   echo "      This will return the status of the green/red (if present) leds"
   echo
+  echo "  $(basename "$0") led both"
+  echo "      This will return the status of both green/red (if present) leds"
+  echo
   echo "  $(basename "$0") led red"
   echo "      This will return the status of the red led"
   echo
@@ -233,6 +244,9 @@ function led_help {
   echo
   echo "  $(basename "$0") led red default-on"
   echo "      This will set the mode of the red led to default-on"
+  echo
+  echo "  $(basename "$0") led both none"
+  echo "      This will set the mode of the both leds to none"
   echo
   echo "  $(basename "$0") led dance"
   echo "      This will do a sequence with the green led"

@@ -5,7 +5,7 @@ _treehouses_complete()
   local cur prev
 
   # Valid top-level completions
-  commands="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
+  commands="ap apchannel bluetooth bootoption bridge burn button clone container \ 
               coralenv default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
               rebootneeded reboots rename restore rtc services ssh sshkey sshtunnel staticwifi \
@@ -18,7 +18,7 @@ _treehouses_complete()
   button_cmds="off bluetooth"
   container_cmds="none docker balena"
   coralenv_cmds="install demo-on demo-off demo-always-on"
-  help_cmds="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
+  help_cmds="ap apchannel bluetooth bootoption bridge burn button clone container \ 
               coralenv default detect detectrpi ethernet expandfs feedback help \
               image internet led locale memory networkmode ntp  openvpn password \
               rebootneeded reboots rename restore rtc services ssh sshkey sshtunnel staticwifi \

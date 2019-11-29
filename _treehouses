@@ -65,9 +65,6 @@ vnc_cmds="on off info"
       "bluetooth")
         COMPREPLY=( $(compgen -W "$bluetooth_cmds" -- $cur) )
         ;;
-      "bluetoothid")
-        COMPREPLY=( $(compgen -W "$bluetoothid_cmds" -- $cur) )
-        ;;	
       "bootoption")
         COMPREPLY=( $(compgen -W "$bootoption_cmds" -- $cur) )
         ;;

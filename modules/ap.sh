@@ -9,7 +9,7 @@ function ap {
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
 
-  if [ "${#essid}" -gt 32 ] && [  "$essid" = *" "*  ]
+  if [ "${#essid}" -gt 32 ] && [  "$essid" = *" "*  ]; then
     echo "Error: ssid must have less than 32 character and no spaces"
     exit 1 
   fi

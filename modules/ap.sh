@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 function ap {
   mode=$(clean_var "$1")
   essid=$(clean_var "$2")
@@ -7,6 +8,11 @@ function ap {
   base_24=$(echo "${@: -1}" | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}' | awk '{sub(/.$/,""); gsub("--ip=","", $0); print}')
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
+
+  if [ "${#essid}" -gt 32 ] && [  "$essid" = *" "*  ]
+    echo "Error: ssid must have less than 32 character and no spaces"
+    exit 1 
+  fi
 
   if [ -n "$password" ];
   then

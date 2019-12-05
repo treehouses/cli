@@ -8,12 +8,14 @@ function services2 {
 
   service_file="$TEMPLATES/services/$service_name/$output"
 
+  # list all services available to be installed
   if [ "$service_name" = "available" ]; then
     while IFS= read -r -d '' service
     do
       service=$(basename "$service")
       find_available_services "$service"
     done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
+  # list all installed services
   elif [ "$service_name" = "installed" ]; then
     docker ps -a
   else

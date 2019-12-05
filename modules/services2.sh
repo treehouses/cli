@@ -27,6 +27,7 @@ function services2 {
           ;;
 
         # docker-compose up (build and create container) with given port number
+        # port number MUST MATCH with port given in yml file
         up)
           if [ -z "$command_option" ]; then
             echo "no port given"
@@ -52,6 +53,7 @@ function services2 {
               docker-compose -f /srv/kolibri/kolibri.yml down
               echo "service stopped and removed"
               ;;
+              # grep -A1 "down)" $TEMPLATES/services/${service_name}/${service_name}_config
             *)
               echo "unknown service"
               ;;
@@ -60,12 +62,14 @@ function services2 {
 
         # docker start (starts a stopped container)
         start)
-          
+          docker start "$service_name"
+          echo "service started"
           ;;
 
         # docker stop (stops a running container)
         stop)
-
+          docker stop "$service_name"
+          echo "service stopped"
           ;;
 
         # autorun, autorun true, autorun false

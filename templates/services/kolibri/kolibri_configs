@@ -1,0 +1,5 @@
+up)
+docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
+
+down)
+docker-compose -f /srv/kolibri/kolibri.yml down

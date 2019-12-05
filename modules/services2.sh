@@ -49,7 +49,7 @@ function services2 {
         down)
           case "$service_name" in
             kolibri)
-              docker-compose rm -fsv kolibri
+              docker-compose -f /srv/kolibri/kolibri.yml down
               echo "service stopped and removed"
               ;;
             *)

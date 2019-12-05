@@ -6,11 +6,10 @@ _treehouses_complete()
 
   # Valid top-level completions
   commands="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
-              coralenv cron default detect detectrpi discover ethernet expandfs feedback help \
-              image internet led locale memory networkmode ntp  openvpn password \
-              rebootneeded rename restore rtc services speedtest ssh sshkey sshtunnel staticwifi \
-              temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
-
+            coralenv cron default detect detectrpi discover ethernet expandfs feedback help \
+            image internet led locale memory networkmode ntp  openvpn password \
+            rebootneeded reboots rename restore rtc services speedtest ssh sshkey sshtunnel \
+            staticwifi temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
   ap_cmdas="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
   bluetooth_cmds="on off pause"
@@ -19,16 +18,14 @@ _treehouses_complete()
   button_cmds="off bluetooth"
   container_cmds="none docker balena"
   coralenv_cmds="install demo-on demo-off demo-always-on"
-  help_cmds="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
-              coralenv cron default detect detectrpi discover ethernet expandfs feedback help \
-              image internet led locale memory networkmode ntp  openvpn password \
-              rebootneeded rename restore rtc services speedtest ssh sshkey sshtunnel staticwifi \
-              temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
+  discover_cmds="rpi scan interface ping ports mac"
+  help_cmds=$commands
   led_cmds="green red both dance thanksgiving christmas newyear"
   memory_cmds="total used free"
   networkmode_cmds="info"
   ntp_cmds="local internet"
   openvpn_cmds="use show delete notice start stop load"
+  reboots_cmds="now in cron daily weekly monthly"
   rtc_cmds="on off"
   rtc_on_cmds="ds3231 rasclock"
 
@@ -41,7 +38,6 @@ _treehouses_complete()
   temperature_cmds="celsius"
   tor_cmds="start stop add list notice destroy"
   notice_cmds="on off add delete list"
-  discover_cmds="rpi scan interface ping ports mac"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 
@@ -105,6 +101,9 @@ vnc_cmds="on off info"
         ;;
       "rtc")
         COMPREPLY=( $(compgen -W "$rtc_cmds" -- $cur) )
+        ;;
+      "reboots")
+        COMPREPLY=( $(compgen -W "$reboots_cmds" -- $cur) )
         ;;
       "sshkey")
         COMPREPLY=( $(compgen -W "$sshkey_cmds" -- $cur) )

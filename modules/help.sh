@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 function help_default {
   echo "Usage: $(basename "$0")"
   echo
@@ -8,16 +7,18 @@ function help_default {
   echo "   expandfs                                  expands the partition of the RPI image to the maximum of the SDcard"
   echo "   rename <hostname>                         changes hostname"
   echo "   password <password>                       changes the password for 'pi' user"
-  echo "   sshkey <add|list|delete|deleteall>        used for adding or removing ssh keys for authentication"
-  echo "          <addgithubusername|addgithubgroup>"
+  echo "   sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication"        
   echo "   version                                   returns the version of $(basename "$0") command"
   echo "   image                                     returns version of the system image installed"
   echo "   detectrpi                                 detects the hardware version of a raspberry pi"
   echo "   detect                                    detects the hardware version of any device"
   echo "   ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address"
+  echo "   discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network"
+  echo "            <rpi> [ipaddress|url|macaddress]"
   echo "   wifi <ESSID> [password]                   connects to a wifi network"
   echo "   staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address"
   echo "              <ESSID> [password]"
+  echo "   wifistatus                                displays signal strength in dBm and layman nomenclature"
   echo "   bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot"
   echo "          [password] [hotspotPassword]"
   echo "   container <none|docker|balena>            enables (and start) the desired container"
@@ -59,6 +60,8 @@ function help_default {
   echo "   memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory"
   echo "   temperature [celsius]                     displays raspberry pi's CPU temperature"
   echo "   speedtest                                 tests internet download and upload speed"
+  echo "   cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs"
+  echo "        [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)"
   echo
 }
 

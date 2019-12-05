@@ -1,4 +1,4 @@
-# npm i @treehouses/cli
+# npm i -g --unsafe-perm @treehouses/cli
 
 [![Build Status](https://travis-ci.org/treehouses/cli.svg?branch=master)](https://travis-ci.org/treehouses/cli)
 [![npm version](https://badge.fury.io/js/%40treehouses%2Fcli.svg)](https://www.npmjs.com/package/%40treehouses%2Fcli)
@@ -15,16 +15,18 @@ help [command]                            gives you a more detailed info about t
 expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
 rename <hostname>                         changes hostname
 password <password>                       changes the password for 'pi' user
-sshkey <add|list|delete|deleteall>        used for adding or removing ssh keys for authentication
-       <addgithubusername|addgithubgroup>
+sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
 version                                   returns the version of cli.sh command
 image                                     returns version of the system image installed
 detectrpi                                 detects the hardware version of a raspberry pi
 detect                                    detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
+discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
+         <rpi> [ipaddress|url|macaddress]
 wifi <ESSID> [password]                   connects to a wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]
+wifistatus                                displays signal strength in dBm and layman nomenclature
 bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot
        [password] [hotspotPassword]
 container <none|docker|balena>            enables (and start) the desired container
@@ -66,4 +68,6 @@ coralenv [install|demo-on|demo-off]       plays with the coral environmental boa
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory 
 temperature [celsius]                     displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
+cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
+     [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 ```

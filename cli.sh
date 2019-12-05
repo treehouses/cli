@@ -3,7 +3,7 @@
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 
-source "$SCRIPTFOLDER/modules/detectrpi.sh" 
+source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
 source "$SCRIPTFOLDER/modules/apchannel.sh"
@@ -47,10 +47,12 @@ source "$SCRIPTFOLDER/modules/version.sh"
 source "$SCRIPTFOLDER/modules/vnc.sh"
 source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
+source "$SCRIPTFOLDER/modules/wifistatus.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
-
+source "$SCRIPTFOLDER/modules/cron.sh"
+source "$SCRIPTFOLDER/modules/discover.sh"
 
 
 case $1 in
@@ -96,7 +98,6 @@ case $1 in
     staticwifi "$2" "$3" "$4" "$5" "$6" "$7"
     ;;
   container)
-    checkrpi
     checkroot
     container "$2"
     ;;
@@ -119,6 +120,10 @@ case $1 in
     checkroot
     shift
     ap "$@"
+    ;;
+  discover)
+    shift
+    discover "$@"
     ;;
   timezone)
     checkroot
@@ -154,6 +159,10 @@ case $1 in
     checkrpi
     checkroot
     wificountry "$2"
+    ;;
+  wifistatus)
+    checkrpi
+    wifistatus "$2"
     ;;
   sshtunnel)
     checkroot
@@ -254,6 +263,10 @@ case $1 in
   speedtest)
     shift
     speedtest "$@"
+    ;;
+  cron)
+    checkroot
+    cron "$2" "$3"
     ;;
   help)
     help "$2"

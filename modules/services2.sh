@@ -5,6 +5,7 @@ function services2 {
   command="$2"
   command_option="$3"
 
+
   service_file="$TEMPLATES/services/$service_name/$output"
 
   if [ "$service_name" = "available" ]; then
@@ -25,9 +26,41 @@ function services2 {
           echo "yml file created"
           ;;
 
+        # docker-compose up (build and create container) with given port number
+        up)
+          if [ -z "$command_option" ]; then
+            echo "no port given"
+            exit 1
+          else
+            treehouses tor add "$command_option"
+            case "$service_name" in
+              kolibri)
+                docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
+                echo "service built and started"
+                ;;
+              *)
+                echo "unknown service"
+                ;;
+            esac
+          fi
+          ;;
+
+        # docker-compose down (stop and remove container)
+        down)
+          case "$service_name" in
+            kolibri)
+              docker-compose down -f /srv/kolibri/kolibri.yml -p kolibri down -d
+              echo "service stopped and removed"
+              ;;
+            *)
+              echo "unknown service"
+              ;;
+          esac
+          ;;
+
         # docker start (starts a stopped container)
         start)
-
+          
           ;;
 
         # docker stop (stops a running container)
@@ -35,31 +68,20 @@ function services2 {
 
           ;;
 
-        # docker-compose up (build and create container) with given port number
-        up)
-
-          ;;
-
-        # docker-compose down (stop and remove container)
-        down)
-
-          ;;
-
-        # autostart, autostart true, autostart false
-        autostart)
+        # autorun, autorun true, autorun false
+        autorun)
 
           ;;
 
         # docker ps -a
         installed)
-
+          docker ps -a
           ;;
 
-        # docker ps
+        # docker ps (specific service)
         ps)
-
+          docker ps -f name=$service_name | grep -w $service_name
           ;;
-
 
         *)
           echo "command not known"

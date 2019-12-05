@@ -86,6 +86,7 @@ function set_brightness {
 }
 
 function dance {
+  echo "leds are set to dance mode."
   current_green=$(led "green")
   current_red=$(led "red")
 
@@ -109,6 +110,7 @@ function dance {
 }
 
 function thanksgiving {
+  echo "leds are set to thanksgiving mode."
   current_red=$(led "red")
   current_green=$(led "green")
 
@@ -153,6 +155,7 @@ function thanksgiving {
 }
 
 function christmas {
+  echo "leds are set to christmas mode."
   current_red=$(led "red")
   current_green=$(led "green")
 
@@ -173,6 +176,7 @@ function christmas {
 }
 
 function newyear {
+  echo "leds are set to newyear mode."
   current_green=$(led "green")
   current_red=$(led "red")
 

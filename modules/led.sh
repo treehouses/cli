@@ -23,15 +23,19 @@ function led {
     exit 0
   elif [ "$color" = "dance" ]; then
     checkroot
+    echo "leds are set to dance mode."
     dance > /dev/null
   elif [ "$color" = "thanksgiving" ]; then
     checkroot
+    echo "leds are set to thanksgiving mode."
     thanksgiving > /dev/null
   elif [ "$color" = "christmas" ]; then
     checkroot
+    echo "leds are set to christmas mode."
     christmas > /dev/null
   elif [ "$color" = "newyear" ]; then
     checkroot
+    echo "leds are set to newyear mode."
     newyear > /dev/null
   else
     if [ -z "$color" ]; then
@@ -86,7 +90,6 @@ function set_brightness {
 }
 
 function dance {
-  echo "leds are set to dance mode."
   current_green=$(led "green")
   current_red=$(led "red")
 
@@ -110,7 +113,6 @@ function dance {
 }
 
 function thanksgiving {
-  echo "leds are set to thanksgiving mode."
   current_red=$(led "red")
   current_green=$(led "green")
 
@@ -155,7 +157,6 @@ function thanksgiving {
 }
 
 function christmas {
-  echo "leds are set to christmas mode."
   current_red=$(led "red")
   current_green=$(led "green")
 
@@ -176,7 +177,6 @@ function christmas {
 }
 
 function newyear {
-  echo "leds are set to newyear mode."
   current_green=$(led "green")
   current_red=$(led "red")
 

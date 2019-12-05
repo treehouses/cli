@@ -67,15 +67,23 @@ function services2 {
         # docker start (starts a stopped container)
         start)
           # check if container exists
-          docker start "$service_name"
-          echo "service started"
+          if [ "docker ps -f name=$service_name | grep -w $service_name" ]; then
+            docker start "$service_name"
+            echo "service started"
+          else
+            echo "service not found"
+          fi
           ;;
 
         # docker stop (stops a running container)
         stop)
           # check if container exists
-          docker stop "$service_name"
-          echo "service stopped"
+          if [ "docker ps -f name=$service_name | grep -w $service_name" ]; then
+            docker stop "$service_name"
+            echo "service stopped"
+          else
+            echo "service not found"
+          fi
           ;;
 
         # autorun, autorun true, autorun false

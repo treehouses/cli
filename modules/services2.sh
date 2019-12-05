@@ -21,7 +21,7 @@ function services2 {
       case "$command" in
         # create yml file
         create)
-          bash $TEMPLATES/services/${service_name}/${service_name}_yml
+          bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
           echo "yml file created"
           ;;
 

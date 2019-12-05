@@ -14,6 +14,8 @@ function services2 {
       service=$(basename "$service")
       find_available_services "$service"
     done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
+  elif [ "$service_name" = "installed" ]; then
+    docker ps -a
   else
     if [ -z "$command" ]; then
       echo "no command given"
@@ -62,12 +64,14 @@ function services2 {
 
         # docker start (starts a stopped container)
         start)
+          # check if container exists
           docker start "$service_name"
           echo "service started"
           ;;
 
         # docker stop (stops a running container)
         stop)
+          # check if container exists
           docker stop "$service_name"
           echo "service stopped"
           ;;
@@ -75,11 +79,6 @@ function services2 {
         # autorun, autorun true, autorun false
         autorun)
 
-          ;;
-
-        # docker ps -a
-        installed)
-          docker ps -a
           ;;
 
         # docker ps (specific service)

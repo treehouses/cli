@@ -34,8 +34,8 @@ function led {
     echo "|#S  ()() |  | CAM  +-+                 |USB|"
     echo "|#P   ()  +--+  #                       +---+"  
     echo "|#Y             #                      +----+"
-    echo "|Green LED-->[]        +----+ # +-+    | NET|"
-    echo "|Red LED-->[]()+---+ |    | # |A|  ()+------+"
+    echo "|[]<--Green LED        +----+ # +-+    | NET|"
+    echo "|[]<--Red LED()+---+ |    | # |A|  ()+------+"
     echo "+-------|PWR|------|HDMI|------|V|----------+"
     echo "      +-----+     +-------+           +-----+"
     dance > /dev/null

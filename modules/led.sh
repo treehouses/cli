@@ -24,8 +24,8 @@ function led {
   elif [ "$color" = "dance" ]; then
     checkroot
     echo "leds are set to dance mode."
-    echo "The pattern of leds will be 1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
-    echo "Look at the you leds' RPi"
+    echo "Look at your RPi leds, green led will be in this pattern: 1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off "
+    echo "Here is the location of LEDs"
     echo "+-------------------------------------------+"
     echo "|  ()2#################40()             +---+"
     echo "|    1#################39               |USB|"
@@ -34,8 +34,8 @@ function led {
     echo "|#S  ()() |  | CAM  +-+                 |USB|"
     echo "|#P   ()  +--+  #                       +---+"  
     echo "|#Y             #                      +----+"
-    echo "|[]<--Green LED        +----+ # +-+    | NET|"
-    echo "|[]<--Red LED()+---+ |    | # |A|  ()+------+"
+    echo -e "|\e[5m\e[32m[] \e[25m\e[39m           +----+ # +-+             | NET|"
+    echo -e "|\e[31m[] \e[39m()+---+ |      | # |A|         ()+------+"
     echo "+-------|PWR|------|HDMI|------|V|----------+"
     echo "      +-----+     +-------+           +-----+"
     dance > /dev/null

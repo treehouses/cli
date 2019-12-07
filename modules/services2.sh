@@ -155,7 +155,7 @@ function services2 {
             #   for line in $(cat /boot/autorun); do
             #     # if [ $line = *"$service_name"* ]; then
             #     #   # remove line
-                  
+
             #     # fi
             #   done
             # fi
@@ -209,7 +209,10 @@ function services2_help {
   echo "      Starts | stops the planet service"
   echo ""
   echo "  $(basename "$0") services2 planet autorun"
-  echo "      "
+  echo "      Outputs true if the planet service is set to autorun or false otherwise"
+  echo ""
+  echo "  $(basename "$0") services2 planet autorun true | false"
+  echo "      Sets the planet service autorun to true | false"
   echo ""
   echo "  $(basename "$0") services2 planet ps"
   echo "      Outputs the containers related to the planet service"

@@ -61,23 +61,28 @@ function services2 {
 
         # docker-compose down (stop and remove container)
         down)
-          case "$service_name" in
-            # grep -A1 "down)" $TEMPLATES/services/${service_name}/${service_name}_config
+          # case "$service_name" in
+          #   kolibri)
+          #     docker-compose -f /srv/kolibri/kolibri.yml down
+          #     echo "service stopped and removed"
+          #     ;;
+          #   planet)
+          #     docker-compose -f /srv/planet/planet.yml down
+          #     echo "service stopped and removed"
+          #     ;;
+          #   *)
+          #     echo "unknown service"
+          #     ;;
+          # esac
+          # ;;
 
-            # check if service is running
-
-            kolibri)
-              docker-compose -f /srv/kolibri/kolibri.yml down
-              echo "service stopped and removed"
-              ;;
-            planet)
-              docker-compose -f /srv/planet/planet.yml down
-              echo "service stopped and removed"
-              ;;
-            *)
-              echo "unknown service"
-              ;;
-          esac
+          # check if yml file exists
+          if [ -e /srv/${service_name}/${service_name}.yml ]; then
+            echo "yml file doesn't exist"
+          else
+            docker-compose -f /srv/${service_name}/${service_name}.yml down
+            echo "service stopped and removed"
+          fi
           ;;
 
         # docker start (starts a stopped container)

@@ -93,7 +93,7 @@ function services2 {
 
         # docker ps (specific service)
         ps)
-          docker ps -f name=$service_name | grep -w $service_name
+          docker ps -a | grep $service_name
           ;;
 
         *)

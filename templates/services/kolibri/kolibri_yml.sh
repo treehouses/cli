@@ -10,6 +10,5 @@ mkdir -p /srv/kolibri
   echo "      - \"8080:8080\""
   echo "    volumes:"
   echo "      - \"/srv/kolibri:/root/.kolibri\""
-  echo "    container_name: kolibri"
   echo "version: \"2\""
 } > /srv/kolibri/kolibri.yml

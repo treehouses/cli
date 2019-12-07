@@ -153,10 +153,10 @@ function services2 {
             # if autorun file exists
             if [ -e /boot/autorun ]; then
               for line in $(cat /boot/autorun); do
-                if [ $line = *"$service_name"* ]; then
-                  # remove line
+                # if [ $line = *"$service_name"* ]; then
+                #   # remove line
                   
-                fi
+                # fi
               done
             fi
             echo "service autorun set to false"

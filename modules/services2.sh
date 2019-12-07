@@ -44,6 +44,10 @@ function services2 {
           else
             treehouses tor add "$command_option"
             case "$service_name" in
+              planet)
+                docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
+                echo "service built and started"
+                ;;
               kolibri)
                 docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
                 echo "service built and started"

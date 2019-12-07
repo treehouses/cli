@@ -77,7 +77,7 @@ function services2 {
           # ;;
 
           # check if yml file exists
-          if [ -e /srv/${service_name}/${service_name}.yml ]; then
+          if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
             echo "yml file doesn't exist"
           else
             docker-compose -f /srv/${service_name}/${service_name}.yml down

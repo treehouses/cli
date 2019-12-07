@@ -4,9 +4,7 @@ function services2 {
   service_name="$1"
   command="$2"
   command_option="$3"
-
-
-  service_file="$TEMPLATES/services/$service_name/$output"
+  # service_file="$TEMPLATES/services/$service_name/$output"
 
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
@@ -18,6 +16,9 @@ function services2 {
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
     docker ps -a
+  # list all running services
+  elif [ "$service_name" = "running" ]; then
+    docker ps
   else
     if [ -z "$command" ]; then
       echo "no command given"
@@ -61,21 +62,6 @@ function services2 {
 
         # docker-compose down (stop and remove container)
         down)
-          # case "$service_name" in
-          #   kolibri)
-          #     docker-compose -f /srv/kolibri/kolibri.yml down
-          #     echo "service stopped and removed"
-          #     ;;
-          #   planet)
-          #     docker-compose -f /srv/planet/planet.yml down
-          #     echo "service stopped and removed"
-          #     ;;
-          #   *)
-          #     echo "unknown service"
-          #     ;;
-          # esac
-          # ;;
-
           # check if yml file exists
           if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
             echo "yml file doesn't exist"

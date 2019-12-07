@@ -26,8 +26,13 @@ function services2 {
       case "$command" in
         # create yml file
         create)
-          bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
-          echo "yml file created"
+          # check if yml file exists
+          if [ -e /srv/${service_name}/${service_name}.yml ]; then
+            echo "yml file already exists"
+          else
+            bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
+            echo "yml file created"
+          fi
           ;;
 
         # docker-compose up (build and create container) with given port number
@@ -53,11 +58,17 @@ function services2 {
         # docker-compose down (stop and remove container)
         down)
           case "$service_name" in
+            # grep -A1 "down)" $TEMPLATES/services/${service_name}/${service_name}_config
+
+            # check if service is running
+
             kolibri)
               docker-compose -f /srv/kolibri/kolibri.yml down
               echo "service stopped and removed"
               ;;
-              # grep -A1 "down)" $TEMPLATES/services/${service_name}/${service_name}_config
+            planet)
+              docker-compose -f /srv/planet/planet.yml down
+              echo "service stopped and removed"
             *)
               echo "unknown service"
               ;;
@@ -68,7 +79,7 @@ function services2 {
         start)
           # check if container exists
           if [ "$(docker ps -a | grep $service_name)" ]; then
-            docker start "$service_name"
+            docker-compose -f /srv/${service_name}/${service_name}.yml start
             echo "service started"
           else
             echo "service not found"
@@ -79,7 +90,7 @@ function services2 {
         stop)
           # check if container exists
           if [ "$(docker ps -a | grep $service_name)" ]; then
-            docker stop "$service_name"
+            docker-compose -f /srv/${service_name}/${service_name}.yml stop
             echo "service stopped"
           else
             echo "service not found"

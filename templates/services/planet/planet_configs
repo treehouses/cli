@@ -1,0 +1,11 @@
+up)
+docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
+
+down)
+docker-compose -f /srv/planet/planet.yml down
+
+start)
+
+
+stop)
+

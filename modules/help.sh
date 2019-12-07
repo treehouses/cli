@@ -50,6 +50,7 @@ function help_default {
   echo "   internet                                  checks if the rpi has access to internet"
   echo "   services [service_name] [format]          outputs or install the desired service"
   echo "            [install]"
+  echo "   services2 [service_name] [command]        executes the given command on the specified service"
   echo "   tor [start|stop|add|delete|list]          deals with services on tor hidden network"
   echo "       [notice|destroy|deleteall]"
   echo "   bootoption <console|desktop> [autologin]  sets the boot mode"

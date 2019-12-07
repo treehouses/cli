@@ -67,7 +67,7 @@ function services2 {
         # docker start (starts a stopped container)
         start)
           # check if container exists
-          if [ "docker ps -f name=$service_name | grep -w $service_name" ]; then
+          if [ "$(docker ps -a | grep $service_name)" ]; then
             docker start "$service_name"
             echo "service started"
           else
@@ -78,7 +78,7 @@ function services2 {
         # docker stop (stops a running container)
         stop)
           # check if container exists
-          if [ "docker ps -f name=$service_name | grep -w $service_name" ]; then
+          if [ "$(docker ps -a | grep $service_name)" ]; then
             docker stop "$service_name"
             echo "service stopped"
           else

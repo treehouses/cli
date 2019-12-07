@@ -69,6 +69,7 @@ function services2 {
             planet)
               docker-compose -f /srv/planet/planet.yml down
               echo "service stopped and removed"
+              ;;
             *)
               echo "unknown service"
               ;;

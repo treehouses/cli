@@ -41,7 +41,7 @@ function services2 {
         up)
           if [ -z "$command_option" ]; then
             echo "no port given"
-            exit 1
+            # exit 1
           else
             treehouses tor add "$command_option"
             case "$service_name" in
@@ -95,7 +95,74 @@ function services2 {
 
         # autorun, autorun true, autorun false
         autorun)
-
+          # if no command_option, then output true or false
+          if [ -z "$command_option" ]; then
+            # if no autorun file, output false
+            if [ ! -e /boot/autorun ]; then
+              echo "false"
+            # else check autorun file for autorun line
+            else
+              tf_flag=false
+              for line in $(cat /boot/autorun); do
+                if [ $line = *"$service_name"* ]; then
+                  tf_flag= true
+                  break
+                fi
+              done
+              if [ tf_flag = true ]; then
+                echo "true"
+              else
+                echo "false"
+              fi
+            fi
+          # if command_option = true, then make service autostart
+          elif [ "$command_option" = "true" ]; then
+            # if no autorun file, create one
+            if [ ! -e /boot/autorun ]; then
+              {
+                echo "#!/bin/bash"
+                echo
+                echo "sleep 1"
+                echo
+              } > /boot/autorun
+            fi
+            # add autorun line
+            case "$service_name" in
+              planet)
+                {
+                  echo "if [ -f /srv/planet/pwd/credentials.yml ]; then"
+                  echo "  docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d"
+                  echo "else"
+                  echo "  docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d"
+                  echo "fi"
+                  echo
+                } >> /boot/autorun
+                ;;
+              kolibri)
+                {
+                  echo "docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d"
+                  echo
+                } >> /boot/autorun
+                ;;
+              *)
+                echo "unknown service"
+                ;;
+            esac
+            echo "service autorun set to true"
+          elif [ "$command_option" = "false" ]; then
+            # if autorun file exists
+            if [ -e /boot/autorun ]; then
+              for line in $(cat /boot/autorun); do
+                if [ $line = *"$service_name"* ]; then
+                  # remove line
+                  
+                fi
+              done
+            fi
+            echo "service autorun set to false"
+          else
+            echo "unknown command option"
+          fi
           ;;
 
         # docker ps (specific service)
@@ -104,7 +171,7 @@ function services2 {
           ;;
 
         *)
-          echo "command not known"
+          echo "unknown command"
           ;;
       esac
     fi

@@ -152,16 +152,12 @@ function services2 {
             # if autorun file exists
             if [ -e /boot/autorun ]; then
               # if autorun lines exist, set flag to false
-              found=false
               while read line; do
                 if [[ $line == "${service_name}_autorun=true" ]]; then
-                  found=true
+                  sed -i "/$line/c\\${service_name}_autorun=false" /boot/autorun
                   break
                 fi
               done < /boot/autorun
-              if [ "$found" = true ]; then
-                sed -i "/${service_name}_autorun=true/c\\${service_name}_autorun=false" /boot/autorun
-              fi
             fi
             echo "service autorun set to false"
           else

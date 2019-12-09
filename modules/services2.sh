@@ -109,7 +109,6 @@ function services2 {
               found=false
               while read line; do
                 if [[ $line == "${service_name}_autorun=true" ]]; then
-                  echo "$line"
                   found=true
                   break
                 fi
@@ -156,7 +155,6 @@ function services2 {
               found=false
               while read line; do
                 if [[ $line == "${service_name}_autorun=true" ]]; then
-                  echo "$line"
                   found=true
                   break
                 fi

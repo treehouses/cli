@@ -46,7 +46,11 @@ function services2 {
             treehouses tor add "$command_option"
             case "$service_name" in
               planet)
-                docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
+                if [ -f /srv/planet/pwd/credentials.yml ]; then
+                  docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d
+                else
+                  docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
+                fi
                 echo "service built and started"
                 ;;
               kolibri)
@@ -102,14 +106,16 @@ function services2 {
               echo "false"
             # else check autorun file for autorun line
             else
-              tf_flag=false
-              for line in $(cat /boot/autorun); do
-                if [ $line = *"$service_name"* ]; then
-                  tf_flag= true
+              found=false
+              while read line; do
+                if [[ $line == *"$service_name up"* ]]; then
+                  echo "$line"
+                  found=true
+                  echo "found"
                   break
                 fi
-              done
-              if [ "$tf_flag" = true ]; then
+              done < /boot/autorun
+              if [ "$found" = true ]; then
                 echo "true"
               else
                 echo "false"
@@ -129,28 +135,30 @@ function services2 {
             # add autorun line(s)
             case "$service_name" in
               planet)
-                {
-                  echo "planet_autorun=true"
-                  echo 
-                  echo "if [ "$planet_autorun" = true ]; then"
-                  echo "  if [ -f /srv/planet/pwd/credentials.yml ]; then"
-                  echo "    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d"
-                  echo "  else"
-                  echo "    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d"
-                  echo "  fi"
-                  echo "fi"
-                  echo
-                } >> /boot/autorun
+                # {
+                #   echo "planet_autorun=true"
+                #   echo 
+                #   echo "if [ "$planet_autorun" = true ]; then"
+                #   echo "  if [ -f /srv/planet/pwd/credentials.yml ]; then"
+                #   echo "    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d"
+                #   echo "  else"
+                #   echo "    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d"
+                #   echo "  fi"
+                #   echo "fi"
+                #   echo
+                # } >> /boot/autorun
+                cat $TEMPLATES/services/${service_name}/${service_name}_autorun.sh >> /boot/autorun
                 ;;
               kolibri)
-                {
-                  echo "kolibri_autorun=true"
-                  echo
-                  echo "if [ "$kolibri_autorun" = true ]; then"
-                  echo "  docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d"
-                  echo "fi"
-                  echo
-                } >> /boot/autorun
+                # {
+                #   echo "kolibri_autorun=true"
+                #   echo
+                #   echo "if [ "$kolibri_autorun" = true ]; then"
+                #   echo "  docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d"
+                #   echo "fi"
+                #   echo
+                # } >> /boot/autorun
+                cat $TEMPLATES/services/${service_name}/${service_name}_autorun.sh >> /boot/autorun
                 ;;
               *)
                 echo "unknown service"

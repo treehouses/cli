@@ -1,10 +1,5 @@
-#!/bin/bash
+kolibri_autorun=false
 
-# create autorun
-{
-  echo "#!/bin/bash"
-  echo
-  echo "sleep 1"
-  echo
-  echo "docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d"
-} > /boot/autorun
+if [ "$kolibri_autorun" = true ]; then
+  docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
+fi

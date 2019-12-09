@@ -109,7 +109,7 @@ function services2 {
                   break
                 fi
               done
-              if [ tf_flag = true ]; then
+              if [ "$tf_flag" = true ]; then
                 echo "true"
               else
                 echo "false"
@@ -126,21 +126,29 @@ function services2 {
                 echo
               } > /boot/autorun
             fi
-            # add autorun line
+            # add autorun line(s)
             case "$service_name" in
               planet)
                 {
-                  echo "if [ -f /srv/planet/pwd/credentials.yml ]; then"
-                  echo "  docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d"
-                  echo "else"
-                  echo "  docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d"
+                  echo "planet_autorun=true"
+                  echo 
+                  echo "if [ "$planet_autorun" = true ]; then"
+                  echo "  if [ -f /srv/planet/pwd/credentials.yml ]; then"
+                  echo "    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d"
+                  echo "  else"
+                  echo "    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d"
+                  echo "  fi"
                   echo "fi"
                   echo
                 } >> /boot/autorun
                 ;;
               kolibri)
                 {
-                  echo "docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d"
+                  echo "kolibri_autorun=true"
+                  echo
+                  echo "if [ "$kolibri_autorun" = true ]; then"
+                  echo "  docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d"
+                  echo "fi"
                   echo
                 } >> /boot/autorun
                 ;;
@@ -153,10 +161,10 @@ function services2 {
             # if autorun file exists
             # if [ -e /boot/autorun ]; then
             #   for line in $(cat /boot/autorun); do
-            #     # if [ $line = *"$service_name"* ]; then
-            #     #   # remove line
+            #     if [ $line = *"$service_name"* ]; then
+            #       # remove line
 
-            #     # fi
+            #     fi
             #   done
             # fi
             echo "service autorun set to false"

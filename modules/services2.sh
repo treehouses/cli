@@ -148,39 +148,6 @@ function services2 {
               # find $service_name_autorun=false and change to true
               sed -i "/${service_name}_autorun=false/c\\${service_name}_autorun=true" /boot/autorun
             fi
-
-            # # add autorun line(s)
-            # case "$service_name" in
-            #   planet)
-            #     # {
-            #     #   echo "planet_autorun=true"
-            #     #   echo 
-            #     #   echo "if [ "$planet_autorun" = true ]; then"
-            #     #   echo "  if [ -f /srv/planet/pwd/credentials.yml ]; then"
-            #     #   echo "    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d"
-            #     #   echo "  else"
-            #     #   echo "    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d"
-            #     #   echo "  fi"
-            #     #   echo "fi"
-            #     #   echo
-            #     # } >> /boot/autorun
-            #     cat $TEMPLATES/services/${service_name}/${service_name}_autorun.sh >> /boot/autorun
-            #     ;;
-            #   kolibri)
-            #     # {
-            #     #   echo "kolibri_autorun=true"
-            #     #   echo
-            #     #   echo "if [ "$kolibri_autorun" = true ]; then"
-            #     #   echo "  docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d"
-            #     #   echo "fi"
-            #     #   echo
-            #     # } >> /boot/autorun
-            #     cat $TEMPLATES/services/${service_name}/${service_name}_autorun.sh >> /boot/autorun
-            #     ;;
-            #   *)
-            #     echo "unknown service"
-            #     ;;
-            # esac
             echo "service autorun set to true"
           elif [ "$command_option" = "false" ]; then
             # if autorun file exists
@@ -195,11 +162,10 @@ function services2 {
                 fi
               done < /boot/autorun
               if [ "$found" = true ]; then
-                sed -i '/${service_name}_autorun=true/c\${service_name}_autorun=false' /boot/autorun
+                sed -i "/${service_name}_autorun=true/c\\${service_name}_autorun=false" /boot/autorun
               fi
-            else
-              echo "service autorun set to false"
             fi
+            echo "service autorun set to false"
           else
             echo "unknown command option"
           fi

@@ -7,3 +7,4 @@ if [ "$planet_autorun" = true ]; then
     docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
   fi
 fi
+

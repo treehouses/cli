@@ -1,4 +1,4 @@
-planet_autorun=false
+planet_autorun=true
 
 if [ "$planet_autorun" = true ]; then
   if [ -f /srv/planet/pwd/credentials.yml ]; then

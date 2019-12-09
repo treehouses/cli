@@ -146,7 +146,7 @@ function services2 {
             # if lines are found, change flag to true
             else
               # find $service_name_autorun=false and change to true
-              sed -i '/${service_name}_autorun=false/c\${service_name}_autorun=true' /boot/autorun
+              sed -i "/${service_name}_autorun=false/c\\${service_name}_autorun=true" /boot/autorun
             fi
 
             # # add autorun line(s)

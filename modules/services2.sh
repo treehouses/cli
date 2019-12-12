@@ -110,6 +110,7 @@ function services2 {
             nextcloud)
               docker stop nextcloud
               docker rm nextcloud
+              echo "service stopped and removed"
               ;;
             *)
               echo "unknown service"

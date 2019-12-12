@@ -4,7 +4,6 @@ function services2 {
   service_name="$1"
   command="$2"
   command_option="$3"
-  # service_file="$TEMPLATES/services/$service_name/$output"
 
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
@@ -37,60 +36,44 @@ function services2 {
         #   fi
         #   ;;
 
-        # docker-compose up (build and create container) with given port number
-        # port number MUST MATCH with port given in yml file
+        # build and create container
         up)
-          # if [ -z "$command_option" ]; then
-          #   echo "no port given"
-          #   # exit 1
-          # else
-            # treehouses tor add "$command_option"
-            case "$service_name" in
-              planet)
-                echo "adding port 80..."
-                treehouses tor add 80
-                if [ -f /srv/planet/pwd/credentials.yml ]; then
-                  docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d
-                else
-                  docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
-                fi
-                echo "service built and started"
-                ;;
-              kolibri)
-                echo "adding port 8080..."
-                treehouses tor add 8080
-                bash $TEMPLATES/services/kolibri/kolibri_yml.sh
-                echo "yml file created"
-
-                docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
-                echo "service built and started"
-                ;;
-              nextcloud)
-                echo "adding port 8081..."
-                treehouses tor add 8081
-                docker run --name nextcloud -d -p 8081:80 nextcloud
-                echo "service built and started"
-                ;;
-              *)
-                echo "unknown service"
-                ;;
-            esac
-          # fi
-          ;;
-
-        # docker-compose down (stop and remove container)
-        down)
-          # # check if yml file exists
-          # if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
-          #   echo "yml file doesn't exist"
-          # else
-          #   docker-compose -f /srv/${service_name}/${service_name}.yml down
-          #   echo "service stopped and removed"
-          # fi
-
           case "$service_name" in
             planet)
-              # check if yml file exists
+              echo "adding port 80..."
+              treehouses tor add 80
+              if [ -f /srv/planet/pwd/credentials.yml ]; then
+                docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d
+              else
+                docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
+              fi
+              echo "service built and started"
+              ;;
+            kolibri)
+              echo "adding port 8080..."
+              treehouses tor add 8080
+              bash $TEMPLATES/services/kolibri/kolibri_yml.sh
+              echo "yml file created"
+
+              docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
+              echo "service built and started"
+              ;;
+            nextcloud)
+              echo "adding port 8081..."
+              treehouses tor add 8081
+              docker run --name nextcloud -d -p 8081:80 nextcloud
+              echo "service built and started"
+              ;;
+            *)
+              echo "unknown service"
+              ;;
+          esac
+          ;;
+
+        # stop and remove container
+        down)
+          case "$service_name" in
+            planet)
               if [ ! -e /srv/planet/planet.yml ]; then
                 echo "yml file doesn't exist"
               else
@@ -99,7 +82,6 @@ function services2 {
               fi
               ;;
             kolibri)
-              # check if yml file exists
               if [ ! -e /srv/kolibri/kolibri.yml ]; then
                 echo "yml file doesn't exist"
               else
@@ -118,16 +100,8 @@ function services2 {
           esac
         ;;
 
-        # docker start (starts a stopped container)
+        # start a stopped container
         start)
-          # # check if container exists
-          # if [ "$(docker ps -a | grep $service_name)" ]; then
-          #   docker-compose -f /srv/${service_name}/${service_name}.yml start
-          #   echo "service started"
-          # else
-          #   echo "service not found"
-          # fi
-
           case "$service_name" in
             planet)
               if [ "$(docker ps -a | grep planet)" ]; then
@@ -155,16 +129,8 @@ function services2 {
           esac
           ;;
 
-        # docker stop (stops a running container)
+        # stop a running container
         stop)
-          # # check if container exists
-          # if [ "$(docker ps -a | grep $service_name)" ]; then
-          #   docker-compose -f /srv/${service_name}/${service_name}.yml stop
-          #   echo "service stopped"
-          # else
-          #   echo "service not found"
-          # fi
-
           case "$service_name" in
             planet)
               if [ "$(docker ps -a | grep planet)" ]; then
@@ -194,12 +160,10 @@ function services2 {
 
         # autorun, autorun true, autorun false
         autorun)
-          # if no command_option, then output true or false
+          # if no command_option, output true or false
           if [ -z "$command_option" ]; then
-            # if no autorun file, output false
             if [ ! -e /boot/autorun ]; then
               echo "false"
-            # else check autorun file for autorun line
             else
               found=false
               while read line; do
@@ -214,7 +178,7 @@ function services2 {
                 echo "false"
               fi
             fi
-          # if command_option = true, then make service autostart
+          # make service autostart
           elif [ "$command_option" = "true" ]; then
             # if no autorun file, create one
             if [ ! -e /boot/autorun ]; then
@@ -225,7 +189,6 @@ function services2 {
                 echo
               } > /boot/autorun
             fi
-
             # check if autorun lines exist
             found=false
             while read line; do
@@ -237,14 +200,12 @@ function services2 {
             # if lines aren't found, add them
             if [ "$found" = false ]; then
               cat $TEMPLATES/services/${service_name}/${service_name}_autorun.sh >> /boot/autorun
-            # if lines are found, change flag to true
             else
-              # find $service_name_autorun=false and change to true
               sed -i "/${service_name}_autorun=false/c\\${service_name}_autorun=true" /boot/autorun
             fi
             echo "service autorun set to true"
+          # stop service from autostarting
           elif [ "$command_option" = "false" ]; then
-            # if autorun file exists
             if [ -e /boot/autorun ]; then
               # if autorun lines exist, set flag to false
               while read line; do
@@ -282,7 +243,7 @@ function find_available_services {
 
 function services2_help {
   echo ""
-  echo "Usage: $(basename "$0") services2 [service_name] [available|installed|running|create|up|down|start|stop|autorun|ps]"
+  echo "Usage: $(basename "$0") services2 [service_name] [available|installed|running|up|down|start|stop|autorun|ps]"
   echo ""
   echo "Executes the given command on the specified service"
   echo ""
@@ -291,9 +252,6 @@ function services2_help {
   echo "  $(basename "$0") services2 available | installed | running"
   echo "      Outputs the available | installed | running services"
   echo ""
-  # echo "  $(basename "$0") services2 planet create"
-  # echo "      Creates the yml file for the planet service and places it in the /srv/planet directory"
-  # echo ""
   echo "  $(basename "$0") services2 planet up"
   echo "      Builds and starts the planet service"
   echo ""

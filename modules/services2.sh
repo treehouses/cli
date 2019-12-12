@@ -25,16 +25,17 @@ function services2 {
       exit 1
     else
       case "$command" in
-        # create yml file
-        create)
-          # check if yml file exists
-          if [ -e /srv/${service_name}/${service_name}.yml ]; then
-            echo "yml file already exists"
-          else
-            bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
-            echo "yml file created"
-          fi
-          ;;
+
+        # # create yml file
+        # create)
+        #   # check if yml file exists
+        #   if [ -e /srv/${service_name}/${service_name}.yml ]; then
+        #     echo "yml file already exists"
+        #   else
+        #     bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
+        #     echo "yml file created"
+        #   fi
+        #   ;;
 
         # docker-compose up (build and create container) with given port number
         # port number MUST MATCH with port given in yml file
@@ -54,7 +55,14 @@ function services2 {
                 echo "service built and started"
                 ;;
               kolibri)
+                bash $TEMPLATES/services/kolibri/kolibri_yml.sh
+                echo "yml file created"
+
                 docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
+                echo "service built and started"
+                ;;
+              nextcloud)
+                docker run --name nextcloud -d -p 8080:80 nextcloud
                 echo "service built and started"
                 ;;
               *)
@@ -66,35 +74,115 @@ function services2 {
 
         # docker-compose down (stop and remove container)
         down)
-          # check if yml file exists
-          if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
-            echo "yml file doesn't exist"
-          else
-            docker-compose -f /srv/${service_name}/${service_name}.yml down
-            echo "service stopped and removed"
-          fi
-          ;;
+          # # check if yml file exists
+          # if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+          #   echo "yml file doesn't exist"
+          # else
+          #   docker-compose -f /srv/${service_name}/${service_name}.yml down
+          #   echo "service stopped and removed"
+          # fi
+
+          case "$service_name" in
+            planet)
+              # check if yml file exists
+              if [ ! -e /srv/planet/planet.yml ]; then
+                echo "yml file doesn't exist"
+              else
+                docker-compose -f /srv/planet/planet.yml down
+                echo "service stopped and removed"
+              fi
+              ;;
+            kolibri)
+              # check if yml file exists
+              if [ ! -e /srv/kolibri/kolibri.yml ]; then
+                echo "yml file doesn't exist"
+              else
+                docker-compose -f /srv/kolibri/kolibri.yml down
+                echo "service stopped and removed"
+              fi
+              ;;
+            nextcloud)
+              docker stop nextcloud
+              docker rm nextcloud
+              ;;
+            *)
+              echo "unknown service"
+              ;;
+          esac
+        ;;
 
         # docker start (starts a stopped container)
         start)
-          # check if container exists
-          if [ "$(docker ps -a | grep $service_name)" ]; then
-            docker-compose -f /srv/${service_name}/${service_name}.yml start
-            echo "service started"
-          else
-            echo "service not found"
-          fi
+          # # check if container exists
+          # if [ "$(docker ps -a | grep $service_name)" ]; then
+          #   docker-compose -f /srv/${service_name}/${service_name}.yml start
+          #   echo "service started"
+          # else
+          #   echo "service not found"
+          # fi
+
+          case "$service_name" in
+            planet)
+              if [ "$(docker ps -a | grep planet)" ]; then
+                docker-compose -f /srv/planet/planet.yml start
+                echo "service started"
+              else
+                echo "service not found"
+              fi
+              ;;
+            kolibri)
+              if [ "$(docker ps -a | grep kolibri)" ]; then
+                docker-compose -f /srv/kolibri/kolibri.yml start
+                echo "service started"
+              else
+                echo "service not found"
+              fi
+              ;;
+            nextcloud)
+              docker start nextcloud
+              echo "service started"
+              ;;
+            *)
+              echo "unknown service"
+              ;;
+          esac
           ;;
 
         # docker stop (stops a running container)
         stop)
-          # check if container exists
-          if [ "$(docker ps -a | grep $service_name)" ]; then
-            docker-compose -f /srv/${service_name}/${service_name}.yml stop
-            echo "service stopped"
-          else
-            echo "service not found"
-          fi
+          # # check if container exists
+          # if [ "$(docker ps -a | grep $service_name)" ]; then
+          #   docker-compose -f /srv/${service_name}/${service_name}.yml stop
+          #   echo "service stopped"
+          # else
+          #   echo "service not found"
+          # fi
+
+          case "$service_name" in
+            planet)
+              if [ "$(docker ps -a | grep planet)" ]; then
+                docker-compose -f /srv/planet/planet.yml stop
+                echo "service stopped"
+              else
+                echo "service not found"
+              fi
+              ;;
+            kolibri)
+              if [ "$(docker ps -a | grep kolibri)" ]; then
+                docker-compose -f /srv/kolibri/kolibri.yml stop
+                echo "service stopped"
+              else
+                echo "service not found"
+              fi
+              ;;
+            nextcloud)
+              docker stop nextcloud
+              echo "service stopped"
+              ;;
+            *)
+              echo "unknown service"
+              ;;
+          esac
           ;;
 
         # autorun, autorun true, autorun false
@@ -196,9 +284,9 @@ function services2_help {
   echo "  $(basename "$0") services2 available | installed | running"
   echo "      Outputs the available | installed | running services"
   echo ""
-  echo "  $(basename "$0") services2 planet create"
-  echo "      Creates the yml file for the planet service and places it in the /srv/planet directory"
-  echo ""
+  # echo "  $(basename "$0") services2 planet create"
+  # echo "      Creates the yml file for the planet service and places it in the /srv/planet directory"
+  # echo ""
   echo "  $(basename "$0") services2 planet up"
   echo "      Builds and starts the planet service"
   echo ""

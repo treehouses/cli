@@ -40,13 +40,14 @@ function services2 {
         # docker-compose up (build and create container) with given port number
         # port number MUST MATCH with port given in yml file
         up)
-          if [ -z "$command_option" ]; then
-            echo "no port given"
-            # exit 1
-          else
-            treehouses tor add "$command_option"
+          # if [ -z "$command_option" ]; then
+          #   echo "no port given"
+          #   # exit 1
+          # else
+            # treehouses tor add "$command_option"
             case "$service_name" in
               planet)
+                treehouses tor add 80
                 if [ -f /srv/planet/pwd/credentials.yml ]; then
                   docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d
                 else
@@ -55,6 +56,7 @@ function services2 {
                 echo "service built and started"
                 ;;
               kolibri)
+                treehouses tor add 8080
                 bash $TEMPLATES/services/kolibri/kolibri_yml.sh
                 echo "yml file created"
 
@@ -62,6 +64,7 @@ function services2 {
                 echo "service built and started"
                 ;;
               nextcloud)
+                treehouses tor add 8080
                 docker run --name nextcloud -d -p 8080:80 nextcloud
                 echo "service built and started"
                 ;;
@@ -69,7 +72,7 @@ function services2 {
                 echo "unknown service"
                 ;;
             esac
-          fi
+          # fi
           ;;
 
         # docker-compose down (stop and remove container)

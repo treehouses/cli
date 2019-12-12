@@ -53,7 +53,6 @@ function led {
 
   if [ -z "$trigger" ]; then
      echo "$current"
-     
   else
     checkroot
 

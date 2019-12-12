@@ -52,11 +52,8 @@ function led {
   fi
 
   if [ -z "$trigger" ]; then
-    if [ $led = $gLed ]; then
-      echo -e "$green: $currentGreen"
-    elif [ $led = $rLed ]; then
-      echo -e "$red: $currentRed"
-    fi
+     echo "$current"
+     
   else
     checkroot
 

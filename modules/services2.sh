@@ -47,6 +47,7 @@ function services2 {
             # treehouses tor add "$command_option"
             case "$service_name" in
               planet)
+                echo "adding port 80..."
                 treehouses tor add 80
                 if [ -f /srv/planet/pwd/credentials.yml ]; then
                   docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d
@@ -56,6 +57,7 @@ function services2 {
                 echo "service built and started"
                 ;;
               kolibri)
+                echo "adding port 8080..."
                 treehouses tor add 8080
                 bash $TEMPLATES/services/kolibri/kolibri_yml.sh
                 echo "yml file created"
@@ -64,8 +66,9 @@ function services2 {
                 echo "service built and started"
                 ;;
               nextcloud)
-                treehouses tor add 8080
-                docker run --name nextcloud -d -p 8080:80 nextcloud
+                echo "adding port 8081..."
+                treehouses tor add 8081
+                docker run --name nextcloud -d -p 8081:80 nextcloud
                 echo "service built and started"
                 ;;
               *)

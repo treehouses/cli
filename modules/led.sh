@@ -3,6 +3,7 @@
 function led {
   color="$1"
   trigger="$2"
+
   gLed="/sys/class/leds/led0"
   rLed="/sys/class/leds/led1"
   currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>/dev/null < "$gLed/trigger")

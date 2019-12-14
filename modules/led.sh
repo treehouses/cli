@@ -19,15 +19,33 @@ function led {
     current="$currentRed"
   elif [ "$color" = "dance" ]; then
     checkroot
+    echo "leds are set to dance mode."
+    echo "Look at your RPi leds, green led will be in this pattern: 1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
     dance > /dev/null
   elif [ "$color" = "thanksgiving" ]; then
     checkroot
+    echo "leds are set to thanksgiving mode."
+    echo "Look at your RPi leds, both leds will be in this pattern... "
+    echo "Green LED: 0.5 sec off; 0.5 on"
+    echo "Red LED: 0.5 off; 0.5 on; 0.25 off; 0.25 on"
+    echo "Green LED: 0.5 on; 0.25 off; 0.25 on"
+    echo "Red LED: 0.5 on"
+    echo "Both LED: flash 2 times"
     thanksgiving > /dev/null
   elif [ "$color" = "christmas" ]; then
     checkroot
+    echo "leds are set to christmas mode."
+    echo "Look at your RPi leds, both leds will be in this pattern... "
+    echo "Both LED: 1 sec on; 8 blink; 1 on"
     christmas > /dev/null
   elif [ "$color" = "newyear" ]; then
     checkroot
+    echo "leds are set to newyear mode."
+    echo "Look at your RPi leds, both leds will be in this pattern... "
+    echo "Both LED: 1 sec off"
+    echo "Green LED: 0.5 on; 0.5 off"
+    echo "Red LED: 0.5 on; 0.5 off"
+    echo "Both LED: flash 2 times"
     newyear > /dev/null
   else
     if [ -z "$color" ]; then
@@ -221,6 +239,19 @@ function led_help {
   echo "  none                       sets LED to none"
   echo "  kbd-[numlock|capslock|etc] sets LED when keyboard key is hit"
   echo
+  echo "Here is the location of LEDs"
+  echo "+-------------------------------------------+"
+  echo "|  ()2#################40()             +---+"
+  echo "|    1#################39               |USB|"
+  echo "|#D    Pi 3B/ 4B     +-+                +---+"
+  echo "|#I   \/  +--+      | |                 +---+"
+  echo "|#S  ()() |  | CAM  +-+                 |USB|"
+  echo "|#P   ()  +--+  #                       +---+"  
+  echo "|#Y             #                      +----+"
+  echo -e "|\e[5m\e[32m[] \e[25m\e[39m           +----+ # +-+             | NET|"
+  echo -e "|\e[5m\e[31m[] \e[25m\e[39m()+---+ |      | # |A|         ()+------+"
+  echo "+-------|PWR|------|HDMI|------|V|----------+"
+  echo "      +-----+     +-------+           +-----+"
   echo "Example:"
   echo "  $(basename "$0") led"
   echo "      This will return the status of the green/red (if present) leds"

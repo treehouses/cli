@@ -35,11 +35,20 @@ function sshkey () {
       echo "Usage: $(basename "$0") sshkey delete \"<key>\""
       exit 1
     fi
-    sed -i "\|$2|d" /root/.ssh/authorized_keys
-    if [ "$(detectrpi)" != "nonrpi" ]; then
-      sed -i "\|$2|d" /home/pi/.ssh/authorized_keys
+    if grep -Fxq "$2" /root/.ssh/authorized_keys; then
+      sed -i "\:$2:d" /root/.ssh/authorized_keys
+      echo "Key deleted from root keys."
+    else
+      echo "Key not found in root keys."
     fi
-    echo "$2 is deleted."
+    if [ "$(detectrpi)" != "nonrpi" ]; then
+      if grep -Fxq "$2" /home/pi/.ssh/authorized_keys; then
+        sed -i "\:$2:d" /home/pi/.ssh/authorized_keys
+        echo "Key deleted from pi keys."
+      else
+        echo "Key not found in pi keys."
+      fi
+    fi
   elif [ "$1" == "deleteall" ]; then
     rm /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then

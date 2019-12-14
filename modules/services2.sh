@@ -108,6 +108,7 @@ function services2 {
               else
                 docker-compose -f /srv/pihole/pihole.yml down
                 echo "pihole stopped and removed"
+              fi
               ;;
             *)
               echo "unknown service"

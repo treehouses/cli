@@ -47,7 +47,7 @@ function services2 {
               else
                 docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
               fi
-              echo "service built and started"
+              echo "planet built and started"
               ;;
             kolibri)
               echo "adding port 8080..."
@@ -56,13 +56,21 @@ function services2 {
               echo "yml file created"
 
               docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
-              echo "service built and started"
+              echo "kolibri built and started"
               ;;
             nextcloud)
               echo "adding port 8081..."
               treehouses tor add 8081
               docker run --name nextcloud -d -p 8081:80 nextcloud
-              echo "service built and started"
+              echo "nextcloud built and started"
+              ;;
+            pihole)
+              bash $TEMPLATES/services/pihole/pihole_yml.sh
+              echo "yml file created"
+
+              service dnsmasq stop
+              docker-compose -f /srv/pihole/pihole.yml -p pihole up -d
+              echo "pihole built and started"
               ;;
             *)
               echo "unknown service"
@@ -78,7 +86,7 @@ function services2 {
                 echo "yml file doesn't exist"
               else
                 docker-compose -f /srv/planet/planet.yml down
-                echo "service stopped and removed"
+                echo "planet stopped and removed"
               fi
               ;;
             kolibri)
@@ -86,13 +94,20 @@ function services2 {
                 echo "yml file doesn't exist"
               else
                 docker-compose -f /srv/kolibri/kolibri.yml down
-                echo "service stopped and removed"
+                echo "kolibri stopped and removed"
               fi
               ;;
             nextcloud)
               docker stop nextcloud
               docker rm nextcloud
-              echo "service stopped and removed"
+              echo "nextcloud stopped and removed"
+              ;;
+            pihole)
+              if [ ! -e /srv/pihole/pihole.yml ]; then
+                echo "yml file doesn't exist"
+              else
+                docker-compose -f /srv/pihole/pihole.yml down
+                echo "pihole stopped and removed"
               ;;
             *)
               echo "unknown service"
@@ -106,7 +121,7 @@ function services2 {
             planet)
               if docker ps -a | grep -q planet; then
                 docker-compose -f /srv/planet/planet.yml start
-                echo "service started"
+                echo "planet started"
               else
                 echo "service not found"
               fi
@@ -114,14 +129,22 @@ function services2 {
             kolibri)
               if docker ps -a | grep -q kolibri; then
                 docker-compose -f /srv/kolibri/kolibri.yml start
-                echo "service started"
+                echo "kolibri started"
               else
                 echo "service not found"
               fi
               ;;
             nextcloud)
               docker start nextcloud
-              echo "service started"
+              echo "nextcloud started"
+              ;;
+            pihole)
+              if docker ps -a | grep -q pihole; then
+                docker-compose -f /srv/pihole/pihole.yml start
+                echo "pihole started"
+              else
+                echo "service not found"
+              fi
               ;;
             *)
               echo "unknown service"
@@ -135,7 +158,7 @@ function services2 {
             planet)
               if docker ps -a | grep -q planet; then
                 docker-compose -f /srv/planet/planet.yml stop
-                echo "service stopped"
+                echo "planet stopped"
               else
                 echo "service not found"
               fi
@@ -143,14 +166,22 @@ function services2 {
             kolibri)
               if docker ps -a | grep -q kolibri; then
                 docker-compose -f /srv/kolibri/kolibri.yml stop
-                echo "service stopped"
+                echo "kolibri stopped"
               else
                 echo "service not found"
               fi
               ;;
             nextcloud)
               docker stop nextcloud
-              echo "service stopped"
+              echo "nextcloud stopped"
+              ;;
+            pihole)
+              if docker ps -a | grep -q pihole; then
+                docker-compose -f /srv/pihole/pihole.yml stop
+                echo "pihole stopped"
+              else
+                echo "service not found"
+              fi
               ;;
             *)
               echo "unknown service"

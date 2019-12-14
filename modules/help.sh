@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 function help_default {
   echo "Usage: $(basename "$0")"
   echo
@@ -14,8 +13,8 @@ function help_default {
   echo "   detectrpi                                 detects the hardware version of a raspberry pi"
   echo "   detect                                    detects the hardware version of any device"
   echo "   ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address"
-  echo "   discover <rpi|scan|interface|ping|ports>  performs network scan and discovers all raspberry pis on the network"
-  echo "            [ipaddress|url]"
+  echo "   discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network"
+  echo "            <rpi> [ipaddress|url|macaddress]"
   echo "   wifi <ESSID> [password]                   connects to a wifi network"
   echo "   staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address"
   echo "              <ESSID> [password]"
@@ -46,6 +45,8 @@ function help_default {
   echo "   restore [device path]                     restores a treehouses image to an SDCard or specified device"
   echo "   burn [device path]                        download and burns the latest treehouses image to the SDcard or specified device"
   echo "   rebootneeded                              shows if reboot is required to apply changes"
+  echo "   reboots <now|in|cron>                     reboots at given frequency | removes it if reboot task active"
+  echo "           <daily|weekly|monthly>"
   echo "   internet                                  checks if the rpi has access to internet"
   echo "   services [service_name] [format]          outputs or install the desired service"
   echo "            [install]"
@@ -59,6 +60,8 @@ function help_default {
   echo "   memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory"
   echo "   temperature [celsius]                     displays raspberry pi's CPU temperature"
   echo "   speedtest                                 tests internet download and upload speed"
+  echo "   cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs"
+  echo "        [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)"
   echo
 }
 

@@ -3,7 +3,7 @@
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 
-source "$SCRIPTFOLDER/modules/detectrpi.sh" 
+source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
 source "$SCRIPTFOLDER/modules/apchannel.sh"
@@ -31,6 +31,7 @@ source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
 source "$SCRIPTFOLDER/modules/openvpn.sh"
 source "$SCRIPTFOLDER/modules/rebootneeded.sh"
+source "$SCRIPTFOLDER/modules/reboots.sh"
 source "$SCRIPTFOLDER/modules/rename.sh"
 source "$SCRIPTFOLDER/modules/restore.sh"
 source "$SCRIPTFOLDER/modules/rtc.sh"
@@ -50,6 +51,7 @@ source "$SCRIPTFOLDER/modules/wifistatus.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
+source "$SCRIPTFOLDER/modules/cron.sh"
 source "$SCRIPTFOLDER/modules/discover.sh"
 
 
@@ -96,7 +98,6 @@ case $1 in
     staticwifi "$2" "$3" "$4" "$5" "$6" "$7"
     ;;
   container)
-    checkrpi
     checkroot
     container "$2"
     ;;
@@ -219,6 +220,9 @@ case $1 in
   rebootneeded)
     rebootneeded
     ;;
+  reboots)
+    reboots "$2" "$3"
+    ;;
   internet)
     internet
     ;;
@@ -259,6 +263,10 @@ case $1 in
   speedtest)
     shift
     speedtest "$@"
+    ;;
+  cron)
+    checkroot
+    cron "$2" "$3"
     ;;
   help)
     help "$2"

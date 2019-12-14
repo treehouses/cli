@@ -104,7 +104,7 @@ function services2 {
         start)
           case "$service_name" in
             planet)
-              if [ "$(docker ps -a | grep planet)" ]; then
+              if [ "$(docker ps -a | grep -q planet)" ]; then
                 docker-compose -f /srv/planet/planet.yml start
                 echo "service started"
               else
@@ -112,7 +112,7 @@ function services2 {
               fi
               ;;
             kolibri)
-              if [ "$(docker ps -a | grep kolibri)" ]; then
+              if [ "$(docker ps -a | grep -q kolibri)" ]; then
                 docker-compose -f /srv/kolibri/kolibri.yml start
                 echo "service started"
               else
@@ -133,7 +133,7 @@ function services2 {
         stop)
           case "$service_name" in
             planet)
-              if [ "$(docker ps -a | grep planet)" ]; then
+              if [ "$(docker ps -a | grep -q planet)" ]; then
                 docker-compose -f /srv/planet/planet.yml stop
                 echo "service stopped"
               else
@@ -141,7 +141,7 @@ function services2 {
               fi
               ;;
             kolibri)
-              if [ "$(docker ps -a | grep kolibri)" ]; then
+              if [ "$(docker ps -a | grep -q kolibri)" ]; then
                 docker-compose -f /srv/kolibri/kolibri.yml stop
                 echo "service stopped"
               else
@@ -166,7 +166,7 @@ function services2 {
               echo "false"
             else
               found=false
-              while read line; do
+              while read -r line; do
                 if [[ $line == "${service_name}_autorun=true" ]]; then
                   found=true
                   break
@@ -191,7 +191,7 @@ function services2 {
             fi
             # check if autorun lines exist
             found=false
-            while read line; do
+            while read -r line; do
               if [[ $line == *"$service_name up"* ]]; then
                 found=true
                 break
@@ -199,7 +199,7 @@ function services2 {
             done < /boot/autorun
             # if lines aren't found, add them
             if [ "$found" = false ]; then
-              cat $TEMPLATES/services/${service_name}/${service_name}_autorun.sh >> /boot/autorun
+              cat $TEMPLATES/services/${service_name}/${service_name}_autorun >> /boot/autorun
             else
               sed -i "/${service_name}_autorun=false/c\\${service_name}_autorun=true" /boot/autorun
             fi
@@ -208,12 +208,15 @@ function services2 {
           elif [ "$command_option" = "false" ]; then
             if [ -e /boot/autorun ]; then
               # if autorun lines exist, set flag to false
-              while read line; do
-                if [[ $line == "${service_name}_autorun=true" ]]; then
-                  sed -i "/$line/c\\${service_name}_autorun=false" /boot/autorun
-                  break
-                fi
-              done < /boot/autorun
+              # while read -r line; do
+              #   if [[ $line == "${service_name}_autorun=true" ]]; then
+              #     sed -i "/$line/c\\${service_name}_autorun=false" /boot/autorun
+              #     break
+              #   fi
+              # done < /boot/autorun
+
+              sed -i "/${service_name}_autorun=true/c\\${service_name}_autorun=false" /boot/autorun
+
             fi
             echo "service autorun set to false"
           else

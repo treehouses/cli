@@ -72,6 +72,15 @@ function services2 {
               docker-compose -f /srv/pihole/pihole.yml -p pihole up -d
               echo "pihole built and started"
               ;;
+            moodle)
+              echo "adding port 8082..."
+              treehouses tor add 8082
+              bash $TEMPLATES/services/moodle/moodle_yml.sh
+              echo "yml file created"
+
+              docker-compose -f /srv/moodle/moodle.yml -p moodle up -d
+              echo "moodle built and started"
+              ;;
             *)
               echo "unknown service"
               ;;
@@ -108,6 +117,14 @@ function services2 {
               else
                 docker-compose -f /srv/pihole/pihole.yml down
                 echo "pihole stopped and removed"
+              fi
+              ;;
+            moodle)
+              if [ ! -e /srv/moodle/moodle.yml ]; then
+                echo "yml file doesn't exist"
+              else
+                docker-compose -f /srv/moodle/moodle.yml down
+                echo "moodle stopped and removed"
               fi
               ;;
             *)
@@ -147,6 +164,14 @@ function services2 {
                 echo "service not found"
               fi
               ;;
+            moodle)
+              if docker ps -a | grep -q moodle; then
+                docker-compose -f /srv/moodle/moodle.yml start
+                echo "moodle started"
+              else
+                echo "service not found"
+              fi
+              ;;
             *)
               echo "unknown service"
               ;;
@@ -180,6 +205,14 @@ function services2 {
               if docker ps -a | grep -q pihole; then
                 docker-compose -f /srv/pihole/pihole.yml stop
                 echo "pihole stopped"
+              else
+                echo "service not found"
+              fi
+              ;;
+            moodle)
+              if docker ps -a | grep -q moodle; then
+                docker-compose -f /srv/moodle/moodle.yml stop
+                echo "moodle stopped"
               else
                 echo "service not found"
               fi

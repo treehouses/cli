@@ -272,6 +272,7 @@ case $1 in
   usb)
     checkroot
     usb "$2"
+    ;;
   help)
     help "$2"
     ;;

@@ -45,9 +45,10 @@ function camera {
       mkdir -p ${directory}
       if ! grep -q "start_x=1" ${config} ; then
         echo "You need to enable AND reboot first in order to take pictures."
+        exit 1
       else
         echo "Camera is capturing and storing a time-stamped ${savetype} photo in ${directory}."
-        raspistill -e ${savetype} -n -o "${directory}$(basename "$0")-${timestamp}.png"
+        raspistill -e ${savetype} -n -o "${directory}$(basename "$0")-${timestamp}.png" && echo "Success: Pictures generated"
       fi
     ;;
 

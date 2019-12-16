@@ -53,6 +53,7 @@ source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
 source "$SCRIPTFOLDER/modules/cron.sh"
 source "$SCRIPTFOLDER/modules/discover.sh"
+source "$SCRIPTFOLDER/modules/usb.sh"
 
 
 case $1 in
@@ -268,6 +269,9 @@ case $1 in
     checkroot
     cron "$2" "$3"
     ;;
+  usb)
+    checkroot
+    usb "$2"
   help)
     help "$2"
     ;;

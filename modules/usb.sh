@@ -14,6 +14,19 @@ function usb {
 
     echo "usb ports turned on"
   elif [ "$command" = "off" ]; then
+    # check for connected ethernet
+    if [ `cat /sys/class/net/eth0/carrier` = "1" ]; then
+      read -p "The ethernet port on your Raspberry Pi is connected. Turning off usb power will interfere with your ethernet connection. Do you wish to continue?" yn
+      case $yn in
+        [Yy]*)
+          continue
+          ;;
+        [Nn]*)
+          exit
+          ;;
+      esac
+    fi
+
     $TEMPLATES/hub-ctrl -h 2 -P 1 -p
     $TEMPLATES/hub-ctrl -h 2 -P 2 -p
     $TEMPLATES/hub-ctrl -h 2 -P 3 -p

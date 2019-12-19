@@ -15,16 +15,14 @@ help [command]                            gives you a more detailed info about t
 expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
 rename <hostname>                         changes hostname
 password <password>                       changes the password for 'pi' user
-sshkey <add|list|delete|deleteall>        used for adding or removing ssh keys for authentication
-       <addgithubusername|addgithubgroup>
-       <deletegithubusername>
+sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
 version                                   returns the version of cli.sh command
 image                                     returns version of the system image installed
 detectrpi                                 detects the hardware version of a raspberry pi
 detect                                    detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
-discover <rpi|scan|interface|ping|ports>  performs network scan and discovers all raspberry pis on the network
-         [ipaddress|url]
+discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
+         <rpi> [ipaddress|url|macaddress]
 wifi <ESSID> [password]                   connects to a wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]
@@ -55,6 +53,8 @@ clone [device path]                       clones the current SDCard onto a secon
 restore [device path]                     restores a treehouses image to an SDCard or specified device
 burn [device path]                        download and burns the latest treehouses image to the SDcard or specified device
 rebootneeded                              shows if reboot is required to apply changes
+reboots <now|in|cron>                     reboots at given frequency | removes it if reboot task active
+        <daily|weekly|monthly>
 internet                                  checks if the rpi has access to internet
 services [service_name] [format]          outputs or install the desired service
          [install]
@@ -69,5 +69,7 @@ memory [total|used|free]                  displays the total memory of the devic
 temperature [celsius]                     displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
 camera [on|off|capture]                   enables camera, disables camera, captures png photo
+cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
+     [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 ```
 

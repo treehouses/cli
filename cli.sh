@@ -31,6 +31,7 @@ source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
 source "$SCRIPTFOLDER/modules/openvpn.sh"
 source "$SCRIPTFOLDER/modules/rebootneeded.sh"
+source "$SCRIPTFOLDER/modules/reboots.sh"
 source "$SCRIPTFOLDER/modules/rename.sh"
 source "$SCRIPTFOLDER/modules/restore.sh"
 source "$SCRIPTFOLDER/modules/rtc.sh"
@@ -50,6 +51,7 @@ source "$SCRIPTFOLDER/modules/wifistatus.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
+source "$SCRIPTFOLDER/modules/cron.sh"
 source "$SCRIPTFOLDER/modules/discover.sh"
 source "$SCRIPTFOLDER/modules/camera.sh"
 
@@ -96,7 +98,6 @@ case $1 in
     staticwifi "$2" "$3" "$4" "$5" "$6" "$7"
     ;;
   container)
-    checkrpi
     checkroot
     container "$2"
     ;;
@@ -160,7 +161,8 @@ case $1 in
     wificountry "$2"
     ;;
   wifistatus)
-    wifistatus
+    checkrpi
+    wifistatus "$2"
     ;;
   sshtunnel)
     checkroot
@@ -218,6 +220,9 @@ case $1 in
   rebootneeded)
     rebootneeded
     ;;
+  reboots)
+    reboots "$2" "$3"
+    ;;
   internet)
     internet
     ;;
@@ -262,6 +267,9 @@ case $1 in
   camera)
     checkrpi
     camera "$2"
+  cron)
+    checkroot
+    cron "$2" "$3"
     ;;
   help)
     help "$2"

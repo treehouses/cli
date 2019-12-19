@@ -70,4 +70,5 @@ temperature [celsius]                     displays raspberry pi's CPU temperatur
 speedtest                                 tests internet download and upload speed
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
+usb [on|off]                              turns usb ports on or off
 ```

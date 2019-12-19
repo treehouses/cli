@@ -72,6 +72,7 @@ function bridge {
   then
     {
         echo "network={"
+        echo "  scan_ssid=1"
         echo "  ssid=\"$wifiessid\""
         echo "  key_mgmt=NONE"
         echo "}"
@@ -79,6 +80,7 @@ function bridge {
   else
     {
       echo "network={"
+      echo "  scan_ssid=1"
       echo "  ssid=\"$wifiessid\""
       echo "  psk=\"$wifipassword\""
       echo "}"

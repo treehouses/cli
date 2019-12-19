@@ -3,20 +3,22 @@
 function usb {
   command="$1"
 
+  chmod +x $TEMPLATES/hub-ctrl
+
   if [ "$command" = "on" ]; then
-    chmod u+x $TEMPLATES/hub-ctrl -h 2 -P 1 -p 1
-    chmod u+x $TEMPLATES/hub-ctrl -h 2 -P 2 -p 1
-    chmod u+x $TEMPLATES/hub-ctrl -h 2 -P 3 -p 1
-    chmod u+x $TEMPLATES/hub-ctrl -h 2 -P 4 -p 1
-    chmod u+x $TEMPLATES/hub-ctrl -h 1 -P 1 -p 1
+    $TEMPLATES/hub-ctrl -h 2 -P 1 -p 1
+    $TEMPLATES/hub-ctrl -h 2 -P 2 -p 1
+    $TEMPLATES/hub-ctrl -h 2 -P 3 -p 1
+    $TEMPLATES/hub-ctrl -h 2 -P 4 -p 1
+    $TEMPLATES/hub-ctrl -h 1 -P 1 -p 1
 
     echo "usb ports turned on"
   elif [ "$command" = "off" ]; then
-    chmod u+x $TEMPLATES/hub-ctrl -h 2 -P 1 -p
-    chmod u+x $TEMPLATES/hub-ctrl -h 2 -P 2 -p
-    chmod u+x $TEMPLATES/hub-ctrl -h 2 -P 3 -p
-    chmod u+x $TEMPLATES/hub-ctrl -h 2 -P 4 -p
-    chmod u+x $TEMPLATES/hub-ctrl -h 1 -P 1 -p
+    $TEMPLATES/hub-ctrl -h 2 -P 1 -p
+    $TEMPLATES/hub-ctrl -h 2 -P 2 -p
+    $TEMPLATES/hub-ctrl -h 2 -P 3 -p
+    $TEMPLATES/hub-ctrl -h 2 -P 4 -p
+    $TEMPLATES/hub-ctrl -h 1 -P 1 -p
 
     echo "usb ports turned off"
   else
@@ -29,6 +31,7 @@ function usb_help {
   echo "Usage: $(basename "$0") usb [on|off]"
   echo ""
   echo "Turns usb ports on or off"
+  echo "Note: cannot control individual usb ports"
   echo ""
   echo "Example:"
   echo ""

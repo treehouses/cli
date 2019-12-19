@@ -267,6 +267,7 @@ case $1 in
   camera)
     checkrpi
     camera "$2"
+    ;;
   cron)
     checkroot
     cron "$2" "$3"

@@ -5,9 +5,9 @@ _treehouses_complete()
   local cur prev
 
   # Valid top-level completions
-  commands="ap apchannel bluetooth bluetoothid bootoption bridge burn button clone container \ 
-            coralenv cron default detect detectrpi discover ethernet expandfs feedback help \
-            image internet led locale memory networkmode ntp  openvpn password \
+  commands="ap apchannel bluetooth bluetoothid bootoption bridge burn button camera clone \
+            container coralenv cron default detect detectrpi discover ethernet expandfs \
+            feedback help image internet led locale memory networkmode ntp openvpn password \
             rebootneeded reboots rename restore rtc services speedtest ssh sshkey sshtunnel \
             staticwifi temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
   ap_cmdas="local internet"
@@ -16,6 +16,7 @@ _treehouses_complete()
   bootoption_cmds="console desktop"
   bootoption_second_cmds="autologin"
   button_cmds="off bluetooth"
+  camera_cmds="on off capture"
   container_cmds="none docker balena"
   coralenv_cmds="install demo-on demo-off demo-always-on"
   discover_cmds="rpi scan interface ping ports mac"
@@ -68,6 +69,9 @@ vnc_cmds="on off info"
         ;;
       "button")
         COMPREPLY=( $(compgen -W "$button_cmds" -- $cur) )
+        ;;
+      "camera")
+        COMPREPLY=( $(compgen -W "$camera_cmds" -- $cur) )
         ;;
       "container")
         COMPREPLY=( $(compgen -W "$container_cmds" -- $cur) )
@@ -145,6 +149,6 @@ vnc_cmds="on off info"
         ;;
     esac
   fi
-
 }
-	complete -F _treehouses_complete treehouses
+
+complete -F _treehouses_complete treehouses

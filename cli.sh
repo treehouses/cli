@@ -53,8 +53,8 @@ source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
 source "$SCRIPTFOLDER/modules/cron.sh"
 source "$SCRIPTFOLDER/modules/discover.sh"
+source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
-
 
 case $1 in
   expandfs)
@@ -264,6 +264,10 @@ case $1 in
   speedtest)
     shift
     speedtest "$@"
+    ;;
+  camera)
+    checkrpi
+    camera "$2"
     ;;
   cron)
     checkroot

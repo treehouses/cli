@@ -4,7 +4,7 @@ function container_check {
   if [ "$(which balena)" ]; then
 	  echo 'balena is installed'
   else
-	  echo 'balean is not installed'
+	  echo 'balena is not installed'
   fi
 
   if [ "$(which docker)" ]; then

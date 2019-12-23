@@ -32,6 +32,7 @@ bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan 
 container <none|docker|balena>            enables (and start) the desired container
 bluetooth <on|off>                        switches between bluetooth hotspot mode / regular bluetooth and starts the service
 bluetoothid [number]                      displays the bluetooth network name with the 4 random digits attached
+bluetoothmac                              displays the device's MAC address if bluetooth is available
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
 apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system

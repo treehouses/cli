@@ -28,7 +28,7 @@ function bluetooth {
     restart_service bluealsa # restart the bluetooth audio service
 
     echo "Success: the bluetooth service has been switched to default, and the service has been stopped."
-  elif ["$status" = "mac" ]; then
+  elif [ "$status" = "mac" ]; then
     macfile=/sys/kernel/debug/bluetooth/hci0/identity
     macadd=$(cat ${macfile})
     echo "${macadd:0:17}"

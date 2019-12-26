@@ -40,9 +40,9 @@ function bluetooth {
 
 function bluetooth_help {
   echo ""
-  echo "Usage: $(basename "$0") bluetooth <on|off|pause>"
+  echo "Usage: $(basename "$0") bluetooth <on|off|pause|mac>"
   echo ""
-  echo "Switches between hotspot / regular bluetooth mode"
+  echo "Switches between hotspot / regular bluetooth mode, or displays the bluetooth mac address"
   echo ""
   echo "Example:"
   echo "  $(basename "$0") bluetooth on"
@@ -55,5 +55,8 @@ function bluetooth_help {
   echo "  $(basename "$0") bluetooth pause"
   echo "      Performs the same as '$(basename "$0") bluetooth off'"
   echo "      The only difference is that this command will not remove the bluetooth device id."
+  echo ""
+  echo "  $(basename "$0") bluetooth  mac"
+  echo "      This will display the bluetooth MAC address"
   echo ""
 }

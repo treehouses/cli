@@ -46,9 +46,19 @@ function checkroot {
 }
 
 function checkrpi {
-  if [ "$(detectrpi)" == "nonrpi" ]; 
+  if [ "$(detectrpi)" == "nonrpi" ];
   then
     echo "Error: Must be run with rpi system"
+    exit 1
+  fi
+}
+
+function checkwrpi {
+  declare -a wRPIs=("RPIZW" "RPI3A" "RPI3B" "RPI4B")
+  model="$(detectrpi)"
+  check="${model:0:5}"
+  if [[ ! "${wRPIs[@]}" =~ "$check" ]]; then
+    echo "Bluetooth does not exist on this device"
     exit 1
   fi
 }

@@ -87,6 +87,9 @@ case $1 in
   detectrpi)
     detectrpi
     ;;
+  test)
+    test
+    ;;
   wifi)
     checkrpi
     checkroot
@@ -103,6 +106,7 @@ case $1 in
     ;;
   bluetooth)
     checkrpi
+    checkwrpi
     checkroot
     bluetooth "$2"
     ;;

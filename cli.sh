@@ -87,9 +87,6 @@ case $1 in
   detectrpi)
     detectrpi
     ;;
-  test)
-    test
-    ;;
   wifi)
     checkrpi
     checkroot

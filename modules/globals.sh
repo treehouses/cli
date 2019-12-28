@@ -57,7 +57,7 @@ function checkwrpi {
   declare -a wRPIs=("RPIZW" "RPI3A" "RPI3B" "RPI4B")
   model="$(detectrpi)"
   check="${model:0:5}"
-  if [[ ! "${wRPIs[@]}" =~ "$check" ]]; then
+  if [[ ! "${wRPIs[*]}" == "$check" ]]; then
     echo "Bluetooth does not exist on this device"
     exit 1
   fi

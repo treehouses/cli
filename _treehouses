@@ -36,7 +36,7 @@ _treehouses_complete()
   sshkey_cmds="add list delete deleteal addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
-  temperature_cmds="celsius"
+  temperature_cmds="celsius fahrenheit"
   tor_cmds="start stop add list notice destroy"
   notice_cmds="on off add delete list"
 

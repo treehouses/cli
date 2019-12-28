@@ -24,7 +24,7 @@ function temperature () {
 
 function temperature_help {
   echo ""
-  echo "  Usage: $(basename "$0") temperature <celsius>/<fahrenheit>"
+  echo "  Usage: $(basename "$0") temperature <celsius|fahrenheit>"
   echo ""
   echo "  Measures CPU temperature of Raspberry Pi"
   echo ""

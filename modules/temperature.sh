@@ -34,5 +34,5 @@ function temperature_help {
   echo ""
   echo "  $(basename "$0") temperature fahrenheit"
   echo ""
-  echo "  116.96°F"  
+  echo "  117.0°F"  
 }

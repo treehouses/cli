@@ -10,9 +10,9 @@ function temperature () {
 	  "fahrenheit")
 		  
 		  fahrenheitSymbol="°F"
-		  fraction=`echo "scale=2; 9.0/5.0" | bc`
-		  resultA=`echo "$number*$fraction" | bc`
-		  resultB=`echo "$resultA+32" | bc`
+		  fraction=$(echo "scale=2; 9.0/5.0" | bc)
+		  resultA=$(echo "$number*$fraction" | bc)
+		  resultB=$(echo "$resultA+32" | bc)
 		  echo $resultB$fahrenheitSymbol
 		  ;;
 	  

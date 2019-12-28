@@ -6,25 +6,33 @@ function temperature () {
   number0=${reading:5}
   number=${number0/%??/}
   case "$1" in
-    "") echo $number"°C"
-    ;;
-    "celsius") echo $number
-    ;;
+    "")
+      echo $number
+      ;;
+    "fahrenheit")
+      fraction=$(echo "scale=1; 9.0/5.0" | bc)
+      resultA=$(echo "$number*$fraction" | bc)
+      resultB=$(echo "$resultA+32" | bc)
+      echo $resultB"°F"
+      ;;
+    "celsius") 
+      echo $number"°C"
+      ;;
   esac
 }
 
 function temperature_help {
   echo ""
-  echo "  Usage: $(basename "$0") temperature <celsius>"
+  echo "  Usage: $(basename "$0") temperature <celsius|fahrenheit>"
   echo ""
   echo "  Measures CPU temperature of Raspberry Pi"
   echo ""
   echo "  Example:"
-  echo "  $(basename "$0") temperature"
-  echo ""
-  echo "  60.43°C"
-  echo ""
   echo "  $(basename "$0") temperature celsius"
   echo ""
-  echo "  60.43"  
+  echo "  47.2°C"
+  echo ""
+  echo "  $(basename "$0") temperature fahrenheit"
+  echo ""
+  echo "  116.96°F"  
 }

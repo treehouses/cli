@@ -8,9 +8,9 @@ function ap {
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
   regex='^[^!#;+\]\/"\t ]{1,32}$' 
-  if [[ "$essid" =~ $regex ]];
+  if [[ ! "$essid" =~ $regex ]];
   then
-    echo "Error: ssid must have less than 32 character and no spaces"
+    echo "Error: ssid must have alphabet only, less than 32 character and no spaces"
     exit 1 
   fi
 

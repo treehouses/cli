@@ -6,8 +6,14 @@ function wifi {
     echo "Error: name of the network missing"
     exit 1
   fi
+
   wifinetwork=$1
   wifipassword=$2
+
+  regex='^[a-zA-Z]*{1,32}$'
+  if [ "$wifinetwork" =~ $regex ]; then
+    echo "Error: network name has to be alphabet and less than 32 characters"
+  fi 
 
   if [ -n "$wifipassword" ]
   then

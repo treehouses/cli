@@ -12,7 +12,7 @@ _treehouses_complete()
             staticwifi temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
   ap_cmdas="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
-  bluetooth_cmds="on off pause"
+  bluetooth_cmds="on off pause mac"
   bootoption_cmds="console desktop"
   bootoption_second_cmds="autologin"
   button_cmds="off bluetooth"
@@ -36,7 +36,7 @@ _treehouses_complete()
   sshkey_cmds="add list delete deleteal addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
-  temperature_cmds="celsius"
+  temperature_cmds="celsius fahrenheit"
   tor_cmds="start stop add list notice destroy"
   notice_cmds="on off add delete list"
 

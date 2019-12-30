@@ -30,7 +30,7 @@ wifistatus                                displays signal strength in dBm and la
 bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot
        [password] [hotspotPassword]
 container <none|docker|balena>            enables (and start) the desired container
-bluetooth <on|off>                        switches between bluetooth hotspot mode / regular bluetooth and starts the service
+bluetooth <on|off|pause|mac>              switches between bluetooth hotspot mode / regular bluetooth and starts the service
 bluetoothid [number]                      displays the bluetooth network name with the 4 random digits attached
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
 apchannel [channel]                       sets or prints the current ap channel
@@ -66,7 +66,7 @@ openvpn [use|show|delete]                 helps setting up an openvpn client
 coralenv [install|demo-on|demo-off]       plays with the coral environmental board
          [demo-always-on]
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory 
-temperature [celsius]                     displays raspberry pi's CPU temperature
+temperature [celsius|fahrenheit]          displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
 camera [on|off|capture]                   enables camera, disables camera, captures png photo
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs

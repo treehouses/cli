@@ -9,6 +9,11 @@ function wifi {
   wifinetwork=$1
   wifipassword=$2
 
+	regex='^[a-zA-Z]'
+	if [ "$wifinetwork" =~ $regex ]]; then
+	  echo "Error: network name has to be alphabet and less than 32 characters"
+	fi
+
   if [ -n "$wifipassword" ]
   then
     if [ ${#wifipassword} -lt 8 ]

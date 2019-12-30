@@ -8,7 +8,6 @@ source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
 source "$SCRIPTFOLDER/modules/apchannel.sh"
 source "$SCRIPTFOLDER/modules/bluetooth.sh"
-source "$SCRIPTFOLDER/modules/bluetoothid.sh"
 source "$SCRIPTFOLDER/modules/bridge.sh"
 source "$SCRIPTFOLDER/modules/burn.sh"
 source "$SCRIPTFOLDER/modules/button.sh"
@@ -104,11 +103,7 @@ case $1 in
   bluetooth)
     checkrpi
     checkroot
-    bluetooth "$2"
-    ;;
-  bluetoothid)
-    checkrpi
-    bluetoothid "$2"
+    bluetooth "$2" "$3"
     ;;
   ethernet)
     checkrpi

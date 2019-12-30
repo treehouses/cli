@@ -28,6 +28,29 @@ function bluetooth {
     macadd=$(cat ${macfile})
     echo "${macadd:0:17}"
 
+  elif [ "$status" = "id" ]; then
+    btidfile=/etc/bluetooth-id
+    if [ ! -f "${btidfile}" ]; then
+      echo "No ID. Bluetooth service is not on."
+      exit 0
+    fi
+
+    bid=$(cat ${btidfile})
+    nname=$(uname -n)
+
+    case "$2" in
+      "")
+        echo "${nname}-${bid}"
+        ;;
+      "number")
+        echo "${bid}"
+        ;;
+      *)
+        echo "Argument not valid; leave blank or use \"number\""
+        exit 1
+        ;;
+    esac
+
   else
     echo "Error: only 'on', 'off', 'pause' options are supported";
   fi
@@ -35,9 +58,9 @@ function bluetooth {
 
 function bluetooth_help {
   echo ""
-  echo "Usage: $(basename "$0") bluetooth <on|off|pause|mac>"
+  echo "Usage: $(basename "$0") bluetooth <on|off|pause|mac|id>"
   echo ""
-  echo "Switches between hotspot / regular bluetooth mode, or displays the bluetooth mac address"
+  echo "Switches between hotspot / regular bluetooth mode, displays the bluetooth mac address or bluetooth id number"
   echo ""
   echo "Example:"
   echo "  $(basename "$0") bluetooth on"
@@ -53,5 +76,11 @@ function bluetooth_help {
   echo ""
   echo "  $(basename "$0") bluetooth  mac"
   echo "      This will display the bluetooth MAC address"
+  echo ""
+  echo "  $(basename "$0") bluetooth id"
+  echo "      This will display the network name and bluetooth id number"
+  echo ""
+  echo "  $(basename "$0") bluetooth id number"
+  echo "      This will display the bluetooth id number"
   echo ""
 }

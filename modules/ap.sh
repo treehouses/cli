@@ -7,10 +7,19 @@ function ap {
   base_24=$(echo "${@: -1}" | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}' | awk '{sub(/.$/,""); gsub("--ip=","", $0); print}')
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
-  regex='^[a-zA-Z-_]{1,32}$' 
-  if [[ ! "$essid" =~ $regex ]];
+  
+  if [ -n "$essid" ]
   then
-    echo "Error: ssid must be alphabetical, at most 32 characters, and no spaces"
+    if [ ${#essid} -gt 32 ]
+    then
+      echo "Error: network name must be no greater than 32 characters"
+      exit 1
+    fi
+  fi
+  
+  if [[ "$essid" =~ [^a-zA-Z_-] ]];
+  then
+    echo "Error: network name must be alphabetical and may contain dashes or underscores"
     exit 1 
   fi
 

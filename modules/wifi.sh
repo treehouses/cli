@@ -10,10 +10,18 @@ function wifi {
   wifinetwork=$1
   wifipassword=$2
 
-  regex='^[a-zA-Z-_]{1,32}$'
-  if [[ "$wifinetwork" =~ $regex ]]; then
-    echo "Error: network name must be alphabetical, and at most 32 characters"
-		exit 
+  if [ -n "$wifinetwork" ]
+  then
+    if [ ${#wifinetwork} -gt 32 ]
+    then
+      echo "Error: network name must be no greater than 32 characters"
+      exit 1
+    fi
+  fi
+
+  if [[ "$wifinetwork" =~ [^a-zA-Z_-] ]]; then
+    echo "Error: network name must be alphabetical and may contain dashes or underscores"
+		exit 1 
   fi 
 
   if [ -n "$wifipassword" ]

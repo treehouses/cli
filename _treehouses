@@ -33,7 +33,7 @@ _treehouses_complete()
 # services_cmds="" Think about it, a little bit complicated
 
   cron_cmds="list 0W tor timestamp add delete deleteall"
-  sshkey_cmds="add list delete deleteal addgithubusername deletegithubusername addgithubgroup"
+  sshkey_cmds="add list delete deleteall github"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
   temperature_cmds="celsius fahrenheit"

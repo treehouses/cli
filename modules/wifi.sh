@@ -10,7 +10,7 @@ function wifi {
   wifinetwork=$1
   wifipassword=$2
 
-  regex='^[a-zA-Z]{1,32}$'
+  regex='^[a-zA-Z-_]{1,32}$'
   if [[ "$wifinetwork" =~ $regex ]]; then
     echo "Error: network name must be alphabetical, and at most 32 characters"
 		exit 

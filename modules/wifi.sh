@@ -12,7 +12,7 @@ function wifi {
 
   regex='^[a-zA-Z]{1,32}$'
   if [[ "$wifinetwork" =~ $regex ]]; then
-    echo "Error: network name must be alphabetical, and less than 32 characters"
+    echo "Error: network name must be alphabetical, and at most 32 characters"
 		exit 
   fi 
 

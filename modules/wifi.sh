@@ -20,8 +20,8 @@ function wifi {
   fi
 
   if [[ "$wifinetwork" =~ [^a-zA-Z_-] ]]; then
-    echo "Error: network name must be alphabetical and may contain dashes or underscores"
-		exit 1 
+    echo "Error: network name can only contains alphabet, dashes and underscores"
+    exit 1 
   fi 
 
   if [ -n "$wifipassword" ]

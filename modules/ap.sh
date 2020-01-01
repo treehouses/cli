@@ -10,7 +10,7 @@ function ap {
   regex='^[a-zA-Z]{1,32}$' 
   if [[ ! "$essid" =~ $regex ]];
   then
-    echo "Error: ssid must be alphabetical, less than 32 characters, and no spaces"
+    echo "Error: ssid must be alphabetical, at most 32 characters, and no spaces"
     exit 1 
   fi
 

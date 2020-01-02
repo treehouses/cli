@@ -12,14 +12,14 @@ function ap {
   then
     if [ ${#essid} -gt 32 ]
     then
-      echo "Error: network name must be no greater than 32 characters"
+      echo "Error: essid must be no greater than 32 characters"
       exit 1
     fi
   fi
   
   if [[ "$essid" =~ [^a-zA-Z_-] ]];
   then
-    echo "Error: network name must be alphabetical and may contain dashes or underscores"
+    echo "Error: essid must be alphabetical and may contain dashes or underscores"
     exit 1 
   fi
 

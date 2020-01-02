@@ -58,7 +58,7 @@ function help_default {
   echo "            [demo-always-on]"
   echo "   memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory"
   echo "   temperature [celsius|fahrenheit]          displays raspberry pi's CPU temperature"
-  echo "   speedtest                                 tests internet download and upload speed"
+  echo "   speedtest [-h]                            tests internet download and upload speed or get more options from built-in help"
   echo "   camera [on|off|capture]                   enables camera, disables camera, captures png photo"
   echo "   cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs"
   echo "        [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)"

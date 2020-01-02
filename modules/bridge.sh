@@ -105,7 +105,7 @@ function bridge {
   echo "bridge" > /etc/network/mode
 
   sync; sync; sync
-  systemctl isolate rescue; systemctl isolate default
+  systemctl isolate default
   echo "the bridge has been built ;), check your wifi and run again if problems"
 }
 

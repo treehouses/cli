@@ -104,7 +104,7 @@ case $1 in
   bluetooth)
     checkwrpi
     checkroot
-    bluetooth "$2"
+    bluetooth "$2" "$3"
     ;;
   bluetoothid)
     checkrpi

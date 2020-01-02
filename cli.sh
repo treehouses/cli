@@ -102,7 +102,7 @@ case $1 in
     container "$2"
     ;;
   bluetooth)
-    checkrpi
+    checkwrpi
     checkroot
     bluetooth "$2" "$3"
     ;;

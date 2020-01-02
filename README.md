@@ -44,7 +44,7 @@ sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
           <key|portinterval> [user@host]
 led [green|red] [mode]                    sets the led mode
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
-ntp <local|internet>                      enables or disables time through ntp servers
+ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode
 button <off|bluetooth>                    gives the gpio pin 18 an action
 feedback <message>                        sends feedback

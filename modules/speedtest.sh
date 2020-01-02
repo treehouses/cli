@@ -15,4 +15,12 @@ function speedtest_help {
   echo "  $(basename "$0") speedtest"
   echo "      Outputs the speed of internet download and upload speed"
   echo ""
+  echo "Usage: $(basename "$0") speedtest -h"
+  echo ""
+  echo "displays speedtest's built-in help message"
+  echo ""
+  echo "Examples:"
+  echo "  $(basename "$0") speedtest -h"
+  echo "      Outputs additional speedtest options built into speedtest"
+  echo ""
 }

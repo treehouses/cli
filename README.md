@@ -45,7 +45,7 @@ sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
           <key|portinterval> [user@host]
 led [green|red] [mode]                    sets the led mode
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
-ntp <local|internet>                      configure treehouses as a timing server by setting the timing source as local or as a client by setting the source as internet
+ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode
 button <off|bluetooth>                    gives the gpio pin 18 an action
 feedback <message>                        sends feedback

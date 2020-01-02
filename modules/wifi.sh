@@ -10,20 +10,6 @@ function wifi {
   wifinetwork=$1
   wifipassword=$2
 
-  if [ -n "$wifinetwork" ]
-  then
-    if [ ${#wifinetwork} -gt 32 ]
-    then
-      echo "Error: network name must be no greater than 32 characters"
-      exit 1
-    fi
-  fi
-
-  if [[ "$wifinetwork" =~ [^a-zA-Z_-] ]]; then
-    echo "Error: network name can only contains alphabet, dashes and underscores"
-    exit 1 
-  fi 
-
   if [ -n "$wifipassword" ]
   then
     if [ ${#wifipassword} -lt 8 ]

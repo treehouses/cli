@@ -3,14 +3,26 @@
 function usb {
   command="$1"
 
-  chmod +x $TEMPLATES/hub-ctrl
+  # check if hub-ctrl binary exists
+  if [ ! -e /usr/local/bin/hub-ctrl ]; then
+    echo "required binary 'hub-ctrl' not found"
+    exit
+  fi
+
+  # check if libusb-dev pkg is installed
+  if [ $(dpkg-query -W -f='${Status}' libusb-dev 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+    echo "required package 'libusb-dev' not installed"
+    exit
+  fi
+
+  chmod +x /usr/local/bin/hub-ctrl
 
   if [ "$command" = "on" ]; then
-    $TEMPLATES/hub-ctrl -h 2 -P 1 -p 1
-    $TEMPLATES/hub-ctrl -h 2 -P 2 -p 1
-    $TEMPLATES/hub-ctrl -h 2 -P 3 -p 1
-    $TEMPLATES/hub-ctrl -h 2 -P 4 -p 1
-    $TEMPLATES/hub-ctrl -h 1 -P 1 -p 1
+    /usr/local/bin/hub-ctrl -h 2 -P 1 -p 1
+    /usr/local/bin/hub-ctrl -h 2 -P 2 -p 1
+    /usr/local/bin/hub-ctrl -h 2 -P 3 -p 1
+    /usr/local/bin/hub-ctrl -h 2 -P 4 -p 1
+    /usr/local/bin/hub-ctrl -h 1 -P 1 -p 1
 
     echo "usb ports turned on"
   elif [ "$command" = "off" ]; then
@@ -26,11 +38,11 @@ function usb {
       esac
     fi
 
-    $TEMPLATES/hub-ctrl -h 2 -P 1 -p
-    $TEMPLATES/hub-ctrl -h 2 -P 2 -p
-    $TEMPLATES/hub-ctrl -h 2 -P 3 -p
-    $TEMPLATES/hub-ctrl -h 2 -P 4 -p
-    $TEMPLATES/hub-ctrl -h 1 -P 1 -p
+    /usr/local/bin/hub-ctrl -h 2 -P 1 -p
+    /usr/local/bin/hub-ctrl -h 2 -P 2 -p
+    /usr/local/bin/hub-ctrl -h 2 -P 3 -p
+    /usr/local/bin/hub-ctrl -h 2 -P 4 -p
+    /usr/local/bin/hub-ctrl -h 1 -P 1 -p
 
     echo "usb ports turned off"
   else

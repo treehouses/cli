@@ -24,18 +24,6 @@ function services2 {
       exit 1
     else
       case "$command" in
-
-        # # create yml file
-        # create)
-        #   # check if yml file exists
-        #   if [ -e /srv/${service_name}/${service_name}.yml ]; then
-        #     echo "yml file already exists"
-        #   else
-        #     bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
-        #     echo "yml file created"
-        #   fi
-        #   ;;
-
         # build and create container
         up)
           case "$service_name" in
@@ -268,6 +256,14 @@ function services2 {
             else
               sed -i "/${service_name}_autorun=false/c\\${service_name}_autorun=true" /boot/autorun
             fi
+
+
+            # # if yml file doesn't exist, create it
+            # if [ -e /srv/${service_name}/${service_name}.yml ]; then
+            #   bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
+            # fi
+
+            
             echo "service autorun set to true"
           # stop service from autostarting
           elif [ "$command_option" = "false" ]; then

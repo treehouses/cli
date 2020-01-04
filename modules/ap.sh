@@ -7,6 +7,21 @@ function ap {
   base_24=$(echo "${@: -1}" | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}' | awk '{sub(/.$/,""); gsub("--ip=","", $0); print}')
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
+  
+  if [ -n "$essid" ]
+  then
+    if [ ${#essid} -gt 32 ]
+    then
+      echo "Error: essid must be no greater than 32 characters"
+      exit 1
+    fi
+  fi
+  
+  if [[ "$essid" =~ [^a-zA-Z_-] ]];
+  then
+    echo "Error: essid must be alphabetical and may contain dashes or underscores"
+    exit 1 
+  fi
 
   if [ -n "$password" ];
   then

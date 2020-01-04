@@ -45,14 +45,20 @@ function wifi {
     {
       echo "network={"
       echo "  ssid=\"$wifinetwork\""
-      echo "  scan_ssid=1"
       echo "  key_mgmt=NONE"
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >/dev/null 2>/dev/null
     echo "open wifi network"
   else
-    wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
+    {
+      echo "network={"
+      echo "  ssid=\"$wifinetwork\""
+      echo "  scan_ssid=1"
+      echo "  key_mgmt=WPA-PSK"
+      echo "  psk=\"$wifipassword\""
+      echo "}"
+    } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >/dev/null 2>/dev/null
     echo "password network"
   fi

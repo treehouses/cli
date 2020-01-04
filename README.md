@@ -30,8 +30,7 @@ wifistatus                                displays signal strength in dBm and la
 bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot
        [password] [hotspotPassword]
 container <none|docker|balena>            enables (and start) the desired container
-bluetooth <on|off>                        switches between bluetooth hotspot mode / regular bluetooth and starts the service
-bluetoothid [number]                      displays the bluetooth network name with the 4 random digits attached
+bluetooth <on|off|pause|mac|id> [number]  switches bluetooth from regular to hotspot mode and shows id or MAC address
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
 apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system
@@ -45,7 +44,7 @@ sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
           <key|portinterval> [user@host]
 led [green|red] [mode]                    sets the led mode
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
-ntp <local|internet>                      enables or disables time through ntp servers
+ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode
 button <off|bluetooth>                    gives the gpio pin 18 an action
 feedback <message>                        sends feedback
@@ -53,6 +52,8 @@ clone [device path]                       clones the current SDCard onto a secon
 restore [device path]                     restores a treehouses image to an SDCard or specified device
 burn [device path]                        download and burns the latest treehouses image to the SDcard or specified device
 rebootneeded                              shows if reboot is required to apply changes
+reboots <now|in|cron>                     reboots at given frequency | removes it if reboot task active
+        <daily|weekly|monthly>
 internet                                  checks if the rpi has access to internet
 services [service_name] [format]          outputs or install the desired service
          [install]
@@ -64,8 +65,10 @@ openvpn [use|show|delete]                 helps setting up an openvpn client
 coralenv [install|demo-on|demo-off]       plays with the coral environmental board
          [demo-always-on]
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory 
-temperature [celsius]                     displays raspberry pi's CPU temperature
+temperature [celsius|fahrenheit]          displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
+camera [on|off|capture]                   enables camera, disables camera, captures png photo
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 ```
+

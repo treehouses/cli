@@ -31,6 +31,7 @@ source "$SCRIPTFOLDER/modules/ntp.sh"
 source "$SCRIPTFOLDER/modules/password.sh"
 source "$SCRIPTFOLDER/modules/openvpn.sh"
 source "$SCRIPTFOLDER/modules/rebootneeded.sh"
+source "$SCRIPTFOLDER/modules/reboots.sh"
 source "$SCRIPTFOLDER/modules/rename.sh"
 source "$SCRIPTFOLDER/modules/restore.sh"
 source "$SCRIPTFOLDER/modules/rtc.sh"
@@ -52,7 +53,7 @@ source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
 source "$SCRIPTFOLDER/modules/cron.sh"
 source "$SCRIPTFOLDER/modules/discover.sh"
-
+source "$SCRIPTFOLDER/modules/camera.sh"
 
 case $1 in
   expandfs)
@@ -101,9 +102,9 @@ case $1 in
     container "$2"
     ;;
   bluetooth)
-    checkrpi
+    checkwrpi
     checkroot
-    bluetooth "$2"
+    bluetooth "$2" "$3"
     ;;
   bluetoothid)
     checkrpi
@@ -219,6 +220,9 @@ case $1 in
   rebootneeded)
     rebootneeded
     ;;
+  reboots)
+    reboots "$2" "$3"
+    ;;
   internet)
     internet
     ;;
@@ -259,6 +263,10 @@ case $1 in
   speedtest)
     shift
     speedtest "$@"
+    ;;
+  camera)
+    checkrpi
+    camera "$2"
     ;;
   cron)
     checkroot

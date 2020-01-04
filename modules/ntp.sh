@@ -40,8 +40,8 @@ function ntp_help {
   echo ""
   echo "Example:"
   echo "  $(basename "$0") ntp internet"
-  echo "      Enables the ntp service, and uses internet time."
+  echo "    Configures treehouses as a client with timing sourced from the internet"
   echo ""
   echo "  $(basename "$0") ntp local"
-  echo "      Disables the ntp service, and uses rtc time."
+  echo "    Configures treehouses as a server with timing sourced from the onboard clock"
 }

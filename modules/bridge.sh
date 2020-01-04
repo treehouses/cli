@@ -23,6 +23,20 @@ function bridge {
     exit 1
   fi
 
+  if [ -n "$hotspotessid" ]
+  then
+    if [ ${#hotspotessid} -gt 32 ]
+    then
+      echo "Error: hotspot essid must be no greater than 32 characters"
+      exit 1
+    fi
+  fi
+
+  if [[ "$hotspotessid" =~ [^a-zA-Z_-] ]]; then
+    echo "Error: hotspot essid can only contains alphabet, dashes and underscores"
+    exit 1 
+  fi 
+
   if [ -n "$wifipassword" ];
   then
     if [ ${#wifipassword} -lt 8 ];

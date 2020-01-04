@@ -1,0 +1,7 @@
+pihole_autorun=true
+
+if [ "$pihole_autorun" = true ]; then
+  service dnsmasq stop
+  docker-compose -f /srv/pihole/pihole.yml -p pihole up -d
+fi
+

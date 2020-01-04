@@ -3,7 +3,7 @@
 function usb {
   command="$1"
 
-  source detectrpi.sh
+  source modules/detectrpi.sh
   chmod +x $TEMPLATES/hub-ctrl
 
   if [[ $(detectrpi) =~ '3' ]]; then

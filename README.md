@@ -56,9 +56,7 @@ rebootneeded                              shows if reboot is required to apply c
 reboots <now|in|cron>                     reboots at given frequency | removes it if reboot task active
         <daily|weekly|monthly>
 internet                                  checks if the rpi has access to internet
-services [service_name] [format]          outputs or install the desired service
-         [install]
-services2 [service_name] [command]        executes the given command on the specified service
+services [service_name] [command]        executes the given command on the specified service
 tor [start|stop|add|delete|list]          deals with services on tor hidden network
     [notice|destroy|deleteall]
 bootoption <console|desktop> [autologin]  sets the boot mode

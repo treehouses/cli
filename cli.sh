@@ -36,7 +36,6 @@ source "$SCRIPTFOLDER/modules/rename.sh"
 source "$SCRIPTFOLDER/modules/restore.sh"
 source "$SCRIPTFOLDER/modules/rtc.sh"
 source "$SCRIPTFOLDER/modules/services.sh"
-source "$SCRIPTFOLDER/modules/services2.sh"
 source "$SCRIPTFOLDER/modules/ssh.sh"
 source "$SCRIPTFOLDER/modules/sshkey.sh"
 source "$SCRIPTFOLDER/modules/sshtunnel.sh"
@@ -230,10 +229,6 @@ case $1 in
   services)
     shift
     services "$@"
-    ;;
-  services2)
-    shift
-    services2 "$@"
     ;;
   tor)
     checkroot

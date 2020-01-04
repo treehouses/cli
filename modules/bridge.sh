@@ -16,7 +16,7 @@ function bridge {
   base_24=$(echo "${@: -1}" | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}' | awk '{sub(/.$/,""); gsub("--ip=","", $0); print}')
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
-  
+
   if [ -z "$hotspotessid" ];
   then
     echo "a hotspot essid is required"

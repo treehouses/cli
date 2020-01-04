@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function wifi {
+function wifihidden {
 
   if [ -z "$1" ]; then
     echo "Error: name of the network missing"
@@ -49,7 +49,7 @@ function wifi {
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >/dev/null 2>/dev/null
-    echo "open wifi network"
+    echo "successfully connected to open wifi network"
   else
     {
       echo "network={"
@@ -60,23 +60,23 @@ function wifi {
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >/dev/null 2>/dev/null
-    echo "password network"
+    echo "successfully connected to hidden network"
   fi
 
   echo "wifi" > /etc/network/mode
 }
 
-function wifi_help {
+function wifihidden_help {
   echo ""
-  echo "Usage: $(basename "$0") wifi <ESSID> [password]"
+  echo "Usage: $(basename "$0") wifihidden <ESSID> [password]"
   echo ""
-  echo "Connects to a wifi network"
+  echo "Connects to a hidden wifi network"
   echo ""
   echo "Example:"
-  echo "  $(basename "$0") wifi home homewifipassword"
-  echo "      Connects to a wifi network named 'home' with password 'homewifipassword'."
+  echo "  $(basename "$0") wifihidden home homewifipassword"
+  echo "      Connects to a hidden wifi network named 'home' with password 'homewifipassword'."
   echo ""
-  echo "  $(basename "$0") wifi yourwifiname"
+  echo "  $(basename "$0") wifihidden yourwifiname"
   echo "      Connects to an open wifi network named 'yourwifiname'."
   echo ""
-
+}

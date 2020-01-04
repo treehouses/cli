@@ -27,7 +27,7 @@ function ap {
   then
     if [ ${#password} -lt 8 ];
     then
-   echo "Error: password must have at least 8 characters"
+    echo "Error: password must have at least 8 characters"
       exit 1
     fi
   fi

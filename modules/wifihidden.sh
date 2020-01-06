@@ -45,11 +45,12 @@ function wifihidden {
     {
       echo "network={"
       echo "  ssid=\"$wifinetwork\""
+      echo "  scan_ssid=1"
       echo "  key_mgmt=NONE"
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >/dev/null 2>/dev/null
-    echo "successfully connected to open wifi network"
+    echo "connected to hidden open network"
   else
     {
       echo "network={"
@@ -77,6 +78,6 @@ function wifihidden_help {
   echo "      Connects to a hidden wifi network named 'home' with password 'homewifipassword'."
   echo ""
   echo "  $(basename "$0") wifihidden yourwifiname"
-  echo "      Connects to an open wifi network named 'yourwifiname'."
+  echo "      Connects to a hidden open wifi network named 'yourwifiname'."
   echo ""
 }

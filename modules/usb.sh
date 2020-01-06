@@ -1,21 +1,22 @@
 #!/bin/bash
 
+source modules/detectrpi.sh
+
 function usb {
   command="$1"
 
   # check if hub-ctrl binary exists
   if [ ! -e /usr/local/bin/hub-ctrl ]; then
     echo "required binary 'hub-ctrl' not found"
-    exit
+    exit 1
   fi
 
   # check if libusb-dev pkg is installed
   if [ "$(dpkg-query -W -f='${Status}' libusb-dev 2>/dev/null | grep -c 'ok installed')" -eq 0 ]; then
     echo "required package 'libusb-dev' not installed"
-    exit
+    exit 1
   fi
 
-  source modules/detectrpi.sh
   chmod +x /usr/local/bin/hub-ctrl
 
   if [[ $(detectrpi) =~ 'RPI3' ]]; then

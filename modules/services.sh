@@ -69,6 +69,15 @@ function services {
               docker-compose -f /srv/moodle/moodle.yml -p moodle up -d
               echo "moodle built and started"
               ;;
+	    privatebin)
+	      echo "adding port 8083..."
+	      treehouses tor add 8083
+              bash $TEMPLATES/services/privatebin/privatebin_yml.sh
+	      echo "yml file created"
+
+              docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d
+              echo "privatebin built and started"
+              ;;
             *)
               echo "unknown service"
               ;;
@@ -115,6 +124,14 @@ function services {
                 echo "moodle stopped and removed"
               fi
               ;;
+            privatebin)
+              if [ ! -e /srv/privatebin/privatebin.yml ]; then
+                echo "yml file doesn't exist"
+              else
+                docker-compose -f /srv/privatebin/privatebin.yml down
+                echo "privatebin stopped and removed"
+	      fi
+	      ;;
             *)
               echo "unknown service"
               ;;
@@ -160,6 +177,14 @@ function services {
                 echo "service not found"
               fi
               ;;
+            privatebin)
+              if docker ps -a | grep -q privatebin; then
+                docker-compose -f /srv/privatebin/privatebin.yml start
+                echo "privatebin started"
+              else
+                echo "service not found"
+              fi
+              ;;
             *)
               echo "unknown service"
               ;;
@@ -201,6 +226,14 @@ function services {
               if docker ps -a | grep -q moodle; then
                 docker-compose -f /srv/moodle/moodle.yml stop
                 echo "moodle stopped"
+              else
+                echo "service not found"
+              fi
+              ;;
+            privatebin)
+              if docker ps -a | grep -q privatebin; then
+                docker-compose -f /srv/privatebin/privatebin.yml stop
+                echo "privatebin stopped"
               else
                 echo "service not found"
               fi

@@ -136,7 +136,7 @@ function services {
               echo "unknown service"
               ;;
           esac
-        ;;
+          ;;
 
         # start a stopped container
         start)

@@ -10,10 +10,7 @@ function usb {
   fi
 
   # check if libusb-dev pkg is installed
-  if [ "$(dpkg-query -W -f='${Status}' libusb-dev 2>/dev/null | grep -c 'ok installed')" -eq 0 ]; then
-    echo "required package 'libusb-dev' not installed"
-    exit 1
-  fi
+  check_missing_packages libusb-dev
 
   chmod +x /usr/local/bin/hub-ctrl
 

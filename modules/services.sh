@@ -55,6 +55,7 @@ function services {
             pihole)
               bash $TEMPLATES/services/pihole/pihole_yml.sh
               echo "yml file created"
+
               service dnsmasq stop
               docker-compose -f /srv/pihole/pihole.yml -p pihole up -d
               echo "pihole built and started"

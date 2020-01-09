@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# create pihole.yml
+# create privatebin.yml
 mkdir -p /srv/privatebin
 {
   echo "version: \"3\""

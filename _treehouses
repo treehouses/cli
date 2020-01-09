@@ -9,7 +9,7 @@ _treehouses_complete()
             container coralenv cron default detect detectrpi discover ethernet expandfs \
             feedback help image internet led locale memory networkmode ntp openvpn password \
             rebootneeded reboots rename restore rtc services speedtest ssh sshkey sshtunnel \
-            staticwifi temperature timezone tor upgrade version vnc wifi wificountry wifistatus"
+            staticwifi temperature timezone tor upgrade version vnc wifi wificountry wifihidden wifistatus"
   ap_cmdas="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
   bluetooth_cmds="on off pause mac id"

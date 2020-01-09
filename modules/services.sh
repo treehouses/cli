@@ -55,7 +55,6 @@ function services {
             pihole)
               bash $TEMPLATES/services/pihole/pihole_yml.sh
               echo "yml file created"
-
               service dnsmasq stop
               docker-compose -f /srv/pihole/pihole.yml -p pihole up -d
               echo "pihole built and started"
@@ -69,11 +68,11 @@ function services {
               docker-compose -f /srv/moodle/moodle.yml -p moodle up -d
               echo "moodle built and started"
               ;;
-	    privatebin)
-	      echo "adding port 8083..."
-	      treehouses tor add 8083
+            privatebin)
+              echo "adding port 8083..."
+              treehouses tor add 8083
               bash $TEMPLATES/services/privatebin/privatebin_yml.sh
-	      echo "yml file created"
+              echo "yml file created"
 
               docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d
               echo "privatebin built and started"
@@ -130,8 +129,8 @@ function services {
               else
                 docker-compose -f /srv/privatebin/privatebin.yml down
                 echo "privatebin stopped and removed"
-	      fi
-	      ;;
+              fi
+              ;;
             *)
               echo "unknown service"
               ;;

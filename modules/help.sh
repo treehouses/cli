@@ -16,6 +16,7 @@ function help_default {
   echo "   discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network"
   echo "            <rpi> [ipaddress|url|macaddress]"
   echo "   wifi <ESSID> [password]                   connects to a wifi network"
+  echo "   wifihidden <ESSID> [password]             connects to a hidden wifi network"
   echo "   staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address"
   echo "              <ESSID> [password]"
   echo "   wifistatus                                displays signal strength in dBm and layman nomenclature"

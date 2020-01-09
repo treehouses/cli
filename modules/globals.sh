@@ -144,8 +144,8 @@ function iface_exists {
 function check_missing_packages {
   missing_deps=()
   for command in "$@"; do
-    if ! type $command &>/dev/null ; then
-        missing_deps+=( "$command" )
+    if [ "$(dpkg-query -W -f='${Status}' $command 2>/dev/null | grep -c 'ok installed')" -eq 0 ]; then
+      missing_deps+=( "$command" )
     fi
   done
 

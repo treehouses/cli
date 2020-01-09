@@ -9,10 +9,10 @@ _treehouses_complete()
             container coralenv cron default detect detectrpi discover ethernet expandfs \
             feedback help image internet led locale memory networkmode ntp openvpn password \
             rebootneeded reboots rename restore rtc services speedtest ssh sshkey sshtunnel \
-            staticwifi temperature timezone tor upgrade usb version vnc wifi wificountry wifistatus"
+            staticwifi temperature timezone tor upgrade usb version vnc wifi wificountry wifihidden wifistatus"
   ap_cmdas="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
-  bluetooth_cmds="on off pause"
+  bluetooth_cmds="on off pause mac id"
   bootoption_cmds="console desktop"
   bootoption_second_cmds="autologin"
   button_cmds="off bluetooth"
@@ -36,7 +36,7 @@ _treehouses_complete()
   sshkey_cmds="add list delete deleteal addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
-  temperature_cmds="celsius"
+  temperature_cmds="celsius fahrenheit"
   tor_cmds="start stop add list notice destroy"
   usb_cmds="on off"
   notice_cmds="on off add delete list"

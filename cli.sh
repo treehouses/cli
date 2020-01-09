@@ -47,6 +47,7 @@ source "$SCRIPTFOLDER/modules/version.sh"
 source "$SCRIPTFOLDER/modules/vnc.sh"
 source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
+source "$SCRIPTFOLDER/modules/wifihidden.sh"
 source "$SCRIPTFOLDER/modules/wifistatus.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
@@ -93,6 +94,11 @@ case $1 in
     checkroot
     wifi "$2" "$3"
     ;;
+  wifihidden)
+    checkrpi
+    checkroot
+    wifihidden "$2" "$3"
+    ;;
   staticwifi)
     checkrpi
     checkroot
@@ -103,9 +109,9 @@ case $1 in
     container "$2"
     ;;
   bluetooth)
-    checkrpi
+    checkwrpi
     checkroot
-    bluetooth "$2"
+    bluetooth "$2" "$3"
     ;;
   bluetoothid)
     checkrpi

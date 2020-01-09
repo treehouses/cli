@@ -1,0 +1,6 @@
+moodle_autorun=true
+
+if [ "$moodle_autorun" = true ]; then
+  docker-compose -f /srv/moodle/moodle.yml -p moodle up -d
+fi
+

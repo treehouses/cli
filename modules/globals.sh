@@ -46,11 +46,24 @@ function checkroot {
 }
 
 function checkrpi {
-  if [ "$(detectrpi)" == "nonrpi" ]; 
+  if [ "$(detectrpi)" == "nonrpi" ];
   then
     echo "Error: Must be run with rpi system"
     exit 1
   fi
+}
+
+function checkwrpi {
+  declare -a wRPIs=("RPIZW" "RPI3A" "RPI3B" "RPI4B")
+  model="$(detectrpi)"
+  check="${model:0:5}"
+  for i in "${wRPIs[@]}"; do
+    if [ "$i" == "$check" ]; then
+      return 1
+    fi
+  done
+  echo "Bluetooth does not exist on this device"
+  exit 1
 }
 
 function restart_hotspot {
@@ -131,8 +144,8 @@ function iface_exists {
 function check_missing_packages {
   missing_deps=()
   for command in "$@"; do
-    if ! type $command &>/dev/null ; then
-        missing_deps+=( "$command" )
+    if [ "$(dpkg-query -W -f='${Status}' $command 2>/dev/null | grep -c 'ok installed')" -eq 0 ]; then
+      missing_deps+=( "$command" )
     fi
   done
 

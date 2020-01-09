@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source modules/detectrpi.sh
-
 function usb {
   command="$1"
 

@@ -48,11 +48,11 @@ function wifi {
       echo "  key_mgmt=NONE"
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
-    restart_wifi >/dev/null 2>/dev/null
+    restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     echo "open wifi network"
   else
     wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
-    restart_wifi >/dev/null 2>/dev/null
+    restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     echo "password network"
   fi
 

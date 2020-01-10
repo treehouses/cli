@@ -16,7 +16,7 @@ function timezone {
 
   rm /etc/localtime
   echo "$timezone" > /etc/timezone
-  dpkg-reconfigure -f noninteractive tzdata 2>/dev/null
+  dpkg-reconfigure -f noninteractive tzdata 2>"$LOGFILE"
   echo "Success: the timezone has been set"
 }
 

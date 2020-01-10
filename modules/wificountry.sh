@@ -12,9 +12,9 @@ function wificountry {
   else
       echo "country=$country" > /etc/wpa_supplicant/wpa_supplicant.conf
   fi
-  iw reg set "$country" 2> /dev/null;
+  iw reg set "$country" 2> "$LOGFILE";
 
-  if [ -f /run/wifi-country-unset ] && hash rfkill 2> /dev/null; then
+  if [ -f /run/wifi-country-unset ] && hash rfkill 2> "$LOGFILE"; then
       rfkill unblock wifi
   fi
 

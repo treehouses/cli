@@ -4,7 +4,7 @@ function ntp {
   status="$1"
 
   if [ "$status" = "internet" ]; then
-    rm -rf /boot/time &> /dev/null
+    rm -rf /boot/time &> "$LOGFILE"
     sed -i "s/server 127\.127\.1\.0//" /etc/ntp.conf
     sed -i "s/fudge 127\.127\.1\.0 stratum 10//" /etc/ntp.conf
     sed -i "s/restrict 192\.168\.0\.0 mask 255\.255\.0\.0 nomodify notrap//" /etc/ntp.conf

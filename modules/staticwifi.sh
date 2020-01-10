@@ -47,7 +47,7 @@ function staticwifi {
     wpa_passphrase "$essid" "$password" >> /etc/wpa_supplicant/wpa_supplicant.conf
   fi
 
-  restart_wifi >/dev/null 2>/dev/null
+  restart_wifi >"$LOGFILE" 2>"$LOGFILE"
 
   echo "static wifi" > /etc/network/mode
 

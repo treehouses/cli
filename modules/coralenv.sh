@@ -2,7 +2,7 @@
 
 function coralenv {
   param=$1
-  cronjob='@reboot nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>/dev/null &'
+  cronjob='@reboot nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>"$LOGFILE" &'
   
   if [ ! -d /usr/share/doc/python3-coral-enviro ] ; then
     warn "Error: the Coral python environment is not installed"
@@ -19,12 +19,12 @@ function coralenv {
 if [ -e /sys/bus/iio/devices/iio:device0 ]; then # Checks if board is attached
   case "$param" in
     "demo-on") # Start the demo until next reboot
-      nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>/dev/null &
+      nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>"$LOGFILE" &
       echo "Success: the Coral Environmental board is now displaying sensor information.";
       echo "The board's display will turn off on reboot."
       ;;
     "demo-always-on") # Starts the demo, and activates it on reboot
-      nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>/dev/null &
+      nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>"$LOGFILE" &
       ( crontab -l | grep -v -F "$cronjob" ; echo "$cronjob" ) | crontab -
       echo "Success: the Coral Environmental board is now displaying sensor information.";
       echo "The board's display will persist on reboot."

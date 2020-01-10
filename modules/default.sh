@@ -20,7 +20,7 @@ function default {
     exit 0
   fi
 
-  rename "raspberrypi" > /dev/null 2>/dev/null
+  rename "raspberrypi" > "$LOGFILE" 2>"$LOGFILE"
   default_notice 
   default_tunnel
   default_network
@@ -64,15 +64,15 @@ function default_network {
 }
 
 function default_tunnel {
-  treehouses tor destroy > /dev/null
-  treehouses openvpn off > /dev/null
-  treehouses sshtunnel remove > /dev/null
+  treehouses tor destroy > "$LOGFILE"
+  treehouses openvpn off > "$LOGFILE"
+  treehouses sshtunnel remove > "$LOGFILE"
 }
 
 function default_notice {
-  treehouses tor notice off > /dev/null
-  treehouses openvpn notice off > /dev/null
-  treehouses sshtunnel notice off > /dev/null
+  treehouses tor notice off > "$LOGFILE"
+  treehouses openvpn notice off > "$LOGFILE"
+  treehouses sshtunnel notice off > "$LOGFILE"
 }
 
 

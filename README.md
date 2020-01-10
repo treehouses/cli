@@ -12,6 +12,7 @@ Usage: treehouses [command] ...
 Commands:
 
 help [command]                            gives you a more detailed info about the command or will output this
+verbose <on|off>                          makes each command print more output (can be excessive)
 expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
 rename <hostname>                         changes hostname
 password <password>                       changes the password for 'pi' user

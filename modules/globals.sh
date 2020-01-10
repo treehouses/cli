@@ -4,6 +4,14 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
+LOGFILE=/dev/null
+if [[ -s "$CONFIGFILE" ]]
+then
+  source "$CONFIGFILE"
+else
+  touch "$CONFIGFILE"
+fi
+
 function start_service {
   if [ "$(systemctl is-active "$1" 2>/dev/null)" = "inactive" ]
   then

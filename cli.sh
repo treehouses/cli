@@ -2,6 +2,7 @@
 
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
+CONFIGFILE="$SCRIPTFOLDER/.treehouses"
 
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
@@ -44,6 +45,7 @@ source "$SCRIPTFOLDER/modules/timezone.sh"
 source "$SCRIPTFOLDER/modules/tor.sh"
 source "$SCRIPTFOLDER/modules/upgrade.sh"
 source "$SCRIPTFOLDER/modules/version.sh"
+source "$SCRIPTFOLDER/modules/verbose.sh"
 source "$SCRIPTFOLDER/modules/vnc.sh"
 source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
@@ -142,6 +144,10 @@ case $1 in
   ssh)
     checkroot
     ssh "$2"
+    ;;
+  verbose)
+    checkroot
+    verbose "$2"
     ;;
   vnc)
     checkroot

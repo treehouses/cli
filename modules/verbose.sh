@@ -12,7 +12,7 @@ function verbose {
       exit 0;
       ;;
     "on")
-      LOGFILE=""
+      LOGFILE=$(tty)
       echo "Successfully enabled verbosity"
       ;;
     "off")

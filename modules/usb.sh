@@ -1,8 +1,6 @@
 #!/bin/bash
 
 function usb {
-  command="$1"
-
   # check if hub-ctrl binary exists
   if [ ! -e /usr/local/bin/hub-ctrl ]; then
     echo "required binary 'hub-ctrl' not found"
@@ -12,7 +10,7 @@ function usb {
   # check if libusb-dev pkg is installed
   check_missing_packages libusb-dev
 
-  chmod +x /usr/local/bin/hub-ctrl
+  command="$1"
 
   if [[ $(detectrpi) =~ 'RPI3' ]]; then
     if [ "$command" = "on" ]; then

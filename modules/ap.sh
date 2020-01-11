@@ -17,12 +17,6 @@ function ap {
     fi
   fi
   
-  if [[ "$essid" =~ [^a-zA-Z_-] ]];
-  then
-    echo "Error: essid must be alphabetical and may contain dashes or underscores"
-    exit 1 
-  fi
-
   if [ -n "$password" ];
   then
     if [ ${#password} -lt 8 ];

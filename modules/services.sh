@@ -7,17 +7,34 @@ function services {
 
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
-    while IFS= read -r -d '' service
-    do
-      service=$(basename "$service")
-      find_available_services "$service"
-    done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
+    if [ "$command" = "string" ]; then
+      echo $(
+        while IFS= read -r -d '' service
+        do
+          echo $(basename "$service")
+        done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
+      )
+    else
+      while IFS= read -r -d '' service
+      do
+        service=$(basename "$service")
+        find_available_services "$service"
+      done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
+    fi
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
-    docker ps -a
+    if [ "$command" = "string" ]; then
+      echo $(docker ps -a --format '{{.Names}}')
+    else
+      docker ps -a
+    fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
-    docker ps
+    if [ "$command" = "string" ]; then
+      echo $(docker ps --format '{{.Names}}')
+    else
+      docker ps
+    fi
   else
     if [ -z "$command" ]; then
       echo "no command given"

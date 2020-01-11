@@ -11,7 +11,7 @@ function services {
       echo $(
         while IFS= read -r -d '' service
         do
-          echo $(basename "$service")
+          basename "$service"
         done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
       )
     else
@@ -24,14 +24,14 @@ function services {
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
     if [ "$command" = "string" ]; then
-      echo $(docker ps -a --format '{{.Names}}')
+      echo "$(docker ps -a --format '{{.Names}}')"
     else
       docker ps -a
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
     if [ "$command" = "string" ]; then
-      echo $(docker ps --format '{{.Names}}')
+      echo "$(docker ps --format '{{.Names}}')"
     else
       docker ps
     fi

@@ -32,7 +32,6 @@ function bridge {
     fi
   fi
 
-
   if [ -n "$wifipassword" ];
   then
     if [ ${#wifipassword} -lt 8 ];

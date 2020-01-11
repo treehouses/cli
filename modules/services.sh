@@ -24,14 +24,14 @@ function services {
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
     if [ "$command" = "string" ]; then
-      echo "$(docker ps -a --format '{{.Names}}')"
+      echo $(docker ps -a --format '{{.Names}}')
     else
       docker ps -a
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
     if [ "$command" = "string" ]; then
-      echo "$(docker ps --format '{{.Names}}')"
+      echo $(docker ps --format '{{.Names}}')
     else
       docker ps
     fi

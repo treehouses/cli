@@ -55,6 +55,7 @@ source "$SCRIPTFOLDER/modules/speedtest.sh"
 source "$SCRIPTFOLDER/modules/cron.sh"
 source "$SCRIPTFOLDER/modules/discover.sh"
 source "$SCRIPTFOLDER/modules/camera.sh"
+source "$SCRIPTFOLDER/modules/usb.sh"
 
 case $1 in
   expandfs)
@@ -277,6 +278,10 @@ case $1 in
   cron)
     checkroot
     cron "$2" "$3"
+    ;;
+  usb)
+    checkroot
+    usb "$2"
     ;;
   help)
     help "$2"

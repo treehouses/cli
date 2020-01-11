@@ -5,9 +5,9 @@ function verbose {
     "")
       if [[ "$LOGFILE" == /dev/null ]]
       then
-        echo "Verbosity is currently disabled"
+        echo "Verbosity is off"
       else
-        echo "Verbosity is currently enabled"
+        echo "Verbosity is on"
       fi
       exit 0;
       ;;
@@ -38,7 +38,7 @@ function verbose_help {
   echo ""
   echo "Example:"
   echo "  $(basename "$0") verbose"
-  echo "      Verbosity is currently disabled"
+  echo "      Verbosity is off"
   echo ""
   echo "  $(basename "$0") verbose on"
   echo "      Successfully enabled verbosity"

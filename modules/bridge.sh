@@ -32,11 +32,6 @@ function bridge {
     fi
   fi
 
-  if [[ "$hotspotessid" =~ [^a-zA-Z_-] ]]; then
-    echo "Error: hotspot essid can only contains alphabet, dashes and underscores"
-    exit 1 
-  fi 
-
   if [ -n "$wifipassword" ];
   then
     if [ ${#wifipassword} -lt 8 ];

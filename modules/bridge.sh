@@ -32,7 +32,7 @@ function bridge {
     fi
   fi
 
-  if [[ "$hotspotessid" =~ [^a-zA-Z_-] ]]; then
+  if [[ "$hotspotessid" =~ ^[a-zA-Z0-9_-]{1,32}$ ]]; then
     echo "Error: hotspot essid can only contains alphabet, dashes and underscores"
     exit 1 
   fi 

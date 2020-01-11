@@ -17,7 +17,7 @@ function ap {
     fi
   fi
   
-  if [[ "$essid" =~ [^a-zA-Z_-] ]];
+  if [[ "$essid" =~ ^[a-zA-Z0-9_-]{1,32}$ ]];
   then
     echo "Error: essid must be alphabetical and may contain dashes or underscores"
     exit 1 

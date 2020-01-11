@@ -26,7 +26,7 @@
     "email": "vi@treehouses.io",
     "url": "https://treehouses.io"
   },
-  "license": "AGPL-3.0",
+  "license": "AGPL-3.0-only",
   "bugs": {
     "url": "https://github.com/treehouses/cli/issues",
     "email": "vi@treehouses.io"

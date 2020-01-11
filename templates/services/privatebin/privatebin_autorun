@@ -1,0 +1,6 @@
+privatebin_autorun=true
+
+if [ "$privatebin_autorun" = true ]; then
+  docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d
+fi
+

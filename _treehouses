@@ -9,7 +9,7 @@ _treehouses_complete()
             container coralenv cron default detect detectrpi discover ethernet expandfs \
             feedback help image internet led locale memory networkmode ntp openvpn password \
             rebootneeded reboots rename restore rtc services speedtest ssh sshkey sshtunnel \
-            staticwifi temperature timezone tor upgrade verbose version vnc wifi wificountry wifihidden wifistatus"
+            staticwifi temperature timezone tor upgrade usb verbose version vnc wifi wificountry wifihidden wifistatus"
   ap_cmdas="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
   bluetooth_cmds="on off pause mac id"
@@ -38,6 +38,7 @@ _treehouses_complete()
   sshtunnel_cmds="add remove list key notice"
   temperature_cmds="celsius fahrenheit"
   tor_cmds="start stop add list notice destroy"
+  usb_cmds="on off"
   notice_cmds="on off add delete list"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
@@ -127,6 +128,9 @@ _treehouses_complete()
         ;;
       "verbose")
         COMPREPLY=( $(compgen -W "$verbose_cmds" -- $cur) )
+        ;;
+      "usb")
+        COMPREPLY=( $(compgen -W "$usb_cmds" -- $cur) )
         ;;
       "vnc")
         COMPREPLY=( $(compgen -W "$vnc_cmds" -- $cur) )

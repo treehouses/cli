@@ -122,13 +122,11 @@ function services {
                 echo "${service_name} stopped and removed"
               fi
               ;;
-
             nextcloud)
               docker stop nextcloud
               docker rm nextcloud
               echo "nextcloud stopped and removed"
               ;;
-
             *)
               echo "unknown service"
               ;;
@@ -146,12 +144,10 @@ function services {
                 echo "service not found"
               fi
               ;;
-
             nextcloud)
               docker start nextcloud
               echo "nextcloud started"
               ;;
-
             *)
               echo "unknown service"
               ;;
@@ -169,12 +165,10 @@ function services {
                 echo "service not found"
               fi
               ;;
-
             nextcloud)
               docker stop nextcloud
               echo "nextcloud stopped"
               ;;
-
             *)
               echo "unknown service"
               ;;

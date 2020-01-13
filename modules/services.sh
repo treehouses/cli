@@ -359,7 +359,7 @@ function find_available_services {
 
 function services_help {
   echo ""
-  echo "Usage: $(basename "$0") services [service_name] [available|installed|running|ports|up|down|start|stop|autorun|ps]"
+  echo "Usage: $(basename "$0") services [available|installed|running|ports|service_name] [up|down|start|stop|autorun|ps]"
   echo ""
   echo "Currently available services:"
   echo "  Planet"

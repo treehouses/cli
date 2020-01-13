@@ -114,7 +114,7 @@ function services {
         # stop and remove container
         down)
           case "$service_name" in
-            planet, kolibri, pihole, moodle, privatebin)
+            planet|kolibri|pihole|moodle|privatebin)
               if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
                 echo "yml file doesn't exit"
               else
@@ -138,7 +138,7 @@ function services {
         # start a stopped container
         start)
           case "$service_name" in
-            planet, kolibri, pihole, moodle, privatebin)
+            planet|kolibri|pihole|moodle|privatebin)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml start
                 echo "${service_name} started"
@@ -161,7 +161,7 @@ function services {
         # stop a running container
         stop)
           case "$service_name" in
-            planet, kolibri, pihole, moodle, privatebin)
+            planet|kolibri|pihole|moodle|privatebin)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml stop
                 echo "${service_name} stopped"

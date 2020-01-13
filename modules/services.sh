@@ -114,51 +114,21 @@ function services {
         # stop and remove container
         down)
           case "$service_name" in
-            planet)
-              if [ ! -e /srv/planet/planet.yml ]; then
-                echo "yml file doesn't exist"
+            planet, kolibri, pihole, moodle, privatebin)
+              if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+                echo "yml file doesn't exit"
               else
-                docker-compose -f /srv/planet/planet.yml down
-                echo "planet stopped and removed"
+                docker-compose -f /srv/${service_name}/${service_name}.yml down
+                echo "${service_name} stopped and removed"
               fi
               ;;
-            kolibri)
-              if [ ! -e /srv/kolibri/kolibri.yml ]; then
-                echo "yml file doesn't exist"
-              else
-                docker-compose -f /srv/kolibri/kolibri.yml down
-                echo "kolibri stopped and removed"
-              fi
-              ;;
+
             nextcloud)
               docker stop nextcloud
               docker rm nextcloud
               echo "nextcloud stopped and removed"
               ;;
-            pihole)
-              if [ ! -e /srv/pihole/pihole.yml ]; then
-                echo "yml file doesn't exist"
-              else
-                docker-compose -f /srv/pihole/pihole.yml down
-                echo "pihole stopped and removed"
-              fi
-              ;;
-            moodle)
-              if [ ! -e /srv/moodle/moodle.yml ]; then
-                echo "yml file doesn't exist"
-              else
-                docker-compose -f /srv/moodle/moodle.yml down
-                echo "moodle stopped and removed"
-              fi
-              ;;
-            privatebin)
-              if [ ! -e /srv/privatebin/privatebin.yml ]; then
-                echo "yml file doesn't exist"
-              else
-                docker-compose -f /srv/privatebin/privatebin.yml down
-                echo "privatebin stopped and removed"
-              fi
-              ;;
+
             *)
               echo "unknown service"
               ;;
@@ -168,50 +138,20 @@ function services {
         # start a stopped container
         start)
           case "$service_name" in
-            planet)
-              if docker ps -a | grep -q planet; then
-                docker-compose -f /srv/planet/planet.yml start
-                echo "planet started"
+            planet, kolibri, pihole, moodle, privatebin)
+              if docker ps -a | grep -q $service_name; then
+                docker-compose -f /srv/${service_name}/${service_name}.yml start
+                echo "${service_name} started"
               else
                 echo "service not found"
               fi
               ;;
-            kolibri)
-              if docker ps -a | grep -q kolibri; then
-                docker-compose -f /srv/kolibri/kolibri.yml start
-                echo "kolibri started"
-              else
-                echo "service not found"
-              fi
-              ;;
+
             nextcloud)
               docker start nextcloud
               echo "nextcloud started"
               ;;
-            pihole)
-              if docker ps -a | grep -q pihole; then
-                docker-compose -f /srv/pihole/pihole.yml start
-                echo "pihole started"
-              else
-                echo "service not found"
-              fi
-              ;;
-            moodle)
-              if docker ps -a | grep -q moodle; then
-                docker-compose -f /srv/moodle/moodle.yml start
-                echo "moodle started"
-              else
-                echo "service not found"
-              fi
-              ;;
-            privatebin)
-              if docker ps -a | grep -q privatebin; then
-                docker-compose -f /srv/privatebin/privatebin.yml start
-                echo "privatebin started"
-              else
-                echo "service not found"
-              fi
-              ;;
+
             *)
               echo "unknown service"
               ;;
@@ -221,50 +161,20 @@ function services {
         # stop a running container
         stop)
           case "$service_name" in
-            planet)
-              if docker ps -a | grep -q planet; then
-                docker-compose -f /srv/planet/planet.yml stop
-                echo "planet stopped"
+            planet, kolibri, pihole, moodle, privatebin)
+              if docker ps -a | grep -q $service_name; then
+                docker-compose -f /srv/${service_name}/${service_name}.yml stop
+                echo "${service_name} stopped"
               else
                 echo "service not found"
               fi
               ;;
-            kolibri)
-              if docker ps -a | grep -q kolibri; then
-                docker-compose -f /srv/kolibri/kolibri.yml stop
-                echo "kolibri stopped"
-              else
-                echo "service not found"
-              fi
-              ;;
+
             nextcloud)
               docker stop nextcloud
               echo "nextcloud stopped"
               ;;
-            pihole)
-              if docker ps -a | grep -q pihole; then
-                docker-compose -f /srv/pihole/pihole.yml stop
-                echo "pihole stopped"
-              else
-                echo "service not found"
-              fi
-              ;;
-            moodle)
-              if docker ps -a | grep -q moodle; then
-                docker-compose -f /srv/moodle/moodle.yml stop
-                echo "moodle stopped"
-              else
-                echo "service not found"
-              fi
-              ;;
-            privatebin)
-              if docker ps -a | grep -q privatebin; then
-                docker-compose -f /srv/privatebin/privatebin.yml stop
-                echo "privatebin stopped"
-              else
-                echo "service not found"
-              fi
-              ;;
+
             *)
               echo "unknown service"
               ;;
@@ -317,12 +227,10 @@ function services {
               sed -i "/${service_name}_autorun=false/c\\${service_name}_autorun=true" /boot/autorun
             fi
 
-
             # # if yml file doesn't exist, create it
             # if [ -e /srv/${service_name}/${service_name}.yml ]; then
             #   bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
             # fi
-
             
             echo "service autorun set to true"
           # stop service from autostarting

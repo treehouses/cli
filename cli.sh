@@ -59,6 +59,14 @@ source "$SCRIPTFOLDER/modules/discover.sh"
 source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
 
+LOGFILE=/dev/null
+if [[ -s "$CONFIGFILE" ]]
+then
+  source "$CONFIGFILE"
+else
+  touch "$CONFIGFILE"
+fi
+
 case $1 in
   expandfs)
     checkrpi

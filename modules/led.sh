@@ -38,11 +38,11 @@ function led {
     echo "Look at your RPi leds, both leds will be in this pattern... "
     echo "Both LED: 1 sec on; 8 blink; 1 on"
     christmas > /dev/null
-  elif [ "$color" = "carneval" ]; then
+  elif [ "$color" = "carnival" ]; then
     checkroot
-    echo "leds are set to carnval mode."
+    echo "leds are set to carnival mode."
     echo "Look at your RPi leds, both leds will be in this pattern... "
-    echo "Both LED: 1 sec on; 8 blink; 1 on"
+    echo "Both LED: 2 sec on; 6 blink; 4 on"
     carneval > /dev/null    
   elif [ "$color" = "newyear" ]; then
     checkroot
@@ -222,7 +222,7 @@ function newyear {
   led red "$current_red"
 }
 
-function carneval {
+function carnival {
   current_red=$(led "red")
   current_green=$(led "green")
 
@@ -245,7 +245,7 @@ function carneval {
 function led_help {
   echo
   echo "Usage: $(basename "$0") led [green|red] [mode]"
-  echo "       $(basename "$0") led [dance|thanksgiving|christmas|newyear|carneval]"
+  echo "       $(basename "$0") led [dance|thanksgiving|christmas|newyear|carnival]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -301,7 +301,7 @@ function led_help {
   echo "  $(basename "$0") led christmas"
   echo "      This will set the mode of the led to christmas"
   echo 
-  echo "  $(basename "$0") led carneval"
+  echo "  $(basename "$0") led carnival"
   echo "     This will set mode of the led to carneval"
   echo
 }

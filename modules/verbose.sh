@@ -24,11 +24,12 @@ function verbose {
       exit 1;
       ;;
   esac
-  if grep -q 'LOGFILE=' "$CONFIGFILE"
+  s1="LOGFILE="
+  if [[ $CONFIGFILE = *"$s1"* ]]
   then
-    sed -i "s@^LOGFILE=.*\$@LOGFILE=$LOGFILE@" "$CONFIGFILE"
+    sed -i "s@^$s1.*\$@$s1$LOGFILE@" "$CONFIGFILE"
   else
-    echo -e "LOGFILE=$LOGFILE\n" >> "$CONFIGFILE"
+    echo -e "$s1$LOGFILE\n" >> "$CONFIGFILE"
   fi
 }
 

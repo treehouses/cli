@@ -33,15 +33,15 @@ function ntp {
 }
 
 function ntp_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") ntp <local|internet>"
-  echo ""
+  echo
   echo "Enables or disables time through ntp servers"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") ntp internet"
   echo "    Configures treehouses as a client with timing sourced from the internet"
-  echo ""
+  echo
   echo "  $(basename "$0") ntp local"
   echo "    Configures treehouses as a server with timing sourced from the onboard clock"
 }

@@ -350,32 +350,32 @@ function find_available_services {
 }
 
 function services_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") services [service_name] [available|installed|running|up|down|start|stop|autorun|ps]"
-  echo ""
+  echo
   echo "Executes the given command on the specified service"
-  echo ""
+  echo
   echo "Example:"
-  echo ""
+  echo
   echo "  $(basename "$0") services available | installed | running"
   echo "      Outputs the available | installed | running services"
-  echo ""
+  echo
   echo "  $(basename "$0") services planet up"
   echo "      Builds and starts the planet service"
-  echo ""
+  echo
   echo "  $(basename "$0") services planet down"
   echo "      Stops and removes the planet service"
-  echo ""
+  echo
   echo "  $(basename "$0") services planet start | stop"
   echo "      Starts | stops the planet service"
-  echo ""
+  echo
   echo "  $(basename "$0") services planet autorun"
   echo "      Outputs true if the planet service is set to autorun or false otherwise"
-  echo ""
+  echo
   echo "  $(basename "$0") services planet autorun true | false"
   echo "      Sets the planet service autorun to true | false"
-  echo ""
+  echo
   echo "  $(basename "$0") services planet ps"
   echo "      Outputs the containers related to the planet service"
-  echo ""
+  echo
 }

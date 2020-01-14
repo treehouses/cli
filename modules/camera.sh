@@ -60,21 +60,21 @@ function camera {
 }
 
 function camera_help {
-  echo ""
+  echo
   echo "  Usage: $(basename "$0") camera [on|off|capture]      enables camera, disables camera, captures png photo"
-  echo ""
+  echo
   echo "  Example:"
   echo "    $(basename "$0") camera"
   echo "      Config file has Camera settings which are currently disabled. Use \"$(basename "$0") help camera\" for more commands."
-  echo ""
+  echo
   echo "    $(basename "$0") camera on"
   echo "      Camera is already enabled. Use \"$(basename "$0") camera capture\" to take a photo."
   echo "      If you are having issues using the camera, try rebooting."
-  echo ""
+  echo
   echo "    $(basename "$0") camera off"
   echo "      Camera has been disabled. Reboot needed for settings to take effect."
-  echo ""
+  echo
   echo "    $(basename "$0") camera capture"
   echo "      Camera is capturing and storing a time-stamped photo in ${directory}."
-  echo ""
+  echo
 }

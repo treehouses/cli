@@ -31,15 +31,15 @@ function burn {
 
 
 function burn_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") burn [device path]"
-  echo ""
+  echo
   echo "downloads and burns the treehouse image to the specified device"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") burn"
   echo "      Will download or update the treehouses image and write it to /dev/sdb (by default)."
-  echo ""
+  echo
   echo "  $(basename "$0") burn /dev/sda"
   echo "      Will download or update the treehouses image and write it to /dev/sda"
 }

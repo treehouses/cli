@@ -82,21 +82,21 @@ case "$option" in
 
 # Prints the options for the "vnc" command
 function vnc_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") vnc <on|off|info>"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") vnc"
   echo "      Prints the status of the VNC server (enabled or disabled)."
-  echo ""
+  echo
   echo "  $(basename "$0") vnc on"
   echo "      The VNC service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using VNC viewer."
   echo "      This will disable html, if it is active."
-  echo ""
+  echo
   echo "  $(basename "$0") vnc off"
-  echo "      VNC services will be disabled."  echo ""
+  echo "      VNC services will be disabled."  echo
   echo "Enables or disables the VNC server service"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") vnc info"
   echo "      Prints a detailed configuration of each required component (boot option, vnc service, x service)."

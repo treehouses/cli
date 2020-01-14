@@ -102,7 +102,7 @@ function restart_wifi {
 
 function clean_var {
   if echo "$1" | grep -q "\-\-ip="; then
-    echo ""
+    echo
   else
     echo "$1"
   fi

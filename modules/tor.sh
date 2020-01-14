@@ -164,15 +164,15 @@ function tor {
 
 function tor_help {
 
-  echo ""
+  echo
   echo "Usage: $(basename "$0") tor"
-  echo ""
+  echo
   echo "Setups the tor service on the rpi"
-  echo ""
+  echo
   echo "Examples:"
   echo "  $(basename "$0") tor"
   echo "      Outputs the hostname of the tor service"
-  echo ""
+  echo
   echo "  $(basename "$0") tor list"
   echo "      Outputs the ports that are exposed on the tor network"
   echo "      Example:"
@@ -181,30 +181,30 @@ function tor_help {
   echo "        80       <=> 80"
   echo "      the port 22 is open and routing the traffic of the local port 22,"
   echo "      the port 80 is open and routing the traffic of the local port 80"
-  echo ""
+  echo
   echo "  $(basename "$0") tor add <port> [localport]"
   echo "      Adds the desired port to be accessible from the tor network"
   echo "      Redirects localport to (tor) port"
-  echo ""
+  echo
   echo "  $(basename "$0") tor delete <port> [localport]"
   echo "      Deletes the desired port from the tor network"
-  echo ""
+  echo
   echo "  $(basename "$0") tor deleteall"
   echo "      Deletes all local ports from the tor network"
-  echo ""
+  echo
   echo "  $(basename "$0") tor start"
   echo "      Setups and starts the tor service"
-  echo ""
+  echo
   echo "  $(basename "$0") tor stop"
   echo "      Stops the tor service"
-  echo ""
+  echo
   echo "  $(basename "$0") tor destroy"
   echo "      Stops and resets the tor configuration"
-  echo ""
+  echo
   echo "  $(basename "$0") tor notice <on|off|now|add|delete|list> [api_url]"
   echo "      Enables or disables the propagation of the tor address/ports to gitter"
-  echo ""
+  echo
   echo "  $(basename "$0") tor status"
   echo "      Outputs the status of the tor service"
-  echo ""
+  echo
 }

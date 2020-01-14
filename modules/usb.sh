@@ -59,18 +59,18 @@ function usb {
 }
 
 function usb_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") usb [on|off]"
-  echo ""
+  echo
   echo "Turns usb ports on or off"
   echo "Note: cannot control individual usb ports"
-  echo ""
+  echo
   echo "Example:"
-  echo ""
+  echo
   echo "  $(basename "$0") usb on"
   echo "      Turns the usb ports on"
-  echo ""
+  echo
   echo "  $(basename "$0") usb off"
   echo "      Turns the usb ports off"
-  echo ""
+  echo
 }

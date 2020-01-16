@@ -100,4 +100,5 @@ function vnc_help {
   echo "Example:"
   echo "  $(basename "$0") vnc info"
   echo "      Prints a detailed configuration of each required component (boot option, vnc service, x service)."
+  echo
 } 

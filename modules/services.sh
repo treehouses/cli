@@ -14,12 +14,15 @@ function services {
         find_available_services "$service"
       done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
     elif [ -z "$command" ]; then
-      echo $(
-        while IFS= read -r -d '' service
-        do
-          basename "$service"
-        done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
-      )
+      results="Available: "
+
+      while IFS= read -r -d '' service
+      do
+        results+=$(basename "$service")
+        results+=" "
+      done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
+
+      echo ${results}
     fi
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
@@ -28,7 +31,7 @@ function services {
     elif [ -z "$command" ]; then
       installed=$(docker ps -a --format '{{.Names}}')
       array=($installed)
-      results=""
+      results="Installed: "
 
       for i in "${array[@]}"
       do
@@ -45,7 +48,7 @@ function services {
     elif [ -z "$command" ]; then
       running=$(docker ps --format '{{.Names}}')
       array=($running)
-      results=""
+      results="Running: "
 
       for i in "${array[@]}"
       do

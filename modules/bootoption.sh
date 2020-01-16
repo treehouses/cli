@@ -75,4 +75,5 @@ function bootoption_help {
   echo
   echo "  $(basename "$0") bootoption desktop autologin"
   echo "      The rpi will boot to desktop by default and autologin in the user that run the command"
+  echo
 }

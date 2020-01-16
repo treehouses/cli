@@ -56,7 +56,7 @@ source "$SCRIPTFOLDER/modules/cron.sh"
 source "$SCRIPTFOLDER/modules/discover.sh"
 source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
-source "$SCRIPTFOLDER/moduels/remote.sh"
+source "$SCRIPTFOLDER/modules/remote.sh"
 
 case $1 in
   expandfs)
@@ -287,6 +287,7 @@ case $1 in
   remote)
     checkroot
     remote "$2"
+    ;;
   help)
     help "$2"
     ;;

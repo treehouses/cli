@@ -71,4 +71,5 @@ function detectrpi_help {
   echo "Example:"
   echo "  $(basename "$0") detectrpi"
   echo "      Prints the model number"
+  echo
 }

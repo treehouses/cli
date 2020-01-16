@@ -29,9 +29,7 @@ _treehouses_complete()
   reboots_cmds="now in cron daily weekly monthly"
   rtc_cmds="on off"
   rtc_on_cmds="ds3231 rasclock"
-
-# services_cmds="" Think about it, a little bit complicated
-
+  services_cmds="available installed running ports"
   cron_cmds="list 0W tor timestamp add delete deleteall"
   sshkey_cmds="add list delete deleteal addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"

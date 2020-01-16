@@ -63,6 +63,7 @@ function help_default {
   echo "   cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs"
   echo "        [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)"
   echo "   usb [on|off]                              turns usb ports on or off"
+  echo "   remote [status|upgrade]                   helps with treehouses remote android app"
   echo
 }
 

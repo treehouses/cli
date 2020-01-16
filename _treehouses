@@ -38,6 +38,7 @@ _treehouses_complete()
   tor_cmds="start stop add list notice destroy"
   usb_cmds="on off"
   notice_cmds="on off add delete list"
+  remote_cmds="status upgrade"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 

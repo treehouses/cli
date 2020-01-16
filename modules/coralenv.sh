@@ -74,4 +74,5 @@ function coralenv_help {
   echo
   echo "  $(basename "$0") coralenv demo-off"
   echo "      Stops the demo and the board's display will turn off on reboot."
+  echo
 } 

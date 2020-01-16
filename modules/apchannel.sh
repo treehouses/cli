@@ -41,4 +41,4 @@ function apchannel_help {
   echo "      This will set the ap channel to 6."
   echo "      A reboot is required to apply the changes."
   echo
-}
+}\n

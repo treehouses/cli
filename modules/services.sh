@@ -44,7 +44,7 @@ function services {
       docker ps
     elif [ -z "$command" ]; then
       running=$(docker ps --format '{{.Names}}')
-      array=($installed)
+      array=($running)
       results=""
 
       for i in "${array[@]}"

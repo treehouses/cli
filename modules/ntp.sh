@@ -44,4 +44,5 @@ function ntp_help {
   echo
   echo "  $(basename "$0") ntp local"
   echo "    Configures treehouses as a server with timing sourced from the onboard clock"
+  echo
 }

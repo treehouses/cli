@@ -30,7 +30,7 @@ function services {
       array=($installed)
       results=""
 
-      for i in "${strings[@]}"
+      for i in "${array[@]}"
       do
         results+="${i%%_*}"
         results+=" "
@@ -47,7 +47,7 @@ function services {
       array=($installed)
       results=""
 
-      for i in "${strings[@]}"
+      for i in "${array[@]}"
       do
         results+="${i%%_*}"
         results+=" "

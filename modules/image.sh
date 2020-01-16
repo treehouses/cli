@@ -5,13 +5,13 @@ function image {
 }
 
 function image_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") image"
-  echo ""
+  echo
   echo "Returns the version of the system image which is currently running"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") image"
   echo "      Prints the current version of the system image."
-  echo ""
+  echo
 }

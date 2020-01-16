@@ -21,15 +21,15 @@ function timezone {
 }
 
 function timezone_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") timezone <timezone>"
-  echo ""
+  echo
   echo "Sets the system timezone"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") timezone Etc/GMT-3"
   echo "      This will set the raspberry pi time to GMT-3"
   echo "      When using Etc/GMT you can specify the offset, from GMT-14 up to GMT+12"
   echo "      Available timezones are inside /usr/share/zoneinfo/"
-  echo ""
+  echo
 }

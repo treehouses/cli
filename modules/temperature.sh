@@ -22,21 +22,22 @@ function temperature () {
 }
 
 function temperature_help {
-  echo ""
+  echo
   echo "  Usage: $(basename "$0") temperature [celsius|fahrenheit]"
-  echo ""
+  echo
   echo "  Measures CPU temperature of Raspberry Pi"
-  echo ""
+  echo
   echo "  Example:"
   echo "  $(basename "$0") temperature"
-  echo ""
+  echo
   echo "  47.2"
-  echo "" 
+  echo 
   echo "  $(basename "$0") temperature celsius"
-  echo ""
+  echo
   echo "  47.2°C"
-  echo ""
+  echo
   echo "  $(basename "$0") temperature fahrenheit"
-  echo ""
-  echo "  117.0°F"  
+  echo
+  echo "  117.0°F"
+  echo
 }

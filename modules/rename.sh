@@ -20,13 +20,13 @@ function rename () {
 }
 
 function rename_help () {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") rename <hostname>"
-  echo ""
+  echo
   echo "Changes the hostname"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") rename rpi"
   echo "      Sets the hostname to 'rpi'."
-  echo ""
+  echo
 }

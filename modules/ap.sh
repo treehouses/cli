@@ -77,31 +77,31 @@ function ap {
 
 
 function ap_help () {
-  echo ""
+  echo
   echo "Usage: treehouses ap <local|internet> <ESSID> [password]"
-  echo ""
+  echo
   echo "Creates a mobile ap. If the mode is 'internet' the ethernet connection will be shared in the ap."
-  echo ""
+  echo
   echo "Examples:"
   echo "  treehouses ap local apname apPassword"
   echo "      Creates a ap with ESSID 'apname' and password 'apPassword'."
   echo "      This hotspot will not share the ethernet connection if present."
-  echo ""
+  echo
   echo "  treehouses ap local apname"
   echo "      Creates an open ap with ESSID 'apname'."
   echo "      This hotspot will not share ethernet connection when present."
-  echo ""
+  echo
   echo "  treehouses ap internet apname apPassword"
   echo "      Creates a ap with ESSID 'apname' and password 'apPassword'."
   echo "      This hotspot will share the ethernet connection when present."
-  echo ""
+  echo
   echo "  treehouses ap internet apname"
   echo "      Creates an open ap with ESSID 'apname'."
   echo "      This hotspot will share the ethernet connection when present."
-  echo ""
+  echo
   echo "  This command can be used with the argument '--ip=x.y.z.w' to specify the base ip (x.y.z) for the clients/ap."
-  echo ""
+  echo
   echo "  treehouses ap internet apname --ip=192.168.2.24"
   echo "      All the clients of this network will have an ip under the network 192.168.2.0"
-  echo ""
+  echo
 }

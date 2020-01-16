@@ -134,16 +134,16 @@ function get_hostapd_settings {
 }
 
 function networkmode_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") networkmode [info]"
-  echo ""
+  echo
   echo "Outputs the current network mode"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") networkmode"
   echo "      Will output the current network mode that has been set up using $(basename "$0")"
-  echo ""
+  echo
   echo "  $(basename "$0") networkmode info"
   echo "      shows the current status of the network mode"
-  echo ""
+  echo
 }

@@ -283,9 +283,9 @@ function find_available_services {
 }
 
 function services_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") services [available|installed|running|ports|service_name] [up|down|start|stop|autorun|ps]"
-  echo ""
+  echo
   echo "Currently available services:"
   echo "  Planet"
   echo "  Kolibri"
@@ -293,7 +293,7 @@ function services_help {
   echo "  Pi-hole"
   # echo "  Moodle"
   echo "  PrivateBin"
-  echo ""
+  echo
   echo "commands:"
   echo "  available                   lists all available services"
   echo "  installed                   lists all installed services"
@@ -306,19 +306,19 @@ function services_help {
   echo "  autorun                     outputs true if the service is set to autorun or false otherwise"
   echo "  autorun [true | false]      sets the service autorun to true | false"
   echo "  ps                          outputs the containers related to the service"
-  echo ""
+  echo
   echo "examples:"
-  echo ""
+  echo
   echo "  $(basename "$0") services available"
-  echo ""
+  echo
   echo "  $(basename "$0") services planet up"
-  echo ""
+  echo
   echo "  $(basename "$0") services planet stop"
-  echo ""
+  echo
   echo "  $(basename "$0") services planet autorun"
-  echo ""
+  echo
   echo "  $(basename "$0") services planet autorun true"
-  echo ""
+  echo
   echo "  $(basename "$0") services planet ps"
-  echo ""
+  echo
 }

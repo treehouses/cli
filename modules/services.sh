@@ -68,29 +68,29 @@ function services {
         up)
           case "$service_name" in
             planet)
-              echo "adding port 80..."
-              treehouses tor add 80
               if [ -f /srv/planet/pwd/credentials.yml ]; then
                 docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d
               else
                 docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
               fi
               echo "planet built and started"
+              echo "adding port 80..."
+              treehouses tor add 80
               ;;
             kolibri)
-              echo "adding port 8080..."
-              treehouses tor add 8080
               bash $TEMPLATES/services/kolibri/kolibri_yml.sh
               echo "yml file created"
 
               docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
               echo "kolibri built and started"
+              echo "adding port 8080..."
+              treehouses tor add 8080
               ;;
             nextcloud)
-              echo "adding port 8081..."
-              treehouses tor add 8081
               docker run --name nextcloud -d -p 8081:80 nextcloud
               echo "nextcloud built and started"
+              echo "adding port 8081..."
+              treehouses tor add 8081
               ;;
             pihole)
               bash $TEMPLATES/services/pihole/pihole_yml.sh
@@ -99,24 +99,26 @@ function services {
               service dnsmasq stop
               docker-compose -f /srv/pihole/pihole.yml -p pihole up -d
               echo "pihole built and started"
+              echo "adding port 8053..."
+              treehouses tor add 8053
               ;;
             moodle)
-              echo "adding port 8082..."
-              treehouses tor add 8082
               bash $TEMPLATES/services/moodle/moodle_yml.sh
               echo "yml file created"
 
               docker-compose -f /srv/moodle/moodle.yml -p moodle up -d
               echo "moodle built and started"
+              echo "adding port 8082..."
+              treehouses tor add 8082
               ;;
             privatebin)
-              echo "adding port 8083..."
-              treehouses tor add 8083
               bash $TEMPLATES/services/privatebin/privatebin_yml.sh
               echo "yml file created"
 
               docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d
               echo "privatebin built and started"
+              echo "adding port 8083..."
+              treehouses tor add 8083
               ;;
             *)
               echo "unknown service"

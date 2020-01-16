@@ -7,35 +7,53 @@ function services {
 
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
-    if [ "$command" = "string" ]; then
+    if [ "$command" = "full" ]; then
+      while IFS= read -r -d '' service
+      do
+        service=$(basename "$service")
+        find_available_services "$service"
+      done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
+    elif [ -z "$command" ]; then
       echo $(
         while IFS= read -r -d '' service
         do
           basename "$service"
         done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
       )
-    else
-      while IFS= read -r -d '' service
-      do
-        service=$(basename "$service")
-        find_available_services "$service"
-      done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
     fi
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
-    if [ "$command" = "string" ]; then
-        installedstring=$(docker ps -a --format '{{.Names}}')
-        echo ${installedstring%%_*}
-    else
+    if [ "$command" = "full" ]; then
       docker ps -a
+    elif [ -z "$command" ]; then
+      installed=$(docker ps -a --format '{{.Names}}')
+      array=($installed)
+      results=""
+
+      for i in "${strings[@]}"
+      do
+        results+="${i%%_*}"
+        results+=" "
+      done
+
+      echo ${results} | tr ' ' '\n' | uniq | xargs
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
-    if [ "$command" = "string" ]; then
-        runningstring=$(docker ps --format '{{.Names}}')
-        echo ${runningstring%%_*}
-    else
+    if [ "$command" = "full" ]; then
       docker ps
+    elif [ -z "$command" ]; then
+      running=$(docker ps --format '{{.Names}}')
+      array=($installed)
+      results=""
+
+      for i in "${strings[@]}"
+      do
+        results+="${i%%_*}"
+        results+=" "
+      done
+
+      echo ${results} | tr ' ' '\n' | uniq | xargs
     fi
   else
     if [ -z "$command" ]; then

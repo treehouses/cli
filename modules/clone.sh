@@ -43,4 +43,5 @@ function clone_help {
   echo
   echo "  $(basename "$0") clone /dev/sda"
   echo "      Will clone the current system to /dev/sda"
+  echo
 }

@@ -4,12 +4,6 @@ function remote {
     option="$1"
 
     if [ "$option" = "status" ]; then
-        # source modules/internet.sh
-        # source modules/bluetooth.sh
-        # source modules/image.sh
-        source modules/version.sh
-        # source modules/detectrpi.sh
-
         results=""
         results+="$(internet) "
         results+="$(bluetooth mac) "
@@ -19,9 +13,7 @@ function remote {
 
         echo ${results}
     elif [ "$option" = "upgrade" ]; then
-        source modules/upgrade.sh
-
-        echo "$(upgrade --check)"
+        upgrade --check
     else
         echo "unknown command option"
         echo "usage: $(basename "$0") remote [status | upgrade]"

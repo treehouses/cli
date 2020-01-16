@@ -24,4 +24,5 @@ function detect_help {
   echo "Example:"
   echo "  $(basename "$0") detect"
   echo "      Prints the hardware info"
+  echo
 }

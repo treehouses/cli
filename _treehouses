@@ -21,7 +21,7 @@ _treehouses_complete()
   coralenv_cmds="install demo-on demo-off demo-always-on"
   discover_cmds="rpi scan interface ping ports mac"
   help_cmds=$commands
-  led_cmds="green red dance thanksgiving christmas newyear"
+  led_cmds="green red dance thanksgiving christmas newyear carneval"
   memory_cmds="total used free"
   networkmode_cmds="info"
   ntp_cmds="local internet"
@@ -29,9 +29,7 @@ _treehouses_complete()
   reboots_cmds="now in cron daily weekly monthly"
   rtc_cmds="on off"
   rtc_on_cmds="ds3231 rasclock"
-
-# services_cmds="" Think about it, a little bit complicated
-
+  services_cmds="available installed running ports"
   cron_cmds="list 0W tor timestamp add delete deleteall"
   sshkey_cmds="add list delete deleteal addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"
@@ -40,6 +38,7 @@ _treehouses_complete()
   tor_cmds="start stop add list notice destroy"
   usb_cmds="on off"
   notice_cmds="on off add delete list"
+  remote_cmds="status upgrade"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 

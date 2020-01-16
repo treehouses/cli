@@ -42,4 +42,3 @@ function apchannel_help {
   echo "      A reboot is required to apply the changes."
   echo
 }
-\n

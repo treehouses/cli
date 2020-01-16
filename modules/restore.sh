@@ -37,4 +37,5 @@ function restore_help {
   echo
   echo "  $(basename "$0") restore /dev/sda"
   echo "      Will restore the current system to /dev/sda"
+  echo
 }

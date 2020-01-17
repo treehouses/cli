@@ -25,6 +25,8 @@ function help_default {
   echo "   container <none|docker|balena>            enables (and start) the desired container"
   echo "   bluetooth <on|off|pause|mac|id> [number]  switches bluetooth from regular to hotspot mode and shows id or MAC address"
   echo "   ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)"
+  echo "   aphidden <local|internet>                 creates a hidden mobile ap, with or without internet access"
+  echo "            <ESSID> [password]" 
   echo "   apchannel [channel]                       sets or prints the current ap channel"
   echo "   timezone <timezone>                       sets the timezone of the system"
   echo "   locale <locale>                           sets the system locale"

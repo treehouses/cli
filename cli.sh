@@ -6,6 +6,7 @@ SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
+source "$SCRIPTFOLDER/modules/aphidden.sh"
 source "$SCRIPTFOLDER/modules/apchannel.sh"
 source "$SCRIPTFOLDER/modules/bluetooth.sh"
 source "$SCRIPTFOLDER/modules/bluetoothid.sh"
@@ -127,6 +128,12 @@ case $1 in
     checkroot
     shift
     ap "$@"
+    ;;
+  aphidden)
+    checkrpi
+    checkroot
+    shift
+    aphidden "$@"
     ;;
   discover)
     shift

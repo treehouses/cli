@@ -82,8 +82,7 @@ function services {
                 docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
               fi
               echo "planet built and started"
-              echo "adding port 80..."
-              treehouses tor add 80
+              check_tor "80"
               ;;
             kolibri)
               bash $TEMPLATES/services/kolibri/kolibri_yml.sh
@@ -91,14 +90,12 @@ function services {
 
               docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
               echo "kolibri built and started"
-              echo "adding port 8080..."
-              treehouses tor add 8080
+              check_tor "8080"
               ;;
             nextcloud)
               docker run --name nextcloud -d -p 8081:80 nextcloud
               echo "nextcloud built and started"
-              echo "adding port 8081..."
-              treehouses tor add 8081
+              check_tor "8081"
               ;;
             pihole)
               bash $TEMPLATES/services/pihole/pihole_yml.sh
@@ -107,8 +104,7 @@ function services {
               service dnsmasq stop
               docker-compose -f /srv/pihole/pihole.yml -p pihole up -d
               echo "pihole built and started"
-              echo "adding port 8053..."
-              treehouses tor add 8053
+              check_tor "8053"
               ;;
             moodle)
               bash $TEMPLATES/services/moodle/moodle_yml.sh
@@ -116,8 +112,7 @@ function services {
 
               docker-compose -f /srv/moodle/moodle.yml -p moodle up -d
               echo "moodle built and started"
-              echo "adding port 8082..."
-              treehouses tor add 8082
+              check_tor "8082"
               ;;
             privatebin)
               bash $TEMPLATES/services/privatebin/privatebin_yml.sh
@@ -125,8 +120,7 @@ function services {
 
               docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d
               echo "privatebin built and started"
-              echo "adding port 8083..."
-              treehouses tor add 8083
+              check_tor "8083"
               ;;
             *)
               echo "unknown service"
@@ -280,6 +274,18 @@ function find_available_services {
   service_name="$1"
   available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
   echo "$service [$available_formats]"
+}
+
+# tor status and port check
+function check_tor {
+  port="$1"
+  if [ "$(treehouses tor status)" = "active" ]; then
+    echo "tor active"
+    if ! treehouses tor list | grep -w $port; then
+      echo "adding port ${port}"
+      treehouses tor add $port
+    fi
+  fi
 }
 
 function services_help {

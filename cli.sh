@@ -2,8 +2,8 @@
 
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
-CONFIGFOLDER=~/treehouses/
-CONFIGFILE="$CONFIGFOLDER".treehouses
+CONFIGFOLDER=~/.treehouses/
+CONFIGFILE="$CONFIGFOLDER"config
 
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"

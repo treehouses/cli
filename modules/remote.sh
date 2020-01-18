@@ -14,6 +14,23 @@ function remote {
         echo ${results}
     elif [ "$option" = "upgrade" ]; then
         upgrade --check
+    elif [ "$option" = "services" ]; then
+        if [ "$2" = "available" ]; then
+            results="Available: "
+            results+="$(services available)"
+
+            echo ${results}
+        elif [ "$2" = "installed" ]; then
+            results="Installed: "
+            results+="$(services installed)"
+
+            echo ${results}
+        elif [ "$2" = "running" ]; then
+            results="Running: "
+            results+="$(services running)"
+
+            echo ${results}
+        fi
     else
         echo "unknown command option"
         echo "usage: $(basename "$0") remote [status | upgrade]"
@@ -22,7 +39,7 @@ function remote {
 
 function remote_help {
     echo
-    echo "Usage: $(basename "$0") remote [status | upgrade]"
+    echo "Usage: $(basename "$0") remote [status | upgrade | services]"
     echo
     echo "Returns a string representation of the current status of the Raspberry Pi"
     echo "Used for Treehouses Remote"
@@ -39,5 +56,8 @@ function remote_help {
     echo "$(basename "$0") remote upgrade"
     echo "true if an upgrade is available"
     echo "false otherwise"
+    echo
+    echo "$(basename "$0") remote services [available | installed | running]"
+    echo "Available: | Installed: | Running: <list of services>"
     echo
 }

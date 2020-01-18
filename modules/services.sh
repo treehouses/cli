@@ -279,19 +279,12 @@ function find_available_services {
 # tor status and port check
 function check_tor {
   port="$1"
-  echo "checking tor status"
   if [ "$(treehouses tor status)" = "active" ]; then
     echo "tor active"
-    echo "checking tor port"
     if ! treehouses tor list | grep -w $port; then
-      echo "port ${port} not present"
       echo "adding port ${port}"
       treehouses tor add $port
-    else
-      echo "port ${port} already present"
     fi
-  else
-    echo "tor inactive"
   fi
 }
 

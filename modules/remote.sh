@@ -57,4 +57,7 @@ function remote_help {
     echo "true if an upgrade is available"
     echo "false otherwise"
     echo
+    echo "$(basename "$0") remote services [available | installed | running]"
+    echo "Available: | Installed: | Running: <list of services>"
+    echo
 }

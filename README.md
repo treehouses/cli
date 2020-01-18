@@ -72,6 +72,6 @@ camera [on|off|capture]                   enables camera, disables camera, captu
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off
-remote [status|upgrade]                   helps with treehouses remote android app
+remote [status|upgrade|services]          helps with treehouses remote android app
 ```
 

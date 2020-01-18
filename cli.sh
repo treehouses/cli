@@ -300,7 +300,8 @@ case $1 in
     ;;
   remote)
     checkroot
-    remote "$2"
+    checkrpi
+    remote "$@"
     ;;
   help)
     help "$2"

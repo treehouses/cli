@@ -76,11 +76,13 @@ function aphidden {
 }
 
 
-function ap_help () {
+function aphidden_help () {
   echo
   echo "Usage: treehouses aphidden <local|internet> <ESSID> [password]"
   echo
-  echo "Creates a hidden mobile ap. If the mode is 'internet' the ethernet connection will be shared in the ap."
+  echo "When the Raspberry pi is connected to a network via an ethernet cable this command"
+  echo "creates a wireless access point that users can connect to via wifi. If the mode is"
+  echo "'internet' the ethernet connection will be shared in the access point."
   echo
   echo "Examples:"
   echo "  treehouses aphidden local apname apPassword"

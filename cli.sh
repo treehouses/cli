@@ -2,7 +2,7 @@
 
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
-CONFIGFILE=/etc/treehouses.conf
+CONFIGFILE=/home/pi/.treehousesrc
 
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"

@@ -28,7 +28,7 @@ mkdir -p /srv/portainer
   echo "    image: portainer/portainer"
   echo "    command: -H tcp://tasks.agent:9001 --tlsskipverify"
   echo "    ports:"
-  echo "      - \"9000:9000\""
+  echo "      - \"8084:8084\""
   # echo "      - \"8000:8000\""
   echo "    volumes:"
   echo "      - portainer_data:/data"

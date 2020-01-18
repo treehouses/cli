@@ -66,6 +66,7 @@ function services {
     echo "Pi-hole               port 8053"
     # echo "Moodle                port 8082"
     echo "PrivateBin            port 8083"
+    echo "Portainer             port 8084"
   else
     if [ -z "$command" ]; then
       echo "no command given"
@@ -122,6 +123,13 @@ function services {
               echo "privatebin built and started"
               check_tor "8083"
               ;;
+            portainer)
+              bash $TEMPLATES/services/portainer/portainer_yml.sh
+              echo "yml file created"
+
+              docker-compose -f /srv/portainer/portainer.yml -p portainer up -d
+              echo "portainer built and started"
+              check_tor "8084"
             *)
               echo "unknown service"
               ;;
@@ -131,7 +139,7 @@ function services {
         # stop and remove container
         down)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin)
+            planet|kolibri|pihole|moodle|privatebin|portainer)
               if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
                 echo "yml file doesn't exit"
               else
@@ -153,7 +161,7 @@ function services {
         # start a stopped container
         start)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin)
+            planet|kolibri|pihole|moodle|privatebin|portainer)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml start
                 echo "${service_name} started"
@@ -174,7 +182,7 @@ function services {
         # stop a running container
         stop)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin)
+            planet|kolibri|pihole|moodle|privatebin|portainer)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml stop
                 echo "${service_name} stopped"

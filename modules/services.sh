@@ -146,15 +146,10 @@ function services {
                 echo "${service_name} stopped and removed"
               fi
               ;;
-            nextcloud)
-              docker stop nextcloud
-              docker rm nextcloud
-              echo "nextcloud stopped and removed"
-              ;;
-            portainer)
-              docker stop portainer
-              docker rm portainer
-              echo "portainer stopped and removed"
+            nextcloud|portainer)
+              docker stop $service_name
+              docker rm $service_name
+              echo "${service_name} stopped and removed"
               ;;
             *)
               echo "unknown service"
@@ -173,13 +168,9 @@ function services {
                 echo "service not found"
               fi
               ;;
-            nextcloud)
-              docker start nextcloud
-              echo "nextcloud started"
-              ;;
-            portainer)
-              docker start portainer
-              echo "portainer started"
+            nextcloud|portainer)
+              docker start $service_name
+              echo "${service_name} started"
               ;;
             *)
               echo "unknown service"
@@ -198,13 +189,9 @@ function services {
                 echo "service not found"
               fi
               ;;
-            nextcloud)
-              docker stop nextcloud
-              echo "nextcloud stopped"
-              ;;
-            portainer)
-              docker stop portainer
-              echo "portainer stopped"
+            nextcloud|portainer)
+              docker stop $service_name
+              echo "${service_name} stopped"
               ;;
             *)
               echo "unknown service"

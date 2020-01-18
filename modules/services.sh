@@ -125,7 +125,7 @@ function services {
               ;;
             portainer)
               docker volume create portainer_data
-              docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+              docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer --name portainer
               echo "portainer built and started"
               check_tor "9000"
               ;;
@@ -138,7 +138,7 @@ function services {
         # stop and remove container
         down)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|portainer)
+            planet|kolibri|pihole|moodle|privatebin)
               if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
                 echo "yml file doesn't exit"
               else
@@ -151,6 +151,11 @@ function services {
               docker rm nextcloud
               echo "nextcloud stopped and removed"
               ;;
+            portainer)
+              docker stop portainer
+              docker rm portainer
+              echo "portainer stopped and removed"
+              ;;
             *)
               echo "unknown service"
               ;;
@@ -160,7 +165,7 @@ function services {
         # start a stopped container
         start)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|portainer)
+            planet|kolibri|pihole|moodle|privatebin)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml start
                 echo "${service_name} started"
@@ -172,6 +177,10 @@ function services {
               docker start nextcloud
               echo "nextcloud started"
               ;;
+            portainer)
+              docker start portainer
+              echo "portainer started"
+              ;;
             *)
               echo "unknown service"
               ;;
@@ -181,7 +190,7 @@ function services {
         # stop a running container
         stop)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|portainer)
+            planet|kolibri|pihole|moodle|privatebin)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml stop
                 echo "${service_name} stopped"
@@ -192,6 +201,10 @@ function services {
             nextcloud)
               docker stop nextcloud
               echo "nextcloud stopped"
+              ;;
+            portainer)
+              docker stop portainer
+              echo "portainer stopped"
               ;;
             *)
               echo "unknown service"

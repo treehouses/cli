@@ -1,11 +1,12 @@
 #!/bin/bash
 
 function disable_pass {
-  password -l $1 && echo -e "Sucess: password login of  user $1 is locked, system is only accessed via ssh" 
+  passwd -l $1 && echo -e "Sucess: password login of  user $1 is locked, system is only accessed via ssh" 
 }
+
 function password () {
   if [[ -z "$1" ]];then
-    disable_pass()
+    disable_pass "$(whoami)"
   else 
     echo "pi:$1" | chpasswd
     echo "Success: the password has been changed"

@@ -55,12 +55,12 @@ function ap {
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/PASSWORD/$password/g" /etc/hostapd/hostapd.conf
     sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
-    restart_hotspot >/dev/null 2>/dev/null
+    restart_hotspot >"$LOGFILE" 2>"$LOGFILE"
   else 
     cp "$TEMPLATES/network/hostapd/no_password" /etc/hostapd/hostapd.conf
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
-    restart_hotspot >/dev/null 2>/dev/null
+    restart_hotspot >"$LOGFILE" 2>"$LOGFILE"
   fi
 
   if [ -n "$base_24" ];

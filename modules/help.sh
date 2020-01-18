@@ -4,6 +4,7 @@ function help_default {
   echo "Usage: $(basename "$0")"
   echo
   echo "   help [command]                            gives you a more detailed info about the command or will output this"
+  echo "   verbose <on|off>                          makes each command print more output (might not work with treehouses remote)"
   echo "   expandfs                                  expands the partition of the RPI image to the maximum of the SDcard"
   echo "   rename <hostname>                         changes hostname"
   echo "   password <password>                       changes the password for 'pi' user"

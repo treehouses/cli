@@ -130,6 +130,7 @@ function services {
               docker-compose -f /srv/portainer/portainer.yml -p portainer up -d
               echo "portainer built and started"
               check_tor "8084"
+              ;;
             *)
               echo "unknown service"
               ;;

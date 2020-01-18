@@ -66,7 +66,7 @@ function services {
     echo "Pi-hole               port 8053"
     # echo "Moodle                port 8082"
     echo "PrivateBin            port 8083"
-    echo "Portainer             port 8084"
+    echo "Portainer             port 9000"
   else
     if [ -z "$command" ]; then
       echo "no command given"
@@ -124,12 +124,10 @@ function services {
               check_tor "8083"
               ;;
             portainer)
-              bash $TEMPLATES/services/portainer/portainer_yml.sh
-              echo "yml file created"
-
-              docker-compose -f /srv/portainer/portainer.yml -p portainer up -d
+              docker volume create portainer_data
+              docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
               echo "portainer built and started"
-              check_tor "8084"
+              check_tor "9000"
               ;;
             *)
               echo "unknown service"
@@ -308,6 +306,7 @@ function services_help {
   echo "  Pi-hole"
   # echo "  Moodle"
   echo "  PrivateBin"
+  echo "  Portainer"
   echo
   echo "commands:"
   echo "  available                   lists all available services"

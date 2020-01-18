@@ -2,7 +2,8 @@
 
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
-CONFIGFILE=~/.treehousesrc
+CONFIGFOLDER=~/treehouses/
+CONFIGFILE="$CONFIGFOLDER" + .treehouses
 
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
@@ -61,6 +62,9 @@ source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 
 LOGFILE=/dev/null
+if [[ ! -d "$CONFIGFOLDER" ]]; then
+  mkdir "$CONFIGFOLDER"
+fi
 if [[ -s "$CONFIGFILE" ]]
 then
   source "$CONFIGFILE"

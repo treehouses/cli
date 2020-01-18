@@ -287,7 +287,11 @@ function check_tor {
       echo "port ${port} not present"
       echo "adding port ${port}"
       treehouses tor add $port
+    else
+      echo "port ${port} already present"
     fi
+  else
+    echo "tor inactive"
   fi
 }
 

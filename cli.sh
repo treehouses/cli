@@ -301,7 +301,7 @@ case $1 in
   remote)
     checkroot
     checkrpi
-    remote "$@"
+    remote "$2"
     ;;
   help)
     help "$2"

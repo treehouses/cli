@@ -39,7 +39,7 @@ function remote {
 
 function remote_help {
     echo
-    echo "Usage: $(basename "$0") remote [status | upgrade]"
+    echo "Usage: $(basename "$0") remote [status | upgrade | services]"
     echo
     echo "Returns a string representation of the current status of the Raspberry Pi"
     echo "Used for Treehouses Remote"

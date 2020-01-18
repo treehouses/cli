@@ -17,7 +17,7 @@ function locale {
   encoding="$(echo "$locale_line" | cut -f2 -d " ")"
   echo "$locale $encoding" > /etc/locale.gen
   sed -i "s/^\\s*LANG=\\S*/LANG=$locale/" /etc/default/locale
-  dpkg-reconfigure -f noninteractive locales -q 2>/dev/null
+  dpkg-reconfigure -f noninteractive locales -q 2>"$LOGFILE"
   echo "Success: the locale has been changed"
 }
 

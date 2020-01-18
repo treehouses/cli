@@ -49,7 +49,7 @@ function wifihidden {
       echo "  key_mgmt=NONE"
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
-    restart_wifi >/dev/null 2>/dev/null
+    restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     echo "connected to hidden open network"
   else
     {
@@ -60,7 +60,7 @@ function wifihidden {
       echo "  psk=\"$wifipassword\""
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
-    restart_wifi >/dev/null 2>/dev/null
+    restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     echo "successfully connected to hidden network"
   fi
 

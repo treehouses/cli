@@ -29,13 +29,13 @@ function feedback {
 }
 
 function feedback_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") feedback <message>"
-  echo ""
+  echo
   echo "Shares feedback with the developers"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") feedback \"Hi, you are very awesome\""
   echo "      Gives some feedback that the developers will read :)"
-  echo ""
+  echo
 }

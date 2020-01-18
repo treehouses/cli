@@ -67,21 +67,21 @@ function reboots {
 }
 
 function reboots_help {
-  echo ""
+  echo
   echo "  Usage: $(basename "$0") reboots <now|in|cron|daily|weekly|monthly>"
-  echo ""
+  echo
   echo "  Reboots system at selected time and removes it if reboot task already active"
-  echo ""
+  echo
   echo "  Example:"
   echo "  $(basename "$0") reboots daily"
   echo "  System will reboot daily at 00:00"
-  echo ""
+  echo
   echo "  $(basename "$0") reboots in 120"
   echo "  System will reboot in 120 seconds. ctrl+c to cancel."
-  echo ""
+  echo
   echo "  $(basename "$0") reboots cron \"0 * * * *\""
   echo "  Rebooting with frequency of \"0 * * * *\" added"
-  echo ""
+  echo
   echo "  Set frequency: * * * * *"
   echo "                 │ │ │ │ │"
   echo "                 │ │ │ │ └── day of the week    (* | #/# | 0 - 6 or Sun to Sat)"
@@ -89,5 +89,5 @@ function reboots_help {
   echo "                 │ │ └────── day of the month   (* | #/# | 1 - 31)"
   echo "                 │ └──────── hour               (* | #/# | 0 - 23)"
   echo "                 └────────── minute             (* | #/# | 0 - 59)"
-  echo ""
+  echo
 }

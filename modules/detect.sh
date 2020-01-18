@@ -16,12 +16,13 @@ function detect {
 
 
 function detect_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") detect"
-  echo ""
+  echo
   echo "Detects and outputs the hardware info"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") detect"
   echo "      Prints the hardware info"
+  echo
 }

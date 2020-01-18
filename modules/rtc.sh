@@ -78,19 +78,19 @@ function rtc {
 }
 
 function rtc_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") rtc <on|off> [ds3231|rasclock]"
-  echo ""
+  echo
   echo "Enables or disables the rtc clock"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") rtc off"
   echo "      Disables the rtc clock."
-  echo ""
+  echo
   echo "  $(basename "$0") rtc on rasclock"
   echo "      Set ups the system to make the 'rasclock' clock work."
-  echo ""
+  echo
   echo "  $(basename "$0") rtc on ds3231"
   echo "      Set ups the system to make the 'ds3231' clock work."
-  echo ""
+  echo
 }

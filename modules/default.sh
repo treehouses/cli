@@ -77,27 +77,27 @@ function default_notice {
 
 
 function default_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") default [network]"
-  echo ""
+  echo
   echo "Resets the raspberry pi to default."
   echo "You can also just default the network by specifying it."
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") default"
   echo "      This will allow you to return back to the original configuration for all the services and settings which were set for the image when it was first installed."
   echo "      This will not delete any new files you created."
-  echo ""
+  echo
   echo "  $(basename "$0") default network"
   echo "      This will return the network back to the original configuration of when installed."
   echo "      This will not delete any new files you created."
-  echo ""
+  echo
   echo "  $(basename "$0") default tunnel"
   echo "      This will return the tunnel back to the original configuration of when installed."
   echo "      This will not delete any new files you created."
-  echo ""
+  echo
   echo "  $(basename "$0") default notice"
   echo "      This will return the message back to its original configuration of when installed."
   echo "      This will not delete any new files you created."
-  echo ""
+  echo
 }

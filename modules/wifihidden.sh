@@ -68,16 +68,16 @@ function wifihidden {
 }
 
 function wifihidden_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") wifihidden <ESSID> [password]"
-  echo ""
+  echo
   echo "Connects to a hidden wifi network"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") wifihidden home homewifipassword"
   echo "      Connects to a hidden wifi network named 'home' with password 'homewifipassword'."
-  echo ""
+  echo
   echo "  $(basename "$0") wifihidden yourwifiname"
   echo "      Connects to a hidden open wifi network named 'yourwifiname'."
-  echo ""
+  echo
 }

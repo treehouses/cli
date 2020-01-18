@@ -69,11 +69,11 @@ function discover {
 
 
 function discover_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") discover <rpi|scan|hostinterface|ping|ports ip|ping|ports[ipaddress|url]>"
-  echo ""
+  echo
   echo "Scans the network provdied and shows the open ports. Can scan for all raspberry pis on the network as well."
-  echo ""
+  echo
   echo "Example:"
   echo " $(basename "$0") discover rpi"
   echo "    Detects raspberry pis on the network."
@@ -89,5 +89,5 @@ function discover_help {
   echo "    Displays open ports."
   echo " $(basename "$0") discover mac b8:29:eb:9f:42:8b "
   echo "    find the ip address of mac address."
-  echo ""
+  echo
 }

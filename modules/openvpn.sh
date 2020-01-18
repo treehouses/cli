@@ -120,11 +120,11 @@ function openvpn {
 
 
 function openvpn_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") openvpn [use|show|delete|start|stop|load]"
-  echo ""
+  echo
   echo "Helps setting up an openvpn client"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") openvpn                        => shows current status"
   echo "  $(basename "$0") openvpn use <file> [password]  => copies the opvn file to the right place"
@@ -135,5 +135,5 @@ function openvpn_help {
   echo "  $(basename "$0") openvpn load <url> [password]  => downloads the cert from a server and uses it"
   echo "  $(basename "$0") openvpn notice <on|off|add|delete|list> [api_url]"
   echo "    Enables or disables the propagation of the openvpn ip / status to gitter"
-  echo ""
+  echo
 }

@@ -14,6 +14,23 @@ function remote {
         echo ${results}
     elif [ "$option" = "upgrade" ]; then
         upgrade --check
+    elif [ "$option" = "services" ]; then
+        if [ "$2" = "available" ]; then
+            results="Available: "
+            results+="$(treehouses services available)"
+
+            echo ${results}
+        elif [ "$2" = "installed" ]; then
+            results="Installed: "
+            results+="$(treehouses services installed)"
+
+            echo ${results}
+        elif [ "$2" = "running" ]; then
+            results="Running: "
+            results+="$(treehouses services running)"
+
+            echo ${results}
+        fi
     else
         echo "unknown command option"
         echo "usage: $(basename "$0") remote [status | upgrade]"

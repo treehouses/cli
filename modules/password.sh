@@ -1,11 +1,15 @@
 #!/bin/bash
 
-function disable_ssh{
-	
+function disable_pass {
+  password -l $1 && echo -e "Sucess: password login of  user $1 is locked, system is only accessed via ssh" 
 }
 function password () {
-  echo "pi:$1" | chpasswd
-  echo "Success: the password has been changed"
+  if [[ -z "$1" ]];then
+    disable_pass()
+  else 
+    echo "pi:$1" | chpasswd
+    echo "Success: the password has been changed"
+  fi 
 }
 
 function password_help () {
@@ -15,6 +19,8 @@ function password_help () {
   echo "Changes the password for 'pi' user. If the password is left empty, the password is disabled during ssh login session"
   echo ""
   echo "Example:"
+  echo "  $(basename "$0") "
+  echo "      disable password login"
   echo "  $(basename "$0") password ABC"
   echo "      Sets the password for 'pi' user to 'ABC'."
   echo ""

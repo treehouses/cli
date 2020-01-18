@@ -3,7 +3,7 @@
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 CONFIGFOLDER=~/treehouses/
-CONFIGFILE="$CONFIGFOLDER.treehouses"
+CONFIGFILE="$CONFIGFOLDER".treehouses
 
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
@@ -55,7 +55,9 @@ source "$SCRIPTFOLDER/modules/wifistatus.sh"
 source "$SCRIPTFOLDER/modules/clone.sh"
 source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
-source "$SCRIPTFOLDER/modules/cron.sh"
+source "$SCRIPTFOLDER/modules/cron.sh"CONFIGFOLDER="$HOME"/treehouses/
+CONFIGFILE="$CONFIGFOLDER".treehouses
+
 source "$SCRIPTFOLDER/modules/discover.sh"
 source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"

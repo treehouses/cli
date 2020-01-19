@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function disable_pass {
-  passwd -l $1 && echo -e "Sucess: password login of  user $1 is locked, system is only accessed via ssh" 
+  passwd -l $1 || echo -e "Sucess: password login of  user $1 is locked, system is only accessed via ssh" 
 }
 
 function password () {

@@ -381,6 +381,8 @@ function services_help {
   echo "  autorun                     outputs true if the service is set to autorun or false otherwise"
   echo "  autorun [true | false]      sets the service autorun to true | false"
   echo "  ps                          outputs the containers related to the service"
+  echo "  url [local | tor]           outputs the local | tor address for the service"
+  echo "  <service> port              outputs the port number for the service"
   echo
   echo "examples:"
   echo

@@ -72,6 +72,8 @@ else
   touch "$CONFIGFILE"
 fi
 
+echo "$0" "$*" >> /var/log/treehouses.log
+
 case $1 in
   expandfs)
     checkrpi

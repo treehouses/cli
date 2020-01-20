@@ -121,6 +121,12 @@ function services {
               echo "privatebin built and started"
               check_tor "8083"
               ;;
+            portainer)
+              docker volume create portainer_data
+              docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+              echo "portainer built and started"
+              check_tor "9000"
+              ;;
             *)
               echo "unknown service"
               ;;
@@ -138,10 +144,10 @@ function services {
                 echo "${service_name} stopped and removed"
               fi
               ;;
-            nextcloud)
-              docker stop nextcloud
-              docker rm nextcloud
-              echo "nextcloud stopped and removed"
+            nextcloud|portainer)
+              docker stop $service_name
+              docker rm $service_name
+              echo "${service_name} stopped and removed"
               ;;
             *)
               echo "unknown service"
@@ -160,9 +166,9 @@ function services {
                 echo "service not found"
               fi
               ;;
-            nextcloud)
-              docker start nextcloud
-              echo "nextcloud started"
+            nextcloud|portainer)
+              docker start $service_name
+              echo "${service_name} started"
               ;;
             *)
               echo "unknown service"
@@ -181,9 +187,9 @@ function services {
                 echo "service not found"
               fi
               ;;
-            nextcloud)
-              docker stop nextcloud
-              echo "nextcloud stopped"
+            nextcloud|portainer)
+              docker stop $service_name
+              echo "${service_name} stopped"
               ;;
             *)
               echo "unknown service"
@@ -358,6 +364,7 @@ function services_help {
   echo "  Pi-hole"
   # echo "  Moodle"
   echo "  PrivateBin"
+  echo "  Portainer"
   echo
   echo "commands:"
   echo "  available                   lists all available services"

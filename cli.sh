@@ -72,6 +72,11 @@ else
   touch "$CONFIGFILE"
 fi
 
+if [[ ! -d /var/log/treehouses.log ]]; then
+  sudo touch /var/log/treehouses.log
+  sudo chmod ugo+rw /var/log/treehouses.log
+fi
+
 echo "$0" "$*" >> /var/log/treehouses.log
 
 case $1 in

@@ -261,6 +261,33 @@ function services {
           docker ps -a | grep $service_name
           ;;
 
+        # local and tor url
+        url)
+          if [ "$command_option" = "local" ]; then
+            local_url=$(hostname -I | head -n1 | cut -d " " -f1)
+            local_url+=":"
+            local_url+=$(get_port $service_name)
+
+            if [ "$service_name" = "pihole" ]; then
+              local_url+="/admin"
+            fi
+
+            echo $local_url
+          elif [ "$command_option" = "tor" ]; then
+            tor_url=$(tor)
+            tor_url+=":"
+            tor_url+=$(get_port $service_name)
+
+            if [ "$service_name" = "pihole" ]; then
+              tor_url+="/admin"
+            fi
+
+            echo $tor_url
+          else
+            echo "unkown command"
+          fi
+          ;;
+
         *)
           echo "unknown command"
           ;;
@@ -286,6 +313,35 @@ function check_tor {
       treehouses tor add $port
     fi
   fi
+}
+
+# get port number for specified service
+function get_port {
+  service_name="$1"
+
+  case "$service_name" in
+    planet)
+      echo "80"
+      ;;
+    kolibri)
+      echo "8080"
+      ;;
+    nextcloud)
+      echo "8081"
+      ;;
+    pihole)
+      echo "8053"
+      ;;
+    # moodle)
+    #   echo "8082"
+    #   ;;
+    privatebin)
+      echo "8083"
+      ;;
+    *)
+      echo "unknown service"
+      ;;
+  esac
 }
 
 function services_help {

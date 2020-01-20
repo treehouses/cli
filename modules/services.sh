@@ -287,6 +287,10 @@ function services {
           fi
           ;;
 
+        port)
+          get_port $service_name
+          ;;
+
         *)
           echo "unknown command"
           ;;

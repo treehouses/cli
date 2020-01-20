@@ -66,6 +66,13 @@ function checkwrpi {
   exit 1
 }
 
+function checkwifi {
+  if iwconfig wlan0 | grep -q "ESSID:off/any"; then
+    echo "Wifi not connected. Check SSID and password and try again."
+    exit 1
+  fi
+}
+
 function restart_hotspot {
   restart_service dhcpcd || true
   ifdown wlan0 || true

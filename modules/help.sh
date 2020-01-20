@@ -65,6 +65,7 @@ function help_default {
   echo "        [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)"
   echo "   usb [on|off]                              turns usb ports on or off"
   echo "   remote [status|upgrade|services]          helps with treehouses remote android app"
+  echo "   log <on|off>                              turn logging to file on or off (default to /home/pi/.treehouses/logs)"
   echo
 }
 

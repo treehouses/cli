@@ -7,7 +7,7 @@ _treehouses_complete()
   # Valid top-level completions
   commands="ap apchannel bluetooth bluetoothid bootoption bridge burn button camera clone \
             container coralenv cron default detect detectrpi discover ethernet expandfs \
-            feedback help image internet led locale memory networkmode ntp openvpn password \
+            feedback help image internet led locale log memory networkmode ntp openvpn password \
             rebootneeded reboots rename restore rtc services speedtest ssh sshkey sshtunnel \
             staticwifi temperature timezone tor upgrade usb verbose version vnc wifi wificountry wifihidden wifistatus"
   ap_cmdas="local internet"
@@ -22,6 +22,7 @@ _treehouses_complete()
   discover_cmds="rpi scan interface ping ports mac"
   help_cmds=$commands
   led_cmds="green red dance thanksgiving christmas newyear carneval"
+  log_cmds="on off"
   memory_cmds="total used free"
   networkmode_cmds="info"
   ntp_cmds="local internet"
@@ -127,6 +128,9 @@ _treehouses_complete()
         ;;
       "verbose")
         COMPREPLY=( $(compgen -W "$verbose_cmds" -- $cur) )
+        ;;
+	  "log")
+        COMPREPLY=( $(compgen -W "$log_cmds" -- $cur) )
         ;;
       "usb")
         COMPREPLY=( $(compgen -W "$usb_cmds" -- $cur) )

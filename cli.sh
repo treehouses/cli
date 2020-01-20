@@ -4,7 +4,9 @@ SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 CONFIGFOLDER=~/.treehouses/
 CONFIGFILE="$CONFIGFOLDER"config
+LOGFOLDER="$CONFIGFOLDER"/logs/
 
+source "$SCRIPTFOLDER/modules/log.sh"
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
@@ -62,6 +64,7 @@ source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 
 LOGFILE=/dev/null
+LOG=ON
 if [[ ! -d "$CONFIGFOLDER" ]]; then
   mkdir "$CONFIGFOLDER"
 fi
@@ -306,6 +309,10 @@ case $1 in
     checkroot
     checkrpi
     remote "$2" "$3"
+    ;;
+  log)
+    checkroot
+    log "$2"
     ;;
   help)
     help "$2"

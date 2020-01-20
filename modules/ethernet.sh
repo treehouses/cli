@@ -13,7 +13,7 @@ function ethernet {
   sed -i "s/NETMASK/$2/g" /etc/network/interfaces.d/eth0
   sed -i "s/GATEWAY/$3/g" /etc/network/interfaces.d/eth0
   sed -i "s/DNS/$4/g" /etc/network/interfaces.d/eth0
-  restart_ethernet >/dev/null 2>/dev/null
+  restart_ethernet >"$LOGFILE" 2>"$LOGFILE"
 
   echo "static ethernet" > /etc/network/mode
 
@@ -21,13 +21,13 @@ function ethernet {
 }
 
 function ethernet_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") ethernet <ip> <mask> <gateway> <dns>"
-  echo ""
+  echo
   echo "Configures ethernet interface (eth0) to use a static ip address"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") ethernet 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9"
   echo "      Sets the ethernet interface IP address to 192.168.1.101, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
-  echo ""
+  echo
 }

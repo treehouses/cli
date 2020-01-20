@@ -9,14 +9,14 @@ function internet {
 }
 
 function internet_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") internet"
-  echo ""
+  echo
   echo "Outputs true if the rpi can reach internet, or false if it doesn't"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") internet"
   echo "      the rpi has access to internet -> output: true"
   echo "      the rpi doesn't have access to internet -> output: false"
-  echo ""
+  echo
 }

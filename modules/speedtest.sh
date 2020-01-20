@@ -5,16 +5,16 @@ function speedtest {
   /usr/bin/speedtest "$@"
 }
 function speedtest_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") speedtest"
-  echo ""
+  echo
   echo "tests internet download and upload speed"
-  echo ""
+  echo
   echo "Examples:"
   echo "  $(basename "$0") speedtest"
   echo "      Outputs the speed of internet download and upload speed"
-  echo ""
+  echo
   echo "  $(basename "$0") speedtest -h"
   echo "      Outputs additional speedtest options built into speedtest"
-  echo ""
+  echo
 }

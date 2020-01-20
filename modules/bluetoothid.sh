@@ -26,16 +26,16 @@ function bluetoothid () {
 }
 
 function bluetoothid_help () {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") bluetoothid [number]"
-  echo ""
+  echo
   echo "Displays the bluetooth network name with the 4 random digits attached."
   echo "Optionally displays Bluetooth ID individually with the use of argument [number]."
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") bluetoothid"
   echo "      treehouses-9012"
   echo "  $(basename "$0") bluetoothid number"
   echo "      9012"
-  echo ""
+  echo
 }

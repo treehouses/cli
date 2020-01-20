@@ -49,7 +49,7 @@ function wifihidden {
       echo "  key_mgmt=NONE"
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
-    restart_wifi >/dev/null 2>/dev/null
+    restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     echo "connected to hidden open network"
   else
     {
@@ -60,7 +60,7 @@ function wifihidden {
       echo "  psk=\"$wifipassword\""
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
-    restart_wifi >/dev/null 2>/dev/null
+    restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     echo "successfully connected to hidden network"
   fi
 
@@ -68,16 +68,16 @@ function wifihidden {
 }
 
 function wifihidden_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") wifihidden <ESSID> [password]"
-  echo ""
+  echo
   echo "Connects to a hidden wifi network"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") wifihidden home homewifipassword"
   echo "      Connects to a hidden wifi network named 'home' with password 'homewifipassword'."
-  echo ""
+  echo
   echo "  $(basename "$0") wifihidden yourwifiname"
   echo "      Connects to a hidden open wifi network named 'yourwifiname'."
-  echo ""
+  echo
 }

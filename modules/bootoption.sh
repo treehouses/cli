@@ -3,7 +3,7 @@
 function bootoption {
   option="$1"
   if [ "$option" = "console" ]; then
-    systemctl set-default multi-user.target > /dev/null
+    systemctl set-default multi-user.target > "$LOGFILE"
     ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
     if [ -f "/etc/systemd/system/getty@tty1.service.d/autologin.conf" ]; then
       rm /etc/systemd/system/getty@tty1.service.d/autologin.conf
@@ -11,7 +11,7 @@ function bootoption {
     reboot_needed
     echo "OK: A reboot is required to see the changes"
   elif [ "$option" = "console autologin" ]; then
-    systemctl set-default multi-user.target > /dev/null
+    systemctl set-default multi-user.target > "$LOGFILE"
     ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
     cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf << EOF
 [Service]
@@ -58,21 +58,22 @@ EOF
 
 
 function bootoption_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") bootoption <console|console autologin|desktop|desktop autologin>"
-  echo ""
+  echo
   echo "Changes the boot mode, to console or desktop"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") bootoption console"
   echo "      The rpi will boot to console by default"
-  echo ""
+  echo
   echo "  $(basename "$0") bootoption console autologin"
   echo "      The rpi will boot to console by default and autologin in the user that run the command"
-  echo ""
+  echo
   echo "  $(basename "$0") bootoption desktop"
   echo "      The rpi will boot to desktop by default"
-  echo ""
+  echo
   echo "  $(basename "$0") bootoption desktop autologin"
   echo "      The rpi will boot to desktop by default and autologin in the user that run the command"
+  echo
 }

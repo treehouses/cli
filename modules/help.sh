@@ -4,6 +4,7 @@ function help_default {
   echo "Usage: $(basename "$0")"
   echo
   echo "   help [command]                            gives you a more detailed info about the command or will output this"
+  echo "   verbose <on|off>                          makes each command print more output (might not work with treehouses remote)"
   echo "   expandfs                                  expands the partition of the RPI image to the maximum of the SDcard"
   echo "   rename <hostname>                         changes hostname"
   echo "   password <password>                       changes the password for 'pi' user"
@@ -65,6 +66,7 @@ function help_default {
   echo "   cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs"
   echo "        [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)"
   echo "   usb [on|off]                              turns usb ports on or off"
+  echo "   remote [status|upgrade|services]          helps with treehouses remote android app"
   echo
 }
 

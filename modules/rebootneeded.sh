@@ -10,13 +10,13 @@ function rebootneeded {
 }
 
 function rebootneeded_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") rebootneeded"
-  echo ""
+  echo
   echo "Shows if a reboot is required to apply the configuration changes done by this command"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") rebootneeded"
   echo "      output: true"
-  echo ""
+  echo
 }

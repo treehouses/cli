@@ -6,8 +6,8 @@ function led {
 
   gLed="/sys/class/leds/led0"
   rLed="/sys/class/leds/led1"
-  currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>/dev/null < "$gLed/trigger")
-  currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>/dev/null < "$rLed/trigger")
+  currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$gLed/trigger")
+  currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$rLed/trigger")
   green="${GREEN}green led${NC}"
   red="${RED}red led${NC}"
 
@@ -21,7 +21,7 @@ function led {
     checkroot
     echo "leds are set to dance mode."
     echo "Look at your RPi leds, green led will be in this pattern: 1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
-    dance > /dev/null
+    dance > "$LOGFILE"
   elif [ "$color" = "thanksgiving" ]; then
     checkroot
     echo "leds are set to thanksgiving mode."
@@ -31,13 +31,13 @@ function led {
     echo "Green LED: 0.5 on; 0.25 off; 0.25 on"
     echo "Red LED: 0.5 on"
     echo "Both LED: flash 2 times"
-    thanksgiving > /dev/null
+    thanksgiving > "$LOGFILE"
   elif [ "$color" = "christmas" ]; then
     checkroot
     echo "leds are set to christmas mode."
     echo "Look at your RPi leds, both leds will be in this pattern... "
     echo "Both LED: 1 sec on; 8 blink; 1 on"
-    christmas > /dev/null
+    christmas > "$LOGFILE"
   elif [ "$color" = "newyear" ]; then
     checkroot
     echo "leds are set to newyear mode."
@@ -46,7 +46,13 @@ function led {
     echo "Green LED: 0.5 on; 0.5 off"
     echo "Red LED: 0.5 on; 0.5 off"
     echo "Both LED: flash 2 times"
-    newyear > /dev/null
+    newyear > "$LOGFILE"
+  elif [ "$color" = "carnival" ]; then
+    checkroot
+    echo "leds are set to carnival mode."
+    echo "Look at your RPi leds, both leds will be in this pattern... "
+    echo "Both LED: 2 sec on; 6 blink; 4 on"
+    carnevals > "$LOGFILE"    
   else
     if [ -z "$color" ]; then
       if [ ! -z "$currentGreen" ]; then
@@ -74,7 +80,7 @@ function led {
   else
     checkroot
 
-    if ! grep -q "$trigger" "$led/trigger" 2>/dev/null; then
+    if ! grep -q "$trigger" "$led/trigger" 2>"$LOGFILE"; then
         echo -e "${RED}Error:${NC} unkown led mode '$trigger'"
         exit 1
     fi
@@ -216,10 +222,30 @@ function newyear {
   led red "$current_red"
 }
 
+function carnival {
+  current_red=$(led "red")
+  current_green=$(led "green")
+
+  led green none
+  led red none
+  sleep 2
+  
+  led red timer
+  led green timer
+  sleep 6
+
+  led green none
+  led red none
+  sleep 4
+
+  led red "$current_red"
+  led green "$current_green"  
+}
+
 function led_help {
   echo
   echo "Usage: $(basename "$0") led [green|red] [mode]"
-  echo "       $(basename "$0") led [dance|thanksgiving|christmas|newyear]"
+  echo "       $(basename "$0") led [dance|thanksgiving|christmas|newyear|carnival]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -275,4 +301,7 @@ function led_help {
   echo "  $(basename "$0") led christmas"
   echo "      This will set the mode of the led to christmas"
   echo 
+  echo "  $(basename "$0") led carnival"
+  echo "     This will set mode of the led to carnival"
+  echo
 }

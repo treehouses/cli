@@ -63,12 +63,13 @@ function detectrpi {
 
 
 function detectrpi_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") detectrpi"
-  echo ""
+  echo
   echo "Detects the hardware version"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") detectrpi"
   echo "      Prints the model number"
+  echo
 }

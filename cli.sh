@@ -2,6 +2,8 @@
 
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
+CONFIGFOLDER=~/.treehouses/
+CONFIGFILE="$CONFIGFOLDER"config
 
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
@@ -45,6 +47,7 @@ source "$SCRIPTFOLDER/modules/timezone.sh"
 source "$SCRIPTFOLDER/modules/tor.sh"
 source "$SCRIPTFOLDER/modules/upgrade.sh"
 source "$SCRIPTFOLDER/modules/version.sh"
+source "$SCRIPTFOLDER/modules/verbose.sh"
 source "$SCRIPTFOLDER/modules/vnc.sh"
 source "$SCRIPTFOLDER/modules/wifi.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
@@ -57,6 +60,18 @@ source "$SCRIPTFOLDER/modules/cron.sh"
 source "$SCRIPTFOLDER/modules/discover.sh"
 source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
+source "$SCRIPTFOLDER/modules/remote.sh"
+
+LOGFILE=/dev/null
+if [[ ! -d "$CONFIGFOLDER" ]]; then
+  mkdir "$CONFIGFOLDER"
+fi
+if [[ -s "$CONFIGFILE" ]]
+then
+  source "$CONFIGFILE"
+else
+  touch "$CONFIGFILE"
+fi
 
 case $1 in
   expandfs)
@@ -150,6 +165,10 @@ case $1 in
   ssh)
     checkroot
     ssh "$2"
+    ;;
+  verbose)
+    checkroot
+    verbose "$2"
     ;;
   vnc)
     checkroot
@@ -289,6 +308,11 @@ case $1 in
   usb)
     checkroot
     usb "$2"
+    ;;
+  remote)
+    checkroot
+    checkrpi
+    remote "$2" "$3"
     ;;
   help)
     help "$2"

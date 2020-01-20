@@ -12,6 +12,7 @@ Usage: treehouses [command] ...
 Commands:
 
 help [command]                            gives you a more detailed info about the command or will output this
+verbose <on|off>                          makes each command print more output (might not work with treehouses remote)
 expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
 rename <hostname>                         changes hostname
 password <password>                       changes the password for 'pi' user
@@ -73,5 +74,6 @@ camera [on|off|capture]                   enables camera, disables camera, captu
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off
+remote [status|upgrade|services]          helps with treehouses remote android app
 ```
 

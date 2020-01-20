@@ -7,36 +7,66 @@ function services {
 
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
-    if [ "$command" = "string" ]; then
-      echo $(
-        while IFS= read -r -d '' service
-        do
-          basename "$service"
-        done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
-      )
-    else
+    if [ "$command" = "full" ]; then
       while IFS= read -r -d '' service
       do
         service=$(basename "$service")
         find_available_services "$service"
       done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
+    elif [ -z "$command" ]; then
+      results=""
+
+      while IFS= read -r -d '' service
+      do
+        results+=$(basename "$service")
+        results+=" "
+      done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
+
+      echo ${results}
     fi
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
-    if [ "$command" = "string" ]; then
-        installedstring=$(docker ps -a --format '{{.Names}}')
-        echo ${installedstring%%_*}
-    else
+    if [ "$command" = "full" ]; then
       docker ps -a
+    elif [ -z "$command" ]; then
+      installed=$(docker ps -a --format '{{.Names}}')
+      array=($installed)
+      results=""
+
+      for i in "${array[@]}"
+      do
+        results+="${i%%_*}"
+        results+=" "
+      done
+
+      echo ${results} | tr ' ' '\n' | uniq | xargs
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
-    if [ "$command" = "string" ]; then
-        runningstring=$(docker ps --format '{{.Names}}')
-        echo ${runningstring%%_*}
-    else
+    if [ "$command" = "full" ]; then
       docker ps
+    elif [ -z "$command" ]; then
+      running=$(docker ps --format '{{.Names}}')
+      array=($running)
+      results=""
+
+      for i in "${array[@]}"
+      do
+        results+="${i%%_*}"
+        results+=" "
+      done
+
+      echo ${results} | tr ' ' '\n' | uniq | xargs
     fi
+  # list all ports used by services
+  elif [ "$service_name" = "ports" ]; then
+    echo "Planet                port 80"
+    echo "Kolibri               port 8080"
+    echo "Nextcloud             port 8081"
+    echo "Pi-hole               port 8053"
+    # echo "Moodle                port 8082"
+    echo "PrivateBin            port 8083"
+    echo "Portainer             port 9000"
   else
     if [ -z "$command" ]; then
       echo "no command given"
@@ -47,29 +77,26 @@ function services {
         up)
           case "$service_name" in
             planet)
-              echo "adding port 80..."
-              treehouses tor add 80
               if [ -f /srv/planet/pwd/credentials.yml ]; then
                 docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d
               else
                 docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
               fi
               echo "planet built and started"
+              check_tor "80"
               ;;
             kolibri)
-              echo "adding port 8080..."
-              treehouses tor add 8080
               bash $TEMPLATES/services/kolibri/kolibri_yml.sh
               echo "yml file created"
 
               docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
               echo "kolibri built and started"
+              check_tor "8080"
               ;;
             nextcloud)
-              echo "adding port 8081..."
-              treehouses tor add 8081
               docker run --name nextcloud -d -p 8081:80 nextcloud
               echo "nextcloud built and started"
+              check_tor "8081"
               ;;
             pihole)
               bash $TEMPLATES/services/pihole/pihole_yml.sh
@@ -78,24 +105,29 @@ function services {
               service dnsmasq stop
               docker-compose -f /srv/pihole/pihole.yml -p pihole up -d
               echo "pihole built and started"
+              check_tor "8053"
               ;;
             moodle)
-              echo "adding port 8082..."
-              treehouses tor add 8082
               bash $TEMPLATES/services/moodle/moodle_yml.sh
               echo "yml file created"
 
               docker-compose -f /srv/moodle/moodle.yml -p moodle up -d
               echo "moodle built and started"
+              check_tor "8082"
               ;;
             privatebin)
-              echo "adding port 8083..."
-              treehouses tor add 8083
               bash $TEMPLATES/services/privatebin/privatebin_yml.sh
               echo "yml file created"
 
               docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d
               echo "privatebin built and started"
+              check_tor "8083"
+              ;;
+            portainer)
+              docker volume create portainer_data
+              docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+              echo "portainer built and started"
+              check_tor "9000"
               ;;
             *)
               echo "unknown service"
@@ -106,50 +138,18 @@ function services {
         # stop and remove container
         down)
           case "$service_name" in
-            planet)
-              if [ ! -e /srv/planet/planet.yml ]; then
-                echo "yml file doesn't exist"
+            planet|kolibri|pihole|moodle|privatebin)
+              if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+                echo "yml file doesn't exit"
               else
-                docker-compose -f /srv/planet/planet.yml down
-                echo "planet stopped and removed"
+                docker-compose -f /srv/${service_name}/${service_name}.yml down
+                echo "${service_name} stopped and removed"
               fi
               ;;
-            kolibri)
-              if [ ! -e /srv/kolibri/kolibri.yml ]; then
-                echo "yml file doesn't exist"
-              else
-                docker-compose -f /srv/kolibri/kolibri.yml down
-                echo "kolibri stopped and removed"
-              fi
-              ;;
-            nextcloud)
-              docker stop nextcloud
-              docker rm nextcloud
-              echo "nextcloud stopped and removed"
-              ;;
-            pihole)
-              if [ ! -e /srv/pihole/pihole.yml ]; then
-                echo "yml file doesn't exist"
-              else
-                docker-compose -f /srv/pihole/pihole.yml down
-                echo "pihole stopped and removed"
-              fi
-              ;;
-            moodle)
-              if [ ! -e /srv/moodle/moodle.yml ]; then
-                echo "yml file doesn't exist"
-              else
-                docker-compose -f /srv/moodle/moodle.yml down
-                echo "moodle stopped and removed"
-              fi
-              ;;
-            privatebin)
-              if [ ! -e /srv/privatebin/privatebin.yml ]; then
-                echo "yml file doesn't exist"
-              else
-                docker-compose -f /srv/privatebin/privatebin.yml down
-                echo "privatebin stopped and removed"
-              fi
+            nextcloud|portainer)
+              docker stop $service_name
+              docker rm $service_name
+              echo "${service_name} stopped and removed"
               ;;
             *)
               echo "unknown service"
@@ -160,49 +160,17 @@ function services {
         # start a stopped container
         start)
           case "$service_name" in
-            planet)
-              if docker ps -a | grep -q planet; then
-                docker-compose -f /srv/planet/planet.yml start
-                echo "planet started"
+            planet|kolibri|pihole|moodle|privatebin)
+              if docker ps -a | grep -q $service_name; then
+                docker-compose -f /srv/${service_name}/${service_name}.yml start
+                echo "${service_name} started"
               else
                 echo "service not found"
               fi
               ;;
-            kolibri)
-              if docker ps -a | grep -q kolibri; then
-                docker-compose -f /srv/kolibri/kolibri.yml start
-                echo "kolibri started"
-              else
-                echo "service not found"
-              fi
-              ;;
-            nextcloud)
-              docker start nextcloud
-              echo "nextcloud started"
-              ;;
-            pihole)
-              if docker ps -a | grep -q pihole; then
-                docker-compose -f /srv/pihole/pihole.yml start
-                echo "pihole started"
-              else
-                echo "service not found"
-              fi
-              ;;
-            moodle)
-              if docker ps -a | grep -q moodle; then
-                docker-compose -f /srv/moodle/moodle.yml start
-                echo "moodle started"
-              else
-                echo "service not found"
-              fi
-              ;;
-            privatebin)
-              if docker ps -a | grep -q privatebin; then
-                docker-compose -f /srv/privatebin/privatebin.yml start
-                echo "privatebin started"
-              else
-                echo "service not found"
-              fi
+            nextcloud|portainer)
+              docker start $service_name
+              echo "${service_name} started"
               ;;
             *)
               echo "unknown service"
@@ -213,49 +181,17 @@ function services {
         # stop a running container
         stop)
           case "$service_name" in
-            planet)
-              if docker ps -a | grep -q planet; then
-                docker-compose -f /srv/planet/planet.yml stop
-                echo "planet stopped"
+            planet|kolibri|pihole|moodle|privatebin)
+              if docker ps -a | grep -q $service_name; then
+                docker-compose -f /srv/${service_name}/${service_name}.yml stop
+                echo "${service_name} stopped"
               else
                 echo "service not found"
               fi
               ;;
-            kolibri)
-              if docker ps -a | grep -q kolibri; then
-                docker-compose -f /srv/kolibri/kolibri.yml stop
-                echo "kolibri stopped"
-              else
-                echo "service not found"
-              fi
-              ;;
-            nextcloud)
-              docker stop nextcloud
-              echo "nextcloud stopped"
-              ;;
-            pihole)
-              if docker ps -a | grep -q pihole; then
-                docker-compose -f /srv/pihole/pihole.yml stop
-                echo "pihole stopped"
-              else
-                echo "service not found"
-              fi
-              ;;
-            moodle)
-              if docker ps -a | grep -q moodle; then
-                docker-compose -f /srv/moodle/moodle.yml stop
-                echo "moodle stopped"
-              else
-                echo "service not found"
-              fi
-              ;;
-            privatebin)
-              if docker ps -a | grep -q privatebin; then
-                docker-compose -f /srv/privatebin/privatebin.yml stop
-                echo "privatebin stopped"
-              else
-                echo "service not found"
-              fi
+            nextcloud|portainer)
+              docker stop $service_name
+              echo "${service_name} stopped"
               ;;
             *)
               echo "unknown service"
@@ -309,12 +245,10 @@ function services {
               sed -i "/${service_name}_autorun=false/c\\${service_name}_autorun=true" /boot/autorun
             fi
 
-
             # # if yml file doesn't exist, create it
             # if [ -e /srv/${service_name}/${service_name}.yml ]; then
             #   bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
             # fi
-
             
             echo "service autorun set to true"
           # stop service from autostarting
@@ -349,33 +283,56 @@ function find_available_services {
   echo "$service [$available_formats]"
 }
 
+# tor status and port check
+function check_tor {
+  port="$1"
+  if [ "$(treehouses tor status)" = "active" ]; then
+    echo "tor active"
+    if ! treehouses tor list | grep -w $port; then
+      echo "adding port ${port}"
+      treehouses tor add $port
+    fi
+  fi
+}
+
 function services_help {
-  echo ""
-  echo "Usage: $(basename "$0") services [service_name] [available|installed|running|up|down|start|stop|autorun|ps]"
-  echo ""
-  echo "Executes the given command on the specified service"
-  echo ""
-  echo "Example:"
-  echo ""
-  echo "  $(basename "$0") services available | installed | running"
-  echo "      Outputs the available | installed | running services"
-  echo ""
+  echo
+  echo "Usage: $(basename "$0") services [available|installed|running|ports|service_name] [up|down|start|stop|autorun|ps]"
+  echo
+  echo "Currently available services:"
+  echo "  Planet"
+  echo "  Kolibri"
+  echo "  Nextcloud"
+  echo "  Pi-hole"
+  # echo "  Moodle"
+  echo "  PrivateBin"
+  echo "  Portainer"
+  echo
+  echo "commands:"
+  echo "  available                   lists all available services"
+  echo "  installed                   lists all installed services"
+  echo "  running                     lists all running services"
+  echo "  ports                       lists all ports used by services"
+  echo "  up                          builds and starts the service"
+  echo "  down                        stops and removes the service"
+  echo "  start                       starts the service"
+  echo "  stop                        stops the service"
+  echo "  autorun                     outputs true if the service is set to autorun or false otherwise"
+  echo "  autorun [true | false]      sets the service autorun to true | false"
+  echo "  ps                          outputs the containers related to the service"
+  echo
+  echo "examples:"
+  echo
+  echo "  $(basename "$0") services available"
+  echo
   echo "  $(basename "$0") services planet up"
-  echo "      Builds and starts the planet service"
-  echo ""
-  echo "  $(basename "$0") services planet down"
-  echo "      Stops and removes the planet service"
-  echo ""
-  echo "  $(basename "$0") services planet start | stop"
-  echo "      Starts | stops the planet service"
-  echo ""
+  echo
+  echo "  $(basename "$0") services planet stop"
+  echo
   echo "  $(basename "$0") services planet autorun"
-  echo "      Outputs true if the planet service is set to autorun or false otherwise"
-  echo ""
-  echo "  $(basename "$0") services planet autorun true | false"
-  echo "      Sets the planet service autorun to true | false"
-  echo ""
+  echo
+  echo "  $(basename "$0") services planet autorun true"
+  echo
   echo "  $(basename "$0") services planet ps"
-  echo "      Outputs the containers related to the planet service"
-  echo ""
+  echo
 }

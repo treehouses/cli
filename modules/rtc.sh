@@ -7,7 +7,7 @@ rtcclockdata["ds3231"]="dtoverlay=i2c-rtc,ds3231"
 function get_current_clock {
   for i in "${rtcclockdata[@]}"
   do
-    if grep -q "$i" "/boot/config.txt" 2>/dev/null; then
+    if grep -q "$i" "/boot/config.txt" 2>"$LOGFILE"; then
       prevClock="$i"
       break
     fi
@@ -52,8 +52,8 @@ function rtc {
       sed -e '/run\/systemd\/system/,+2 s/^#*/#/' -i /lib/udev/hwclock-set
       sed -e '/--systz/ s/^#*/#/' -i /lib/udev/hwclock-set
 
-      apt-get --force-yes -y remove fake-hwclock -qq &> /dev/null
-      update-rc.d -f fake-hwclock remove &> /dev/null
+      apt-get --force-yes -y remove fake-hwclock -qq &> "$LOGFILE"
+      update-rc.d -f fake-hwclock remove &> "$LOGFILE"
 
       reboot_needed
       echo "Success: clock changed. Please reboot"
@@ -66,8 +66,8 @@ function rtc {
 
     cp /lib/udev/hwclock-set.old /lib/udev/hwclock-set
 
-    apt-get -y install fake-hwclock -qq &> /dev/null
-    update-rc.d -f fake-hwclock defaults &> /dev/null
+    apt-get -y install fake-hwclock -qq &> "$LOGFILE"
+    update-rc.d -f fake-hwclock defaults &> "$LOGFILE"
 
     reboot_needed
     echo "Success: clock changed. Please reboot"
@@ -78,19 +78,19 @@ function rtc {
 }
 
 function rtc_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") rtc <on|off> [ds3231|rasclock]"
-  echo ""
+  echo
   echo "Enables or disables the rtc clock"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") rtc off"
   echo "      Disables the rtc clock."
-  echo ""
+  echo
   echo "  $(basename "$0") rtc on rasclock"
   echo "      Set ups the system to make the 'rasclock' clock work."
-  echo ""
+  echo
   echo "  $(basename "$0") rtc on ds3231"
   echo "      Set ups the system to make the 'ds3231' clock work."
-  echo ""
+  echo
 }

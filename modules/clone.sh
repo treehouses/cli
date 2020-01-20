@@ -32,15 +32,16 @@ function clone {
 }
 
 function clone_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") burn [device path]"
-  echo ""
+  echo
   echo "clones your treehouses image to an SDCard"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") clone"
   echo "      Will clone the current system to /dev/sdb (by default)."
-  echo ""
+  echo
   echo "  $(basename "$0") clone /dev/sda"
   echo "      Will clone the current system to /dev/sda"
+  echo
 }

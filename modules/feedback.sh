@@ -21,7 +21,7 @@ function feedback {
     else
       body="{\"text\":\"\`$(hostname)\` \`$ip_address\` \`$(version)\` \`$(detect | sed "s/ /\` \`/1")\`:\\n$message\"}"
     fi
-    curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token"   "$channel" -d  "$body"> /dev/null
+    curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token"   "$channel" -d  "$body"> "$LOGFILE"
     echo "Thanks for the feedback!"
   else
     echo "No feedback was submitted."
@@ -29,13 +29,13 @@ function feedback {
 }
 
 function feedback_help {
-  echo ""
+  echo
   echo "Usage: $(basename "$0") feedback <message>"
-  echo ""
+  echo
   echo "Shares feedback with the developers"
-  echo ""
+  echo
   echo "Example:"
   echo "  $(basename "$0") feedback \"Hi, you are very awesome\""
   echo "      Gives some feedback that the developers will read :)"
-  echo ""
+  echo
 }

@@ -37,9 +37,9 @@ function button {
 
 
 function button_help () {
-  echo ""
+  echo
   echo "Usage: treehouses button <off|bluetooth>"
-  echo ""
+  echo
   echo "Gives the gpio pin 18 an action."
   echo "              Pin 1 Pin2"
   echo "           +3V3 [ ] [ ] +5V"
@@ -63,14 +63,14 @@ function button_help () {
   echo "        GPIO 26 [ ] [ ] GPIO 20 / MOSI"
   echo "            GND [ ] [ ] GPIO 21 / SCLK"
   echo "             Pin 39 Pin 40"
-  echo ""
-  echo ""
+  echo
+  echo
   echo "Examples:"
   echo "  treehouses button off"
   echo "      Disables the action that is run when the GPIO pin 18 is on"
-  echo ""
+  echo
   echo "  treehouses button bluetooth"
   echo "      When the GPIO pin 18 is on the bluetooth will be turned off".
   echo "      Otherwise the bluetooth mode will be changed to hotspot."
-  echo ""
+  echo
 }

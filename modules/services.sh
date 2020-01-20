@@ -347,6 +347,9 @@ function get_port {
     privatebin)
       echo "8083"
       ;;
+    portainer)
+      echo "9000"
+      ;;
     *)
       echo "unknown service"
       ;;

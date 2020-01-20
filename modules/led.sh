@@ -38,12 +38,6 @@ function led {
     echo "Look at your RPi leds, both leds will be in this pattern... "
     echo "Both LED: 1 sec on; 8 blink; 1 on"
     christmas > /dev/null
-  elif [ "$color" = "carnival" ]; then
-    checkroot
-    echo "leds are set to carnival mode."
-    echo "Look at your RPi leds, both leds will be in this pattern... "
-    echo "Both LED: 2 sec on; 6 blink; 4 on"
-    carneval > /dev/null    
   elif [ "$color" = "newyear" ]; then
     checkroot
     echo "leds are set to newyear mode."
@@ -53,6 +47,21 @@ function led {
     echo "Red LED: 0.5 on; 0.5 off"
     echo "Both LED: flash 2 times"
     newyear > /dev/null
+  elif [ "$color" = "valentine" ]; then
+    checkroot
+    echo "leds are set to valentine mode."
+    echo "Look at your RPi leds, both leds will be in this pattern... "
+    echo "Both LED: 0.25 sec off"
+    echo "Green LED: 1.0 on; 0.25 off"
+    echo "Red LED: 1.0 on; 0.25 off"
+    echo "Both LED: flash 3 times"
+    valetine > /dev/null
+  elif [ "$color" = "carnival" ]; then
+    checkroot
+    echo "leds are set to carnival mode."
+    echo "Look at your RPi leds, both leds will be in this pattern... "
+    echo "Both LED: 2 sec on; 6 blink; 4 on"
+    carneval > /dev/null
   else
     if [ -z "$color" ]; then
       if [ ! -z "$currentGreen" ]; then
@@ -150,7 +159,7 @@ function thanksgiving {
 
   set_brightness 1 0
   for i in {0..1}
-  do 
+  do
     set_brightness 0 0 && sleep 0.25
     set_brightness 0 1 && sleep 0.25
   done
@@ -175,7 +184,7 @@ function christmas {
   led green none
   led red none
   sleep 1
-  
+
   led red timer
   led green timer
   sleep 8
@@ -222,6 +231,40 @@ function newyear {
   led red "$current_red"
 }
 
+function valetine {
+  current_red=$(led "red")
+  current_green=$(led "green")
+
+  set_brightness 0 0 && set_brightness 1 0
+  sleep 0.25
+
+  counter=0
+  while [ $counter -le 3 ]
+  do
+    set_brightness 1 0 && set_brightness 0 1
+    sleep 0.25
+    set_brightness 1 1 && set_brightness 0 0
+    sleep 0.25
+    counter=$(( counter + 1 ))
+  done
+
+  set_brightness 1 0 && set_brightness 0 0
+  sleep 0.25
+
+  counter=0
+  while [ $counter -le 3 ]
+  do
+    set_brightness 1 1 && set_brightness 0 1
+    sleep 0.25
+    set_brightness 1 0 && set_brightness 0 0
+    sleep 0.25
+    counter=$(( counter + 1 ))
+  done
+
+  led red "$current_red"
+  led green "$current_green"
+}
+
 function carnival {
   current_red=$(led "red")
   current_green=$(led "green")
@@ -229,7 +272,7 @@ function carnival {
   led green none
   led red none
   sleep 2
-  
+
   led red timer
   led green timer
   sleep 6
@@ -239,7 +282,7 @@ function carnival {
   sleep 4
 
   led red "$current_red"
-  led green "$current_green"  
+  led green "$current_green"
 }
 
 function led_help {
@@ -272,7 +315,7 @@ function led_help {
   echo "|#D    Pi 3B/ 4B     +-+                +---+"
   echo "|#I   \/  +--+      | |                 +---+"
   echo "|#S  ()() |  | CAM  +-+                 |USB|"
-  echo "|#P   ()  +--+  #                       +---+"  
+  echo "|#P   ()  +--+  #                       +---+"
   echo "|#Y             #                      +----+"
   echo -e "|\e[5m\e[32m[] \e[25m\e[39m           +----+ # +-+             | NET|"
   echo -e "|\e[5m\e[31m[] \e[25m\e[39m()+---+ |      | # |A|         ()+------+"
@@ -294,13 +337,13 @@ function led_help {
   echo "  $(basename "$0") led dance"
   echo "      This will do a sequence with the green led"
   echo "      1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
-  echo 
+  echo
   echo "  $(basename "$0") led thanksgiving"
   echo "      This will do a sequence with the green and red led"
   echo
   echo "  $(basename "$0") led christmas"
   echo "      This will set the mode of the led to christmas"
-  echo 
+  echo
   echo "  $(basename "$0") led carnival"
   echo "     This will set mode of the led to carnival"
   echo

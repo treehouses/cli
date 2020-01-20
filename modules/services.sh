@@ -60,12 +60,11 @@ function services {
     fi
   # list all ports used by services
   elif [ "$service_name" = "ports" ]; then
-    echo "Planet                port 80"
-    echo "Kolibri               port 8080"
-    echo "Nextcloud             port 8081"
-    echo "Pi-hole               port 8053"
-    # echo "Moodle                port 8082"
-    echo "PrivateBin            port 8083"
+    array=($(services available))
+    for i in "${array[@]}"
+    do
+      printf "%-10s %20s %-5d\n" "$i" "port" "$(get_port $i)"
+    done
   else
     if [ -z "$command" ]; then
       echo "no command given"
@@ -332,9 +331,9 @@ function get_port {
     pihole)
       echo "8053"
       ;;
-    # moodle)
-    #   echo "8082"
-    #   ;;
+    moodle)
+      echo "8082"
+      ;;
     privatebin)
       echo "8083"
       ;;

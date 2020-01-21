@@ -5,6 +5,7 @@ function logger() {
   log_string="$1"
   log_level="$2"
   log_date=`date '+%Y-%m-%d'`
+  log_time=`date '+%H:%M:%S'`
   log_loc="$LOGFOLDER$log_date.log"
   
   if [ ! -d "$LOGFOLDER" ]; then
@@ -13,7 +14,7 @@ function logger() {
   if [ ! -f "$log_loc" ]; then
     touch "$log_loc"
   fi
-  echo -e "${log_level}:${log_string}" >> "$log_loc"
+  echo -e "$log_time-${log_level}-${log_string}\n" >> "$log_loc"
 }
 
 function log_info() {

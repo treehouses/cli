@@ -4,8 +4,8 @@ function logger() {
   
   log_string="$1"
   log_level="$2"
-  log_date=`date '+%Y-%m-%d'`
-  log_time=`date '+%H:%M:%S'`
+  log_date=$(date '+%Y-%m-%d')
+  log_time=$(date '+%H:%M:%S')
   log_loc="$LOGFOLDER$log_date.log"
   
   if [ ! -d "$LOGFOLDER" ]; then

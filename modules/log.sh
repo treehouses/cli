@@ -14,7 +14,7 @@ function logger() {
   if [ ! -f "$log_loc" ]; then
     touch "$log_loc"
   fi
-  echo -e "$log_time-${log_level}-${log_string}\n" >> "$log_loc"
+  echo -e "$log_time-${log_level}-${log_string}" >> "$log_loc"
 }
 
 function log_info() {

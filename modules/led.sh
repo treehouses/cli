@@ -230,6 +230,39 @@ function newyear {
   led green "$current_green"
   led red "$current_red"
 }
+function valentine {
+  current_red=$(led "red")
+  current_green=$(led "green")
+
+  set_brightness 0 0 && set_brightness 1 0
+  sleep 0.25
+
+  counter=0
+  while [ $counter -le 3 ]
+  do
+    set_brightness 1 0 && set_brightness 0 1
+    sleep 0.25
+    set_brightness 1 1 && set_brightness 0 0
+    sleep 0.25
+    counter=$(( counter + 1 ))
+  done
+
+  set_brightness 1 0 && set_brightness 0 0
+  sleep 0.25
+
+  counter=0
+  while [ $counter -le 3 ]
+  do
+    set_brightness 1 1 && set_brightness 0 1
+    sleep 0.25
+    set_brightness 1 0 && set_brightness 0 0
+    sleep 0.25
+    counter=$(( counter + 1 ))
+  done
+
+  led red "$current_red"
+  led green "$current_green"
+}
 
 function carnival {
   current_red=$(led "red")

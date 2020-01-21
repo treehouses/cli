@@ -79,7 +79,7 @@ log_info "$(basename "$0"): execution started with '$*' arguments"
 case $1 in
   expandfs)
     checkrpi
-    checkroot	
+    checkroot
     expandfs
     ;;
   rename)
@@ -93,7 +93,7 @@ case $1 in
     ;;
   sshkey)
     checkroot
-    shift	
+    shift$(basename "$0")
     sshkey "$@"
     ;;
   version)

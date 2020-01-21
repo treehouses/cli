@@ -93,7 +93,7 @@ case $1 in
     ;;
   sshkey)
     checkroot
-    shift$(basename "$0")
+    shift
     sshkey "$@"
     ;;
   version)

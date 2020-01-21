@@ -54,7 +54,7 @@ function led {
     echo "Both LED: 0.25 sec off"
     echo "Green LED: 1.0 on; 0.25 off"
     echo "Red LED: 1.0 on; 0.25 off"
-    echo "Both LED: flash 3 times"
+    echo "Both LED: flash 4 times"
     valentine > "$LOGFILE"
   elif [ "$color" = "carnival" ]; then
     checkroot
@@ -238,7 +238,7 @@ function valentine {
   sleep 0.25
 
   counter=0
-  while [ $counter -le 3 ]
+  while [ $counter -le 4 ]
   do
     set_brightness 1 0 && set_brightness 0 1
     sleep 0.25
@@ -251,7 +251,7 @@ function valentine {
   sleep 0.25
 
   counter=0
-  while [ $counter -le 3 ]
+  while [ $counter -le 4 ]
   do
     set_brightness 1 1 && set_brightness 0 1
     sleep 0.25

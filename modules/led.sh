@@ -47,6 +47,15 @@ function led {
     echo "Red LED: 0.5 on; 0.5 off"
     echo "Both LED: flash 2 times"
     newyear > "$LOGFILE"
+  elif [ "$color" = "valentine" ]; then
+    checkroot
+    echo "leds are set to valentine mode."
+    echo "Look at your RPi leds, both leds will be in this pattern... "
+    echo "Both LED: 0.25 sec off"
+    echo "Green LED: 1.0 on; 0.25 off"
+    echo "Red LED: 1.0 on; 0.25 off"
+    echo "Both LED: flash 3 times"
+    valentine > "$LOGFILE"
   elif [ "$color" = "carnival" ]; then
     checkroot
     echo "leds are set to carnival mode."

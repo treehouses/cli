@@ -26,6 +26,7 @@ source "$SCRIPTFOLDER/modules/help.sh"
 source "$SCRIPTFOLDER/modules/image.sh"
 source "$SCRIPTFOLDER/modules/led.sh"
 source "$SCRIPTFOLDER/modules/locale.sh"
+source "$SCRIPTFOLDER/modules/log.sh"
 source "$SCRIPTFOLDER/modules/memory.sh"
 source "$SCRIPTFOLDER/modules/temperature.sh"
 source "$SCRIPTFOLDER/modules/networkmode.sh"
@@ -62,6 +63,8 @@ source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 
 LOGFILE=/dev/null
+LOG=1
+
 if [[ ! -d "$CONFIGFOLDER" ]]; then
   mkdir "$CONFIGFOLDER"
 fi
@@ -72,12 +75,13 @@ else
   touch "$CONFIGFILE"
 fi
 
-if [[ ! -d /var/log/treehouses.log ]]; then
-  sudo touch /var/log/treehouses.log
-  sudo chmod ugo+rw /var/log/treehouses.log
+if [[ "$LOG" == 1 ]]; then
+  if [ ! -a /var/log/treehouses.log ]; then
+    sudo touch /var/log/treehouses.log
+    sudo chmod ugo+rw /var/log/treehouses.log
+  fi
+  echo "$0" "$*" >> /var/log/treehouses.log
 fi
-
-echo "$0" "$*" >> /var/log/treehouses.log
 
 case $1 in
   expandfs)
@@ -204,6 +208,10 @@ case $1 in
   led)
     checkrpi
     led "$2" "$3"
+    ;;
+  log)
+    checkrpi
+    log "$2"
     ;;
   rtc)
     checkrpi

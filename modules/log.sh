@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function log {
   case "$1" in
     "")

@@ -63,7 +63,10 @@ function services {
     array=($(services available))
     for i in "${array[@]}"
     do
-      printf "%-10s %20s %-5d\n" "$i" "port" "$(get_port $i)"
+      for j in $(seq 1 "$(get_port $i | wc -l)")
+      do
+        printf "%-10s %20s %-5d\n" "$i" "port" "$(get_port $i | sed -n "$j p")"
+      done
     done
   else
     if [ -z "$command" ]; then

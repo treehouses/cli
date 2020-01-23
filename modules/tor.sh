@@ -7,12 +7,10 @@ function tor {
     if [ -z "$(grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g')" ]; then
       echo "Error: there are no tor ports added."
       echo "'$(basename "$0") add [localPort]' to add a port and be able to use the service"
-      exit 1
+    elif
+      echo "Error: the tor service has not been configured."
+      echo "Run '$(basename "$0") tor start' to configure it."
     fi
-
-    echo "Error: the tor service has not been configured."
-    echo "Run '$(basename "$0") tor start' to configure it."
-    echo "Or '$(basename "$0") add [localPort]' to add a port and be able to use the service"
     exit 1
   fi
 

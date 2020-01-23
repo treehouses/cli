@@ -269,7 +269,7 @@ function services {
         # local and tor url
         url)
           if [ "$command_option" = "local" ]; then
-            for i in $(seq 1 $(get_port $service_name | wc -l))
+            for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
               local_url=$(hostname -I | head -n1 | cut -d " " -f1)
               local_url+=":"
@@ -282,7 +282,7 @@ function services {
               echo $local_url
             done
           elif [ "$command_option" = "tor" ]; then
-            for i in $(seq 1 $(get_port $service_name | wc -l))
+            for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
               tor_url=$(tor)
               tor_url+=":"

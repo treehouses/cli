@@ -230,6 +230,7 @@ function newyear {
   led green "$current_green"
   led red "$current_red"
 }
+
 function valentine {
   current_red=$(led "red")
   current_green=$(led "green")

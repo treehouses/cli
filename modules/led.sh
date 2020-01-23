@@ -342,6 +342,9 @@ function led_help {
   echo
   echo "  $(basename "$0") led christmas"
   echo "      This will set the mode of the led to christmas"
+  echo
+  echo "  $(basename "$0") led valentine"
+  echo "      This will set the mode of the led to valentine"
   echo 
   echo "  $(basename "$0") led carnival"
   echo "     This will set mode of the led to carnival"

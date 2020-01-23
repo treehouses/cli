@@ -288,8 +288,12 @@ function services {
             fi
 
             echo $tor_url
+          elif [ "$command_option" = "both" ]; then
+            services $service_name url local
+            services $service_name url tor
           else
-            echo "unkown command"
+            echo "unknown command"
+            echo "usage: $(basename "$0") services <service_name> url [local | tor | both]"
           fi
           ;;
 
@@ -370,19 +374,19 @@ function services_help {
   echo "  Portainer"
   echo
   echo "commands:"
-  echo "  available                   lists all available services"
-  echo "  installed                   lists all installed services"
-  echo "  running                     lists all running services"
-  echo "  ports                       lists all ports used by services"
-  echo "  up                          builds and starts the service"
-  echo "  down                        stops and removes the service"
-  echo "  start                       starts the service"
-  echo "  stop                        stops the service"
-  echo "  autorun                     outputs true if the service is set to autorun or false otherwise"
-  echo "  autorun [true | false]      sets the service autorun to true | false"
-  echo "  ps                          outputs the containers related to the service"
-  echo "  url [local | tor]           outputs the local | tor address for the service"
-  echo "  <service> port              outputs the port number for the service"
+  echo "  available                           lists all available services"
+  echo "  installed                           lists all installed services"
+  echo "  running                             lists all running services"
+  echo "  ports                               lists all ports used by services"
+  echo "  up                                  builds and starts the service"
+  echo "  down                                stops and removes the service"
+  echo "  start                               starts the service"
+  echo "  stop                                stops the service"
+  echo "  autorun                             outputs true if the service is set to autorun or false otherwise"
+  echo "  autorun [true | false]              sets the service autorun to true | false"
+  echo "  ps                                  outputs the containers related to the service"
+  echo "  <service_name> url [local | tor]    outputs the local | tor address for the service"
+  echo "  <service_name> port                 outputs the port number for the service"
   echo
   echo "examples:"
   echo

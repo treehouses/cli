@@ -287,7 +287,7 @@ function carnival {
 function led_help {
   echo
   echo "Usage: $(basename "$0") led [green|red] [mode]"
-  echo "       $(basename "$0") led [dance|thanksgiving|christmas|newyear|carnival]"
+  echo "       $(basename "$0") led [dance|thanksgiving|christmas|newyear|valentine|carnival]"
   echo
   echo "Sets or returns the led mode"
   echo

@@ -47,6 +47,15 @@ function led {
     echo "Red LED: 0.5 on; 0.5 off"
     echo "Both LED: flash 2 times"
     newyear > "$LOGFILE"
+  elif [ "$color" = "valentine" ]; then
+    checkroot
+    echo "leds are set to valentine mode."
+    echo "Look at your RPi leds, both leds will be in this pattern... "
+    echo "Both LED: 0.25 sec off"
+    echo "Green LED: 1.0 on; 0.25 off"
+    echo "Red LED: 1.0 on; 0.25 off"
+    echo "Both LED: flash 4 times"
+    valentine > "$LOGFILE"
   elif [ "$color" = "carnival" ]; then
     checkroot
     echo "leds are set to carnival mode."
@@ -222,6 +231,40 @@ function newyear {
   led red "$current_red"
 }
 
+function valentine {
+  current_red=$(led "red")
+  current_green=$(led "green")
+
+  set_brightness 0 0 && set_brightness 1 0
+  sleep 0.25
+
+  counter=0
+  while [ $counter -le 4 ]
+  do
+    set_brightness 1 0 && set_brightness 0 1
+    sleep 0.25
+    set_brightness 1 1 && set_brightness 0 0
+    sleep 0.25
+    counter=$(( counter + 1 ))
+  done
+
+  set_brightness 1 0 && set_brightness 0 0
+  sleep 0.25
+
+  counter=0
+  while [ $counter -le 4 ]
+  do
+    set_brightness 1 1 && set_brightness 0 1
+    sleep 0.25
+    set_brightness 1 0 && set_brightness 0 0
+    sleep 0.25
+    counter=$(( counter + 1 ))
+  done
+
+  led red "$current_red"
+  led green "$current_green"
+}
+
 function carnival {
   current_red=$(led "red")
   current_green=$(led "green")
@@ -245,7 +288,7 @@ function carnival {
 function led_help {
   echo
   echo "Usage: $(basename "$0") led [green|red] [mode]"
-  echo "       $(basename "$0") led [dance|thanksgiving|christmas|newyear|carnival]"
+  echo "       $(basename "$0") led [dance|thanksgiving|christmas|newyear|valentine|carnival]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -300,6 +343,9 @@ function led_help {
   echo
   echo "  $(basename "$0") led christmas"
   echo "      This will set the mode of the led to christmas"
+  echo
+  echo "  $(basename "$0") led valentine"
+  echo "      This will set the mode of the led to valentine"
   echo 
   echo "  $(basename "$0") led carnival"
   echo "     This will set mode of the led to carnival"

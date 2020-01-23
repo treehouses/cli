@@ -269,25 +269,31 @@ function services {
         # local and tor url
         url)
           if [ "$command_option" = "local" ]; then
-            local_url=$(hostname -I | head -n1 | cut -d " " -f1)
-            local_url+=":"
-            local_url+=$(get_port $service_name)
+            for i in $(seq 1 $(get_port $service_name | wc -l))
+            do
+              local_url=$(hostname -I | head -n1 | cut -d " " -f1)
+              local_url+=":"
+              local_url+=$(get_port $service_name | sed -n "$i p")
 
-            if [ "$service_name" = "pihole" ]; then
-              local_url+="/admin"
-            fi
+              if [ "$service_name" = "pihole" ]; then
+                local_url+="/admin"
+              fi
 
-            echo $local_url
+              echo $local_url
+            done
           elif [ "$command_option" = "tor" ]; then
-            tor_url=$(tor)
-            tor_url+=":"
-            tor_url+=$(get_port $service_name)
+            for i in $(seq 1 $(get_port $service_name | wc -l))
+            do
+              tor_url=$(tor)
+              tor_url+=":"
+              tor_url+=$(get_port $service_name | sed -n "$i p")
 
-            if [ "$service_name" = "pihole" ]; then
-              tor_url+="/admin"
-            fi
+              if [ "$service_name" = "pihole" ]; then
+                tor_url+="/admin"
+              fi
 
-            echo $tor_url
+              echo $tor_url
+            done
           elif [ "$command_option" = "both" ]; then
             services $service_name url local
             services $service_name url tor
@@ -335,6 +341,7 @@ function get_port {
   case "$service_name" in
     planet)
       echo "80"
+      echo "2200"
       ;;
     kolibri)
       echo "8080"

@@ -198,6 +198,7 @@ function services {
         restart)
           services $service_name stop
           services $service_name up
+          ;;
 
         autorun)
           # if no command_option, output true or false

@@ -319,6 +319,8 @@ function services {
               echo "Swarm clusters).\""
               ;;
           esac
+          ;;
+          
         # local and tor url
         url)
           if [ "$command_option" = "local" ]; then

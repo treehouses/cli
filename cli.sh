@@ -2,7 +2,7 @@
 
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
-CONFIGFOLDER=~/.treehouses/
+CONFIGFOLDER=/etc/treehouses.conf
 CONFIGFILE="$CONFIGFOLDER"config
 
 source "$SCRIPTFOLDER/modules/log.sh"
@@ -64,7 +64,7 @@ source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 
 LOGFILE=/dev/null
-LOG=0
+LOG=OFF
 if [[ ! -d "$CONFIGFOLDER" ]]; then
   mkdir "$CONFIGFOLDER"
 fi
@@ -75,7 +75,7 @@ else
   touch "$CONFIGFILE"
 fi
 
-log_info "$(basename "$0"): execution started with '$*' arguments" 
+logit "$(basename "$0"): execution started with '$*' arguments" "1"
 case $1 in
   expandfs)
     checkrpi

@@ -1,22 +1,24 @@
 #!/bin/bash
 
 function logit() {
-  case "$2" in
-    "")
-	  logger -p local0.info "$1"
-	  ;;
-	"WARNING")
-	  logger -p local0.warning "$1"
-	  ;;
-	"ERROR")
-	  logger -p local0.err "$1"
-	  ;;
-	"DEBUG")
-	  logger -p local0.debug "$1"
-	  ;;
-  esac
-  if [[ "$3" == "1" ]]; then
-    exit 0;
+  if [[ "$LOG" == "ON" ]]; then
+    case "$3" in
+      "")
+        logger -p local0.info "$1"
+        ;;
+      "WARNING")
+        logger -p local0.warning "$1"
+        ;;
+      "ERROR")
+        logger -p local0.err "$1"
+        ;;
+      "DEBUG")
+        logger -p local0.debug "$1"
+        ;;
+    esac
+  fi
+  if [[ "$2" == "1" ]]; then
+    return 0;
   fi
   echo "$1"
 }
@@ -24,7 +26,7 @@ function logit() {
 function log {
   case "$1" in
     "")
-      if [[ "$LOG" == "0" ]]
+      if [[ "$LOG" == "OFF" ]]
       then
         echo "Log is off"
       else
@@ -33,15 +35,15 @@ function log {
       exit 0;
       ;;
     "1")
-      LOG=1
+      LOG=ON
       echo "Successfully enabled Log"
       ;;
     "0")
-      LOG=0
+      LOG=OFF
       echo "Successfully disabled Log"
       ;;
     *)
-      echo "Error: only 'on' and 'off' options are supported";
+      echo "Error: only '1' and '0' options are supported";
       exit 1;
       ;;
   esac
@@ -55,16 +57,16 @@ function log {
 }
 
 function log_help {
-  echo 
+  echo
   echo "Usage: $(basename "$0") log <0|1>"
-  echo 
+  echo
   echo "Example:"
   echo "  $(basename "$0") log"
   echo "      Log is off"
-  echo 
+  echo
   echo "  $(basename "$0") log 0"
   echo "      Successfully disabled Log"
-  echo 
+  echo
   echo "  $(basename "$0") log 1"
   echo "      Successfully enabled Log"
   echo

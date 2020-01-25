@@ -347,7 +347,7 @@ function check_tor {
 
 function services_help {
   echo
-  echo "Currently Available Services:"
+  echo "Available Services:"
   echo
   echo "  Planet"
   echo "  Kolibri"

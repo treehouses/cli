@@ -2,8 +2,7 @@
 
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
-CONFIGFOLDER=/etc/treehouses.conf
-CONFIGFILE="$CONFIGFOLDER"config
+CONFIGFILE=/etc/treehouses.conf
 
 source "$SCRIPTFOLDER/modules/log.sh"
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
@@ -65,15 +64,7 @@ source "$SCRIPTFOLDER/modules/remote.sh"
 
 LOGFILE=/dev/null
 LOG=OFF
-if [[ ! -d "$CONFIGFOLDER" ]]; then
-  mkdir "$CONFIGFOLDER"
-fi
-if [[ -s "$CONFIGFILE" ]]
-then
-  source "$CONFIGFILE"
-else
-  touch "$CONFIGFILE"
-fi
+source "$CONFIGFILE"
 
 logit "$(basename "$0"): execution started with '$*' arguments" "1"
 case $1 in

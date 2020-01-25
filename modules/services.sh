@@ -60,13 +60,17 @@ function services {
     fi
   # list all ports used by services
   elif [ "$service_name" = "ports" ]; then
-    echo "Planet                port 80"
-    echo "Kolibri               port 8080"
-    echo "Nextcloud             port 8081"
-    echo "Pi-hole               port 8053"
-    # echo "Moodle                port 8082"
-    echo "PrivateBin            port 8083"
-    echo "Portainer             port 9000"
+    array=($(services available))
+    for i in "${array[@]}"
+    do
+      port_string=""
+      for j in $(seq 1 "$(get_port $i | wc -l)")
+      do
+        port_string+=$(get_port $i | sed -n "$j p")
+        port_string+=" "
+      done
+      printf "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
+    done
   else
     if [ -z "$command" ]; then
       echo "no command given"
@@ -267,6 +271,95 @@ function services {
           docker ps -a | grep $service_name
           ;;
 
+        info)
+          case "$service_name" in
+            planet)
+              echo "https://github.com/open-learning-exchange/planet"
+              echo
+              echo "\"Planet Learning is a generic learning system built in Angular"
+              echo "& CouchDB.\""
+              ;;
+            kolibri)
+              echo "https://github.com/treehouses/kolibri"
+              echo
+              echo "\"Kolibri is the offline learning platform from Learning Equality.\""
+              ;;
+            nextcloud)
+              echo "https://github.com/nextcloud"
+              echo
+              echo "\"A safe home for all your data. Access & share your files, calendars,"
+              echo "contacts, mail & more from any device, on your terms.\""
+              ;;
+            pihole)
+              echo "https://github.com/pi-hole/docker-pi-hole"
+              echo
+              echo "\"The Pi-hole® is a DNS sinkhole that protects your devices from"
+              echo "unwanted content, without installing any client-side software.\""
+              ;;
+            moodle)
+              echo "https://github.com/treehouses/moodole"
+              echo
+              echo "\"Moodle <https://moodle.org> is a learning platform designed to"
+              echo "provide educators, administrators and learners with a single robust,"
+              echo "secure and integrated system to create personalised learning"
+              echo "environments.\""
+              ;;
+            privatebin)
+              echo "https://github.com/treehouses/privatebin"
+              echo
+              echo "\"A minimalist, open source online pastebin where the server has"
+              echo "zero knowledge of pasted data. Data is encrypted/decrypted in the"
+              echo "browser using 256 bits AES. https://privatebin.info/\""
+              ;;
+            portainer)
+              echo "https://github.com/portainer/portainer"
+              echo
+              echo "\"Portainer is a lightweight management UI which allows you to"
+              echo "easily manage your different Docker environments (Docker hosts or"
+              echo "Swarm clusters).\""
+              ;;
+          esac
+        # local and tor url
+        url)
+          if [ "$command_option" = "local" ]; then
+            for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            do
+              local_url=$(hostname -I | head -n1 | cut -d " " -f1)
+              local_url+=":"
+              local_url+=$(get_port $service_name | sed -n "$i p")
+
+              if [ "$service_name" = "pihole" ]; then
+                local_url+="/admin"
+              fi
+
+              echo $local_url
+            done
+          elif [ "$command_option" = "tor" ]; then
+            for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            do
+              tor_url=$(tor)
+              tor_url+=":"
+              tor_url+=$(get_port $service_name | sed -n "$i p")
+
+              if [ "$service_name" = "pihole" ]; then
+                tor_url+="/admin"
+              fi
+
+              echo $tor_url
+            done
+          elif [ "$command_option" = "both" ]; then
+            services $service_name url local
+            services $service_name url tor
+          else
+            echo "unknown command"
+            echo "usage: $(basename "$0") services <service_name> url [local | tor | both]"
+          fi
+          ;;
+
+        port)
+          get_port $service_name
+          ;;
+
         *)
           echo "unknown command"
           ;;
@@ -294,11 +387,43 @@ function check_tor {
   fi
 }
 
+# get port number for specified service
+function get_port {
+  service_name="$1"
+
+  case "$service_name" in
+    planet)
+      echo "80"
+      echo "2200"
+      ;;
+    kolibri)
+      echo "8080"
+      ;;
+    nextcloud)
+      echo "8081"
+      ;;
+    pihole)
+      echo "8053"
+      ;;
+    moodle)
+      echo "8082"
+      ;;
+    privatebin)
+      echo "8083"
+      ;;
+    portainer)
+      echo "9000"
+      ;;
+    *)
+      echo "unknown service"
+      ;;
+  esac
+}
+
 function services_help {
   echo
-  echo "Usage: $(basename "$0") services [available|installed|running|ports|service_name] [up|down|start|stop|autorun|ps]"
+  echo "Available Services:"
   echo
-  echo "Currently available services:"
   echo "  Planet"
   echo "  Kolibri"
   echo "  Nextcloud"
@@ -307,31 +432,77 @@ function services_help {
   echo "  PrivateBin"
   echo "  Portainer"
   echo
-  echo "commands:"
-  echo "  available                   lists all available services"
-  echo "  installed                   lists all installed services"
-  echo "  running                     lists all running services"
-  echo "  ports                       lists all ports used by services"
-  echo "  up                          builds and starts the service"
-  echo "  down                        stops and removes the service"
-  echo "  start                       starts the service"
-  echo "  stop                        stops the service"
-  echo "  autorun                     outputs true if the service is set to autorun or false otherwise"
-  echo "  autorun [true | false]      sets the service autorun to true | false"
-  echo "  ps                          outputs the containers related to the service"
   echo
-  echo "examples:"
+  echo "Top-Level Commands:"
   echo
-  echo "  $(basename "$0") services available"
+  echo "  Usage:"
+  echo "    $(basename "$0") services available [full]"
+  echo "              ..... installed [full]"
+  echo "              ..... running [full]"
+  echo "              ..... ports"
   echo
-  echo "  $(basename "$0") services planet up"
+  echo "    available               lists all available services"
+  echo "        [full]                  full details"
   echo
-  echo "  $(basename "$0") services planet stop"
+  echo "    installed               lists all installed services"
+  echo "        [full]                  full details"
   echo
-  echo "  $(basename "$0") services planet autorun"
+  echo "    running                 lists all running services"
+  echo "        [full]                  full details"
   echo
-  echo "  $(basename "$0") services planet autorun true"
+  echo "    ports                   lists all ports used by services"
   echo
-  echo "  $(basename "$0") services planet ps"
+  echo "  Examples:"
+  echo
+  echo "    $(basename "$0") services available"
+  echo
+  echo "    $(basename "$0") services running full"
+  echo
+  echo
+  echo "Service-Specific Commands:"
+  echo
+  echo "  Usage:"
+  echo "    $(basename "$0") services <service_name> up"
+  echo "                             ..... down"
+  echo "                             ..... start"
+  echo "                             ..... stop"
+  echo "                             ..... autorun [true|false]"
+  echo "                             ..... ps"
+  echo "                             ..... url <local|tor|both>"
+  echo "                             ..... port"
+  echo "                             ..... info"
+  echo
+  echo "    up                      builds and starts <service_name>"
+  echo
+  echo "    down                    stops and removes <service_name>"
+  echo
+  echo "    start                   starts <service_name>"
+  echo
+  echo "    stop                    stops <service_name>"
+  echo
+  echo "    autorun                 outputs true if <service_name> is set to autorun or false otherwise"
+  echo "        [true]                  sets <service_name> autorun to true"
+  echo "        [false]                 sets <service_name> autorun to false"
+  echo
+  echo "    ps                      outputs the containers related to <service_name>"
+  echo
+  echo "    url                     <requires one of the options given below>"
+  echo "        <local>                 lists the local url for <service_name>"
+  echo "        <tor>                   lists the tor url for <service_name>"
+  echo "        <both>                  lists both the local and tor url for <service_name>"
+  echo
+  echo "    port                    lists the ports used by <service_name>"
+  echo
+  echo "    info                    gives some information about <service_name>"
+  echo
+  echo "  Examples:"
+  echo
+  echo "    $(basename "$0") services planet up"
+  echo
+  echo "    $(basename "$0") services planet autorun"
+  echo
+  echo "    $(basename "$0") services planet autorun true"
+  echo
+  echo "    $(basename "$0") services planet url local"
   echo
 }

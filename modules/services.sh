@@ -347,9 +347,7 @@ function check_tor {
 
 function services_help {
   echo
-  echo "Usage: $(basename "$0") services [available|installed|running|ports|service_name] [up|down|start|stop|autorun|ps]"
-  echo
-  echo "Currently available services:"
+  echo "Currently Available Services:"
   echo "  Planet"
   echo "  Kolibri"
   echo "  Nextcloud"
@@ -358,31 +356,77 @@ function services_help {
   echo "  PrivateBin"
   echo "  Portainer"
   echo
-  echo "commands:"
-  echo "  available                   lists all available services"
-  echo "  installed                   lists all installed services"
-  echo "  running                     lists all running services"
-  echo "  ports                       lists all ports used by services"
-  echo "  up                          builds and starts the service"
-  echo "  down                        stops and removes the service"
-  echo "  start                       starts the service"
-  echo "  stop                        stops the service"
-  echo "  autorun                     outputs true if the service is set to autorun or false otherwise"
-  echo "  autorun [true | false]      sets the service autorun to true | false"
-  echo "  ps                          outputs the containers related to the service"
   echo
-  echo "examples:"
+  echo "Top-Level Commands:"
   echo
-  echo "  $(basename "$0") services available"
+  echo "  Usage:"
+  echo "    $(basename "$0") services available [full]"
+  echo "                        ..... installed [full]"
+  echo "                        ..... running [full]"
+  echo "                        ..... ports"
   echo
-  echo "  $(basename "$0") services planet up"
+  echo "    available               lists all available services"
+  echo "        [full]                  full details"
   echo
-  echo "  $(basename "$0") services planet stop"
+  echo "    installed               lists all installed services"
+  echo "        [full]                  full details"
   echo
-  echo "  $(basename "$0") services planet autorun"
+  echo "    running                 lists all running services"
+  echo "        [full]                  full details"
   echo
-  echo "  $(basename "$0") services planet autorun true"
+  echo "    ports                   lists all ports used by services"
   echo
-  echo "  $(basename "$0") services planet ps"
+  echo "  Examples:"
+  echo
+  echo "    $(basename "$0") services available"
+  echo
+  echo "    $(basename "$0") services running full"
+  echo
+  echo
+  echo "Service-Specific Commands:"
+  echo
+  echo "  Usage:"
+  echo "    $(basename "$0") services <service_name> up"
+  echo "                                       ..... down"
+  echo "                                       ..... start"
+  echo "                                       ..... stop"
+  echo "                                       ..... autorun [true|false]"
+  echo "                                       ..... ps"
+  echo "                                       ..... url <local|tor|both>"
+  echo "                                       ..... port"
+  echo "                                       ..... info"
+  echo
+  echo "    up                      builds and starts <service_name>"
+  echo
+  echo "    down                    stops and removes <service_name>"
+  echo
+  echo "    start                   starts <service_name>"
+  echo
+  echo "    stop                    stops <service_name>"
+  echo
+  echo "    autorun                 outputs true if <service_name> is set to autorun or false otherwise"
+  echo "        [true]                  sets <service_name> autorun to true"
+  echo "        [false]                 sets <service_name> autorun to false"
+  echo
+  echo "    ps                      outputs the containers related to <service_name>"
+  echo
+  echo "    url                     <requires one of the options given below>"
+  echo "        <local>                 lists the local url for <service_name>"
+  echo "        <tor>                   lists the tor url for <service_name>"
+  echo "        <both>                  lists both the local and tor url for <service_name>"
+  echo
+  echo "    port                    lists the ports used by <service_name>"
+  echo
+  echo "    info                    gives some information about <service_name>"
+  echo
+  echo "  Examples:"
+  echo
+  echo "    $(basename "$0") services planet up"
+  echo
+  echo "    $(basename "$0") services planet autorun"
+  echo
+  echo "    $(basename "$0") services planet autorun true"
+  echo
+  echo "    $(basename "$0") services planet url local"
   echo
 }

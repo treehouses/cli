@@ -60,13 +60,17 @@ function services {
     fi
   # list all ports used by services
   elif [ "$service_name" = "ports" ]; then
-    echo "Planet                port 80"
-    echo "Kolibri               port 8080"
-    echo "Nextcloud             port 8081"
-    echo "Pi-hole               port 8053"
-    # echo "Moodle                port 8082"
-    echo "PrivateBin            port 8083"
-    echo "Portainer             port 9000"
+    array=($(services available))
+    for i in "${array[@]}"
+    do
+      port_string=""
+      for j in $(seq 1 "$(get_port $i | wc -l)")
+      do
+        port_string+=$(get_port $i | sed -n "$j p")
+        port_string+=" "
+      done
+      printf "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
+    done
   else
     if [ -z "$command" ]; then
       echo "no command given"
@@ -268,6 +272,47 @@ function services {
           docker ps -a | grep $service_name
           ;;
 
+        # local and tor url
+        url)
+          if [ "$command_option" = "local" ]; then
+            for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            do
+              local_url=$(hostname -I | head -n1 | cut -d " " -f1)
+              local_url+=":"
+              local_url+=$(get_port $service_name | sed -n "$i p")
+
+              if [ "$service_name" = "pihole" ]; then
+                local_url+="/admin"
+              fi
+
+              echo $local_url
+            done
+          elif [ "$command_option" = "tor" ]; then
+            for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            do
+              tor_url=$(tor)
+              tor_url+=":"
+              tor_url+=$(get_port $service_name | sed -n "$i p")
+
+              if [ "$service_name" = "pihole" ]; then
+                tor_url+="/admin"
+              fi
+
+              echo $tor_url
+            done
+          elif [ "$command_option" = "both" ]; then
+            services $service_name url local
+            services $service_name url tor
+          else
+            echo "unknown command"
+            echo "usage: $(basename "$0") services <service_name> url [local | tor | both]"
+          fi
+          ;;
+
+        port)
+          get_port $service_name
+          ;;
+
         *)
           echo "unknown command"
           ;;
@@ -295,6 +340,39 @@ function check_tor {
   fi
 }
 
+# get port number for specified service
+function get_port {
+  service_name="$1"
+
+  case "$service_name" in
+    planet)
+      echo "80"
+      echo "2200"
+      ;;
+    kolibri)
+      echo "8080"
+      ;;
+    nextcloud)
+      echo "8081"
+      ;;
+    pihole)
+      echo "8053"
+      ;;
+    moodle)
+      echo "8082"
+      ;;
+    privatebin)
+      echo "8083"
+      ;;
+    portainer)
+      echo "9000"
+      ;;
+    *)
+      echo "unknown service"
+      ;;
+  esac
+}
+
 function services_help {
   echo
   echo "Usage: $(basename "$0") services [available|installed|running|ports|service_name] [up|down|start|stop|autorun|ps]"
@@ -309,17 +387,19 @@ function services_help {
   echo "  Portainer"
   echo
   echo "commands:"
-  echo "  available                   lists all available services"
-  echo "  installed                   lists all installed services"
-  echo "  running                     lists all running services"
-  echo "  ports                       lists all ports used by services"
-  echo "  up                          builds and starts the service"
-  echo "  down                        stops and removes the service"
-  echo "  start                       starts the service"
-  echo "  stop                        stops the service"
-  echo "  autorun                     outputs true if the service is set to autorun or false otherwise"
-  echo "  autorun [true | false]      sets the service autorun to true | false"
-  echo "  ps                          outputs the containers related to the service"
+  echo "  available                           lists all available services"
+  echo "  installed                           lists all installed services"
+  echo "  running                             lists all running services"
+  echo "  ports                               lists all ports used by services"
+  echo "  up                                  builds and starts the service"
+  echo "  down                                stops and removes the service"
+  echo "  start                               starts the service"
+  echo "  stop                                stops the service"
+  echo "  autorun                             outputs true if the service is set to autorun or false otherwise"
+  echo "  autorun [true | false]              sets the service autorun to true | false"
+  echo "  ps                                  outputs the containers related to the service"
+  echo "  <service_name> url [local | tor]    outputs the local | tor address for the service"
+  echo "  <service_name> port                 outputs the port number for the service"
   echo
   echo "examples:"
   echo

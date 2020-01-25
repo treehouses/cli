@@ -1,47 +1,30 @@
 #!/bin/bash
 
-function logger() {
-  
-  log_string="$1"
-  log_level="$2"
-  log_date=$(date '+%Y-%m-%d')
-  log_time=$(date '+%H:%M:%S')
-  log_loc="$LOGFOLDER$log_date.log"
-  
-  if [ ! -d "$LOGFOLDER" ]; then
-    mkdir "$LOGFOLDER"
+function logit() {
+  case "$2" in
+    "")
+	  logger -p local0.info "$1"
+	  ;;
+	"WARNING")
+	  logger -p local0.warning "$1"
+	  ;;
+	"ERROR")
+	  logger -p local0.err "$1"
+	  ;;
+	"DEBUG")
+	  logger -p local0.debug "$1"
+	  ;;
+  esac
+  if [[ "$3" == "1" ]]; then
+    exit 0;
   fi
-  if [ ! -f "$log_loc" ]; then
-    touch "$log_loc"
-  fi
-  echo -e "$log_time-${log_level}-${log_string}" >> "$log_loc"
+  echo "$1"
 }
-
-function log_info() {
-  logger "$1" "INFO"
-}
-
-function log_warning() {
-  logger "$1" "WARNING"
-}
-
-function log_error() {
-  logger "$1" "ERROR"
-}
-
-function log_debug() {
-  logger "$1" "DEBUG"
-}
-
-function log_success() {
-  logger "$1" "SUCCESS"
-}
-
 
 function log {
   case "$1" in
     "")
-      if [[ "$LOG" == OFF ]]
+      if [[ "$LOG" == "0" ]]
       then
         echo "Log is off"
       else
@@ -49,12 +32,12 @@ function log {
       fi
       exit 0;
       ;;
-    "on")
-      LOG=ON
+    "1")
+      LOG=1
       echo "Successfully enabled Log"
       ;;
-    "off")
-      LOG=OFF
+    "0")
+      LOG=0
       echo "Successfully disabled Log"
       ;;
     *)
@@ -72,17 +55,17 @@ function log {
 }
 
 function log_help {
-  echo ""
-  echo "Usage: $(basename "$0") log <on|off>"
-  echo ""
+  echo 
+  echo "Usage: $(basename "$0") log <0|1>"
+  echo 
   echo "Example:"
   echo "  $(basename "$0") log"
   echo "      Log is off"
-  echo ""
-  echo "  $(basename "$0") log on"
-  echo "      Successfully enabled Log"
-  echo ""
-  echo "  $(basename "$0") log off"
+  echo 
+  echo "  $(basename "$0") log 0"
   echo "      Successfully disabled Log"
-  echo ""
+  echo 
+  echo "  $(basename "$0") log 1"
+  echo "      Successfully enabled Log"
+  echo
 }

@@ -4,7 +4,6 @@ SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 CONFIGFOLDER=~/.treehouses/
 CONFIGFILE="$CONFIGFOLDER"config
-LOGFOLDER="$CONFIGFOLDER"logs/
 
 source "$SCRIPTFOLDER/modules/log.sh"
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
@@ -65,7 +64,7 @@ source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 
 LOGFILE=/dev/null
-LOG=ON
+LOG=0
 if [[ ! -d "$CONFIGFOLDER" ]]; then
   mkdir "$CONFIGFOLDER"
 fi

@@ -77,7 +77,6 @@ function services {
       exit 1
     else
       case "$command" in
-        # build and create container
         up)
           case "$service_name" in
             planet)
@@ -139,7 +138,6 @@ function services {
           esac
           ;;
 
-        # stop and remove container
         down)
           case "$service_name" in
             planet|kolibri|pihole|moodle|privatebin)
@@ -161,7 +159,6 @@ function services {
           esac
           ;;
 
-        # start a stopped container
         start)
           case "$service_name" in
             planet|kolibri|pihole|moodle|privatebin)
@@ -182,7 +179,6 @@ function services {
           esac
           ;;
 
-        # stop a running container
         stop)
           case "$service_name" in
             planet|kolibri|pihole|moodle|privatebin)
@@ -203,7 +199,11 @@ function services {
           esac
           ;;
 
-        # autorun, autorun true, autorun false
+        restart)
+          services $service_name stop
+          services $service_name up
+          ;;
+
         autorun)
           # if no command_option, output true or false
           if [ -z "$command_option" ]; then
@@ -267,7 +267,6 @@ function services {
           fi
           ;;
 
-        # docker ps (specific service)
         ps)
           docker ps -a | grep $service_name
           ;;

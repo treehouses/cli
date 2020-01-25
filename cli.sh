@@ -58,13 +58,7 @@ source "$SCRIPTFOLDER/modules/coralenv.sh"
 source "$SCRIPTFOLDER/modules/speedtest.sh"
 source "$SCRIPTFOLDER/modules/cron.sh"
 source "$SCRIPTFOLDER/modules/discover.sh"
-source "$SCRIPTFOLsudo npm install --unsafe-perm -g yourtreehousesclidirectory
-then juggle these commands around:
-./cli.sh log 1
-./cli.sh log 0
-./cli.sh image
-sudo cat /etc/treehouses.conf
-sudo tail -5 /var/log/syslog ; page down/scroll down to bottomDER/modules/camera.sh"
+source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 

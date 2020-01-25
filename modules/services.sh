@@ -348,6 +348,7 @@ function check_tor {
 function services_help {
   echo
   echo "Currently Available Services:"
+  echo
   echo "  Planet"
   echo "  Kolibri"
   echo "  Nextcloud"
@@ -361,9 +362,9 @@ function services_help {
   echo
   echo "  Usage:"
   echo "    $(basename "$0") services available [full]"
-  echo "                        ..... installed [full]"
-  echo "                        ..... running [full]"
-  echo "                        ..... ports"
+  echo "              ..... installed [full]"
+  echo "              ..... running [full]"
+  echo "              ..... ports"
   echo
   echo "    available               lists all available services"
   echo "        [full]                  full details"
@@ -387,14 +388,14 @@ function services_help {
   echo
   echo "  Usage:"
   echo "    $(basename "$0") services <service_name> up"
-  echo "                                       ..... down"
-  echo "                                       ..... start"
-  echo "                                       ..... stop"
-  echo "                                       ..... autorun [true|false]"
-  echo "                                       ..... ps"
-  echo "                                       ..... url <local|tor|both>"
-  echo "                                       ..... port"
-  echo "                                       ..... info"
+  echo "                             ..... down"
+  echo "                             ..... start"
+  echo "                             ..... stop"
+  echo "                             ..... autorun [true|false]"
+  echo "                             ..... ps"
+  echo "                             ..... url <local|tor|both>"
+  echo "                             ..... port"
+  echo "                             ..... info"
   echo
   echo "    up                      builds and starts <service_name>"
   echo

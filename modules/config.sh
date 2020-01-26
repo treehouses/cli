@@ -1,8 +1,6 @@
 #!/bin/bash
 
 # config constants
-SCRIPTPATH=$(realpath "$0")
-SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 CONFIGFILE=/etc/treehouses.conf
 BASENAME=$(basename "$0")
 TEMPLATES="$SCRIPTFOLDER/templates"

@@ -18,7 +18,7 @@ fi
 
 # updates config variables "LOG" "1" Requires root
 function conf_var_update() {
-  if [[ $(cat $CONFIGFILE) = *"$1"* ]]
+  if [[ -f "$CONFIGFILE" && $(cat $CONFIGFILE) = *"$1"* ]]
   then
     sed -i "s@^$1=.*\$@$1=$2@" "$CONFIGFILE"
   else

@@ -93,10 +93,10 @@ function log {
       logit "Log 4: level set to Info, Warning, Error, and Debug"
       ;;
 	"show")
-	  if [ -z "$2" ]; then
+	  if [ -z "$2" ] || ! [[ "$2" =~ ^[0-9]+$ ]]; then
 	    lines="6"
       fi
-	    grep "@treehouses/cli" /var/log/syslog | tail -n "$lines"
+	  grep "@treehouses/cli" /var/log/syslog | tail -n "$lines"
 	  ;;
 	"max")
 	  LOG=max

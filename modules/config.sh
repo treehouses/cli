@@ -16,10 +16,6 @@ if [[ -f "$CONFIGFILE" ]]; then
   source "$CONFIGFILE"
 fi
 
-if [[ ! "$LOGFILE" == /dev/null ]]; then
-  set -v
-fi
-
 if [[ "$LOG" == "max" ]]; then
   set -x
   exec 1> >(logger -t treehouses-cli) 2>&1

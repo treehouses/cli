@@ -10,24 +10,24 @@ function logit() {
   if [[ ! "$LOG" == "0" && ! "$LOG" == "max" ]]; then
     case "$3" in
       "")
-        logger -p local0.info -t treehouses-cli "$1"
+        logger -p local0.info -t @treehouses/cli "$1"
         ;;
 	  # Stuff might break
       "WARNING")
 	    if [[ "$LOG" -gt "1" ]]; then
-          logger -p local0.warning -t treehouses-cli "$1"
+          logger -p local0.warning -t @treehouses/cli "$1"
 		fi 
         ;;
 	  # Stuff did break
       "ERROR")
 	  	if [[ "$LOG" -gt "2" ]]; then
-          logger -p local0.err -t treehouses-cli "$1"
+          logger -p local0.err -t @treehouses/cli "$1"
 		fi
         ;;
 	  # Developer wants to log as well
       "DEBUG")
 	  	if [[ "$LOG" -gt "3" ]]; then
-          logger -p local0.debug -t treehouses-cli "$1"
+          logger -p local0.debug -t @treehouses/cli "$1"
 		fi
         ;;
     esac
@@ -51,52 +51,52 @@ function log {
     "")
 	  case "$LOG" in
 	    "0")
-		  logit "Log is disabled"
+		  logit "Log 0: log is disabled"
 		  ;;
 	    "1")
-		  logit "Log level is set to Info"
+		  logit "Log 1: level is set to Info"
 		  ;;
 	    "2")
-		  logit "Log level is set to Info and Warning"
+		  logit "Log 2: level is set to Info and Warning"
 		  ;;
 	    "3")
-		  logit "Log level is set to Info, Warning, and Error"
+		  logit "Log 3: level is set to Info, Warning, and Error"
 		  ;;
 	    "4")
-		  logit "Log level is set to Info, Warning, Error, and Debug"
+		  logit "Log 4: level is set to Info, Warning, Error, and Debug"
 		  ;;
 		"max")
-		  logit "Log level is set to max"
+		  logit "Log X: level is set to max"
 		  ;;
 	  esac
       exit 0;
       ;;
 	"0")
       LOG=0
-      logit "Log disabled"
+      logit "Log 0: log disabled"
       ;;
     "1")
       LOG=1
-      logit "Log level set to Info"
+      logit "Log 1: level set to Info"
       ;;
     "2")
       LOG=2
-      logit "Log level set to Info and Warning"
+      logit "Log 2: level set to Info and Warning"
       ;;
     "3")
       LOG=3
-      logit "Log level set to Info, Warning, and Error"
+      logit "Log 3: level set to Info, Warning, and Error"
       ;;
     "4")
       LOG=4
-      logit "Log level set to Info, Warning, Error, and Debug"
+      logit "Log 4: level set to Info, Warning, Error, and Debug"
       ;;
 	"show")
-	  grep "treehouses-cli" /var/log/syslog
+	  grep "@treehouses/cli" /var/log/syslog
 	  ;;
 	"max")
 	  LOG=max
-	  logit "Log level set to max"
+	  logit "Log X: level set to max"
 	  ;;
     *)
       echo "Error: option not supported";
@@ -112,27 +112,27 @@ function log_help {
   echo
   echo "Example:"
   echo "  $BASENAME log"
-  echo "      Log is disabled"
+  echo "      Log 0: log is disabled"
   echo
   echo "  $BASENAME log 0"
-  echo "      Log disabled"
+  echo "      Log 0: log disabled"
   echo
   echo "  $BASENAME log 1"
-  echo "      Log level set to Info"
+  echo "      Log 1: level set to Info"
   echo
   echo "  $BASENAME log 2"
-  echo "      Log level set to Info and Warning"
+  echo "      Log 2: level set to Info and Warning"
   echo
   echo "  $BASENAME log 3"
-  echo "      Log level set to Info, Warning, and Error"
+  echo "      Log 3: level set to Info, Warning, and Error"
   echo
   echo "  $BASENAME log 4"
-  echo "      Log level set to Info, Warning, Error, and Debug"
+  echo "      Log 4: level set to Info, Warning, Error, and Debug"
   echo
   echo "  $BASENAME log show"
-  echo "      treehouses pi: cli.sh: execution started with 'log 1' arguments"
+  echo "      @treehouses/cli: temperature fahrenheit"
   echo
   echo "  $BASENAME log max"
-  echo "      Log level set to max"
+  echo "      Log X: level set to max"
   echo
 }

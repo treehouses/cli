@@ -47,6 +47,7 @@ function log_and_exit1() {
 # Sets logging level to be used by the entire app
 # Can also show the log
 function log {
+  local lines="$2"
   case "$1" in
     "")
 	  case "$LOG" in
@@ -92,7 +93,10 @@ function log {
       logit "Log 4: level set to Info, Warning, Error, and Debug"
       ;;
 	"show")
-	  grep "@treehouses/cli" /var/log/syslog
+	  if [ -z "$2" ]; then
+	    lines="6"
+      fi
+	    grep "@treehouses/cli" /var/log/syslog | tail -n "$lines"
 	  ;;
 	"max")
 	  LOG=max
@@ -130,6 +134,9 @@ function log_help {
   echo "      Log 4: level set to Info, Warning, Error, and Debug"
   echo
   echo "  $BASENAME log show"
+  echo "      @treehouses/cli: temperature fahrenheit"
+  echo
+  echo "  $BASENAME log show 5"
   echo "      @treehouses/cli: temperature fahrenheit"
   echo
   echo "  $BASENAME log max"

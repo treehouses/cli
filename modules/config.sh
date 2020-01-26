@@ -16,6 +16,7 @@ if [[ -f "$CONFIGFILE" ]]; then
   source "$CONFIGFILE"
 fi
 
+# writes bash trace to screen and to syslog
 if [[ "$LOG" == "max" ]]; then
   set -x
   exec 1> >(tee >(logger -t @treehouses/cli)) 2>&1

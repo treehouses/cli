@@ -305,7 +305,7 @@ case $1 in
     ;;
   log)
     checkroot
-    log "$2"
+    log "$2" "$3"
     ;;
   help)
     help "$2"

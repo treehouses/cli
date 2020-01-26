@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# $LOGFILE is used like so systemctl disable "$1" >"$LOGFILE" 2>"$LOGFILE"
+# /dev/null is the void (output and errors vanish) $(tty) is the terminal screen
 function verbose {
   case "$1" in
     "")
@@ -24,13 +26,7 @@ function verbose {
       exit 1;
       ;;
   esac
-  s1="LOGFILE="
-  if [[ $(cat $CONFIGFILE) = *"$s1"* ]]
-  then
-    sed -i "s@^$s1.*\$@$s1$LOGFILE@" "$CONFIGFILE"
-  else
-    echo -e "$s1$LOGFILE" >> "$CONFIGFILE"
-  fi
+  conf_var_update "LOGFILE" "$LOGFILE"
 }
 
 function verbose_help {

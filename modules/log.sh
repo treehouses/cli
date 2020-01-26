@@ -1,17 +1,11 @@
 #!/bin/bash
 
-LOGFILE=/dev/null
-LOG=0
-
-function load_config() {
-  if [[ ! -f "$CONFIGFILE" ]]; then
-    touch "$CONFIGFILE"
-  fi
-  source "$CONFIGFILE"
-}
-
-load_config
-
+# uses logger command to log to /var/log/syslog 
+# logit "text" "whether or not to write to screen" "logging level"
+# e.g. logit "i logged some text"
+# e.g. logit "error: MISSION ABORT" "" "ERROR"
+# e.g. logit "i am in the log but not written to terminal window" "1"
+# What gets logged depends on the logging level set by log command
 function logit() {
   $s1 = "$(basename "$0"):"
   if [[ ! "$LOG" == "0" ]]; then
@@ -46,6 +40,8 @@ function logit() {
   echo "$1"
 }
 
+# Sets logging level to be used by the entire app
+# Can also show the log
 function log {
   case "$1" in
     "")
@@ -96,14 +92,7 @@ function log {
       exit 1;
       ;;
   esac
-  s1="LOG="
-  if [[ $(cat $CONFIGFILE) = *"$s1"* ]]
-  then
-    sed -i "s@^$s1.*\$@$s1$LOG@" "$CONFIGFILE"
-  else
-    echo -e "$s1$LOG" >> "$CONFIGFILE"
-  fi
-  sync;
+  conf_var_update "LOG" "$LOG"
 }
 
 function log_help {

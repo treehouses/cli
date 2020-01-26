@@ -2,8 +2,8 @@
 
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
-CONFIGFILE=/etc/treehouses.conf
 
+source "$SCRIPTFOLDER/modules/config.sh"
 source "$SCRIPTFOLDER/modules/log.sh"
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"

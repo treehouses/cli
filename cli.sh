@@ -62,11 +62,7 @@ source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 
-LOGFILE=/dev/null
-LOG=OFF
-source "$CONFIGFILE"
-
-logit "$(basename "$0"): execution started with '$*' arguments" "1"
+logit "$*" "1"
 case $1 in
   expandfs)
     checkrpi
@@ -309,6 +305,7 @@ case $1 in
     remote "$2" "$3"
     ;;
   log)
+    checkroot
     log "$2"
     ;;
   help)

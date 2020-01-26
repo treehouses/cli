@@ -1,8 +1,5 @@
 #!/bin/bash
 
-SCRIPTPATH=$(realpath "$0")
-SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
-
 source "$SCRIPTFOLDER/modules/config.sh"
 source "$SCRIPTFOLDER/modules/log.sh"
 source "$SCRIPTFOLDER/modules/detectrpi.sh"

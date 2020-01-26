@@ -6,10 +6,10 @@ function tor {
   if { [ ! -d "/var/lib/tor/treehouses" ] || [ ! -f "/var/lib/tor/treehouses/hostname" ]; } && [ "$1" != "start" ] && [ "$1" != "add" ]; then
     if [ -z "$(grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g')" ]; then
       echo "Error: there are no tor ports added."
-      echo "'$(basename "$0") add [localPort]' to add a port and be able to use the service"
+      echo "'$BASENAME add [localPort]' to add a port and be able to use the service"
     else
       echo "Error: the tor service has not been configured."
-      echo "Run '$(basename "$0") tor start' to configure it."
+      echo "Run '$BASENAME tor start' to configure it."
     fi
     exit 1
   fi
@@ -169,15 +169,15 @@ function tor {
 function tor_help {
 
   echo
-  echo "Usage: $(basename "$0") tor"
+  echo "Usage: $BASENAME tor"
   echo
   echo "Setups the tor service on the rpi"
   echo
   echo "Examples:"
-  echo "  $(basename "$0") tor"
+  echo "  $BASENAME tor"
   echo "      Outputs the hostname of the tor service"
   echo
-  echo "  $(basename "$0") tor list"
+  echo "  $BASENAME tor list"
   echo "      Outputs the ports that are exposed on the tor network"
   echo "      Example:"
   echo "        external <=> local"
@@ -186,29 +186,29 @@ function tor_help {
   echo "      the port 22 is open and routing the traffic of the local port 22,"
   echo "      the port 80 is open and routing the traffic of the local port 80"
   echo
-  echo "  $(basename "$0") tor add <port> [localport]"
+  echo "  $BASENAME tor add <port> [localport]"
   echo "      Adds the desired port to be accessible from the tor network"
   echo "      Redirects localport to (tor) port"
   echo
-  echo "  $(basename "$0") tor delete <port> [localport]"
+  echo "  $BASENAME tor delete <port> [localport]"
   echo "      Deletes the desired port from the tor network"
   echo
-  echo "  $(basename "$0") tor deleteall"
+  echo "  $BASENAME tor deleteall"
   echo "      Deletes all local ports from the tor network"
   echo
-  echo "  $(basename "$0") tor start"
+  echo "  $BASENAME tor start"
   echo "      Setups and starts the tor service"
   echo
-  echo "  $(basename "$0") tor stop"
+  echo "  $BASENAME tor stop"
   echo "      Stops the tor service"
   echo
-  echo "  $(basename "$0") tor destroy"
+  echo "  $BASENAME tor destroy"
   echo "      Stops and resets the tor configuration"
   echo
-  echo "  $(basename "$0") tor notice <on|off|now|add|delete|list> [api_url]"
+  echo "  $BASENAME tor notice <on|off|now|add|delete|list> [api_url]"
   echo "      Enables or disables the propagation of the tor address/ports to gitter"
   echo
-  echo "  $(basename "$0") tor status"
+  echo "  $BASENAME tor status"
   echo "      Outputs the status of the tor service"
   echo
 }

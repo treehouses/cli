@@ -7,28 +7,27 @@
 # e.g. logit "i am in the log but not written to terminal window" "1"
 # What gets logged depends on the logging level set by log command
 function logit() {
-  s1 = "$(basename "$0"):"
   if [[ ! "$LOG" == "0" ]]; then
     case "$3" in
       "")
-        logger -p local0.info "$s1$1"
+        logger -p local0.info "$BASENAME$1"
         ;;
 	  # Stuff might break
       "WARNING")
 	    if [[ "$LOG" -gt "1" ]]; then
-          logger -p local0.warning "$s1$1"
+          logger -p local0.warning "$BASENAME$1"
 		fi 
         ;;
 	  # Stuff did break
       "ERROR")
 	  	if [[ "$LOG" -gt "2" ]]; then
-          logger -p local0.err "$s1$1"
+          logger -p local0.err "$BASENAME$1"
 		fi
         ;;
 	  # Developer wants to log as well
       "DEBUG")
 	  	if [[ "$LOG" -gt "3" ]]; then
-          logger -p local0.debug "$s1$1"
+          logger -p local0.debug "$BASENAME$1"
 		fi
         ;;
     esac
@@ -85,7 +84,7 @@ function log {
       logit "Log level set to Info, Warning, Error, and Debug"
       ;;
 	"show")
-	  grep "$(basename "$0")" /var/log/syslog
+	  grep "$BASENAME" /var/log/syslog
 	  ;;
     *)
       echo "Error: option not supported";
@@ -97,28 +96,28 @@ function log {
 
 function log_help {
   echo
-  echo "Usage: $(basename "$0") log <0|1|2|3|4|show>"
+  echo "Usage: $BASENAME log <0|1|2|3|4|show>"
   echo
   echo "Example:"
-  echo "  $(basename "$0") log"
+  echo "  $BASENAME log"
   echo "      Log is disabled"
   echo
-  echo "  $(basename "$0") log 0"
+  echo "  $BASENAME log 0"
   echo "      Log disabled"
   echo
-  echo "  $(basename "$0") log 1"
+  echo "  $BASENAME log 1"
   echo "      Log level set to Info"
   echo
-  echo "  $(basename "$0") log 2"
+  echo "  $BASENAME log 2"
   echo "      Log level set to Info and Warning"
   echo
-  echo "  $(basename "$0") log 3"
+  echo "  $BASENAME log 3"
   echo "      Log level set to Info, Warning, and Error"
   echo
-  echo "  $(basename "$0") log 4"
+  echo "  $BASENAME log 4"
   echo "      Log level set to Info, Warning, Error, and Debug"
   echo
-  echo "  $(basename "$0") log show"
+  echo "  $BASENAME log show"
   echo "      treehouses pi: cli.sh: execution started with 'log 1' arguments"
   echo
 }

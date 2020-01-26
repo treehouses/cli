@@ -7,12 +7,12 @@ function password () {
 
 function password_help () {
   echo
-  echo "Usage: $(basename "$0") password <password>"
+  echo "Usage: $BASENAME password <password>"
   echo
   echo "Changes the password for 'pi' user"
   echo
   echo "Example:"
-  echo "  $(basename "$0") password ABC"
+  echo "  $BASENAME password ABC"
   echo "      Sets the password for 'pi' user to 'ABC'."
   echo
 }

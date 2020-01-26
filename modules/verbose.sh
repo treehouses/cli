@@ -31,16 +31,16 @@ function verbose {
 
 function verbose_help {
   echo
-  echo "Usage: $(basename "$0") verbose <on|off>"
+  echo "Usage: $BASENAME verbose <on|off>"
   echo
   echo "Example:"
-  echo "  $(basename "$0") verbose"
+  echo "  $BASENAME verbose"
   echo "      Verbosity is off"
   echo
-  echo "  $(basename "$0") verbose on"
+  echo "  $BASENAME verbose on"
   echo "      Successfully enabled verbosity"
   echo
-  echo "  $(basename "$0") verbose off"
+  echo "  $BASENAME verbose off"
   echo "      Successfully disabled verbosity"
   echo
 }

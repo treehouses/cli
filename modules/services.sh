@@ -297,7 +297,7 @@ function check_tor {
 
 function services_help {
   echo
-  echo "Usage: $(basename "$0") services [available|installed|running|ports|service_name] [up|down|start|stop|autorun|ps]"
+  echo "Usage: $BASENAME services [available|installed|running|ports|service_name] [up|down|start|stop|autorun|ps]"
   echo
   echo "Currently available services:"
   echo "  Planet"
@@ -323,16 +323,16 @@ function services_help {
   echo
   echo "examples:"
   echo
-  echo "  $(basename "$0") services available"
+  echo "  $BASENAME services available"
   echo
-  echo "  $(basename "$0") services planet up"
+  echo "  $BASENAME services planet up"
   echo
-  echo "  $(basename "$0") services planet stop"
+  echo "  $BASENAME services planet stop"
   echo
-  echo "  $(basename "$0") services planet autorun"
+  echo "  $BASENAME services planet autorun"
   echo
-  echo "  $(basename "$0") services planet autorun true"
+  echo "  $BASENAME services planet autorun true"
   echo
-  echo "  $(basename "$0") services planet ps"
+  echo "  $BASENAME services planet ps"
   echo
 }

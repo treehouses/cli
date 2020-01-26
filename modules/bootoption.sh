@@ -59,21 +59,21 @@ EOF
 
 function bootoption_help {
   echo
-  echo "Usage: $(basename "$0") bootoption <console|console autologin|desktop|desktop autologin>"
+  echo "Usage: $BASENAME bootoption <console|console autologin|desktop|desktop autologin>"
   echo
   echo "Changes the boot mode, to console or desktop"
   echo
   echo "Example:"
-  echo "  $(basename "$0") bootoption console"
+  echo "  $BASENAME bootoption console"
   echo "      The rpi will boot to console by default"
   echo
-  echo "  $(basename "$0") bootoption console autologin"
+  echo "  $BASENAME bootoption console autologin"
   echo "      The rpi will boot to console by default and autologin in the user that run the command"
   echo
-  echo "  $(basename "$0") bootoption desktop"
+  echo "  $BASENAME bootoption desktop"
   echo "      The rpi will boot to desktop by default"
   echo
-  echo "  $(basename "$0") bootoption desktop autologin"
+  echo "  $BASENAME bootoption desktop autologin"
   echo "      The rpi will boot to desktop by default and autologin in the user that run the command"
   echo
 }

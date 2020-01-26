@@ -17,9 +17,8 @@ if [[ -f "$CONFIGFILE" ]]; then
 fi
 
 if [[ "$LOG" == "max" ]]; then
-  alias echo='{ set +x; } 2> /dev/null; builtin echo'
   set -x
-  exec 1> >(logger -t treehouses-cli) 2>&1
+  exec 1> >(logger -t treehouses-cli) 2>&1 3>&1 4>&1 5>&1 6>&1 7>&1
 fi
 
 # updates config variables "LOG" "1" Requires root

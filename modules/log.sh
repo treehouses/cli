@@ -10,24 +10,24 @@ function logit() {
   if [[ ! "$LOG" == "0" ]]; then
     case "$3" in
       "")
-        logger -p local0.info "$BASENAME$1"
+        logger -p local0.info "$BASENAME: $1"
         ;;
 	  # Stuff might break
       "WARNING")
 	    if [[ "$LOG" -gt "1" ]]; then
-          logger -p local0.warning "$BASENAME$1"
+          logger -p local0.warning "$BASENAME: $1"
 		fi 
         ;;
 	  # Stuff did break
       "ERROR")
 	  	if [[ "$LOG" -gt "2" ]]; then
-          logger -p local0.err "$BASENAME$1"
+          logger -p local0.err "$BASENAME: $1"
 		fi
         ;;
 	  # Developer wants to log as well
       "DEBUG")
 	  	if [[ "$LOG" -gt "3" ]]; then
-          logger -p local0.debug "$BASENAME$1"
+          logger -p local0.debug "$BASENAME: $1"
 		fi
         ;;
     esac

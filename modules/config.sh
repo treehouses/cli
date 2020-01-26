@@ -16,6 +16,17 @@ if [[ -f "$CONFIGFILE" ]]; then
   source "$CONFIGFILE"
 fi
 
+if [[ ! "$LOGFILE" == /dev/null ]]; then
+  set -v
+fi
+
+if [[ "$LOG" == "max" ]]; then
+  set -x
+  exec 3>&1 4>&2 >(logger -t treehouses-cli 2>&1) 
+fi
+
+
+
 # updates config variables "LOG" "1" Requires root
 function conf_var_update() {
   if [[ -f "$CONFIGFILE" && $(cat $CONFIGFILE) = *"$1"* ]]

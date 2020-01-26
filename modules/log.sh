@@ -7,27 +7,27 @@
 # e.g. logit "i am in the log but not written to terminal window" "1"
 # What gets logged depends on the logging level set by log command
 function logit() {
-  if [[ ! "$LOG" == "0" ]]; then
+  if [[ ! "$LOG" == "0" && ! "$LOG" == "max" ]]; then
     case "$3" in
       "")
-        logger -p local0.info "$BASENAME: $1"
+        logger -p local0.info -t treehouses-cli "$1"
         ;;
 	  # Stuff might break
       "WARNING")
 	    if [[ "$LOG" -gt "1" ]]; then
-          logger -p local0.warning "$BASENAME: $1"
+          logger -p local0.warning -t treehouses-cli "$1"
 		fi 
         ;;
 	  # Stuff did break
       "ERROR")
 	  	if [[ "$LOG" -gt "2" ]]; then
-          logger -p local0.err "$BASENAME: $1"
+          logger -p local0.err -t treehouses-cli "$1"
 		fi
         ;;
 	  # Developer wants to log as well
       "DEBUG")
 	  	if [[ "$LOG" -gt "3" ]]; then
-          logger -p local0.debug "$BASENAME: $1"
+          logger -p local0.debug -t treehouses-cli "$1"
 		fi
         ;;
     esac
@@ -37,6 +37,11 @@ function logit() {
     return 0;
   fi
   echo "$1"
+}
+
+function log_and_exit1() {
+  logit "$1" "$2" "$3"
+  exit 1
 }
 
 # Sets logging level to be used by the entire app
@@ -59,6 +64,9 @@ function log {
 		  ;;
 	    "4")
 		  logit "Log level is set to Info, Warning, Error, and Debug"
+		  ;;
+		"max")
+		  logit "Log level is set to max"
 		  ;;
 	  esac
       exit 0;
@@ -84,7 +92,11 @@ function log {
       logit "Log level set to Info, Warning, Error, and Debug"
       ;;
 	"show")
-	  grep "$BASENAME" /var/log/syslog
+	  grep "treehouses-cli" /var/log/syslog
+	  ;;
+	"max")
+	  LOG=max
+	  logit "Log level set to max"
 	  ;;
     *)
       echo "Error: option not supported";
@@ -96,7 +108,7 @@ function log {
 
 function log_help {
   echo
-  echo "Usage: $BASENAME log <0|1|2|3|4|show>"
+  echo "Usage: $BASENAME log <0|1|2|3|4|show|max>"
   echo
   echo "Example:"
   echo "  $BASENAME log"
@@ -119,5 +131,8 @@ function log_help {
   echo
   echo "  $BASENAME log show"
   echo "      treehouses pi: cli.sh: execution started with 'log 1' arguments"
+  echo
+  echo "  $BASENAME log max"
+  echo "      Log level set to max"
   echo
 }

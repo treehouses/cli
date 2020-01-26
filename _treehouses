@@ -23,7 +23,7 @@ _treehouses_complete()
   discover_cmds="rpi scan interface ping ports mac"
   help_cmds=$commands
   led_cmds="green red dance thanksgiving christmas newyear valentine carneval"
-  log_cmds="0 1 2 3 4 show"
+  log_cmds="0 1 2 3 4 show max"
   memory_cmds="total used free"
   networkmode_cmds="info"
   ntp_cmds="local internet"

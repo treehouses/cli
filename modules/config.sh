@@ -18,7 +18,7 @@ fi
 
 if [[ "$LOG" == "max" ]]; then
   set -x
-  exec 1> >(logger -t treehouses-cli) 2>&1 3>&1 4>&1 5>&1 6>&1 7>&1
+  exec 1> >(tee >(logger -t treehouses-cli)) 2>&1
 fi
 
 # updates config variables "LOG" "1" Requires root

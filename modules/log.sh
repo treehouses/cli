@@ -7,7 +7,7 @@
 # e.g. logit "i am in the log but not written to terminal window" "1"
 # What gets logged depends on the logging level set by log command
 function logit() {
-  $s1 = "$(basename "$0"):"
+  s1 = "$(basename "$0"):"
   if [[ ! "$LOG" == "0" ]]; then
     case "$3" in
       "")

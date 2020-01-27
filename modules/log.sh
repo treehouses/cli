@@ -23,12 +23,20 @@ function log {
       exit 1
       ;;
   esac
-  s1="LOG="
-  if [[ $CONFIGFILE = *"$s1"* ]]
-  then
-    sed -i "s@^$s1.*\$@$s1$LOG@" "$CONFIGFILE"
-  else
-    echo -e "$s1$LOG\n" >> "$CONFIGFILE"
-  fi
+
+  conf_var_update "LOG" "$LOG"
 }
+
+function logger {
+  if [ ! -a /var/log/treehouses.log ]; then
+    touch /var/log/treehouses.log
+    chmod ugo+rw /var/log/treehouses.log
+  fi
+
+  if [[ "$LOG" == 1 ]]; then
+    echo "$*" >> /var/log/treehouses.log
+  fi
+
+}
+
 

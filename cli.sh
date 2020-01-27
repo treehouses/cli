@@ -2,8 +2,6 @@
 
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
-CONFIGFOLDER=~/.treehouses/
-CONFIGFILE="$CONFIGFOLDER"config
 
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
@@ -16,6 +14,7 @@ source "$SCRIPTFOLDER/modules/bridge.sh"
 source "$SCRIPTFOLDER/modules/burn.sh"
 source "$SCRIPTFOLDER/modules/button.sh"
 source "$SCRIPTFOLDER/modules/bootoption.sh"
+source "$SCRIPTFOLDER/modules/config.sh"
 source "$SCRIPTFOLDER/modules/container.sh"
 source "$SCRIPTFOLDER/modules/default.sh"
 source "$SCRIPTFOLDER/modules/detect.sh"
@@ -63,26 +62,8 @@ source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 
-LOGFILE=/dev/null
-LOG=1
 
-if [[ ! -d "$CONFIGFOLDER" ]]; then
-  mkdir "$CONFIGFOLDER"
-fi
-if [[ -s "$CONFIGFILE" ]]
-then
-  source "$CONFIGFILE"
-else
-  touch "$CONFIGFILE"
-fi
-
-if [[ "$LOG" == 1 ]]; then
-  if [ ! -a /var/log/treehouses.log ]; then
-    sudo touch /var/log/treehouses.log
-    sudo chmod ugo+rw /var/log/treehouses.log
-  fi
-  echo "$0" "$*" >> /var/log/treehouses.log
-fi
+logger "$0" "$*"
 
 case $1 in
   expandfs)
@@ -172,6 +153,10 @@ case $1 in
   locale)
     checkroot
     locale "$2"
+    ;;
+  log)
+    checkroot
+    log "$2"
     ;;
   ssh)
     checkroot

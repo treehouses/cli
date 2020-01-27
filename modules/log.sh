@@ -27,6 +27,12 @@ function log {
   conf_var_update "LOG" "$LOG"
 }
 
+function adddate {
+    while IFS= read -r line; do
+        printf '%s %s\n' "$(date -u '+%D %T')" "$line";
+    done
+}
+
 function logger {
   if [ ! -a /var/log/treehouses.log ]; then
     touch /var/log/treehouses.log
@@ -34,7 +40,7 @@ function logger {
   fi
 
   if [[ "$LOG" == 1 ]]; then
-    echo "$*" >> /var/log/treehouses.log
+    echo "$*" | adddate >> /var/log/treehouses.log
   fi
 
 }

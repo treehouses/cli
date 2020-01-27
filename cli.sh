@@ -155,7 +155,6 @@ case $1 in
     locale "$2"
     ;;
   log)
-    checkroot
     log "$2"
     ;;
   ssh)
@@ -200,10 +199,6 @@ case $1 in
   led)
     checkrpi
     led "$2" "$3"
-    ;;
-  log)
-    checkrpi
-    log "$2"
     ;;
   rtc)
     checkrpi

@@ -39,8 +39,8 @@ function adddate {
 
 function logger {
   if [ ! -a /var/log/treehouses.log ]; then
-    touch /var/log/treehouses.log
-    chmod ugo+rw /var/log/treehouses.log
+    sudo touch /var/log/treehouses.log
+    sudo chmod ugo+rw /var/log/treehouses.log
   fi
 
   if [[ "$LOG" == 1 ]]; then

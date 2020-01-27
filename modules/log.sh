@@ -18,6 +18,10 @@ function log {
       LOG=1
       echo "Logging enabled"
       ;;
+    "2")
+      LOG=2
+      echo "Logging to screen"
+      ;;
     *)
       echo "Error: only '0' and '1' are supported"
       exit 1
@@ -41,6 +45,11 @@ function logger {
 
   if [[ "$LOG" == 1 ]]; then
     echo "$*" | adddate >> /var/log/treehouses.log
+  fi
+
+  if [[ "$LOG" == 2 ]]; then
+    LOGFILE=$(tty)
+    echo "$*"
   fi
 
 }

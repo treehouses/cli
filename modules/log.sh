@@ -3,24 +3,20 @@
 function log {
   case "$1" in
     "")
-      if [[ "$LOG" == 0 ]]; then
-        echo "Log is off"
-      else
-        echo "Log is on"
-      fi
+      echo "Logging level: $LOG"
       exit 0
       ;;
     "0")
       LOG=0
-      echo "Logging disabled"
+      echo "Logging level: 0"
       ;;
     "1")
       LOG=1
-      echo "Logging enabled"
+      echo "Logging level: 1"
       ;;
     "2")
       LOG=2
-      echo "Logging to screen"
+      echo "Logging level: 2"
       ;;
     *)
       echo "Error: only '0' and '1' are supported"

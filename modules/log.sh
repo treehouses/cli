@@ -1,5 +1,7 @@
 #!/bin/bash
 
+lines=$3
+
 function log {
   case "$1" in
     "")
@@ -8,15 +10,18 @@ function log {
       ;;
     "0")
       LOG=0
-      echo "Logging level: 0"
+      echo "Logging level set to 0"
       ;;
     "1")
       LOG=1
-      echo "Logging level: 1"
+      echo "Logging level set to 1"
       ;;
     "2")
       LOG=2
-      echo "Logging level: 2"
+      echo "Logging level set to 2"
+      ;;
+    "display")
+      display
       ;;
     *)
       echo "Error: only '0' and '1' are supported"
@@ -31,6 +36,14 @@ function adddate {
     while IFS= read -r line; do
         printf '%s %s\n' "$(date -u '+%D %T')" "$line";
     done
+}
+
+function display {
+  if [ ! $lines ]; then
+    cat /var/log/treehouses.log
+  else
+    sudo tail -n "$lines" /var/log/treehouses.log
+  fi
 }
 
 function logger {

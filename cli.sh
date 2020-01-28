@@ -155,7 +155,7 @@ case $1 in
     locale "$2"
     ;;
   log)
-    log "$2"
+    log "$2" "$3"
     ;;
   ssh)
     checkroot

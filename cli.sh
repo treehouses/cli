@@ -1,4 +1,5 @@
 #!/bin/bash
+
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 SCRIPTARGS="$*"

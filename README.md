@@ -17,9 +17,7 @@ Also [treehouses remote](https://github.com/treehouses/remote) uses this interfa
 To manually install on a Pi:
 ```bash
 sudo apt-get install nodejs npm
-git clone http://github.com/treehouses/cli
-cd cli
-npm install --unsafe-perm -g ./
+sudo npm i -g --unsafe-perm @treehouses/cli
 ```
 If you run into any problems check if your RPi is supported [here](https://github.com/treehouses/cli/blob/836c2e9b0bcebfe6afc97706634e7c070d795eac/modules/detectrpi.sh#L5-L42).
 

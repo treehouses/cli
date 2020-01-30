@@ -9,7 +9,7 @@
 
 @treehouses/cli is a command-line interface for Raspberry Pi that is used to manage various services and functions.
 Including vnc, ssh, tor, vpn, networking, starting services, bluetooth, led lights, and much more!
-Also [treehouses-remote](https://github.com/treehouses/remote) uses this interface. 
+Also [treehouses remote](https://github.com/treehouses/remote) uses this interface. 
 
 ## Install
 

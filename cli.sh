@@ -313,4 +313,6 @@ case $1 in
     help
     ;;
 esac
-logit "$*" "1"
+if [ $? -eq 0 ]; then
+  logit "$*" "1"
+fi

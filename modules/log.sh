@@ -134,9 +134,11 @@ function log_help {
   echo "      Log 4: level set to Info, Warning, Error, and Debug"
   echo
   echo "  $BASENAME log show"
+  echo "      Shows the default 6 lines of log which is at (/var/log/syslog)"
   echo "      @treehouses/cli: temperature fahrenheit"
   echo
   echo "  $BASENAME log show 5"
+  echo "      Shows 5 lines of log which is at (/var/log/syslog)"
   echo "      @treehouses/cli: temperature fahrenheit"
   echo
   echo "  $BASENAME log max"

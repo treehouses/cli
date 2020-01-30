@@ -116,22 +116,22 @@ function log_help {
   echo
   echo "Example:"
   echo "  $BASENAME log"
-  echo "      Log 0: log is disabled"
+  echo "      log 0: log is disabled"
   echo
   echo "  $BASENAME log 0"
-  echo "      Log 0: log disabled"
+  echo "      log 0: log disabled"
   echo
   echo "  $BASENAME log 1"
-  echo "      Log 1: level set to Info"
+  echo "      log 1: level set to Info"
   echo
   echo "  $BASENAME log 2"
-  echo "      Log 2: level set to Info and Warning"
+  echo "      log 2: level set to Info and Warning"
   echo
   echo "  $BASENAME log 3"
-  echo "      Log 3: level set to Info, Warning, and Error"
+  echo "      log 3: level set to Info, Warning, and Error"
   echo
   echo "  $BASENAME log 4"
-  echo "      Log 4: level set to Info, Warning, Error, and Debug"
+  echo "      log 4: level set to Info, Warning, Error, and Debug"
   echo
   echo "  $BASENAME log show"
   echo "      Shows the default 6 lines of log which is at (/var/log/syslog)"
@@ -142,6 +142,6 @@ function log_help {
   echo "      @treehouses/cli: temperature fahrenheit"
   echo
   echo "  $BASENAME log max"
-  echo "      Log X: level set to max"
+  echo "      log X: level set to max"
   echo
 }

@@ -52,45 +52,45 @@ function log {
     "")
 	  case "$LOG" in
 	    "0")
-		  logit "Log 0: log is disabled"
+		  logit "log 0: log is disabled"
 		  ;;
 	    "1")
-		  logit "Log 1: level is set to Info"
+		  logit "log 1: level is set to Info"
 		  ;;
 	    "2")
-		  logit "Log 2: level is set to Info and Warning"
+		  logit "log 2: level is set to Info and Warning"
 		  ;;
 	    "3")
-		  logit "Log 3: level is set to Info, Warning, and Error"
+		  logit "log 3: level is set to Info, Warning, and Error"
 		  ;;
 	    "4")
-		  logit "Log 4: level is set to Info, Warning, Error, and Debug"
+		  logit "log 4: level is set to Info, Warning, Error, and Debug"
 		  ;;
 		"max")
-		  logit "Log X: level is set to max"
+		  logit "log X: level is set to max"
 		  ;;
 	  esac
       exit 0;
       ;;
 	"0")
       LOG=0
-      logit "Log 0: log disabled"
+      logit "log 0: log disabled"
       ;;
     "1")
       LOG=1
-      logit "Log 1: level set to Info"
+      logit "log 1: level set to Info" "" "INFO"
       ;;
     "2")
       LOG=2
-      logit "Log 2: level set to Info and Warning"
+      logit "log 2: level set to Info and Warning" "" "WARNING"
       ;;
     "3")
       LOG=3
-      logit "Log 3: level set to Info, Warning, and Error"
+      logit "log 3: level set to Info, Warning, and Error" "" "ERROR"
       ;;
     "4")
       LOG=4
-      logit "Log 4: level set to Info, Warning, Error, and Debug"
+      logit "log 4: level set to Info, Warning, Error, and Debug" "" "DEBUG"
       ;;
 	"show")
 	  if [ -z "$2" ] || ! [[ "$2" =~ ^[0-9]+$ ]]; then
@@ -100,11 +100,10 @@ function log {
 	  ;;
 	"max")
 	  LOG=max
-	  logit "Log X: level set to max"
+	  logit "log X: level set to max" "" "DEBUG"
 	  ;;
     *)
-      echo "Error: option not supported";
-      exit 1;
+      log_and_exit1 "Error: option not supported"
       ;;
   esac
   conf_var_update "LOG" "$LOG"

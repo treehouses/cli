@@ -1,6 +1,7 @@
 #!/bin/bash
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
+SCRIPTARGS="$*"
 
 source "$SCRIPTFOLDER/modules/config.sh"
 source "$SCRIPTFOLDER/modules/log.sh"
@@ -314,5 +315,5 @@ case $1 in
     ;;
 esac
 if [ $? -eq 0 ]; then
-  logit "$*" "1"
+  logit "$SCRIPTARGS" "1"
 fi

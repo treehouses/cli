@@ -5,6 +5,26 @@
 [![npm](https://img.shields.io/npm/dw/@treehouses/cli)](https://www.npmjs.com/package/%40treehouses%2Fcli)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/treehouses/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## About
+
+@treehouses/cli is a command-line interface for Raspberry Pi that is used to manage various services and functions.
+Including vnc, ssh, tor, vpn, networking, starting services, bluetooth, led lights, and much more!
+Also [treehouses-remote](https://github.com/treehouses/remote) uses this interface. 
+
+## Install
+
+@treehouses/cli comes pre-installed on the treehouses image made with [builder](https://github.com/treehouses/builder).
+To manually install on a Pi:
+```bash
+sudo apt-get install nodejs npm
+git clone http://github.com/treehouses/cli
+cd cli
+npm install --unsafe-perm -g ./
+```
+If you run into any problems check if your RPi is supported [here](https://github.com/treehouses/cli/blob/836c2e9b0bcebfe6afc97706634e7c070d795eac/modules/detectrpi.sh#L5-L42).
+
+## Features
+
 ```
 Usage: treehouses [command] ...
 

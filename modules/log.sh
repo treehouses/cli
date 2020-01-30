@@ -103,7 +103,7 @@ function log {
 	  logit "log X: level set to max" "" "DEBUG"
 	  ;;
     *)
-      log_and_exit1 "Error: option not supported"
+      log_and_exit1 "Error: only '0' '1' '2' '3' '4' 'show' 'max' options are supported"
       ;;
   esac
   conf_var_update "LOG" "$LOG"

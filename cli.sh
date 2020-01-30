@@ -61,7 +61,6 @@ source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 
-logit "$*" "1"
 case $1 in
   expandfs)
     checkrpi
@@ -314,3 +313,4 @@ case $1 in
     help
     ;;
 esac
+logit "$*" "1"

@@ -29,15 +29,15 @@ function apchannel {
 
 function apchannel_help {
   echo
-  echo "Usage: $(basename "$0") apchannel [channel]"
+  echo "Usage: $BASENAME apchannel [channel]"
   echo
   echo "Prints out or sets the ap channel."
   echo
   echo "Example:"
-  echo "  $(basename "$0") apchannel"
+  echo "  $BASENAME apchannel"
   echo "      This will print out the current ap channel"
   echo
-  echo "  $(basename "$0") apchannel 6"
+  echo "  $BASENAME apchannel 6"
   echo "      This will set the ap channel to 6."
   echo "      A reboot is required to apply the changes."
   echo

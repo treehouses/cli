@@ -117,24 +117,24 @@ function memory() {
 
 function memory_help {
   echo
-  echo "Usage: $(basename "$0") memory [total|used|free] [-g|-m]"
+  echo "Usage: $BASENAME memory [total|used|free] [-g|-m]"
   echo
   echo "Displays the various values for total, used, and free RAM memory."
   echo
   echo "Example:"
-  echo "  $(basename "$0") memory"
+  echo "  $BASENAME memory"
   echo "      This will display in a single sentence 3 different RAM memory values in bytes for total, used and free memory."
   echo
-  echo "  $(basename "$0") memory -g"
+  echo "  $BASENAME memory -g"
   echo "      This will display in a single sentence 3 different RAM memory values in gigabytes for total, used and free memory."
   echo
-  echo "  $(basename "$0") memory total"
+  echo "  $BASENAME memory total"
   echo "      This will return the numerical value for the total memory (value in bytes)."
   echo
-  echo "  $(basename "$0") memory used"
+  echo "  $BASENAME memory used"
   echo "      This will return the numerical value for the used memory (value in bytes)."
   echo
-  echo "  $(basename "$0") memory free -m"
+  echo "  $BASENAME memory free -m"
   echo "      This will return the numerical value for the remaining free memory (value in megabytes)."
   echo
 }

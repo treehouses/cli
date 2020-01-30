@@ -25,17 +25,17 @@ case "$option" in
   "")
     if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "inactive" ]; then
       echo "VNC is disabled." 
-      echo "To enable it, use $(basename "$0") vnc on"
+      echo "To enable it, use $BASENAME vnc on"
     elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "active" ]; then
       echo "You can now remotely access the system with a VNC client using the IP address: $ipaddress"
-      echo "To disable it, use $(basename "$0") vnc off"
+      echo "To disable it, use $BASENAME vnc off"
     elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
       echo "Please reboot your system."
     elif [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "active" ]; then
       echo "Please reboot your system."
     else
-      echo "VNC server is not configured correctly. Please try $(basename "$0") vnc on to enable it, or $(basename "$0") vnc off to disable it."
-      echo "Alternatively, you may try $(basename "$0") vnc status-service to verify the status of each specific required service."
+      echo "VNC server is not configured correctly. Please try $BASENAME vnc on to enable it, or $BASENAME vnc off to disable it."
+      echo "Alternatively, you may try $BASENAME vnc status-service to verify the status of each specific required service."
     fi
     ;;
   "on")
@@ -83,22 +83,22 @@ case "$option" in
 # Prints the options for the "vnc" command
 function vnc_help {
   echo
-  echo "Usage: $(basename "$0") vnc <on|off|info>"
+  echo "Usage: $BASENAME vnc <on|off|info>"
   echo
   echo "Example:"
-  echo "  $(basename "$0") vnc"
+  echo "  $BASENAME vnc"
   echo "      Prints the status of the VNC server (enabled or disabled)."
   echo
-  echo "  $(basename "$0") vnc on"
+  echo "  $BASENAME vnc on"
   echo "      The VNC service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using VNC viewer."
   echo "      This will disable html, if it is active."
   echo
-  echo "  $(basename "$0") vnc off"
+  echo "  $BASENAME vnc off"
   echo "      VNC services will be disabled."  echo
   echo "Enables or disables the VNC server service"
   echo
   echo "Example:"
-  echo "  $(basename "$0") vnc info"
+  echo "  $BASENAME vnc info"
   echo "      Prints a detailed configuration of each required component (boot option, vnc service, x service)."
   echo
 } 

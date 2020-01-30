@@ -26,16 +26,16 @@ function restore {
 
 function restore_help {
   echo
-  echo "Usage: $(basename "$0") restore [device path]"
+  echo "Usage: $BASENAME restore [device path]"
   echo
   echo "restores a treehouses image to an SDCard"
   echo "and is the logical brother of 'treehouses clone'"
   echo
   echo "Example:"
-  echo "  $(basename "$0") restore"
+  echo "  $BASENAME restore"
   echo "      Will restore the current system to /dev/sdb (by default)."
   echo
-  echo "  $(basename "$0") restore /dev/sda"
+  echo "  $BASENAME restore /dev/sda"
   echo "      Will restore the current system to /dev/sda"
   echo
 }

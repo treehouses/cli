@@ -22,12 +22,12 @@ function ethernet {
 
 function ethernet_help {
   echo
-  echo "Usage: $(basename "$0") ethernet <ip> <mask> <gateway> <dns>"
+  echo "Usage: $BASENAME ethernet <ip> <mask> <gateway> <dns>"
   echo
   echo "Configures ethernet interface (eth0) to use a static ip address"
   echo
   echo "Example:"
-  echo "  $(basename "$0") ethernet 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9"
+  echo "  $BASENAME ethernet 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9"
   echo "      Sets the ethernet interface IP address to 192.168.1.101, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
   echo
 }

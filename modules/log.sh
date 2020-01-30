@@ -93,8 +93,10 @@ function log {
       logit "log 4: level set to Info, Warning, Error, and Debug" "" "DEBUG"
       ;;
 	"show")
-	  if [ -z "$2" ] || ! [[ "$2" =~ ^[0-9]+$ ]]; then
+	  if [ -z "$2" ]; then
 	    lines="6"
+	  elif ! [[ "$2" =~ ^[0-9]+$ ]]; then
+	    log_and_exit1 "Error: only numbers allowed"
       fi
 	  grep "@treehouses/cli" /var/log/syslog | tail -n "$lines"
 	  ;;

@@ -166,17 +166,13 @@ function services {
 
         start)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml start
                 echo "${service_name} started"
               else
                 echo "service not found"
               fi
-              ;;
-            nextcloud|portainer)
-              docker start $service_name
-              echo "${service_name} started"
               ;;
             *)
               echo "unknown service"
@@ -186,17 +182,13 @@ function services {
 
         stop)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml stop
                 echo "${service_name} stopped"
               else
                 echo "service not found"
               fi
-              ;;
-            nextcloud|portainer)
-              docker stop $service_name
-              echo "${service_name} stopped"
               ;;
             *)
               echo "unknown service"

@@ -80,6 +80,7 @@ function services {
         up)
           case "$service_name" in
             planet)
+              check_space "treehouses/planet"
               if [ -f /srv/planet/pwd/credentials.yml ]; then
                 docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d
               else
@@ -89,44 +90,46 @@ function services {
               check_tor "80"
               ;;
             kolibri)
+              check_space "treehouses/kolibri"
               bash $TEMPLATES/services/kolibri/kolibri_yml.sh
               echo "yml file created"
-
               docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
               echo "kolibri built and started"
               check_tor "8080"
               ;;
             nextcloud)
+              check_space "library/nextcloud"
               docker run --name nextcloud -d -p 8081:80 nextcloud
               echo "nextcloud built and started"
               check_tor "8081"
               ;;
             pihole)
+              check_space "pihole/pihole"
               bash $TEMPLATES/services/pihole/pihole_yml.sh
               echo "yml file created"
-
               service dnsmasq stop
               docker-compose -f /srv/pihole/pihole.yml -p pihole up -d
               echo "pihole built and started"
               check_tor "8053"
               ;;
             moodle)
+              check_space "treehouses/moodle"
               bash $TEMPLATES/services/moodle/moodle_yml.sh
               echo "yml file created"
-
               docker-compose -f /srv/moodle/moodle.yml -p moodle up -d
               echo "moodle built and started"
               check_tor "8082"
               ;;
             privatebin)
+              check_space "treehouses/privatebin"
               bash $TEMPLATES/services/privatebin/privatebin_yml.sh
               echo "yml file created"
-
               docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d
               echo "privatebin built and started"
               check_tor "8083"
               ;;
             portainer)
+              check_space "portainer/portainer"
               docker volume create portainer_data
               docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
               echo "portainer built and started"
@@ -375,6 +378,19 @@ function find_available_services {
   service_name="$1"
   available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
   echo "$service [$available_formats]"
+}
+
+function check_space {
+  image_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')
+  free_space=$(df -Ph /var/lib/docker | awk 'END {print $4}')
+  free_space=$(echo $free_space | numfmt --from=iec)
+
+  if (( $image_size > $free_space )); then
+    echo "image size:" $image_size
+    echo "free space:" $free_space
+    echo "not enough free space"
+    exit 1
+  fi
 }
 
 # tor status and port check

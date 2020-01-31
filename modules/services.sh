@@ -97,9 +97,12 @@ function services {
               check_tor "8080"
               ;;
             nextcloud)
-              docker run --name nextcloud -d -p 8081:80 nextcloud
-              echo "nextcloud built and started"
-              check_tor "8081"
+              bash $TEMPLATES/services/nextcloud/nextcloud_yml.sh
+              echo "yml file created"
+
+              docker-compose -f /srv/nextcloud/nextcloud.yml -p nextcloud up -d
+              echo "Next cloud built and started"
+              check_tor "8081:80"
               ;;
             pihole)
               bash $TEMPLATES/services/pihole/pihole_yml.sh
@@ -127,8 +130,10 @@ function services {
               check_tor "8083"
               ;;
             portainer)
-              docker volume create portainer_data
-              docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+              bash $TEMPLATES/services/portainer/portainer_yml.sh
+              echo "yml file created"
+
+              docker-compose -f /srv/portainer/portainer.yml -p portainer up -d
               echo "portainer built and started"
               check_tor "9000"
               ;;

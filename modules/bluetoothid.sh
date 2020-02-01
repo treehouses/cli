@@ -4,8 +4,7 @@ function bluetoothid () {
   #check if bluetooth has an id
   btidfile=/etc/bluetooth-id
   if [ ! -f "${btidfile}" ]; then
-    echo "No ID. Bluetooth service is not on."
-    exit 0
+    log_and_exit0 "No ID. Bluetooth service is not on."
   fi
 
   bid=$(cat ${btidfile})  #get id of the bluetooth
@@ -13,14 +12,13 @@ function bluetoothid () {
 
   case "$1" in
     "")
-      echo "${nname}-${bid}"
+      logit "${nname}-${bid}"
       ;;
     "number")
-      echo "${bid}"
+      logit "${bid}"
       ;;
     *)
-      echo "Argument not valid; leave blank or use \"number\""
-      exit 1
+      log_and_exit1 "Argument not valid; leave blank or use \"number\""
       ;;
   esac
 }

@@ -31,16 +31,29 @@ function logit() {
 		fi
         ;;
     esac
-	sync;
+	sync; sync; sync;
   fi
   if [[ "$2" == "1" ]]; then
     return 0;
   fi
-  echo "$1"
+  if [[ "$4" == "1" ]]; then
+    echo -e "$1"
+  elif [[ "$4" == "2" ]]; then
+    echo -n "$1"
+  elif [[ "$4" == "3" ]]; then
+    printf "$1"
+  else
+    echo "$1"
+  fi
+}
+
+function log_and_exit0() {
+  logit "$1" "$2" "$3" "$4"
+  exit 0
 }
 
 function log_and_exit1() {
-  logit "$1" "$2" "$3"
+  logit "$1" "$2" "$3" "$4"
   exit 1
 }
 

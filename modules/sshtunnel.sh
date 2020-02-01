@@ -2,8 +2,8 @@
 
 function sshtunnel {
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
-    echo "Error: no tunnel has been set up."
-    echo "Run '$BASENAME sshtunnel add' to add a key for the tunnel."
+    logit "Error: no tunnel has been set up."
+    logit "Run '$BASENAME sshtunnel add' to add a key for the tunnel."
     exit 0
   fi      
   portinterval="$2"
@@ -23,8 +23,7 @@ function sshtunnel {
   if [ "$1" = "add" ]; then
     if [ -z "$portinterval" ];
     then
-      echo "Error: A port interval is required"
-      exit 1
+      log_and_exit1 "Error: A port interval is required"
     fi
 
     portssh=$((portinterval + 22))
@@ -74,7 +73,7 @@ function sshtunnel {
     fi
 
     pkill -3 autossh
-    echo -e "${GREEN}Removed${NC}"
+    logit "${GREEN}Removed${NC}" "" "" "1"
   elif [ "$1" = "list" ]; then
     if [ -f "/etc/tunnel" ]; then
       portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
@@ -84,43 +83,42 @@ function sshtunnel {
       portnewcouchdb=$((portinterval + 82))
       portmunin=$((portinterval + 49))
 
-      echo "Ports:"
-      echo " local   -> external"
-      echo "    22   -> $portssh"
-      echo "    80   -> $portweb"
-      echo "    2200 -> $portnewcouchdb"
-      echo "    4949 -> $portmunin"
-      echo "    5984 -> $portcouchdb"
-      echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
+      logit "Ports:"
+      logit " local   -> external"
+      logit "    22   -> $portssh"
+      logit "    80   -> $portweb"
+      logit "    2200 -> $portnewcouchdb"
+      logit "    4949 -> $portmunin"
+      logit "    5984 -> $portcouchdb"
+      logit "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
     else
-      echo "Error: a tunnel has not been set up yet"
-      exit 1
+      log_and_exit1 "Error: a tunnel has not been set up yet"
     fi
   elif [ "$1" = "check" ]; then
     if [ -f "/etc/tunnel" ]; then
-      echo -e "[${GREEN}OK${NC}] /etc/tunnel"
+      logit "[${GREEN}OK${NC}] /etc/tunnel" "" "" "1"
     else
-      echo -e "[${RED}MISSING${NC}] /etc/tunnel"
+      logit "[${RED}MISSING${NC}] /etc/tunnel" "" "" "1"
     fi
 
     if [ -f "/etc/cron.d/autossh" ]
     then
-      echo -e "[${GREEN}OK${NC}] /etc/cron.d/autossh"
+      logit "[${GREEN}OK${NC}] /etc/cron.d/autossh" "" "" "1"
     else
-      echo -e "[${RED}MISSING${NC}] /etc/cron.d/autossh"
+      logit "[${RED}MISSING${NC}] /etc/cron.d/autossh" "" "" "1"
     fi
 
     if grep -q "\\-f \"/etc/tunnel\"" /etc/rc.local 2>"$LOGFILE"; then
-      echo -e "[${GREEN}OK${NC}] /etc/rc.local starts /etc/tunnel if exists"
+      logit "[${GREEN}OK${NC}] /etc/rc.local starts /etc/tunnel if exists" "" "" "1"
     else
-      echo -e "[${RED}MISSING${NC}] /etc/rc.local doesn't start /etc/tunnel if exists"
+      logit "[${RED}MISSING${NC}] /etc/rc.local doesn't start /etc/tunnel if exists" "" "" "1"
     fi
 
     if [ "$(pidof autossh)" ]
     then
-      echo -e "[${GREEN}OK${NC}] autossh pid: $(pidof autossh)"
+      logit "[${GREEN}OK${NC}] autossh pid: $(pidof autossh)" "" "" "1"
     else
-      echo -e "[${RED}MISSING${NC}] autossh not running"
+      logit "[${RED}MISSING${NC}] autossh not running" "" "" "1"
     fi
   elif [ "$1" = "key" ]; then
     if [ ! -f "/root/.ssh/id_rsa" ]; then
@@ -137,35 +135,33 @@ function sshtunnel {
       if [ ! -f "/etc/tunnel_report_channels.txt" ]; then
         echo "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" >> /etc/tunnel_report_channels.txt
       fi
-      echo "OK."
+      logit "OK."
     elif [ "$option" = "add" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        echo "Error: You must specify a channel URL"
-        exit 1
+        log_and_exit1 "Error: You must specify a channel URL"
       fi
 
       echo "$value" >> /etc/tunnel_report_channels.txt
-      echo "OK."
+      logit "OK."
     elif [ "$option" = "delete" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        echo "Error: You must specify a channel URL"
-        exit 1
+        log_and_exit1 "Error: You must specify a channel URL"
       fi
 
       value=$(echo $value | sed 's/\//\\\//g')
       sed -i "/^$value/d" /etc/tunnel_report_channels.txt
-      echo "OK."
+      logit "OK."
     elif [ "$option" = "list" ]; then
       if [ -f "/etc/tunnel_report_channels.txt" ]; then
         cat /etc/tunnel_report_channels.txt
       else
-        echo "No channels found. No message send"
+        logit "No channels found. No message send"
       fi
     elif [ "$option" = "off" ]; then
       rm -rf /etc/tunnel_report.sh /etc/cron.d/tunnel_report /etc/tunnel_report_channels.txt || true
-      echo "OK."
+      logit "OK."
     elif [ "$option" = "now" ]; then
       portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
       portssh=$((portinterval + 22))
@@ -180,13 +176,12 @@ function sshtunnel {
       else
         status="off"
       fi
-      echo "Status: $status"
+      logit "Status: $status"
     else
-      echo "Error: only 'on' and 'off' options are supported."
+      logit "Error: only 'on' and 'off' options are supported."
     fi
   else
-    echo "Error: only 'add', 'remove', 'list', 'check', 'key', 'notice' options are supported";
-    exit 1
+    log_and_exit1 "Error: only 'add', 'remove', 'list', 'check', 'key', 'notice' options are supported";
   fi
 }
 

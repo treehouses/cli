@@ -6,34 +6,34 @@ function coralenv {
   
   if [ ! -d /usr/share/doc/python3-coral-enviro ] ; then
     warn "Error: the Coral python environment is not installed"
-    echo "You can install it using the command:"
-    echo "$BASENAME coralenv install"
+    logit "You can install it using the command:"
+    logit "$BASENAME coralenv install"
     echo
-    echo "To install them manually, run:";    
-    echo "echo \"deb https://packages.cloud.google.com/apt coral-cloud-stable main\" | sudo tee /etc/apt/sources.list.d/coral-cloud.list"
-    echo "curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -"
-    echo "sudo apt update"
-    echo "sudo apt install python3-coral-enviro"
+    logit "To install them manually, run:";    
+    logit "echo \"deb https://packages.cloud.google.com/apt coral-cloud-stable main\" | sudo tee /etc/apt/sources.list.d/coral-cloud.list"
+    logit "curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -"
+    logit "sudo apt update"
+    logit "sudo apt install python3-coral-enviro"
   fi
 
 if [ -e /sys/bus/iio/devices/iio:device0 ]; then # Checks if board is attached
   case "$param" in
     "demo-on") # Start the demo until next reboot
       nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>"$LOGFILE" &
-      echo "Success: the Coral Environmental board is now displaying sensor information.";
-      echo "The board's display will turn off on reboot."
+      logit "Success: the Coral Environmental board is now displaying sensor information.";
+      logit "The board's display will turn off on reboot."
       ;;
     "demo-always-on") # Starts the demo, and activates it on reboot
       nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>"$LOGFILE" &
       ( crontab -l | grep -v -F "$cronjob" ; echo "$cronjob" ) | crontab -
-      echo "Success: the Coral Environmental board is now displaying sensor information.";
-      echo "The board's display will persist on reboot."
+      logit "Success: the Coral Environmental board is now displaying sensor information.";
+      logit "The board's display will persist on reboot."
       ;;
     "demo-off") # Stops the demo and deactivates it on reboot
       ( crontab -l | grep -v -F "$croncmd" ) | crontab -
       pkill enviro_demo;
-      echo "Success: the Coral Environmental board demo is now stopped.";
-      echo "The board's display will turn off on reboot."
+      logit "Success: the Coral Environmental board demo is now stopped.";
+      logit "The board's display will turn off on reboot."
       ;;
     "install") # Installs the prequisite packages
       grep -qF 'deb https://packages.cloud.google.com/apt coral-cloud-stable main' '/etc/apt/sources.list.d/treehouses.list' || echo 'deb https://packages.cloud.google.com/apt coral-cloud-stable main' | tee -a '/etc/apt/sources.list.d/treehouses.list'
@@ -41,14 +41,14 @@ if [ -e /sys/bus/iio/devices/iio:device0 ]; then # Checks if board is attached
       apt update;
       apt install -y python3-coral-enviro;
       reboot_needed;
-      echo "Please reboot your Raspberry Pi."
+      logit "Please reboot your Raspberry Pi."
       ;;
     *)
-      echo "Error: only 'demo-on', 'demo-always-on', 'demo-off' and 'install' options are supported"
+      logit "Error: only 'demo-on', 'demo-always-on', 'demo-off' and 'install' options are supported"
       ;;
     esac
   else
-    echo "Coral Environmmental Board not detected" && exit 1
+    log_and_exit1 "Coral Environmmental Board not detected"
   fi
 }
 

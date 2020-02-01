@@ -17,62 +17,61 @@ function wifistatus {
     "")
       #check if device has wifi
       if iwconfig wlan0 2>&1 | grep -q "No such device"; then
-        echo "Error: no wifi device is present"
-        exit 0
+        log_and_exit0 "Error: no wifi device is present"
       fi
       #check if device is connected to wifi
       if iwconfig wlan0 | grep -q "ESSID:off/any"; then
-        echo "Error: you are not on a wireless connection"
+        logit "Error: you are not on a wireless connection"
       else
-        echo "Signal strength is $signalStrength"
+        logit "Signal strength is $signalStrength"
         if [ "$signal" -gt -30 ] && [ "$signal" -lt -10 ] ; then
-          echo "You have a perfect signal"
+          logit "You have a perfect signal"
         fi
         if [ "$signal" -gt -40 ] && [ "$signal" -lt -29 ] ; then
-          echo "You have an incredible signal"
+          logit "You have an incredible signal"
         fi
         if [ "$signal" -gt -50 ] && [ "$signal" -lt -39 ] ; then
-          echo "You have an excellent signal"
+          logit "You have an excellent signal"
         fi
         if [ "$signal" -gt -60 ] && [ "$signal" -lt -49 ] ; then
-          echo "You have a good signal"
+          logit "You have a good signal"
         fi
         if [ "$signal" -gt -70 ] && [ "$signal" -lt -59 ] ; then
-          echo "You have an okay signal"
+          logit "You have an okay signal"
         fi
         if [ "$signal" -gt -80 ] && [ "$signal" -lt -69 ] ; then
-          echo "You have a poor signal"
+          logit "You have a poor signal"
         fi
         if [ "$signal" -gt -90 ] && [ "$signal" -lt -79 ] ; then
-          echo "You have a bad signal"
+          logit "You have a bad signal"
         fi
       fi
       ;;
     "simple")
       if [ "$signal" -gt -30 ] && [ "$signal" -lt -10 ] ; then
-        echo "You have a perfect signal"
+        logit "You have a perfect signal"
       fi
       if [ "$signal" -gt -40 ] && [ "$signal" -lt -29 ] ; then
-        echo "You have an incredible signal"
+        logit "You have an incredible signal"
       fi
       if [ "$signal" -gt -50 ] && [ "$signal" -lt -39 ] ; then
-        echo "You have an excellent signal"
+        logit "You have an excellent signal"
       fi
       if [ "$signal" -gt -60 ] && [ "$signal" -lt -49 ] ; then
-        echo "You have a good signal"
+        logit "You have a good signal"
       fi
       if [ "$signal" -gt -70 ] && [ "$signal" -lt -59 ] ; then
-        echo "You have an okay signal"
+        logit "You have an okay signal"
       fi
       if [ "$signal" -gt -80 ] && [ "$signal" -lt -69 ] ; then
-        echo "You have a poor signal"
+        logit "You have a poor signal"
       fi
       if [ "$signal" -gt -90 ] && [ "$signal" -lt -79 ] ; then
-        echo "You have a bad signal"
+        logit "You have a bad signal"
       fi
       ;;
     "dbm")
-      echo "$signal"
+      logit "$signal"
       ;;
     "*")
       wifistatus_help

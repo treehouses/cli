@@ -13,7 +13,7 @@ function get_current_clock {
     fi
   done
 
-  echo "$prevClock"
+  logit "$prevClock"
 }
 
 function write_rtc {
@@ -34,11 +34,9 @@ function rtc {
 
   if [ "$status" = "on" ]; then
     if [ -z "$clock" ]; then
-      echo "Error: you need to specify a clock"
-      exit 0
+      log_and_exit0 "Error: you need to specify a clock"
     elif [ -z "${rtcclockdata[$clock]}" ]; then
-      echo "Error: the clock is not supported."
-      exit 0
+      log_and_exit0 "Error: the clock is not supported."
     else
       write_rtc "${rtcclockdata[$clock]}"
 
@@ -56,7 +54,7 @@ function rtc {
       update-rc.d -f fake-hwclock remove &> "$LOGFILE"
 
       reboot_needed
-      echo "Success: clock changed. Please reboot"
+      logit "Success: clock changed. Please reboot"
     fi
   elif [ "$status" = "off" ]; then
     currentClock=$(get_current_clock)
@@ -70,10 +68,9 @@ function rtc {
     update-rc.d -f fake-hwclock defaults &> "$LOGFILE"
 
     reboot_needed
-    echo "Success: clock changed. Please reboot"
+    logit "Success: clock changed. Please reboot"
   else
-    echo "Error: only on, off options are supported"
-    exit 0
+    log_and_exit0 "Error: only on, off options are supported"
   fi
 }
 

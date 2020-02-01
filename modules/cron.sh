@@ -4,9 +4,9 @@ function cron {
   options="$1"
   case "$options" in
     ""|"list") #lists current cron tasks
-        echo "List of cron jobs:"
+        logit "List of cron jobs:"
       if [[ $(crontab -l | wc -c) -eq 0 ]]; then
-        echo "The system has no cron jobs"
+        logit "The system has no cron jobs"
       else
         crontab -l
       fi
@@ -15,59 +15,59 @@ function cron {
       cronjob="$2"
       if [[ $(crontab -l | grep "$2") != "$2" ]]; then
         (crontab -l ; echo "$2") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
-        echo "\"$2\" cron job added"
+        logit "\"$2\" cron job added"
       elif [[ $(crontab -l | grep "$2") == "$2" ]]; then
-        echo "cron job \"$2\" already established"
-        echo "run \"$BASENAME help cron\" for more commands"
+        logit "cron job \"$2\" already established"
+        logit "run \"$BASENAME help cron\" for more commands"
       fi
       ;;
     "delete") #search for and delete line with it
       crontab -l | grep -q "$2"
       if [ $? -eq 1 ] ; then
-        echo "Could not find a job containing \"$2\" to delete"
+        logit "Could not find a job containing \"$2\" to delete"
       else
         (crontab -l ; echo "$2") 2>&1 | grep -v "no crontab" | grep -v "$2" | sort | uniq | crontab -
-        echo "cron job(s) containing \"$2\" deleted"
+        logit "cron job(s) containing \"$2\" deleted"
       fi
       ;;
     "deleteall")
       if [[ $(crontab -l | wc -c) -eq 0 ]]; then
-        echo "There are no cron jobs to delete"
+        logit "There are no cron jobs to delete"
       else
         crontab -r
-        echo "All cron jobs deleted"
+        logit "All cron jobs deleted"
       fi
       ;;
     "0W" ) #adds/removes a daily reboot to system - RPi 0's will benefit from this
       if [[ $(crontab -l | grep "@daily") != "@daily reboot" ]]; then
         (crontab -l ; echo "@daily reboot") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
-        echo "\"Daily Reboot\" cron job established"
+        logit "\"Daily Reboot\" cron job established"
       elif [[ $(crontab -l | grep "@daily") == "@daily reboot" ]]; then
         (crontab -l ; echo "@daily reboot") 2>&1 | grep -v "no crontab" | grep -v "@daily" | sort | uniq | crontab -
-        echo "\"Daily Reboot\" cron job removed"
+        logit "\"Daily Reboot\" cron job removed"
       fi
       ;;
     "tor") #add/removes execution of 'tor notice now' every 3 days
       if [[ $(crontab -l | grep tor) != "0 */72 * * * treehouses tor notice now" ]]; then
         (crontab -l ; echo "0 */72 * * * treehouses tor notice now") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
-        echo "\"treehouses tor notice now\" cron job established"
+        logit "\"treehouses tor notice now\" cron job established"
       elif [[ $(crontab -l | grep tor) == "0 */72 * * * treehouses tor notice now" ]]; then
         (crontab -l ; echo "0 */72 * * * treehouses tor notice now") 2>&1 | grep -v "no crontab" | grep -v "tor" | sort | uniq | crontab -
-        echo "\"treehouses tor notice now\" cron job removed"
+        logit "\"treehouses tor notice now\" cron job removed"
       fi
       ;;
     "timestamp") #adds/removes timestamp logging every 15 minutes
       #Make log file if not found
       if [ ! -f /var/log/uptime.log ]; then
         sudo touch /var/log/uptime.log
-        echo "created \"uptime.log\" in /var/log/"
+        logit "created \"uptime.log\" in /var/log/"
       fi
       if [[ $(crontab -l | grep date) != "*/15 * * * * date >> /var/log/uptime.log" ]]; then
         (crontab -l ; echo "*/15 * * * * date >> /var/log/uptime.log") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
-        echo "\"timestamp /var/log/uptime.log every 15 minutes\" cron job established"
+        logit "\"timestamp /var/log/uptime.log every 15 minutes\" cron job established"
       elif [[ $(crontab -l | grep date) == "*/15 * * * * date >> /var/log/uptime.log" ]]; then
         (crontab -l ; echo "*/15 * * * * date >> /var/log/uptime.log") 2>&1 | grep -v "no crontab" | grep -v "date" | sort | uniq | crontab -
-        echo "timestamping cron job removed"
+        logit "timestamping cron job removed"
       fi
       ;;
     *) #prompts help for bad inputs

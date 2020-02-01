@@ -14,11 +14,11 @@ function restore {
   #echo "$b - /dev/sdb"
   
   if [ -z "$a" ] || [ -z "$b" ]; then
-      echo "Error: the device $device wasn't detected"
+      logit "Error: the device $device wasn't detected"
       return 1
   fi
 
-  echo "restoring...."
+  logit "restoring...."
   echo u > /proc/sysrq-trigger
   dd if=/dev/mmcblk0 bs=1M of="$device"
 

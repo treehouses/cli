@@ -3,8 +3,7 @@
 function wifihidden {
 
   if [ -z "$1" ]; then
-    echo "Error: name of the network missing"
-    exit 1
+    log_and_exit1 "Error: name of the network missing"
   fi
 
   wifinetwork=$1
@@ -14,8 +13,7 @@ function wifihidden {
   then
     if [ ${#wifipassword} -lt 8 ]
     then
-      echo "Error: password must have at least 8 characters"
-      exit 1
+      log_and_exit1 "Error: password must have at least 8 characters"
     fi
   fi
 
@@ -50,7 +48,7 @@ function wifihidden {
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
-    echo "connected to hidden open network"
+    logit "connected to hidden open network"
   else
     {
       echo "network={"
@@ -61,7 +59,7 @@ function wifihidden {
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
-    echo "successfully connected to hidden network"
+    logit "successfully connected to hidden network"
   fi
 
   echo "wifi" > /etc/network/mode

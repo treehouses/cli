@@ -22,7 +22,7 @@ function services {
         results+=" "
       done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
 
-      echo ${results}
+      logit ${results}
     fi
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
@@ -39,7 +39,7 @@ function services {
         results+=" "
       done
 
-      echo ${results} | tr ' ' '\n' | uniq | xargs
+      logit ${results} | tr ' ' '\n' | uniq | xargs
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
@@ -56,7 +56,7 @@ function services {
         results+=" "
       done
 
-      echo ${results} | tr ' ' '\n' | uniq | xargs
+      logit ${results} | tr ' ' '\n' | uniq | xargs
     fi
   # list all ports used by services
   elif [ "$service_name" = "ports" ]; then
@@ -69,12 +69,11 @@ function services {
         port_string+=$(get_port $i | sed -n "$j p")
         port_string+=" "
       done
-      printf "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
+      logit "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')" "" "" "3"
     done
   else
     if [ -z "$command" ]; then
-      echo "no command given"
-      exit 1
+      log_and_exit1 "no command given"
     else
       case "$command" in
         up)
@@ -85,55 +84,55 @@ function services {
               else
                 docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
               fi
-              echo "planet built and started"
+              logit "planet built and started"
               check_tor "80"
               ;;
             kolibri)
               bash $TEMPLATES/services/kolibri/kolibri_yml.sh
-              echo "yml file created"
+              logit "yml file created"
 
               docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
-              echo "kolibri built and started"
+              logit "kolibri built and started"
               check_tor "8080"
               ;;
             nextcloud)
               docker run --name nextcloud -d -p 8081:80 nextcloud
-              echo "nextcloud built and started"
+              logit "nextcloud built and started"
               check_tor "8081"
               ;;
             pihole)
               bash $TEMPLATES/services/pihole/pihole_yml.sh
-              echo "yml file created"
+              logit "yml file created"
 
               service dnsmasq stop
               docker-compose -f /srv/pihole/pihole.yml -p pihole up -d
-              echo "pihole built and started"
+              logit "pihole built and started"
               check_tor "8053"
               ;;
             moodle)
               bash $TEMPLATES/services/moodle/moodle_yml.sh
-              echo "yml file created"
+              logit "yml file created"
 
               docker-compose -f /srv/moodle/moodle.yml -p moodle up -d
-              echo "moodle built and started"
+              logit "moodle built and started"
               check_tor "8082"
               ;;
             privatebin)
               bash $TEMPLATES/services/privatebin/privatebin_yml.sh
-              echo "yml file created"
+              logit "yml file created"
 
               docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d
-              echo "privatebin built and started"
+              logit "privatebin built and started"
               check_tor "8083"
               ;;
             portainer)
               docker volume create portainer_data
               docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
-              echo "portainer built and started"
+              logit "portainer built and started"
               check_tor "9000"
               ;;
             *)
-              echo "unknown service"
+              logit "unknown service"
               ;;
           esac
           ;;
@@ -142,19 +141,19 @@ function services {
           case "$service_name" in
             planet|kolibri|pihole|moodle|privatebin)
               if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
-                echo "yml file doesn't exit"
+                logit "yml file doesn't exit"
               else
                 docker-compose -f /srv/${service_name}/${service_name}.yml down
-                echo "${service_name} stopped and removed"
+                logit "${service_name} stopped and removed"
               fi
               ;;
             nextcloud|portainer)
               docker stop $service_name
               docker rm $service_name
-              echo "${service_name} stopped and removed"
+              logit "${service_name} stopped and removed"
               ;;
             *)
-              echo "unknown service"
+              logit "unknown service"
               ;;
           esac
           ;;
@@ -164,17 +163,17 @@ function services {
             planet|kolibri|pihole|moodle|privatebin)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml start
-                echo "${service_name} started"
+                logit "${service_name} started"
               else
-                echo "service not found"
+                logit "service not found"
               fi
               ;;
             nextcloud|portainer)
               docker start $service_name
-              echo "${service_name} started"
+              logit "${service_name} started"
               ;;
             *)
-              echo "unknown service"
+              logit "unknown service"
               ;;
           esac
           ;;
@@ -184,17 +183,17 @@ function services {
             planet|kolibri|pihole|moodle|privatebin)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml stop
-                echo "${service_name} stopped"
+                logit "${service_name} stopped"
               else
-                echo "service not found"
+                logit "service not found"
               fi
               ;;
             nextcloud|portainer)
               docker stop $service_name
-              echo "${service_name} stopped"
+              logit "${service_name} stopped"
               ;;
             *)
-              echo "unknown service"
+              logit "unknown service"
               ;;
           esac
           ;;
@@ -208,7 +207,7 @@ function services {
           # if no command_option, output true or false
           if [ -z "$command_option" ]; then
             if [ ! -e /boot/autorun ]; then
-              echo "false"
+              logit "false"
             else
               found=false
               while read -r line; do
@@ -218,9 +217,9 @@ function services {
                 fi
               done < /boot/autorun
               if [ "$found" = true ]; then
-                echo "true"
+                logit "true"
               else
-                echo "false"
+                logit "false"
               fi
             fi
           # make service autostart
@@ -254,16 +253,16 @@ function services {
             #   bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
             # fi
             
-            echo "service autorun set to true"
+            logit "service autorun set to true"
           # stop service from autostarting
           elif [ "$command_option" = "false" ]; then
             if [ -e /boot/autorun ]; then
               # if autorun lines exist, set flag to false
               sed -i "/${service_name}_autorun=true/c\\${service_name}_autorun=false" /boot/autorun
             fi
-            echo "service autorun set to false"
+            logit "service autorun set to false"
           else
-            echo "unknown command option"
+            logit "unknown command option"
           fi
           ;;
 
@@ -274,49 +273,49 @@ function services {
         info)
           case "$service_name" in
             planet)
-              echo "https://github.com/open-learning-exchange/planet"
-              echo
-              echo "\"Planet Learning is a generic learning system built in Angular"
-              echo "& CouchDB.\""
+              logit "https://github.com/open-learning-exchange/planet"
+              logit
+              logit "\"Planet Learning is a generic learning system built in Angular"
+              logit "& CouchDB.\""
               ;;
             kolibri)
-              echo "https://github.com/treehouses/kolibri"
-              echo
-              echo "\"Kolibri is the offline learning platform from Learning Equality.\""
+              logit "https://github.com/treehouses/kolibri"
+              logit
+              logit "\"Kolibri is the offline learning platform from Learning Equality.\""
               ;;
             nextcloud)
-              echo "https://github.com/nextcloud"
-              echo
-              echo "\"A safe home for all your data. Access & share your files, calendars,"
-              echo "contacts, mail & more from any device, on your terms.\""
+              logit "https://github.com/nextcloud"
+              logit
+              logit "\"A safe home for all your data. Access & share your files, calendars,"
+              logit "contacts, mail & more from any device, on your terms.\""
               ;;
             pihole)
-              echo "https://github.com/pi-hole/docker-pi-hole"
-              echo
-              echo "\"The Pi-hole® is a DNS sinkhole that protects your devices from"
-              echo "unwanted content, without installing any client-side software.\""
+              logit "https://github.com/pi-hole/docker-pi-hole"
+              logit
+              logit "\"The Pi-hole® is a DNS sinkhole that protects your devices from"
+              logit "unwanted content, without installing any client-side software.\""
               ;;
             moodle)
-              echo "https://github.com/treehouses/moodole"
-              echo
-              echo "\"Moodle <https://moodle.org> is a learning platform designed to"
-              echo "provide educators, administrators and learners with a single robust,"
-              echo "secure and integrated system to create personalised learning"
-              echo "environments.\""
+              logit "https://github.com/treehouses/moodole"
+              logit
+              logit "\"Moodle <https://moodle.org> is a learning platform designed to"
+              logit "provide educators, administrators and learners with a single robust,"
+              logit "secure and integrated system to create personalised learning"
+              logit "environments.\""
               ;;
             privatebin)
-              echo "https://github.com/treehouses/privatebin"
-              echo
-              echo "\"A minimalist, open source online pastebin where the server has"
-              echo "zero knowledge of pasted data. Data is encrypted/decrypted in the"
-              echo "browser using 256 bits AES. https://privatebin.info/\""
+              logit "https://github.com/treehouses/privatebin"
+              logit
+              logit "\"A minimalist, open source online pastebin where the server has"
+              logit "zero knowledge of pasted data. Data is encrypted/decrypted in the"
+              logit "browser using 256 bits AES. https://privatebin.info/\""
               ;;
             portainer)
-              echo "https://github.com/portainer/portainer"
-              echo
-              echo "\"Portainer is a lightweight management UI which allows you to"
-              echo "easily manage your different Docker environments (Docker hosts or"
-              echo "Swarm clusters).\""
+              logit "https://github.com/portainer/portainer"
+              logit
+              logit "\"Portainer is a lightweight management UI which allows you to"
+              logit "easily manage your different Docker environments (Docker hosts or"
+              logit "Swarm clusters).\""
               ;;
           esac
           ;;
@@ -334,7 +333,7 @@ function services {
                 local_url+="/admin"
               fi
 
-              echo $local_url
+              logit $local_url
             done
           elif [ "$command_option" = "tor" ]; then
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
@@ -347,14 +346,14 @@ function services {
                 tor_url+="/admin"
               fi
 
-              echo $tor_url
+              logit $tor_url
             done
           elif [ "$command_option" = "both" ]; then
             services $service_name url local
             services $service_name url tor
           else
-            echo "unknown command"
-            echo "usage: $(basename "$0") services <service_name> url [local | tor | both]"
+            logit "unknown command"
+            logit "usage: $(basename "$0") services <service_name> url [local | tor | both]"
           fi
           ;;
 
@@ -363,7 +362,7 @@ function services {
           ;;
 
         *)
-          echo "unknown command"
+          logit "unknown command"
           ;;
       esac
     fi
@@ -374,16 +373,16 @@ function services {
 function find_available_services {
   service_name="$1"
   available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
-  echo "$service [$available_formats]"
+  logit "$service [$available_formats]"
 }
 
 # tor status and port check
 function check_tor {
   port="$1"
   if [ "$(treehouses tor status)" = "active" ]; then
-    echo "tor active"
+    logit "tor active"
     if ! treehouses tor list | grep -w $port; then
-      echo "adding port ${port}"
+      logit "adding port ${port}"
       treehouses tor add $port
     fi
   fi
@@ -395,29 +394,29 @@ function get_port {
 
   case "$service_name" in
     planet)
-      echo "80"
-      echo "2200"
+      logit "80"
+      logit "2200"
       ;;
     kolibri)
-      echo "8080"
+      logit "8080"
       ;;
     nextcloud)
-      echo "8081"
+      logit "8081"
       ;;
     pihole)
-      echo "8053"
+      logit "8053"
       ;;
     moodle)
-      echo "8082"
+      logit "8082"
       ;;
     privatebin)
-      echo "8083"
+      logit "8083"
       ;;
     portainer)
-      echo "9000"
+      logit "9000"
       ;;
     *)
-      echo "unknown service"
+      logit "unknown service"
       ;;
   esac
 }

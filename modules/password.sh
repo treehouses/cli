@@ -2,7 +2,7 @@
 
 function password () {
   echo "pi:$1" | chpasswd
-  echo "Success: the password has been changed"
+  logit "Success: the password has been changed"
 }
 
 function password_help () {

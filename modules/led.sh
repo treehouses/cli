@@ -19,79 +19,76 @@ function led {
     current="$currentRed"
   elif [ "$color" = "dance" ]; then
     checkroot
-    echo "leds are set to dance mode."
-    echo "Look at your RPi leds, green led will be in this pattern: 1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
+    logit "leds are set to dance mode."
+    logit "Look at your RPi leds, green led will be in this pattern: 1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
     dance > "$LOGFILE"
   elif [ "$color" = "thanksgiving" ]; then
     checkroot
-    echo "leds are set to thanksgiving mode."
-    echo "Look at your RPi leds, both leds will be in this pattern... "
-    echo "Green LED: 0.5 sec off; 0.5 on"
-    echo "Red LED: 0.5 off; 0.5 on; 0.25 off; 0.25 on"
-    echo "Green LED: 0.5 on; 0.25 off; 0.25 on"
-    echo "Red LED: 0.5 on"
-    echo "Both LED: flash 2 times"
+    logit "leds are set to thanksgiving mode."
+    logit "Look at your RPi leds, both leds will be in this pattern... "
+    logit "Green LED: 0.5 sec off; 0.5 on"
+    logit "Red LED: 0.5 off; 0.5 on; 0.25 off; 0.25 on"
+    logit "Green LED: 0.5 on; 0.25 off; 0.25 on"
+    logit "Red LED: 0.5 on"
+    logit "Both LED: flash 2 times"
     thanksgiving > "$LOGFILE"
   elif [ "$color" = "christmas" ]; then
     checkroot
-    echo "leds are set to christmas mode."
-    echo "Look at your RPi leds, both leds will be in this pattern... "
-    echo "Both LED: 1 sec on; 8 blink; 1 on"
+    logit "leds are set to christmas mode."
+    logit "Look at your RPi leds, both leds will be in this pattern... "
+    logit "Both LED: 1 sec on; 8 blink; 1 on"
     christmas > "$LOGFILE"
   elif [ "$color" = "newyear" ]; then
     checkroot
-    echo "leds are set to newyear mode."
-    echo "Look at your RPi leds, both leds will be in this pattern... "
-    echo "Both LED: 1 sec off"
-    echo "Green LED: 0.5 on; 0.5 off"
-    echo "Red LED: 0.5 on; 0.5 off"
-    echo "Both LED: flash 2 times"
+    logit "leds are set to newyear mode."
+    logit "Look at your RPi leds, both leds will be in this pattern... "
+    logit "Both LED: 1 sec off"
+    logit "Green LED: 0.5 on; 0.5 off"
+    logit "Red LED: 0.5 on; 0.5 off"
+    logit "Both LED: flash 2 times"
     newyear > "$LOGFILE"
   elif [ "$color" = "valentine" ]; then
     checkroot
-    echo "leds are set to valentine mode."
-    echo "Look at your RPi leds, both leds will be in this pattern... "
-    echo "Both LED: 0.25 sec off"
-    echo "Green LED: 1.0 on; 0.25 off"
-    echo "Red LED: 1.0 on; 0.25 off"
-    echo "Both LED: flash 4 times"
+    logit "leds are set to valentine mode."
+    logit "Look at your RPi leds, both leds will be in this pattern... "
+    logit "Both LED: 0.25 sec off"
+    logit "Green LED: 1.0 on; 0.25 off"
+    logit "Red LED: 1.0 on; 0.25 off"
+    logit "Both LED: flash 4 times"
     valentine > "$LOGFILE"
   elif [ "$color" = "carnival" ]; then
     checkroot
-    echo "leds are set to carnival mode."
-    echo "Look at your RPi leds, both leds will be in this pattern... "
-    echo "Both LED: 2 sec on; 6 blink; 4 on"
+    logit "leds are set to carnival mode."
+    logit "Look at your RPi leds, both leds will be in this pattern... "
+    logit "Both LED: 2 sec on; 6 blink; 4 on"
     carnevals > "$LOGFILE"    
   else
     if [ -z "$color" ]; then
       if [ ! -z "$currentGreen" ]; then
-        echo -e "$green: $currentGreen"
+        logit "$green: $currentGreen" "" "" "1"
       fi
 
       if [ ! -z "$currentRed" ]; then
-        echo -e "$red: $currentRed"
+        logit "$red: $currentRed" "" "" "1"
       fi
 
       exit 0
     else
-      echo -e "${RED}Error:${NC} led '$color' is not present"
-      exit 1
+      log_and_exit1 "${RED}Error:${NC} led '$color' is not present" "" "" "1"
     fi
   fi
 
   if [ ! -d "$led" ]; then
-    echo -e "${RED}Error:${NC} led '$color' is not present"
-    exit 1
+    log_and_exit1 "${RED}Error:${NC} led '$color' is not present" "" "" "1"
   fi
 
   if [ -z "$trigger" ]; then
-     echo "$current"
+     logit "$current"
   else
     checkroot
 
     if ! grep -q "$trigger" "$led/trigger" 2>"$LOGFILE"; then
-        echo -e "${RED}Error:${NC} unkown led mode '$trigger'"
-        exit 1
+        log_and_exit1 "${RED}Error:${NC} unkown led mode '$trigger'" "" "" "1"
     fi
 
     echo "$trigger" > "$led/trigger"
@@ -99,9 +96,9 @@ function led {
     set_brightness "${led: -1}" 1
 
     if [ "$color" = "green" ]; then
-      echo -e "$green: $newValue"
+      logit "$green: $newValue" "" "" "1"
     elif [ "$color" = "red" ]; then
-      echo -e "$red: $newValue"
+      logit "$red: $newValue" "" "" "1"
     fi
   fi
 }

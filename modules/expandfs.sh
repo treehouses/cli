@@ -3,7 +3,7 @@
 function expandfs () {
   # expandfs is way too complex, it should be handled by raspi-config
   raspi-config --expand-rootfs >"$LOGFILE" 2>"$LOGFILE"
-  echo "Success: the filesystem will be expanded on the next reboot"
+  logit "Success: the filesystem will be expanded on the next reboot"
 }
 
 function expandfs_help {

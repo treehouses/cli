@@ -22,9 +22,9 @@ function feedback {
       body="{\"text\":\"\`$(hostname)\` \`$ip_address\` \`$(version)\` \`$(detect | sed "s/ /\` \`/1")\`:\\n$message\"}"
     fi
     curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token"   "$channel" -d  "$body"> "$LOGFILE"
-    echo "Thanks for the feedback!"
+    logit "Thanks for the feedback!"
   else
-    echo "No feedback was submitted."
+    logit "No feedback was submitted."
   fi
 }
 

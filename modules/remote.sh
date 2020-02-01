@@ -11,7 +11,7 @@ function remote {
         results+="$(version) "
         results+="$(detectrpi)"
 
-        echo ${results}
+        logit ${results}
     elif [ "$option" = "upgrade" ]; then
         upgrade --check
     elif [ "$option" = "services" ]; then
@@ -19,21 +19,21 @@ function remote {
             results="Available: "
             results+="$(services available)"
 
-            echo ${results}
+            logit ${results}
         elif [ "$2" = "installed" ]; then
             results="Installed: "
             results+="$(services installed)"
 
-            echo ${results}
+            logit ${results}
         elif [ "$2" = "running" ]; then
             results="Running: "
             results+="$(services running)"
 
-            echo ${results}
+            logit ${results}
         fi
     else
-        echo "unknown command option"
-        echo "usage: $BASENAME remote [status | upgrade]"
+        logit "unknown command option"
+        logit "usage: $BASENAME remote [status | upgrade]"
     fi
 }
 

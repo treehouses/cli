@@ -3,8 +3,7 @@
 function wifi {
 
   if [ -z "$1" ]; then
-    echo "Error: name of the network missing"
-    exit 1
+    log_and_exit1 "Error: name of the network missing"
   fi
 
   wifinetwork=$1
@@ -14,8 +13,7 @@ function wifi {
   then
     if [ ${#wifipassword} -lt 8 ]
     then
-      echo "Error: password must have at least 8 characters"
-      exit 1
+      log_and_exit1 "Error: password must have at least 8 characters"
     fi
   fi
 
@@ -49,11 +47,11 @@ function wifi {
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
-    echo "open wifi network"
+    logit "open wifi network"
   else
     wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
-    echo "password network"
+    logit "password network"
   fi
 
   echo "wifi" > /etc/network/mode

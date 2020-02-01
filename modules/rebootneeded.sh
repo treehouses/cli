@@ -2,11 +2,9 @@
 
 function rebootneeded {
   if [ -f "/etc/reboot-needed" ]; then
-    echo "true";
-    exit 0
+    log_and_exit0 "true";
   fi
-
-  echo "false"
+  logit "false"
 }
 
 function rebootneeded_help {

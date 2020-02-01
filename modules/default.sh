@@ -3,28 +3,25 @@
 function default {
   if [ "$1" == "notice" ] ; then
     default_notice
-    echo 'Success: the message has been reset to default';
-    exit 0
+    log_and_exit0 'Success: the message has been reset to default';
   fi
 
   if [ "$1" == "tunnel" ] ; then
     default_tunnel
-    echo 'Success: the tunnel mode has been reset to default, please reboot your device';
-    exit 0
+    log_and_exit0 'Success: the tunnel mode has been reset to default, please reboot your device';
   fi
 
   if [ "$1" == "network" ] ; then
     checkrpi
     default_network
-    echo 'Success: the network mode has been reset to default, please reboot your device';
-    exit 0
+    log_and_exit0 'Success: the network mode has been reset to default, please reboot your device';
   fi
 
   rename "raspberrypi" > "$LOGFILE" 2>"$LOGFILE"
   default_notice 
   default_tunnel
   default_network
-  echo 'Success: the rpi has been reset to default, please reboot your device'
+  logit 'Success: the rpi has been reset to default, please reboot your device'
 }
 
 function default_network {

@@ -16,26 +16,26 @@ function vnc {
 
   # Checks whether we have the required package to run a VNC server
   if [ ! -d /usr/share/doc/realvnc-vnc-server ] ; then
-    echo "Error: the vnc server is not installed, to install it run:"
-    echo "apt-get install realvnc-vnc-server"
+    logit "Error: the vnc server is not installed, to install it run:"
+    logit "apt-get install realvnc-vnc-server"
     exit 1;
   fi
 
 case "$option" in
   "")
     if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "inactive" ]; then
-      echo "VNC is disabled." 
-      echo "To enable it, use $BASENAME vnc on"
+      logit "VNC is disabled." 
+      logit "To enable it, use $BASENAME vnc on"
     elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "active" ]; then
-      echo "You can now remotely access the system with a VNC client using the IP address: $ipaddress"
-      echo "To disable it, use $BASENAME vnc off"
+      logit "You can now remotely access the system with a VNC client using the IP address: $ipaddress"
+      logit "To disable it, use $BASENAME vnc off"
     elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
-      echo "Please reboot your system."
+      logit "Please reboot your system."
     elif [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "active" ]; then
-      echo "Please reboot your system."
+      logit "Please reboot your system."
     else
-      echo "VNC server is not configured correctly. Please try $BASENAME vnc on to enable it, or $BASENAME vnc off to disable it."
-      echo "Alternatively, you may try $BASENAME vnc status-service to verify the status of each specific required service."
+      logit "VNC server is not configured correctly. Please try $BASENAME vnc on to enable it, or $BASENAME vnc off to disable it."
+      logit "Alternatively, you may try $BASENAME vnc status-service to verify the status of each specific required service."
     fi
     ;;
   "on")
@@ -46,9 +46,9 @@ case "$option" in
     start_service vncserver-x11-serviced.service
     systemctl set-default graphical.target
     reboot_needed
-    echo "Success: the vnc service has been started and enabled when the system boots."
-    echo "Please reboot the system for changes to take effect."
-    echo "You can then remotely access the system with a VNC client using the IP address: $ipaddress" 
+    logit "Success: the vnc service has been started and enabled when the system boots."
+    logit "Please reboot the system for changes to take effect."
+    logit "You can then remotely access the system with a VNC client using the IP address: $ipaddress" 
     ;;
   "off")
     sed -i '/hdmi_group=2/d' /boot/config.txt
@@ -58,24 +58,23 @@ case "$option" in
     disable_service vncserver-x11-serviced.service
     systemctl set-default multi-user.target
     reboot_needed
-    echo "Success: the vnc service has been stopped and disabled when the system boots."
-    echo "Please reboot the system for changes to take effect."
+    logit "Success: the vnc service has been stopped and disabled when the system boots."
+    logit "Please reboot the system for changes to take effect."
     ;;
   "info")
-    echo "The system boots into $isgraphical"
-    echo "The VNC service is $vncservicestatus"
-    echo "The X window service is $xservicestatus"
-    echo "In order to access your desktop via a VNC viewer, the system needs to boot into Desktop, and VNC and X window services need to be running"
+    logit "The system boots into $isgraphical"
+    logit "The VNC service is $vncservicestatus"
+    logit "The X window service is $xservicestatus"
+    logit "In order to access your desktop via a VNC viewer, the system needs to boot into Desktop, and VNC and X window services need to be running"
     if [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
-      echo "Please reboot your system."
+      logit "Please reboot your system."
     fi
     if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "active" ]; then
-      echo "Please reboot your system."
+      logit "Please reboot your system."
     fi
     ;; 
  *)
-    echo "Error: only 'on', 'off', 'info' options are supported";
-    exit 1;
+    log_and_exit1 "Error: only 'on', 'off', 'info' options are supported";
     ;;
   esac
 }

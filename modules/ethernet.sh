@@ -3,8 +3,7 @@
 function ethernet {
 
   if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
-    echo "Error: argument(s) missing"
-    exit 1
+    log_and_exit1 "Error: argument(s) missing"
   fi
 
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
@@ -17,7 +16,7 @@ function ethernet {
 
   echo "static ethernet" > /etc/network/mode
 
-  echo "This pirateship has anchored successfully!"
+  logit "This pirateship has anchored successfully!"
 }
 
 function ethernet_help {

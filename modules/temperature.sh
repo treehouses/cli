@@ -7,16 +7,16 @@ function temperature () {
   number=${number0/%??/}
   case "$1" in
     "")
-      echo $number
+      logit $number
       ;;
     "fahrenheit")
       fraction=$(echo "scale=1; 9.0/5.0" | bc)
       resultA=$(echo "$number*$fraction" | bc)
       resultB=$(echo "$resultA+32" | bc)
-      echo $resultB"°F"
+      logit $resultB"°F"
       ;;
     "celsius") 
-      echo $number"°C"
+      logit $number"°C"
       ;;
   esac
 }

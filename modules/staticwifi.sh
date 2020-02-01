@@ -19,8 +19,7 @@ function staticwifi {
   then
     if [ ${#password} -lt 8 ];
     then
-      echo "Error: password must have at least 8 characters"
-      exit 1
+      log_and_exit1 "Error: password must have at least 8 characters"
     fi
   fi
 
@@ -52,7 +51,7 @@ function staticwifi {
   echo "static wifi" > /etc/network/mode
 
   reboot_needed
-  echo "Success: the wifi settings have been changed, a reboot is required in order to see the changes"
+  logit "Success: the wifi settings have been changed, a reboot is required in order to see the changes"
 }
 
 function staticwifi_help {

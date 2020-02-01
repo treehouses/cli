@@ -55,9 +55,9 @@ function detectrpi {
 
   if [ "$found" == 1 ];
   then
-    echo ${rpimodels[$rpimodel]}
+    logit ${rpimodels[$rpimodel]}
   else
-    echo "nonrpi"
+    logit "nonrpi"
   fi
 }
 

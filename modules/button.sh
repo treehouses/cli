@@ -11,7 +11,7 @@ function button {
     rm -rf  /etc/systemd/system/gpio-button.service
     rm -rf /etc/gpio-button-action-on.sh /etc/gpio-button-action-off.sh
 
-    echo "ok. button disabled"
+    logit "ok. button disabled"
   elif [ "$mode" = "bluetooth" ]; then
     {
       echo '#!/bin/bash'
@@ -29,9 +29,9 @@ function button {
     enable_service gpio-button
     restart_service gpio-button
 
-    echo "ok. button enabled"
+    logit "ok. button enabled"
   else
-    echo "Unknown option."
+    logit "Unknown option."
   fi
 }
 

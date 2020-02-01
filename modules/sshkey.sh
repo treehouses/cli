@@ -12,41 +12,41 @@ function sshkey () {
       echo "$@" >> /home/pi/.ssh/authorized_keys
       chmod 600 /home/pi/.ssh/authorized_keys
       chown -R pi:pi /home/pi/.ssh
-      echo "====== Added to 'pi' and 'root' user's authorized_keys ======"
+      logit "====== Added to 'pi' and 'root' user's authorized_keys ======"
     else
-      echo "====== Added to 'root' user's authorized_keys ======"
+      logit "====== Added to 'root' user's authorized_keys ======"
     fi
-    echo "$@"
+    logit "$@"
   elif [ "$1" == "list" ]; then
-    echo "==== root keys ===="
+    logit "==== root keys ===="
     cat /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then
-      echo "==== pi keys ===="
+      logit "==== pi keys ===="
       cat /home/pi/.ssh/authorized_keys
     fi
   elif [ "$1" == "delete" ]; then
     if [ -z "$2" ]; then
-      echo "Error: missing argument"
-      echo "Usage: $BASENAME sshkey delete \"<key>\""
+      logit "Error: missing argument"
+      logit "Usage: $BASENAME sshkey delete \"<key>\""
       exit 1
     fi
     if [ "$2" == "ssh-rsa" ]; then
-      echo "Error: missing qoutes"
-      echo "Usage: $BASENAME sshkey delete \"<key>\""
+      logit "Error: missing qoutes"
+      logit "Usage: $BASENAME sshkey delete \"<key>\""
       exit 1
     fi
     if grep -Fxq "$2" /root/.ssh/authorized_keys; then
       sed -i "\:$2:d" /root/.ssh/authorized_keys
-      echo "Key deleted from root keys."
+      logit "Key deleted from root keys."
     else
-      echo "Key not found in root keys."
+      logit "Key not found in root keys."
     fi
     if [ "$(detectrpi)" != "nonrpi" ]; then
       if grep -Fxq "$2" /home/pi/.ssh/authorized_keys; then
         sed -i "\:$2:d" /home/pi/.ssh/authorized_keys
-        echo "Key deleted from pi keys."
+        logit "Key deleted from pi keys."
       else
-        echo "Key not found in pi keys."
+        logit "Key not found in pi keys."
       fi
     fi
   elif [ "$1" == "deleteall" ]; then
@@ -54,17 +54,17 @@ function sshkey () {
     if [ "$(detectrpi)" != "nonrpi" ]; then
       rm /home/pi/.ssh/authorized_keys
     fi
-    echo "all sshkeys are deleted."
+    logit "all sshkeys are deleted."
   elif [ "$1" == "github" ]; then
     if [ -z "$2" ]; then
-      echo "Error: missing arguments"
-      echo "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
+      logit "Error: missing arguments"
+      logit "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
       exit 1
     fi
     if [ "$2" == "adduser" ]; then
       if [ -z "$3" ]; then
-        echo "Error: missing argument"
-        echo "Usage: $BASENAME sshkey adduser <username>"
+        logit "Error: missing argument"
+        logit "Usage: $BASENAME sshkey adduser <username>"
         exit 1
       fi
       keys=$(curl -s "https://github.com/$3.keys")
@@ -74,8 +74,8 @@ function sshkey () {
       fi
     elif [ "$2" == "deleteuser" ]; then
       if [ -z "$3" ]; then
-        echo "Error: missing argument"
-        echo "Usage: $BASENAME sshkey deleteuser <username>"
+        logit "Error: missing argument"
+        logit "Usage: $BASENAME sshkey deleteuser <username>"
         exit 1
       fi
       githubusername="$3"
@@ -84,18 +84,18 @@ function sshkey () {
         if [ -f "$file" ]; then
           if grep -q " $githubusername$" $file; then
             sed -i "/ $githubusername$/d" $file
-	    echo "$githubusername's key(s) deleted from $file"
+	    logit "$githubusername's key(s) deleted from $file"
           else
-            echo "$githubusername does not exist"
+            logit "$githubusername does not exist"
           fi
         else
-          echo "$file does not exist."
+          logit "$file does not exist."
         fi
       done    
     elif [ "$2" == "addteam" ]; then
       if [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
-        echo "Error: missing arguments"
-        echo "Usage: $BASENAME sshkey github addteam <organization> <team_name> <access_token>"
+        logit "Error: missing arguments"
+        logit "Usage: $BASENAME sshkey github addteam <organization> <team_name> <access_token>"
         exit 1
       fi
       teams=$(curl -s -X GET "https://api.github.com/orgs/$3/teams" -H "Authorization: token $5")
@@ -108,8 +108,8 @@ function sshkey () {
 #DEPRECATED####
   elif [ "$1" == "addgithubusername" ]; then
     if [ -z "$2" ]; then
-      echo "Error: missing argument"
-      echo "Usage: $BASENAME sshkey addgithubusername <username>"
+      logit "Error: missing argument"
+      logit "Usage: $BASENAME sshkey addgithubusername <username>"
       exit 1
     fi
     keys=$(curl -s "https://github.com/$2.keys")
@@ -121,8 +121,8 @@ function sshkey () {
 #DEPRECATED####
   elif [ "$1" == "deletegithubusername" ]; then
     if [ -z "$2" ]; then
-      echo "Error: missing argument"
-      echo "Usage: $BASENAME sshkey deletegithubusername \"<username>\""
+      logit "Error: missing argument"
+      logit "Usage: $BASENAME sshkey deletegithubusername \"<username>\""
       exit 1
     fi
     githubusername="$2"
@@ -131,20 +131,20 @@ function sshkey () {
       if [ -f "$file" ]; then
         if grep -q " $githubusername$" $file; then
           sed -i "/ $githubusername$/d" $file
-	  echo "$githubusername's key(s) deleted from $file"
+	  logit "$githubusername's key(s) deleted from $file"
         else
-          echo "$githubusername does not exist"
+          logit "$githubusername does not exist"
         fi
       else
-        echo "$file does not exist."
+        logit "$file does not exist."
       fi
     done
 ###############
 #DEPRECATED####
   elif [ "$1" == "addgithubgroup" ]; then
     if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
-      echo "Error: missing arguments"
-      echo "Usage: $BASENAME sshkey addgithubgroup <organization> <team_name> <access_token>"
+      logit "Error: missing arguments"
+      logit "Usage: $BASENAME sshkey addgithubgroup <organization> <team_name> <access_token>"
       exit 1
     fi
     teams=$(curl -s -X GET "https://api.github.com/orgs/$2/teams" -H "Authorization: token $4")

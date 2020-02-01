@@ -12,8 +12,7 @@ function ap {
   then
     if [ ${#essid} -gt 32 ]
     then
-      echo "Error: essid must be no greater than 32 characters"
-      exit 1
+      log_and_exit1 "Error: essid must be no greater than 32 characters"
     fi
   fi
   
@@ -21,8 +20,7 @@ function ap {
   then
     if [ ${#password} -lt 8 ];
     then
-      echo "Error: password must have at least 8 characters"
-      exit 1
+      log_and_exit1 "Error: password must have at least 8 characters"
     fi
   fi
 
@@ -42,8 +40,7 @@ function ap {
 
     echo "ap local" > /etc/network/mode
   else
-    echo "Error: only 'local' and 'internet' modes are supported".
-    exit 0
+    log_and_exit0 "Error: only 'local' and 'internet' modes are supported".
   fi
 
   cp "$TEMPLATES/network/10-wpa_supplicant" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
@@ -72,7 +69,7 @@ function ap {
     sed -i "s/BASE_24/192.168.2/g" /etc/network/interfaces.d/wlan0
   fi
 
-  echo "This pirateship has anchored successfully!"
+  logit "This pirateship has anchored successfully!"
 }
 
 

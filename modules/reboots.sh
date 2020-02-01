@@ -3,25 +3,25 @@
 function reboots {
   case "$1" in
     "")
-      echo "No timeframe selected. For how to use \"reboots\" run: $BASENAME help reboots"
-      echo ; echo "Tasks scheduled:"
+      logit "No timeframe selected. For how to use \"reboots\" run: $BASENAME help reboots"
+      echo ; logit "Tasks scheduled:"
       crontab -l
       ;;
     "now")
-      echo "Rebooting now."
+      logit "Rebooting now."
       sudo reboot
       ;;
     "in")
-      echo "Rebooting in \"$2\". ctrl+c to cancel."
+      logit "Rebooting in \"$2\". ctrl+c to cancel."
       sleep "$2" ; sudo reboot
       ;;
     "cron")
       if [[ $(crontab -l | grep "$2" ) != "$2 reboot" ]]; then
         (crontab -l ; echo "$2 reboot") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
-        echo "Rebooting with frequency of \"$2\" added"
+        logit "Rebooting with frequency of \"$2\" added"
       elif [[ $(crontab -l | grep "$2") == "$2 reboot" ]]; then
-        echo "Reboot frequency of \"$2\" already established"
-        echo "To delete it, use: $BASENAME cron delete \"$2\""
+        logit "Reboot frequency of \"$2\" already established"
+        logit "To delete it, use: $BASENAME cron delete \"$2\""
       else
         reboots_help
       fi
@@ -29,10 +29,10 @@ function reboots {
     "daily")
       if [[ $(crontab -l | grep "@daily") != "@daily reboot" ]]; then
         (crontab -l ; echo "@daily reboot") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
-        echo "System will reboot daily at 00:00"
+        logit "System will reboot daily at 00:00"
       elif [[ $(crontab -l | grep "@daily") == "@daily reboot" ]]; then
         (crontab -l ; echo "@daily reboot") 2>&1 | grep -v "no crontab" | grep -v "@daily" | sort | uniq | crontab -
-        echo "Job to reboot daily removed"
+        logit "Job to reboot daily removed"
       else
         reboots_help
       fi
@@ -40,10 +40,10 @@ function reboots {
     "weekly")
       if [[ $(crontab -l | grep "@weekly") != "@weekly reboot" ]]; then
         (crontab -l ; echo "@weekly reboot") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
-        echo "System will reboot at 00:00 every Sunday"
+        logit "System will reboot at 00:00 every Sunday"
       elif [[ $(crontab -l | grep "@weekly") == "@weekly reboot" ]]; then
         (crontab -l ; echo "@weekly reboot") 2>&1 | grep -v "no crontab" | grep -v "@weekly" | sort | uniq | crontab -
-        echo "Job to reboot weekly removed"
+        logit "Job to reboot weekly removed"
       else
         reboots_help
       fi
@@ -51,16 +51,16 @@ function reboots {
     "monthly")
       if [[ $(crontab -l | grep "@monthly") != "@monthly reboot" ]]; then
         (crontab -l ; echo "@monthly reboot") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
-        echo "System will reboot at 00:00 on the 1st of every month"
+        logit "System will reboot at 00:00 on the 1st of every month"
       elif [[ $(crontab -l | grep "@monthly") == "@monthly reboot" ]]; then
         (crontab -l ; echo "@monthly reboot") 2>&1 | grep -v "no crontab" | grep -v "@monthly" | sort | uniq | crontab -
-        echo "Job to reboot monthly removed"
+        logit "Job to reboot monthly removed"
       else
         reboots_help
       fi
       ;;
     "*")
-      echo "Invalid input"
+      logit "Invalid input"
       reboots_help
       ;;
   esac

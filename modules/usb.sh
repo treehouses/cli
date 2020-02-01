@@ -3,8 +3,7 @@
 function usb {
   # check if hub-ctrl binary exists
   if [ ! -e /usr/local/bin/hub-ctrl ]; then
-    echo "required binary 'hub-ctrl' not found"
-    exit 1
+    log_and_exit1 "required binary 'hub-ctrl' not found"
   fi
 
   # check if libusb-dev pkg is installed
@@ -16,13 +15,13 @@ function usb {
     if [ "$command" = "on" ]; then
       /usr/local/bin/hub-ctrl -h 1 -P 2 -p 1
 
-      echo "usb ports turned on"
+      logit "usb ports turned on"
     elif [ "$command" = "off" ]; then
       /usr/local/bin/hub-ctrl -h 1 -P 2 -p
 
-      echo "usb ports turned off"
+      logit "usb ports turned off"
     else
-      echo "unknown command"
+      logit "unknown command"
     fi
   elif [[ $(detectrpi) =~ 'RPI4' ]]; then
     if [ "$command" = "on" ]; then
@@ -32,7 +31,7 @@ function usb {
       /usr/local/bin/hub-ctrl -h 2 -P 4 -p 1
       /usr/local/bin/hub-ctrl -h 1 -P 1 -p 1
 
-      echo "usb ports turned on"
+      logit "usb ports turned on"
     elif [ "$command" = "off" ]; then
       # check for connected ethernet
       if [ "$(cat /sys/class/net/eth0/carrier)" = "1" ]; then
@@ -51,9 +50,9 @@ function usb {
       /usr/local/bin/hub-ctrl -h 2 -P 4 -p
       /usr/local/bin/hub-ctrl -h 1 -P 1 -p
 
-      echo "usb ports turned off"
+      logit "usb ports turned off"
     else
-      echo "unknown command"
+      logit "unknown command"
     fi
   fi
 }

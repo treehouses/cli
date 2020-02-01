@@ -17,18 +17,15 @@ if [ "$1" == "docker" ] ; then
   fi
   
   if [ "$(systemctl is-enabled docker)" == "enabled" ] ; then
-    echo "docker";
-    exit 0
+    log_and_exit0 "docker";
   fi
   
   if [ "$(systemctl is-enabled balena)" == "enabled" ] ; then
-    echo "balena";
-    exit 0
+    log_and_exit0 "balena";
   fi
   
   if [ "$(systemctl is-enabled docker)" == "disabled" ] && [ "$(systemctl is-enabled balena)" == "disabled" ] ; then
-    echo "none";
-    exit 0
+    log_and_exit0 "none";
   fi
 }
 
@@ -37,7 +34,7 @@ function container_docker {
     stop_service balena
     enable_service docker
     start_service docker
-    echo "Success: docker has been enabled and started."
+    logit "Success: docker has been enabled and started."
 }
 
 function container_balena {
@@ -45,7 +42,7 @@ function container_balena {
     stop_service docker
     enable_service balena
     start_service balena
-    echo "Success: balena has been enabled and started."
+    logit "Success: balena has been enabled and started."
 }
 
 function container_none {
@@ -53,7 +50,7 @@ function container_none {
     disable_service docker
     stop_service docker
     stop_service balena
-    echo "Success: docker and balena have been disabled and stopped."
+    logit "Success: docker and balena have been disabled and stopped."
 }
 
 function container_help {

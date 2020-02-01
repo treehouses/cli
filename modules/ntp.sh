@@ -10,7 +10,7 @@ function ntp {
     sed -i "s/restrict 192\.168\.0\.0 mask 255\.255\.0\.0 nomodify notrap//" /etc/ntp.conf
 
     reboot_needed
-    echo "Success: please reboot you rpi to apply changes."
+    logit "Success: please reboot you rpi to apply changes."
   elif [ "$status" = "local" ]; then
     service ntp restart
     date > /boot/time
@@ -25,10 +25,9 @@ function ntp {
     } >> /etc/ntp.conf
 
     reboot_needed
-    echo "Success: please reboot you rpi to apply changes."
+    logit "Success: please reboot you rpi to apply changes."
   else
-    echo "Error: only on, off options are supported"
-    exit 0
+    log_and_exit0 "Error: only on, off options are supported"
   fi
 }
 

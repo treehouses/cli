@@ -9,7 +9,7 @@ function bluetooth {
     restart_service bluetooth
     restart_service rpibluetooth
     sleep 5 # wait 5 seconds for bluetooth to be completely up
-    echo "Success: the bluetooth service has been started."
+    logit "Success: the bluetooth service has been started."
 
   elif [ "$status" = "off" ] || [ "$status" = "pause" ]; then
     cp "$TEMPLATES/bluetooth/default" /etc/systemd/system/dbus-org.bluez.service
@@ -21,18 +21,17 @@ function bluetooth {
     fi
     sleep 3 # Wait few seconds for bluetooth to start
     restart_service bluealsa # restart the bluetooth audio service
-    echo "Success: the bluetooth service has been switched to default, and the service has been stopped."
+    logit "Success: the bluetooth service has been switched to default, and the service has been stopped."
 
   elif [ "$status" = "mac" ]; then
     macfile=/sys/kernel/debug/bluetooth/hci0/identity
     macadd=$(cat ${macfile})
-    echo "${macadd:0:17}"
+    logit "${macadd:0:17}"
 
   elif [ "$status" = "id" ]; then
     btidfile=/etc/bluetooth-id
     if [ ! -f "${btidfile}" ]; then
-      echo "No ID. Bluetooth service is not on."
-      exit 0
+      log_and_exit0 "No ID. Bluetooth service is not on."
     fi
 
     bid=$(cat ${btidfile})
@@ -40,19 +39,18 @@ function bluetooth {
 
     case "$2" in
       "")
-        echo "${nname}-${bid}"
+        logit "${nname}-${bid}"
         ;;
       "number")
-        echo "${bid}"
+        logit "${bid}"
         ;;
       *)
-        echo "Argument not valid; leave blank or use \"number\""
-        exit 1
+        log_and_exit1 "Argument not valid; leave blank or use \"number\""
         ;;
     esac
 
   else
-    echo "Error: only 'on', 'off', 'pause' options are supported";
+    logit "Error: only 'on', 'off', 'pause' options are supported";
   fi
 }
 

@@ -2,18 +2,17 @@
 
 function discover {
   check_missing_packages "nmap"
-
   option=$1
   
   if [ "$#" -gt 2 ]; then 
-    echo "Too many arguments."
+    logit "Too many arguments."
     discover_help
     exit 1
   fi 
 
   if [ $option = "rpi" ] || [ $option = "interface" ]; then
     if [ $# -gt 1 ]; then
-      echo "Too many arguments."
+      logit "Too many arguments."
       discover_help
       exit 1
     fi
@@ -21,15 +20,13 @@ function discover {
 
   if [ $option = "scan" ] || [ $option = "ping" ] || [ $option = "ports" ]; then
     if [ -z $2 ]; then 
-      echo "You need to provide an IP address or URL for this command".
-      exit 1
+      log_and_exit1 "You need to provide an IP address or URL for this command".
     fi
     ip=$2
   fi
   if [ $option = "mac" ]; then
     if ! [[ "$2" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]]; then
-        echo "Invalid mac address"
-        exit 1
+        log_and_exit1 "Invalid mac address"
     fi
     mac=$2
   fi
@@ -54,13 +51,13 @@ function discover {
       mac_ip=$(arp -n |grep -i "$mac" |awk '{print $1}')
       if [ -z "$mac_ip" ]
       then
-        echo " We can't find  ip address with this mac address since it is not on arp table."
+        logit " We can't find  ip address with this mac address since it is not on arp table."
       else
-        echo " $mac_ip"
+        logit " $mac_ip"
       fi
       ;;
     *)
-      echo "Unknown operation provided." 1>&2
+      logit "Unknown operation provided." 1>&2
       discover_help
       exit 1
       ;;

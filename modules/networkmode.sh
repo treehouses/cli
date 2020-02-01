@@ -39,8 +39,8 @@ function networkmode {
       get_wpa_supplicant_settings
     elif [ "$network_mode" == "bridge" ]; then
       checkroot
-      echo "wlan0: $(get_wpa_supplicant_settings)"
-      echo "ap0: $(get_hostapd_settings)"
+      logit "wlan0: $(get_wpa_supplicant_settings)"
+      logit "ap0: $(get_hostapd_settings)"
     elif [ "$network_mode" == "ap local" ] || [ "$network_mode" == "ap internet" ]; then
       get_ap_settings "$network_mode"
     elif [ "$network_mode" == "static wifi" ]; then
@@ -48,24 +48,24 @@ function networkmode {
     elif [ "$network_mode" == "static ethernet" ]; then
       get_staticnetwork_info "eth0"
     elif [ "$network_mode" == "default" ]; then
-      echo "network mode is default."
+      logit "network mode is default."
       ifaces=(eth0 wlan0)
       for interface in "${ifaces[@]}"
       do
         if [ ! -z "$(get_ipv4_ip "$interface")" ]; then
-          echo "$interface ip: $(get_ipv4_ip "$interface")"
+          logit "$interface ip: $(get_ipv4_ip "$interface")"
         fi
       done
     else
       for interface in "${interfaces[@]}"
       do
         if [ ! -z "$(get_ipv4_ip "$interface")" ]; then
-          echo "$network_mode $interface ip: $(get_ipv4_ip "$interface")"
+          logit "$network_mode $interface ip: $(get_ipv4_ip "$interface")"
         fi
       done
     fi
   else
-    echo "$network_mode"
+    logit "$network_mode"
   fi
 }
 
@@ -75,20 +75,20 @@ function get_ap_name {
 
 function get_ap_settings {
   if ! grep -q "wpa_passphrase=*" "/etc/hostapd/hostapd.conf"; then
-    echo -n "wlan0: ap essid: $(get_ap_name), ap has no password, ip: $(get_ipv4_ip wlan0),"
+    logit "wlan0: ap essid: $(get_ap_name), ap has no password, ip: $(get_ipv4_ip wlan0)," "" "" "2"
   else
-    echo -n "wlan0: ap essid: $(get_ap_name), ap has password, ip: $(get_ipv4_ip wlan0),"
+    logit "wlan0: ap essid: $(get_ap_name), ap has password, ip: $(get_ipv4_ip wlan0)," "" "" "2"
   fi
   if [ "$1" == "ap local" ]; then
-    echo " not sharing internet"
+    logit " not sharing internet"
   else
-    echo " sharing internet"
+    logit " sharing internet"
   fi
   iseth0=$(get_ipv4_ip eth0)
   if [ -z "$iseth0" ]; then
-    echo "eth0: no uplink, maybe ethernet cable is unplugged?"
+    logit "eth0: no uplink, maybe ethernet cable is unplugged?"
   else
-    echo "eth0: ip: $iseth0"
+    logit "eth0: ip: $iseth0"
   fi
 }
 
@@ -98,14 +98,14 @@ function get_staticnetwork_info {
   netmask=$(sed -n "s/.*netmask \\(.*\\)/\\1/p" "/etc/network/interfaces.d/$interface")
   gateway=$(sed -n "s/.*gateway \\(.*\\)/\\1/p" "/etc/network/interfaces.d/$interface")
   dns=$(sed -n "s/.*dns-nameservers \\(.*\\)/\\1/p" "/etc/network/interfaces.d/$interface")
-  echo -n "$interface: static, ip: $ip_address, netmask: $netmask, gateway: $gateway, dns: $dns"
+  logit "$interface: static, ip: $ip_address, netmask: $netmask, gateway: $gateway, dns: $dns" "" "" "2"
   if [ "$interface" == "wlan0" ]; then 
     network_name=$(sed -n "s/.*ssid=\"\\(.*\\)\"/\\1/p" /etc/wpa_supplicant/wpa_supplicant.conf)
-    echo -n ", essid: $network_name, "
+    logit ", essid: $network_name, " "" "" "2"
     if grep -q "key_mgmt=NONE" "/etc/wpa_supplicant/wpa_supplicant.conf"; then
-      echo "has no password"
+      logit "has no password"
     else
-      echo "has password"
+      logit "has password"
     fi
   else
     echo
@@ -115,11 +115,11 @@ function get_staticnetwork_info {
 function get_wpa_supplicant_settings {
   network_name=$(sed -n "s/.*ssid=\"\\(.*\\)\"/\\1/p" /etc/wpa_supplicant/wpa_supplicant.conf)
   network_ip=$(get_ipv4_ip wlan0)
-  echo -n "essid: $network_name, ip: $network_ip, "
+  logit "essid: $network_name, ip: $network_ip, "  "" "" "2"
   if grep -q "key_mgmt=NONE" "/etc/wpa_supplicant/wpa_supplicant.conf"; then
-    echo "has no password"
+    logit "has no password"
   else
-    echo "has password"
+    logit "has password"
   fi
 }
 
@@ -127,9 +127,9 @@ function get_hostapd_settings {
   network_name=$(get_ap_name)
   network_ip=$(get_ipv4_ip ap0)
   if ! grep -q "wpa_passphrase=*" "/etc/hostapd/hostapd.conf"; then
-    echo "essid: $network_name, ip: $network_ip, has no password"
+    logit "essid: $network_name, ip: $network_ip, has no password"
   else
-    echo "essid: $network_name, ip: $network_ip, has password"
+    logit "essid: $network_name, ip: $network_ip, has password"
   fi
 }
 

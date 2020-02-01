@@ -9,7 +9,7 @@ function bootoption {
       rm /etc/systemd/system/getty@tty1.service.d/autologin.conf
     fi
     reboot_needed
-    echo "OK: A reboot is required to see the changes"
+    logit "OK: A reboot is required to see the changes"
   elif [ "$option" = "console autologin" ]; then
     systemctl set-default multi-user.target > "$LOGFILE"
     ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
@@ -19,7 +19,7 @@ ExecStart=
 ExecStart=-/sbin/agetty --autologin $SUDO_USER --noclear %I $TERM
 EOF
     reboot_needed
-    echo "OK: A reboot is required to see the changes"
+    logit "OK: A reboot is required to see the changes"
   elif [ "$option" = "desktop" ]; then
     if [ -e /etc/init.d/lightdm ]; then
       systemctl set-default graphical.target
@@ -29,10 +29,9 @@ EOF
       fi
       sed /etc/lightdm/lightdm.conf -i -e "s/^autologin-user=.*/#autologin-user=/"
       reboot_needed
-      echo "OK: A reboot is required to see the changes"
+      logit "OK: A reboot is required to see the changes"
     else
-      echo "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
-      exit 1
+      log_and_exit1 "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
     fi
   elif [ "$option" = "desktop autologin" ]; then
     if [ -e /etc/init.d/lightdm ]; then
@@ -45,14 +44,12 @@ ExecStart=-/sbin/agetty --autologin $SUDO_USER --noclear %I $TERM
 EOF
       sed /etc/lightdm/lightdm.conf -i -e "s/^\(#\|\)autologin-user=.*/autologin-user=$SUDO_USER/"
       reboot_needed
-      echo "OK: A reboot is required to see the changes"
+      logit "OK: A reboot is required to see the changes"
     else
-      echo "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
-      exit 1
+      log_and_exit1 "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
     fi
   else
-    echo "Error: only 'console', 'console autologin', 'desktop', 'desktop autologin' options are supported."
-    exit 1
+    log_and_exit1 "Error: only 'console', 'console autologin', 'desktop', 'desktop autologin' options are supported."
   fi
 }
 

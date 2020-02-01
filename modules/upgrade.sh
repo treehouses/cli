@@ -10,8 +10,7 @@ function upgrade {
       last_version=$(npm show @treehouses/cli version)
       if [ "$last_version" = "$(version)" ];
       then
-          echo "$BASENAME is already up to date."
-          exit
+          log_and_exit0 "$BASENAME is already up to date."
       fi
     fi
     npm install -g '@treehouses/cli@latest'
@@ -19,18 +18,16 @@ function upgrade {
   then
     if [ "$(internet)" == "false" ];
     then
-      echo "false"
-      exit
+      log_and_exit0 "false"
     fi
 
     last_version=$(npm show @treehouses/cli version)
     if [ "$last_version" = "$(version)" ];
     then
-      echo "false"
-      exit
+      log_and_exit0 "false"
     fi
 
-    echo "true $last_version"
+    logit "true $last_version"
   else
     npm install -g "@treehouses/cli@${tag}"
   fi

@@ -7,11 +7,10 @@ function burn {
     fi
 
     if [ ! -b "$device" ]; then
-        echo "Error: the device $device wasn't detected"
-        exit 1
+        log_and_exit1 "Error: the device $device wasn't detected"
     fi
 
-    echo "downloading treehouses image."
+    logit "downloading treehouses image."
     rm -f new.sha1
     if wget "http://dev.ole.org/latest.img.gz.sha1" -O new.sha1; then
       if [[ ! -e "latest.img.gz" ]] || [[ ! -e "latest.img.gz.sha1" ]] || [[ $(cat new.sha1) != $(cat latest.img.gz.sha1) ]]; then
@@ -20,13 +19,13 @@ function burn {
         rm -f "latest.img.gz"
         wget "http://dev.ole.org/latest.img.gz"
       else
-        echo "the image is up-to-date"
+        logit "the image is up-to-date"
       fi
     fi
 
-    echo "writing..."
+    logit "writing..."
     zcat "latest.img.gz" > "$device"
-    echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
+    logit "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
 }
 
 

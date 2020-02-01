@@ -5,8 +5,7 @@ function bridge {
     RPI3B|RPIZW|RPI3B+|RPI3A+|RPI4B)
       ;;
     *)
-      echo "Your rpi model is not supported"
-      exit 1;
+      log_and_exit1 "Your rpi model is not supported"
   esac
 
   wifiessid=$(clean_var "$1")
@@ -19,16 +18,14 @@ function bridge {
 
   if [ -z "$hotspotessid" ];
   then
-    echo "a hotspot essid is required"
-    exit 1
+    log_and_exit1 "a hotspot essid is required"
   fi
 
   if [ -n "$hotspotessid" ]
   then
     if [ ${#hotspotessid} -gt 32 ]
     then
-      echo "Error: hotspot essid must be no greater than 32 characters"
-      exit 1
+      log_and_exit1 "Error: hotspot essid must be no greater than 32 characters"
     fi
   fi
 
@@ -36,8 +33,7 @@ function bridge {
   then
     if [ ${#wifipassword} -lt 8 ];
     then
-      echo "Error: wifi password must have at least 8 characters"
-      exit 1
+      log_and_exit1 "Error: wifi password must have at least 8 characters"
     fi
   fi
 
@@ -45,8 +41,7 @@ function bridge {
   then
     if [ ${#hotspotpassword} -lt 8 ];
     then
-      echo "Error: hotspot password must have at least 8 characters"
-      exit 1
+      log_and_exit1 "Error: hotspot password must have at least 8 characters"
     fi
   fi
 
@@ -115,7 +110,7 @@ function bridge {
 
   sync; sync; sync
   reboot_needed
-  echo "the bridge has been built ;), a reboot is required to apply changes"
+  logit "the bridge has been built ;), a reboot is required to apply changes"
 }
 
 function bridge_help {

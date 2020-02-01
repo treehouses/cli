@@ -36,16 +36,14 @@ function disable_service {
 function checkroot {
   if [ "$(id -u)" -ne 0 ];
   then
-      echo "Error: Must be run with root permissions"
-      exit 1
+    log_and_exit1 "Error: Must be run with root permissions"
   fi
 }
 
 function checkrpi {
   if [ "$(detectrpi)" == "nonrpi" ];
   then
-    echo "Error: Must be run with rpi system"
-    exit 1
+    log_and_exit1 "Error: Must be run with rpi system"
   fi
 }
 
@@ -58,8 +56,7 @@ function checkwrpi {
       return 1
     fi
   done
-  echo "Bluetooth does not exist on this device"
-  exit 1
+  log_and_exit1 "Bluetooth does not exist on this device"
 }
 
 function restart_hotspot {
@@ -146,8 +143,8 @@ function check_missing_packages {
   done
 
   if (( ${#missing_deps[@]} > 0 )) ; then
-      echo "Missing required programs: ${missing_deps[*]}"
-      echo "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
+      logit "Missing required programs: ${missing_deps[*]}"
+      logit "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
       exit 1
   fi
 }

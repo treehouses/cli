@@ -4,8 +4,8 @@ function openvpn {
   command="$1"
 
   if ! hash "openvpn" 2>"$LOGFILE"; then
-    echo "Error: couldn't find openvpn installed."
-    echo "On debian systems it can be installed by running 'apt-get install openvpn'"
+    logit "Error: couldn't find openvpn installed."
+    logit "On debian systems it can be installed by running 'apt-get install openvpn'"
     exit 1
   fi
 
@@ -28,7 +28,7 @@ function openvpn {
     if [ -f "/etc/openvpn/openvpn.conf" ]; then
       cat "/etc/openvpn/openvpn.conf"
     else
-      echo "openvpn has not been setup yet."
+      logit "openvpn has not been setup yet."
     fi
   elif [ "$command" == "delete" ]; then
     rm -rf "/etc/openvpn/openvpn.conf"
@@ -52,7 +52,7 @@ function openvpn {
     if [ -f "/tmp/vpn.ovpn" ]; then
       openvpn "use" "/tmp/vpn.ovpn" "$password"
     else
-      echo "Error when trying to download the vpn file"
+      logit "Error when trying to download the vpn file"
     fi
 
     restart_service "openvpn"
@@ -67,54 +67,52 @@ function openvpn {
       if [ ! -f "/etc/openvpn_report_channels.txt" ]; then
         echo "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" >> /etc/openvpn_report_channels.txt
       fi
-      echo "OK."
+      logit "OK."
     elif [ "$option" = "add" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        echo "Error: You must specify a channel URL"
-        exit 1
+        log_and_exit1 "Error: You must specify a channel URL"
       fi
 
       echo "$value" >> /etc/openvpn_report_channels.txt
-      echo "OK."
+      logit "OK."
     elif [ "$option" = "delete" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        echo "Error: You must specify a channel URL"
-        exit 1
+        log_and_exit1 "Error: You must specify a channel URL"
       fi
 
       value=$(echo $value | sed 's/\//\\\//g')
       sed -i "/^$value/d" /etc/tor_report_channels.txt
-      echo "OK."
+      logit "OK."
     elif [ "$option" = "list" ]; then
       if [ -f "/etc/openvpn_report_channels.txt" ]; then
         cat /etc/openvpn_report_channels.txt
       else
-        echo "No channels found. No message send"
+        logit "No channels found. No message send"
       fi
     elif [ "$option" = "off" ]; then
       rm -rf /etc/openvpn_report.sh /etc/cron.d/openvpn_report /etc/openvpn_report_channels.txt || true
-      echo "OK."
+      logit "OK."
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/openvpn_report" ]; then
         status="on"
       else
         status="off"
       fi
-      echo "Status: $status"
+      logit "Status: $status"
     else
-      echo "Error: only 'on' and 'off' options are supported."
+      logit "Error: only 'on' and 'off' options are supported."
     fi
   elif [ -z "$command" ]; then
-    echo "openvpn service"
-    echo "running: $(systemctl is-active openvpn)"
-    echo "run at boot: $(systemctl is-enabled openvpn)"
+    logit "openvpn service"
+    logit "running: $(systemctl is-active openvpn)"
+    logit "run at boot: $(systemctl is-enabled openvpn)"
     if [ "$(systemctl is-active openvpn)" = "active" ]; then
-      echo "ip: $(get_ipv4_ip tun0)"
+      logit "ip: $(get_ipv4_ip tun0)"
     fi
   else
-    echo "Error: only 'use', 'show', 'delete', 'notice', 'start', 'stop' and 'load' options are supported."
+    logit "Error: only 'use', 'show', 'delete', 'notice', 'start', 'stop' and 'load' options are supported."
   fi
 }
 

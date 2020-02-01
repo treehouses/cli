@@ -20,7 +20,7 @@ function wificountry {
 
   echo "$country" > /etc/rpi-wifi-country
 
-  echo "Success: the wifi country has been set to $country"
+  logit "Success: the wifi country has been set to $country"
 }
 
 function wificountry_help {

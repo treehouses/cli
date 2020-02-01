@@ -5,13 +5,13 @@ function ssh {
   if [ "$status" = "on" ]; then
     enable_service ssh
     start_service ssh
-    echo "Success: the ssh service has been started and enabled when the system boots"
+    logit "Success: the ssh service has been started and enabled when the system boots"
   elif [ "$status" = "off" ]; then
     disable_service ssh
     stop_service ssh
-    echo "Success: the ssh service has been stopped and disabled when the system boots."
+    logit "Success: the ssh service has been stopped and disabled when the system boots."
   else
-    echo "Error: only 'on', 'off' options are supported";
+    logit "Error: only 'on', 'off' options are supported";
   fi
 }
 

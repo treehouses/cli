@@ -20,7 +20,7 @@ function apply_blocker {
   esac
   local curr_hostn=hostname
   cp "$TEMPLATES/hosts" "$TEMPLATES/hosts1"
-  sed -i "s/127.0.1.1.*HOSTNAME/127.0.1.1\\t$curr_hostn/g" "$TEMPLATES/hosts1"
+  sed -i "s/127.0.1.1.*hostname/127.0.1.1\\t$curr_hostn/g" "$TEMPLATES/hosts1"
   cp "$TEMPLATES/hosts1" /etc/hosts
   rm -f "$TEMPLATES/hosts1"
   if [ ! $BLOCKER = "0" ]; then

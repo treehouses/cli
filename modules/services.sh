@@ -102,7 +102,7 @@ function services {
 
               docker-compose -f /srv/nextcloud/nextcloud.yml -p nextcloud up -d
               echo "Next cloud built and started"
-              check_tor "8081:80"
+              check_tor "8081"
               ;;
             pihole)
               bash $TEMPLATES/services/pihole/pihole_yml.sh

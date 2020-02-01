@@ -132,6 +132,12 @@ function services {
               echo "portainer built and started"
               check_tor "9000"
               ;;
+            ntopng)            
+              docker volume create ntopng_data
+              docker run --name ntopng -d -p 8090:8090 -v /var/run/docker.sock:/var/run/docker.sock -v ntopng_data:/data jonbackhaus/ntopng --http-port=8090
+              echo "ntopng built and started"
+              check_tor "8090"
+              ;;
             *)
               echo "unknown service"
               ;;
@@ -148,7 +154,7 @@ function services {
                 echo "${service_name} stopped and removed"
               fi
               ;;
-            nextcloud|portainer)
+            nextcloud|portainer|ntopng)
               docker stop $service_name
               docker rm $service_name
               echo "${service_name} stopped and removed"
@@ -169,7 +175,7 @@ function services {
                 echo "service not found"
               fi
               ;;
-            nextcloud|portainer)
+            nextcloud|portainer|ntopng)
               docker start $service_name
               echo "${service_name} started"
               ;;
@@ -189,7 +195,7 @@ function services {
                 echo "service not found"
               fi
               ;;
-            nextcloud|portainer)
+            nextcloud|portainer|ntopng)
               docker stop $service_name
               echo "${service_name} stopped"
               ;;
@@ -318,6 +324,14 @@ function services {
               echo "easily manage your different Docker environments (Docker hosts or"
               echo "Swarm clusters).\""
               ;;
+            ntopng)
+              echo "https://github.com/ntop/ntopng"
+              echo                 
+              echo "\"ntopng is the next generation version of the original ntop,"
+              echo "a network traffic probe that monitors network usage. ntopng is"
+              echo "based on libpcap and it has been written in a portable way in order"
+              echo "to virtually run on every Unix platform, MacOSX and on Windows as well."
+              ;;
           esac
           ;;
 
@@ -416,6 +430,9 @@ function get_port {
     portainer)
       echo "9000"
       ;;
+    ntopng)
+      echo "8090"
+      ;;
     *)
       echo "unknown service"
       ;;
@@ -433,6 +450,7 @@ function services_help {
   # echo "  Moodle"
   echo "  PrivateBin"
   echo "  Portainer"
+  echo "  Ntopng"
   echo
   echo
   echo "Top-Level Commands:"

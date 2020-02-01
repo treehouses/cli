@@ -385,7 +385,7 @@ function check_space {
   free_space=$(df -Ph /var/lib/docker | awk 'END {print $4}')
   free_space=$(echo $free_space | numfmt --from=iec)
 
-  if (( $image_size > $free_space )); then
+  if (( image_size > free_space )); then
     echo "image size:" $image_size
     echo "free space:" $free_space
     echo "not enough free space"

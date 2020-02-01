@@ -40,8 +40,6 @@ function logit() {
     echo -e "$1"
   elif [[ "$4" == "2" ]]; then
     echo -n "$1"
-  elif [[ "$4" == "3" ]]; then
-    printf "$1"
   else
     echo "$1"
   fi

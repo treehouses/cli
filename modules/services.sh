@@ -69,7 +69,7 @@ function services {
         port_string+=$(get_port $i | sed -n "$j p")
         port_string+=" "
       done
-      logit "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')" "" "" "3"
+      printf "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
     done
   else
     if [ -z "$command" ]; then

@@ -19,11 +19,13 @@ function apply_blocker {
       ;;      
   esac
   local curr_hostn=$(< /etc/hostname tr -d " \\t\\n\\r")
-  cp "$TEMPLATES/hosts" /etc/hosts
-  rename "$curr_hostn"
+  cp "$TEMPLATES/hosts" "$TEMPLATES/hosts1"
+  sed -i "s/127.0.1.1.*HOSTNAME/127.0.1.1\\t$curr_hostn/g" "$TEMPLATES/hosts1"
+  cp "$TEMPLATES/hosts1" /etc/hosts
   if [ ! $BLOCKER = "0" ]; then
     wget -q "$down_url" -O - >> /etc/hosts
   fi
+  sync; sync; sync;
 }
 
 function blocker {

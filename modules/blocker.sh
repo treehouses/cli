@@ -22,7 +22,7 @@ function apply_blocker {
   cp "$TEMPLATES/hosts" /etc/hosts
   rename "$curr_hostn"
   if [ ! $BLOCKER = "0" ]; then
-    wget "$down_url" -O - >> /etc/hosts
+    wget -q "$down_url" -O - >> /etc/hosts
   fi
 }
 

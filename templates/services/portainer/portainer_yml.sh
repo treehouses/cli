@@ -13,4 +13,6 @@ echo "services:"
   echo "      - \"/var/run/docker.sock:/var/run/docker.sock\""
   echo "      - \"portainer_data:/data portainer/portainer\""
   echo "version: \"2\""
+  echo "volumes:"
+  echo "  portainer_data:"
 } > /srv/portainer/portainer.yml

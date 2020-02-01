@@ -274,30 +274,30 @@ function services {
           case "$service_name" in
             planet)
               logit "https://github.com/open-learning-exchange/planet"
-              logit
+              echo
               logit "\"Planet Learning is a generic learning system built in Angular"
               logit "& CouchDB.\""
               ;;
             kolibri)
               logit "https://github.com/treehouses/kolibri"
-              logit
+              echo
               logit "\"Kolibri is the offline learning platform from Learning Equality.\""
               ;;
             nextcloud)
               logit "https://github.com/nextcloud"
-              logit
+              echo
               logit "\"A safe home for all your data. Access & share your files, calendars,"
               logit "contacts, mail & more from any device, on your terms.\""
               ;;
             pihole)
               logit "https://github.com/pi-hole/docker-pi-hole"
-              logit
+              echo
               logit "\"The Pi-hole® is a DNS sinkhole that protects your devices from"
               logit "unwanted content, without installing any client-side software.\""
               ;;
             moodle)
               logit "https://github.com/treehouses/moodole"
-              logit
+              echo
               logit "\"Moodle <https://moodle.org> is a learning platform designed to"
               logit "provide educators, administrators and learners with a single robust,"
               logit "secure and integrated system to create personalised learning"
@@ -305,14 +305,14 @@ function services {
               ;;
             privatebin)
               logit "https://github.com/treehouses/privatebin"
-              logit
+              echo
               logit "\"A minimalist, open source online pastebin where the server has"
               logit "zero knowledge of pasted data. Data is encrypted/decrypted in the"
               logit "browser using 256 bits AES. https://privatebin.info/\""
               ;;
             portainer)
               logit "https://github.com/portainer/portainer"
-              logit
+              echo
               logit "\"Portainer is a lightweight management UI which allows you to"
               logit "easily manage your different Docker environments (Docker hosts or"
               logit "Swarm clusters).\""

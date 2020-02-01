@@ -9,6 +9,6 @@ mkdir -p /srv/nextcloud
  echo "  nextcloud:"
  echo "    image: nextcloud"
  echo "    ports:"
- echo "      - \"8081\""
+ echo "      - \"8081:80\""
  echo "version: \"2\""
 } > /srv/nextcloud/nextcloud.yml

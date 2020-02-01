@@ -21,23 +21,23 @@ function camera {
         cat ${config} > ${configtemp}
         echo "start_x=1" >> ${configtemp}
         cat ${configtemp} > ${config}
-        logit "Camera settings have been enabled. A reboot is needed in order to use the camera."
+        logit "Camera settings have been enabled. A reboot is needed in order to use the camera." "" "WARNING"
       elif grep -q "start_x=1" ${config} ; then
         logit "Camera is already enabled. Use \"$BASENAME camera capture\" to take a photo."
         logit "If you are having issues using the camera, try rebooting."
       else
-        logit "Something went wrong."
+        logit "Something went wrong." "" "ERROR"
       fi
     ;;
 
     "off")
       if grep -q "start_x=1" ${config} ; then
         sed -i '/start_x=1/d' ${config}
-        logit "Camera has been disabled. Reboot needed for settings to take effect."
+        logit "Camera has been disabled. Reboot needed for settings to take effect." "" "WARNING"
       elif ! grep -q "start_x=1" ${config} ; then
         logit "Camera is already disabled. If camera is still enabled, try rebooting."
       else
-        logit "Something went wrong."
+        logit "Something went wrong." "" "ERROR"
       fi
     ;;
 

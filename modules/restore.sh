@@ -14,7 +14,7 @@ function restore {
   #echo "$b - /dev/sdb"
   
   if [ -z "$a" ] || [ -z "$b" ]; then
-      logit "Error: the device $device wasn't detected"
+      logit "Error: the device $device wasn't detected" "" "ERROR"
       return 1
   fi
 

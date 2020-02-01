@@ -5,10 +5,10 @@ function tor {
 
   if { [ ! -d "/var/lib/tor/treehouses" ] || [ ! -f "/var/lib/tor/treehouses/hostname" ]; } && [ "$1" != "start" ] && [ "$1" != "add" ]; then
     if [ -z "$(grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g')" ]; then
-      logit "Error: there are no tor ports added."
+      logit "Error: there are no tor ports added." "" "ERROR"
       logit "'$BASENAME add [localPort]' to add a port and be able to use the service"
     else
-      logit "Error: the tor service has not been configured."
+      logit "Error: the tor service has not been configured." "" "ERROR"
       logit "Run '$BASENAME tor start' to configure it."
     fi
     exit 1
@@ -148,12 +148,12 @@ function tor {
       fi
       logit "Status: $status"
     else
-      logit "Error: only 'on' and 'off' options are supported."
+      logit "Error: only 'on' and 'off' options are supported." "" "ERROR"
     fi
   elif [ "$1" = "status" ]; then
     systemctl is-active tor
   else
-    logit "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy', 'delete' and 'deleteall' options are supported."
+    logit "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy', 'delete' and 'deleteall' options are supported." "" "ERROR"
   fi
 }
 

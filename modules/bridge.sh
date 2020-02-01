@@ -110,7 +110,7 @@ function bridge {
 
   sync; sync; sync
   reboot_needed
-  logit "the bridge has been built ;), a reboot is required to apply changes"
+  logit "the bridge has been built ;), a reboot is required to apply changes" "" "WARNING"
 }
 
 function bridge_help {

@@ -11,7 +11,7 @@ function ssh {
     stop_service ssh
     logit "Success: the ssh service has been stopped and disabled when the system boots."
   else
-    logit "Error: only 'on', 'off' options are supported";
+    logit "Error: only 'on', 'off' options are supported" "" "ERROR";
   fi
 }
 

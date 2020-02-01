@@ -13,12 +13,12 @@ function clone {
   #echo "$b - /dev/sdb"
 
   if [ -z "$a" ] || [ -z "$b" ]; then
-    logit "Error: the device $device wasn't detected"
+    logit "Error: the device $device wasn't detected" "" "ERROR"
     return 1
   fi
 
   if [ $b -lt $a ]; then
-    logit "Error: the device $device is not big enough"
+    logit "Error: the device $device is not big enough" "" "ERROR"
     return 1
   fi
 
@@ -28,7 +28,7 @@ function clone {
     dd if=/dev/mmcblk0 bs=1M of="$device"
   fi
 
-  echo ; logit "A reboot is needed to re-enable write permissions to OS."
+  echo ; logit "A reboot is needed to re-enable write permissions to OS." "" "WARNING"
 }
 
 function clone_help {

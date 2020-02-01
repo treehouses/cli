@@ -16,7 +16,7 @@ function vnc {
 
   # Checks whether we have the required package to run a VNC server
   if [ ! -d /usr/share/doc/realvnc-vnc-server ] ; then
-    logit "Error: the vnc server is not installed, to install it run:"
+    logit "Error: the vnc server is not installed, to install it run:" "" "ERROR"
     logit "apt-get install realvnc-vnc-server"
     exit 1;
   fi
@@ -47,7 +47,7 @@ case "$option" in
     systemctl set-default graphical.target
     reboot_needed
     logit "Success: the vnc service has been started and enabled when the system boots."
-    logit "Please reboot the system for changes to take effect."
+    logit "Please reboot the system for changes to take effect." "" "WARNING"
     logit "You can then remotely access the system with a VNC client using the IP address: $ipaddress" 
     ;;
   "off")
@@ -59,7 +59,7 @@ case "$option" in
     systemctl set-default multi-user.target
     reboot_needed
     logit "Success: the vnc service has been stopped and disabled when the system boots."
-    logit "Please reboot the system for changes to take effect."
+    logit "Please reboot the system for changes to take effect." "" "WARNING"
     ;;
   "info")
     logit "The system boots into $isgraphical"
@@ -67,10 +67,10 @@ case "$option" in
     logit "The X window service is $xservicestatus"
     logit "In order to access your desktop via a VNC viewer, the system needs to boot into Desktop, and VNC and X window services need to be running"
     if [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
-      logit "Please reboot your system."
+      logit "Please reboot your system." "" "WARNING"
     fi
     if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "active" ]; then
-      logit "Please reboot your system."
+      logit "Please reboot your system." "" "WARNING"
     fi
     ;; 
  *)

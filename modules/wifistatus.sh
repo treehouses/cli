@@ -21,7 +21,7 @@ function wifistatus {
       fi
       #check if device is connected to wifi
       if iwconfig wlan0 | grep -q "ESSID:off/any"; then
-        logit "Error: you are not on a wireless connection"
+        logit "Error: you are not on a wireless connection" "" "ERROR"
       else
         logit "Signal strength is $signalStrength"
         if [ "$signal" -gt -30 ] && [ "$signal" -lt -10 ] ; then

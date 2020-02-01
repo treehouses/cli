@@ -5,14 +5,14 @@ function discover {
   option=$1
   
   if [ "$#" -gt 2 ]; then 
-    logit "Too many arguments."
+    logit "Too many arguments." "" "ERROR"
     discover_help
     exit 1
   fi 
 
   if [ $option = "rpi" ] || [ $option = "interface" ]; then
     if [ $# -gt 1 ]; then
-      logit "Too many arguments."
+      logit "Too many arguments." "" "ERROR"
       discover_help
       exit 1
     fi
@@ -51,13 +51,13 @@ function discover {
       mac_ip=$(arp -n |grep -i "$mac" |awk '{print $1}')
       if [ -z "$mac_ip" ]
       then
-        logit " We can't find  ip address with this mac address since it is not on arp table."
+        logit " We can't find  ip address with this mac address since it is not on arp table." "" "ERROR"
       else
         logit " $mac_ip"
       fi
       ;;
     *)
-      logit "Unknown operation provided." 1>&2
+      logit "Unknown operation provided." "" "ERROR" 1>&2
       discover_help
       exit 1
       ;;

@@ -41,10 +41,10 @@ if [ -e /sys/bus/iio/devices/iio:device0 ]; then # Checks if board is attached
       apt update;
       apt install -y python3-coral-enviro;
       reboot_needed;
-      logit "Please reboot your Raspberry Pi."
+      logit "Please reboot your Raspberry Pi." "" "WARNING"
       ;;
     *)
-      logit "Error: only 'demo-on', 'demo-always-on', 'demo-off' and 'install' options are supported"
+      logit "Error: only 'demo-on', 'demo-always-on', 'demo-off' and 'install' options are supported" "" "ERROR"
       ;;
     esac
   else

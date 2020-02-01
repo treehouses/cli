@@ -26,12 +26,12 @@ function sshkey () {
     fi
   elif [ "$1" == "delete" ]; then
     if [ -z "$2" ]; then
-      logit "Error: missing argument"
+      logit "Error: missing argument" "" "ERROR"
       logit "Usage: $BASENAME sshkey delete \"<key>\""
       exit 1
     fi
     if [ "$2" == "ssh-rsa" ]; then
-      logit "Error: missing qoutes"
+      logit "Error: missing qoutes" "" "ERROR"
       logit "Usage: $BASENAME sshkey delete \"<key>\""
       exit 1
     fi
@@ -57,13 +57,13 @@ function sshkey () {
     logit "all sshkeys are deleted."
   elif [ "$1" == "github" ]; then
     if [ -z "$2" ]; then
-      logit "Error: missing arguments"
+      logit "Error: missing arguments" "" "ERROR"
       logit "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
       exit 1
     fi
     if [ "$2" == "adduser" ]; then
       if [ -z "$3" ]; then
-        logit "Error: missing argument"
+        logit "Error: missing argument" "" "ERROR"
         logit "Usage: $BASENAME sshkey adduser <username>"
         exit 1
       fi
@@ -74,7 +74,7 @@ function sshkey () {
       fi
     elif [ "$2" == "deleteuser" ]; then
       if [ -z "$3" ]; then
-        logit "Error: missing argument"
+        logit "Error: missing argument" "" "ERROR"
         logit "Usage: $BASENAME sshkey deleteuser <username>"
         exit 1
       fi
@@ -94,7 +94,7 @@ function sshkey () {
       done    
     elif [ "$2" == "addteam" ]; then
       if [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
-        logit "Error: missing arguments"
+        logit "Error: missing arguments" "" "ERROR"
         logit "Usage: $BASENAME sshkey github addteam <organization> <team_name> <access_token>"
         exit 1
       fi
@@ -108,7 +108,7 @@ function sshkey () {
 #DEPRECATED####
   elif [ "$1" == "addgithubusername" ]; then
     if [ -z "$2" ]; then
-      logit "Error: missing argument"
+      logit "Error: missing argument" "" "ERROR"
       logit "Usage: $BASENAME sshkey addgithubusername <username>"
       exit 1
     fi
@@ -121,7 +121,7 @@ function sshkey () {
 #DEPRECATED####
   elif [ "$1" == "deletegithubusername" ]; then
     if [ -z "$2" ]; then
-      logit "Error: missing argument"
+      logit "Error: missing argument" "" "ERROR"
       logit "Usage: $BASENAME sshkey deletegithubusername \"<username>\""
       exit 1
     fi
@@ -143,7 +143,7 @@ function sshkey () {
 #DEPRECATED####
   elif [ "$1" == "addgithubgroup" ]; then
     if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
-      logit "Error: missing arguments"
+      logit "Error: missing arguments" "" "ERROR"
       logit "Usage: $BASENAME sshkey addgithubgroup <organization> <team_name> <access_token>"
       exit 1
     fi

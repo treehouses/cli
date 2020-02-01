@@ -9,7 +9,7 @@ function bootoption {
       rm /etc/systemd/system/getty@tty1.service.d/autologin.conf
     fi
     reboot_needed
-    logit "OK: A reboot is required to see the changes"
+    logit "OK: A reboot is required to see the changes" "" "WARNING"
   elif [ "$option" = "console autologin" ]; then
     systemctl set-default multi-user.target > "$LOGFILE"
     ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
@@ -19,7 +19,7 @@ ExecStart=
 ExecStart=-/sbin/agetty --autologin $SUDO_USER --noclear %I $TERM
 EOF
     reboot_needed
-    logit "OK: A reboot is required to see the changes"
+    logit "OK: A reboot is required to see the changes" "" "WARNING"
   elif [ "$option" = "desktop" ]; then
     if [ -e /etc/init.d/lightdm ]; then
       systemctl set-default graphical.target
@@ -29,7 +29,7 @@ EOF
       fi
       sed /etc/lightdm/lightdm.conf -i -e "s/^autologin-user=.*/#autologin-user=/"
       reboot_needed
-      logit "OK: A reboot is required to see the changes"
+      logit "OK: A reboot is required to see the changes" "" "WARNING"
     else
       log_and_exit1 "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
     fi
@@ -44,7 +44,7 @@ ExecStart=-/sbin/agetty --autologin $SUDO_USER --noclear %I $TERM
 EOF
       sed /etc/lightdm/lightdm.conf -i -e "s/^\(#\|\)autologin-user=.*/autologin-user=$SUDO_USER/"
       reboot_needed
-      logit "OK: A reboot is required to see the changes"
+      logit "OK: A reboot is required to see the changes" "" "WARNING"
     else
       log_and_exit1 "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
     fi

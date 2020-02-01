@@ -2,7 +2,7 @@
 
 function sshtunnel {
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
-    logit "Error: no tunnel has been set up."
+    logit "Error: no tunnel has been set up." "" "ERROR"
     logit "Run '$BASENAME sshtunnel add' to add a key for the tunnel."
     exit 0
   fi      
@@ -178,7 +178,7 @@ function sshtunnel {
       fi
       logit "Status: $status"
     else
-      logit "Error: only 'on' and 'off' options are supported."
+      logit "Error: only 'on' and 'off' options are supported." "" "ERROR"
     fi
   else
     log_and_exit1 "Error: only 'add', 'remove', 'list', 'check', 'key', 'notice' options are supported";

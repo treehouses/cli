@@ -4,7 +4,7 @@ function openvpn {
   command="$1"
 
   if ! hash "openvpn" 2>"$LOGFILE"; then
-    logit "Error: couldn't find openvpn installed."
+    logit "Error: couldn't find openvpn installed." "" "ERROR"
     logit "On debian systems it can be installed by running 'apt-get install openvpn'"
     exit 1
   fi
@@ -52,7 +52,7 @@ function openvpn {
     if [ -f "/tmp/vpn.ovpn" ]; then
       openvpn "use" "/tmp/vpn.ovpn" "$password"
     else
-      logit "Error when trying to download the vpn file"
+      logit "Error when trying to download the vpn file" "" "ERROR"
     fi
 
     restart_service "openvpn"
@@ -102,7 +102,7 @@ function openvpn {
       fi
       logit "Status: $status"
     else
-      logit "Error: only 'on' and 'off' options are supported."
+      logit "Error: only 'on' and 'off' options are supported." "" "ERROR"
     fi
   elif [ -z "$command" ]; then
     logit "openvpn service"
@@ -112,7 +112,7 @@ function openvpn {
       logit "ip: $(get_ipv4_ip tun0)"
     fi
   else
-    logit "Error: only 'use', 'show', 'delete', 'notice', 'start', 'stop' and 'load' options are supported."
+    logit "Error: only 'use', 'show', 'delete', 'notice', 'start', 'stop' and 'load' options are supported." "" "ERROR"
   fi
 }
 

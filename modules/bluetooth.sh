@@ -50,7 +50,7 @@ function bluetooth {
     esac
 
   else
-    logit "Error: only 'on', 'off', 'pause' options are supported";
+    logit "Error: only 'on', 'off', 'pause' options are supported" "" "ERROR";
   fi
 }
 

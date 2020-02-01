@@ -3,7 +3,7 @@
 #create portainer.yml
 
 mkdir -p /srv/portainer
-
+{
 echo "services:"
   echo "  portainer:"
   echo "    image: treehouses/portainer"

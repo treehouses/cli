@@ -36,14 +36,14 @@ function disable_service {
 function checkroot {
   if [ "$(id -u)" -ne 0 ];
   then
-    log_and_exit1 "Error: Must be run with root permissions"
+    log_and_exit1 "Error: Must be run with root permissions" "" "ERROR"
   fi
 }
 
 function checkrpi {
   if [ "$(detectrpi)" == "nonrpi" ];
   then
-    log_and_exit1 "Error: Must be run with rpi system"
+    log_and_exit1 "Error: Must be run with rpi system" "" "ERROR"
   fi
 }
 
@@ -56,7 +56,7 @@ function checkwrpi {
       return 1
     fi
   done
-  log_and_exit1 "Bluetooth does not exist on this device"
+  log_and_exit1 "Bluetooth does not exist on this device" "" "ERROR"
 }
 
 function restart_hotspot {

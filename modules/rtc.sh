@@ -34,9 +34,9 @@ function rtc {
 
   if [ "$status" = "on" ]; then
     if [ -z "$clock" ]; then
-      log_and_exit0 "Error: you need to specify a clock"
+      log_and_exit0 "Error: you need to specify a clock" "" "ERROR"
     elif [ -z "${rtcclockdata[$clock]}" ]; then
-      log_and_exit0 "Error: the clock is not supported."
+      log_and_exit0 "Error: the clock is not supported." "" "ERROR"
     else
       write_rtc "${rtcclockdata[$clock]}"
 
@@ -70,7 +70,7 @@ function rtc {
     reboot_needed
     logit "Success: clock changed. Please reboot"
   else
-    log_and_exit0 "Error: only on, off options are supported"
+    log_and_exit0 "Error: only on, off options are supported" "" "ERROR"
   fi
 }
 

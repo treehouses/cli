@@ -3,7 +3,7 @@
 function usb {
   # check if hub-ctrl binary exists
   if [ ! -e /usr/local/bin/hub-ctrl ]; then
-    log_and_exit1 "required binary 'hub-ctrl' not found"
+    log_and_exit1 "required binary 'hub-ctrl' not found" "" "ERROR"
   fi
 
   # check if libusb-dev pkg is installed

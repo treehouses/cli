@@ -5,7 +5,7 @@ function bridge {
     RPI3B|RPIZW|RPI3B+|RPI3A+|RPI4B)
       ;;
     *)
-      log_and_exit1 "Your rpi model is not supported"
+      log_and_exit1 "Your rpi model is not supported" "" "ERROR"
   esac
 
   wifiessid=$(clean_var "$1")
@@ -18,14 +18,14 @@ function bridge {
 
   if [ -z "$hotspotessid" ];
   then
-    log_and_exit1 "a hotspot essid is required"
+    log_and_exit1 "a hotspot essid is required" "" "ERROR"
   fi
 
   if [ -n "$hotspotessid" ]
   then
     if [ ${#hotspotessid} -gt 32 ]
     then
-      log_and_exit1 "Error: hotspot essid must be no greater than 32 characters"
+      log_and_exit1 "Error: hotspot essid must be no greater than 32 characters" "" "ERROR"
     fi
   fi
 
@@ -33,7 +33,7 @@ function bridge {
   then
     if [ ${#wifipassword} -lt 8 ];
     then
-      log_and_exit1 "Error: wifi password must have at least 8 characters"
+      log_and_exit1 "Error: wifi password must have at least 8 characters" "" "ERROR"
     fi
   fi
 
@@ -41,7 +41,7 @@ function bridge {
   then
     if [ ${#hotspotpassword} -lt 8 ];
     then
-      log_and_exit1 "Error: hotspot password must have at least 8 characters"
+      log_and_exit1 "Error: hotspot password must have at least 8 characters" "" "ERROR"
     fi
   fi
 

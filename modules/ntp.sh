@@ -27,7 +27,7 @@ function ntp {
     reboot_needed
     logit "Success: please reboot you rpi to apply changes."
   else
-    log_and_exit0 "Error: only on, off options are supported"
+    log_and_exit0 "Error: only on, off options are supported" "" "ERROR"
   fi
 }
 

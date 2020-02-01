@@ -74,7 +74,7 @@ case "$option" in
     fi
     ;; 
  *)
-    log_and_exit1 "Error: only 'on', 'off', 'info' options are supported";
+    log_and_exit1 "Error: only 'on', 'off', 'info' options are supported" "" "ERROR"
     ;;
   esac
 }

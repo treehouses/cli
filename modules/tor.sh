@@ -31,11 +31,11 @@ function tor {
     local_port="$3"
 
     if [ -z "$port" ]; then
-      log_and_exit1 "Error: you must specify a port"
+      log_and_exit1 "Error: you must specify a port" "" "ERROR"
     fi
 
     if  ! [[ "$port" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
-      log_and_exit1 "Error: is not a port"
+      log_and_exit1 "Error: is not a port" "" "ERROR"
     fi
 
     if [ -z "$local_port" ]; then
@@ -43,7 +43,7 @@ function tor {
     fi
 
     if  ! [[ "$local_port" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
-      log_and_exit1 "Error: is not a port"
+      log_and_exit1 "Error: is not a port" "" "ERROR"
     fi
 
     existing_port=$(grep -Poi "^HiddenServicePort $port .*" /etc/tor/torrc)
@@ -57,11 +57,11 @@ function tor {
     logit "Success: the port has been added"
   elif [ "$1" = "delete" ]; then
     if [ -z "$2" ]; then
-      log_and_exit1 "Error: no port entered"
+      log_and_exit1 "Error: no port entered" "" "ERROR"
     fi
 
     if  ! [[ "$2" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
-      log_and_exit1 "Error: $2 is not a port"
+      log_and_exit1 "Error: $2 is not a port" "" "ERROR"
     fi
 
     if ! grep -wq "HiddenServicePort $2" /etc/tor/torrc ; then
@@ -73,7 +73,7 @@ function tor {
     logit "Port $2 has been deleted"
   elif [ "$1" = "deleteall" ]; then
     if [ -n "$2" ]; then
-      log_and_exit1 "Error: wrong synthax"
+      log_and_exit1 "Error: wrong synthax" "" "ERROR"
     fi
 
     sed -i "/^HiddenServicePort /d" /etc/tor/torrc
@@ -115,7 +115,7 @@ function tor {
     elif [ "$option" = "add" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        log_and_exit1 "Error: You must specify a channel URL"
+        log_and_exit1 "Error: You must specify a channel URL" "" "ERROR"
       fi
 
       echo "$value" >> /etc/tor_report_channels.txt
@@ -123,7 +123,7 @@ function tor {
     elif [ "$option" = "delete" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        log_and_exit1 "Error: You must specify a channel URL"
+        log_and_exit1 "Error: You must specify a channel URL" "" "ERROR"
       fi
 
       value=$(echo $value | sed 's/\//\\\//g')

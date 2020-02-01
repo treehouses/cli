@@ -17,7 +17,7 @@ function wifistatus {
     "")
       #check if device has wifi
       if iwconfig wlan0 2>&1 | grep -q "No such device"; then
-        log_and_exit0 "Error: no wifi device is present"
+        log_and_exit0 "Error: no wifi device is present" "" "ERROR"
       fi
       #check if device is connected to wifi
       if iwconfig wlan0 | grep -q "ESSID:off/any"; then

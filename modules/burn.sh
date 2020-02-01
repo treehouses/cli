@@ -7,7 +7,7 @@ function burn {
     fi
 
     if [ ! -b "$device" ]; then
-        log_and_exit1 "Error: the device $device wasn't detected"
+        log_and_exit1 "Error: the device $device wasn't detected" "" "ERROR"
     fi
 
     logit "downloading treehouses image."

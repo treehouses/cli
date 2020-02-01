@@ -23,7 +23,7 @@ function sshtunnel {
   if [ "$1" = "add" ]; then
     if [ -z "$portinterval" ];
     then
-      log_and_exit1 "Error: A port interval is required"
+      log_and_exit1 "Error: A port interval is required" "" "ERROR"
     fi
 
     portssh=$((portinterval + 22))
@@ -92,7 +92,7 @@ function sshtunnel {
       logit "    5984 -> $portcouchdb"
       logit "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
     else
-      log_and_exit1 "Error: a tunnel has not been set up yet"
+      log_and_exit1 "Error: a tunnel has not been set up yet" "" "ERROR"
     fi
   elif [ "$1" = "check" ]; then
     if [ -f "/etc/tunnel" ]; then
@@ -139,7 +139,7 @@ function sshtunnel {
     elif [ "$option" = "add" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        log_and_exit1 "Error: You must specify a channel URL"
+        log_and_exit1 "Error: You must specify a channel URL" "" "ERROR"
       fi
 
       echo "$value" >> /etc/tunnel_report_channels.txt
@@ -147,7 +147,7 @@ function sshtunnel {
     elif [ "$option" = "delete" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        log_and_exit1 "Error: You must specify a channel URL"
+        log_and_exit1 "Error: You must specify a channel URL" "" "ERROR"
       fi
 
       value=$(echo $value | sed 's/\//\\\//g')
@@ -181,7 +181,7 @@ function sshtunnel {
       logit "Error: only 'on' and 'off' options are supported." "" "ERROR"
     fi
   else
-    log_and_exit1 "Error: only 'add', 'remove', 'list', 'check', 'key', 'notice' options are supported";
+    log_and_exit1 "Error: only 'add', 'remove', 'list', 'check', 'key', 'notice' options are supported" "" "ERROR"
   fi
 }
 

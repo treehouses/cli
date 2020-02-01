@@ -71,7 +71,7 @@ function openvpn {
     elif [ "$option" = "add" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        log_and_exit1 "Error: You must specify a channel URL"
+        log_and_exit1 "Error: You must specify a channel URL" "" "ERROR"
       fi
 
       echo "$value" >> /etc/openvpn_report_channels.txt
@@ -79,7 +79,7 @@ function openvpn {
     elif [ "$option" = "delete" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        log_and_exit1 "Error: You must specify a channel URL"
+        log_and_exit1 "Error: You must specify a channel URL" "" "ERROR"
       fi
 
       value=$(echo $value | sed 's/\//\\\//g')

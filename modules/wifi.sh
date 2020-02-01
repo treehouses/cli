@@ -3,7 +3,7 @@
 function wifi {
 
   if [ -z "$1" ]; then
-    log_and_exit1 "Error: name of the network missing"
+    log_and_exit1 "Error: name of the network missing" "" "ERROR"
   fi
 
   wifinetwork=$1
@@ -13,7 +13,7 @@ function wifi {
   then
     if [ ${#wifipassword} -lt 8 ]
     then
-      log_and_exit1 "Error: password must have at least 8 characters"
+      log_and_exit1 "Error: password must have at least 8 characters" "" "ERROR"
     fi
   fi
 

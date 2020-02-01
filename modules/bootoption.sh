@@ -31,7 +31,7 @@ EOF
       reboot_needed
       logit "OK: A reboot is required to see the changes" "" "WARNING"
     else
-      log_and_exit1 "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
+      log_and_exit1 "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop" "" "ERROR"
     fi
   elif [ "$option" = "desktop autologin" ]; then
     if [ -e /etc/init.d/lightdm ]; then
@@ -46,10 +46,10 @@ EOF
       reboot_needed
       logit "OK: A reboot is required to see the changes" "" "WARNING"
     else
-      log_and_exit1 "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
+      log_and_exit1 "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop" "" "ERROR"
     fi
   else
-    log_and_exit1 "Error: only 'console', 'console autologin', 'desktop', 'desktop autologin' options are supported."
+    log_and_exit1 "Error: only 'console', 'console autologin', 'desktop', 'desktop autologin' options are supported." "" "ERROR"
   fi
 }
 

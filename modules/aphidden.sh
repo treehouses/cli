@@ -12,7 +12,7 @@ function aphidden {
   then
     if [ ${#essid} -gt 32 ]
     then
-      log_and_exit1 "Error: essid must be no greater than 32 characters"
+      log_and_exit1 "Error: essid must be no greater than 32 characters" "" "ERROR"
     fi
   fi
   
@@ -20,7 +20,7 @@ function aphidden {
   then
     if [ ${#password} -lt 8 ];
     then
-      log_and_exit1 "Error: password must have at least 8 characters"
+      log_and_exit1 "Error: password must have at least 8 characters" "" "ERROR"
     fi
   fi
 
@@ -40,7 +40,7 @@ function aphidden {
 
     echo "hidden ap local" > /etc/network/mode
   else
-    log_and_exit0 "Error: only 'local' and 'internet' modes are supported".
+    log_and_exit0 "Error: only 'local' and 'internet' modes are supported." "" "ERROR"
   fi
 
   cp "$TEMPLATES/network/10-wpa_supplicant" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant

@@ -48,7 +48,7 @@ if [ -e /sys/bus/iio/devices/iio:device0 ]; then # Checks if board is attached
       ;;
     esac
   else
-    log_and_exit1 "Coral Environmmental Board not detected"
+    log_and_exit1 "Coral Environmmental Board not detected" "" "ERROR"
   fi
 }
 

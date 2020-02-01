@@ -20,13 +20,13 @@ function discover {
 
   if [ $option = "scan" ] || [ $option = "ping" ] || [ $option = "ports" ]; then
     if [ -z $2 ]; then 
-      log_and_exit1 "You need to provide an IP address or URL for this command".
+      log_and_exit1 "You need to provide an IP address or URL for this command." "" "ERROR"
     fi
     ip=$2
   fi
   if [ $option = "mac" ]; then
     if ! [[ "$2" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]]; then
-        log_and_exit1 "Invalid mac address"
+        log_and_exit1 "Invalid mac address" "" "ERROR"
     fi
     mac=$2
   fi

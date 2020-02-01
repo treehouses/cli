@@ -74,12 +74,12 @@ function led {
 
       exit 0
     else
-      log_and_exit1 "${RED}Error:${NC} led '$color' is not present" "" "" "1"
+      log_and_exit1 "${RED}Error:${NC} led '$color' is not present" "" "ERROR" "1"
     fi
   fi
 
   if [ ! -d "$led" ]; then
-    log_and_exit1 "${RED}Error:${NC} led '$color' is not present" "" "" "1"
+    log_and_exit1 "${RED}Error:${NC} led '$color' is not present" "" "ERROR" "1"
   fi
 
   if [ -z "$trigger" ]; then
@@ -88,7 +88,7 @@ function led {
     checkroot
 
     if ! grep -q "$trigger" "$led/trigger" 2>"$LOGFILE"; then
-        log_and_exit1 "${RED}Error:${NC} unkown led mode '$trigger'" "" "" "1"
+        log_and_exit1 "${RED}Error:${NC} unkown led mode '$trigger'" "" "ERROR" "1"
     fi
 
     echo "$trigger" > "$led/trigger"

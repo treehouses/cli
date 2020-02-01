@@ -19,7 +19,7 @@ function staticwifi {
   then
     if [ ${#password} -lt 8 ];
     then
-      log_and_exit1 "Error: password must have at least 8 characters"
+      log_and_exit1 "Error: password must have at least 8 characters" "" "ERROR"
     fi
   fi
 

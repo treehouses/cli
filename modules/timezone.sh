@@ -4,12 +4,12 @@ function timezone {
   timezone="$1"
   if [ -z "$timezone" ];
   then
-    log_and_exit1 "Error: the timezone is missing"
+    log_and_exit1 "Error: the timezone is missing" "" "ERROR"
   fi
 
   if [ ! -f "/usr/share/zoneinfo/$timezone" ];
   then
-    log_and_exit1 "Error: the timezone is not supported"
+    log_and_exit1 "Error: the timezone is not supported" "" "ERROR"
   fi
 
   rm /etc/localtime

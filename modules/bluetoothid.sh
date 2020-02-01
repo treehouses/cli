@@ -18,7 +18,7 @@ function bluetoothid () {
       logit "${bid}"
       ;;
     *)
-      log_and_exit1 "Argument not valid; leave blank or use \"number\""
+      log_and_exit1 "Argument not valid; leave blank or use \"number\"" "" "ERROR"
       ;;
   esac
 }

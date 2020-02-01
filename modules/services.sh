@@ -73,7 +73,7 @@ function services {
     done
   else
     if [ -z "$command" ]; then
-      log_and_exit1 "no command given"
+      log_and_exit1 "no command given" "" "ERROR"
     else
       case "$command" in
         up)

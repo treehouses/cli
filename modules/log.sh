@@ -107,7 +107,7 @@ function log {
 	  if [ -z "$2" ]; then
 	    lines="6"
 	  elif ! [[ "$2" =~ ^[0-9]+$ ]]; then
-	    log_and_exit1 "Error: only numbers allowed"
+	    log_and_exit1 "Error: only numbers allowed" "" "ERROR"
       fi
 	  grep "@treehouses/cli" /var/log/syslog | tail -n "$lines"
 	  ;;
@@ -116,7 +116,7 @@ function log {
 	  logit "log X: level set to max" "" "DEBUG"
 	  ;;
     *)
-      log_and_exit1 "Error: only '0' '1' '2' '3' '4' 'show' 'max' options are supported"
+      log_and_exit1 "Error: only '0' '1' '2' '3' '4' 'show' 'max' options are supported" "" "ERROR"
       ;;
   esac
   conf_var_update "LOG" "$LOG"

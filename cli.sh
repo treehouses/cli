@@ -49,6 +49,7 @@ source "$SCRIPTFOLDER/modules/version.sh"
 source "$SCRIPTFOLDER/modules/verbose.sh"
 source "$SCRIPTFOLDER/modules/vnc.sh"
 source "$SCRIPTFOLDER/modules/wifi.sh"
+source "$SCRIPTFOLDER/modules/wifibridge.sh"
 source "$SCRIPTFOLDER/modules/wificountry.sh"
 source "$SCRIPTFOLDER/modules/wifihidden.sh"
 source "$SCRIPTFOLDER/modules/wifistatus.sh"
@@ -108,6 +109,11 @@ case $1 in
     checkrpi
     checkroot
     wifi "$2" "$3"
+    ;;
+  wifibridge)
+    checkrpi
+    checkroot
+    wifibridge "$2"
     ;;
   wifihidden)
     checkrpi

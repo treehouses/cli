@@ -18,7 +18,8 @@ function apply_blocker {
       local down_url="https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-social/hosts"
       ;;      
   esac
-  local hostn=$(hostname)
+  local hostn
+  hostn=$(hostname)
   cp "$TEMPLATES/hosts" "$TEMPLATES/hosts1"
   sed -i "s/HOSTNAME/$hostn/g" "$TEMPLATES/hosts1"
   sync;sync;sync;

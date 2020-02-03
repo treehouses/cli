@@ -145,18 +145,13 @@ function services {
 
         down)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer)
               if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
                 echo "yml file doesn't exit"
               else
                 docker-compose -f /srv/${service_name}/${service_name}.yml down
                 echo "${service_name} stopped and removed"
               fi
-              ;;
-            nextcloud|portainer)
-              docker stop $service_name
-              docker rm $service_name
-              echo "${service_name} stopped and removed"
               ;;
             *)
               echo "unknown service"

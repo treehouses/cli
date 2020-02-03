@@ -161,8 +161,14 @@ function tor {
     fi
   elif [ "$1" = "status" ]; then
     systemctl is-active tor
+  elif [ "$1" = "refresh" ]; then
+    cp /etc/tor/torrc /etc/tor/torrc_backup
+    treehouses tor destroy
+    treehouses tor start
+    mv /etc/tor/torrc_backup /etc/tor/torrc
+    echo "Success: the tor service has been refreshed"
   else
-    echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy', 'delete' and 'deleteall' options are supported."
+    echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy', 'delete', 'deleteall', and 'refresh' options are supported."
   fi
 }
 
@@ -210,5 +216,8 @@ function tor_help {
   echo
   echo "  $BASENAME tor status"
   echo "      Outputs the status of the tor service"
+  echo
+  echo "  $BASENAME tor refresh"
+  echo "      Creates a new tor address while keeping added ports"
   echo
 }

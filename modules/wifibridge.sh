@@ -85,3 +85,4 @@ function wifibridge_help {
   echo ""
   echo "$BASENAME wifibridge off"
   echo "  Removes the wifi bridge."
+}

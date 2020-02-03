@@ -62,6 +62,9 @@ function wifibridge {
       disable_service dnsmasq
 
       restart_wifi >"$LOGFILE" 2>"$LOGFILE"
+
+      sudo iptables -D FORWARD -i wlan0 -o eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+      sudo iptables -D FORWARD -i eth0 -o wlan0 -j ACCEPT
       ;;
 
 

@@ -16,7 +16,7 @@ Also [treehouses remote](https://github.com/treehouses/remote) uses this interfa
 @treehouses/cli comes pre-installed on the treehouses image made with [builder](https://github.com/treehouses/builder).
 To manually install on a Pi:
 ```bash
-curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
 sudo apt-get install -y nodejs
 sudo npm i -g --unsafe-perm @treehouses/cli
 ```

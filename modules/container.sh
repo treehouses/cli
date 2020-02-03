@@ -58,21 +58,21 @@ function container_none {
 
 function container_help {
   echo
-  echo "Usage: $(basename "$0") container <docker|balena|none>"
+  echo "Usage: $BASENAME container <docker|balena|none>"
   echo
   echo "Starts the desired container."
   echo
   echo "Example:"
-  echo "  $(basename "$0") container"
+  echo "  $BASENAME container"
   echo "      This will identify whether docker, balena or none of the services is currently running."
   echo
-  echo "  $(basename "$0") container docker"
+  echo "  $BASENAME container docker"
   echo "      This will start and enable the docker service. The balena service will be stopped and disabled."
   echo
-  echo "  $(basename "$0") container balena"
+  echo "  $BASENAME container balena"
   echo "      This will start and enable the balena service. The docker service will be stopped and disabled."
   echo
-  echo "  $(basename "$0") container none"
+  echo "  $BASENAME container none"
   echo "      This will stop and disable the balena and docker service."
   echo
 }

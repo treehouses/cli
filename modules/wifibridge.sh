@@ -68,8 +68,8 @@ function wifibridge {
       ;;
 
 
-    "*")
-      echo error
+    *)
+      log_and_exit1 "ERROR: only on and off supported" "" "ERROR"
       ;;
 
   esac

@@ -6,15 +6,15 @@ function speedtest {
 }
 function speedtest_help {
   echo
-  echo "Usage: $(basename "$0") speedtest"
+  echo "Usage: $BASENAME speedtest"
   echo
   echo "tests internet download and upload speed"
   echo
   echo "Examples:"
-  echo "  $(basename "$0") speedtest"
+  echo "  $BASENAME speedtest"
   echo "      Outputs the speed of internet download and upload speed"
   echo
-  echo "  $(basename "$0") speedtest -h"
+  echo "  $BASENAME speedtest -h"
   echo "      Outputs additional speedtest options built into speedtest"
   echo
 }

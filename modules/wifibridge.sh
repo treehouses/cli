@@ -71,3 +71,17 @@ function wifibridge {
 
   esac
 }
+
+function wifibridge_help {
+  echo ""
+  echo "Forwards the WLAN signal to the ethernet port, sharing the signal with devices attached via ethernet."
+  echo ""
+  echo "Usage $BASENAME wifibridge <on|off>"
+  echo ""
+  echo "Examples:"
+  echo ""
+  echo "$BASENAME wifibridge on"
+  echo "  Creates the wifi bridge."
+  echo ""
+  echo "$BASENAME wifibridge off"
+  echo "  Removes the wifi bridge."

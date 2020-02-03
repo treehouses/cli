@@ -5,7 +5,7 @@ mkdir -p /srv/portainer
 {
   echo "services:"
   echo "  portainer:"
-  echo "    image: portainer/portainer"
+  echo "    image: portainer"
   echo "    ports:"
   echo "      - \"9000:9000\""
   echo "    volumes:"

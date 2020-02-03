@@ -101,7 +101,7 @@ function services {
               echo "yml file created"
 
               docker-compose -f /srv/nextcloud/nextcloud.yml -p nextcloud up -d
-              echo "Next cloud built and started"
+              echo "nextcloud built and started"
               check_tor "8081"
               ;;
             pihole)

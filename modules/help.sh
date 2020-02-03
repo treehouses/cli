@@ -8,13 +8,8 @@ function help_default {
   echo "   expandfs                                  expands the partition of the RPI image to the maximum of the SDcard"
   echo "   rename <hostname>                         changes hostname"
   echo "   password <password>                       changes the password for 'pi' user"
-<<<<<<< HEAD
   echo "   sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication"
   echo "   version                                   returns the version of $(basename "$0") command"
-=======
-  echo "   sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication"        
-  echo "   version                                   returns the version of $BASENAME command"
->>>>>>> master
   echo "   image                                     returns version of the system image installed"
   echo "   detectrpi                                 detects the hardware version of a raspberry pi"
   echo "   detect                                    detects the hardware version of any device"

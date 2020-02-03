@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function help_default {
-  echo "Usage: $(basename "$0")"
+  echo "Usage: $BASENAME"
   echo
   echo "   help [command]                            gives you a more detailed info about the command or will output this"
   echo "   verbose <on|off>                          makes each command print more output (might not work with treehouses remote)"
@@ -9,7 +9,7 @@ function help_default {
   echo "   rename <hostname>                         changes hostname"
   echo "   password <password>                       changes the password for 'pi' user"
   echo "   sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication"        
-  echo "   version                                   returns the version of $(basename "$0") command"
+  echo "   version                                   returns the version of $BASENAME command"
   echo "   image                                     returns version of the system image installed"
   echo "   detectrpi                                 detects the hardware version of a raspberry pi"
   echo "   detect                                    detects the hardware version of any device"
@@ -35,7 +35,7 @@ function help_default {
   echo "   vnc [on|off|info]                         enables or disables the vnc server service"
   echo "   default                                   sets a raspbian back to default configuration"
   echo "   wificountry <country>                     sets the wifi country"
-  echo "   upgrade                                   upgrades $(basename "$0") package using npm"
+  echo "   upgrade                                   upgrades $BASENAME package using npm"
   echo "   sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel"
   echo "             <key|portinterval> [user@host]"
   echo "   led [green|red] [mode]                    sets the led mode"
@@ -52,8 +52,8 @@ function help_default {
   echo "           <daily|weekly|monthly>"
   echo "   internet                                  checks if the rpi has access to internet"
   echo "   services [service_name] [command]         executes the given command on the specified service"
-  echo "   tor [start|stop|add|delete|list]          deals with services on tor hidden network"
-  echo "       [notice|destroy|deleteall]"
+  echo "   tor [list|add|delete|deleteall|start]     deals with services on tor hidden network"
+  echo "       [stop|destroy|notice|status|refresh]"
   echo "   bootoption <console|desktop> [autologin]  sets the boot mode"
   echo "   openvpn [use|show|delete]                 helps setting up an openvpn client"
   echo "           [notice|start|stop|load]"
@@ -67,6 +67,7 @@ function help_default {
   echo "        [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)"
   echo "   usb [on|off]                              turns usb ports on or off"
   echo "   remote [status|upgrade|services]          helps with treehouses remote android app"
+  echo "   log <0|1|2|3|4|show|max>                  gets/sets log level and shows log"
   echo
 }
 

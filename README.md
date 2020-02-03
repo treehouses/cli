@@ -79,8 +79,8 @@ reboots <now|in|cron>                     reboots at given frequency | removes i
         <daily|weekly|monthly>
 internet                                  checks if the rpi has access to internet
 services [service_name] [command]         executes the given command on the specified service
-tor [start|stop|add|delete|list]          deals with services on tor hidden network
-    [notice|destroy|deleteall]
+tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
+    [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
 openvpn [use|show|delete]                 helps setting up an openvpn client
         [notice|start|stop|load]
@@ -94,5 +94,5 @@ cron [list|add|delete|deleteall]          adds, deletes a custom cron job or del
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off
 remote [status|upgrade|services]          helps with treehouses remote android app
+log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 ```
-

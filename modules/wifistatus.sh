@@ -82,15 +82,15 @@ function wifistatus {
 
 function wifistatus_help {
   echo
-  echo "  Usage: $(basename "$0") wifistatus"
+  echo "  Usage: $BASENAME wifistatus"
   echo
   echo "  Displays signal strength in dBm and layman nomenclature"
   echo
   echo "  Example:"
-  echo "  $(basename "$0") wifistatus"
+  echo "  $BASENAME wifistatus"
   echo "    Error: no wifi device is present"
   echo
-  echo "  $(basename "$0") wifistatus"
+  echo "  $BASENAME wifistatus"
   echo "    Signal strength is -40dBm"
   echo "    You have a perfect signal"
   echo

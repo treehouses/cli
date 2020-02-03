@@ -287,8 +287,8 @@ function carnival {
 
 function led_help {
   echo
-  echo "Usage: $(basename "$0") led [green|red] [mode]"
-  echo "       $(basename "$0") led [dance|thanksgiving|christmas|newyear|valentine|carnival]"
+  echo "Usage: $BASENAME led [green|red] [mode]"
+  echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|valentine|carnival]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -322,32 +322,32 @@ function led_help {
   echo "+-------|PWR|------|HDMI|------|V|----------+"
   echo "      +-----+     +-------+           +-----+"
   echo "Example:"
-  echo "  $(basename "$0") led"
+  echo "  $BASENAME led"
   echo "      This will return the status of the green/red (if present) leds"
   echo
-  echo "  $(basename "$0") led red"
+  echo "  $BASENAME led red"
   echo "      This will return the status of the red led"
   echo
-  echo "  $(basename "$0") led green heartbeat"
+  echo "  $BASENAME led green heartbeat"
   echo "      This will set the mode of the green led to heartbeat"
   echo
-  echo "  $(basename "$0") led red default-on"
+  echo "  $BASENAME led red default-on"
   echo "      This will set the mode of the red led to default-on"
   echo
-  echo "  $(basename "$0") led dance"
+  echo "  $BASENAME led dance"
   echo "      This will do a sequence with the green led"
   echo "      1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
   echo 
-  echo "  $(basename "$0") led thanksgiving"
+  echo "  $BASENAME led thanksgiving"
   echo "      This will do a sequence with the green and red led"
   echo
-  echo "  $(basename "$0") led christmas"
+  echo "  $BASENAME led christmas"
   echo "      This will set the mode of the led to christmas"
   echo
-  echo "  $(basename "$0") led valentine"
+  echo "  $BASENAME led valentine"
   echo "      This will set the mode of the led to valentine"
   echo 
-  echo "  $(basename "$0") led carnival"
+  echo "  $BASENAME led carnival"
   echo "     This will set mode of the led to carnival"
   echo
 }

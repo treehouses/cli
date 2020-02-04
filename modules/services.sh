@@ -331,6 +331,8 @@ function services {
               echo "a network traffic probe that monitors network usage. ntopng is"
               echo "based on libpcap and it has been written in a portable way in order"
               echo "to virtually run on every Unix platform, MacOSX and on Windows as well."
+              echo "Educational users can obtain commercial products at no cost please see here:"
+              echo "https://www.ntop.org/support/faq/do-you-charge-universities-no-profit-and-research/"
               ;;
           esac
           ;;

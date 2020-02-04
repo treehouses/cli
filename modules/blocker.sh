@@ -1,21 +1,22 @@
 #!/bin/bash
 
 function apply_blocker {
+  local file_nh
   case "$BLOCKER" in 
     "1")
-      local down_url="https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+      file_nh=$(<1_hosts)
       ;;
     "2")
-      local down_url="https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts"
+      file_nh=$(<2_hosts)
       ;;
     "3")
-      local down_url="https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn/hosts"
+      file_nh=$(<3_hosts)
       ;;
     "4")
-      local down_url="https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts"
+      file_nh=$(<4_hosts)
       ;;
     "max")
-      local down_url="https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-social/hosts"
+      file_nh=$(<5_hosts)
       ;;      
   esac
   local hostn
@@ -26,9 +27,9 @@ function apply_blocker {
   cp "$TEMPLATES/hosts1" /etc/hosts
   rm -f "$TEMPLATES/hosts1"
   if [ ! $BLOCKER = "0" ]; then
-    wget -q "$down_url" -O - >> /etc/hosts
+    echo "$file_nh" >> /etc/hosts
   fi
-  sync; sync; sync;
+  sync;sync;sync;
 }
 
 function blocker {

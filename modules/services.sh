@@ -326,7 +326,7 @@ function services {
           if [ "$command_option" = "local" ]; then
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
-              local_url=$(treehouses networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+              local_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
               local_url+=":"
               local_url+=$(get_port $service_name | sed -n "$i p")
 

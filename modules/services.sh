@@ -99,10 +99,8 @@ function services {
               ;;
             nextcloud)
               check_space "library/nextcloud"
-
               bash $TEMPLATES/services/nextcloud/nextcloud_yml.sh
               echo "yml file created"
-
               docker-compose -f /srv/nextcloud/nextcloud.yml -p nextcloud up -d
               echo "nextcloud built and started"
               check_tor "8081"
@@ -136,7 +134,6 @@ function services {
               check_space "portainer/portainer"
               bash $TEMPLATES/services/portainer/portainer_yml.sh
               echo "yml file created"
-
               docker-compose -f /srv/portainer/portainer.yml -p portainer up -d
               echo "portainer built and started"
               check_tor "9000"

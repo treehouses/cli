@@ -1,25 +1,25 @@
 #!/bin/bash
 
 function apply_blocker {
-  local file_nh
+  local file_nh folder_nh hostn
+  folder_nh="$TEMPLATES/blocker"
   case "$BLOCKER" in 
     "1")
-      file_nh=$(<1_hosts)
+      file_nh=$(<folder_nh/1_hosts)
       ;;
     "2")
-      file_nh=$(<2_hosts)
+      file_nh=$(<folder_nh/2_hosts)
       ;;
     "3")
-      file_nh=$(<3_hosts)
+      file_nh=$(<folder_nh/3_hosts)
       ;;
     "4")
-      file_nh=$(<4_hosts)
+      file_nh=$(<folder_nh/4_hosts)
       ;;
     "max")
-      file_nh=$(<5_hosts)
+      file_nh=$(<folder_nh/5_hosts)
       ;;      
   esac
-  local hostn
   hostn=$(hostname)
   cp "$TEMPLATES/hosts" "$TEMPLATES/hosts1"
   sed -i "s/HOSTNAME/$hostn/g" "$TEMPLATES/hosts1"
@@ -30,6 +30,7 @@ function apply_blocker {
     echo "$file_nh" >> /etc/hosts
   fi
   sync;sync;sync;
+  logit "$1"
 }
 
 function blocker {
@@ -59,33 +60,27 @@ function blocker {
       ;;
 	"0")
       BLOCKER=0
-      apply_blocker
-      logit "blocker 0: blocker disabled"
+      apply_blocker "blocker 0: blocker disabled"
       ;;
     "1")
       BLOCKER=1
-      apply_blocker
-      logit "blocker 1: level set to ads (adware + malware)"
+      apply_blocker "blocker 1: level set to ads (adware + malware)"
       ;;
     "2")
       BLOCKER=2
-      apply_blocker
-      logit "blocker 2: level set to ads + porn"
+      apply_blocker "blocker 2: level set to ads + porn"
       ;;
     "3")
       BLOCKER=3
-      apply_blocker
-      logit "blocker 3: level set to ads + gambling + porn"
+      apply_blocker "blocker 3: level set to ads + gambling + porn"
       ;;
     "4")
       BLOCKER=4
-      apply_blocker
-      logit "blocker 4: level set to ads + fakenews + gambling + porn"
+      apply_blocker "blocker 4: level set to ads + fakenews + gambling + porn"
       ;;
 	"max")
 	  BLOCKER=max
-      apply_blocker
-	  logit "blocker X: level set to ads + fakenews + gambling + porn + social"
+      apply_blocker "blocker X: level set to ads + fakenews + gambling + porn + social"
 	  ;;
     *)
       log_and_exit1 "Error: only '0' '1' '2' '3' '4' 'max' options are supported"

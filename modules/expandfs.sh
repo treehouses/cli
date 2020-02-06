@@ -8,12 +8,12 @@ function expandfs () {
 
 function expandfs_help {
   echo
-  echo "Usage: $(basename "$0") expandfs"
+  echo "Usage: $BASENAME expandfs"
   echo
   echo "Expands the partition of the raspberry pi image to use the whole disk"
   echo
   echo "Example:"
-  echo "  $(basename "$0") expandfs"
+  echo "  $BASENAME expandfs"
   echo "      The partition of the SD card in which the raspberry pi image is stored will be expanded to match the available space on the SD card after a reboot"
   echo
 }

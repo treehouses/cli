@@ -33,18 +33,18 @@ function remote {
         fi
     else
         echo "unknown command option"
-        echo "usage: $(basename "$0") remote [status | upgrade]"
+        echo "usage: $BASENAME remote [status | upgrade]"
     fi
 }
 
 function remote_help {
     echo
-    echo "Usage: $(basename "$0") remote [status | upgrade | services]"
+    echo "Usage: $BASENAME remote [status | upgrade | services]"
     echo
     echo "Returns a string representation of the current status of the Raspberry Pi"
     echo "Used for Treehouses Remote"
     echo
-    echo "$(basename "$0") remote status"
+    echo "$BASENAME remote status"
     echo "<internet> <bluetooth mac> <image> <version> <detectrpi>"
     echo "     │            │           │        │          │"
     echo "     │            │           │        │          └── model number of rpi"
@@ -53,11 +53,11 @@ function remote_help {
     echo "     │            └────────────────────────────────── bluetooth mac address"
     echo "     └─────────────────────────────────────────────── internet connection status"
     echo
-    echo "$(basename "$0") remote upgrade"
+    echo "$BASENAME remote upgrade"
     echo "true if an upgrade is available"
     echo "false otherwise"
     echo
-    echo "$(basename "$0") remote services [available | installed | running]"
+    echo "$BASENAME remote services [available | installed | running]"
     echo "Available: | Installed: | Running: <list of services>"
     echo
 }

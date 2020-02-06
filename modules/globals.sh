@@ -1,8 +1,4 @@
 #!/bin/bash
-TEMPLATES="$SCRIPTFOLDER/templates"
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m'
 
 function start_service {
   if [ "$(systemctl is-active "$1" 2>"$LOGFILE")" = "inactive" ]
@@ -64,6 +60,14 @@ function checkwrpi {
   done
   echo "Bluetooth does not exist on this device"
   exit 1
+}
+
+function checkwifi {
+  if iwconfig wlan0 | grep -q "ESSID:off/any"; then
+    echo "wifi is not connected"
+    echo "check SSID and password and try again"
+    exit 1
+  fi
 }
 
 function restart_hotspot {

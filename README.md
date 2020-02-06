@@ -1,9 +1,28 @@
-# npm i -g --unsafe-perm @treehouses/cli
+# @treehouses/cli
 
 [![Build Status](https://travis-ci.org/treehouses/cli.svg?branch=master)](https://travis-ci.org/treehouses/cli)
 [![npm version](https://badge.fury.io/js/%40treehouses%2Fcli.svg)](https://www.npmjs.com/package/%40treehouses%2Fcli)
 [![npm](https://img.shields.io/npm/dw/@treehouses/cli)](https://www.npmjs.com/package/%40treehouses%2Fcli)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/treehouses/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+## About
+
+@treehouses/cli is a command-line interface for Raspberry Pi that is used to manage various services and functions.
+Including vnc, ssh, tor, vpn, networking, starting services, bluetooth, led lights, and much more!
+Also [treehouses remote](https://github.com/treehouses/remote) uses this interface. 
+
+## Install
+
+@treehouses/cli comes pre-installed on the treehouses image made with [builder](https://github.com/treehouses/builder).
+To manually install on a Pi:
+```bash
+sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+sudo apt-get install -y nodejs
+sudo npm i -g --unsafe-perm @treehouses/cli
+```
+If you run into any problems check if your RPi is supported [here](https://github.com/treehouses/cli/blob/836c2e9b0bcebfe6afc97706634e7c070d795eac/modules/detectrpi.sh#L5-L42).
+
+## Features
 
 ```
 Usage: treehouses [command] ...
@@ -60,8 +79,8 @@ reboots <now|in|cron>                     reboots at given frequency | removes i
         <daily|weekly|monthly>
 internet                                  checks if the rpi has access to internet
 services [service_name] [command]         executes the given command on the specified service
-tor [start|stop|add|delete|list]          deals with services on tor hidden network
-    [notice|destroy|deleteall]
+tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
+    [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
 openvpn [use|show|delete]                 helps setting up an openvpn client
         [notice|start|stop|load]
@@ -75,5 +94,5 @@ cron [list|add|delete|deleteall]          adds, deletes a custom cron job or del
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off
 remote [status|upgrade|services]          helps with treehouses remote android app
+log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 ```
-

@@ -68,7 +68,8 @@ function checkwrpi {
 
 function checkwifi {
   if iwconfig wlan0 | grep -q "ESSID:off/any"; then
-    echo "Wifi not connected. Check SSID and password and try again."
+    echo "wifi is not connected"
+    echo "check SSID and password and try again"
     exit 1
   fi
 }

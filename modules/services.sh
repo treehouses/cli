@@ -382,11 +382,11 @@ function docker_compose_up {
 # tor status and port check
 function check_tor {
   port="$1"
-  if [ "$(treehouses tor status)" = "active" ]; then
+  if [ "$(tor status)" = "active" ]; then
     echo "tor active"
-    if ! treehouses tor list | grep -w $port; then
+    if ! tor list | grep -w $port; then
       echo "adding port ${port}"
-      treehouses tor add $port
+      tor add $port
     fi
   fi
 }

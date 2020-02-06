@@ -96,7 +96,10 @@ function services {
               check_tor "8080"
               ;;
             nextcloud)
-              docker run --name nextcloud -d -p 8081:80 nextcloud
+              bash $TEMPLATES/services/nextcloud/nextcloud_yml.sh
+              echo "yml file created"
+
+              docker-compose -f /srv/nextcloud/nextcloud.yml -p nextcloud up -d
               logit "nextcloud built and started"
               check_tor "8081"
               ;;
@@ -126,8 +129,10 @@ function services {
               check_tor "8083"
               ;;
             portainer)
-              docker volume create portainer_data
-              docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+              bash $TEMPLATES/services/portainer/portainer_yml.sh
+              echo "yml file created"
+
+              docker-compose -f /srv/portainer/portainer.yml -p portainer up -d
               logit "portainer built and started"
               check_tor "9000"
               ;;
@@ -139,18 +144,13 @@ function services {
 
         down)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer)
               if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
                 logit "yml file doesn't exit"
               else
                 docker-compose -f /srv/${service_name}/${service_name}.yml down
                 logit "${service_name} stopped and removed"
               fi
-              ;;
-            nextcloud|portainer)
-              docker stop $service_name
-              docker rm $service_name
-              logit "${service_name} stopped and removed"
               ;;
             *)
               logit "unknown service"
@@ -160,17 +160,13 @@ function services {
 
         start)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml start
                 logit "${service_name} started"
               else
                 logit "service not found"
               fi
-              ;;
-            nextcloud|portainer)
-              docker start $service_name
-              logit "${service_name} started"
               ;;
             *)
               logit "unknown service"
@@ -180,17 +176,13 @@ function services {
 
         stop)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml stop
                 logit "${service_name} stopped"
               else
                 logit "service not found"
               fi
-              ;;
-            nextcloud|portainer)
-              docker stop $service_name
-              logit "${service_name} stopped"
               ;;
             *)
               logit "unknown service"

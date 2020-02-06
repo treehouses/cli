@@ -367,7 +367,6 @@ function create_yml {
     echo "error creating yml file"
     exit 1
   fi
-  
 }
 
 function docker_compose_up {

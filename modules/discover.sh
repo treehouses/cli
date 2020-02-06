@@ -70,24 +70,24 @@ function discover {
 
 function discover_help {
   echo
-  echo "Usage: $(basename "$0") discover <rpi|scan|hostinterface|ping|ports ip|ping|ports[ipaddress|url]>"
+  echo "Usage: $BASENAME discover <rpi|scan|hostinterface|ping|ports ip|ping|ports[ipaddress|url]>"
   echo
   echo "Scans the network provdied and shows the open ports. Can scan for all raspberry pis on the network as well."
   echo
   echo "Example:"
-  echo " $(basename "$0") discover rpi"
+  echo " $BASENAME discover rpi"
   echo "    Detects raspberry pis on the network."
-  echo " $(basename "$0") discover scan 192.168.7.149"
+  echo " $BASENAME discover scan 192.168.7.149"
   echo "    Performs a network scan of the provided ip address."
-  echo " $(basename "$0") discover scan scanme.nmap.org"
+  echo " $BASENAME discover scan scanme.nmap.org"
   echo "    Performs a network scan of the provided url."
-  echo " $(basename "$0") discover interface"
+  echo " $BASENAME discover interface"
   echo "    Displays the host interfaces and routes on the network."
-  echo " $(basename "$0") discover ping 192.168.7.149"
+  echo " $BASENAME discover ping 192.168.7.149"
   echo "    Displays servers and devices running on network provided."
-  echo " $(basename "$0") discover ports 192.168.7.149"
+  echo " $BASENAME discover ports 192.168.7.149"
   echo "    Displays open ports."
-  echo " $(basename "$0") discover mac b8:29:eb:9f:42:8b "
+  echo " $BASENAME discover mac b8:29:eb:9f:42:8b "
   echo "    find the ip address of mac address."
   echo
 }

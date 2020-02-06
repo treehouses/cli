@@ -7,7 +7,7 @@ function coralenv {
   if [ ! -d /usr/share/doc/python3-coral-enviro ] ; then
     warn "Error: the Coral python environment is not installed"
     echo "You can install it using the command:"
-    echo "$(basename "$0") coralenv install"
+    echo "$BASENAME coralenv install"
     echo
     echo "To install them manually, run:";    
     echo "echo \"deb https://packages.cloud.google.com/apt coral-cloud-stable main\" | sudo tee /etc/apt/sources.list.d/coral-cloud.list"
@@ -55,24 +55,24 @@ if [ -e /sys/bus/iio/devices/iio:device0 ]; then # Checks if board is attached
 # Prints the options for the "coralenv" command
 function coralenv_help {
   echo
-  echo "Usage: $(basename "$0") coralenv <demo-on|demo-always-on|demo-off|help>"
+  echo "Usage: $BASENAME coralenv <demo-on|demo-always-on|demo-off|help>"
   echo
   echo "Controls the Environmental Board"
   echo
   echo "Example:"
-  echo "  $(basename "$0") coralenv install"
+  echo "  $BASENAME coralenv install"
   echo "      Installs the for coral environmental board necessary python packages."
   echo
-  echo "  $(basename "$0") coralenv demo-on"
+  echo "  $BASENAME coralenv demo-on"
   echo "      Starts the Coral Environmental board demo."
   echo "      The Coral Environmental board will be displaying sensor information."
   echo "      The board's display will turn off on reboot."
   echo
-  echo "  $(basename "$0") coralenv demo-always-on"
+  echo "  $BASENAME coralenv demo-always-on"
   echo "      Starts the Coral Environmental board demo."
   echo "      The board's display will persist on reboot."
   echo
-  echo "  $(basename "$0") coralenv demo-off"
+  echo "  $BASENAME coralenv demo-off"
   echo "      Stops the demo and the board's display will turn off on reboot."
   echo
 } 

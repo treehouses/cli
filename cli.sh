@@ -2,12 +2,14 @@
 
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
-CONFIGFOLDER=~/.treehouses/
-CONFIGFILE="$CONFIGFOLDER"config
+SCRIPTARGS="$*"
 
+source "$SCRIPTFOLDER/modules/config.sh"
+source "$SCRIPTFOLDER/modules/log.sh"
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
+source "$SCRIPTFOLDER/modules/aphidden.sh"
 source "$SCRIPTFOLDER/modules/apchannel.sh"
 source "$SCRIPTFOLDER/modules/bluetooth.sh"
 source "$SCRIPTFOLDER/modules/bluetoothid.sh"
@@ -60,17 +62,6 @@ source "$SCRIPTFOLDER/modules/discover.sh"
 source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
-
-LOGFILE=/dev/null
-if [[ ! -d "$CONFIGFOLDER" ]]; then
-  mkdir "$CONFIGFOLDER"
-fi
-if [[ -s "$CONFIGFILE" ]]
-then
-  source "$CONFIGFILE"
-else
-  touch "$CONFIGFILE"
-fi
 
 case $1 in
   expandfs)
@@ -142,6 +133,12 @@ case $1 in
     checkroot
     shift
     ap "$@"
+    ;;
+  aphidden)
+    checkrpi
+    checkroot
+    shift
+    aphidden "$@"
     ;;
   discover)
     shift
@@ -307,6 +304,10 @@ case $1 in
     checkrpi
     remote "$2" "$3"
     ;;
+  log)
+    checkroot
+    log "$2" "$3"
+    ;;
   help)
     help "$2"
     ;;
@@ -314,3 +315,6 @@ case $1 in
     help
     ;;
 esac
+if [ $? -eq 0 ]; then
+  logit "$SCRIPTARGS" "1"
+fi

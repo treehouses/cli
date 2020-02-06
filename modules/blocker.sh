@@ -5,19 +5,19 @@ function apply_blocker {
   folder_nh="$TEMPLATES/blocker"
   case "$BLOCKER" in 
     "1")
-      file_nh=$(<folder_nh/1_hosts)
+      file_nh=$(<$folder_nh/1_hosts)
       ;;
     "2")
-      file_nh=$(<folder_nh/2_hosts)
+      file_nh=$(<$folder_nh/2_hosts)
       ;;
     "3")
-      file_nh=$(<folder_nh/3_hosts)
+      file_nh=$(<$folder_nh/3_hosts)
       ;;
     "4")
-      file_nh=$(<folder_nh/4_hosts)
+      file_nh=$(<$folder_nh/4_hosts)
       ;;
     "max")
-      file_nh=$(<folder_nh/5_hosts)
+      file_nh=$(<$folder_nh/5_hosts)
       ;;      
   esac
   hostn=$(hostname)

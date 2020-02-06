@@ -382,8 +382,7 @@ function find_available_services {
 
 function check_space {
   image_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')
-  free_space=$(df -Ph /var/lib/docker | awk 'END {print $4}')
-  free_space=$(echo $free_space | numfmt --from=iec)
+  free_space=$(df -Ph /var/lib/docker | awk 'END {print $4}' | numfmt --from=iec)
 
   if (( image_size > free_space )); then
     echo "image size:" $image_size

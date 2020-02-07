@@ -59,6 +59,14 @@ function checkwrpi {
   log_and_exit1 "Bluetooth does not exist on this device" "" "ERROR"
 }
 
+function checkwifi {
+  if iwconfig wlan0 | grep -q "ESSID:off/any"; then
+    echo "wifi is not connected"
+    echo "check SSID and password and try again"
+    exit 1
+  fi
+}
+
 function restart_hotspot {
   restart_service dhcpcd || true
   ifdown wlan0 || true

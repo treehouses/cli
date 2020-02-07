@@ -47,11 +47,13 @@ function wifi {
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
-    logit "open wifi network"
+    checkwifi
+    logit "connected to open wifi network"
   else
     wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
-    logit "password network"
+    checkwifi
+    logit "connected to password network"
   fi
 
   echo "wifi" > /etc/network/mode

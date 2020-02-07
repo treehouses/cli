@@ -48,7 +48,8 @@ function wifihidden {
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
-    logit "connected to hidden open network"
+    checkwifi
+    logit "Connected to hidden open network"
   else
     {
       echo "network={"
@@ -59,7 +60,8 @@ function wifihidden {
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
-    logit "successfully connected to hidden network"
+    checkwifi
+    logit "connected to hidden network"
   fi
 
   echo "wifi" > /etc/network/mode

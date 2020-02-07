@@ -3,6 +3,7 @@
 # treehouses button bluetooth                  => bluetooth will be ON when cable is off and OFF when cable is on
 
 function button {
+  local mode
   mode=$1
 
   if [ "$mode" = "off" ]; then

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function timezone {
+  local timezone
   timezone="$1"
   if [ -z "$timezone" ];
   then

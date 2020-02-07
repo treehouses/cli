@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function vnc {
+  local option bootoptionstatus vncservicestatus xservicestatus ipaddress isgraphical
   option=$1
   bootoptionstatus=$(systemctl is-enabled graphical.target)
   vncservicestatus=$(systemctl is-active vncserver-x11-serviced)

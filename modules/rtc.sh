@@ -5,6 +5,7 @@ rtcclockdata["rasclock"]="dtoverlay=i2c-rtc,pcf2127"
 rtcclockdata["ds3231"]="dtoverlay=i2c-rtc,ds3231"
 
 function get_current_clock {
+  local prevClock
   for i in "${rtcclockdata[@]}"
   do
     if grep -q "$i" "/boot/config.txt" 2>"$LOGFILE"; then
@@ -17,8 +18,8 @@ function get_current_clock {
 }
 
 function write_rtc {
+  local clock prevClock
   clock="$1"
-
   prevClock=$(get_current_clock)
 
   if [ ! -z "$prevClock" ]; then
@@ -29,6 +30,7 @@ function write_rtc {
 }
 
 function rtc {
+  local status clock
   status="$1"
   clock="$2"
 

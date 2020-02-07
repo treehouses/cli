@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function cron {
+  local options cronjob
   options="$1"
   case "$options" in
     ""|"list") #lists current cron tasks

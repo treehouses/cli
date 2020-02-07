@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function memory_total() {
   option=$1

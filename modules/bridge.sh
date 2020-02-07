@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function bridge {
   case $(detectrpi) in

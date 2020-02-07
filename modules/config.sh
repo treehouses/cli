@@ -1,4 +1,3 @@
-#!/bin/bash
 
 # config constants
 CONFIGFILE=/etc/treehouses.conf

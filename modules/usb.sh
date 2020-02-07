@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function usb {
   # check if hub-ctrl binary exists

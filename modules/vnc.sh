@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function vnc {
   option=$1

@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function apchannel {
   new_channel="$1"

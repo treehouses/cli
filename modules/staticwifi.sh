@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function staticwifi {
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces

@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function cron {
   options="$1"

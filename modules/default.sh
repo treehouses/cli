@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function default {
   if [ "$1" == "notice" ] ; then

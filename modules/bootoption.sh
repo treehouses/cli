@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function bootoption {
   option="$1"

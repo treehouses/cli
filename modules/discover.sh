@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function discover {
   check_missing_packages "nmap"

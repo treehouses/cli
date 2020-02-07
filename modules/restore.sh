@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function restore {
   device="$1"

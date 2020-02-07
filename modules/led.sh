@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function led {
   color="$1"

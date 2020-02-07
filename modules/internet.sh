@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function internet {
   if wget -q --spider -T 3 --no-check-certificate https://www.google.com; then

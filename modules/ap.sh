@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function ap {
   mode=$(clean_var "$1")

@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function bluetooth {
   status=$1

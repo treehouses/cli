@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function speedtest {
   check_missing_packages "speedtest-cli"

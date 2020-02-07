@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function clone {
   device="$1"

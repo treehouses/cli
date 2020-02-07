@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # uses logger command to log to /var/log/syslog 
 # logit "text" "whether or not to write to screen" "logging level"
 # e.g. logit "i logged some text"

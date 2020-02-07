@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function detectrpi {
   declare -A rpimodels

@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function ssh {
   status=$1

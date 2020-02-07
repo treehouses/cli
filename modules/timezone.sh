@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function timezone {
   timezone="$1"

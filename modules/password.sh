@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function password () {
   echo "pi:$1" | chpasswd

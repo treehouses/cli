@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function upgrade {
   tag=$1

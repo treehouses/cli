@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function networkmode {
   network_mode="default"

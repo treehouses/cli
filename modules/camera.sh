@@ -1,4 +1,3 @@
-#!/bin/bash
 
 function camera {
   directory="/home/pi/Pictures/"

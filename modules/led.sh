@@ -47,7 +47,14 @@ function led {
     echo "Red LED: 0.5 on; 0.5 off"
     echo "Both LED: flash 2 times"
     newyear > "$LOGFILE"
-  elif [ "$color" = "valentine" ]; then
+   elif [ "$color" = "newmoonyear" ]; then
+    checkroot
+    echo "leds are set to newmooonyear mode."
+    echo "Look at your RPi leds, both leds will be in this pattern... "
+    echo "Both LED: 1 sec off"
+    echo "Green LED: 5 sec on"
+    newmoonyear > "$LOGFILE"
+    elif [ "$color" = "valentine" ]; then
     checkroot
     echo "leds are set to valentine mode."
     echo "Look at your RPi leds, both leds will be in this pattern... "
@@ -230,6 +237,19 @@ function newyear {
   led green "$current_green"
   led red "$current_red"
 }
+
+function newmoonyear {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  set_brightness 0 0 && set_brightness 1 0
+  sleep 0.5
+  set_brightness 0 1 sleep 5
+
+  led green "$current_green"
+  led red "$current_red"
+}
+
 
 function valentine {
   current_red=$(led "red")

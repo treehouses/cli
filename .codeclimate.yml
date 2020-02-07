@@ -12,3 +12,5 @@ engines:
         enabled: false
       SC2154:
         enabled: false
+      SC2149:
+        enabled: false

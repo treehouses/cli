@@ -51,8 +51,8 @@ function led {
     checkroot
     echo "leds are set to newmooonyear mode."
     echo "Look at your RPi leds, both leds will be in this pattern... "
-    echo "Both LED: 1 sec off"
-    echo "Green LED: 5 sec on"
+    echo "Red LED: flashes 8 times"
+    echo "Red LED: 5 off: 5 on"
     newmoonyear > "$LOGFILE"
     elif [ "$color" = "valentine" ]; then
     checkroot
@@ -242,14 +242,16 @@ function newmoonyear {
   current_green=$(led "green")
   current_red=$(led "red")
 
-  set_brightness 0 0 && set_brightness 1 0
-  sleep 0.5
-  set_brightness 0 1 sleep 5
+  for i in 1 2 3 4 5 6 7 8
+  do
+  set_brightness 1 0 && set_brightness 1 1 sleep 0.1
+  done
+
+  set_brightness 1 0 && set_brightness 1 1 sleep 5
 
   led green "$current_green"
   led red "$current_red"
 }
-
 
 function valentine {
   current_red=$(led "red")

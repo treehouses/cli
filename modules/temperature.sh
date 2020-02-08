@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function temperature () {
   #Uses `vgencmd measure_temp` command to find CPU temperature of Raspberry Pi
   reading=$(vcgencmd measure_temp)

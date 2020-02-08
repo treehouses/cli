@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function bluetoothid () {
   #check if bluetooth has an id
   btidfile=/etc/bluetooth-id

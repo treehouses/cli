@@ -1,7 +1,5 @@
-#!/bin/bash
 # treehouses button off                        => disables button ~ it does nothing
 # treehouses button bluetooth                  => bluetooth will be ON when cable is off and OFF when cable is on
-
 function button {
   mode=$1
 

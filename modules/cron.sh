@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function cron {
   options="$1"
   case "$options" in

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function upgrade {
   tag=$1
   if [ -z "$tag" ] && [ "$tag" != "--check" ];

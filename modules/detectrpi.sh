@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function detectrpi {
   declare -A rpimodels
   rpimodels["Beta"]="BETA"

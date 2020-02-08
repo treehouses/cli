@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function bootoption {
   option="$1"
   if [ "$option" = "console" ]; then

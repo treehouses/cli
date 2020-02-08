@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function wifi {
 
   if [ -z "$1" ]; then

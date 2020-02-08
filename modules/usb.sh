@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function usb {
   # check if hub-ctrl binary exists
   if [ ! -e /usr/local/bin/hub-ctrl ]; then

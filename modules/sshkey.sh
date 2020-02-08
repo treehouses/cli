@@ -1,6 +1,3 @@
-#!/bin/bash
-
-
 function sshkey () {
   if [ "$1" == "add" ]; then
     shift

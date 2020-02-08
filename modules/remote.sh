@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function remote {
     option="$1"
 

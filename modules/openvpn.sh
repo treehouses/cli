@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function openvpn {
   command="$1"
 

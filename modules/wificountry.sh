@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function wificountry {
   country=$1
 

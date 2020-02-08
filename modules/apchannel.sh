@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function apchannel {
   new_channel="$1"
   if [ "$(networkmode)" == "bridge" ] || [ "$(networkmode)" == "ap local" ] || [ "$(networkmode)" == "ap internet" ]; then

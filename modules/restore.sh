@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function restore {
   device="$1"
   if [ -z "$device" ]; then

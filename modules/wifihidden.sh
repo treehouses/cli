@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function wifihidden {
 
   if [ -z "$1" ]; then

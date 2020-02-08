@@ -8,8 +8,7 @@ install:
 - ls -al
 - cat CHANGELOG.md
 script:
-- ./templates/blocker/blocker.sh
-- mv *_hosts ./templates/blocker/.
+- ./templates/blocker/blocker.sh ./templates/blocker/
 - ls -al ./templates/blocker/
 - ls -al
 deploy:

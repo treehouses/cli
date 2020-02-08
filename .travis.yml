@@ -3,11 +3,12 @@ node_js:
 - '10'
 before_install:
 - npm install -g auto-changelog
+script:
+- ./templates/blocker/blocker.sh
 install:
 - auto-changelog
 - ls -al
 - cat CHANGELOG.md
-- ./templates/blocker/blocker.sh
 deploy:
   provider: npm
   edge: true

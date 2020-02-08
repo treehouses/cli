@@ -1,7 +1,9 @@
 function apply_blocker {
   local file_nh folder_nh hostn
   if [ ! -f $TEMPLATES/blocker/1_hosts ]; then
-    . $TEMPLATES/blocker/blocker.sh
+    cd $TEMPLATES/blocker
+    ./blocker.sh
+    cd -
   fi
   folder_nh="$TEMPLATES/blocker"
   case "$BLOCKER" in 

@@ -80,6 +80,7 @@ function services {
         up)
           case "$service_name" in
             planet)
+              check_space "treehouses/planet"
               if [ -f /srv/planet/pwd/credentials.yml ]; then
                 if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
                   echo "planet built and started"
@@ -98,35 +99,47 @@ function services {
               check_tor "80"
               ;;
             kolibri)
+              check_space "treehouses/kolibri"
               create_yml "kolibri"
               docker_compose_up "kolibri"
               check_tor "8080"
               ;;
             nextcloud)
+              check_space "library/nextcloud"
               create_yml "nextcloud"
               docker_compose_up "nextcloud"
               check_tor "8081"
               ;;
             pihole)
+              check_space "pihole/pihole"
               create_yml "pihole"
               service dnsmasq stop
               docker_compose_up "pihole"
               check_tor "8053"
               ;;
             moodle)
+              check_space "treehouses/moodle"
               create_yml "moodle"
               docker_compose_up "moodle"
               check_tor "8082"
               ;;
             privatebin)
+              check_space "treehouses/privatebin"
               create_yml "privatebin"
               docker_compose_up "privatebin"
               check_tor "8083"
               ;;
             portainer)
+              check_space "portainer/portainer"
               create_yml "portainer"
               docker_compose_up "portainer"
               check_tor "9000"
+              ;;
+            ntopng)            
+              docker volume create ntopng_data
+              docker run --name ntopng -d -p 8090:8090 -v /var/run/docker.sock:/var/run/docker.sock -v ntopng_data:/data jonbackhaus/ntopng --http-port=8090
+              echo "ntopng built and started"
+              check_tor "8090"
               ;;
             *)
               echo "unknown service"
@@ -136,7 +149,7 @@ function services {
 
         down)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|ntopng)
               if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
                 echo "yml file doesn't exit"
               else
@@ -152,7 +165,7 @@ function services {
 
         start)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|ntopng)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml start
                 echo "${service_name} started"
@@ -168,7 +181,7 @@ function services {
 
         stop)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|ntopng)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml stop
                 echo "${service_name} stopped"
@@ -301,6 +314,16 @@ function services {
               echo "easily manage your different Docker environments (Docker hosts or"
               echo "Swarm clusters).\""
               ;;
+            ntopng)
+              echo "https://github.com/ntop/ntopng"
+              echo                 
+              echo "\"ntopng is the next generation version of the original ntop,"
+              echo "a network traffic probe that monitors network usage. ntopng is"
+              echo "based on libpcap and it has been written in a portable way in order"
+              echo "to virtually run on every Unix platform, MacOSX and on Windows as well."
+              echo "Educational users can obtain commercial products at no cost please see here:"
+              echo "https://www.ntop.org/support/faq/do-you-charge-universities-no-profit-and-research/\""
+              ;;
           esac
           ;;
 
@@ -309,7 +332,7 @@ function services {
           if [ "$command_option" = "local" ]; then
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
-              local_url=$(hostname -I | head -n1 | cut -d " " -f1)
+              local_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
               local_url+=":"
               local_url+=$(get_port $service_name | sed -n "$i p")
 
@@ -360,6 +383,7 @@ function find_available_services {
   echo "$service [$available_formats]"
 }
 
+
 function create_yml {
   if bash $TEMPLATES/services/${1}/${1}_yml.sh ; then
     echo "yml file created"
@@ -374,6 +398,15 @@ function docker_compose_up {
     echo "${1} built and started"
   else
     echo "error building ${1}"
+
+function check_space {
+  image_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')
+  free_space=$(df -Ph /var/lib/docker | awk 'END {print $4}' | numfmt --from=iec)
+
+  if (( image_size > free_space )); then
+    echo "image size:" $image_size
+    echo "free space:" $free_space
+    echo "not enough free space"
     exit 1
   fi
 }
@@ -417,6 +450,9 @@ function get_port {
     portainer)
       echo "9000"
       ;;
+    ntopng)
+      echo "8090"
+      ;;
     *)
       echo "unknown service"
       ;;
@@ -434,6 +470,7 @@ function services_help {
   # echo "  Moodle"
   echo "  PrivateBin"
   echo "  Portainer"
+  echo "  Ntopng"
   echo
   echo
   echo "Top-Level Commands:"

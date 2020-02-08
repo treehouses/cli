@@ -1,4 +1,3 @@
-
 function locale {
   locale="$1"
   if [ -z "$locale" ];

@@ -1,4 +1,3 @@
-
 function services {
   service_name="$1"
   command="$2"

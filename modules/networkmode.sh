@@ -1,4 +1,3 @@
-
 function networkmode {
   network_mode="default"
   if [ -f "/etc/network/mode" ]; then

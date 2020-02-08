@@ -1,4 +1,3 @@
-
 function timezone {
   timezone="$1"
   if [ -z "$timezone" ];

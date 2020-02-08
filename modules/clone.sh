@@ -1,4 +1,3 @@
-
 function clone {
   device="$1"
   if [ -z "$device" ]; then

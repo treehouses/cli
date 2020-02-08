@@ -1,4 +1,3 @@
-
 function ntp {
   status="$1"
 

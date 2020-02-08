@@ -1,4 +1,3 @@
-
 function vnc {
   option=$1
   bootoptionstatus=$(systemctl is-enabled graphical.target)

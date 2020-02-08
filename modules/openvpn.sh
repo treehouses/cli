@@ -1,4 +1,3 @@
-
 function openvpn {
   command="$1"
 

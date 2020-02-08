@@ -1,4 +1,3 @@
-
 function tor {
   check_missing_packages "tor" "curl"
 

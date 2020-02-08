@@ -1,4 +1,3 @@
-
 function aphidden {
   mode=$(clean_var "$1")
   essid=$(clean_var "$2")

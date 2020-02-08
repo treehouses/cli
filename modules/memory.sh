@@ -1,4 +1,3 @@
-
 function memory_total() {
   option=$1
   case $option in 

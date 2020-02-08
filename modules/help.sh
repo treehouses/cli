@@ -1,4 +1,3 @@
-
 function help_default {
   echo "Usage: $BASENAME"
   echo

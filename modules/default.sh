@@ -1,4 +1,3 @@
-
 function default {
   if [ "$1" == "notice" ] ; then
     default_notice

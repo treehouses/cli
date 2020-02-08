@@ -1,4 +1,3 @@
-
 function wifistatus {
   # layman nomenclature for wifi signal strength
   #   perfect=(-10 ... -29)

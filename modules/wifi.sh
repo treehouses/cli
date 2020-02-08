@@ -1,4 +1,3 @@
-
 function wifi {
 
   if [ -z "$1" ]; then

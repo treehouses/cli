@@ -1,4 +1,3 @@
-
 function image {
     cat /boot/version.txt
 }

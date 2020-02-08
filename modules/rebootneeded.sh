@@ -1,4 +1,3 @@
-
 function rebootneeded {
   if [ -f "/etc/reboot-needed" ]; then
     echo "true";

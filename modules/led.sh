@@ -1,4 +1,3 @@
-
 function led {
   color="$1"
   trigger="$2"

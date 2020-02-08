@@ -1,4 +1,3 @@
-
 # config constants
 CONFIGFILE=/etc/treehouses.conf
 BASENAME=$(basename "$0")

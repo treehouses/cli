@@ -1,4 +1,3 @@
-
 function camera {
   directory="/home/pi/Pictures/"
   timestamp=$(date +"%Y%m%d-%H%M%S")

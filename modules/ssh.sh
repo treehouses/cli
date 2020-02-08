@@ -1,4 +1,3 @@
-
 function ssh {
   status=$1
   if [ "$status" = "on" ]; then

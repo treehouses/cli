@@ -1,4 +1,3 @@
-
 function burn {
     device="$1"
     if [ -z "$device" ]; then

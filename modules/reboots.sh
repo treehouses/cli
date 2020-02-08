@@ -1,4 +1,3 @@
-
 function reboots {
   case "$1" in
     "")

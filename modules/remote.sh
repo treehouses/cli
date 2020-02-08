@@ -1,4 +1,3 @@
-
 function remote {
     option="$1"
 

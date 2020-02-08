@@ -1,4 +1,3 @@
-
 function wificountry {
   country=$1
 

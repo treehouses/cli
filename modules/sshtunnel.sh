@@ -1,4 +1,3 @@
-
 function sshtunnel {
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
     echo "Error: no tunnel has been set up."

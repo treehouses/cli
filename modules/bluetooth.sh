@@ -1,4 +1,3 @@
-
 function bluetooth {
   status=$1
 

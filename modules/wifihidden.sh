@@ -1,4 +1,3 @@
-
 function wifihidden {
 
   if [ -z "$1" ]; then

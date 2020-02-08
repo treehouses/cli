@@ -1,4 +1,3 @@
-
 function expandfs () {
   # expandfs is way too complex, it should be handled by raspi-config
   raspi-config --expand-rootfs >"$LOGFILE" 2>"$LOGFILE"

@@ -1,4 +1,3 @@
-
 function detect {
   if [ "$(detectrpi)" != "nonrpi" ]; then
     echo "rpi $(detectrpi)"

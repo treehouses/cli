@@ -1,4 +1,3 @@
-
 function bridge {
   case $(detectrpi) in
     RPI3B|RPIZW|RPI3B+|RPI3A+|RPI4B)

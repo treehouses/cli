@@ -1,7 +1,5 @@
-#!/bin/bash
-
 function wifihidden {
-
+  local wifinetwork wifipassword wificountry
   if [ -z "$1" ]; then
     echo "Error: name of the network missing"
     exit 1
@@ -50,7 +48,8 @@ function wifihidden {
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
-    echo "connected to hidden open network"
+    checkwifi
+    echo "Connected to hidden open network"
   else
     {
       echo "network={"
@@ -61,7 +60,8 @@ function wifihidden {
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
-    echo "successfully connected to hidden network"
+    checkwifi
+    echo "connected to hidden network"
   fi
 
   echo "wifi" > /etc/network/mode

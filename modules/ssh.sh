@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function ssh {
+  local status
   status=$1
   if [ "$status" = "on" ]; then
     enable_service ssh

@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function detectrpi {
+  local rpimodel found
   declare -A rpimodels
   rpimodels["Beta"]="BETA"
   rpimodels["0002"]="RPIB"

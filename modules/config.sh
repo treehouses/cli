@@ -1,6 +1,4 @@
-#!/bin/bash
-
-# config constants
+# global config constants
 CONFIGFILE=/etc/treehouses.conf
 BASENAME=$(basename "$0")
 TEMPLATES="$SCRIPTFOLDER/templates"
@@ -8,7 +6,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-# config variables (defaults)
+# global config variables (defaults)
 LOGFILE=/dev/null
 LOG=0
 BLOCKER=0

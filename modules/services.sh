@@ -397,6 +397,9 @@ function docker_compose_up {
     echo "${1} built and started"
   else
     echo "error building ${1}"
+    exit 1
+  fi
+}
 
 function check_space {
   image_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')

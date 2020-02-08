@@ -45,7 +45,8 @@ function log_and_exit1() {
 # Sets logging level to be used by the entire app
 # Can also show the log
 function log {
-  local lines="$2"
+  local lines
+  lines="$2"
   case "$1" in
     "")
 	  case "$LOG" in

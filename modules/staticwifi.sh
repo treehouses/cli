@@ -1,4 +1,5 @@
 function staticwifi {
+  local essid password wificountry
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/wlan0/static" /etc/network/interfaces.d/wlan0
 

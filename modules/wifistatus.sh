@@ -8,6 +8,7 @@ function wifistatus {
   #   poor=(-70 -71 -72 -73 -74 -75 -76 -77 -78 -79)
   #   bad=(-80 -81 -82 -83 -84 -85 -86 -87 -88 -89 -90)
   # display strength of signal in dBm and layman terms
+  local signal signalStrength
   signal=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p' | sed -e 's/Signal level=//g' | sed -e 's/dBm//g')
   signalStrength=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p' | sed -e 's/Signal level=//g')
 

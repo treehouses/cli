@@ -1,4 +1,5 @@
 function clone {
+  local device a b
   device="$1"
   if [ -z "$device" ]; then
     device="/dev/sdb"

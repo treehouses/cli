@@ -1,4 +1,5 @@
 function locale {
+  local locale encoding
   locale="$1"
   if [ -z "$locale" ];
   then

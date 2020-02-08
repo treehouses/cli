@@ -48,6 +48,7 @@ function checkrpi {
 }
 
 function checkwrpi {
+  local model check
   declare -a wRPIs=("RPIZW" "RPI3A" "RPI3B" "RPI4B")
   model="$(detectrpi)"
   check="${model:0:5}"
@@ -124,6 +125,7 @@ function reboot_needed {
 }
 
 function get_ipv4_ip {
+  local interface
   interface="$1"
   if iface_exists "$interface"; then
     if [ "$interface" == "ap0" ]; then
@@ -135,6 +137,7 @@ function get_ipv4_ip {
 }
 
 function iface_exists {
+  local interface
   interface="$1"
   if grep -q "$interface:" < /proc/net/dev ; then
     return 0
@@ -144,6 +147,7 @@ function iface_exists {
 }
 
 function check_missing_packages {
+  local missing_deps
   missing_deps=()
   for command in "$@"; do
     if [ "$(dpkg-query -W -f='${Status}' $command 2>"$LOGFILE" | grep -c 'ok installed')" -eq 0 ]; then

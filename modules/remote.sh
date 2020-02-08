@@ -1,4 +1,5 @@
 function remote {
+    local option results
     option="$1"
 
     if [ "$option" = "status" ]; then

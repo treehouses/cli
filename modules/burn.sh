@@ -1,4 +1,5 @@
 function burn {
+    local device
     device="$1"
     if [ -z "$device" ]; then
         device="/dev/sdb"

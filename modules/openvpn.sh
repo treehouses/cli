@@ -1,4 +1,5 @@
 function openvpn {
+  local command filename password url option value status
   command="$1"
 
   if ! hash "openvpn" 2>"$LOGFILE"; then

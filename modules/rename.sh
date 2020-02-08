@@ -1,5 +1,5 @@
 function rename () { 
-
+  local CURRENT_HOSTNAME
   if
     [[ ${1:0:1} == "-" ]] || #checks beginning for "-"
     [[ ${1: -1} == "-" ]] || #checks end for "-"

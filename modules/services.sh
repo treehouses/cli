@@ -1,4 +1,6 @@
 function services {
+  local service_name command command_option service results installed
+  local array running port_string found local_url tor_url
   service_name="$1"
   command="$2"
   command_option="$3"
@@ -376,6 +378,7 @@ function services {
 
 # list all services found in /templates/services
 function find_available_services {
+  local service_name available_formats
   service_name="$1"
   available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
   echo "$service [$available_formats]"
@@ -400,6 +403,7 @@ function docker_compose_up {
 }
 
 function check_space {
+  local image_size free_space
   image_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')
   free_space=$(df -Ph /var/lib/docker | awk 'END {print $4}' | numfmt --from=iec)
 
@@ -413,6 +417,7 @@ function check_space {
 
 # tor status and port check
 function check_tor {
+  local port
   port="$1"
   if [ "$(tor status)" = "active" ]; then
     echo "tor active"
@@ -425,6 +430,7 @@ function check_tor {
 
 # get port number for specified service
 function get_port {
+  local service_name
   service_name="$1"
 
   case "$service_name" in

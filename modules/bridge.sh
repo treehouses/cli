@@ -1,4 +1,5 @@
 function bridge {
+  local wifiessid hotspotessid wifipassword hotspotpassword base_24 channels channel wificountry
   case $(detectrpi) in
     RPI3B|RPIZW|RPI3B+|RPI3A+|RPI4B)
       ;;

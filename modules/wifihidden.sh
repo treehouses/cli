@@ -1,5 +1,5 @@
 function wifihidden {
-
+  local wifinetwork wifipassword wificountry
   if [ -z "$1" ]; then
     echo "Error: name of the network missing"
     exit 1

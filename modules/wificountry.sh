@@ -1,4 +1,5 @@
 function wificountry {
+  local country
   country=$1
 
   if [ -e /etc/wpa_supplicant/wpa_supplicant.conf ]; then

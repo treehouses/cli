@@ -1,4 +1,5 @@
 function aphidden {
+  local mode essid password base_24 channels channel
   mode=$(clean_var "$1")
   essid=$(clean_var "$2")
   password=$(clean_var "$3")

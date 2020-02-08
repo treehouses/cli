@@ -1,4 +1,5 @@
 function tor {
+  local port local_port existing_port option value status
   check_missing_packages "tor" "curl"
 
   if { [ ! -d "/var/lib/tor/treehouses" ] || [ ! -f "/var/lib/tor/treehouses/hostname" ]; } && [ "$1" != "start" ] && [ "$1" != "add" ]; then

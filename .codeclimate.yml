@@ -1,6 +1,7 @@
 engines:
   shellcheck:
     enabled: true
+    shell: bash
     checks:
       SC1090:
         enabled: false

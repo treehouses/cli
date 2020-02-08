@@ -2,7 +2,7 @@ function apply_blocker {
   local file_nh folder_nh hostn
   if [ ! -f $TEMPLATES/blocker/1_hosts ]; then
     cd $TEMPLATES/blocker
-    ./blocker.sh
+    ./blocker.sh &> "$LOGFILE"
     cd -
   fi
   folder_nh="$TEMPLATES/blocker"

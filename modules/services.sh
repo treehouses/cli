@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function services {
   local service_name command command_option service results installed
   local array running port_string found local_url tor_url

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function wifi {
   local wifinetwork wifipassword wificountry
   if [ -z "$1" ]; then

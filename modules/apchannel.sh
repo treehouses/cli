@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function apchannel {
   local new_channel current_channel
   new_channel="$1"

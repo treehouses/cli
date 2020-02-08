@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function vnc {
   local option bootoptionstatus vncservicestatus xservicestatus ipaddress isgraphical
   option=$1

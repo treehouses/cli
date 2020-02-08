@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function rename () { 
   local CURRENT_HOSTNAME
   if

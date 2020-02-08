@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function burn {
     local device
     device="$1"

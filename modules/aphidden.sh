@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function aphidden {
   local mode essid password base_24 channels channel
   mode=$(clean_var "$1")

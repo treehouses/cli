@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function cron {
   local options cronjob
   options="$1"

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function detectrpi {
   local rpimodel found
   declare -A rpimodels

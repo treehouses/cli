@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function sshtunnel {
   local portinterval host hostname portssh portweb portcouchdb
   local portnewcouchdb portmunin keys option value status

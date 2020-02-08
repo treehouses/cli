@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function upgrade {
   local tag last_version
   tag=$1

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function clone {
   local device a b
   device="$1"

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function tor {
   local port local_port existing_port option value status
   check_missing_packages "tor" "curl"

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function bridge {
   local wifiessid hotspotessid wifipassword hotspotpassword base_24 channels channel wificountry
   case $(detectrpi) in

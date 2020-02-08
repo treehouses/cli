@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function wifihidden {
   local wifinetwork wifipassword wificountry
   if [ -z "$1" ]; then

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function openvpn {
   local command filename password url option value status
   command="$1"

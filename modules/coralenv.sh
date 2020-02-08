@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function coralenv {
   local param cronjob
   param=$1

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function led {
   local color trigger gLed rLed currentGreen currentRed green red led current newValue
   color="$1"

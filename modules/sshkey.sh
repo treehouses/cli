@@ -1,6 +1,3 @@
-#!/bin/bash
-
-
 function sshkey () {
   local keys githubusername auth_files teams team_id members
   if [ "$1" == "add" ]; then

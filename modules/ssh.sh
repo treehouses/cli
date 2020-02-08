@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function ssh {
   local status
   status=$1

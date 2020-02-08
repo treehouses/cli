@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function memory_total() {
   local option t_M t
   option=$1

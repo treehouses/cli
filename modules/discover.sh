@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function discover {
   local option ip mac mac_ip
   check_missing_packages "nmap"

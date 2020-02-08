@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function remote {
     local option results
     option="$1"

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 declare -A rtcclockdata
 rtcclockdata["rasclock"]="dtoverlay=i2c-rtc,pcf2127"
 rtcclockdata["ds3231"]="dtoverlay=i2c-rtc,ds3231"

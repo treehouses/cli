@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function bluetoothid () {
   local btidfile bid nname
   #check if bluetooth has an id

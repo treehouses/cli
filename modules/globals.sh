@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function start_service {
   if [ "$(systemctl is-active "$1" 2>"$LOGFILE")" = "inactive" ]
   then

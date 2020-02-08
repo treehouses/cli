@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function restore {
   local device a b
   device="$1"

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function staticwifi {
   local essid password wificountry
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces

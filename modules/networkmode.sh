@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function networkmode {
   local network_mode interfaces ifaces
   network_mode="default"

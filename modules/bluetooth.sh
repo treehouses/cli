@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function bluetooth {
   local status macfile macadd btidfile bid nname
   status=$1

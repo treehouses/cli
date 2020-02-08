@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function ntp {
   local status
   status="$1"

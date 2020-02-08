@@ -383,7 +383,6 @@ function find_available_services {
   echo "$service [$available_formats]"
 }
 
-
 function create_yml {
   if bash $TEMPLATES/services/${1}/${1}_yml.sh ; then
     echo "yml file created"

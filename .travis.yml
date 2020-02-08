@@ -10,6 +10,8 @@ install:
 script:
 - ./templates/blocker/blocker.sh
 - ls -al ./templates/blocker/
+- apt install tree
+- tree .
 deploy:
   provider: npm
   edge: true

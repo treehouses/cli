@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function reboots {
   case "$1" in
     "")

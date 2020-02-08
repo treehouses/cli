@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function password () {
   echo "pi:$1" | chpasswd
   logit "Success: the password has been changed"

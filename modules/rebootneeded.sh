@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function rebootneeded {
   if [ -f "/etc/reboot-needed" ]; then
     log_and_exit0 "true";

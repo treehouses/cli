@@ -1,7 +1,5 @@
-#!/bin/bash
-
 function wifi {
-
+  local wifinetwork wifipassword wificountry
   if [ -z "$1" ]; then
     log_and_exit1 "Error: name of the network missing" "" "ERROR"
   fi

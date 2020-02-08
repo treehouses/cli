@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function detect {
   if [ "$(detectrpi)" != "nonrpi" ]; then
     logit "rpi $(detectrpi)"

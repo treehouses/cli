@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function ntp {
+  local status
   status="$1"
 
   if [ "$status" = "internet" ]; then

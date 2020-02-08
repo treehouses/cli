@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function container {
 if [ "$1" == "docker" ] ; then
     container_docker;

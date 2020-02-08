@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # $LOGFILE is used like so systemctl disable "$1" >"$LOGFILE" 2>"$LOGFILE"
 # /dev/null is the void (output and errors vanish) $(tty) is the terminal screen
 function verbose {

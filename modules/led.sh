@@ -53,7 +53,7 @@ function led {
     echo "Look at your RPi leds, both leds will be in this pattern... "
     echo "Red LED: flashes 8 times"
     echo "Red LED: 5 off: 5 on"
-    newmoonyear > "$LOGFILE"
+    lunarnewyear > "$LOGFILE"
     elif [ "$color" = "valentine" ]; then
     checkroot
     echo "leds are set to valentine mode."

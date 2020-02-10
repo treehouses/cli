@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# create ntopng.yml
 mkdir -p /srv/ntopng
 
+# create ntopng.yml
 {
   echo "services:"
   echo "  ntopng:"

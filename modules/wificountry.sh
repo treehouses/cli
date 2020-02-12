@@ -1,7 +1,6 @@
 function wificountry {
   local country
   country=$1
-  
 
   case "$1" in
     "")
@@ -46,6 +45,10 @@ function wificountry_help {
   echo "Sets the wireless interface country. Required on rpi 3b+ in order to get wifi working."
   echo
   echo "Example:"
+  echo
+  echo "  $BASENAME wificountry"
+  echo "      This will display the current wifi country setting."
+  echo 
   echo "  $BASENAME wificountry US"
   echo "      This will set the wifi country to 'US'."
   echo "      This configuration is used in all commands (wifi, bridge, hotspot)."

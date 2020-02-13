@@ -249,7 +249,7 @@ function services {
             # if [ -e /srv/${service_name}/${service_name}.yml ]; then
             #   bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
             # fi
-            
+
             echo "service autorun set to true"
           # stop service from autostarting
           elif [ "$command_option" = "false" ]; then
@@ -385,7 +385,7 @@ function find_available_services {
 }
 
 function create_yml {
-  if bash $TEMPLATES/services/${1}/${1}_yml.sh ; then
+  if $TEMPLATES/services/${1}/${1}_yml.sh ; then
     echo "yml file created"
   else
     echo "error creating yml file"

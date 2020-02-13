@@ -1,4 +1,6 @@
 #!/bin/bash
+# this file needs to be excuted on the base of the repo with `./templates/blocker/blocker.sh`
+
 # Credits: https://github.com/StevenBlack/hosts
 # The MIT License (MIT) Copyright © 2020 Steven Black
 # https://github.com/StevenBlack/hosts/blob/master/license.txt

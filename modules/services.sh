@@ -82,7 +82,8 @@ function services {
         up)
           case "$service_name" in
             planet)
-              check_space "treehouses/planet"
+              # check_space "treehouses/planet"
+              check_space "planet"
               if [ -f /srv/planet/pwd/credentials.yml ]; then
                 if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
                   echo "planet built and started"
@@ -104,7 +105,8 @@ function services {
               done
               ;;
             kolibri)
-              check_space "treehouses/kolibri"
+              # check_space "treehouses/kolibri"
+              check_space "kolibri"
               docker_compose_up "kolibri"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
@@ -112,7 +114,7 @@ function services {
               done
               ;;
             nextcloud)
-              check_space "library/nextcloud"
+              # check_space "library/nextcloud"
               docker_compose_up "nextcloud"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
@@ -120,7 +122,7 @@ function services {
               done
               ;;
             pihole)
-              check_space "pihole/pihole"
+              # check_space "pihole/pihole"
               service dnsmasq stop
               docker_compose_up "pihole"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
@@ -129,7 +131,7 @@ function services {
               done
               ;;
             moodle)
-              check_space "treehouses/moodle"
+              # check_space "treehouses/moodle"
               docker_compose_up "moodle"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
@@ -137,7 +139,7 @@ function services {
               done
               ;;
             privatebin)
-              check_space "treehouses/privatebin"
+              # check_space "treehouses/privatebin"
               docker_compose_up "privatebin"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
@@ -145,7 +147,7 @@ function services {
               done
               ;;
             portainer)
-              check_space "portainer/portainer"
+              # check_space "portainer/portainer"
               docker_compose_up "portainer"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
@@ -352,12 +354,13 @@ function docker_compose_up {
 }
 
 function check_space {
-  local image_size free_space
-  image_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')
+  local service_size service_name free_space
+  # service_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')
+  service_size=$(cat $TEMPLATES/services/${service_name}/size | numfmt --from-unit=Mi)
   free_space=$(df -Ph /var/lib/docker | awk 'END {print $4}' | numfmt --from=iec)
 
-  if (( image_size > free_space )); then
-    echo "image size:" $image_size
+  if (( service_size > free_space )); then
+    echo "service size:" $service_size
     echo "free space:" $free_space
     echo "not enough free space"
     exit 1

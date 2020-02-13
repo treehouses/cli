@@ -20,9 +20,9 @@ mkdir -p /srv/kolibri
   echo "8080"
 } > /srv/kolibri/ports
 
-# add size
+# add size (in MB)
 {
-  echo ""
+  echo "700"
 } > /srv/kolibri/size
 
 # add info

@@ -390,37 +390,12 @@ function check_tor {
 function get_port {
   local service_name
   service_name="$1"
-
-  case "$service_name" in
-    planet)
-      echo "80"
-      echo "2200"
-      ;;
-    kolibri)
-      echo "8080"
-      ;;
-    nextcloud)
-      echo "8081"
-      ;;
-    pihole)
-      echo "8053"
-      ;;
-    moodle)
-      echo "8082"
-      ;;
-    privatebin)
-      echo "8083"
-      ;;
-    portainer)
-      echo "9000"
-      ;;
-    ntopng)
-      echo "8090"
-      ;;
-    *)
-      echo "unknown service"
-      ;;
-  esac
+  if cat /srv/${service_name}/ports ; then
+    :
+  else
+    echo "${service_name} ports not found"
+    exit 1
+  fi
 }
 
 function services_help {

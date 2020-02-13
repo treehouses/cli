@@ -78,10 +78,10 @@ function services {
     else
       case "$command" in
         install)
-          if [ -f $TEMPLATES/services/install-scripts/install_${service_name}.sh ]; then
-            bash install_${service_name}.sh
+          if bash $TEMPLATES/services/install-scripts/install_${service_name}.sh ; then
+            echo "${service_name} installed"
           else
-            echo "install script not found"
+            echo "error running install script"
             exit 1
           fi
           ;;
@@ -277,63 +277,12 @@ function services {
           ;;
 
         info)
-          case "$service_name" in
-            planet)
-              echo "https://github.com/open-learning-exchange/planet"
-              echo
-              echo "\"Planet Learning is a generic learning system built in Angular"
-              echo "& CouchDB.\""
-              ;;
-            kolibri)
-              echo "https://github.com/treehouses/kolibri"
-              echo
-              echo "\"Kolibri is the offline learning platform from Learning Equality.\""
-              ;;
-            nextcloud)
-              echo "https://github.com/nextcloud"
-              echo
-              echo "\"A safe home for all your data. Access & share your files, calendars,"
-              echo "contacts, mail & more from any device, on your terms.\""
-              ;;
-            pihole)
-              echo "https://github.com/pi-hole/docker-pi-hole"
-              echo
-              echo "\"The Pi-hole® is a DNS sinkhole that protects your devices from"
-              echo "unwanted content, without installing any client-side software.\""
-              ;;
-            moodle)
-              echo "https://github.com/treehouses/moodole"
-              echo
-              echo "\"Moodle <https://moodle.org> is a learning platform designed to"
-              echo "provide educators, administrators and learners with a single robust,"
-              echo "secure and integrated system to create personalised learning"
-              echo "environments.\""
-              ;;
-            privatebin)
-              echo "https://github.com/treehouses/privatebin"
-              echo
-              echo "\"A minimalist, open source online pastebin where the server has"
-              echo "zero knowledge of pasted data. Data is encrypted/decrypted in the"
-              echo "browser using 256 bits AES. https://privatebin.info/\""
-              ;;
-            portainer)
-              echo "https://github.com/portainer/portainer"
-              echo
-              echo "\"Portainer is a lightweight management UI which allows you to"
-              echo "easily manage your different Docker environments (Docker hosts or"
-              echo "Swarm clusters).\""
-              ;;
-            ntopng)
-              echo "https://github.com/ntop/ntopng"
-              echo                 
-              echo "\"ntopng is the next generation version of the original ntop,"
-              echo "a network traffic probe that monitors network usage. ntopng is"
-              echo "based on libpcap and it has been written in a portable way in order"
-              echo "to virtually run on every Unix platform, MacOSX and on Windows as well."
-              echo "Educational users can obtain commercial products at no cost please see here:"
-              echo "https://www.ntop.org/support/faq/do-you-charge-universities-no-profit-and-research/\""
-              ;;
-          esac
+          if cat /srv/${service_name}/info ; then
+            :
+          else
+            echo "${service_name} info not found"
+            exit 1
+          fi
           ;;
 
         # local and tor url

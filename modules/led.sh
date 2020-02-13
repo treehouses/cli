@@ -244,8 +244,8 @@ function lunarnewyear {
 
   for i in 1 2 3 4 5 6 7 8
   do
-  set_brightness 1 0 && sleep 0.1
-  set_brightness 1 1 && sleep 0.1
+    set_brightness 1 0 && sleep 0.1
+    set_brightness 1 1 && sleep 0.1
   done
 
   set_brightness 1 0 && sleep 1

@@ -36,7 +36,7 @@ mkdir -p /srv/kolibri
 {
   echo "kolibri_autorun=true"
   echo
-  echo "if [ "$kolibri_autorun" = true ]; then"
+  echo "if [ \"$kolibri_autorun\" = true ]; then"
   echo "  docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d"
   echo "fi"
   echo

@@ -104,18 +104,9 @@ function services {
                 check_tor $(get_port $service_name | sed -n "$i p")
               done
               ;;
-            kolibri)
-              # check_space "treehouses/kolibri"
-              check_space "kolibri"
-              docker_compose_up "kolibri"
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
-              do
-                check_tor $(get_port $service_name | sed -n "$i p")
-              done
-              ;;
-            nextcloud)
-              # check_space "library/nextcloud"
-              docker_compose_up "nextcloud"
+            kolibri|nextcloud|moodle|privatebin|portainer)
+              check_space $service_name
+              docker_compose_up $service_name
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
                 check_tor $(get_port $service_name | sed -n "$i p")
@@ -125,30 +116,6 @@ function services {
               # check_space "pihole/pihole"
               service dnsmasq stop
               docker_compose_up "pihole"
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
-              do
-                check_tor $(get_port $service_name | sed -n "$i p")
-              done
-              ;;
-            moodle)
-              # check_space "treehouses/moodle"
-              docker_compose_up "moodle"
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
-              do
-                check_tor $(get_port $service_name | sed -n "$i p")
-              done
-              ;;
-            privatebin)
-              # check_space "treehouses/privatebin"
-              docker_compose_up "privatebin"
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
-              do
-                check_tor $(get_port $service_name | sed -n "$i p")
-              done
-              ;;
-            portainer)
-              # check_space "portainer/portainer"
-              docker_compose_up "portainer"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
                 check_tor $(get_port $service_name | sed -n "$i p")

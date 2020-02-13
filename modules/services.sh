@@ -77,6 +77,15 @@ function services {
       exit 1
     else
       case "$command" in
+        install)
+          if [ -f $TEMPLATES/services/install-scripts/install_${service_name}.sh ]; then
+            bash install_${service_name}.sh
+          else
+            echo "install script not found"
+            exit 1
+          fi
+          ;;
+
         up)
           case "$service_name" in
             planet)

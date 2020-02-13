@@ -15,13 +15,11 @@ function services {
       done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
     elif [ -z "$command" ]; then
       results=""
-
       while IFS= read -r -d '' service
       do
         results+=$(basename "$service")
         results+=" "
       done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
-
       echo ${results}
     fi
   # list all installed services
@@ -32,13 +30,11 @@ function services {
       installed=$(docker ps -a --format '{{.Names}}')
       array=($installed)
       results=""
-
       for i in "${array[@]}"
       do
         results+="${i%%_*}"
         results+=" "
       done
-
       echo ${results} | tr ' ' '\n' | uniq | xargs
     fi
   # list all running services
@@ -49,13 +45,11 @@ function services {
       running=$(docker ps --format '{{.Names}}')
       array=($running)
       results=""
-
       for i in "${array[@]}"
       do
         results+="${i%%_*}"
         results+=" "
       done
-
       echo ${results} | tr ' ' '\n' | uniq | xargs
     fi
   # list all ports used by services
@@ -85,7 +79,6 @@ function services {
             exit 1
           fi
           ;;
-
         up)
           case "$service_name" in
             planet)
@@ -105,57 +98,74 @@ function services {
                   exit 1
                 fi
               fi
-              check_tor "80"
+              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              do
+                check_tor $(get_port $service_name | sed -n "$i p")
+              done
               ;;
             kolibri)
               check_space "treehouses/kolibri"
-              create_yml "kolibri"
               docker_compose_up "kolibri"
-              check_tor "8080"
+              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              do
+                check_tor $(get_port $service_name | sed -n "$i p")
+              done
               ;;
             nextcloud)
               check_space "library/nextcloud"
-              create_yml "nextcloud"
               docker_compose_up "nextcloud"
-              check_tor "8081"
+              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              do
+                check_tor $(get_port $service_name | sed -n "$i p")
+              done
               ;;
             pihole)
               check_space "pihole/pihole"
-              create_yml "pihole"
               service dnsmasq stop
               docker_compose_up "pihole"
-              check_tor "8053"
+              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              do
+                check_tor $(get_port $service_name | sed -n "$i p")
+              done
               ;;
             moodle)
               check_space "treehouses/moodle"
-              create_yml "moodle"
               docker_compose_up "moodle"
-              check_tor "8082"
+              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              do
+                check_tor $(get_port $service_name | sed -n "$i p")
+              done
               ;;
             privatebin)
               check_space "treehouses/privatebin"
-              create_yml "privatebin"
               docker_compose_up "privatebin"
-              check_tor "8083"
+              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              do
+                check_tor $(get_port $service_name | sed -n "$i p")
+              done
               ;;
             portainer)
               check_space "portainer/portainer"
-              create_yml "portainer"
               docker_compose_up "portainer"
-              check_tor "9000"
+              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              do
+                check_tor $(get_port $service_name | sed -n "$i p")
+              done
               ;;
             ntopng)            
               docker volume create ntopng_data
               docker run --name ntopng -d -p 8090:8090 -v /var/run/docker.sock:/var/run/docker.sock -v ntopng_data:/data jonbackhaus/ntopng --http-port=8090
               echo "ntopng built and started"
-              check_tor "8090"
+              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              do
+                check_tor $(get_port $service_name | sed -n "$i p")
+              done
               ;;
             *)
               echo "unknown service"
               ;;
           esac
           ;;
-
         down)
           case "$service_name" in
             planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|ntopng)
@@ -171,7 +181,6 @@ function services {
               ;;
           esac
           ;;
-
         start)
           case "$service_name" in
             planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|ntopng)
@@ -187,7 +196,6 @@ function services {
               ;;
           esac
           ;;
-
         stop)
           case "$service_name" in
             planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|ntopng)
@@ -203,12 +211,10 @@ function services {
               ;;
           esac
           ;;
-
         restart)
           services $service_name stop
           services $service_name up
           ;;
-
         autorun)
           # if no command_option, output true or false
           if [ -z "$command_option" ]; then
@@ -253,12 +259,6 @@ function services {
             else
               sed -i "/${service_name}_autorun=false/c\\${service_name}_autorun=true" /boot/autorun
             fi
-
-            # # if yml file doesn't exist, create it
-            # if [ -e /srv/${service_name}/${service_name}.yml ]; then
-            #   bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
-            # fi
-            
             echo "service autorun set to true"
           # stop service from autostarting
           elif [ "$command_option" = "false" ]; then
@@ -271,11 +271,9 @@ function services {
             echo "unknown command option"
           fi
           ;;
-
         ps)
           docker ps -a | grep $service_name
           ;;
-
         info)
           if cat /srv/${service_name}/info ; then
             :
@@ -284,8 +282,6 @@ function services {
             exit 1
           fi
           ;;
-
-        # local and tor url
         url)
           if [ "$command_option" = "local" ]; then
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
@@ -297,7 +293,6 @@ function services {
               if [ "$service_name" = "pihole" ]; then
                 local_url+="/admin"
               fi
-
               echo $local_url
             done
           elif [ "$command_option" = "tor" ]; then
@@ -310,7 +305,6 @@ function services {
               if [ "$service_name" = "pihole" ]; then
                 tor_url+="/admin"
               fi
-
               echo $tor_url
             done
           elif [ "$command_option" = "both" ]; then
@@ -321,11 +315,9 @@ function services {
             echo "usage: $(basename "$0") services <service_name> url [local | tor | both]"
           fi
           ;;
-
         port)
           get_port $service_name
           ;;
-
         *)
           echo "unknown command"
           ;;
@@ -334,7 +326,6 @@ function services {
   fi
 }
 
-# list all services found in /templates/services
 function find_available_services {
   local service_name available_formats
   service_name="$1"
@@ -373,7 +364,6 @@ function check_space {
   fi
 }
 
-# tor status and port check
 function check_tor {
   local port
   port="$1"
@@ -386,7 +376,6 @@ function check_tor {
   fi
 }
 
-# get port number for specified service
 function get_port {
   local service_name
   service_name="$1"

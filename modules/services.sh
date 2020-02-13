@@ -257,7 +257,8 @@ function services {
             done < /boot/autorun
             # if lines aren't found, add them
             if [ "$found" = false ]; then
-              cat $TEMPLATES/services/${service_name}/${service_name}_autorun >> /boot/autorun
+              # cat $TEMPLATES/services/${service_name}/${service_name}_autorun >> /boot/autorun
+              cat /srv/${service_name}/autorun >> /boot/autorun
             else
               sed -i "/${service_name}_autorun=false/c\\${service_name}_autorun=true" /boot/autorun
             fi
@@ -335,14 +336,14 @@ function find_available_services {
   echo "$service [$available_formats]"
 }
 
-function create_yml {
-  if bash $TEMPLATES/services/${1}/${1}_yml.sh ; then
-    echo "yml file created"
-  else
-    echo "error creating yml file"
-    exit 1
-  fi
-}
+# function create_yml {
+#   if bash $TEMPLATES/services/${1}/${1}_yml.sh ; then
+#     echo "yml file created"
+#   else
+#     echo "error creating yml file"
+#     exit 1
+#   fi
+# }
 
 function docker_compose_up {
   if docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
@@ -356,7 +357,8 @@ function docker_compose_up {
 function check_space {
   local service_size service_name free_space
   # service_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')
-  service_size=$(cat $TEMPLATES/services/${service_name}/size | numfmt --from-unit=Mi)
+  service_name="$1"
+  service_size=$(cat /srv/${service_name}/size | numfmt --from-unit=Mi)
   free_space=$(df -Ph /var/lib/docker | awk 'END {print $4}' | numfmt --from=iec)
 
   if (( service_size > free_space )); then

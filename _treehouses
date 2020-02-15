@@ -23,7 +23,7 @@ _treehouses_complete()
   coralenv_cmds="install demo-on demo-off demo-always-on"
   discover_cmds="rpi scan interface ping ports mac"
   help_cmds=$commands
-  led_cmds="green red dance thanksgiving christmas newyear valentine carneval"
+  led_cmds="green red dance thanksgiving christmas newyear lunarnewyear valentine carneval"
   log_cmds="0 1 2 3 4 show max"
   memory_cmds="total used free"
   networkmode_cmds="info"

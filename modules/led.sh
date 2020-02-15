@@ -46,7 +46,14 @@ function led {
     echo "Red LED: 0.5 on; 0.5 off"
     echo "Both LED: flash 2 times"
     newyear > "$LOGFILE"
-  elif [ "$color" = "valentine" ]; then
+   elif [ "$color" = "lunarnewyear" ]; then
+    checkroot
+    echo "leds are set to lunarnewyear mode."
+    echo "Look at your RPi leds, both leds will be in this pattern... "
+    echo "Red LED: flashes 8 times"
+    echo "Red LED: 5 off: 5 on"
+    lunarnewyear > "$LOGFILE"
+    elif [ "$color" = "valentine" ]; then
     checkroot
     echo "leds are set to valentine mode."
     echo "Look at your RPi leds, both leds will be in this pattern... "
@@ -234,6 +241,23 @@ function newyear {
   led red "$current_red"
 }
 
+function lunarnewyear {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  for i in 1 2 3 4 5 6 7 8
+  do
+    set_brightness 1 0 && sleep 0.1
+    set_brightness 1 1 && sleep 0.1
+  done
+
+  set_brightness 1 0 && sleep 1
+  set_brightness 1 1 && sleep 5
+
+  led green "$current_green"
+  led red "$current_red"
+}
+
 function valentine {
   local current_red current_green counter
   current_red=$(led "red")
@@ -293,7 +317,7 @@ function carnival {
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|valentine|carnival]"
+  echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear|valentine|carnival]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -348,6 +372,9 @@ function led_help {
   echo
   echo "  $BASENAME led christmas"
   echo "      This will set the mode of the led to christmas"
+  echo
+  echo " $BASENAME led lunarnewyear"
+  echo "      This wil set the mode of the led to lunarnewyear"
   echo
   echo "  $BASENAME led valentine"
   echo "      This will set the mode of the led to valentine"

@@ -6,29 +6,29 @@
 # What gets logged depends on the logging level set by log command
 function logit() {
   if [[ ! "$LOG" == "0" && ! "$LOG" == "max" ]]; then
-    if [ -z ${commands+x} ]; then
-      commands=""
+    if [ -z ${logcommands+x} ]; then
+      logcommands=""
     fi
     case "$3" in
       "")
-        commands="$commandslogger -p local0.info -t @treehouses/cli \"INFO: $1\";"
+        logcommands="$logcommandslogger -p local0.info -t @treehouses/cli \"INFO: $1\";"
         ;;
 	  # Stuff might break
       "WARNING")
 	    if [[ "$LOG" -gt "1" ]]; then
-          commands="$commandslogger -p local0.warning -t @treehouses/cli \"WARNING: $1\";"
+          logcommands="$logcommandslogger -p local0.warning -t @treehouses/cli \"WARNING: $1\";"
 		fi 
         ;;
 	  # Stuff did break
       "ERROR")
 	  	if [[ "$LOG" -gt "2" ]]; then
-          commands="$commandslogger -p local0.err -t @treehouses/cli \"ERROR: $1\";"
+          logcommands="$logcommandslogger -p local0.err -t @treehouses/cli \"ERROR: $1\";"
 		fi
         ;;
 	  # Developer wants to log as well
       "DEBUG")
 	  	if [[ "$LOG" -gt "3" ]]; then
-          commands="$commandslogger -p local0.debug -t @treehouses/cli \"DEBUG: $1\";"
+          logcommands="$logcommandslogger -p local0.debug -t @treehouses/cli \"DEBUG: $1\";"
 		fi
         ;;
     esac

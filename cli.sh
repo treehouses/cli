@@ -321,9 +321,9 @@ case $1 in
     ;;
 esac
 if [ $? -eq 0 ]; then
-  eval "logit \"$SCRIPTARGS\" \"1\"; $commands"
+  eval "logit \"$SCRIPTARGS\" \"1\"; $logcommands"
 else
-  if [ -z ${commands+x} ]; then
-    eval "$commands"
+  if [ -z ${logcommands+x} ]; then
+    eval "$logcommands"
   fi
 fi

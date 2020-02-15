@@ -7,21 +7,18 @@ function services {
 
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
-    if [ "$command" = "full" ]; then
-      while IFS= read -r -d '' service
-      do
-        service=$(basename "$service")
-        find_available_services "$service"
-      done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
-    elif [ -z "$command" ]; then
-      results=""
-      while IFS= read -r -d '' service
-      do
-        results+=$(basename "$service")
-        results+=" "
-      done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
-      echo ${results}
-    fi
+    # look through install-scripts folder
+    # $TEMPLATES/services/install-scripts
+    if [ -d $TEMPLATES/services/installl-scripts ]; then
+
+
+    else
+      echo "$TEMPLATES/services/install-scripts directory does not exist"
+
+
+
+
+    
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
     if [ "$command" = "full" ]; then
@@ -72,8 +69,13 @@ function services {
     else
       case "$command" in
         install)
-          if bash $TEMPLATES/services/install-scripts/install_${service_name}.sh ; then
-            echo "${service_name} installed"
+          if bash $TEMPLATES/services/install-scripts/install-${service_name}.sh ; then
+            if docker-compose -f /srv/${service_name}/${service_name}.yml pull ${service_name} ; then
+              echo "${service_name} installed"
+            else
+              echo "error pulling docker image"
+              exit 1
+            fi
           else
             echo "error running install script"
             exit 1
@@ -295,12 +297,12 @@ function services {
   fi
 }
 
-function find_available_services {
-  local service_name available_formats
-  service_name="$1"
-  available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
-  echo "$service [$available_formats]"
-}
+# function find_available_services {
+#   local service_name available_formats
+#   service_name="$1"
+#   available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
+#   echo "$service [$available_formats]"
+# }
 
 function docker_compose_up {
   if docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then

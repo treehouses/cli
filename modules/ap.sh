@@ -19,7 +19,7 @@ function ap {
   then
     if [ ${#password} -lt 8 ];
     then
-      log_and_exit1 "Error: password must have at least 8 characters" "" "ERROR"
+      log_and_exit1 "LordJashin32-patch-1Error: password must have at least 8 characters" "" "ERROR"
     fi
   fi
 

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function memory_total() {
   option=$1
   case $option in 
@@ -69,8 +67,7 @@ function memory_free {
 }
 
 function memory() {
-
-    if [ "$1" == "total" ] ; then
+  if [ "$1" == "total" ] ; then
     memory_total $2
     echo "$t";
     exit 0
@@ -87,10 +84,9 @@ function memory() {
     echo "$f";
     exit 0
   fi
-    
 
- option=$1
- case $option in
+  option=$1
+  case $option in
     '-g')
       memory_total '-g'
       memory_used '-g' 
@@ -110,8 +106,8 @@ function memory() {
       echo "Your rpi has $t bytes of total memory with $ubc bytes used and $f bytes available"
       ;;
     *)
-        echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory )"
-        exit 1  
+      echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory )"
+      exit 1  
   esac
 }
 

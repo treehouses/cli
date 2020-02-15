@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function help_default {
   echo "Usage: $BASENAME"
   echo
@@ -68,6 +66,7 @@ function help_default {
   echo "   usb [on|off]                              turns usb ports on or off"
   echo "   remote [status|upgrade|services]          helps with treehouses remote android app"
   echo "   log <0|1|2|3|4|show|max>                  gets/sets log level and shows log"
+  echo "   blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts"
   echo
 }
 

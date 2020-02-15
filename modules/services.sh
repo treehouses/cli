@@ -1,6 +1,6 @@
-#!/bin/bash
-
 function services {
+  local service_name command command_option service results installed
+  local array running port_string found local_url tor_url
   service_name="$1"
   command="$2"
   command_option="$3"
@@ -82,61 +82,64 @@ function services {
             planet)
               check_space "treehouses/planet"
               if [ -f /srv/planet/pwd/credentials.yml ]; then
-                docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d
+                if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
+                  echo "planet built and started"
+                else
+                  echo "error building planet"
+                  exit 1
+                fi
               else
-                docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
+                if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d ; then
+                  echo "planet built and started"
+                else
+                  echo "error building planet"
+                  exit 1
+                fi
               fi
-              echo "planet built and started"
               check_tor "80"
               ;;
             kolibri)
               check_space "treehouses/kolibri"
-              bash $TEMPLATES/services/kolibri/kolibri_yml.sh
-              echo "yml file created"
-              docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
-              echo "kolibri built and started"
+              create_yml "kolibri"
+              docker_compose_up "kolibri"
               check_tor "8080"
               ;;
             nextcloud)
               check_space "library/nextcloud"
-              bash $TEMPLATES/services/nextcloud/nextcloud_yml.sh
-              echo "yml file created"
-              docker-compose -f /srv/nextcloud/nextcloud.yml -p nextcloud up -d
-              echo "nextcloud built and started"
+              create_yml "nextcloud"
+              docker_compose_up "nextcloud"
               check_tor "8081"
               ;;
             pihole)
               check_space "pihole/pihole"
-              bash $TEMPLATES/services/pihole/pihole_yml.sh
-              echo "yml file created"
+              create_yml "pihole"
               service dnsmasq stop
-              docker-compose -f /srv/pihole/pihole.yml -p pihole up -d
-              echo "pihole built and started"
+              docker_compose_up "pihole"
               check_tor "8053"
               ;;
             moodle)
               check_space "treehouses/moodle"
-              bash $TEMPLATES/services/moodle/moodle_yml.sh
-              echo "yml file created"
-              docker-compose -f /srv/moodle/moodle.yml -p moodle up -d
-              echo "moodle built and started"
+              create_yml "moodle"
+              docker_compose_up "moodle"
               check_tor "8082"
               ;;
             privatebin)
               check_space "treehouses/privatebin"
-              bash $TEMPLATES/services/privatebin/privatebin_yml.sh
-              echo "yml file created"
-              docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d
-              echo "privatebin built and started"
+              create_yml "privatebin"
+              docker_compose_up "privatebin"
               check_tor "8083"
               ;;
             portainer)
               check_space "portainer/portainer"
-              bash $TEMPLATES/services/portainer/portainer_yml.sh
-              echo "yml file created"
-              docker-compose -f /srv/portainer/portainer.yml -p portainer up -d
-              echo "portainer built and started"
+              create_yml "portainer"
+              docker_compose_up "portainer"
               check_tor "9000"
+              ;;
+            netdata)
+              check_space "treehouses/netdata"
+              create_yml "netdata"
+              docker_compose_up "netdata"
+              check_tor "19999"
               ;;
             ntopng)            
               docker volume create ntopng_data
@@ -152,7 +155,7 @@ function services {
 
         down)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|ntopng)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|ntopng)
               if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
                 echo "yml file doesn't exit"
               else
@@ -168,7 +171,7 @@ function services {
 
         start)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|ntopng)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|ntopng)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml start
                 echo "${service_name} started"
@@ -184,7 +187,7 @@ function services {
 
         stop)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|ntopng)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|ntopng)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml stop
                 echo "${service_name} stopped"
@@ -317,6 +320,12 @@ function services {
               echo "easily manage your different Docker environments (Docker hosts or"
               echo "Swarm clusters).\""
               ;;
+            netdata)
+              echo "https://github.com/netdata/netdata"
+              echo
+              echo "\"Netdata is distributed, real-time performance and health monitoring for systems and applications."
+              echo "It is a highly-optimized monitoring agent you install on all your systems and containers."
+              ;;
             ntopng)
               echo "https://github.com/ntop/ntopng"
               echo                 
@@ -381,12 +390,32 @@ function services {
 
 # list all services found in /templates/services
 function find_available_services {
+  local service_name available_formats
   service_name="$1"
   available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
   echo "$service [$available_formats]"
 }
 
+function create_yml {
+  if bash $TEMPLATES/services/${1}/${1}_yml.sh ; then
+    echo "yml file created"
+  else
+    echo "error creating yml file"
+    exit 1
+  fi
+}
+
+function docker_compose_up {
+  if docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
+    echo "${1} built and started"
+  else
+    echo "error building ${1}"
+    exit 1
+  fi
+}
+
 function check_space {
+  local image_size free_space
   image_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')
   free_space=$(df -Ph /var/lib/docker | awk 'END {print $4}' | numfmt --from=iec)
 
@@ -400,18 +429,20 @@ function check_space {
 
 # tor status and port check
 function check_tor {
+  local port
   port="$1"
-  if [ "$(treehouses tor status)" = "active" ]; then
+  if [ "$(tor status)" = "active" ]; then
     echo "tor active"
-    if ! treehouses tor list | grep -w $port; then
+    if ! tor list | grep -w $port; then
       echo "adding port ${port}"
-      treehouses tor add $port
+      tor add $port
     fi
   fi
 }
 
 # get port number for specified service
 function get_port {
+  local service_name
   service_name="$1"
 
   case "$service_name" in
@@ -437,6 +468,9 @@ function get_port {
     portainer)
       echo "9000"
       ;;
+    netdata)
+      echo "19999"
+      ;;
     ntopng)
       echo "8090"
       ;;
@@ -453,6 +487,7 @@ function services_help {
   echo "  Planet"
   echo "  Kolibri"
   echo "  Nextcloud"
+  echo "  Netdata"
   echo "  Pi-hole"
   # echo "  Moodle"
   echo "  PrivateBin"

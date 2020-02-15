@@ -1,6 +1,7 @@
 engines:
   shellcheck:
     enabled: true
+    shell: bash
     checks:
       SC1090:
         enabled: false
@@ -11,4 +12,6 @@ engines:
       SC2086:
         enabled: false
       SC2154:
+        enabled: false
+      SC2148:
         enabled: false

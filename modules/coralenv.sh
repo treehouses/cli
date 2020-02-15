@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function coralenv {
+  local param cronjob
   param=$1
   cronjob='@reboot nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>"$LOGFILE" &'
   

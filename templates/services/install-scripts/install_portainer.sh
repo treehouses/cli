@@ -25,7 +25,7 @@ mkdir -p /srv/portainer
 
 # add size (in MB)
 {
-  echo ""
+  echo "100"
 } > /srv/portainer/size
 
 # add info

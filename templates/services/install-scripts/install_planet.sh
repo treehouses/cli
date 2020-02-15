@@ -57,7 +57,7 @@ mkdir -p /srv/planet
 
 # add size (in MB)
 {
-  echo "500"
+  echo "450"
 } > /srv/planet/size
 
 # add info

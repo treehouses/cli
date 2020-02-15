@@ -22,7 +22,7 @@ mkdir -p /srv/kolibri
 
 # add size (in MB)
 {
-  echo "700"
+  echo "650"
 } > /srv/kolibri/size
 
 # add info

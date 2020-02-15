@@ -37,7 +37,7 @@ mkdir -p /srv/moodle
 
 # add size (in MB)
 {
-  echo ""
+  echo "350"
 } > /srv/moodle/size
 
 # add info

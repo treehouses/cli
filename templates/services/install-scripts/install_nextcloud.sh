@@ -22,7 +22,7 @@ mkdir -p /srv/nextcloud
 
 # add size (in MB)
 {
-  echo ""
+  echo "900"
 } > /srv/nextcloud/size
 
 # add info

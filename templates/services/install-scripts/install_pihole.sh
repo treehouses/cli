@@ -46,7 +46,7 @@ mkdir -p /srv/pihole
 
 # add size (in MB)
 {
-  echo ""
+  echo "350"
 } > /srv/pihole/size
 
 # add info

@@ -22,7 +22,7 @@ mkdir -p /srv/privatebin
 
 # add size (in MB)
 {
-  echo ""
+  echo "550"
 } > /srv/privatebin/size
 
 # add info

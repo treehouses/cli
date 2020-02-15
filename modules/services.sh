@@ -82,7 +82,6 @@ function services {
         up)
           case "$service_name" in
             planet)
-              # check_space "treehouses/planet"
               check_space "planet"
               if [ -f /srv/planet/pwd/credentials.yml ]; then
                 if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
@@ -113,7 +112,7 @@ function services {
               done
               ;;
             pihole)
-              # check_space "pihole/pihole"
+              check_space "pihole"
               service dnsmasq stop
               docker_compose_up "pihole"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
@@ -302,15 +301,6 @@ function find_available_services {
   available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
   echo "$service [$available_formats]"
 }
-
-# function create_yml {
-#   if bash $TEMPLATES/services/${1}/${1}_yml.sh ; then
-#     echo "yml file created"
-#   else
-#     echo "error creating yml file"
-#     exit 1
-#   fi
-# }
 
 function docker_compose_up {
   if docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then

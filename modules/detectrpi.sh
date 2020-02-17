@@ -61,7 +61,7 @@ function detectrpi {
     then
       echo "$rpimodel"
     else
-      logit "unknown command"
+      log_and_exit1 "Error: only 'detectrpi', and 'detectrpi model' commands supported"
     fi
   else
     echo "nonrpi"

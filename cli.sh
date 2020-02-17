@@ -94,7 +94,7 @@ case $1 in
     detect
     ;;
   detectrpi)
-    detectrpi "$2"
+    detectrpi "$2" "$3"
     ;;
   wifi)
     checkrpi

@@ -22,6 +22,7 @@ _treehouses_complete()
   container_cmds="none docker balena"
   coralenv_cmds="install demo-on demo-off demo-always-on"
   discover_cmds="rpi scan interface ping ports mac"
+  detectrpi_cmds="model"
   help_cmds=$commands
   led_cmds="green red dance thanksgiving christmas newyear lunarnewyear valentine carneval"
   log_cmds="0 1 2 3 4 show max"
@@ -92,6 +93,9 @@ _treehouses_complete()
       "discover")
         COMPREPLY=( $(compgen -W "$discover_cmds" -- $cur) )
         ;;
+      "detectrpi")
+        COMPREPLY=( $(compgen -W "$detectrpi_cmds" -- $cur) )
+        ;;      
       "help")
         COMPREPLY=( $(compgen -W "$help_cmds" -- $cur) )
         ;;

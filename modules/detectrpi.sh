@@ -54,7 +54,15 @@ function detectrpi {
 
   if [ "$found" == 1 ];
   then
-    echo ${rpimodels[$rpimodel]}
+    if [[ "$1" == "" ]];
+    then
+      echo ${rpimodels[$rpimodel]}
+    elif [[ "$1" == "model" ]]; 
+    then
+      echo "$rpimodel"
+    else
+      logit "unknown command"
+    fi
   else
     echo "nonrpi"
   fi
@@ -69,6 +77,9 @@ function detectrpi_help {
   echo
   echo "Example:"
   echo "  $BASENAME detectrpi"
-  echo "      Prints the model number"
+  echo "      Prints the Raspberry Pi name"
+  echo
+  echo "  $BASENAME detectrpi model"
+  echo "      Prints the model number of the RPi"
   echo
 }

@@ -136,49 +136,40 @@ function services {
           esac
           ;;
         down)
-          case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|ntopng)
-              if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
-                echo "yml file doesn't exit"
-              else
-                docker-compose -f /srv/${service_name}/${service_name}.yml down
-                echo "${service_name} stopped and removed"
-              fi
-              ;;
-            *)
-              echo "unknown service"
-              ;;
-          esac
+          if check_available_services $service_name; then
+            if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+              echo "${service_name}.yml not found"
+            else
+              docker-compose -f /srv/${service_name}/${service_name}.yml down
+              echo "${service_name} stopped and removed"
+            fi
+          else
+            echo "unknown service"
+          fi
           ;;
         start)
-          case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|ntopng)
-              if docker ps -a | grep -q $service_name; then
-                docker-compose -f /srv/${service_name}/${service_name}.yml start
-                echo "${service_name} started"
-              else
-                echo "service not found"
-              fi
-              ;;
-            *)
-              echo "unknown service"
-              ;;
-          esac
+          if check_available_services $service_name; then
+            if docker ps -a | grep -q $service_name; then
+              docker-compose -f /srv/${service_name}/${service_name}.yml start
+              echo "${service_name} started"
+            else
+              echo "${service_name} not found"
+            fi
+          else
+            echo "unknown service"
+          fi
           ;;
         stop)
-          case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|ntopng)
-              if docker ps -a | grep -q $service_name; then
-                docker-compose -f /srv/${service_name}/${service_name}.yml stop
-                echo "${service_name} stopped"
-              else
-                echo "service not found"
-              fi
-              ;;
-            *)
-              echo "unknown service"
-              ;;
-          esac
+          if check_available_services $service_name; then
+            if docker ps -a | grep -q $service_name; then
+              docker-compose -f /srv/${service_name}/${service_name}.yml stop
+              echo "${service_name} stopped"
+            else
+              echo "${service_name} not found"
+            fi
+          else
+            echo "unknown service"
+          fi
           ;;
         restart)
           services $service_name stop
@@ -296,12 +287,16 @@ function services {
   fi
 }
 
-# function find_available_services {
-#   local service_name available_formats
-#   service_name="$1"
-#   available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
-#   echo "$service [$available_formats]"
-# }
+function check_available_services {
+  array=($(services available))
+  for service in "${array[@]}"
+  do
+    if [ "${1}" == "$service" ]; then
+      return 0
+    fi
+  done
+  return 1
+}
 
 function docker_compose_up {
   if docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then

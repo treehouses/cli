@@ -57,7 +57,9 @@ function services {
         port_string+=$(get_port $i | sed -n "$j p")
         port_string+=" "
       done
-      printf "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
+      if [ ! -z "$port_string" ]; then
+        printf "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
+      fi
     done
   else
     if [ -z "$command" ]; then
@@ -340,11 +342,8 @@ function check_tor {
 function get_port {
   local service_name
   service_name="$1"
-  if cat /srv/${service_name}/ports ; then
-    :
-  else
-    echo "${service_name} ports not found"
-    exit 1
+  if [ -f /srv/${service_name}/ports ]; then
+    cat /srv/${service_name}/ports
   fi
 }
 

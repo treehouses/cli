@@ -9,7 +9,7 @@ _treehouses_complete()
             container coralenv cron default detect detectrpi discover ethernet expandfs \
             feedback help image internet led locale log memory networkmode ntp openvpn password \
             rebootneeded reboots rename restore rtc services speedtest ssh sshkey sshtunnel \
-            staticwifi temperature timezone tor upgrade usb verbose version vnc wifi wificountry wifihidden wifistatus"
+            staticwifi temperature timezone tor tunnels upgrade usb verbose version vnc wifi wificountry wifihidden wifistatus"
   ap_cmdas="local internet"
   aphidden_cmds="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
@@ -38,6 +38,7 @@ _treehouses_complete()
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
   temperature_cmds="celsius fahrenheit"
+  tunnels_cmds="pagekite info"
   tor_cmds="list add delete deleteall start stop destroy notice status refresh"
   usb_cmds="on off"
   notice_cmds="on off add delete list"
@@ -130,6 +131,9 @@ _treehouses_complete()
         ;;
       "tor")
         COMPREPLY=( $(compgen -W "$tor_cmds" -- $cur) )
+        ;;
+      "tunnels")
+        COMPREPLY=( $(compgen -W "$tunnels_cmds" -- $cur) )
         ;;
       "verbose")
         COMPREPLY=( $(compgen -W "$verbose_cmds" -- $cur) )

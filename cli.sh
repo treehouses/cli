@@ -46,6 +46,7 @@ source "$SCRIPTFOLDER/modules/sshtunnel.sh"
 source "$SCRIPTFOLDER/modules/staticwifi.sh"
 source "$SCRIPTFOLDER/modules/timezone.sh"
 source "$SCRIPTFOLDER/modules/tor.sh"
+source "$SCRIPTFOLDER/modules/tunnels.sh"
 source "$SCRIPTFOLDER/modules/upgrade.sh"
 source "$SCRIPTFOLDER/modules/version.sh"
 source "$SCRIPTFOLDER/modules/verbose.sh"
@@ -283,6 +284,10 @@ case $1 in
   temperature)
     checkrpi
     temperature "$2"
+    ;;
+  tunnels)
+    shift
+    tunnels "$@"
     ;;
   speedtest)
     shift

@@ -81,6 +81,7 @@ internet                                  checks if the rpi has access to intern
 services [service_name] [command]         executes the given command on the specified service
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
+tunnels [pagekite|info]                   services to host a local port on a remote url
 bootoption <console|desktop> [autologin]  sets the boot mode
 openvpn [use|show|delete]                 helps setting up an openvpn client
         [notice|start|stop|load]

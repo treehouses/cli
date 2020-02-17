@@ -52,6 +52,7 @@ function help_default {
   echo "   services [service_name] [command]         executes the given command on the specified service"
   echo "   tor [list|add|delete|deleteall|start]     deals with services on tor hidden network"
   echo "       [stop|destroy|notice|status|refresh]"
+  echo "   tunnels [pagekite|info]                   services to host a local port on a remote url"
   echo "   bootoption <console|desktop> [autologin]  sets the boot mode"
   echo "   openvpn [use|show|delete]                 helps setting up an openvpn client"
   echo "           [notice|start|stop|load]"

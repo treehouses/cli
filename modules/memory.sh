@@ -1,5 +1,4 @@
 function memory_total() {
-  local option t_M t
   option=$1
   case $option in 
     '-g')
@@ -19,7 +18,6 @@ function memory_total() {
 }
 
 function memory_used {
-  local option u_M u bc_M bc ubc
   option=$1
   case $option in 
     '-g')
@@ -47,7 +45,6 @@ function memory_used {
 }
 
 function memory_free {
-  local option f_G f
   option=$1
   case $option in 
     '-g')
@@ -67,7 +64,6 @@ function memory_free {
 }
 
 function memory() {
-  local option
   if [ "$1" == "total" ] ; then
     memory_total $2
     log_and_exit0 "$t";

@@ -8,7 +8,10 @@ function services {
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
     if [ -d "$TEMPLATES/services/install-scripts" ]; then
-      find $TEMPLATES/services/install-scripts -type f -printf "%f\n"
+      for file in $TEMPLATES/services/install-scripts/*
+      do
+        echo "${file##*/}" | sed 's/install-*//' | sed 's/.sh*//'
+      done
     else
       echo "$TEMPLATES/services/install-scripts directory does not exist"
       exit 1

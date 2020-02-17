@@ -7,18 +7,12 @@ function services {
 
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
-    # look through install-scripts folder
-    # $TEMPLATES/services/install-scripts
-    if [ -d $TEMPLATES/services/installl-scripts ]; then
-
-
+    if [ -d "$TEMPLATES/services/install-scripts" ]; then
+      find $TEMPLATES/services/install-scripts -type f -printf "%f\n"
     else
       echo "$TEMPLATES/services/install-scripts directory does not exist"
-
-
-
-
-    
+      exit 1
+    fi    
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
     if [ "$command" = "full" ]; then

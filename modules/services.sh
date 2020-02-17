@@ -235,14 +235,6 @@ function services {
         ps)
           docker ps -a | grep $service_name
           ;;
-        info)
-          if cat /srv/${service_name}/info ; then
-            :
-          else
-            echo "${service_name} info not found"
-            exit 1
-          fi
-          ;;
         url)
           if [ "$command_option" = "local" ]; then
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
@@ -273,11 +265,18 @@ function services {
             services $service_name url tor
           else
             echo "unknown command"
-            echo "usage: $(basename "$0") services <service_name> url [local | tor | both]"
           fi
           ;;
         port)
           get_port $service_name
+          ;;
+        info)
+          if cat /srv/${service_name}/info ; then
+            :
+          else
+            echo "${service_name} info not found"
+            # exit 1
+          fi
           ;;
         *)
           echo "unknown command"
@@ -385,7 +384,8 @@ function services_help {
   echo "Service-Specific Commands:"
   echo
   echo "  Usage:"
-  echo "    $(basename "$0") services <service_name> up"
+  echo "    $(basename "$0") services <service_name> install"
+  echo "                             ..... up"
   echo "                             ..... down"
   echo "                             ..... start"
   echo "                             ..... stop"
@@ -394,6 +394,8 @@ function services_help {
   echo "                             ..... url <local|tor|both>"
   echo "                             ..... port"
   echo "                             ..... info"
+  echo
+  echo "    install                 installs and pulls <service_name>"
   echo
   echo "    up                      builds and starts <service_name>"
   echo

@@ -37,17 +37,17 @@ function led {
     echo "Look at your RPi leds, both leds will be in this pattern... "
     echo "Both LED: 1 sec on; 8 blink; 1 on"
     christmas > "$LOGFILE"
-  elif [ "$color" = "Onam" ]; then
+  elif [ "$color" = "onam" ]; then
 	checkroot
-	echo "leds are set to Onam mode."
-	echo "Look at your Rpi leds, both leds will be in this pattern..."
-	echo "green LED :5 blink"
-	echo "Both LED : 1 sec off"
-	echo "red LED :5 blink"
-	echo "green LED :5 blink"
-	echo "Both LED : 1 sec"
-	echo "red LED :5 blink"
-	Onam > "$LOGFILE"
+  echo "leds are set to onam mode."
+  echo "Look at your Rpi leds, both leds will be in this pattern..."
+  echo "Green LED :5 blink"
+  echo "Both LED : 1 sec off"
+  echo "Red LED :5 blink"
+  echo "Green LED :5 blink"
+  echo "Both LED : 1 sec"
+  echo "Red LED :5 blink"
+  onam > "$LOGFILE"
   elif [ "$color" = "newyear" ]; then
     checkroot
     echo "leds are set to newyear mode."
@@ -216,7 +216,7 @@ function christmas {
   led red "$current_red"
   led green "$current_green"
 }
-function Onam {
+function onam {
 	local current_red current_green
 	current_red=$(led "red")
 	current_green=$(led "green")
@@ -414,8 +414,8 @@ function led_help {
   echo "  $BASENAME led christmas"
   echo "      This will set the mode of the led to christmas"
   echo 
-  echo "  $BASENAME led Onam"
-  echo "      This will set the mode of the led to Onam"
+  echo "  $BASENAME led onam"
+  echo "      This will set the mode of the led to onam"
   echo			
   echo " $BASENAME led lunarnewyear"
   echo "      This wil set the mode of the led to lunarnewyear"

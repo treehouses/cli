@@ -1,5 +1,4 @@
 function led {
-  local color trigger gLed rLed currentGreen currentRed green red led current newValue
   color="$1"
   trigger="$2"
 
@@ -128,7 +127,6 @@ function set_brightness {
 }
 
 function dance {
-  local current_green current_red
   current_green=$(led "green")
   current_red=$(led "red")
 
@@ -152,7 +150,6 @@ function dance {
 }
 
 function thanksgiving {
-  local current_red current_green
   current_red=$(led "red")
   current_green=$(led "green")
 
@@ -197,7 +194,6 @@ function thanksgiving {
 }
 
 function christmas {
-  local current_red current_green
   current_red=$(led "red")
   current_green=$(led "green")
 
@@ -218,7 +214,6 @@ function christmas {
 }
 
 function onam {
-  local current_red current_green
   current_red=$(led "red")
   current_green=$(led "green")
 
@@ -250,7 +245,6 @@ function onam {
 }
 
 function newyear {
-  local current_green current_red counter
   current_green=$(led "green")
   current_red=$(led "red")
 
@@ -302,7 +296,6 @@ function lunarnewyear {
 }
 
 function valentine {
-  local current_red current_green counter
   current_red=$(led "red")
   current_green=$(led "green")
 
@@ -337,7 +330,6 @@ function valentine {
 }
 
 function carnival {
-  local current_red current_green
   current_red=$(led "red")
   current_green=$(led "green")
 

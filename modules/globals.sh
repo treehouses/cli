@@ -80,7 +80,7 @@ function restart_hotspot {
   iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT || true
   restart_service dnsmasq || true
   restart_service hostapd || true
-  enable_service hostaules/log.spd || true
+  enable_service hostapd || true
   enable_service dnsmasq || true
 }
 
@@ -88,7 +88,7 @@ function restart_ethernet {
   ifup eth0 || true
   ifdown eth0 || true
   sleep 1
-  ifup eth0 || trueules/log.s
+  ifup eth0 || true
 }
 
 function restart_wifi {

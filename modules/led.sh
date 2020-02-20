@@ -216,37 +216,39 @@ function christmas {
   led red "$current_red"
   led green "$current_green"
 }
+
 function onam {
-	local current_red current_green
-	current_red=$(led "red")
-	current_green=$(led "green")
-	
-	set_brightness 0 0 && set_brightness 1 0
-	counter=1
-	while [ $counter -le 2 ]
-	do
-		set_brightness 0 0 && set_brightness 1 0
-		sleep 1
-		for i in {1..5}
-		do
-			set_brightness 0 1 && set_brightness 1 0
-			sleep 0.5
-			set_brightness 0 0 && set_brightness 1 0
-			sleep 0.5
-		done
-		for i in {1..5}
-		do
-			set_brightness 0 0 && set_brightness 1 1
-			sleep 0.5
-			set_brightness 0 0 && set_brightness 1 0
-			sleep 0.5
-		done
-		counter=$(( counter+1 ))
-	done
-	
-	led red "$current_red"
-	led green "$current_green"
+  local current_red current_green
+  current_red=$(led "red")
+  current_green=$(led "green")
+
+  set_brightness 0 0 && set_brightness 1 0
+  counter=1
+  while [ $counter -le 2 ]
+  do
+    set_brightness 0 0 && set_brightness 1 0
+    sleep 1
+    for i in {1..5}
+    do
+      set_brightness 0 1 && set_brightness 1 0
+      sleep 0.5
+      set_brightness 0 0 && set_brightness 1 0
+      sleep 0.5
+    done
+    for i in {1..5}
+    do
+      set_brightness 0 0 && set_brightness 1 1
+      sleep 0.5
+      set_brightness 0 0 && set_brightness 1 0
+      sleep 0.5
+    done
+    counter=$(( counter+1 ))
+  done
+
+  led red "$current_red"
+  led green "$current_green"
 }
+
 function newyear {
   local current_green current_red counter
   current_green=$(led "green")

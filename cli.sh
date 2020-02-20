@@ -257,7 +257,7 @@ case $1 in
   tor)
     checkroot
     shift
-    tor "$@"
+    screen -d -m tor "$@"
     ;;
   bootoption)
     checkrpi

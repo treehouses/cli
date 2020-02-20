@@ -409,19 +409,19 @@ function led_help {
   echo "  $BASENAME led dance"
   echo "      This will do a sequence with the green led"
   echo "      1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
-  echo 
+  echo
   echo "  $BASENAME led thanksgiving"
   echo "      This will do a sequence with the green and red led"
   echo
   echo "  $BASENAME led christmas"
   echo "      This will set the mode of the led to christmas"
-  echo 			
+  echo
   echo "  $BASENAME led lunarnewyear"
   echo "      This wil set the mode of the led to lunarnewyear"
   echo
   echo "  $BASENAME led valentine"
   echo "      This will set the mode of the led to valentine"
-  echo 
+  echo
   echo "  $BASENAME led carnival"
   echo "     This will set mode of the led to carnival"
   echo

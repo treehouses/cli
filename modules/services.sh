@@ -102,7 +102,7 @@ function services {
               fi
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
-                check_tor $(get_port $service_name | sed -n "$i p")
+                check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
             kolibri|nextcloud|moodle|privatebin|portainer)
@@ -110,7 +110,7 @@ function services {
               docker_compose_up $service_name
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
-                check_tor $(get_port $service_name | sed -n "$i p")
+                check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
             pihole)
@@ -119,7 +119,7 @@ function services {
               docker_compose_up "pihole"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
-                check_tor $(get_port $service_name | sed -n "$i p")
+                check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
             ntopng)            
@@ -128,7 +128,7 @@ function services {
               echo "ntopng built and started"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
-                check_tor $(get_port $service_name | sed -n "$i p")
+                check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
             *)

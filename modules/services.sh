@@ -21,7 +21,8 @@ function services {
     if [ "$command" = "full" ]; then
       docker ps -a
     elif [ -z "$command" ]; then
-      installed=$(docker ps -a --format '{{.Names}}')
+      # installed=$(docker ps -a --format '{{.Names}}')
+      installed=$(docker images --format '{{.Repository}}' | sed 's:.*/::')
       array=($installed)
       results=""
       for i in "${array[@]}"

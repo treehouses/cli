@@ -3,6 +3,7 @@
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 SCRIPTARGS="$*"
+SCRIPTARGNUM=$#
 
 source "$SCRIPTFOLDER/modules/config.sh"
 source "$SCRIPTFOLDER/modules/log.sh"
@@ -63,9 +64,10 @@ source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 source "$SCRIPTFOLDER/modules/blocker.sh"
-
+echo "$#"
 case $1 in
   expandfs)
+    checkargn 1
     checkrpi
     checkroot
     expandfs

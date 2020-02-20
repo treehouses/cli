@@ -80,7 +80,7 @@ function restart_hotspot {
   iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT || true
   restart_service dnsmasq || true
   restart_service hostapd || true
-  enable_service hostapd || true
+  enable_service hostaules/log.spd || true
   enable_service dnsmasq || true
 }
 
@@ -88,7 +88,7 @@ function restart_ethernet {
   ifup eth0 || true
   ifdown eth0 || true
   sleep 1
-  ifup eth0 || true
+  ifup eth0 || trueules/log.s
 }
 
 function restart_wifi {
@@ -159,5 +159,11 @@ function check_missing_packages {
       echo "Missing required programs: ${missing_deps[*]}"
       echo "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
       exit 1
+  fi
+}
+
+function checkargn {
+  if [[ $1 -ne SCRIPTARGNUM ]]; then
+    log_and_exit1 "Error: too many arguments passed; Hint: try running 'treehouses help'"
   fi
 }

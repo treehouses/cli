@@ -242,7 +242,6 @@ function services {
               local_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
               local_url+=":"
               local_url+=$(get_port $service_name | sed -n "$i p")
-
               if [ "$service_name" = "pihole" ]; then
                 local_url+="/admin"
               fi
@@ -254,7 +253,6 @@ function services {
               tor_url=$(tor)
               tor_url+=":"
               tor_url+=$(get_port $service_name | sed -n "$i p")
-
               if [ "$service_name" = "pihole" ]; then
                 tor_url+="/admin"
               fi
@@ -275,7 +273,7 @@ function services {
             :
           else
             echo "${service_name} info not found"
-            # exit 1
+            exit 1
           fi
           ;;
         *)
@@ -322,22 +320,18 @@ function check_space {
 }
 
 function check_tor {
-  local port
-  port="$1"
   if [ "$(tor status)" = "active" ]; then
     echo "tor active"
-    if ! tor list | grep -w $port; then
-      echo "adding port ${port}"
-      tor add $port
+    if ! tor list | grep -w $1; then
+      echo "adding port ${1}"
+      tor add $1
     fi
   fi
 }
 
 function get_port {
-  local service_name
-  service_name="$1"
-  if [ -f /srv/${service_name}/ports ]; then
-    cat /srv/${service_name}/ports
+  if [ -f /srv/${1}/ports ]; then
+    cat /srv/${1}/ports
   fi
 }
 

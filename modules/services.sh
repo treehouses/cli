@@ -21,7 +21,6 @@ function services {
     if [ "$command" = "full" ]; then
       docker ps -a
     elif [ -z "$command" ]; then
-      # installed=$(docker ps -a --format '{{.Names}}')
       installed=$(docker images --format '{{.Repository}}' | sed 's:.*/::')
       array=($installed)
       results=""
@@ -121,6 +120,12 @@ function services {
               do
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
+              ;;
+            netdata)
+              check_space "treehouses/netdata"
+              create_yml "netdata"
+              docker_compose_up "netdata"
+              check_tor "19999"
               ;;
             ntopng)            
               docker volume create ntopng_data
@@ -343,6 +348,7 @@ function services_help {
   echo "  Planet"
   echo "  Kolibri"
   echo "  Nextcloud"
+  echo "  Netdata"
   echo "  Pi-hole"
   # echo "  Moodle"
   echo "  PrivateBin"

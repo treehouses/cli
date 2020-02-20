@@ -37,6 +37,17 @@ function led {
     echo "Look at your RPi leds, both leds will be in this pattern... "
     echo "Both LED: 1 sec on; 8 blink; 1 on"
     christmas > "$LOGFILE"
+  elif [ "$color" = "onam" ]; then
+    checkroot
+    echo "leds are set to onam mode."
+    echo "Look at your Rpi leds, both leds will be in this pattern..."
+    echo "Green LED: 5 blink"
+    echo "Both LED: 1 sec off"
+    echo "Red LED: 5 blink"
+    echo "Green LED: 5 blink"
+    echo "Both LED: 1 sec"
+    echo "Red LED: 5 blink"
+    onam > "$LOGFILE"
   elif [ "$color" = "newyear" ]; then
     checkroot
     echo "leds are set to newyear mode."
@@ -206,6 +217,38 @@ function christmas {
   led green "$current_green"
 }
 
+function onam {
+  local current_red current_green
+  current_red=$(led "red")
+  current_green=$(led "green")
+
+  set_brightness 0 0 && set_brightness 1 0
+  counter=1
+  while [ $counter -le 2 ]
+  do
+    set_brightness 0 0 && set_brightness 1 0
+    sleep 1
+    for i in {1..5}
+    do
+      set_brightness 0 1 && set_brightness 1 0
+      sleep 0.5
+      set_brightness 0 0 && set_brightness 1 0
+      sleep 0.5
+    done
+    for i in {1..5}
+    do
+      set_brightness 0 0 && set_brightness 1 1
+      sleep 0.5
+      set_brightness 0 0 && set_brightness 1 0
+      sleep 0.5
+    done
+    counter=$(( counter+1 ))
+  done
+
+  led red "$current_red"
+  led green "$current_green"
+}
+
 function newyear {
   local current_green current_red counter
   current_green=$(led "green")
@@ -366,20 +409,23 @@ function led_help {
   echo "  $BASENAME led dance"
   echo "      This will do a sequence with the green led"
   echo "      1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
-  echo 
+  echo
   echo "  $BASENAME led thanksgiving"
   echo "      This will do a sequence with the green and red led"
   echo
   echo "  $BASENAME led christmas"
   echo "      This will set the mode of the led to christmas"
   echo
-  echo " $BASENAME led lunarnewyear"
+  echo "  $BASENAME led lunarnewyear"
   echo "      This wil set the mode of the led to lunarnewyear"
   echo
   echo "  $BASENAME led valentine"
   echo "      This will set the mode of the led to valentine"
-  echo 
+  echo
   echo "  $BASENAME led carnival"
   echo "     This will set mode of the led to carnival"
+  echo
+  echo "  $BASENAME led onam"
+  echo "      This will set the mode of the led to onam"
   echo
 }

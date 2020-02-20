@@ -60,6 +60,8 @@ function detectrpi {
     elif [[ "$1" == "model" ]];
     then
       echo "$rpimodel"
+    else
+      log_and_exit1 "Error: only 'detectrpi', and 'detectrpi model' commands supported"
     fi
   else
     echo "nonrpi"

@@ -67,6 +67,8 @@ function memory_free {
 }
 
 function memory() {
+  check_missing_packages "bc" 
+
   if [ "$1" == "total" ] ; then
     memory_total $2
     echo "$t";

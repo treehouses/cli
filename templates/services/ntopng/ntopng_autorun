@@ -1,0 +1,7 @@
+ntopng_autorun=true
+
+if [ "ntopng_autorun" = true ]; then
+  docker volume create ntopng_data
+  docker run --name ntopng -d -p 8090:8090 -v /var/run/docker.sock:/var/run/docker.sock -v ntopng_data:/data jonbackhaus/ntopng --http-port=8090
+fi
+

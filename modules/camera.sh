@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function camera {
+  local directory timestamp config configtemp savetype
   directory="/home/pi/Pictures/"
   timestamp=$(date +"%Y%m%d-%H%M%S")
   config="/boot/config.txt"

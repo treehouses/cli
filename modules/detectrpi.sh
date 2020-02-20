@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function detectrpi {
+  local rpimodel found
   declare -A rpimodels
   rpimodels["Beta"]="BETA"
   rpimodels["0002"]="RPIB"
@@ -55,7 +54,15 @@ function detectrpi {
 
   if [ "$found" == 1 ];
   then
-    echo ${rpimodels[$rpimodel]}
+    if [[ "$1" == "" ]];
+    then
+      echo ${rpimodels[$rpimodel]}
+    elif [[ "$1" == "model" ]] && [[ "$2" == "" ]]; 
+    then
+      echo "$rpimodel"
+    else
+      log_and_exit1 "Error: only 'detectrpi', and 'detectrpi model' commands supported"
+    fi
   else
     echo "nonrpi"
   fi
@@ -70,6 +77,9 @@ function detectrpi_help {
   echo
   echo "Example:"
   echo "  $BASENAME detectrpi"
-  echo "      Prints the model number"
+  echo "      Prints the Raspberry Pi name"
+  echo
+  echo "  $BASENAME detectrpi model"
+  echo "      Prints the model number of the RPi"
   echo
 }

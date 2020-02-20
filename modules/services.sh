@@ -1,6 +1,6 @@
-#!/bin/bash
-
 function services {
+  local service_name command command_option service results installed
+  local array running port_string found local_url tor_url
   service_name="$1"
   command="$2"
   command_option="$3"
@@ -80,57 +80,72 @@ function services {
         up)
           case "$service_name" in
             planet)
+              check_space "treehouses/planet"
               if [ -f /srv/planet/pwd/credentials.yml ]; then
-                docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d
+                if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
+                  echo "planet built and started"
+                else
+                  echo "error building planet"
+                  exit 1
+                fi
               else
-                docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d
+                if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d ; then
+                  echo "planet built and started"
+                else
+                  echo "error building planet"
+                  exit 1
+                fi
               fi
-              echo "planet built and started"
               check_tor "80"
               ;;
             kolibri)
-              bash $TEMPLATES/services/kolibri/kolibri_yml.sh
-              echo "yml file created"
-
-              docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d
-              echo "kolibri built and started"
+              check_space "treehouses/kolibri"
+              create_yml "kolibri"
+              docker_compose_up "kolibri"
               check_tor "8080"
               ;;
             nextcloud)
-              docker run --name nextcloud -d -p 8081:80 nextcloud
-              echo "nextcloud built and started"
+              check_space "library/nextcloud"
+              create_yml "nextcloud"
+              docker_compose_up "nextcloud"
               check_tor "8081"
               ;;
             pihole)
-              bash $TEMPLATES/services/pihole/pihole_yml.sh
-              echo "yml file created"
-
+              check_space "pihole/pihole"
+              create_yml "pihole"
               service dnsmasq stop
-              docker-compose -f /srv/pihole/pihole.yml -p pihole up -d
-              echo "pihole built and started"
+              docker_compose_up "pihole"
               check_tor "8053"
               ;;
             moodle)
-              bash $TEMPLATES/services/moodle/moodle_yml.sh
-              echo "yml file created"
-
-              docker-compose -f /srv/moodle/moodle.yml -p moodle up -d
-              echo "moodle built and started"
+              check_space "treehouses/moodle"
+              create_yml "moodle"
+              docker_compose_up "moodle"
               check_tor "8082"
               ;;
             privatebin)
-              bash $TEMPLATES/services/privatebin/privatebin_yml.sh
-              echo "yml file created"
-
-              docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d
-              echo "privatebin built and started"
+              check_space "treehouses/privatebin"
+              create_yml "privatebin"
+              docker_compose_up "privatebin"
               check_tor "8083"
               ;;
             portainer)
-              docker volume create portainer_data
-              docker run --name portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
-              echo "portainer built and started"
+              check_space "portainer/portainer"
+              create_yml "portainer"
+              docker_compose_up "portainer"
               check_tor "9000"
+              ;;
+            netdata)
+              check_space "treehouses/netdata"
+              create_yml "netdata"
+              docker_compose_up "netdata"
+              check_tor "19999"
+              ;;
+            ntopng)            
+              docker volume create ntopng_data
+              docker run --name ntopng -d -p 8090:8090 -v /var/run/docker.sock:/var/run/docker.sock -v ntopng_data:/data jonbackhaus/ntopng --http-port=8090
+              echo "ntopng built and started"
+              check_tor "8090"
               ;;
             *)
               echo "unknown service"
@@ -140,18 +155,13 @@ function services {
 
         down)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|ntopng)
               if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
                 echo "yml file doesn't exit"
               else
                 docker-compose -f /srv/${service_name}/${service_name}.yml down
                 echo "${service_name} stopped and removed"
               fi
-              ;;
-            nextcloud|portainer)
-              docker stop $service_name
-              docker rm $service_name
-              echo "${service_name} stopped and removed"
               ;;
             *)
               echo "unknown service"
@@ -161,17 +171,13 @@ function services {
 
         start)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|ntopng)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml start
                 echo "${service_name} started"
               else
                 echo "service not found"
               fi
-              ;;
-            nextcloud|portainer)
-              docker start $service_name
-              echo "${service_name} started"
               ;;
             *)
               echo "unknown service"
@@ -181,17 +187,13 @@ function services {
 
         stop)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|ntopng)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml stop
                 echo "${service_name} stopped"
               else
                 echo "service not found"
               fi
-              ;;
-            nextcloud|portainer)
-              docker stop $service_name
-              echo "${service_name} stopped"
               ;;
             *)
               echo "unknown service"
@@ -318,6 +320,22 @@ function services {
               echo "easily manage your different Docker environments (Docker hosts or"
               echo "Swarm clusters).\""
               ;;
+            netdata)
+              echo "https://github.com/netdata/netdata"
+              echo
+              echo "\"Netdata is distributed, real-time performance and health monitoring for systems and applications."
+              echo "It is a highly-optimized monitoring agent you install on all your systems and containers.\""
+              ;;
+            ntopng)
+              echo "https://github.com/ntop/ntopng"
+              echo                 
+              echo "\"ntopng is the next generation version of the original ntop,"
+              echo "a network traffic probe that monitors network usage. ntopng is"
+              echo "based on libpcap and it has been written in a portable way in order"
+              echo "to virtually run on every Unix platform, MacOSX and on Windows as well."
+              echo "Educational users can obtain commercial products at no cost please see here:"
+              echo "https://www.ntop.org/support/faq/do-you-charge-universities-no-profit-and-research/\""
+              ;;
           esac
           ;;
 
@@ -326,7 +344,7 @@ function services {
           if [ "$command_option" = "local" ]; then
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
-              local_url=$(hostname -I | head -n1 | cut -d " " -f1)
+              local_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
               local_url+=":"
               local_url+=$(get_port $service_name | sed -n "$i p")
 
@@ -372,25 +390,59 @@ function services {
 
 # list all services found in /templates/services
 function find_available_services {
+  local service_name available_formats
   service_name="$1"
   available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
   echo "$service [$available_formats]"
 }
 
+function create_yml {
+  if bash $TEMPLATES/services/${1}/${1}_yml.sh ; then
+    echo "yml file created"
+  else
+    echo "error creating yml file"
+    exit 1
+  fi
+}
+
+function docker_compose_up {
+  if docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
+    echo "${1} built and started"
+  else
+    echo "error building ${1}"
+    exit 1
+  fi
+}
+
+function check_space {
+  local image_size free_space
+  image_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')
+  free_space=$(df -Ph /var/lib/docker | awk 'END {print $4}' | numfmt --from=iec)
+
+  if (( image_size > free_space )); then
+    echo "image size:" $image_size
+    echo "free space:" $free_space
+    echo "not enough free space"
+    exit 1
+  fi
+}
+
 # tor status and port check
 function check_tor {
+  local port
   port="$1"
-  if [ "$(treehouses tor status)" = "active" ]; then
+  if [ "$(tor status)" = "active" ]; then
     echo "tor active"
-    if ! treehouses tor list | grep -w $port; then
+    if ! tor list | grep -w $port; then
       echo "adding port ${port}"
-      treehouses tor add $port
+      tor add $port
     fi
   fi
 }
 
 # get port number for specified service
 function get_port {
+  local service_name
   service_name="$1"
 
   case "$service_name" in
@@ -416,6 +468,12 @@ function get_port {
     portainer)
       echo "9000"
       ;;
+    netdata)
+      echo "19999"
+      ;;
+    ntopng)
+      echo "8090"
+      ;;
     *)
       echo "unknown service"
       ;;
@@ -429,10 +487,12 @@ function services_help {
   echo "  Planet"
   echo "  Kolibri"
   echo "  Nextcloud"
+  echo "  Netdata"
   echo "  Pi-hole"
   # echo "  Moodle"
   echo "  PrivateBin"
   echo "  Portainer"
+  echo "  Ntopng"
   echo
   echo
   echo "Top-Level Commands:"

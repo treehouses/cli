@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function version {
   node -p "require('$SCRIPTFOLDER/package.json').version"
 }

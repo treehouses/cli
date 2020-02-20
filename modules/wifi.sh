@@ -1,7 +1,5 @@
-#!/bin/bash
-
 function wifi {
-
+  local wifinetwork wifipassword wificountry
   if [ -z "$1" ]; then
     echo "Error: name of the network missing"
     exit 1
@@ -49,11 +47,13 @@ function wifi {
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
-    echo "open wifi network"
+    checkwifi
+    echo "connected to open wifi network"
   else
     wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
-    echo "password network"
+    checkwifi
+    echo "connected to password network"
   fi
 
   echo "wifi" > /etc/network/mode

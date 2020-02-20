@@ -62,6 +62,7 @@ source "$SCRIPTFOLDER/modules/discover.sh"
 source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
+source "$SCRIPTFOLDER/modules/blocker.sh"
 
 case $1 in
   expandfs)
@@ -93,7 +94,7 @@ case $1 in
     detect
     ;;
   detectrpi)
-    detectrpi
+    detectrpi "$2" "$3"
     ;;
   wifi)
     checkrpi
@@ -307,6 +308,10 @@ case $1 in
   log)
     checkroot
     log "$2" "$3"
+    ;;
+  blocker)
+    checkroot
+    blocker "$2"
     ;;
   help)
     help "$2"

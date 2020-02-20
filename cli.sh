@@ -64,7 +64,7 @@ source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 source "$SCRIPTFOLDER/modules/blocker.sh"
-echo "$#"
+
 case $1 in
   expandfs)
     checkrpi

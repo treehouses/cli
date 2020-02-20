@@ -38,15 +38,15 @@ function led {
     echo "Both LED: 1 sec on; 8 blink; 1 on"
     christmas > "$LOGFILE"
   elif [ "$color" = "onam" ]; then
-	checkroot
+  checkroot
   echo "leds are set to onam mode."
   echo "Look at your Rpi leds, both leds will be in this pattern..."
-  echo "Green LED :5 blink"
-  echo "Both LED : 1 sec off"
-  echo "Red LED :5 blink"
-  echo "Green LED :5 blink"
-  echo "Both LED : 1 sec"
-  echo "Red LED :5 blink"
+  echo "Green LED: 5 blink"
+  echo "Both LED: 1 sec off"
+  echo "Red LED: 5 blink"
+  echo "Green LED: 5 blink"
+  echo "Both LED: 1 sec"
+  echo "Red LED: 5 blink"
   onam > "$LOGFILE"
   elif [ "$color" = "newyear" ]; then
     checkroot

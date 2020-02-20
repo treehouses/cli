@@ -10,9 +10,8 @@ function tunnels {
       echo
       echo "PageKite is a reverse proxy tool that connects local servers to the public Internet."
       echo "It gives proper domain names to servers running on localhost and makes them visible to the world, bypassing NAT and firewalls."
-      echo "The pagekite.py and libpagekite source code is licensed under "
-      echo "version 3.0 of the GNU Affero General Public License as published by the Free Software Foundation."
-      echo "We also offer sponsored accounts to Free Software projects which fulfill certain criteria."
+      echo "Pagekite sign up url: https://pagekite.net/signup/"
+      echo "Pagekite also offers sponsored accounts to Free Software projects which fulfill certain criteria."
       echo "https://pagekite.net/support/free-for-foss"
       ;;
     *)

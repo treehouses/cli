@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function memory_total() {
+  check_missing_packages "bc" 
   option=$1
   case $option in 
     '-g')

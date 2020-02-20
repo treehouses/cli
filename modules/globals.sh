@@ -163,7 +163,7 @@ function check_missing_packages {
 }
 
 function checkargn {
-  if [[ $1 -ne SCRIPTARGNUM ]]; then
+  if [[ $1 -gt SCRIPTARGNUM ]]; then
     log_and_exit1 "Error: too many arguments passed; Hint: try running 'treehouses help'"
   fi
 }

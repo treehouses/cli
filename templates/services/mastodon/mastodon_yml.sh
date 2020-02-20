@@ -10,8 +10,6 @@ services:
     restart: always
     image: postgres:9.6.16-alpine
     container_name: mastodon-db
-#    ports:
-#      - "5432:5432"
 
   redis:
     restart: always
@@ -21,7 +19,6 @@ services:
 
   web:
     restart: always
-    build: .
     image: gilir/rpi-mastodon
     container_name: mastodon-web
     env_file: .env.production

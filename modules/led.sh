@@ -415,11 +415,8 @@ function led_help {
   echo
   echo "  $BASENAME led christmas"
   echo "      This will set the mode of the led to christmas"
-  echo 
-  echo "  $BASENAME led onam"
-  echo "      This will set the mode of the led to onam"
-  echo			
-  echo " $BASENAME led lunarnewyear"
+  echo 			
+  echo "  $BASENAME led lunarnewyear"
   echo "      This wil set the mode of the led to lunarnewyear"
   echo
   echo "  $BASENAME led valentine"
@@ -427,5 +424,8 @@ function led_help {
   echo 
   echo "  $BASENAME led carnival"
   echo "     This will set mode of the led to carnival"
+  echo
+  echo "  $BASENAME led onam"
+  echo "      This will set the mode of the led to onam"
   echo
 }

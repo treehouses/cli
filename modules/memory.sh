@@ -1,7 +1,6 @@
 #!/bin/bash
 
 function memory_total() {
-  check_missing_packages "bc" 
   option=$1
   case $option in 
     '-g')
@@ -70,8 +69,9 @@ function memory_free {
 }
 
 function memory() {
+  check_missing_packages "bc" 
 
-    if [ "$1" == "total" ] ; then
+  if [ "$1" == "total" ] ; then
     memory_total $2
     echo "$t";
     exit 0

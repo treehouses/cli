@@ -141,6 +141,13 @@ function services {
               docker_compose_up "netdata"
               check_tor "19999"
               ;;
+            mastodon)
+              check_space "treehouses/mastodon"
+              create_yml "mastodon"
+              docker_compose_up "mastodon"
+              check_tor "3000"
+              check_tor "4000"
+              ;;
             ntopng)            
               docker volume create ntopng_data
               docker run --name ntopng -d -p 8090:8090 -v /var/run/docker.sock:/var/run/docker.sock -v ntopng_data:/data jonbackhaus/ntopng --http-port=8090
@@ -155,7 +162,7 @@ function services {
 
         down)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|ntopng)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng)
               if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
                 echo "yml file doesn't exit"
               else
@@ -171,7 +178,7 @@ function services {
 
         start)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|ntopng)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml start
                 echo "${service_name} started"
@@ -187,7 +194,7 @@ function services {
 
         stop)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|ntopng)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml stop
                 echo "${service_name} stopped"
@@ -325,6 +332,13 @@ function services {
               echo
               echo "\"Netdata is distributed, real-time performance and health monitoring for systems and applications."
               echo "It is a highly-optimized monitoring agent you install on all your systems and containers.\""
+              ;;
+            mastodon)
+              echo "https://github.com/gilir/rpi-mastodon, https://github.com/tootsuite/mastodon"
+              echo 
+              echo "Mastodon is a free, open-source social network server, a decentralized solution to commercial platforms." 
+              echo "It avoids the risks of a single company monopolizing your communication."
+              echo "Anyone can run Mastodon and participate in the social network seamlessly."
               ;;
             ntopng)
               echo "https://github.com/ntop/ntopng"
@@ -471,6 +485,10 @@ function get_port {
     netdata)
       echo "19999"
       ;;
+    mastodon)
+      echo "3000"
+      echo "4000"
+      ;;
     ntopng)
       echo "8090"
       ;;
@@ -488,6 +506,7 @@ function services_help {
   echo "  Kolibri"
   echo "  Nextcloud"
   echo "  Netdata"
+  echo "  Mastodon"
   echo "  Pi-hole"
   # echo "  Moodle"
   echo "  PrivateBin"

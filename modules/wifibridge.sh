@@ -52,7 +52,7 @@ function wifibridge {
 
       restart_wifi >"$LOGFILE" 2>"$LOGFILE"
 
-      sudo iptables-restore < templates/network/default_iptables
+      iptables-restore < templates/network/default_iptables
       ;;
 
 

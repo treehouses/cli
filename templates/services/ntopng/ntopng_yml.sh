@@ -11,8 +11,6 @@ mkdir -p /srv/ntopng
   echo "      - \"8090:8090\""
   echo "    volumes:"
   echo "      - \"/var/run/docker.sock:/var/run/docker.sock\""
-  echo "      - \"/ntopng_data:/data jonbackhaus/ntopng\""
+  echo "      - \"/ntopng_data:/data_jonbackhaus/ntopng\""
   echo "version: \"2\""
-  echo "volumes:"
-  echo "  ntopng_data:"
 } > /srv/ntopng/ntopng.yml

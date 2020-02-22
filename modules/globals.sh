@@ -164,6 +164,8 @@ function check_missing_packages {
 
 function checkargn {
   if [[ SCRIPTARGNUM -gt $1 ]]; then
-    log_and_exit1 "Error: too many arguments passed; Hint: try running 'treehouses help'"
+    logit "Error: Too many arguments."
+    eval "$(echo $SCRIPTARGS | cut -d' ' -f1)_help"
+    exit 1
   fi
 }

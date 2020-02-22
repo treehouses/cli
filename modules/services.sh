@@ -331,7 +331,7 @@ function services {
               echo "https://github.com/netdata/netdata"
               echo
               echo "\"Netdata is distributed, real-time performance and health monitoring for systems and applications."
-              echo "It is a highly-optimized monitoring agent you install on all your systems and containers."
+              echo "It is a highly-optimized monitoring agent you install on all your systems and containers.\""
               ;;
             mastodon)
               echo "https://github.com/gilir/rpi-mastodon, https://github.com/tootsuite/mastodon"

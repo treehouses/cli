@@ -4,15 +4,14 @@
 
 function wifibridge {
 
+  sudo iptables-save > templates/network/default_iptables
+
   case "$1" in
     "on")
       echo on
 
       ip_address="192.168.2.1"
       netmask="255.255.255.0"
-      dhcp_range_start="192.168.2.2"
-      dhcp_range_end="192.168.2.100"
-      dhcp_time="12h"
 
       sudo systemctl start network-online.target &> /dev/null
 
@@ -33,12 +32,7 @@ function wifibridge {
 
       sudo rm -rf /etc/dnsmasq.d/* &> /dev/null
 
-      echo -e "interface=eth0\n\
-      bind-interfaces\n\
-      server=8.8.8.8\n\
-      domain-needed\n\
-      bogus-priv\n\
-      dhcp-range=$dhcp_range_start,$dhcp_range_end,$dhcp_time" > /tmp/custom-dnsmasq.conf
+      cp "$TEMPLATES/network/wifibridge" /tmp/custom-dnsmasq.conf
 
       sudo cp /tmp/custom-dnsmasq.conf /etc/dnsmasq.d/custom-dnsmasq.conf
       sudo systemctl start dnsmasq
@@ -63,8 +57,7 @@ function wifibridge {
 
       restart_wifi >"$LOGFILE" 2>"$LOGFILE"
 
-      sudo iptables -D FORWARD -i wlan0 -o eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-      sudo iptables -D FORWARD -i eth0 -o wlan0 -j ACCEPT
+      sudo iptables-restore < templates/network/default_iptables
       ;;
 
 

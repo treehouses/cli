@@ -4,12 +4,8 @@
 
 function wifibridge {
 
-  sudo iptables-save > templates/network/default_iptables
-
   case "$1" in
     "on")
-      echo on
-
       ip_address="192.168.2.1"
       netmask="255.255.255.0"
 
@@ -39,7 +35,6 @@ function wifibridge {
       ;;
 
     "off")
-      echo off
       cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
       cp "$TEMPLATES/network/wlan0/default" /etc/network/interfaces.d/wlan0
       cp "$TEMPLATES/network/eth0/default" /etc/network/interfaces.d/eth0

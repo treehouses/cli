@@ -6,6 +6,9 @@ function wifibridge {
 
   case "$1" in
     "on")
+
+      checkwifi
+
       ip_address="192.168.2.1"
       netmask="255.255.255.0"
 
@@ -61,6 +64,17 @@ function wifibridge {
       ;;
 
   esac
+}
+
+function checkwifi {
+  if iwconfig wlan0 | grep -q "ESSID:off/any"; then
+    echo "Wifi is not connected."
+    echo ""
+    echo "A wifi connection is necessary to build the wifibridge."
+    echo "Use the 'treehouses wifi' command to connect to wireless network."
+    echo ""
+    exit 1
+  fi
 }
 
 function wifibridge_help {

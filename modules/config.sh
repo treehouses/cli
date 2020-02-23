@@ -41,11 +41,10 @@ function spin() {
     do
       echo -n "${spinner:$i:1}"
       echo -en "\010"
-      sleep 1
+      sleep 0.2
     done
   done
 }
 # Run spin in background and kill upon cli exit
 spin &
-SPIN_PID=$!
-trap 'kill -9 $SPIN_PID' $(seq 0 15)
+trap 'kill -9 $!' $(seq 0 15)

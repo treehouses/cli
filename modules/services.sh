@@ -314,7 +314,7 @@ function check_space {
   local service_size service_name free_space
   # service_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')
   service_name="$1"
-  service_size=$(cat /srv/${service_name}/size | numfmt --from-unit=Mi)
+  service_size=$(numfmt --from-unit=Mi < /srv/${service_name}/size)
   free_space=$(df -Ph /var/lib/docker | awk 'END {print $4}' | numfmt --from=iec)
 
   if (( service_size > free_space )); then

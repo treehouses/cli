@@ -68,7 +68,7 @@ source "$SCRIPTFOLDER/modules/blocker.sh"
 if [[ $(pstree -ps $$) == *"ssh"* ]] && [[ "$USINGSSH" -eq 0 ]]; then
   USINGSSH=1
   conf_var_update "USINGSSH" "$USINGSSH"
-  tmux new-session -d "$0 $@"
+  tmux new-session -d "$0 $*"
   USINGSSH=0
   conf_var_update "USINGSSH" "$USINGSSH"
 fi

@@ -69,7 +69,7 @@ if [[ $(pstree -ps $$) == *"ssh"* ]] && [[ "$RUNSCREEN" -eq 0 ]]; then
   checkroot
   RUNSCREEN=1
   conf_var_update "RUNSCREEN" "$RUNSCREEN"
-  tmux new-session -d "$0 $@"
+  tmux new-session -d "$0 $*"
   RUNSCREEN=0
   conf_var_update "RUNSCREEN" "$RUNSCREEN"
 fi

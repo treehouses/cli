@@ -41,7 +41,7 @@ function spin() {
     do
       echo -n "${spinner:$i:1}"
       echo -en "\010"
-      sleep 0.2
+      sleep 0.6
     done
   done
 }

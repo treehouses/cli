@@ -31,3 +31,21 @@ function conf_var_update() {
   fi
   sync;
 }
+
+# Credits: https://www.shellscript.sh/tips/spinner/
+function spin() {
+  spinner="/|\\-/|\\-"
+  while :
+  do
+    for i in `seq 0 7`
+    do
+      echo -n "${spinner:$i:1}"
+      echo -en "\010"
+      sleep 1
+    done
+  done
+}
+# Run spin in background and kill upon cli exit
+spin &
+SPIN_PID=$!
+trap "kill -9 $SPIN_PID" `seq 0 15`

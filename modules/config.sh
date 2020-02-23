@@ -10,7 +10,7 @@ NC='\033[0m'
 LOGFILE=/dev/null
 LOG=0
 BLOCKER=0
-USINGSSH=0
+RUNSCREEN=0
 
 if [[ -f "$CONFIGFILE" ]]; then
   source "$CONFIGFILE"

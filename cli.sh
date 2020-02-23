@@ -65,12 +65,13 @@ source "$SCRIPTFOLDER/modules/remote.sh"
 source "$SCRIPTFOLDER/modules/blocker.sh"
 
 # Runs command in new tmux screen to avoid commands not getting run with ssh closes
-if [[ $(pstree -ps $$) == *"ssh"* ]] && [[ "$USINGSSH" -eq 0 ]]; then
-  USINGSSH=1
-  conf_var_update "USINGSSH" "$USINGSSH"
-  tmux new-session -d "$0 $*"
-  USINGSSH=0
-  conf_var_update "USINGSSH" "$USINGSSH"
+if [[ $(pstree -ps $$) == *"ssh"* ]] && [[ "$RUNSCREEN" -eq 0 ]]; then
+  checkroot
+  RUNSCREEN=1
+  conf_var_update "RUNSCREEN" "$RUNSCREEN"
+  tmux new-session -d "$0 $@"
+  RUNSCREEN=0
+  conf_var_update "RUNSCREEN" "$RUNSCREEN"
 fi
 
 case $1 in

@@ -37,7 +37,7 @@ function spin() {
   spinner="/|\\-/|\\-"
   while :
   do
-    for i in `seq 0 7`
+    for i in $(seq 0 7)
     do
       echo -n "${spinner:$i:1}"
       echo -en "\010"
@@ -48,4 +48,4 @@ function spin() {
 # Run spin in background and kill upon cli exit
 spin &
 SPIN_PID=$!
-trap "kill -9 $SPIN_PID" `seq 0 15`
+trap 'kill -9 $SPIN_PID' $(seq 0 15)

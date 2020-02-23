@@ -34,6 +34,7 @@ function conf_var_update() {
 
 # Credits: https://www.shellscript.sh/tips/spinner/
 function spin() {
+  tput civis
   spinner="/|\\-/|\\-"
   while :
   do
@@ -41,9 +42,10 @@ function spin() {
     do
       echo -n "${spinner:$i:1}"
       echo -en "\010"
-      sleep 0.6
+      sleep 0.5
     done
   done
+  tput cvvis
 }
 # Run spin in background and kill upon cli exit
 spin &

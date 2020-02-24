@@ -31,9 +31,8 @@ function wifibridge {
 
       sudo rm -rf /etc/dnsmasq.d/* &> /dev/null
 
-      cp "$TEMPLATES/network/wifibridge" /tmp/custom-dnsmasq.conf
+      cp "$TEMPLATES/network/wifibridge" /etc/dnsmasq.d/custom-dnsmasq.conf
 
-      sudo cp /tmp/custom-dnsmasq.conf /etc/dnsmasq.d/custom-dnsmasq.conf
       sudo systemctl start dnsmasq
       ;;
 

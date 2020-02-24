@@ -9,7 +9,8 @@ _treehouses_complete()
             container coralenv cron default detect detectrpi discover ethernet expandfs \
             feedback help image internet led locale log memory networkmode ntp openvpn password \
             rebootneeded reboots rename restore rtc services speedtest ssh sshkey sshtunnel \
-            staticwifi temperature timezone tor upgrade usb verbose version vnc wifi wificountry wifihidden wifistatus"
+            staticwifi temperature timezone tor upgrade usb verbose version vnc wifi \
+            wifibridge wificountry wifihidden wifistatus"
   ap_cmdas="local internet"
   aphidden_cmds="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
@@ -43,6 +44,7 @@ _treehouses_complete()
   usb_cmds="on off"
   notice_cmds="on off add delete list"
   remote_cmds="status upgrade services"
+  wifibridge_cmds="on off"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 

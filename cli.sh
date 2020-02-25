@@ -64,6 +64,8 @@ source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 source "$SCRIPTFOLDER/modules/blocker.sh"
 
+
+start_spinner
 case $1 in
   expandfs)
     checkrpi
@@ -323,3 +325,5 @@ esac
 if [ $? -eq 0 ]; then
   logit "$SCRIPTARGS" "1"
 fi
+# put cursor back to normal (blinking)
+tput cvvis

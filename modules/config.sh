@@ -34,8 +34,8 @@ function conf_var_update() {
 
 # Credits: https://www.shellscript.sh/tips/spinner/
 function spin() {
-  tput civis
   spinner="/|\\-/|\\-"
+  tput civis
   while :
   do
     for i in $(seq 0 7)
@@ -45,8 +45,23 @@ function spin() {
       sleep 0.5
     done
   done
-  tput cvvis
 }
-# Run spin in background and kill upon cli exit
-spin &
-trap 'kill -9 $!' $(seq 0 15)
+
+# Kills spinner once and returns to cli.sh
+function kill_spinner() {
+  if [[ "$KILLDONE" != 1 ]]; then
+    kill -9 $SPINPID
+    KILLDONE=1
+  fi
+  return
+}
+
+# start spinner background process, kill on signals 0-15
+function start_spinner() {
+  set -m
+  trap kill_spinner $(seq 0 15)
+  spin &
+  SPINPID=$!
+  disown
+}
+

@@ -324,5 +324,5 @@ esac
 if [ $? -eq 0 ]; then
   logit "$SCRIPTARGS" "1"
 fi
-# put cursor back to normal (blinking)
+# script ending so spinner will close too automatically but we still need to put cursor back
 tput cvvis

@@ -53,6 +53,7 @@ function kill_spinner() {
     kill -9 $SPINPID
     KILLDONE=1
   fi
+  tput cvvis
   return
 }
 

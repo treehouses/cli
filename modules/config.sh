@@ -33,7 +33,7 @@ function conf_var_update() {
 }
 
 # Credits: https://www.shellscript.sh/tips/spinner/
-function spin() {
+function spinner() {
   spinner="/|\\-/|\\-"
   # hides the cursor
   tput civis
@@ -69,7 +69,7 @@ function start_spinner() {
   # if signals 0-15 (ctrl+c, exit, termination, kill, etc) run kill_spinner
   trap kill_spinner $(seq 0 15)
   # run spin in background process under job control
-  spin &
+  spinner &
   SPINPID=$! # process PID of spin, needed to kill it later
   # this prevents any feedback from kill entering our terminal output
   disown

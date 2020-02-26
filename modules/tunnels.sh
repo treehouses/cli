@@ -15,7 +15,8 @@ function tunnels {
       echo "https://pagekite.net/support/free-for-foss"
       ;;
     *)
-      log_and_exit1 "Error: unknown command"
+      echo "Error: unknown command"
+      exit 1
       ;;
   esac
 }
@@ -28,16 +29,16 @@ function tunnels_help {
   echo
   echo "  Examples:"
   echo
-  echo "    $(basename "$0") tunnels pagekite 3000 treehouses.pagekite.me"
+  echo "    $BASENAME tunnels pagekite 3000 treehouses.pagekite.me"
   echo "        Flying localhost:3000"
   echo
-  echo "    $(basename "$0") tunnels pagekite"
+  echo "    $BASENAME tunnels pagekite"
   echo "        Kites are flying and all is well."
   echo
-  echo "    $(basename "$0") tunnels pagekite --ports=3000,8000 treehouses.pagekite.me"
+  echo "    $BASENAME tunnels pagekite --ports=3000,8000 treehouses.pagekite.me"
   echo "        Hello! This is pagekite v0.5.9.3."
   echo
-  echo "    $(basename "$0") tunnels info"
+  echo "    $BASENAME tunnels info"
   echo "        https://github.com/pagekite/PyPagekite"
   echo
   

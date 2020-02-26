@@ -47,6 +47,14 @@ function checkrpi {
   fi
 }
 
+function checkargn {
+  if [[ $SCRIPTARGNUM -gt $1 ]]; then
+    echo "Error: Too many arguments."
+    eval "$(echo $SCRIPTARGS | cut -d' ' -f1)_help"
+    exit 1
+  fi
+}
+
 function checkwrpi {
   local model check
   declare -a wRPIs=("RPIZW" "RPI3A" "RPI3B" "RPI4B")
@@ -159,13 +167,5 @@ function check_missing_packages {
       echo "Missing required programs: ${missing_deps[*]}"
       echo "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
       exit 1
-  fi
-}
-
-function checkargn {
-  if [[ SCRIPTARGNUM -gt $1 ]]; then
-    logit "Error: Too many arguments."
-    eval "$(echo $SCRIPTARGS | cut -d' ' -f1)_help"
-    exit 1
   fi
 }

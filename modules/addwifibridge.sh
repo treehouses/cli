@@ -2,7 +2,7 @@
 
 # Share Wifi with Eth device
 
-function wifibridge {
+function addwifibridge {
 
   case "$1" in
     "on")
@@ -76,17 +76,17 @@ function checkwifi {
   fi
 }
 
-function wifibridge_help {
+function addwifibridge_help {
   echo ""
   echo "Forwards the WLAN signal to the ethernet port, sharing the signal with devices attached via ethernet."
   echo ""
-  echo "Usage $BASENAME wifibridge <on|off>"
+  echo "Usage $BASENAME addwifibridge <on|off>"
   echo ""
   echo "Examples:"
   echo ""
-  echo "$BASENAME wifibridge on"
+  echo "$BASENAME addwifibridge on"
   echo "  Creates the wifi bridge."
   echo ""
-  echo "$BASENAME wifibridge off"
+  echo "$BASENAME addwifibridge off"
   echo "  Removes the wifi bridge."
 }

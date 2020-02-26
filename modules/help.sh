@@ -21,7 +21,7 @@ function help_default {
   echo "   staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address"
   echo "              <ESSID> [password]"
   echo "   wifistatus                                displays signal strength in dBm and layman nomenclature"
-  echo "   wifibridge <on|off>                       bridges wifi signal to ethernet port, sharing with devices attached via ethernet"
+  echo "   addwifibridge <on|off>                    bridges wifi signal to ethernet port, sharing with devices attached via ethernet"
   echo "   bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot"
   echo "          [password] [hotspotPassword]"
   echo "   container <none|docker|balena>            enables (and start) the desired container"

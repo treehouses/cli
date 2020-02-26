@@ -29,7 +29,7 @@ wifihidden <ESSID> [password]             connects to a hidden wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]
 wifistatus                                displays signal strength in dBm and layman nomenclature
-wifibridge <on|off>                       shares wifi signal with ethernet port, sharing signal with devices attached via ethernet
+addwifibridge <on|off>                    shares wifi signal with ethernet port, sharing signal with devices attached via ethernet
 bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot
        [password] [hotspotPassword]
 container <none|docker|balena>            enables (and start) the desired container

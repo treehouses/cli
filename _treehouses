@@ -5,7 +5,7 @@ _treehouses_complete()
   local cur prev
 
   # Valid top-level completions
-  commands="ap aphidden apchannel bluetooth bluetoothid bootoption bridge burn button camera clone \
+  commands="addwifibridge ap aphidden apchannel bluetooth bluetoothid bootoption bridge burn button camera clone \
             container coralenv cron default detect detectrpi discover ethernet expandfs \
             feedback help image internet led locale log memory networkmode ntp openvpn password \
             rebootneeded reboots rename restore rtc services speedtest ssh sshkey sshtunnel \
@@ -42,7 +42,7 @@ _treehouses_complete()
   usb_cmds="on off"
   notice_cmds="on off add delete list"
   remote_cmds="status upgrade services"
-  wifibridge_cmds="on off"
+  addwifibridge_cmds="on off"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 

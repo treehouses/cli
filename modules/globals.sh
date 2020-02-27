@@ -48,9 +48,15 @@ function checkrpi {
 }
 
 function checkargn {
+  local helpfunc
   if [[ $SCRIPTARGNUM -gt $1 ]]; then
     echo "Error: Too many arguments."
-    eval "$(echo $SCRIPTARGS | cut -d' ' -f1)_help"
+    helpfunc="$(echo $SCRIPTARGS | cut -d' ' -f1)"
+    if [[ $helpfunc = "help" ]]; then
+      help
+    else
+      eval "${helpfunc}_help"
+    fi
     exit 1
   fi
 }

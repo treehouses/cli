@@ -64,8 +64,10 @@ function kill_spinner() {
 
 # start spinner background process, kill on signals 0-15
 function start_spinner() {
+  local tree
+  tree=$(pstree -ps $$)
   # if remote app is sending commmands then abort spinner
-  if [[ $(pstree -ps $$) == *"python"* ]]; then
+  if [[ $tree == *"python"* ]] || [[ $tree == *"cron"* ]]; then
     NOSPIN=1
     return
   fi

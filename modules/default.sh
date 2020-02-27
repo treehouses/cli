@@ -19,7 +19,7 @@ function default {
   fi
 
   rename "raspberrypi" > "$LOGFILE" 2>"$LOGFILE"
-  default_notice 
+  default_notice
   default_tunnel
   default_network
   echo 'Success: the rpi has been reset to default, please reboot your device'
@@ -57,20 +57,20 @@ function default_network {
       } > /etc/network/interfaces.d/usb0
       ;;
   esac
-  
+
   reboot_needed
 }
 
 function default_tunnel {
-  treehouses tor destroy > "$LOGFILE"
-  treehouses openvpn off > "$LOGFILE"
-  treehouses sshtunnel remove > "$LOGFILE"
+  tor destroy > "$LOGFILE"
+  openvpn off > "$LOGFILE"
+  sshtunnel remove > "$LOGFILE"
 }
 
 function default_notice {
-  treehouses tor notice off > "$LOGFILE"
-  treehouses openvpn notice off > "$LOGFILE"
-  treehouses sshtunnel notice off > "$LOGFILE"
+  tor notice off > "$LOGFILE"
+  openvpn notice off > "$LOGFILE"
+  sshtunnel notice off > "$LOGFILE"
 }
 
 

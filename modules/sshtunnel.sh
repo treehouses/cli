@@ -5,7 +5,7 @@ function sshtunnel {
     echo "Error: no tunnel has been set up."
     echo "Run '$BASENAME sshtunnel add' to add a key for the tunnel."
     exit 0
-  fi      
+  fi
   portinterval="$2"
   host="$3"
 
@@ -173,7 +173,7 @@ function sshtunnel {
       portcouchdb=$((portinterval + 84))
       portnewcouchdb=$((portinterval + 82))
       portmunin=$((portinterval + 49))
-      treehouses feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$portinterval\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+      feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$portinterval\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(networkmode)"
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tunnel_report" ]; then
         status="on"

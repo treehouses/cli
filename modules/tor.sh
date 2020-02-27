@@ -147,7 +147,7 @@ function tor {
       rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
       echo "OK."
     elif [ "$option" = "now" ]; then
-       treehouses feedback "$(treehouses tor)\n$(treehouses tor list | sed '1d' | sed "s/  <=> /:/g" | tr "\n" " " | sed 's/.$//')\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+       feedback "$(tor)\n$(tor list | sed '1d' | sed "s/  <=> /:/g" | tr "\n" " " | sed 's/.$//')\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(networkmode)"
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tor_report" ]; then
         status="on"
@@ -162,8 +162,8 @@ function tor {
     systemctl is-active tor
   elif [ "$1" = "refresh" ]; then
     cp /etc/tor/torrc /etc/tor/torrc_backup
-    treehouses tor destroy
-    treehouses tor start
+    tor destroy
+    tor start
     mv /etc/tor/torrc_backup /etc/tor/torrc
     echo "Success: the tor service has been refreshed"
   else

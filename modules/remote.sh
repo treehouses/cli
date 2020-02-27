@@ -36,7 +36,7 @@ function remote {
       echo "usage: $BASENAME remote version <version_number>"
       exit 1
     fi
-    if [ "$2" -ge "$(node -p "require('$SCRIPTFOLDER/package.json').remote_min_version")" ]; then
+    if [ "$2" -ge "$(node -p "require('$SCRIPTFOLDER/package.json').remote")" ]; then
       echo true
     else
       echo false

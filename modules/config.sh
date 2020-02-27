@@ -66,6 +66,7 @@ function kill_spinner() {
 function start_spinner() {
   # if remote app is sending commmands then abort spinner
   if [[ $(pstree -ps $$) == *"python"* ]]; then
+    NOSPIN=1
     return
   fi
   # enable job control for bash needed for disown command to work

@@ -9,7 +9,7 @@ function help_default {
   echo "   sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication"        
   echo "   version                                   returns the version of $BASENAME command"
   echo "   image                                     returns version of the system image installed"
-  echo "   detectrpi                                 detects the hardware version of a raspberry pi"
+  echo "   detectrpi [model]                         detects the hardware version of a raspberry pi"
   echo "   detect                                    detects the hardware version of any device"
   echo "   ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address"
   echo "   discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network"
@@ -66,6 +66,7 @@ function help_default {
   echo "   usb [on|off]                              turns usb ports on or off"
   echo "   remote [status|upgrade|services]          helps with treehouses remote android app"
   echo "   log <0|1|2|3|4|show|max>                  gets/sets log level and shows log"
+  echo "   blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts"
   echo
 }
 

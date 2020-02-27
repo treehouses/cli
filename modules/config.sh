@@ -9,6 +9,7 @@ NC='\033[0m'
 # global config variables (defaults)
 LOGFILE=/dev/null
 LOG=0
+BLOCKER=0
 
 if [[ -f "$CONFIGFILE" ]]; then
   source "$CONFIGFILE"

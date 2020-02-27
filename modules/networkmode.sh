@@ -33,11 +33,10 @@ function networkmode {
   esac
 
   if [ "$1" == "info" ]; then
+    checkroot
     if [ "$network_mode" == "wifi" ]; then
-      checkroot
       get_wpa_supplicant_settings
     elif [ "$network_mode" == "bridge" ]; then
-      checkroot
       echo "wlan0: $(get_wpa_supplicant_settings)"
       echo "ap0: $(get_hostapd_settings)"
     elif [ "$network_mode" == "ap local" ] || [ "$network_mode" == "ap internet" ]; then

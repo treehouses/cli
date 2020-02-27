@@ -152,7 +152,7 @@ function services {
               check_space "jonbackhaus/ntopng"
               create_yml "ntopng"
               docker_compose_up "ntopng"
-              check_tor "8090"
+              check_tor "8084"
               ;;
             *)
               echo "unknown service"

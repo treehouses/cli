@@ -44,6 +44,7 @@ ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a 
 discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
          <rpi> [ipaddress|url|macaddress]
 wifi <ESSID> [password]                   connects to a wifi network
+wifibridge <ESSID> [password]             connects to wifi network and bridges network to ethernet port
 wifihidden <ESSID> [password]             connects to a hidden wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]

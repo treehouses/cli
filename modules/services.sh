@@ -221,7 +221,11 @@ function services {
             done < /boot/autorun
             # if lines aren't found, add them
             if [ "$found" = false ]; then
-              # cat $TEMPLATES/services/${service_name}/${service_name}_autorun >> /boot/autorun
+              if [ ! -e /srv/${service_name}/autorun ]; then
+                echo "${service_name} autorun file not found"
+                echo "run \"$BASENAME services ${service_name} install\" first"
+                exit 1
+              fi
               cat /srv/${service_name}/autorun >> /boot/autorun
             else
               sed -i "/${service_name}_autorun=false/c\\${service_name}_autorun=true" /boot/autorun

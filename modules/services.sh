@@ -69,11 +69,13 @@ function services {
       case "$command" in
         install)
           if bash $TEMPLATES/services/install-scripts/install-${service_name}.sh ; then
-            if docker-compose -f /srv/${service_name}/${service_name}.yml pull ${service_name} ; then
-              echo "${service_name} installed"
-            else
-              echo "error pulling docker image"
-              exit 1
+            if [ "$service_name" != "planet" ]; then
+              if docker-compose -f /srv/${service_name}/${service_name}.yml pull ${service_name} ; then
+                echo "${service_name} installed"
+              else
+                echo "error pulling docker image"
+                exit 1
+              fi
             fi
           else
             echo "error running install script"

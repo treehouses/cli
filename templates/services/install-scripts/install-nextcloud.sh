@@ -37,7 +37,7 @@ mkdir -p /srv/nextcloud
 {
   echo "nextcloud_autorun=true"
   echo
-  echo "if [ \"$nextcloud_autorun\" = true ]; then"
+  echo "if [ \"\$nextcloud_autorun\" = true ]; then"
   echo "  docker-compose -f /srv/nextcloud/nextcloud.yml -p nextcloud up -d"
   echo "fi"
   echo

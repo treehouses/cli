@@ -38,7 +38,7 @@ mkdir -p /srv/privatebin
 {
   echo "privatebin_autorun=true"
   echo
-  echo "if [ \"$privatebin_autorun\" = true ]; then"
+  echo "if [ \"\$privatebin_autorun\" = true ]; then"
   echo "  docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d"
   echo "fi"
   echo

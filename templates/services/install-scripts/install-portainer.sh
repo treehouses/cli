@@ -41,7 +41,7 @@ mkdir -p /srv/portainer
 {
   echo "portainer_autorun=true"
   echo
-  echo "if [ \"$portainer_autorun\" = true ]; then"
+  echo "if [ \"\$portainer_autorun\" = true ]; then"
   echo "  docker-compose -f /srv/portainer/portainer.yml -p portainer up -d"
   echo "fi"
   echo

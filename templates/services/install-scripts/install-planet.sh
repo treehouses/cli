@@ -72,7 +72,7 @@ mkdir -p /srv/planet
 {
   echo "planet_autorun=true"
   echo
-  echo "if [ \"$planet_autorun\" = true ]; then"
+  echo "if [ \"\$planet_autorun\" = true ]; then"
   echo "  if [ -f /srv/planet/pwd/credentials.yml ]; then"
   echo "    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d"
   echo "  else"

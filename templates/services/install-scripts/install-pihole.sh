@@ -61,7 +61,7 @@ mkdir -p /srv/pihole
 {
   echo "pihole_autorun=true"
   echo
-  echo "if [ \"$pihole_autorun\" = true ]; then"
+  echo "if [ \"\$pihole_autorun\" = true ]; then"
   echo "  service dnsmasq stop"
   echo "  docker-compose -f /srv/pihole/pihole.yml -p pihole up -d"
   echo "fi"

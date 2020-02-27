@@ -54,7 +54,7 @@ mkdir -p /srv/moodle
 {
   echo "moodle_autorun=true"
   echo
-  echo "if [ \"$moodle_autorun\" = true ]; then"
+  echo "if [ \"\$moodle_autorun\" = true ]; then"
   echo "  docker-compose -f /srv/moodle/moodle.yml -p moodle up -d"
   echo "fi"
   echo

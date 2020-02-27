@@ -1,5 +1,4 @@
 function detectrpi {
-  local rpimodel found
   rpimodel=$(tr -d '\0' </sys/firmware/devicetree/base/model)
   if [ "$1" == "" ]
   then
@@ -11,8 +10,6 @@ function detectrpi {
 	  echo "Not a Raspberry pi"
   fi
 }
-
-
 
 function detectrpi_help {
   echo

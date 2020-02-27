@@ -64,7 +64,7 @@ function help_default {
   echo "   cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs"
   echo "        [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)"
   echo "   usb [on|off]                              turns usb ports on or off"
-  echo "   remote [status|upgrade|services]          helps with treehouses remote android app"
+  echo "   remote [status|upgrade|services|version]  helps with treehouses remote android app"
   echo "   log <0|1|2|3|4|show|max>                  gets/sets log level and shows log"
   echo "   blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts"
   echo

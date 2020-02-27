@@ -42,7 +42,7 @@ _treehouses_complete()
   tor_cmds="list add delete deleteall start stop destroy notice status refresh"
   usb_cmds="on off"
   notice_cmds="on off add delete list"
-  remote_cmds="status upgrade services"
+  remote_cmds="status upgrade services version"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 

@@ -449,7 +449,11 @@ function check_tor {
     echo "tor active"
     if ! tor list | grep -w $port; then
       echo "adding port ${port}"
-      tor add $port
+      if [[ $(pstree -ps $$) == *"ssh"* ]]; then
+        screen -dm bash -c "tor add ${port}"
+      else
+        tor add ${port}
+      fi
     fi
   fi
 }

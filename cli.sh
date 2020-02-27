@@ -325,6 +325,6 @@ if [ $? -eq 0 ]; then
   logit "$SCRIPTARGS" "1"
 fi
 # script ending so spinner will close too automatically but we still need to put cursor back
-if [ $NOSPIN -eq 1 ]; then
+if [[ -v NOSPIN ]]; then
   tput cvvis
 fi

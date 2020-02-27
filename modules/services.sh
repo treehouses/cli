@@ -149,10 +149,10 @@ function services {
               check_tor "4000"
               ;;
             ntopng)            
-              docker volume create ntopng_data
-              docker run --name ntopng -d -p 8090:8090 -v /var/run/docker.sock:/var/run/docker.sock -v ntopng_data:/data jonbackhaus/ntopng --http-port=8090
-              echo "ntopng built and started"
-              check_tor "8090"
+              check_space "jonbackhaus/ntopng"
+              create_yml "ntopng"
+              docker_compose_up "ntopng"
+              check_tor "8084"
               ;;
             *)
               echo "unknown service"
@@ -449,7 +449,11 @@ function check_tor {
     echo "tor active"
     if ! tor list | grep -w $port; then
       echo "adding port ${port}"
-      tor add $port
+      if [[ $(pstree -ps $$) == *"ssh"* ]]; then
+        screen -dm bash -c "tor add ${port}"
+      else
+        tor add ${port}
+      fi
     fi
   fi
 }

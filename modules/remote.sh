@@ -31,10 +31,14 @@ function remote {
       echo ${results}
     fi
   elif [ "$option" = "version" ]; then
-    if (( $2 > node -p "require('$SCRIPTFOLDER/package.json').remote-min-version" )); then
-      true
+    if [ -z "$2" ]; then
+      echo "version number required"
+      exit 1
+    fi
+    if [ "$2" -ge "$(node -p "require('$SCRIPTFOLDER/package.json').remote_min_version")" ]; then
+      echo true
     else
-      false
+      echo false
     fi
   else
     echo "unknown command option"

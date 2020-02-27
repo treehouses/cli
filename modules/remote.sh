@@ -43,7 +43,7 @@ function remote {
     fi
   else
     echo "unknown command option"
-    echo "usage: $BASENAME remote [status | upgrade]"
+    echo "usage: $BASENAME remote [status | upgrade | services | version]"
   fi
 }
 

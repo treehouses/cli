@@ -77,7 +77,7 @@ function led {
     echo "leds are set to carnival mode."
     echo "Look at your RPi leds, both leds will be in this pattern... "
     echo "Both LED: 2 sec on; 6 blink; 4 on"
-    carnevals > "$LOGFILE"    
+    carnival > "$LOGFILE"    
   else
     if [ -z "$color" ]; then
       if [ ! -z "$currentGreen" ]; then

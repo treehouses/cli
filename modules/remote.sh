@@ -49,7 +49,7 @@ function remote {
 
 function remote_help {
   echo
-  echo "Usage: $BASENAME remote [status | upgrade | services]"
+  echo "Usage: $BASENAME remote [status | upgrade | services | version]"
   echo
   echo "Returns a string representation of the current status of the Raspberry Pi"
   echo "Used for Treehouses Remote"
@@ -69,5 +69,9 @@ function remote_help {
   echo
   echo "$BASENAME remote services [available | installed | running]"
   echo "Available: | Installed: | Running: <list of services>"
+  echo
+  echo "$BASENAME remote version <version_number>"
+  echo "true if <version_number> >= \"remote_min_version\" in package.json"
+  echo "false otherwise"
   echo
 }

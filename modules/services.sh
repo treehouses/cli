@@ -449,7 +449,7 @@ function check_tor {
     echo "tor active"
     if ! tor list | grep -w $port; then
       echo "adding port ${port}"
-      screen -dm bash -c 'tor add $port'
+      screen -dm bash -c "treehouses tor add ${port}"
     fi
   fi
 }

@@ -64,6 +64,10 @@ function kill_spinner() {
 
 # start spinner background process, kill on signals 0-15
 function start_spinner() {
+  # if remote app is sending commmands then abort spinner
+  if [[ $(pstree -ps $$) == *"python"* ]]; then
+    return
+  fi
   # enable job control for bash needed for disown command to work
   set -m
   # if signals 0-15 (ctrl+c, exit, termination, kill, etc) run kill_spinner

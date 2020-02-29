@@ -98,6 +98,12 @@ function services {
               fi
               check_tor "80"
               ;;
+	    couchdb)
+	      check_space "treehouses/couchdb"
+              create_yml "couchdb"
+              docker_compose_up "couchdb"
+              check_tor "5984"
+              ;;
             kolibri)
               check_space "treehouses/kolibri"
               create_yml "kolibri"
@@ -495,6 +501,9 @@ function get_port {
       ;;
     ntopng)
       echo "8090"
+      ;;
+    couchdb)
+      echo "5984"
       ;;
     *)
       echo "unknown service"

@@ -1,4 +1,4 @@
-function bluetoothid () {
+function bluetoothid() {
   local btidfile bid nname
   #check if bluetooth has an id
   btidfile=/etc/bluetooth-id
@@ -7,7 +7,7 @@ function bluetoothid () {
     exit 0
   fi
 
-  bid=$(cat ${btidfile})  #get id of the bluetooth
+  bid=$(<${btidfile})  #get id of the bluetooth
   nname=$(uname -n)  #get network name
 
   case "$1" in
@@ -24,7 +24,7 @@ function bluetoothid () {
   esac
 }
 
-function bluetoothid_help () {
+function bluetoothid_help() {
   echo
   echo "Usage: $BASENAME bluetoothid [number]"
   echo

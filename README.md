@@ -80,15 +80,15 @@ reboots <now|in|cron>                     reboots at given frequency | removes i
 internet                                  checks if the rpi has access to internet
 services [service_name] [command]         executes the given command on the specified service
            [planet]                       Planet Learning is a generic learning system built in Angular & CouchDB
-           [kolibri]                      kolibri is a learning platform using DJango
+           [kolibri]                      Kolibri is a learning platform using DJango
            [nextcloud]                    Nextcloud is a safe home for all your data, files, etc
-           [netdata]                      Netdata is distributed, real-time performance and health monitoring for systems
+           [netdata]                      Netdata is a distributed, real-time performance and health monitoring for systems
            [mastodon]                     Mastodon is a free, open-source social network server
            [moodle]                       Moodle is a learning management system built in PHP
-           [pihole]                       the Pi-hole® is a DNS sinkhole that protects your devices from unwanted content
-           [privatebin]                   privateBin is a minimalist, open source online pastebin
-           [portainer]                    portainer is a lightweight management UI for Docker environments
-           [ntopng]                       ntopng is a network traffic probe that monitors network usage
+           [pihole]                       Pi-hole is a DNS sinkhole that protects your devices from unwanted content
+           [privatebin]                   PrivateBin is a minimalist, open source online pastebin
+           [portainer]                    Portainer is a lightweight management UI for Docker environments
+           [ntopng]                       Ntopng is a network traffic probe that monitors network usage
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

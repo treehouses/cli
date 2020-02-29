@@ -81,6 +81,8 @@ function wifibridge {
   cp "$TEMPLATES/network/wifibridge" /etc/dnsmasq.d/custom-dnsmasq.conf
 
   sudo systemctl start dnsmasq
+
+  echo "wifibridge" > /etc/network/mode
 }
 
 function checkwifi {

@@ -72,19 +72,19 @@ function memory() {
   if [ "$1" == "total" ] ; then
     memory_total $2
     echo "$t";
-    exit 0
+    return
   fi
 
   if [ "$1" == "used" ] ; then
     memory_used $2
     echo "$ubc";
-    exit 0
+    return
   fi
 
   if [ "$1" == "free" ] ; then
     memory_free $2
     echo "$f";
-    exit 0
+    return
   fi
 
   option=$1

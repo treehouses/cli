@@ -88,7 +88,7 @@ function led {
         echo -e "$red: $currentRed"
       fi
 
-      exit 0
+      return
     else
       echo -e "${RED}Error:${NC} led '$color' is not present"
       exit 1

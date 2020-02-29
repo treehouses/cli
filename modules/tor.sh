@@ -15,7 +15,7 @@ function tor {
 
   if [ -z "$1" ]; then
     cat "/var/lib/tor/treehouses/hostname"
-    exit 0
+    return
   fi
 
   if [ "$1" = "list" ]; then
@@ -70,7 +70,7 @@ function tor {
 
     if ! grep -wq "HiddenServicePort $2" /etc/tor/torrc ; then
       echo "Port $2 is not assigned"
-      exit 0
+      exit 1
     fi
 
     sed -i "/^HiddenServicePort $2 /d" /etc/tor/torrc

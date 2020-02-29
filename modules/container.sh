@@ -1,32 +1,32 @@
 function container {
 if [ "$1" == "docker" ] ; then
     container_docker;
-    exit 0
+    return
   fi
 
   if [ "$1" == "balena" ] ; then
     container_balena;
-    exit 0
+    return
   fi
 
   if [ "$1" == "none" ] ; then
     container_none;
-    exit 0
+    return
   fi
   
   if [ "$(systemctl is-enabled docker)" == "enabled" ] ; then
     echo "docker";
-    exit 0
+    return
   fi
   
   if [ "$(systemctl is-enabled balena)" == "enabled" ] ; then
     echo "balena";
-    exit 0
+    return
   fi
   
   if [ "$(systemctl is-enabled docker)" == "disabled" ] && [ "$(systemctl is-enabled balena)" == "disabled" ] ; then
     echo "none";
-    exit 0
+    return
   fi
 }
 

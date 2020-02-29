@@ -2,20 +2,20 @@ function default {
   if [ "$1" == "notice" ] ; then
     default_notice
     echo 'Success: the message has been reset to default';
-    exit 0
+    return
   fi
 
   if [ "$1" == "tunnel" ] ; then
     default_tunnel
     echo 'Success: the tunnel mode has been reset to default, please reboot your device';
-    exit 0
+    return
   fi
 
   if [ "$1" == "network" ] ; then
     checkrpi
     default_network
     echo 'Success: the network mode has been reset to default, please reboot your device';
-    exit 0
+    return
   fi
 
   rename "raspberrypi" > "$LOGFILE" 2>"$LOGFILE"

@@ -42,7 +42,7 @@ function ap {
     echo "ap local" > /etc/network/mode
   else
     echo "Error: only 'local' and 'internet' modes are supported".
-    exit 0
+    exit 1
   fi
 
   cp "$TEMPLATES/network/10-wpa_supplicant" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant

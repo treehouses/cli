@@ -9,7 +9,7 @@ function verbose {
       else
         logit "Verbosity is on"
       fi
-      exit 0;
+      return
       ;;
     "on")
       LOGFILE=$(tty)

@@ -27,7 +27,7 @@ function ntp {
     echo "Success: please reboot you rpi to apply changes."
   else
     echo "Error: only on, off options are supported"
-    exit 0
+    exit 1
   fi
 }
 

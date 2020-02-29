@@ -10,7 +10,7 @@ function apchannel {
 
   if [ -z "$new_channel" ]; then
       echo $current_channel;
-      exit 0
+      return
   fi
 
   checkroot

@@ -12,27 +12,27 @@ function logit() {
         ;;
 	  # Stuff might break
       "WARNING")
-	    if [[ "$LOG" -gt "1" ]]; then
+	      if [[ "$LOG" -gt "1" ]]; then
           logger -p local0.warning -t @treehouses/cli "WARNING: $1"
-		fi 
+		    fi 
         ;;
 	  # Stuff did break
       "ERROR")
-	  	if [[ "$LOG" -gt "2" ]]; then
+	  	  if [[ "$LOG" -gt "2" ]]; then
           logger -p local0.err -t @treehouses/cli "ERROR: $1"
-		fi
+		    fi
         ;;
 	  # Developer wants to log as well
       "DEBUG")
-	  	if [[ "$LOG" -gt "3" ]]; then
+	  	  if [[ "$LOG" -gt "3" ]]; then
           logger -p local0.debug -t @treehouses/cli "DEBUG: $1"
-		fi
+		    fi
         ;;
     esac
-	sync;
+	  sync;
   fi
   if [[ "$2" == "1" ]]; then
-    return 0;
+    return
   fi
   echo "$1"
 }
@@ -49,29 +49,29 @@ function log {
   lines="$2"
   case "$1" in
     "")
-	  case "$LOG" in
-	    "0")
-		  logit "log 0: log is disabled"
-		  ;;
-	    "1")
-		  logit "log 1: level is set to Info"
-		  ;;
-	    "2")
-		  logit "log 2: level is set to Info and Warning"
-		  ;;
-	    "3")
-		  logit "log 3: level is set to Info, Warning, and Error"
-		  ;;
-	    "4")
-		  logit "log 4: level is set to Info, Warning, Error, and Debug"
-		  ;;
-		"max")
-		  logit "log X: level is set to max"
-		  ;;
-	  esac
-      exit 0;
+	    case "$LOG" in
+	      "0")
+		      logit "log 0: log is disabled"
+		      ;;
+	      "1")
+		      logit "log 1: level is set to Info"
+		      ;;
+	      "2")
+		      logit "log 2: level is set to Info and Warning"
+		      ;;
+	      "3")
+		      logit "log 3: level is set to Info, Warning, and Error"
+		      ;;
+	      "4")
+		      logit "log 4: level is set to Info, Warning, Error, and Debug"
+		      ;;
+		    "max")
+		      logit "log X: level is set to max"
+		      ;;
+	    esac
+      return
       ;;
-	"0")
+	  "0")
       LOG=0
       logit "log 0: log disabled"
       ;;
@@ -91,18 +91,18 @@ function log {
       LOG=4
       logit "log 4: level set to Info, Warning, Error, and Debug" "" "DEBUG"
       ;;
-	"show")
-	  if [ -z "$2" ]; then
-	    lines="6"
-	  elif ! [[ "$2" =~ ^[0-9]+$ ]]; then
-	    log_and_exit1 "Error: only numbers allowed"
+	  "show")
+	    if [ -z "$2" ]; then
+	      lines="6"
+	    elif ! [[ "$2" =~ ^[0-9]+$ ]]; then
+	      log_and_exit1 "Error: only numbers allowed"
       fi
-	  grep "@treehouses/cli" /var/log/syslog | tail -n "$lines"
-	  ;;
-	"max")
-	  LOG=max
-	  logit "log X: level set to max" "" "DEBUG"
-	  ;;
+	    grep "@treehouses/cli" /var/log/syslog | tail -n "$lines"
+	    ;;
+	  "max")
+	    LOG=max
+	    logit "log X: level set to max" "" "DEBUG"
+	    ;;
     *)
       log_and_exit1 "Error: only '0' '1' '2' '3' '4' 'show' 'max' options are supported"
       ;;

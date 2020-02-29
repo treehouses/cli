@@ -37,29 +37,29 @@ function apply_blocker {
 function blocker {
   case "$1" in
     "")
-	  case "$BLOCKER" in
-	    "0")
-		  logit "blocker 0: blocker is disabled"
-		  ;;
-	    "1")
-		  logit "blocker 1: level is set to ads (adware + malware)"
-		  ;;
-	    "2")
-		  logit "blocker 2: level is set to ads + porn"
-		  ;;
-	    "3")
-		  logit "blocker 3: level is set to ads + gambling + porn"
-		  ;;
-	    "4")
-		  logit "blocker 4: level is set to ads + fakenews + gambling + porn"
-		  ;;
-		"max")
-		  logit "blocker X: level is set to ads + fakenews + gambling + porn + social"
-		  ;;
-	  esac
-      exit 0;
+	    case "$BLOCKER" in
+	      "0")
+		      logit "blocker 0: blocker is disabled"
+		      ;;
+	      "1")
+		      logit "blocker 1: level is set to ads (adware + malware)"
+		      ;;
+	      "2")
+		      logit "blocker 2: level is set to ads + porn"
+		      ;;
+	      "3")
+		      logit "blocker 3: level is set to ads + gambling + porn"
+		      ;;
+	      "4")
+		      logit "blocker 4: level is set to ads + fakenews + gambling + porn"
+		      ;;
+		    "max")
+		      logit "blocker X: level is set to ads + fakenews + gambling + porn + social"
+		      ;;
+	    esac
+      return
       ;;
-	"0")
+	  "0")
       BLOCKER=0
       apply_blocker "blocker 0: blocker disabled"
       ;;
@@ -79,10 +79,10 @@ function blocker {
       BLOCKER=4
       apply_blocker "blocker 4: level set to ads + fakenews + gambling + porn"
       ;;
-	"max")
-	  BLOCKER=max
+	  "max")
+	    BLOCKER=max
       apply_blocker "blocker X: level set to ads + fakenews + gambling + porn + social"
-	  ;;
+	    ;;
     *)
       log_and_exit1 "Error: only '0' '1' '2' '3' '4' 'max' options are supported"
       ;;

@@ -24,7 +24,7 @@ function bluetooth {
 
   elif [ "$status" = "mac" ]; then
     macfile=/sys/kernel/debug/bluetooth/hci0/identity
-    macadd=$(cat ${macfile})
+    macadd=$(<${macfile})
     echo "${macadd:0:17}"
 
   elif [ "$status" = "id" ]; then
@@ -34,7 +34,7 @@ function bluetooth {
       exit 0
     fi
 
-    bid=$(cat ${btidfile})
+    bid=$(<${btidfile})
     nname=$(uname -n)
 
     case "$2" in

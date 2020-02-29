@@ -506,16 +506,16 @@ function services_help {
   echo
   echo "Available Services:"
   echo
-  echo "  planet       planet Learning is a generic learning system built in Angular & CouchDB"
-  echo "  kolibri      kolibri is the offline learning platform using DJango"
-  echo "  nextcloud    nextcloud is a safe home for all your data, files, etc"
-  echo "  netdata      netdata is distributed, real-time performance and health monitoring for systems"
-  echo "  mastodon     mastodon is a free, open-source social network server"
-  echo "  moodle       Learning management system built in PHP"
-  echo "  pihole      the Pi-hole® is a DNS sinkhole that protects your devices from unwanted content"
-  echo "  privatebin   privateBin is a minimalist, open source online pastebin"
-  echo "  portainer    portainer is a lightweight management UI for Docker environments"
-  echo "  ntopng       ntopng is a network traffic probe that monitors network usage"
+  echo "  planet       Planet Learning is a generic learning system built in Angular & CouchDB"
+  echo "  kolibri      Kolibri is the offline learning platform using DJango"
+  echo "  nextcloud    Nextcloud is a safe home for all your data, files, etc"
+  echo "  netdata      Netdata is distributed, real-time performance and health monitoring for systems"
+  echo "  mastodon     Mastodon is a free, open-source social network server"
+  echo "  moodle       Moodle is a Learning management system built in PHP"
+  echo "  pihole       the Pi-hole® is a DNS sinkhole that protects your devices from unwanted content"
+  echo "  privatebin   PrivateBin is a minimalist, open source online pastebin"
+  echo "  portainer    Portainer is a lightweight management UI for Docker environments"
+  echo "  ntopng       Ntopng is a network traffic probe that monitors network usage"
   echo
   echo
   echo "Top-Level Commands:"

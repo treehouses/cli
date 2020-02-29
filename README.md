@@ -79,12 +79,12 @@ reboots <now|in|cron>                     reboots at given frequency | removes i
         <daily|weekly|monthly>
 internet                                  checks if the rpi has access to internet
 services [service_name] [command]         executes the given command on the specified service
-           [planet]                       planet Learning is a generic learning system built in Angular & CouchDB
-           [kolibri]                      kolibri is the offline learning platform using DJango
-           [nextcloud]                    nextcloud is a safe home for all your data, files, etc
-           [netdata]                      netdata is distributed, real-time performance and health monitoring for systems
-           [mastodon]                     mastodon is a free, open-source social network server
-           [moodle]                       Learning management system built in PHP
+           [planet]                       Planet Learning is a generic learning system built in Angular & CouchDB
+           [kolibri]                      kolibri is a learning platform using DJango
+           [nextcloud]                    Nextcloud is a safe home for all your data, files, etc
+           [netdata]                      Netdata is distributed, real-time performance and health monitoring for systems
+           [mastodon]                     Mastodon is a free, open-source social network server
+           [moodle]                       Moodle is a learning management system built in PHP
            [pihole]                       the Pi-hole® is a DNS sinkhole that protects your devices from unwanted content
            [privatebin]                   privateBin is a minimalist, open source online pastebin
            [portainer]                    portainer is a lightweight management UI for Docker environments

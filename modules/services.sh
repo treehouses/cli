@@ -386,7 +386,7 @@ function services {
             services $service_name url tor
           else
             echo "unknown command"
-            echo "usage: $(basename "$0") services <service_name> url [local | tor | both]"
+            echo "usage: $BASENAME services <service_name> url [local | tor | both]"
           fi
           ;;
 
@@ -506,22 +506,26 @@ function services_help {
   echo
   echo "Available Services:"
   echo
-  echo "  Planet"
-  echo "  Kolibri"
-  echo "  Nextcloud"
-  echo "  Netdata"
-  echo "  Mastodon"
-  echo "  Pi-hole"
-  # echo "  Moodle"
-  echo "  PrivateBin"
-  echo "  Portainer"
-  echo "  Ntopng"
+  echo "  Planet      -  Planet Learning is a generic learning system built in Angular & CouchDB"
+  echo "  Kolibri     -  Kolibri is the offline learning platform from Learning Equality"
+  echo "  Nextcloud   -  Nextcloud is a safe home for all your data. Access & share your files, calendars,"
+  echo "                 contacts, mail & more from any device, on your terms"
+  echo "  Netdata     -  Netdata is distributed, real-time performance and health monitoring for systems and applications"
+  echo "  Mastodon    -  Mastodon is a free, open-source social network server, a decentralized solution to commercial platforms"
+  echo "  Pi-hole     -  The Pi-hole® is a DNS sinkhole that protects your devices from unwanted content,"
+  echo "                 without installing any client-side software"
+  echo "  PrivateBin  -  PrivateBin is a minimalist, open source online pastebin where the server has zero"
+  echo "              -  knowledge of pasted data"
+  echo "  Portainer   -  Portainer is a lightweight management UI which allows you to easily manage your"
+  echo "                 different Docker environments (Docker hosts or Swarm clusters)"
+  echo "  Ntopng      -  ntopng is the next generation version of the original ntop,"
+  echo "                 a network traffic probe that monitors network usage"
   echo
   echo
   echo "Top-Level Commands:"
   echo
   echo "  Usage:"
-  echo "    $(basename "$0") services available [full]"
+  echo "    $BASENAME services available [full]"
   echo "              ..... installed [full]"
   echo "              ..... running [full]"
   echo "              ..... ports"
@@ -539,15 +543,15 @@ function services_help {
   echo
   echo "  Examples:"
   echo
-  echo "    $(basename "$0") services available"
+  echo "    $BASENAME services available"
   echo
-  echo "    $(basename "$0") services running full"
+  echo "    $BASENAME services running full"
   echo
   echo
   echo "Service-Specific Commands:"
   echo
   echo "  Usage:"
-  echo "    $(basename "$0") services <service_name> up"
+  echo "    $BASENAME services <service_name> up"
   echo "                             ..... down"
   echo "                             ..... start"
   echo "                             ..... stop"
@@ -582,12 +586,12 @@ function services_help {
   echo
   echo "  Examples:"
   echo
-  echo "    $(basename "$0") services planet up"
+  echo "    $BASENAME services planet up"
   echo
-  echo "    $(basename "$0") services planet autorun"
+  echo "    $BASENAME services planet autorun"
   echo
-  echo "    $(basename "$0") services planet autorun true"
+  echo "    $BASENAME services planet autorun true"
   echo
-  echo "    $(basename "$0") services planet url local"
+  echo "    $BASENAME services planet url local"
   echo
 }

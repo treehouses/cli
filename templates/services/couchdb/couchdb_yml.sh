@@ -5,7 +5,7 @@ mkdir -p /srv/couchdb/data
   echo "version: \"2\""
   echo "services:"
   echo "  couchdb:"
-  echo "    image: treehouses/couchdb"
+  echo "    image: treehouses/couchdb:2.3.1"
   echo "    ports:"
   echo "      - \"5984:5984\""
   echo "    volumes:"

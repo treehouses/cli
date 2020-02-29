@@ -65,7 +65,7 @@ function detectrpi {
     fi
   else
     if grep -q "Raspberry Pi" "/sys/firmware/devicetree/base/model"; then
-      echo "RPIANY"
+      echo "RPI"
     else
       echo "nonrpi"
     fi

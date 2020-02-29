@@ -34,6 +34,8 @@ function addwifibridge {
       cp "$TEMPLATES/network/wifibridge" /etc/dnsmasq.d/custom-dnsmasq.conf
 
       sudo systemctl start dnsmasq
+
+      echo "wifibridge" > /etc/network/mode
       ;;
 
     "off")
@@ -55,6 +57,8 @@ function addwifibridge {
       restart_wifi >"$LOGFILE" 2>"$LOGFILE"
 
       iptables-restore < templates/network/default_iptables
+
+      echo "wifi" > /etc/network/mode
       ;;
 
 

@@ -111,7 +111,7 @@ function services {
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
-            kolibri|nextcloud|moodle|privatebin|portainer)
+            kolibri|nextcloud|moodle|privatebin|portainer|netdata)
               check_space $service_name
               docker_compose_up $service_name
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
@@ -127,12 +127,6 @@ function services {
               do
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
-              ;;
-            netdata)
-              check_space "treehouses/netdata"
-              create_yml "netdata"
-              docker_compose_up "netdata"
-              check_tor "19999"
               ;;
             ntopng)            
               docker volume create ntopng_data

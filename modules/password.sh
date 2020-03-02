@@ -1,5 +1,5 @@
 function password () {
-  echo "pi:$1" | chpasswd
+  chpasswd <<< "pi:$1"
   echo "Success: the password has been changed"
 }
 

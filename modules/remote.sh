@@ -36,7 +36,7 @@ function remote {
       echo "usage: $BASENAME remote version <version_number>"
       exit 1
     fi
-    if ! [[ $2 =~ '^[0-9]+$' ]]; then
+    if ! [[ "$2" =~ ^[0-9]+$ ]]; then
       echo "Error: not a number"
       exit 1
     fi

@@ -6,7 +6,7 @@ err_report() {
 trap 'err_report $LINENO' ERR
 
 function t {
-  echo "running $@"
+  echo "running $*"
   ./cli.sh "$@"
 }
 

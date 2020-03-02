@@ -60,6 +60,10 @@ function detectrpi {
     elif [[ "$1" == "model" ]] && [[ "$2" == "" ]]; 
     then
       echo "$rpimodel"
+    elif [[ "$1" == "full" ]] && [[ "$2" == "" ]];
+    then
+      rpimodel=$(tr -d '\0' </sys/firmware/devicetree/base/model)
+      echo "$rpimodel"
     else
       log_and_exit1 "Error: only 'detectrpi', and 'detectrpi model' commands supported"
     fi

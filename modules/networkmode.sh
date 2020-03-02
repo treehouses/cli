@@ -2,7 +2,7 @@ function networkmode {
   local network_mode interfaces ifaces
   network_mode="default"
   if [ -f "/etc/network/mode" ]; then
-    network_mode=$(cat "/etc/network/mode")
+    network_mode=$(</etc/network/mode)
   fi
 
   interfaces=()

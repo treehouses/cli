@@ -37,7 +37,9 @@ mkdir -p /srv/netdata
 {
   echo "https://github.com/netdata/netdata"
   echo
-  echo "\"Real-time performance monitoring, done right! https://my-netdata.io/\""
+  echo "\"Netdata is distributed, real-time performance and health monitoring"
+  echo "for systems and applications. It is a highly-optimized monitoring agent"
+  echo "you install on all your systems and containers.\""
 } > /srv/netdata/info
 
 # add autorun

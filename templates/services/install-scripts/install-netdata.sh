@@ -30,7 +30,7 @@ mkdir -p /srv/netdata
 
 # add size (in MB)
 {
-  echo ""
+  echo "300"
 } > /srv/netdata/size
 
 # add info

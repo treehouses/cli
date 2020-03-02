@@ -23,13 +23,10 @@ function services {
     elif [ -z "$command" ]; then
       installed=$(docker images --format '{{.Repository}}' | sed 's:.*/::')
       array=($installed)
-      results=""
-      for i in "${array[@]}"
-      do
-        results+="${i%%_*}"
-        results+=" "
-      done
-      echo ${results} | tr ' ' '\n' | uniq | xargs
+      IFS=$'\n' sorted=($(sort <<<"${array[*]}"))
+      unset IFS
+      available=($(services available))
+      comm -12 <(printf '%s\n' "${sorted[@]}") <(printf '%s\n' "${available[@]}")
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then

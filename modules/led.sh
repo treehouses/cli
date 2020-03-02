@@ -27,7 +27,7 @@ function led {
     thanksgiving)
       checkroot
       echo "leds are set to thanksgiving mode."
-      echo "Look at your RPi leds, both leds will be in this pattern... "
+      echo "Look at your RPi leds, both leds will be in this pattern..."
       echo "Green LED: 0.5 sec off; 0.5 on"
       echo "Red LED: 0.5 off; 0.5 on; 0.25 off; 0.25 on"
       echo "Green LED: 0.5 on; 0.25 off; 0.25 on"
@@ -38,7 +38,7 @@ function led {
     christmas)
       checkroot
       echo "leds are set to christmas mode."
-      echo "Look at your RPi leds, both leds will be in this pattern... "
+      echo "Look at your RPi leds, both leds will be in this pattern..."
       echo "Both LED: 1 sec on; 8 blink; 1 on"
       christmas > "$LOGFILE"
       ;;
@@ -57,7 +57,7 @@ function led {
     newyear)
       checkroot
       echo "leds are set to newyear mode."
-      echo "Look at your RPi leds, both leds will be in this pattern... "
+      echo "Look at your RPi leds, both leds will be in this pattern..."
       echo "Both LED: 1 sec off"
       echo "Green LED: 0.5 on; 0.5 off"
       echo "Red LED: 0.5 on; 0.5 off"
@@ -67,7 +67,7 @@ function led {
     lunarnewyear)
       checkroot
       echo "leds are set to lunarnewyear mode."
-      echo "Look at your RPi leds, both leds will be in this pattern... "
+      echo "Look at your RPi leds, both leds will be in this pattern..."
       echo "Red LED: flashes 8 times"
       echo "Red LED: 5 off: 5 on"
       lunarnewyear > "$LOGFILE"
@@ -75,7 +75,7 @@ function led {
     valentine)
       checkroot
       echo "leds are set to valentine mode."
-      echo "Look at your RPi leds, both leds will be in this pattern... "
+      echo "Look at your RPi leds, both leds will be in this pattern..."
       echo "Both LED: 0.25 sec off"
       echo "Green LED: 1.0 on; 0.25 off"
       echo "Red LED: 1.0 on; 0.25 off"
@@ -85,7 +85,7 @@ function led {
     carnival)
       checkroot
       echo "leds are set to carnival mode."
-      echo "Look at your RPi leds, both leds will be in this pattern... "
+      echo "Look at your RPi leds, both leds will be in this pattern..."
       echo "Both LED: 2 sec on; 6 blink; 4 on"
       carnival > "$LOGFILE"
       ;;

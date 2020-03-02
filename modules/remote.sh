@@ -36,6 +36,10 @@ function remote {
       echo "usage: $BASENAME remote version <version_number>"
       exit 1
     fi
+    if ! [[ $2 =~ '^[0-9]+$' ]]; then
+      echo "Error: not a number"
+      exit 1
+    fi
     if [ "$2" -ge "$(node -p "require('$SCRIPTFOLDER/package.json').remote")" ]; then
       echo true
     else

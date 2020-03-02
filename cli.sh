@@ -63,7 +63,7 @@ source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 source "$SCRIPTFOLDER/modules/blocker.sh"
-logit "$(ps -o comm= $$)" "1"
+
 case $1 in
   expandfs)
     checkrpi

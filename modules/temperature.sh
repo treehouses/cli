@@ -4,20 +4,27 @@ function temperature () {
   reading=$(vcgencmd measure_temp)
   number0=${reading:5}
   number=${number0/%??/}
-  case "$1" in
-    "")
-      echo $number
-      ;;
-    "fahrenheit")
-      fraction=$(echo "scale=1; 9.0/5.0" | bc)
-      resultA=$(echo "$number*$fraction" | bc)
-      resultB=$(echo "$resultA+32" | bc)
-      echo $resultB"°F"
-      ;;
-    "celsius") 
-      echo $number"°C"
-      ;;
-  esac
+  [ "$1" = '' ] && echo "$number"
+  while [ -n "$1" ];
+  do
+    case "$1" in
+      "fahrenheit")
+        fraction=$(echo "scale=1; 9.0/5.0" | bc)
+        resultA=$(echo "$number*$fraction" | bc)
+        resultB=$(echo "$resultA+32" | bc)
+        echo $resultB"°F"
+        ;;
+      "celsius") 
+        echo $number"°C"
+        ;;
+      *)
+        echo -e "\n $1 is not a valid option."
+        temperature_help
+        break
+        ;;
+    esac
+    shift
+  done
 }
 
 function temperature_help {

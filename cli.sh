@@ -88,7 +88,8 @@ case $1 in
     version
     ;;
   image)
-    image
+    shift
+    image "$@"
     ;;
   detect)
     detect

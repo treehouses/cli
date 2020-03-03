@@ -1,4 +1,5 @@
 function image {
+    [ -n "$1" ] && echo "Error: this command need no argument" && image_help && exit 1
     cat /boot/version.txt
 }
 

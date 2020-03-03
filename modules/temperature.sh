@@ -19,8 +19,8 @@ function temperature () {
         ;;
       *)
         echo -e "\n $1 is not a valid option. \n" 
-	temperature_help
-	break
+        temperature_help
+        break
         ;;
     esac
     shift

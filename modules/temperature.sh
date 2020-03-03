@@ -18,9 +18,9 @@ function temperature () {
         echo $number"°C"
         ;;
       *)
-        echo -e "\n $1 is not a valid option."
-        temperature_help
-        break
+        echo -e "\n $1 is not a valid option. \n" 
+	temperature_help
+	break
         ;;
     esac
     shift

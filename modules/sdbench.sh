@@ -11,10 +11,8 @@ function sdbench {
   RDCMD="echo 3 > /proc/sys/vm/drop_caches && sync && dd if=${FILENM} of=/dev/null bs=1M 2>&1 | grep -v records | sed 's/.*, //'"
   writeResult="$(eval "${WRCMD}")" 
   readResult="$(eval "${RDCMD}")" 
-  echo "WRITE"
-  echo "$writeResult" 
-  echo "READ"
-  echo $readResult
+  echo "WRITE - $writeResult"
+  echo "READ - $readResult"
 }
 
 function sdbench_help {

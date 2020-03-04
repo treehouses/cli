@@ -40,6 +40,8 @@ _treehouses_complete()
   usb_cmds="on off"
   notice_cmds="on off add delete list"
   remote_cmds="status upgrade services"
+  services_cmds="planet kolibri moodle"
+  services_cmds="up down start stop"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 

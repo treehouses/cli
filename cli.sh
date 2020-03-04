@@ -63,6 +63,7 @@ source "$SCRIPTFOLDER/modules/camera.sh"
 source "$SCRIPTFOLDER/modules/usb.sh"
 source "$SCRIPTFOLDER/modules/remote.sh"
 source "$SCRIPTFOLDER/modules/blocker.sh"
+source "$SCRIPTFOLDER/modules/sdbench.sh"
 
 case $1 in
   expandfs)
@@ -313,6 +314,10 @@ case $1 in
     checkroot
     blocker "$2"
     ;;
+  sdbench)
+    checkroot
+    sdbench
+    ;;    
   help)
     help "$2"
     ;;

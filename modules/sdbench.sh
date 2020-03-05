@@ -7,7 +7,7 @@ function sdbench {
   rdcmd="echo 3 > /proc/sys/vm/drop_caches && sync && dd if=${filenm} of=/dev/null bs=1M 2>&1 | grep -v records | sed 's/.*, //'"
   wrresult="$(eval ${wrcmd})"
   rdresult="$(eval ${rdcmd})"
-  echo "read - ${rdresult}"
+  echo "read  - ${rdresult}"
   echo "write - ${wrresult}"
 }
 

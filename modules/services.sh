@@ -279,6 +279,14 @@ function services {
             exit 1
           fi
           ;;
+        size)
+          if [ -e /srv/${service_name}/size ]; then
+            echo "$(< /srv/${service_name}/size)M"
+          else
+            echo "/srv/${service_name}/size file not found"
+            exit 1
+          fi
+          ;;
         *)
           echo "unknown command"
           ;;

@@ -282,8 +282,7 @@ case $1 in
     ;;
   temperature)
     checkrpi
-    shift
-    temperature "$@"
+    temperature "$2"
     ;;
   speedtest)
     shift

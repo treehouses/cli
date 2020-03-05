@@ -136,13 +136,13 @@ function services {
               check_tor "9000"
               ;;
             netdata)
-              check_space "treehouses/netdata"
+              check_space "netdata/netdata"
               create_yml "netdata"
               docker_compose_up "netdata"
               check_tor "19999"
               ;;
             mastodon)
-              check_space "treehouses/mastodon"
+              check_space "gilir/rpi-mastodon"
               create_yml "mastodon"
               docker_compose_up "mastodon"
               check_tor "3000"
@@ -409,6 +409,47 @@ function services {
           get_port $service_name
           ;;
 
+        size)
+          case "$service_name" in
+            planet)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/planet/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            kolibri)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/kolibri/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            pihole)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/pihole/pihole/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            moodle)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/moodle/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            privatebin)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/privatebin/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            nextcloud)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/library/nextcloud/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            portainer)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/portainer/portainer/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            netdata)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/netdata/netdata/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            mastodon)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/gilir/rpi-mastodon/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            ntopng)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/jonbackhaus/ntopng/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            couchdb)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/couchdb/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            *)
+              echo "unknown service"
+              ;;
+          esac
+          ;;
+
         *)
           echo "unknown command"
           ;;
@@ -570,11 +611,13 @@ function services_help {
   echo "                             ..... down"
   echo "                             ..... start"
   echo "                             ..... stop"
+  echo "                             ..... restart"
   echo "                             ..... autorun [true|false]"
   echo "                             ..... ps"
+  echo "                             ..... info"
   echo "                             ..... url <local|tor|both>"
   echo "                             ..... port"
-  echo "                             ..... info"
+  echo "                             ..... size"
   echo
   echo "    up                      builds and starts <service_name>"
   echo
@@ -584,11 +627,15 @@ function services_help {
   echo
   echo "    stop                    stops <service_name>"
   echo
+  echo "    restart                 restarts <service_name>"
+  echo
   echo "    autorun                 outputs true if <service_name> is set to autorun or false otherwise"
   echo "        [true]                  sets <service_name> autorun to true"
   echo "        [false]                 sets <service_name> autorun to false"
   echo
   echo "    ps                      outputs the containers related to <service_name>"
+  echo
+  echo "    info                    gives some information about <service_name>"
   echo
   echo "    url                     <requires one of the options given below>"
   echo "        <local>                 lists the local url for <service_name>"
@@ -597,7 +644,7 @@ function services_help {
   echo
   echo "    port                    lists the ports used by <service_name>"
   echo
-  echo "    info                    gives some information about <service_name>"
+  echo "    size                    outputs the size of <service_name>"
   echo
   echo "  Examples:"
   echo

@@ -1,33 +1,31 @@
 function container {
-if [ "$1" == "docker" ] ; then
-    container_docker;
-    exit 0
-  fi
-
-  if [ "$1" == "balena" ] ; then
-    container_balena;
-    exit 0
-  fi
-
-  if [ "$1" == "none" ] ; then
-    container_none;
-    exit 0
-  fi
-  
-  if [ "$(systemctl is-enabled docker)" == "enabled" ] ; then
-    echo "docker";
-    exit 0
-  fi
-  
-  if [ "$(systemctl is-enabled balena)" == "enabled" ] ; then
-    echo "balena";
-    exit 0
-  fi
-  
-  if [ "$(systemctl is-enabled docker)" == "disabled" ] && [ "$(systemctl is-enabled balena)" == "disabled" ] ; then
-    echo "none";
-    exit 0
-  fi
+  case "$1" in
+    docker)
+      container_docker;
+      ;;
+    balena)
+      container_balena;
+      ;;
+    none)
+      container_none;
+      ;;
+    "")
+      if [ "$(systemctl is-enabled docker)" == "enabled" ]; then
+        echo "docker"
+        return
+      fi
+      if [ "$(systemctl is-enabled balena)" == "enabled" ]; then
+        echo "balena"
+        return
+      fi
+      if [ "$(systemctl is-enabled docker)" == "disabled" ] && [ "$(systemctl is-enabled balena)" == "disabled" ]; then
+        echo "none"
+      fi
+      ;;
+    *)
+      echo "Error: only 'docker' 'balena' 'none' options are supported"
+      ;;
+  esac
 }
 
 function container_docker {

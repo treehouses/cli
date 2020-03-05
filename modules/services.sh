@@ -350,7 +350,9 @@ function services_help {
   # echo "  Moodle"
   echo "  PrivateBin"
   echo "  Portainer"
+  echo "  Netdata"
   echo "  Ntopng"
+  echo "  Mastodon"
   echo
   echo
   echo "Top-Level Commands:"

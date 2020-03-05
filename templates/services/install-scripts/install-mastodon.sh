@@ -63,7 +63,7 @@ mkdir -p /srv/mastodon
 
 # add size (in MB)
 {
-  echo ""
+  echo "1000"
 } > /srv/mastodon/size
 
 # add info

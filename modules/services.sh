@@ -21,7 +21,7 @@ function services {
     if [ "$command" = "full" ]; then
       docker ps -a
     elif [ -z "$command" ]; then
-      installed=$(docker images --format '{{.Repository}}' | sed 's:.*/::')
+      installed=$(docker images --format '{{.Repository}}' | sed -e 's:.*/::' -e 's:.*-::')
       array=($installed)
       IFS=$'\n' sorted=($(sort <<<"${array[*]}"))
       unset IFS

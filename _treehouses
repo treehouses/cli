@@ -8,7 +8,7 @@ _treehouses_complete()
   commands="ap aphidden apchannel blocker bluetooth bluetoothid bootoption bridge burn button camera clone \
             container coralenv cron default detect detectrpi discover ethernet expandfs \
             feedback help image internet led locale log memory networkmode ntp openvpn password \
-            rebootneeded reboots rename restore rtc services speedtest ssh sshkey sshtunnel \
+            rebootneeded reboots rename restore rtc sdbench services speedtest ssh sshkey sshtunnel \
             staticwifi temperature timezone tor upgrade usb verbose version vnc wifi wificountry wifihidden wifistatus"
   ap_cmdas="local internet"
   aphidden_cmds="local internet"

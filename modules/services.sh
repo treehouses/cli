@@ -426,6 +426,9 @@ function services {
             ntopng)
               curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/jonbackhaus/ntopng/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
               ;;
+            couchdb)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/couchdb/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
             *)
               echo "unknown service"
               ;;

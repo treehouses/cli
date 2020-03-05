@@ -98,12 +98,6 @@ function services {
               fi
               check_tor "80"
               ;;
-	    couchdb)
-	      check_space "treehouses/couchdb"
-              create_yml "couchdb"
-              docker_compose_up "couchdb"
-              check_tor "5984"
-              ;;
             kolibri)
               check_space "treehouses/kolibri"
               create_yml "kolibri"
@@ -160,6 +154,12 @@ function services {
               docker_compose_up "ntopng"
               check_tor "8084"
               ;;
+            couchdb)
+	            check_space "treehouses/couchdb"
+              create_yml "couchdb"
+              docker_compose_up "couchdb"
+              check_tor "5984"
+              ;;
             *)
               echo "unknown service"
               ;;
@@ -168,7 +168,7 @@ function services {
 
         down)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng|couchdb)
               if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
                 echo "yml file doesn't exit"
               else
@@ -184,7 +184,7 @@ function services {
 
         start)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng|couchdb)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml start
                 echo "${service_name} started"
@@ -200,7 +200,7 @@ function services {
 
         stop)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng|couchdb)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml stop
                 echo "${service_name} stopped"
@@ -355,6 +355,15 @@ function services {
               echo "to virtually run on every Unix platform, MacOSX and on Windows as well."
               echo "Educational users can obtain commercial products at no cost please see here:"
               echo "https://www.ntop.org/support/faq/do-you-charge-universities-no-profit-and-research/\""
+              ;;
+            couchdb)
+              echo "https://github.com/treehouses/rpi-couchdb"
+              echo "https://github.com/docker-library/docs/tree/master/couchdb"
+              echo
+              echo "\"Apache CouchDB™ lets you access your data where you need it by defining the"
+              echo "Couch Replication Protocol that is implemented by a variety of projects and products"
+              echo "that span every imaginable computing environment from globally distributed server-clusters,"
+              echo "over mobile phones to web browsers.\""
               ;;
           esac
           ;;

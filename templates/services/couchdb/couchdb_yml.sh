@@ -1,6 +1,7 @@
 #!/bin/bash
 
-mkdir -p /srv/couchdb/data
+# create couchdb.yml
+mkdir -p /srv/couchdb
 {
   echo "version: \"2\""
   echo "services:"
@@ -12,5 +13,3 @@ mkdir -p /srv/couchdb/data
   echo "      - \"/srv/couchdb/data:/opt/couchdb/data\""
   echo "      - \"/srv/couchdb/log:/opt/couchdb/var/log\""
 } > /srv/couchdb/couchdb.yml
-
-

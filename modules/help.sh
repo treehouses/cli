@@ -77,7 +77,7 @@ function help_default {
   echo "   remote [status|upgrade|services|version]  helps with treehouses remote android app"
   echo "   log <0|1|2|3|4|show|max>                  gets/sets log level and shows log"
   echo "   blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts"
-  echo "   sdbench                                   displays write and read speed of SD card" 
+  echo "   sdbench                                   displays read and write speed of micro SD card"
   echo
 }
 

@@ -5,8 +5,9 @@ function temperature () {
   number0=${reading:5}
   number=${number0/%??/}
   case "$1" in
-    ""
-      echo $number0
+    "")
+      echo $number
+      ;;
     "fahrenheit")
       fraction=$(echo "scale=1; 9.0/5.0" | bc)
       resultA=$(echo "$number*$fraction" | bc)

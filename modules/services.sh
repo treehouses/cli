@@ -73,7 +73,7 @@ function services {
               exit 1
             fi
           elif bash $TEMPLATES/services/install-scripts/install-${service_name}.sh ; then
-            if docker-compose -f /srv/${service_name}/${service_name}.yml pull ${service_name} ; then
+            if docker-compose -f /srv/${service_name}/${service_name}.yml pull ; then
               echo "${service_name} installed"
             else
               echo "error pulling docker image"

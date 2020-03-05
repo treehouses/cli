@@ -38,7 +38,11 @@ function services {
       results=""
       for i in "${array[@]}"
       do
-        results+="${i%%_*}"
+        if [[ $i == *"_"* ]]; then
+          results+="${i%%_*}"
+        elif [[ $i == *"-"* ]]; then
+          results+="${i%%-*}"
+        fi
         results+=" "
       done
       echo ${results} | tr ' ' '\n' | uniq | xargs

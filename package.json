@@ -1,6 +1,6 @@
 {
   "name": "@treehouses/cli",
-  "version": "1.13.38",
+  "version": "1.13.40",
   "remote": "2069",
   "description": "Thin command-line interface for Raspberry Pi low level configuration.",
   "main": "cli.sh",

@@ -22,7 +22,7 @@ mkdir -p /srv/ntopng
 
 # add size (in MB)
 {
-  echo ""
+  echo "400"
 } > /srv/ntopng/size
 
 # add info

@@ -108,7 +108,7 @@ function services {
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
-            kolibri|nextcloud|moodle|privatebin|portainer|netdata)
+            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng)
               check_space $service_name
               docker_compose_up $service_name
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
@@ -120,15 +120,6 @@ function services {
               check_space "pihole"
               service dnsmasq stop
               docker_compose_up "pihole"
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
-              do
-                check_tor "$(get_port $service_name | sed -n "$i p")"
-              done
-              ;;
-            ntopng)            
-              docker volume create ntopng_data
-              docker run --name ntopng -d -p 8090:8090 -v /var/run/docker.sock:/var/run/docker.sock -v ntopng_data:/data jonbackhaus/ntopng --http-port=8090
-              echo "ntopng built and started"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
                 check_tor "$(get_port $service_name | sed -n "$i p")"

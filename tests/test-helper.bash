@@ -3,7 +3,8 @@ load '../node_modules/bats-support/load'
 load '../node_modules/bats-assert/load'
 
 setup() {
-  export CLICMD="${BATS_TEST_DIRNAME}/../cli.sh"
+  export clinom="cli.sh"
+  export clicmd="${BATS_TEST_DIRNAME}/../cli.sh"
 }
 
 teardown() {

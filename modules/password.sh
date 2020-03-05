@@ -1,19 +1,23 @@
 #!/bin/bash
 
-function disable_pass {
-  passwd -l $1 || echo -e "Sucess: password login of  user $1 is locked, system is only accessed via ssh" 
+disable_pass () 
+{
+  passwd -l "$1" && echo "Sucess: password login of  user $1 is locked, system is only accessed via ssh" || echo "Error: Password can't disable"
 }
 
-function password () {
+password () 
+{
   if [[ -z "$1" ]];then
-    disable_pass "$(whoami)"
+    local current_user="$(whoami)"
+    disable_pass "$current_user"
   else 
     echo "pi:$1" | chpasswd
     echo "Success: the password has been changed"
   fi 
 }
 
-function password_help () {
+password_help () 
+{
   echo ""
   echo "Usage: $(basename "$0") password <password>"
   echo ""

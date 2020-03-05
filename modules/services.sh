@@ -155,7 +155,7 @@ function services {
               check_tor "8084"
               ;;
             couchdb)
-	            check_space "treehouses/couchdb"
+              check_space "treehouses/couchdb"
               create_yml "couchdb"
               docker_compose_up "couchdb"
               check_tor "5984"

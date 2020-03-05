@@ -136,16 +136,29 @@ function services {
               check_tor "9000"
               ;;
             netdata)
-              check_space "treehouses/netdata"
+              check_space "netdata/netdata"
               create_yml "netdata"
               docker_compose_up "netdata"
               check_tor "19999"
               ;;
+            mastodon)
+              check_space "gilir/rpi-mastodon"
+              create_yml "mastodon"
+              docker_compose_up "mastodon"
+              check_tor "3000"
+              check_tor "4000"
+              ;;
             ntopng)            
-              docker volume create ntopng_data
-              docker run --name ntopng -d -p 8090:8090 -v /var/run/docker.sock:/var/run/docker.sock -v ntopng_data:/data jonbackhaus/ntopng --http-port=8090
-              echo "ntopng built and started"
-              check_tor "8090"
+              check_space "jonbackhaus/ntopng"
+              create_yml "ntopng"
+              docker_compose_up "ntopng"
+              check_tor "8084"
+              ;;
+            couchdb)
+              check_space "treehouses/couchdb"
+              create_yml "couchdb"
+              docker_compose_up "couchdb"
+              check_tor "5984"
               ;;
             *)
               echo "unknown service"
@@ -155,7 +168,7 @@ function services {
 
         down)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|ntopng)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng|couchdb)
               if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
                 echo "yml file doesn't exit"
               else
@@ -171,7 +184,7 @@ function services {
 
         start)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|ntopng)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng|couchdb)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml start
                 echo "${service_name} started"
@@ -187,7 +200,7 @@ function services {
 
         stop)
           case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|ntopng)
+            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng|couchdb)
               if docker ps -a | grep -q $service_name; then
                 docker-compose -f /srv/${service_name}/${service_name}.yml stop
                 echo "${service_name} stopped"
@@ -326,6 +339,13 @@ function services {
               echo "\"Netdata is distributed, real-time performance and health monitoring for systems and applications."
               echo "It is a highly-optimized monitoring agent you install on all your systems and containers.\""
               ;;
+            mastodon)
+              echo "https://github.com/gilir/rpi-mastodon, https://github.com/tootsuite/mastodon"
+              echo 
+              echo "Mastodon is a free, open-source social network server, a decentralized solution to commercial platforms." 
+              echo "It avoids the risks of a single company monopolizing your communication."
+              echo "Anyone can run Mastodon and participate in the social network seamlessly."
+              ;;
             ntopng)
               echo "https://github.com/ntop/ntopng"
               echo                 
@@ -335,6 +355,15 @@ function services {
               echo "to virtually run on every Unix platform, MacOSX and on Windows as well."
               echo "Educational users can obtain commercial products at no cost please see here:"
               echo "https://www.ntop.org/support/faq/do-you-charge-universities-no-profit-and-research/\""
+              ;;
+            couchdb)
+              echo "https://github.com/treehouses/rpi-couchdb"
+              echo "https://github.com/docker-library/docs/tree/master/couchdb"
+              echo
+              echo "\"Apache CouchDB lets you access your data where you need it by defining the"
+              echo "Couch Replication Protocol that is implemented by a variety of projects and products"
+              echo "that span every imaginable computing environment from globally distributed server-clusters,"
+              echo "over mobile phones to web browsers.\""
               ;;
           esac
           ;;
@@ -372,12 +401,53 @@ function services {
             services $service_name url tor
           else
             echo "unknown command"
-            echo "usage: $(basename "$0") services <service_name> url [local | tor | both]"
+            echo "usage: $BASENAME services <service_name> url [local | tor | both]"
           fi
           ;;
 
         port)
           get_port $service_name
+          ;;
+
+        size)
+          case "$service_name" in
+            planet)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/planet/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            kolibri)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/kolibri/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            pihole)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/pihole/pihole/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            moodle)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/moodle/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            privatebin)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/privatebin/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            nextcloud)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/library/nextcloud/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            portainer)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/portainer/portainer/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            netdata)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/netdata/netdata/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            mastodon)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/gilir/rpi-mastodon/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            ntopng)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/jonbackhaus/ntopng/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            couchdb)
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/couchdb/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              ;;
+            *)
+              echo "unknown service"
+              ;;
+          esac
           ;;
 
         *)
@@ -435,7 +505,11 @@ function check_tor {
     echo "tor active"
     if ! tor list | grep -w $port; then
       echo "adding port ${port}"
-      tor add $port
+      if [[ $(pstree -ps $$) == *"ssh"* ]]; then
+        screen -dm bash -c "tor add ${port}"
+      else
+        tor add ${port}
+      fi
     fi
   fi
 }
@@ -471,8 +545,15 @@ function get_port {
     netdata)
       echo "19999"
       ;;
+    mastodon)
+      echo "3000"
+      echo "4000"
+      ;;
     ntopng)
       echo "8090"
+      ;;
+    couchdb)
+      echo "5984"
       ;;
     *)
       echo "unknown service"
@@ -484,21 +565,23 @@ function services_help {
   echo
   echo "Available Services:"
   echo
-  echo "  Planet"
-  echo "  Kolibri"
-  echo "  Nextcloud"
-  echo "  Netdata"
-  echo "  Pi-hole"
-  # echo "  Moodle"
-  echo "  PrivateBin"
-  echo "  Portainer"
-  echo "  Ntopng"
+  echo "  planet       Planet Learning is a generic learning system built in Angular & CouchDB"
+  echo "  kolibri      Kolibri is a learning platform using DJango"
+  echo "  nextcloud    Nextcloud is a safe home for all your data, files, etc"
+  echo "  netdata      Netdata is a distributed, real-time performance and health monitoring for systems"
+  echo "  mastodon     Mastodon is a free, open-source social network server"
+  echo "  moodle       Moodle is a Learning management system built in PHP"
+  echo "  pihole       Pi-hole is a DNS sinkhole that protects your devices from unwanted content"
+  echo "  privatebin   PrivateBin is a minimalist, open source online pastebin"
+  echo "  portainer    Portainer is a lightweight management UI for Docker environments"
+  echo "  ntopng       Ntopng is a network traffic probe that monitors network usage"
+  echo "  couchdb      Apache CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang."
   echo
   echo
   echo "Top-Level Commands:"
   echo
   echo "  Usage:"
-  echo "    $(basename "$0") services available [full]"
+  echo "    $BASENAME services available [full]"
   echo "              ..... installed [full]"
   echo "              ..... running [full]"
   echo "              ..... ports"
@@ -516,23 +599,25 @@ function services_help {
   echo
   echo "  Examples:"
   echo
-  echo "    $(basename "$0") services available"
+  echo "    $BASENAME services available"
   echo
-  echo "    $(basename "$0") services running full"
+  echo "    $BASENAME services running full"
   echo
   echo
   echo "Service-Specific Commands:"
   echo
   echo "  Usage:"
-  echo "    $(basename "$0") services <service_name> up"
+  echo "    $BASENAME services <service_name> up"
   echo "                             ..... down"
   echo "                             ..... start"
   echo "                             ..... stop"
+  echo "                             ..... restart"
   echo "                             ..... autorun [true|false]"
   echo "                             ..... ps"
+  echo "                             ..... info"
   echo "                             ..... url <local|tor|both>"
   echo "                             ..... port"
-  echo "                             ..... info"
+  echo "                             ..... size"
   echo
   echo "    up                      builds and starts <service_name>"
   echo
@@ -542,11 +627,15 @@ function services_help {
   echo
   echo "    stop                    stops <service_name>"
   echo
+  echo "    restart                 restarts <service_name>"
+  echo
   echo "    autorun                 outputs true if <service_name> is set to autorun or false otherwise"
   echo "        [true]                  sets <service_name> autorun to true"
   echo "        [false]                 sets <service_name> autorun to false"
   echo
   echo "    ps                      outputs the containers related to <service_name>"
+  echo
+  echo "    info                    gives some information about <service_name>"
   echo
   echo "    url                     <requires one of the options given below>"
   echo "        <local>                 lists the local url for <service_name>"
@@ -555,16 +644,16 @@ function services_help {
   echo
   echo "    port                    lists the ports used by <service_name>"
   echo
-  echo "    info                    gives some information about <service_name>"
+  echo "    size                    outputs the size of <service_name>"
   echo
   echo "  Examples:"
   echo
-  echo "    $(basename "$0") services planet up"
+  echo "    $BASENAME services planet up"
   echo
-  echo "    $(basename "$0") services planet autorun"
+  echo "    $BASENAME services planet autorun"
   echo
-  echo "    $(basename "$0") services planet autorun true"
+  echo "    $BASENAME services planet autorun true"
   echo
-  echo "    $(basename "$0") services planet url local"
+  echo "    $BASENAME services planet url local"
   echo
 }

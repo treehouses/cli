@@ -34,16 +34,13 @@ function temperature_help {
   echo "  Measures CPU temperature of Raspberry Pi"
   echo
   echo "  Example:"
-  echo "  $BASENAME temperature"
-  echo
-  echo "  47.2"
+  echo "    $BASENAME temperature"
+  echo "    47.2"
   echo 
-  echo "  $BASENAME temperature celsius"
+  echo "    $BASENAME temperature celsius"
+  echo "    47.2°C"
   echo
-  echo "  47.2°C"
-  echo
-  echo "  $BASENAME temperature fahrenheit"
-  echo
-  echo "  117.0°F"
+  echo "    $BASENAME temperature fahrenheit"
+  echo "    117.0°F"
   echo
 }

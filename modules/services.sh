@@ -589,11 +589,13 @@ function services_help {
   echo "                             ..... down"
   echo "                             ..... start"
   echo "                             ..... stop"
+  echo "                             ..... restart"
   echo "                             ..... autorun [true|false]"
   echo "                             ..... ps"
+  echo "                             ..... info"
   echo "                             ..... url <local|tor|both>"
   echo "                             ..... port"
-  echo "                             ..... info"
+  echo "                             ..... size"
   echo
   echo "    up                      builds and starts <service_name>"
   echo
@@ -603,11 +605,15 @@ function services_help {
   echo
   echo "    stop                    stops <service_name>"
   echo
+  echo "    restart                 restarts <service_name>"
+  echo
   echo "    autorun                 outputs true if <service_name> is set to autorun or false otherwise"
   echo "        [true]                  sets <service_name> autorun to true"
   echo "        [false]                 sets <service_name> autorun to false"
   echo
   echo "    ps                      outputs the containers related to <service_name>"
+  echo
+  echo "    info                    gives some information about <service_name>"
   echo
   echo "    url                     <requires one of the options given below>"
   echo "        <local>                 lists the local url for <service_name>"
@@ -616,7 +622,7 @@ function services_help {
   echo
   echo "    port                    lists the ports used by <service_name>"
   echo
-  echo "    info                    gives some information about <service_name>"
+  echo "    size                    outputs the size of <service_name>"
   echo
   echo "  Examples:"
   echo

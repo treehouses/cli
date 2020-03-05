@@ -6,8 +6,8 @@ load test-helper
   assert_success
 }
 
-@test "$clinom discover scan 192.168.0.1" {
-  run "${clicmd}" discover scan 192.168.0.1
+@test "$clinom discover scan google.com" {
+  run "${clicmd}" discover scan google.com
   assert_success
 }
 

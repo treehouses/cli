@@ -8,14 +8,14 @@ function temperature () {
     "")
       echo $number
       ;;
+    "celsius") 
+      echo $number"°C"
+      ;;
     "fahrenheit")
       fraction=$(echo "scale=1; 9.0/5.0" | bc)
       resultA=$(echo "$number*$fraction" | bc)
       resultB=$(echo "$resultA+32" | bc)
       echo $resultB"°F"
-      ;;
-    "celsius") 
-      echo $number"°C"
       ;;
     *)
       echo "not a valid option"

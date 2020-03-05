@@ -534,6 +534,7 @@ function services_help {
   echo "  PrivateBin"
   echo "  Portainer"
   echo "  Ntopng"
+  echo "  CouchDB"
   echo
   echo
   echo "Top-Level Commands:"

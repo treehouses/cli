@@ -1,5 +1,3 @@
-#!/bin/bash
-
 token="adfab56b2f10b85f94db25f18e51a4b465dbd670"
 channel="https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages"
 # set on ../templates/network/tor_report.sh
@@ -8,6 +6,7 @@ if [ ! -z "$gitter_channel" ]; then
 fi
 
 function feedback {
+  local message ip6_regex ip4_regex ip_address body
   message="$*"
   ip6_regex="^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))$"
   ip4_regex="((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])"
@@ -30,12 +29,12 @@ function feedback {
 
 function feedback_help {
   echo
-  echo "Usage: $(basename "$0") feedback <message>"
+  echo "Usage: $BASENAME feedback <message>"
   echo
   echo "Shares feedback with the developers"
   echo
   echo "Example:"
-  echo "  $(basename "$0") feedback \"Hi, you are very awesome\""
+  echo "  $BASENAME feedback \"Hi, you are very awesome\""
   echo "      Gives some feedback that the developers will read :)"
   echo
 }

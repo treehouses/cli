@@ -1,7 +1,5 @@
-#!/bin/bash
-
 function rename () { 
-
+  local CURRENT_HOSTNAME
   if
     [[ ${1:0:1} == "-" ]] || #checks beginning for "-"
     [[ ${1: -1} == "-" ]] || #checks end for "-"
@@ -21,12 +19,12 @@ function rename () {
 
 function rename_help () {
   echo
-  echo "Usage: $(basename "$0") rename <hostname>"
+  echo "Usage: $BASENAME rename <hostname>"
   echo
   echo "Changes the hostname"
   echo
   echo "Example:"
-  echo "  $(basename "$0") rename rpi"
+  echo "  $BASENAME rename rpi"
   echo "      Sets the hostname to 'rpi'."
   echo
 }

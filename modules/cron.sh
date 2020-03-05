@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function cron {
+  local options cronjob
   options="$1"
   case "$options" in
     ""|"list") #lists current cron tasks
@@ -18,7 +17,7 @@ function cron {
         echo "\"$2\" cron job added"
       elif [[ $(crontab -l | grep "$2") == "$2" ]]; then
         echo "cron job \"$2\" already established"
-        echo "run \"$(basename "$0") help cron\" for more commands"
+        echo "run \"$BASENAME help cron\" for more commands"
       fi
       ;;
     "delete") #search for and delete line with it
@@ -79,7 +78,7 @@ function cron {
 
 function cron_help {
   echo
-  echo "Usage: $(basename "$0") cron [options]    lists all active cron jobs [adds job to cron, or removes it if present]"
+  echo "Usage: $BASENAME cron [options]    lists all active cron jobs [adds job to cron, or removes it if present]"
   echo
   echo "options:"
   echo "  list                        lists all cron jobs"
@@ -93,7 +92,7 @@ function cron_help {
   echo
   echo "HOW TO ADD A CRON JOB:"
   echo "  set the frequency (shown below) of when you want the job to execute followed by the command"
-  echo "  example: $(basename "$0") cron add \"*/15 6-8 * 3 * uname\""
+  echo "  example: $BASENAME cron add \"*/15 6-8 * 3 * uname\""
   echo "           This will execute \"uname\" at every 15th minute within the hours of 6 through 8 in March"
   echo "  Frequency Method: * * * * * command-to-execute"
   echo "                    │ │ │ │ │"
@@ -104,16 +103,16 @@ function cron_help {
   echo "                    └────────── minute             (* | #/# | 0 - 59)"
   echo
   echo "examples:"
-  echo "  $(basename "$0") cron"
+  echo "  $BASENAME cron"
   echo "    List of cron jobs:"
   echo "    0 */72 * * * treehouses tor notice now"
   echo "    */15 * * * * date >> /var/log/uptime.log"
   echo "    @daily reboot"
   echo
-  echo "  $(basename "$0") cron 0W"
+  echo "  $BASENAME cron 0W"
   echo "    \"daily reboot\" cron job removed"
   echo
-  echo "  $(basename "$0") cron delete \"uname -n\""
+  echo "  $BASENAME cron delete \"uname -n\""
   echo "    cron job(s) containing \"uname -n\" deleted"
   echo
 }

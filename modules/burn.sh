@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function burn {
+    local device
     device="$1"
     if [ -z "$device" ]; then
         device="/dev/sdb"
@@ -32,15 +31,15 @@ function burn {
 
 function burn_help {
   echo
-  echo "Usage: $(basename "$0") burn [device path]"
+  echo "Usage: $BASENAME burn [device path]"
   echo
   echo "downloads and burns the treehouse image to the specified device"
   echo
   echo "Example:"
-  echo "  $(basename "$0") burn"
+  echo "  $BASENAME burn"
   echo "      Will download or update the treehouses image and write it to /dev/sdb (by default)."
   echo
-  echo "  $(basename "$0") burn /dev/sda"
+  echo "  $BASENAME burn /dev/sda"
   echo "      Will download or update the treehouses image and write it to /dev/sda"
   echo
 }

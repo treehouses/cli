@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function locale {
+  local locale encoding
   locale="$1"
   if [ -z "$locale" ];
   then
@@ -23,12 +22,12 @@ function locale {
 
 function locale_help {
   echo
-  echo "Usage: $(basename "$0") locale <locale>"
+  echo "Usage: $BASENAME locale <locale>"
   echo
   echo "Sets the system locale"
   echo
   echo "Example:"
-  echo "  $(basename "$0") locale en_US"
+  echo "  $BASENAME locale en_US"
   echo "      This will set the raspberry pi locale to en_US."
   echo "      The supported languages are in /usr/share/i18n/SUPPORTED"
   echo

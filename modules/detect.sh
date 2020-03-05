@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function detect {
   if [ "$(detectrpi)" != "nonrpi" ]; then
     echo "rpi $(detectrpi)"
@@ -17,12 +15,12 @@ function detect {
 
 function detect_help {
   echo
-  echo "Usage: $(basename "$0") detect"
+  echo "Usage: $BASENAME detect"
   echo
   echo "Detects and outputs the hardware info"
   echo
   echo "Example:"
-  echo "  $(basename "$0") detect"
+  echo "  $BASENAME detect"
   echo "      Prints the hardware info"
   echo
 }

@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function ntp {
+  local status
   status="$1"
 
   if [ "$status" = "internet" ]; then
@@ -34,15 +33,15 @@ function ntp {
 
 function ntp_help {
   echo
-  echo "Usage: $(basename "$0") ntp <local|internet>"
+  echo "Usage: $BASENAME ntp <local|internet>"
   echo
   echo "Enables or disables time through ntp servers"
   echo
   echo "Example:"
-  echo "  $(basename "$0") ntp internet"
+  echo "  $BASENAME ntp internet"
   echo "    Configures treehouses as a client with timing sourced from the internet"
   echo
-  echo "  $(basename "$0") ntp local"
+  echo "  $BASENAME ntp local"
   echo "    Configures treehouses as a server with timing sourced from the onboard clock"
   echo
 }

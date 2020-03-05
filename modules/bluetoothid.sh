@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function bluetoothid () {
+  local btidfile bid nname
   #check if bluetooth has an id
   btidfile=/etc/bluetooth-id
   if [ ! -f "${btidfile}" ]; then
@@ -27,15 +26,15 @@ function bluetoothid () {
 
 function bluetoothid_help () {
   echo
-  echo "Usage: $(basename "$0") bluetoothid [number]"
+  echo "Usage: $BASENAME bluetoothid [number]"
   echo
   echo "Displays the bluetooth network name with the 4 random digits attached."
   echo "Optionally displays Bluetooth ID individually with the use of argument [number]."
   echo
   echo "Example:"
-  echo "  $(basename "$0") bluetoothid"
+  echo "  $BASENAME bluetoothid"
   echo "      treehouses-9012"
-  echo "  $(basename "$0") bluetoothid number"
+  echo "  $BASENAME bluetoothid number"
   echo "      9012"
   echo
 }

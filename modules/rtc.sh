@@ -1,10 +1,9 @@
-#!/bin/bash
-
 declare -A rtcclockdata
 rtcclockdata["rasclock"]="dtoverlay=i2c-rtc,pcf2127"
 rtcclockdata["ds3231"]="dtoverlay=i2c-rtc,ds3231"
 
 function get_current_clock {
+  local prevClock
   for i in "${rtcclockdata[@]}"
   do
     if grep -q "$i" "/boot/config.txt" 2>"$LOGFILE"; then
@@ -17,8 +16,8 @@ function get_current_clock {
 }
 
 function write_rtc {
+  local clock prevClock
   clock="$1"
-
   prevClock=$(get_current_clock)
 
   if [ ! -z "$prevClock" ]; then
@@ -29,6 +28,7 @@ function write_rtc {
 }
 
 function rtc {
+  local status clock
   status="$1"
   clock="$2"
 
@@ -79,18 +79,18 @@ function rtc {
 
 function rtc_help {
   echo
-  echo "Usage: $(basename "$0") rtc <on|off> [ds3231|rasclock]"
+  echo "Usage: $BASENAME rtc <on|off> [ds3231|rasclock]"
   echo
   echo "Enables or disables the rtc clock"
   echo
   echo "Example:"
-  echo "  $(basename "$0") rtc off"
+  echo "  $BASENAME rtc off"
   echo "      Disables the rtc clock."
   echo
-  echo "  $(basename "$0") rtc on rasclock"
+  echo "  $BASENAME rtc on rasclock"
   echo "      Set ups the system to make the 'rasclock' clock work."
   echo
-  echo "  $(basename "$0") rtc on ds3231"
+  echo "  $BASENAME rtc on ds3231"
   echo "      Set ups the system to make the 'ds3231' clock work."
   echo
 }

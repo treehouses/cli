@@ -1,9 +1,8 @@
-#!/bin/bash
-
 function networkmode {
+  local network_mode interfaces ifaces
   network_mode="default"
   if [ -f "/etc/network/mode" ]; then
-    network_mode=$(cat "/etc/network/mode")
+    network_mode=$(</etc/network/mode)
   fi
 
   interfaces=()
@@ -34,11 +33,10 @@ function networkmode {
   esac
 
   if [ "$1" == "info" ]; then
+    checkroot
     if [ "$network_mode" == "wifi" ]; then
-      checkroot
       get_wpa_supplicant_settings
     elif [ "$network_mode" == "bridge" ]; then
-      checkroot
       echo "wlan0: $(get_wpa_supplicant_settings)"
       echo "ap0: $(get_hostapd_settings)"
     elif [ "$network_mode" == "ap local" ] || [ "$network_mode" == "ap internet" ]; then
@@ -74,6 +72,7 @@ function get_ap_name {
 }
 
 function get_ap_settings {
+  local iseth0
   if ! grep -q "wpa_passphrase=*" "/etc/hostapd/hostapd.conf"; then
     echo -n "wlan0: ap essid: $(get_ap_name), ap has no password, ip: $(get_ipv4_ip wlan0),"
   else
@@ -93,6 +92,7 @@ function get_ap_settings {
 }
 
 function get_staticnetwork_info {
+  local interface ip_address netmask gateway dns network_name
   interface="$1"
   ip_address=$(sed -n "s/.*address \\(.*\\)/\\1/p" "/etc/network/interfaces.d/$interface")
   netmask=$(sed -n "s/.*netmask \\(.*\\)/\\1/p" "/etc/network/interfaces.d/$interface")
@@ -113,6 +113,7 @@ function get_staticnetwork_info {
 }
 
 function get_wpa_supplicant_settings {
+  local network_name network_ip
   network_name=$(sed -n "s/.*ssid=\"\\(.*\\)\"/\\1/p" /etc/wpa_supplicant/wpa_supplicant.conf)
   network_ip=$(get_ipv4_ip wlan0)
   echo -n "essid: $network_name, ip: $network_ip, "
@@ -124,6 +125,7 @@ function get_wpa_supplicant_settings {
 }
 
 function get_hostapd_settings {
+  local network_name network_ip
   network_name=$(get_ap_name)
   network_ip=$(get_ipv4_ip ap0)
   if ! grep -q "wpa_passphrase=*" "/etc/hostapd/hostapd.conf"; then
@@ -135,15 +137,15 @@ function get_hostapd_settings {
 
 function networkmode_help {
   echo
-  echo "Usage: $(basename "$0") networkmode [info]"
+  echo "Usage: $BASENAME networkmode [info]"
   echo
   echo "Outputs the current network mode"
   echo
   echo "Example:"
-  echo "  $(basename "$0") networkmode"
-  echo "      Will output the current network mode that has been set up using $(basename "$0")"
+  echo "  $BASENAME networkmode"
+  echo "      Will output the current network mode that has been set up using $BASENAME"
   echo
-  echo "  $(basename "$0") networkmode info"
+  echo "  $BASENAME networkmode info"
   echo "      shows the current status of the network mode"
   echo
 }

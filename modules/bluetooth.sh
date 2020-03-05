@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function bluetooth {
+  local status macfile macadd btidfile bid nname
   status=$1
 
   if [ "$status" = "on" ]; then
@@ -58,29 +57,29 @@ function bluetooth {
 
 function bluetooth_help {
   echo
-  echo "Usage: $(basename "$0") bluetooth <on|off|pause|mac|id>"
+  echo "Usage: $BASENAME bluetooth <on|off|pause|mac|id>"
   echo
   echo "Switches between hotspot / regular bluetooth mode, or displays the bluetooth mac address"
   echo
   echo "Example:"
-  echo "  $(basename "$0") bluetooth on"
+  echo "  $BASENAME bluetooth on"
   echo "      This will start the bluetooth server, which lets the user control the raspberry pi using the mobile app."
   echo
-  echo "  $(basename "$0") bluetooth off"
+  echo "  $BASENAME bluetooth off"
   echo "      This will stop the bluetooth server, and bring everything back to regular mode."
   echo "      This will also remove the bluetooth device id."
   echo
-  echo "  $(basename "$0") bluetooth pause"
-  echo "      Performs the same as '$(basename "$0") bluetooth off'"
+  echo "  $BASENAME bluetooth pause"
+  echo "      Performs the same as '$BASENAME bluetooth off'"
   echo "      The only difference is that this command will not remove the bluetooth device id."
   echo
-  echo "  $(basename "$0") bluetooth  mac"
+  echo "  $BASENAME bluetooth  mac"
   echo "      This will display the bluetooth MAC address"
   echo
-  echo "  $(basename "$0") bluetooth id"
+  echo "  $BASENAME bluetooth id"
   echo "      This will display the network name along with the bluetooth id number"
   echo
-  echo "  $(basename "$0") bluetooth id number"
+  echo "  $BASENAME bluetooth id number"
   echo "      This will display the bluetooth id number"
   echo
 }

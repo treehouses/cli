@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function wifistatus {
   # layman nomenclature for wifi signal strength
   #   perfect=(-10 ... -29)
@@ -10,6 +8,7 @@ function wifistatus {
   #   poor=(-70 -71 -72 -73 -74 -75 -76 -77 -78 -79)
   #   bad=(-80 -81 -82 -83 -84 -85 -86 -87 -88 -89 -90)
   # display strength of signal in dBm and layman terms
+  local signal signalStrength
   signal=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p' | sed -e 's/Signal level=//g' | sed -e 's/dBm//g')
   signalStrength=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p' | sed -e 's/Signal level=//g')
 
@@ -82,15 +81,15 @@ function wifistatus {
 
 function wifistatus_help {
   echo
-  echo "  Usage: $(basename "$0") wifistatus"
+  echo "  Usage: $BASENAME wifistatus"
   echo
   echo "  Displays signal strength in dBm and layman nomenclature"
   echo
   echo "  Example:"
-  echo "  $(basename "$0") wifistatus"
+  echo "  $BASENAME wifistatus"
   echo "    Error: no wifi device is present"
   echo
-  echo "  $(basename "$0") wifistatus"
+  echo "  $BASENAME wifistatus"
   echo "    Signal strength is -40dBm"
   echo "    You have a perfect signal"
   echo

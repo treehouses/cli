@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function detectrpi {
+  local rpimodel found
   declare -A rpimodels
   rpimodels["Beta"]="BETA"
   rpimodels["0002"]="RPIB"
@@ -55,21 +54,40 @@ function detectrpi {
 
   if [ "$found" == 1 ];
   then
-    echo ${rpimodels[$rpimodel]}
+    if [[ "$1" == "" ]];
+    then
+      echo ${rpimodels[$rpimodel]}
+    elif [[ "$1" == "model" ]];
+    then
+      echo "$rpimodel"
+    elif [[ "$1" == "full" ]] && [[ "$2" == "" ]];
+    then
+      rpimodel=$(tr -d '\0' </sys/firmware/devicetree/base/model)
+      echo "$rpimodel"
+    else
+      log_and_exit1 "Error: only 'detectrpi', and 'detectrpi model' commands supported"
+    fi
   else
-    echo "nonrpi"
+    if grep -q "Raspberry Pi" "/sys/firmware/devicetree/base/model"; then
+      echo "RPI"
+    else
+      echo "nonrpi"
+    fi
   fi
 }
 
 
 function detectrpi_help {
   echo
-  echo "Usage: $(basename "$0") detectrpi"
+  echo "Usage: $BASENAME detectrpi"
   echo
   echo "Detects the hardware version"
   echo
   echo "Example:"
-  echo "  $(basename "$0") detectrpi"
-  echo "      Prints the model number"
+  echo "  $BASENAME detectrpi"
+  echo "      Prints the Raspberry Pi name"
+  echo
+  echo "  $BASENAME detectrpi model"
+  echo "      Prints the model number of the RPi"
   echo
 }

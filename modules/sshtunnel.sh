@@ -1,9 +1,9 @@
-#!/bin/bash
-
 function sshtunnel {
+  local portinterval host hostname portssh portweb portcouchdb
+  local portnewcouchdb portmunin keys option value status
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
     echo "Error: no tunnel has been set up."
-    echo "Run '$(basename "$0") sshtunnel add' to add a key for the tunnel."
+    echo "Run '$BASENAME sshtunnel add' to add a key for the tunnel."
     exit 0
   fi      
   portinterval="$2"
@@ -192,12 +192,12 @@ function sshtunnel {
 
 function sshtunnel_help {
   echo
-  echo "Usage: $(basename "$0") sshtunnel <add|remove|list|key|notice> <portinterval> [user@host]"
+  echo "Usage: $BASENAME sshtunnel <add|remove|list|key|notice> <portinterval> [user@host]"
   echo
   echo "Helps setting up a sshtunnel"
   echo
   echo "Example:"
-  echo "  $(basename "$0") sshtunnel add 65400 user@server.org"
+  echo "  $BASENAME sshtunnel add 65400 user@server.org"
   echo "      This will set up autossh with the host 'user@server.org' and open the following tunnels"
   echo "      127.0.1.1:22 -> host:65422"
   echo "      127.0.1.1:80 -> host:65480"
@@ -205,19 +205,19 @@ function sshtunnel_help {
   echo "      127.0.1.1:4949 -> host:65449"
   echo "      127.0.1.1:5984 -> host:65484"
   echo
-  echo "  $(basename "$0") sshtunnel remove"
+  echo "  $BASENAME sshtunnel remove"
   echo "      This will stop the ssh tunnels and remove the extra files added"
   echo
-  echo "  $(basename "$0") sshtunnel list"
+  echo "  $BASENAME sshtunnel list"
   echo "      This will output the tunneled ports and to which host"
   echo
-  echo "  $(basename "$0") sshtunnel check"
+  echo "  $BASENAME sshtunnel check"
   echo "      This will run a checklist and report back the results"
   echo
-  echo "  $(basename "$0") sshtunnel key"
+  echo "  $BASENAME sshtunnel key"
   echo "      This will show the public key."
   echo
-  echo "  $(basename "$0") sshtunnel notice <on|off|add|delete|list|now> [api_url]"
+  echo "  $BASENAME sshtunnel notice <on|off|add|delete|list|now> [api_url]"
   echo "      Enables or disables the propagation of the sshtunnel ports to gitter"
   echo
 }

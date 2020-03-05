@@ -5,14 +5,15 @@ _treehouses_complete()
   local cur prev
 
   # Valid top-level completions
-  commands="ap aphidden apchannel bluetooth bluetoothid bootoption bridge burn button camera clone \
+  commands="ap aphidden apchannel blocker bluetooth bluetoothid bootoption bridge burn button camera clone \
             container coralenv cron default detect detectrpi discover ethernet expandfs \
-            feedback help image internet led locale memory networkmode ntp openvpn password \
-            rebootneeded reboots rename restore rtc services speedtest ssh sshkey sshtunnel \
+            feedback help image internet led locale log memory networkmode ntp openvpn password \
+            rebootneeded reboots rename restore rtc sdbench services speedtest ssh sshkey sshtunnel \
             staticwifi temperature timezone tor upgrade usb verbose version vnc wifi wificountry wifihidden wifistatus"
   ap_cmdas="local internet"
   aphidden_cmds="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
+  blocker_cmds="0 1 2 3 4 max"
   bluetooth_cmds="on off pause mac id"
   bootoption_cmds="console desktop"
   bootoption_second_cmds="autologin"
@@ -21,8 +22,10 @@ _treehouses_complete()
   container_cmds="none docker balena"
   coralenv_cmds="install demo-on demo-off demo-always-on"
   discover_cmds="rpi scan interface ping ports mac"
+  detectrpi_cmds="model"
   help_cmds=$commands
-  led_cmds="green red dance thanksgiving christmas newyear valentine carneval"
+  led_cmds="green red dance thanksgiving christmas newyear lunarnewyear valentine carnival"
+  log_cmds="0 1 2 3 4 show max"
   memory_cmds="total used free"
   networkmode_cmds="info"
   ntp_cmds="local internet"
@@ -32,14 +35,14 @@ _treehouses_complete()
   rtc_on_cmds="ds3231 rasclock"
   services_cmds="available installed running ports"
   cron_cmds="list 0W tor timestamp add delete deleteall"
-  sshkey_cmds="add list delete deleteal addgithubusername deletegithubusername addgithubgroup"
+  sshkey_cmds="add list delete deleteall addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
   temperature_cmds="celsius fahrenheit"
-  tor_cmds="start stop add list notice destroy"
+  tor_cmds="list add delete deleteall start stop destroy notice status refresh"
   usb_cmds="on off"
   notice_cmds="on off add delete list"
-  remote_cmds="status upgrade services"
+  remote_cmds="status upgrade services version"
   services_cmds="up down start stop"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
@@ -64,6 +67,9 @@ _treehouses_complete()
       "apchannel")
         COMPREPLY=( $(compgen -W "$apchannel_cmds" -- $cur) ) #cannot ascending order
         ;;
+      "blocker")
+        COMPREPLY=( $(compgen -W "$blocker_cmds" -- $cur) )
+        ;;        
       "bluetooth")
         COMPREPLY=( $(compgen -W "$bluetooth_cmds" -- $cur) )
         ;;
@@ -88,6 +94,9 @@ _treehouses_complete()
       "discover")
         COMPREPLY=( $(compgen -W "$discover_cmds" -- $cur) )
         ;;
+      "detectrpi")
+        COMPREPLY=( $(compgen -W "$detectrpi_cmds" -- $cur) )
+        ;;      
       "help")
         COMPREPLY=( $(compgen -W "$help_cmds" -- $cur) )
         ;;
@@ -129,6 +138,9 @@ _treehouses_complete()
         ;;
       "verbose")
         COMPREPLY=( $(compgen -W "$verbose_cmds" -- $cur) )
+        ;;
+      "log")
+        COMPREPLY=( $(compgen -W "$log_cmds" -- $cur) )
         ;;
       "usb")
         COMPREPLY=( $(compgen -W "$usb_cmds" -- $cur) )

@@ -327,7 +327,11 @@ function check_tor {
     echo "tor active"
     if ! tor list | grep -w $1; then
       echo "adding port ${1}"
-      tor add $1
+      if [[ $(pstree -ps $$) == *"ssh"* ]]; then
+        screen -dm bash -c "tor add ${1}"
+      else
+        tor add $1
+      fi
     fi
   fi
 }
@@ -342,23 +346,22 @@ function services_help {
   echo
   echo "Available Services:"
   echo
-  echo "  Planet"
-  echo "  Kolibri"
-  echo "  Nextcloud"
-  echo "  Netdata"
-  echo "  Pi-hole"
-  # echo "  Moodle"
-  echo "  PrivateBin"
-  echo "  Portainer"
-  echo "  Netdata"
-  echo "  Ntopng"
-  echo "  Mastodon"
+  echo "  planet       Planet Learning is a generic learning system built in Angular & CouchDB"
+  echo "  kolibri      Kolibri is a learning platform using DJango"
+  echo "  nextcloud    Nextcloud is a safe home for all your data, files, etc"
+  echo "  netdata      Netdata is a distributed, real-time performance and health monitoring for systems"
+  echo "  mastodon     Mastodon is a free, open-source social network server"
+  echo "  moodle       Moodle is a Learning management system built in PHP"
+  echo "  pihole       Pi-hole is a DNS sinkhole that protects your devices from unwanted content"
+  echo "  privatebin   PrivateBin is a minimalist, open source online pastebin"
+  echo "  portainer    Portainer is a lightweight management UI for Docker environments"
+  echo "  ntopng       Ntopng is a network traffic probe that monitors network usage"
   echo
   echo
   echo "Top-Level Commands:"
   echo
   echo "  Usage:"
-  echo "    $(basename "$0") services available [full]"
+  echo "    $BASENAME services available [full]"
   echo "              ..... installed [full]"
   echo "              ..... running [full]"
   echo "              ..... ports"
@@ -376,15 +379,15 @@ function services_help {
   echo
   echo "  Examples:"
   echo
-  echo "    $(basename "$0") services available"
+  echo "    $BASENAME services available"
   echo
-  echo "    $(basename "$0") services running full"
+  echo "    $BASENAME services running full"
   echo
   echo
   echo "Service-Specific Commands:"
   echo
   echo "  Usage:"
-  echo "    $(basename "$0") services <service_name> install"
+  echo "    $BASENAME services <service_name> install"
   echo "                             ..... up"
   echo "                             ..... down"
   echo "                             ..... start"
@@ -422,12 +425,12 @@ function services_help {
   echo
   echo "  Examples:"
   echo
-  echo "    $(basename "$0") services planet up"
+  echo "    $BASENAME services planet up"
   echo
-  echo "    $(basename "$0") services planet autorun"
+  echo "    $BASENAME services planet autorun"
   echo
-  echo "    $(basename "$0") services planet autorun true"
+  echo "    $BASENAME services planet autorun true"
   echo
-  echo "    $(basename "$0") services planet url local"
+  echo "    $BASENAME services planet url local"
   echo
 }

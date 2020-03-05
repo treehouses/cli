@@ -136,13 +136,13 @@ function services {
               check_tor "9000"
               ;;
             netdata)
-              check_space "treehouses/netdata"
+              check_space "netdata/netdata"
               create_yml "netdata"
               docker_compose_up "netdata"
               check_tor "19999"
               ;;
             mastodon)
-              check_space "treehouses/mastodon"
+              check_space "gilir/rpi-mastodon"
               create_yml "mastodon"
               docker_compose_up "mastodon"
               check_tor "3000"
@@ -418,10 +418,10 @@ function services {
               curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/portainer/portainer/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
               ;;
             netdata)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/netdata/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/netdata/netdata/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
               ;;
             mastodon)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/mastodon/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
+              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/gilir/rpi-mastodon/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
               ;;
             ntopng)
               curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/jonbackhaus/ntopng/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec

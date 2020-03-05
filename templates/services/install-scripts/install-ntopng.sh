@@ -17,7 +17,7 @@ mkdir -p /srv/ntopng
 
 # add port(s)
 {
-  echo "8090"
+  echo "8084"
 } > /srv/ntopng/ports
 
 # add size (in MB)

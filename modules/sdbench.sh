@@ -16,6 +16,6 @@ function sdbench_help {
   echo "Usage: $BASENAME sdbench"
   echo
   echo "Example:"
-  echo " $BASENAME sdbench"
-  echo "  Prints the read and write speed"
+  echo "  $BASENAME sdbench"
+  echo "    prints the read and write speed"
 }

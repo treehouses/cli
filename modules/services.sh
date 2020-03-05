@@ -10,7 +10,7 @@ function services {
     if [ -d "$TEMPLATES/services/install-scripts" ]; then
       for file in $TEMPLATES/services/install-scripts/*
       do
-        echo "${file##*/}" | sed 's/install-*//' | sed 's/.sh*//'
+        echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//'
       done
     else
       echo "$TEMPLATES/services/install-scripts directory does not exist"

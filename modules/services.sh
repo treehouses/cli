@@ -360,7 +360,7 @@ function services {
               echo "https://github.com/treehouses/rpi-couchdb"
               echo "https://github.com/docker-library/docs/tree/master/couchdb"
               echo
-              echo "\"Apache CouchDB™ lets you access your data where you need it by defining the"
+              echo "\"Apache CouchDB lets you access your data where you need it by defining the"
               echo "Couch Replication Protocol that is implemented by a variety of projects and products"
               echo "that span every imaginable computing environment from globally distributed server-clusters,"
               echo "over mobile phones to web browsers.\""

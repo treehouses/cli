@@ -1,6 +1,0 @@
-portainer_autorun=true
-
-if [ "portainer_autorun" = true ]; then
-  docker-compose -f /srv/portainer/portainer.yml -p portainer up -d
-fi
-

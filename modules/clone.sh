@@ -32,7 +32,7 @@ function clone {
 
 function clone_help {
   echo
-  echo "Usage: $BASENAME burn [device path]"
+  echo "Usage: $BASENAME clone [device path]"
   echo
   echo "clones your treehouses image to an SDCard"
   echo

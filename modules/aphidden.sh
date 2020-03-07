@@ -6,7 +6,7 @@ function aphidden {
   base_24=$(echo "${@: -1}" | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}' | awk '{sub(/.$/,""); gsub("--ip=","", $0); print}')
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
-  
+
   if [ -n "$essid" ]
   then
     if [ ${#essid} -gt 32 ]
@@ -15,7 +15,7 @@ function aphidden {
       exit 1
     fi
   fi
-  
+
   if [ -n "$password" ];
   then
     if [ ${#password} -lt 8 ];
@@ -25,10 +25,10 @@ function aphidden {
     fi
   fi
 
-  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces 
+  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/eth0/default" /etc/network/interfaces.d/eth0
-  cp "$TEMPLATES/network/dhcpcd/modular" /etc/dhcpcd.conf 
-  cp "$TEMPLATES/network/dnsmasq/hotspot" /etc/dnsmasq.conf 
+  cp "$TEMPLATES/network/dhcpcd/modular" /etc/dhcpcd.conf
+  cp "$TEMPLATES/network/dnsmasq/hotspot" /etc/dnsmasq.conf
   cp "$TEMPLATES/network/hostapd/default" /etc/default/hostapd
 
   if [ "$mode" = "internet" ]; then
@@ -55,7 +55,7 @@ function aphidden {
     sed -i "s/PASSWORD/$password/g" /etc/hostapd/hostapd.conf
     sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
     restart_hotspot >/dev/null 2>/dev/null
-  else 
+  else
     cp "$TEMPLATES/network/hostapd/no_password_hidden" /etc/hostapd/hostapd.conf
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
@@ -77,32 +77,32 @@ function aphidden {
 
 function aphidden_help () {
   echo
-  echo "Usage: treehouses aphidden <local|internet> <ESSID> [password]"
+  echo "Usage: $BASENAME aphidden <local|internet> <ESSID> [password]"
   echo
   echo "When the Raspberry pi is connected to a network via an ethernet cable this command"
   echo "creates a wireless access point that users can connect to via wifi. If the mode is"
   echo "'internet' the ethernet connection will be shared in the access point."
   echo
   echo "Examples:"
-  echo "  treehouses aphidden local apname apPassword"
+  echo "  $BASENAME aphidden local apname apPassword"
   echo "      Creates a hidden ap with ESSID 'apname' and password 'apPassword'."
   echo "      This hotspot will not share the ethernet connection if present."
   echo
-  echo "  treehouses aphidden local apname"
+  echo "  $BASENAME aphidden local apname"
   echo "      Creates an open hidden ap with ESSID 'apname'."
   echo "      This hotspot will not share ethernet connection when present."
   echo
-  echo "  treehouses aphidden internet apname apPassword"
+  echo "  $BASENAME aphidden internet apname apPassword"
   echo "      Creates a hidden ap with ESSID 'apname' and password 'apPassword'."
   echo "      This hotspot will share the ethernet connection when present."
   echo
-  echo "  treehouses aphidden internet apname"
+  echo "  $BASENAME aphidden internet apname"
   echo "      Creates an open hidden ap with ESSID 'apname'."
   echo "      This hotspot will share the ethernet connection when present."
   echo
   echo "  This command can be used with the argument '--ip=x.y.z.w' to specify the base ip (x.y.z) for the clients/ap."
   echo
-  echo "  treehouses aphidden internet apname --ip=192.168.2.24"
+  echo "  $BASENAME aphidden internet apname --ip=192.168.2.24"
   echo "      All the clients of this network will have an ip under the network 192.168.2.0"
   echo
 }

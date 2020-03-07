@@ -281,7 +281,7 @@ function services {
           source $SERVICES/install-${service_name}.sh && get_info
           ;;
         size)
-          echo $(source $SERVICES/install-${service_name}.sh && get_size)M
+          echo "$(source $SERVICES/install-${service_name}.sh && get_size)M"
           ;;
         *)
           echo "unknown command"

@@ -1,7 +1,7 @@
 {
   "name": "@treehouses/cli",
-  "version": "1.13.40",
-  "remote": "2069",
+  "version": "1.14.8",
+  "remote": "2251",
   "description": "Thin command-line interface for Raspberry Pi low level configuration.",
   "main": "cli.sh",
   "bin": {
@@ -20,7 +20,7 @@
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "keywords": [
-    "raspberry pi", "raspberrypi", "rpi", "bluetooth", "ethernet", "wifi", "hotspot", "bridge", "vnc", "ntp", "timezone", "rtc", "cron", "ssh", "backup", "clone", "sshkey", "sshtunnel", "tor", "openvpn", "services", "container", "docker", "balena", "coral"
+    "raspberry pi", "raspberrypi", "rpi", "cli", "bluetooth", "ethernet", "wifi", "hotspot", "bridge", "vnc", "ntp", "timezone", "rtc", "cron", "ssh", "backup", "clone", "sshkey", "sshtunnel", "tor", "openvpn", "services", "container", "docker", "balena", "coral"
   ],
   "author": {
     "name": "OLE treehouses team",
@@ -31,5 +31,6 @@
   "bugs": {
     "url": "https://github.com/treehouses/cli/issues",
     "email": "vi@treehouses.io"
-  }
+  },
+  "homepage": "https://github.com/treehouses/cli"
 }

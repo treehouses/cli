@@ -21,6 +21,7 @@ _treehouses_complete()
   camera_cmds="on off capture"
   container_cmds="none docker balena"
   coralenv_cmds="install demo-on demo-off demo-always-on"
+  cron_cmds="list 0W tor timestamp add delete deleteall"
   discover_cmds="rpi scan interface ping ports mac"
   detectrpi_cmds="model"
   help_cmds=$commands
@@ -33,8 +34,7 @@ _treehouses_complete()
   reboots_cmds="now in cron daily weekly monthly"
   rtc_cmds="on off"
   rtc_on_cmds="ds3231 rasclock"
-  services_cmds="available installed running ports"
-  cron_cmds="list 0W tor timestamp add delete deleteall"
+  services_cmds="available installed running ports kolibri mastodon moodle netdata nextcloud ntopng pihole planet portainer privatebin"
   sshkey_cmds="add list delete deleteall addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
@@ -43,7 +43,6 @@ _treehouses_complete()
   usb_cmds="on off"
   notice_cmds="on off add delete list"
   remote_cmds="status upgrade services version"
-  services_cmds="up down start stop"
 
 # upgrade_cmds="" I am not sure whether we should put autocompletion here.
 
@@ -120,6 +119,9 @@ _treehouses_complete()
         ;;
       "reboots")
         COMPREPLY=( $(compgen -W "$reboots_cmds" -- $cur) )
+        ;;
+      "services")
+        COMPREPLY=( $(compgen -W "$services_cmds" -- $cur) )
         ;;
       "sshkey")
         COMPREPLY=( $(compgen -W "$sshkey_cmds" -- $cur) )

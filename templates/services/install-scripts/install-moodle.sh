@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# create moodle.yml
+# create service directory
 mkdir -p /srv/moodle
+
+# create yml(s)
 {
   echo "version: '2'"
   echo "services:"
@@ -27,3 +29,34 @@ mkdir -p /srv/moodle
   echo "    - MOODOLE_MAX_BODY_SIZE=200M"
   echo "    - MOODOLE_BODY_TIMEOUT=300s"
 } > /srv/moodle/moodle.yml
+
+# add port(s)
+{
+  echo "8082"
+} > /srv/moodle/ports
+
+# add size (in MB)
+{
+  echo "350"
+} > /srv/moodle/size
+
+# add info
+{
+  echo "https://github.com/treehouses/moodole"
+  echo
+  echo "\"Moodle <https://moodle.org> is a learning platform designed to"
+  echo "provide educators, administrators and learners with a single robust,"
+  echo "secure and integrated system to create personalised learning"
+  echo "environments.\""
+} > /srv/moodle/info
+
+# add autorun
+{
+  echo "moodle_autorun=true"
+  echo
+  echo "if [ \"\$moodle_autorun\" = true ]; then"
+  echo "  docker-compose -f /srv/moodle/moodle.yml -p moodle up -d"
+  echo "fi"
+  echo
+  echo
+} > /srv/moodle/autorun

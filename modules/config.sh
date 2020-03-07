@@ -2,6 +2,7 @@
 CONFIGFILE=/etc/treehouses.conf
 BASENAME=$(basename "$0")
 TEMPLATES="$SCRIPTFOLDER/templates"
+SERVICES="$SCRIPTFOLDER/services"
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'

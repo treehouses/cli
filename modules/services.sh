@@ -341,9 +341,7 @@ function check_tor {
 }
 
 function get_port {
-  if [ -f /srv/${1}/ports ]; then
-    cat /srv/${1}/ports
-  fi
+  source $SERVICES/install-${1}.sh && get_ports
 }
 
 function services_help {

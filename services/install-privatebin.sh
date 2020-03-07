@@ -3,28 +3,30 @@
 # create service directory
 mkdir -p /srv/privatebin
 
-# create yml(s)
-{
-  echo "version: \"3\""
-  echo
-  echo "services:"
-  echo "  privatebin:"
-  echo "    container_name: privatebin"
-  echo "    image: treehouses/privatebin"
-  echo "    ports:"
-  echo "      - \"8083:80\""
-} > /srv/privatebin/privatebin.yml
+function install {
+  # create yml(s)
+  {
+    echo "version: \"3\""
+    echo
+    echo "services:"
+    echo "  privatebin:"
+    echo "    container_name: privatebin"
+    echo "    image: treehouses/privatebin"
+    echo "    ports:"
+    echo "      - \"8083:80\""
+  } > /srv/privatebin/privatebin.yml
 
-# add autorun
-{
-  echo "privatebin_autorun=true"
-  echo
-  echo "if [ \"\$privatebin_autorun\" = true ]; then"
-  echo "  docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d"
-  echo "fi"
-  echo
-  echo
-} > /srv/privatebin/autorun
+  # add autorun
+  {
+    echo "privatebin_autorun=true"
+    echo
+    echo "if [ \"\$privatebin_autorun\" = true ]; then"
+    echo "  docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d"
+    echo "fi"
+    echo
+    echo
+  } > /srv/privatebin/autorun
+}
 
 # add port(s)
 function get_ports {

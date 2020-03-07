@@ -3,29 +3,31 @@
 # create service directory
 mkdir -p /srv/ntopng
 
-# create yml(s)
-{
-  echo "services:"
-  echo "  ntopng:"
-  echo "    image: jonbackhaus/ntopng"
-  echo "    ports:"
-  echo "      - \"8084:3000\""
-  echo "    volumes:"
-  echo "      - \"/var/run/docker.sock:/var/run/docker.sock\""
-  echo "version: \"2\""
-} > /srv/ntopng/ntopng.yml
+function install {
+  # create yml(s)
+  {
+    echo "services:"
+    echo "  ntopng:"
+    echo "    image: jonbackhaus/ntopng"
+    echo "    ports:"
+    echo "      - \"8084:3000\""
+    echo "    volumes:"
+    echo "      - \"/var/run/docker.sock:/var/run/docker.sock\""
+    echo "version: \"2\""
+  } > /srv/ntopng/ntopng.yml
 
-# add autorun
-{
-  echo "ntopng_autorun=true"
-  echo
-  echo "if [ \"\$ntopng_autorun\" = true ]; then"
-  echo "  docker volume create ntopng_data"
-  echo "  docker run --name ntopng -d -p 8090:8090 -v /var/run/docker.sock:/var/run/docker.sock -v ntopng_data:/data jonbackhaus/ntopng --http-port=8090"
-  echo "fi"
-  echo
-  echo
-} > /srv/ntopng/autorun
+  # add autorun
+  {
+    echo "ntopng_autorun=true"
+    echo
+    echo "if [ \"\$ntopng_autorun\" = true ]; then"
+    echo "  docker volume create ntopng_data"
+    echo "  docker run --name ntopng -d -p 8090:8090 -v /var/run/docker.sock:/var/run/docker.sock -v ntopng_data:/data jonbackhaus/ntopng --http-port=8090"
+    echo "fi"
+    echo
+    echo
+  } > /srv/ntopng/autorun
+}
 
 # add port(s)
 function get_ports {

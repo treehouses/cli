@@ -70,13 +70,13 @@ function services {
       case "$command" in
         install)
           if [ "$service_name" = "planet" ]; then
-            if bash $SERVICES/install-planet.sh ; then
+            if source $SERVICES/install-planet.sh && install ; then
               echo "planet installed"
             else
               echo "error running install script"
               exit 1
             fi
-          elif bash $SERVICES/install-${service_name}.sh ; then
+          elif source $SERVICES/install-${service_name}.sh && install ; then
             if docker-compose -f /srv/${service_name}/${service_name}.yml pull ; then
               echo "${service_name} installed"
             else

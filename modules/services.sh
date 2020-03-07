@@ -278,20 +278,10 @@ function services {
           get_port $service_name
           ;;
         info)
-          if cat /srv/${service_name}/info ; then
-            :
-          else
-            echo "${service_name} info not found"
-            exit 1
-          fi
+          source $SERVICES/install-${service_name}.sh && get_info
           ;;
         size)
-          if [ -e /srv/${service_name}/size ]; then
-            echo "$(< /srv/${service_name}/size)M"
-          else
-            echo "/srv/${service_name}/size file not found"
-            exit 1
-          fi
+          echo $(source $SERVICES/install-${service_name}.sh && get_size)M
           ;;
         *)
           echo "unknown command"

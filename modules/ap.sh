@@ -83,7 +83,7 @@ function ap_help () {
   echo
   echo "Examples:"
   echo "  $BASENAME ap local apname apPassword"
-  echo "      Creates a ap with ESSID 'apname' and password 'apPassword'."
+  echo "      Creates an ap with ESSID 'apname' and password 'apPassword'."
   echo "      This hotspot will not share the ethernet connection if present."
   echo
   echo "  $BASENAME ap local apname"
@@ -91,7 +91,7 @@ function ap_help () {
   echo "      This hotspot will not share ethernet connection when present."
   echo
   echo "  $BASENAME ap internet apname apPassword"
-  echo "      Creates a ap with ESSID 'apname' and password 'apPassword'."
+  echo "      Creates an ap with ESSID 'apname' and password 'apPassword'."
   echo "      This hotspot will share the ethernet connection when present."
   echo
   echo "  $BASENAME ap internet apname"

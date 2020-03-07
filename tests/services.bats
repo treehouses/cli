@@ -13,6 +13,18 @@ load test-helper
   assert_output -p 'planet_yml'
 }
 
+@test "$clinom services planet info" {
+  run "${clicmd}" services planet info
+  assert_success
+  assert_output -p 'https://github.com/open-learning-exchange/planet'
+}
+
+@test "$clinom services planet install" {
+  run "${clicmd}" services planet install
+  assert_success
+  assert_output -p 'installed'
+}
+
 @test "$clinom services planet up" {
   run "${clicmd}" services planet up
   assert_success
@@ -47,12 +59,6 @@ load test-helper
   run "${clicmd}" services ports
   assert_success
   assert_output -p 'port 80'
-}
-
-@test "$clinom services planet info" {
-  run "${clicmd}" services planet info
-  assert_success
-  assert_output -p 'https://github.com/open-learning-exchange/planet'
 }
 
 @test "$clinom services planet port" {

@@ -20,36 +20,33 @@ function wificountry {
       ;;
 
     *)
-      found=false
       for country_code in "${country_codes[@]}"
       do
         if [ "$country" = "$country_code" ]; then
-          found=true
-          break
+          if [ -e /etc/wpa_supplicant/wpa_supplicant.conf ]; then
+            if grep -q "^country=" /etc/wpa_supplicant/wpa_supplicant.conf ; then
+              sed -i --follow-symlinks "s/^country=.*/country=$country/g" /etc/wpa_supplicant/wpa_supplicant.conf
+            else
+              sed -i --follow-symlinks "1i country=$country" /etc/wpa_supplicant/wpa_supplicant.conf
+            fi
+          else
+            echo "country=$country" > /etc/wpa_supplicant/wpa_supplicant.conf
+          fi
+          iw reg set "$country" 2> "$LOGFILE";
+
+          if [ -f /run/wifi-country-unset ] && hash rfkill 2> "$LOGFILE"; then
+            rfkill unblock wifi
+          fi
+
+          echo "$country" > /etc/rpi-wifi-country
+
+          echo "Success: the wifi country has been set to $country"
+          exit 0
         fi
       done
-      if [ "$found" = false ]; then
-        echo "error: invalid country code"
-        exit 1
-      fi
-      if [ -e /etc/wpa_supplicant/wpa_supplicant.conf ]; then
-        if grep -q "^country=" /etc/wpa_supplicant/wpa_supplicant.conf ; then
-          sed -i --follow-symlinks "s/^country=.*/country=$country/g" /etc/wpa_supplicant/wpa_supplicant.conf
-        else
-          sed -i --follow-symlinks "1i country=$country" /etc/wpa_supplicant/wpa_supplicant.conf
-        fi
-      else
-        echo "country=$country" > /etc/wpa_supplicant/wpa_supplicant.conf
-      fi
-      iw reg set "$country" 2> "$LOGFILE";
 
-      if [ -f /run/wifi-country-unset ] && hash rfkill 2> "$LOGFILE"; then
-        rfkill unblock wifi
-      fi
-
-      echo "$country" > /etc/rpi-wifi-country
-
-      echo "Success: the wifi country has been set to $country"
+      echo "error: invalid country code"
+      exit 1
       ;;
   esac
 

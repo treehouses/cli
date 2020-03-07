@@ -7,13 +7,13 @@ function services {
 
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
-    if [ -d "$TEMPLATES/services/install-scripts" ]; then
-      for file in $TEMPLATES/services/install-scripts/*
+    if [ -d "$SERVICES" ]; then
+      for file in $SERVICES/*
       do
         echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//'
       done
     else
-      echo "$TEMPLATES/services/install-scripts directory does not exist"
+      echo "$SERVICES directory does not exist"
       exit 1
     fi    
   # list all installed services
@@ -70,13 +70,13 @@ function services {
       case "$command" in
         install)
           if [ "$service_name" = "planet" ]; then
-            if bash $TEMPLATES/services/install-scripts/install-planet.sh ; then
+            if source $SERVICES/install-planet.sh && install ; then
               echo "planet installed"
             else
               echo "error running install script"
               exit 1
             fi
-          elif bash $TEMPLATES/services/install-scripts/install-${service_name}.sh ; then
+          elif source $SERVICES/install-${service_name}.sh && install ; then
             if docker-compose -f /srv/${service_name}/${service_name}.yml pull ; then
               echo "${service_name} installed"
             else
@@ -278,20 +278,10 @@ function services {
           get_port $service_name
           ;;
         info)
-          if cat /srv/${service_name}/info ; then
-            :
-          else
-            echo "${service_name} info not found"
-            exit 1
-          fi
+          source $SERVICES/install-${service_name}.sh && get_info
           ;;
         size)
-          if [ -e /srv/${service_name}/size ]; then
-            echo "$(< /srv/${service_name}/size)M"
-          else
-            echo "/srv/${service_name}/size file not found"
-            exit 1
-          fi
+          echo "$(source $SERVICES/install-${service_name}.sh && get_size)M"
           ;;
         *)
           echo "unknown command"
@@ -351,9 +341,7 @@ function check_tor {
 }
 
 function get_port {
-  if [ -f /srv/${1}/ports ]; then
-    cat /srv/${1}/ports
-  fi
+  source $SERVICES/install-${1}.sh && get_ports
 }
 
 function services_help {

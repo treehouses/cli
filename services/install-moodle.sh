@@ -30,26 +30,6 @@ mkdir -p /srv/moodle
   echo "    - MOODOLE_BODY_TIMEOUT=300s"
 } > /srv/moodle/moodle.yml
 
-# add port(s)
-{
-  echo "8082"
-} > /srv/moodle/ports
-
-# add size (in MB)
-{
-  echo "350"
-} > /srv/moodle/size
-
-# add info
-{
-  echo "https://github.com/treehouses/moodole"
-  echo
-  echo "\"Moodle <https://moodle.org> is a learning platform designed to"
-  echo "provide educators, administrators and learners with a single robust,"
-  echo "secure and integrated system to create personalised learning"
-  echo "environments.\""
-} > /srv/moodle/info
-
 # add autorun
 {
   echo "moodle_autorun=true"
@@ -60,3 +40,23 @@ mkdir -p /srv/moodle
   echo
   echo
 } > /srv/moodle/autorun
+
+# add port(s)
+function get_ports {
+  echo "8082"
+}
+
+# add size (in MB)
+function get_size {
+  echo "350"
+}
+
+# add info
+function get_info {
+  echo "https://github.com/treehouses/moodole"
+  echo
+  echo "\"Moodle <https://moodle.org> is a learning platform designed to"
+  echo "provide educators, administrators and learners with a single robust,"
+  echo "secure and integrated system to create personalised learning"
+  echo "environments.\""
+}

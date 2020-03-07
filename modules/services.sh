@@ -7,13 +7,13 @@ function services {
 
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
-    if [ -d "$TEMPLATES/services/install-scripts" ]; then
-      for file in $TEMPLATES/services/install-scripts/*
+    if [ -d "$SERVICES" ]; then
+      for file in $SERVICES/*
       do
         echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//'
       done
     else
-      echo "$TEMPLATES/services/install-scripts directory does not exist"
+      echo "$SERVICES directory does not exist"
       exit 1
     fi    
   # list all installed services
@@ -70,13 +70,13 @@ function services {
       case "$command" in
         install)
           if [ "$service_name" = "planet" ]; then
-            if bash $TEMPLATES/services/install-scripts/install-planet.sh ; then
+            if bash $SERVICES/install-planet.sh ; then
               echo "planet installed"
             else
               echo "error running install script"
               exit 1
             fi
-          elif bash $TEMPLATES/services/install-scripts/install-${service_name}.sh ; then
+          elif bash $SERVICES/install-${service_name}.sh ; then
             if docker-compose -f /srv/${service_name}/${service_name}.yml pull ; then
               echo "${service_name} installed"
             else

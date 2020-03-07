@@ -55,26 +55,6 @@ mkdir -p /srv/mastodon
   echo "STREAMING_CLUSTER_NUM=1"
 } > /srv/mastodon/.env.production
 
-# add port(s)
-{
-  echo "3000"
-  echo "4000"
-} > /srv/mastodon/ports
-
-# add size (in MB)
-{
-  echo "1000"
-} > /srv/mastodon/size
-
-# add info
-{
-  echo "https://github.com/gilir/rpi-mastodon, https://github.com/tootsuite/mastodon"
-  echo                 
-  echo "\"Mastodon is a free, open-source social network server, a decentralized solution to"
-  echo "commercial platforms. It avoids the risks of a single company monopolizing your"
-  echo "communication. Anyone can run Mastodon and participate in the social network seamlessly.\""
-} > /srv/mastodon/info
-
 # add autorun
 {
   echo "mastodon_autorun=true"
@@ -85,3 +65,23 @@ mkdir -p /srv/mastodon
   echo
   echo
 } > /srv/mastodon/autorun
+
+# add port(s)
+function get_ports {
+  echo "3000"
+  echo "4000"
+}
+
+# add size (in MB)
+function get_size {
+  echo "1000"
+}
+
+# add info
+function get_info {
+  echo "https://github.com/gilir/rpi-mastodon, https://github.com/tootsuite/mastodon"
+  echo                 
+  echo "\"Mastodon is a free, open-source social network server, a decentralized solution to"
+  echo "commercial platforms. It avoids the risks of a single company monopolizing your"
+  echo "communication. Anyone can run Mastodon and participate in the social network seamlessly.\""
+}

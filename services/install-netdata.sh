@@ -23,25 +23,6 @@ mkdir -p /srv/netdata
   echo "      - /sys:/host/sys:ro"
 } > /srv/netdata/netdata.yml
 
-# add port(s)
-{
-  echo "19999"
-} > /srv/netdata/ports
-
-# add size (in MB)
-{
-  echo "300"
-} > /srv/netdata/size
-
-# add info
-{
-  echo "https://github.com/netdata/netdata"
-  echo
-  echo "\"Netdata is distributed, real-time performance and health monitoring"
-  echo "for systems and applications. It is a highly-optimized monitoring agent"
-  echo "you install on all your systems and containers.\""
-} > /srv/netdata/info
-
 # add autorun
 {
   echo "netdata_autorun=true"
@@ -52,3 +33,22 @@ mkdir -p /srv/netdata
   echo
   echo
 } > /srv/netdata/autorun
+
+# add port(s)
+function get_ports {
+  echo "19999"
+}
+
+# add size (in MB)
+function get_size {
+  echo "300"
+}
+
+# add info
+function get_info {
+  echo "https://github.com/netdata/netdata"
+  echo
+  echo "\"Netdata is distributed, real-time performance and health monitoring"
+  echo "for systems and applications. It is a highly-optimized monitoring agent"
+  echo "you install on all your systems and containers.\""
+}

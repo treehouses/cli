@@ -39,24 +39,6 @@ mkdir -p /srv/pihole
   echo "    # restart: unless-stopped"
 } > /srv/pihole/pihole.yml
 
-# add port(s)
-{
-  echo "8053"
-} > /srv/pihole/ports
-
-# add size (in MB)
-{
-  echo "350"
-} > /srv/pihole/size
-
-# add info
-{
-  echo "https://github.com/pi-hole/docker-pi-hole"
-  echo
-  echo "\"The Pi-hole® is a DNS sinkhole that protects your devices from"
-  echo "unwanted content, without installing any client-side software.\""
-} > /srv/pihole/info
-
 # add autorun
 {
   echo "pihole_autorun=true"
@@ -68,3 +50,21 @@ mkdir -p /srv/pihole
   echo
   echo
 } > /srv/pihole/autorun
+
+# add port(s)
+function get_ports {
+  echo "8053"
+}
+
+# add size (in MB)
+function get_size {
+  echo "350"
+}
+
+# add info
+function get_info {
+  echo "https://github.com/pi-hole/docker-pi-hole"
+  echo
+  echo "\"The Pi-hole® is a DNS sinkhole that protects your devices from"
+  echo "unwanted content, without installing any client-side software.\""
+}

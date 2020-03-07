@@ -15,28 +15,6 @@ mkdir -p /srv/ntopng
   echo "version: \"2\""
 } > /srv/ntopng/ntopng.yml
 
-# add port(s)
-{
-  echo "8084"
-} > /srv/ntopng/ports
-
-# add size (in MB)
-{
-  echo "400"
-} > /srv/ntopng/size
-
-# add info
-{
-  echo "https://github.com/ntop/ntopng"
-  echo                 
-  echo "\"ntopng is the next generation version of the original ntop,"
-  echo "a network traffic probe that monitors network usage. ntopng is"
-  echo "based on libpcap and it has been written in a portable way in order"
-  echo "to virtually run on every Unix platform, MacOSX and on Windows as well."
-  echo "Educational users can obtain commercial products at no cost please see here:"
-  echo "https://www.ntop.org/support/faq/do-you-charge-universities-no-profit-and-research/\""
-} > /srv/ntopng/info
-
 # add autorun
 {
   echo "ntopng_autorun=true"
@@ -48,3 +26,25 @@ mkdir -p /srv/ntopng
   echo
   echo
 } > /srv/ntopng/autorun
+
+# add port(s)
+function get_ports {
+  echo "8084"
+}
+
+# add size (in MB)
+function get_size {
+  echo "400"
+}
+
+# add info
+function get_info {
+  echo "https://github.com/ntop/ntopng"
+  echo                 
+  echo "\"ntopng is the next generation version of the original ntop,"
+  echo "a network traffic probe that monitors network usage. ntopng is"
+  echo "based on libpcap and it has been written in a portable way in order"
+  echo "to virtually run on every Unix platform, MacOSX and on Windows as well."
+  echo "Educational users can obtain commercial products at no cost please see here:"
+  echo "https://www.ntop.org/support/faq/do-you-charge-universities-no-profit-and-research/\""
+}

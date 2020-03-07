@@ -49,25 +49,6 @@ mkdir -p /srv/planet
   echo "version: \"2\""
 } > /srv/planet/volumes.yml
 
-# add port(s)
-{
-  echo "80"
-  echo "2200"
-} > /srv/planet/ports
-
-# add size (in MB)
-{
-  echo "450"
-} > /srv/planet/size
-
-# add info
-{
-  echo "https://github.com/open-learning-exchange/planet"
-  echo
-  echo "\"Planet Learning is a generic learning system built in Angular"
-  echo "& CouchDB.\""
-} > /srv/planet/info
-
 # add autorun
 {
   echo "planet_autorun=true"
@@ -82,3 +63,22 @@ mkdir -p /srv/planet
   echo
   echo
 } > /srv/planet/autorun
+
+# add port(s)
+function get_ports {
+  echo "80"
+  echo "2200"
+}
+
+# add size (in MB)
+function get_size {
+  echo "450"
+}
+
+# add info
+function get_info {
+  echo "https://github.com/open-learning-exchange/planet"
+  echo
+  echo "\"Planet Learning is a generic learning system built in Angular"
+  echo "& CouchDB.\""
+}

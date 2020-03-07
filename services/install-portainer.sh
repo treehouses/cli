@@ -18,25 +18,6 @@ mkdir -p /srv/portainer
   echo "  portainer_data:"
 } > /srv/portainer/portainer.yml
 
-# add port(s)
-{
-  echo "9000"
-} > /srv/portainer/ports
-
-# add size (in MB)
-{
-  echo "100"
-} > /srv/portainer/size
-
-# add info
-{
-  echo "https://github.com/portainer/portainer"
-  echo
-  echo "\"Portainer is a lightweight management UI which allows you to"
-  echo "easily manage your different Docker environments (Docker hosts or"
-  echo "Swarm clusters).\""
-} > /srv/portainer/info
-
 # add autorun
 {
   echo "portainer_autorun=true"
@@ -47,3 +28,22 @@ mkdir -p /srv/portainer
   echo
   echo
 } > /srv/portainer/autorun
+
+# add port(s)
+function get_ports {
+  echo "9000"
+}
+
+# add size (in MB)
+function get_size {
+  echo "100"
+}
+
+# add info
+function get_info {
+  echo "https://github.com/portainer/portainer"
+  echo
+  echo "\"Portainer is a lightweight management UI which allows you to"
+  echo "easily manage your different Docker environments (Docker hosts or"
+  echo "Swarm clusters).\""
+}

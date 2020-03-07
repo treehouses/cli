@@ -15,23 +15,6 @@ mkdir -p /srv/kolibri
   echo "version: \"2\""
 } > /srv/kolibri/kolibri.yml
 
-# add port(s)
-{
-  echo "8080"
-} > /srv/kolibri/ports
-
-# add size (in MB)
-{
-  echo "650"
-} > /srv/kolibri/size
-
-# add info
-{
-  echo "https://github.com/treehouses/kolibri"
-  echo
-  echo "\"Kolibri is the offline learning platform from Learning Equality.\""
-} > /srv/kolibri/info
-
 # add autorun
 {
   echo "kolibri_autorun=true"
@@ -42,3 +25,20 @@ mkdir -p /srv/kolibri
   echo
   echo
 } > /srv/kolibri/autorun
+
+# add port(s)
+function get_ports {
+  echo "8080"
+}
+
+# add size (in MB)
+function get_size {
+  echo "650"
+}
+
+# add info
+function get_info {
+  echo "https://github.com/treehouses/kolibri"
+  echo
+  echo "\"Kolibri is the offline learning platform from Learning Equality.\""
+}

@@ -15,24 +15,6 @@ mkdir -p /srv/nextcloud
   echo "version: \"2\""
 } > /srv/nextcloud/nextcloud.yml
 
-# add port(s)
-{
-  echo "8081"
-} > /srv/nextcloud/ports
-
-# add size (in MB)
-{
-  echo "900"
-} > /srv/nextcloud/size
-
-# add info
-{
-  echo "https://github.com/nextcloud"
-  echo
-  echo "\"A safe home for all your data. Access & share your files, calendars,"
-  echo "contacts, mail & more from any device, on your terms.\""
-} > /srv/nextcloud/info
-
 # add autorun
 {
   echo "nextcloud_autorun=true"
@@ -43,3 +25,21 @@ mkdir -p /srv/nextcloud
   echo
   echo
 } > /srv/nextcloud/autorun
+
+# add port(s)
+function get_ports {
+  echo "8081"
+}
+
+# add size (in MB)
+function get_size {
+  echo "900"
+}
+
+# add info
+function get_info {
+  echo "https://github.com/nextcloud"
+  echo
+  echo "\"A safe home for all your data. Access & share your files, calendars,"
+  echo "contacts, mail & more from any device, on your terms.\""
+}

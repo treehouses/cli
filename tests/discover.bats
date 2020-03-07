@@ -6,15 +6,8 @@ load test-helper
   assert_success
 }
 
-@test "$clinom discover scan google.com" {
-  run "${clicmd}" discover scan google.com
-  assert_success
-}
-
-@test "$clinom discover scan scanme.nmap.org" {
-  run "${clicmd}" discover scan scanme.nmap.org
-  assert_success
-}
+@test "$clinom discover scan google.com (manually test w/out bats - takes time)" {}
+@test "$clinom discover scan scanme.nmap.org (manually test w/out bats - takes time)" {}
 
 @test "$clinom discover interface" {
   run "${clicmd}" discover interface

@@ -31,10 +31,5 @@
   "bugs": {
     "url": "https://github.com/treehouses/cli/issues",
     "email": "vi@treehouses.io"
-  },
-  "homepage": "https://github.com/treehouses/cli",
-  "dependencies": {
-    "bats-assert": "^2.0.0",
-    "bats-support": "^0.3.0"
   }
 }

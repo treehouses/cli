@@ -44,7 +44,7 @@ load test-helper
 }
 
 @test "$clinom tor delete 22" {
-  run "${clicmd}" tor start
+  run "${clicmd}" tor delete 22
   assert_success
   assert_output -p 'has been deleted'
 }

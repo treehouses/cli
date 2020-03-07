@@ -43,16 +43,16 @@ load test-helper
   assert_output -p 'Success'
 }
 
-@test "$clinom tor start" {
-  run "${clicmd}" tor start
-  assert_success
-  assert_output -p 'Success'
-}
-
 @test "$clinom tor delete 22" {
   run "${clicmd}" tor start
   assert_success
   assert_output -p 'has been deleted'
+}
+
+@test "$clinom tor start" {
+  run "${clicmd}" tor start
+  assert_success
+  assert_output -p 'Success'
 }
 
 @test "$clinom tor deleteall" {

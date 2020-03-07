@@ -259,9 +259,12 @@ function services {
           elif [ "$command_option" = "tor" ]; then
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
-              tor_url=$(tor)
-              tor_url+=":"
-              tor_url+=$(get_port $service_name | sed -n "$i p")
+              if tor ; then
+                tor_url=$(tor)
+                tor_url+=":"
+                tor_url+=$(get_port $service_name | sed -n "$i p")
+              fi
+
               if [ "$service_name" = "pihole" ]; then
                 tor_url+="/admin"
               fi

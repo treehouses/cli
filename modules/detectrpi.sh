@@ -57,7 +57,7 @@ function detectrpi {
     if [[ "$1" == "" ]];
     then
       echo ${rpimodels[$rpimodel]}
-    elif [[ "$1" == "model" ]] && [[ "$2" == "" ]]; 
+    elif [[ "$1" == "model" ]];
     then
       echo "$rpimodel"
     elif [[ "$1" == "full" ]] && [[ "$2" == "" ]];

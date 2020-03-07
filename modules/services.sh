@@ -129,6 +129,12 @@ function services {
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
+            couchdb)
+              check_space "treehouses/couchdb"
+              create_yml "couchdb"
+              docker_compose_up "couchdb"
+              check_tor "5984"
+              ;;
             *)
               echo "unknown service"
               ;;
@@ -364,6 +370,7 @@ function services_help {
   echo "  privatebin   PrivateBin is a minimalist, open source online pastebin"
   echo "  portainer    Portainer is a lightweight management UI for Docker environments"
   echo "  ntopng       Ntopng is a network traffic probe that monitors network usage"
+  echo "  couchdb      Apache CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang."
   echo
   echo
   echo "Top-Level Commands:"
@@ -400,11 +407,13 @@ function services_help {
   echo "                             ..... down"
   echo "                             ..... start"
   echo "                             ..... stop"
+  echo "                             ..... restart"
   echo "                             ..... autorun [true|false]"
   echo "                             ..... ps"
+  echo "                             ..... info"
   echo "                             ..... url <local|tor|both>"
   echo "                             ..... port"
-  echo "                             ..... info"
+  echo "                             ..... size"
   echo
   echo "    install                 installs and pulls <service_name>"
   echo
@@ -416,11 +425,15 @@ function services_help {
   echo
   echo "    stop                    stops <service_name>"
   echo
+  echo "    restart                 restarts <service_name>"
+  echo
   echo "    autorun                 outputs true if <service_name> is set to autorun or false otherwise"
   echo "        [true]                  sets <service_name> autorun to true"
   echo "        [false]                 sets <service_name> autorun to false"
   echo
   echo "    ps                      outputs the containers related to <service_name>"
+  echo
+  echo "    info                    gives some information about <service_name>"
   echo
   echo "    url                     <requires one of the options given below>"
   echo "        <local>                 lists the local url for <service_name>"
@@ -429,7 +442,7 @@ function services_help {
   echo
   echo "    port                    lists the ports used by <service_name>"
   echo
-  echo "    info                    gives some information about <service_name>"
+  echo "    size                    outputs the size of <service_name>"
   echo
   echo "  Examples:"
   echo

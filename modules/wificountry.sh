@@ -1,6 +1,11 @@
 function wificountry {
   local country
   country=$1
+  country_codes=(US CA JP3 DE NL IT PT LU NO FI DK CH CZ ES GB KR CN FR HK SG TW BR
+                 IL SA LB AE ZA AR AU AT BO CL GR IS IN IE KW LI LT MX MA NZ PL PR
+                 SK SI TH UY PA RU KW LI LT MX MA NZ PL PR SK SI TH UY PA RU EG TT
+                 TR CR EC HN KE UA VN BG CY EE MU RO CS ID PE VE JM BH OM JO BM CO
+                 DO GT PH LK SV TN PK QA DZ)
 
   case "$1" in
     "")
@@ -15,6 +20,18 @@ function wificountry {
       ;;
 
     *)
+      found=false
+      for country_code in "${country_codes[@]}"
+      do
+        if [ "$country" = "$country_code" ]; then
+          found=true
+          break
+        fi
+      done
+      if [ "$found" = false ]; then
+        echo "error: invalid country code"
+        exit 1
+      fi
       if [ -e /etc/wpa_supplicant/wpa_supplicant.conf ]; then
         if grep -q "^country=" /etc/wpa_supplicant/wpa_supplicant.conf ; then
           sed -i --follow-symlinks "s/^country=.*/country=$country/g" /etc/wpa_supplicant/wpa_supplicant.conf

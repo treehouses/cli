@@ -53,9 +53,9 @@ function services {
     for i in "${array[@]}"
     do
       port_string=""
-      for j in $(seq 1 "$(get_port $i | wc -l)")
+      for j in $(seq 1 "$(services $service_name port $i | wc -l)")
       do
-        port_string+=$(get_port $i | sed -n "$j p")
+        port_string+=$(services $service_name port $i | sed -n "$j p")
         port_string+=" "
       done
       if [ ! -z "$port_string" ]; then
@@ -107,26 +107,26 @@ function services {
                   exit 1
                 fi
               fi
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              for i in $(seq 1 "$(services $service_name port $service_name | wc -l)")
               do
-                check_tor "$(get_port $service_name | sed -n "$i p")"
+                check_tor "$(services $service_name port $service_name | sed -n "$i p")"
               done
               ;;
             kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon)
               check_space $service_name
               docker_compose_up $service_name
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              for i in $(seq 1 "$(services $service_name port $service_name | wc -l)")
               do
-                check_tor "$(get_port $service_name | sed -n "$i p")"
+                check_tor "$(services $service_name port $service_name | sed -n "$i p")"
               done
               ;;
             pihole)
               check_space "pihole"
               service dnsmasq stop
               docker_compose_up "pihole"
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              for i in $(seq 1 "$(services $service_name port $service_name | wc -l)")
               do
-                check_tor "$(get_port $service_name | sed -n "$i p")"
+                check_tor "$(services $service_name port $service_name | sed -n "$i p")"
               done
               ;;
             couchdb)
@@ -246,22 +246,22 @@ function services {
           ;;
         url)
           if [ "$command_option" = "local" ]; then
-            for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            for i in $(seq 1 "$(services $service_name port $service_name | wc -l)")
             do
               local_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
               local_url+=":"
-              local_url+=$(get_port $service_name | sed -n "$i p")
+              local_url+=$(services $service_name port $service_name | sed -n "$i p")
               if [ "$service_name" = "pihole" ]; then
                 local_url+="/admin"
               fi
               echo $local_url
             done
           elif [ "$command_option" = "tor" ]; then
-            for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            for i in $(seq 1 "$(services $service_name port $service_name | wc -l)")
             do
               tor_url=$(tor)
               tor_url+=":"
-              tor_url+=$(get_port $service_name | sed -n "$i p")
+              tor_url+=$(services $service_name port $service_name | sed -n "$i p")
               if [ "$service_name" = "pihole" ]; then
                 tor_url+="/admin"
               fi
@@ -275,7 +275,7 @@ function services {
           fi
           ;;
         port)
-          get_port $service_name
+          source $SERVICES/install-${1}.sh && get_ports
           ;;
         info)
           source $SERVICES/install-${service_name}.sh && get_info
@@ -338,10 +338,6 @@ function check_tor {
       fi
     fi
   fi
-}
-
-function get_port {
-  source $SERVICES/install-${1}.sh && get_ports
 }
 
 function services_help {

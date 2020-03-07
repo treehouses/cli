@@ -7,39 +7,26 @@ function services {
 
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
-    if [ "$command" = "full" ]; then
-      while IFS= read -r -d '' service
+    if [ -d "$SERVICES" ]; then
+      for file in $SERVICES/*
       do
-        service=$(basename "$service")
-        find_available_services "$service"
-      done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
-    elif [ -z "$command" ]; then
-      results=""
-
-      while IFS= read -r -d '' service
-      do
-        results+=$(basename "$service")
-        results+=" "
-      done < <(find "$TEMPLATES/services/"* -maxdepth 1 -type d -print0)
-
-      echo ${results}
-    fi
+        echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//'
+      done
+    else
+      echo "$SERVICES directory does not exist"
+      exit 1
+    fi    
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
     if [ "$command" = "full" ]; then
       docker ps -a
     elif [ -z "$command" ]; then
-      installed=$(docker ps -a --format '{{.Names}}')
+      installed=$(docker images --format '{{.Repository}}' | sed -e 's:.*/::' -e 's:.*-::')
       array=($installed)
-      results=""
-
-      for i in "${array[@]}"
-      do
-        results+="${i%%_*}"
-        results+=" "
-      done
-
-      echo ${results} | tr ' ' '\n' | uniq | xargs
+      IFS=$'\n' sorted=($(sort <<<"${array[*]}"))
+      unset IFS
+      available=($(services available))
+      comm -12 <(printf '%s\n' "${sorted[@]}") <(printf '%s\n' "${available[@]}")
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
@@ -49,13 +36,15 @@ function services {
       running=$(docker ps --format '{{.Names}}')
       array=($running)
       results=""
-
       for i in "${array[@]}"
       do
-        results+="${i%%_*}"
+        if [[ $i == *"_"* ]]; then
+          results+="${i%%_*}"
+        elif [[ $i == *"-"* ]]; then
+          results+="${i%%-*}"
+        fi
         results+=" "
       done
-
       echo ${results} | tr ' ' '\n' | uniq | xargs
     fi
   # list all ports used by services
@@ -69,7 +58,9 @@ function services {
         port_string+=$(get_port $i | sed -n "$j p")
         port_string+=" "
       done
-      printf "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
+      if [ ! -z "$port_string" ]; then
+        printf "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
+      fi
     done
   else
     if [ -z "$command" ]; then
@@ -77,10 +68,30 @@ function services {
       exit 1
     else
       case "$command" in
+        install)
+          if [ "$service_name" = "planet" ]; then
+            if source $SERVICES/install-planet.sh && install ; then
+              echo "planet installed"
+            else
+              echo "error running install script"
+              exit 1
+            fi
+          elif source $SERVICES/install-${service_name}.sh && install ; then
+            if docker-compose -f /srv/${service_name}/${service_name}.yml pull ; then
+              echo "${service_name} installed"
+            else
+              echo "error pulling docker image"
+              exit 1
+            fi
+          else
+            echo "error running install script"
+            exit 1
+          fi
+          ;;
         up)
           case "$service_name" in
             planet)
-              check_space "treehouses/planet"
+              check_space "planet"
               if [ -f /srv/planet/pwd/credentials.yml ]; then
                 if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
                   echo "planet built and started"
@@ -96,63 +107,27 @@ function services {
                   exit 1
                 fi
               fi
-              check_tor "80"
+              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              do
+                check_tor "$(get_port $service_name | sed -n "$i p")"
+              done
               ;;
-            kolibri)
-              check_space "treehouses/kolibri"
-              create_yml "kolibri"
-              docker_compose_up "kolibri"
-              check_tor "8080"
-              ;;
-            nextcloud)
-              check_space "library/nextcloud"
-              create_yml "nextcloud"
-              docker_compose_up "nextcloud"
-              check_tor "8081"
+            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon)
+              check_space $service_name
+              docker_compose_up $service_name
+              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              do
+                check_tor "$(get_port $service_name | sed -n "$i p")"
+              done
               ;;
             pihole)
-              check_space "pihole/pihole"
-              create_yml "pihole"
+              check_space "pihole"
               service dnsmasq stop
               docker_compose_up "pihole"
-              check_tor "8053"
-              ;;
-            moodle)
-              check_space "treehouses/moodle"
-              create_yml "moodle"
-              docker_compose_up "moodle"
-              check_tor "8082"
-              ;;
-            privatebin)
-              check_space "treehouses/privatebin"
-              create_yml "privatebin"
-              docker_compose_up "privatebin"
-              check_tor "8083"
-              ;;
-            portainer)
-              check_space "portainer/portainer"
-              create_yml "portainer"
-              docker_compose_up "portainer"
-              check_tor "9000"
-              ;;
-            netdata)
-              check_space "netdata/netdata"
-              create_yml "netdata"
-              docker_compose_up "netdata"
-              check_tor "19999"
-              ;;
-            mastodon)
-              check_space "gilir/rpi-mastodon"
-              create_yml "mastodon"
-              docker_compose_up "mastodon"
-              check_tor "3000"
-              check_tor "4000"
-              ;;
-            ntopng)            
-              check_space "jonbackhaus/ntopng"
-              create_yml "ntopng"
-              docker_compose_up "ntopng"
-              check_tor "8084"
+              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              do
+                check_tor "$(get_port $service_name | sed -n "$i p")"
+              done
               ;;
             couchdb)
               check_space "treehouses/couchdb"
@@ -165,60 +140,46 @@ function services {
               ;;
           esac
           ;;
-
         down)
-          case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng|couchdb)
-              if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
-                echo "yml file doesn't exit"
-              else
-                docker-compose -f /srv/${service_name}/${service_name}.yml down
-                echo "${service_name} stopped and removed"
-              fi
-              ;;
-            *)
-              echo "unknown service"
-              ;;
-          esac
+          if check_available_services $service_name; then
+            if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+              echo "${service_name}.yml not found"
+            else
+              docker-compose -f /srv/${service_name}/${service_name}.yml down
+              echo "${service_name} stopped and removed"
+            fi
+          else
+            echo "unknown service"
+          fi
           ;;
-
         start)
-          case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng|couchdb)
-              if docker ps -a | grep -q $service_name; then
-                docker-compose -f /srv/${service_name}/${service_name}.yml start
-                echo "${service_name} started"
-              else
-                echo "service not found"
-              fi
-              ;;
-            *)
-              echo "unknown service"
-              ;;
-          esac
+          if check_available_services $service_name; then
+            if docker ps -a | grep -q $service_name; then
+              docker-compose -f /srv/${service_name}/${service_name}.yml start
+              echo "${service_name} started"
+            else
+              echo "${service_name} not found"
+            fi
+          else
+            echo "unknown service"
+          fi
           ;;
-
         stop)
-          case "$service_name" in
-            planet|kolibri|pihole|moodle|privatebin|nextcloud|portainer|netdata|mastodon|ntopng|couchdb)
-              if docker ps -a | grep -q $service_name; then
-                docker-compose -f /srv/${service_name}/${service_name}.yml stop
-                echo "${service_name} stopped"
-              else
-                echo "service not found"
-              fi
-              ;;
-            *)
-              echo "unknown service"
-              ;;
-          esac
+          if check_available_services $service_name; then
+            if docker ps -a | grep -q $service_name; then
+              docker-compose -f /srv/${service_name}/${service_name}.yml stop
+              echo "${service_name} stopped"
+            else
+              echo "${service_name} not found"
+            fi
+          else
+            echo "unknown service"
+          fi
           ;;
-
         restart)
           services $service_name stop
           services $service_name up
           ;;
-
         autorun)
           # if no command_option, output true or false
           if [ -z "$command_option" ]; then
@@ -259,16 +220,15 @@ function services {
             done < /boot/autorun
             # if lines aren't found, add them
             if [ "$found" = false ]; then
-              cat $TEMPLATES/services/${service_name}/${service_name}_autorun >> /boot/autorun
+              if [ ! -e /srv/${service_name}/autorun ]; then
+                echo "${service_name} autorun file not found"
+                echo "run \"$BASENAME services ${service_name} install\" first"
+                exit 1
+              fi
+              cat /srv/${service_name}/autorun >> /boot/autorun
             else
               sed -i "/${service_name}_autorun=false/c\\${service_name}_autorun=true" /boot/autorun
             fi
-
-            # # if yml file doesn't exist, create it
-            # if [ -e /srv/${service_name}/${service_name}.yml ]; then
-            #   bash $TEMPLATES/services/${service_name}/${service_name}_yml.sh
-            # fi
-            
             echo "service autorun set to true"
           # stop service from autostarting
           elif [ "$command_option" = "false" ]; then
@@ -281,94 +241,9 @@ function services {
             echo "unknown command option"
           fi
           ;;
-
         ps)
           docker ps -a | grep $service_name
           ;;
-
-        info)
-          case "$service_name" in
-            planet)
-              echo "https://github.com/open-learning-exchange/planet"
-              echo
-              echo "\"Planet Learning is a generic learning system built in Angular"
-              echo "& CouchDB.\""
-              ;;
-            kolibri)
-              echo "https://github.com/treehouses/kolibri"
-              echo
-              echo "\"Kolibri is the offline learning platform from Learning Equality.\""
-              ;;
-            nextcloud)
-              echo "https://github.com/nextcloud"
-              echo
-              echo "\"A safe home for all your data. Access & share your files, calendars,"
-              echo "contacts, mail & more from any device, on your terms.\""
-              ;;
-            pihole)
-              echo "https://github.com/pi-hole/docker-pi-hole"
-              echo
-              echo "\"The Pi-hole® is a DNS sinkhole that protects your devices from"
-              echo "unwanted content, without installing any client-side software.\""
-              ;;
-            moodle)
-              echo "https://github.com/treehouses/moodole"
-              echo
-              echo "\"Moodle <https://moodle.org> is a learning platform designed to"
-              echo "provide educators, administrators and learners with a single robust,"
-              echo "secure and integrated system to create personalised learning"
-              echo "environments.\""
-              ;;
-            privatebin)
-              echo "https://github.com/treehouses/privatebin"
-              echo
-              echo "\"A minimalist, open source online pastebin where the server has"
-              echo "zero knowledge of pasted data. Data is encrypted/decrypted in the"
-              echo "browser using 256 bits AES. https://privatebin.info/\""
-              ;;
-            portainer)
-              echo "https://github.com/portainer/portainer"
-              echo
-              echo "\"Portainer is a lightweight management UI which allows you to"
-              echo "easily manage your different Docker environments (Docker hosts or"
-              echo "Swarm clusters).\""
-              ;;
-            netdata)
-              echo "https://github.com/netdata/netdata"
-              echo
-              echo "\"Netdata is distributed, real-time performance and health monitoring for systems and applications."
-              echo "It is a highly-optimized monitoring agent you install on all your systems and containers.\""
-              ;;
-            mastodon)
-              echo "https://github.com/gilir/rpi-mastodon, https://github.com/tootsuite/mastodon"
-              echo 
-              echo "Mastodon is a free, open-source social network server, a decentralized solution to commercial platforms." 
-              echo "It avoids the risks of a single company monopolizing your communication."
-              echo "Anyone can run Mastodon and participate in the social network seamlessly."
-              ;;
-            ntopng)
-              echo "https://github.com/ntop/ntopng"
-              echo                 
-              echo "\"ntopng is the next generation version of the original ntop,"
-              echo "a network traffic probe that monitors network usage. ntopng is"
-              echo "based on libpcap and it has been written in a portable way in order"
-              echo "to virtually run on every Unix platform, MacOSX and on Windows as well."
-              echo "Educational users can obtain commercial products at no cost please see here:"
-              echo "https://www.ntop.org/support/faq/do-you-charge-universities-no-profit-and-research/\""
-              ;;
-            couchdb)
-              echo "https://github.com/treehouses/rpi-couchdb"
-              echo "https://github.com/docker-library/docs/tree/master/couchdb"
-              echo
-              echo "\"Apache CouchDB lets you access your data where you need it by defining the"
-              echo "Couch Replication Protocol that is implemented by a variety of projects and products"
-              echo "that span every imaginable computing environment from globally distributed server-clusters,"
-              echo "over mobile phones to web browsers.\""
-              ;;
-          esac
-          ;;
-
-        # local and tor url
         url)
           if [ "$command_option" = "local" ]; then
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
@@ -376,24 +251,23 @@ function services {
               local_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
               local_url+=":"
               local_url+=$(get_port $service_name | sed -n "$i p")
-
               if [ "$service_name" = "pihole" ]; then
                 local_url+="/admin"
               fi
-
               echo $local_url
             done
           elif [ "$command_option" = "tor" ]; then
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
-              tor_url=$(tor)
-              tor_url+=":"
-              tor_url+=$(get_port $service_name | sed -n "$i p")
+              if tor ; then
+                tor_url=$(tor)
+                tor_url+=":"
+                tor_url+=$(get_port $service_name | sed -n "$i p")
+              fi
 
               if [ "$service_name" = "pihole" ]; then
                 tor_url+="/admin"
               fi
-
               echo $tor_url
             done
           elif [ "$command_option" = "both" ]; then
@@ -401,55 +275,17 @@ function services {
             services $service_name url tor
           else
             echo "unknown command"
-            echo "usage: $BASENAME services <service_name> url [local | tor | both]"
           fi
           ;;
-
         port)
           get_port $service_name
           ;;
-
-        size)
-          case "$service_name" in
-            planet)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/planet/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
-              ;;
-            kolibri)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/kolibri/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
-              ;;
-            pihole)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/pihole/pihole/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
-              ;;
-            moodle)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/moodle/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
-              ;;
-            privatebin)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/privatebin/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
-              ;;
-            nextcloud)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/library/nextcloud/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
-              ;;
-            portainer)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/portainer/portainer/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
-              ;;
-            netdata)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/netdata/netdata/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
-              ;;
-            mastodon)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/gilir/rpi-mastodon/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
-              ;;
-            ntopng)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/jonbackhaus/ntopng/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
-              ;;
-            couchdb)
-              curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/treehouses/couchdb/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size' | numfmt --to=iec
-              ;;
-            *)
-              echo "unknown service"
-              ;;
-          esac
+        info)
+          source $SERVICES/install-${service_name}.sh && get_info
           ;;
-
+        size)
+          echo "$(source $SERVICES/install-${service_name}.sh && get_size)M"
+          ;;
         *)
           echo "unknown command"
           ;;
@@ -458,21 +294,15 @@ function services {
   fi
 }
 
-# list all services found in /templates/services
-function find_available_services {
-  local service_name available_formats
-  service_name="$1"
-  available_formats=$(find "$TEMPLATES/services/$service/"* -exec basename {} \; | tr '\n' "|" | sed '$s/|$//')
-  echo "$service [$available_formats]"
-}
-
-function create_yml {
-  if bash $TEMPLATES/services/${1}/${1}_yml.sh ; then
-    echo "yml file created"
-  else
-    echo "error creating yml file"
-    exit 1
-  fi
+function check_available_services {
+  array=($(services available))
+  for service in "${array[@]}"
+  do
+    if [ "${1}" == "$service" ]; then
+      return 0
+    fi
+  done
+  return 1
 }
 
 function docker_compose_up {
@@ -485,80 +315,36 @@ function docker_compose_up {
 }
 
 function check_space {
-  local image_size free_space
-  image_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')
+  local service_size service_name free_space
+  # service_size=$(curl -s -H "Authorization: JWT " "https://hub.docker.com/v2/repositories/${1}/tags/?page_size=100" | jq -r '.results[] | select(.name == "latest") | .images[0].size')
+  service_name="$1"
+  service_size=$(numfmt --from-unit=Mi < /srv/${service_name}/size)
   free_space=$(df -Ph /var/lib/docker | awk 'END {print $4}' | numfmt --from=iec)
 
-  if (( image_size > free_space )); then
-    echo "image size:" $image_size
+  if (( service_size > free_space )); then
+    echo "service size:" $service_size
     echo "free space:" $free_space
     echo "not enough free space"
     exit 1
   fi
 }
 
-# tor status and port check
 function check_tor {
-  local port
-  port="$1"
   if [ "$(tor status)" = "active" ]; then
     echo "tor active"
-    if ! tor list | grep -w $port; then
-      echo "adding port ${port}"
+    if ! tor list | grep -w $1; then
+      echo "adding port ${1}"
       if [[ $(pstree -ps $$) == *"ssh"* ]]; then
-        screen -dm bash -c "tor add ${port}"
+        screen -dm bash -c "tor add ${1}"
       else
-        tor add ${port}
+        tor add $1
       fi
     fi
   fi
 }
 
-# get port number for specified service
 function get_port {
-  local service_name
-  service_name="$1"
-
-  case "$service_name" in
-    planet)
-      echo "80"
-      echo "2200"
-      ;;
-    kolibri)
-      echo "8080"
-      ;;
-    nextcloud)
-      echo "8081"
-      ;;
-    pihole)
-      echo "8053"
-      ;;
-    moodle)
-      echo "8082"
-      ;;
-    privatebin)
-      echo "8083"
-      ;;
-    portainer)
-      echo "9000"
-      ;;
-    netdata)
-      echo "19999"
-      ;;
-    mastodon)
-      echo "3000"
-      echo "4000"
-      ;;
-    ntopng)
-      echo "8090"
-      ;;
-    couchdb)
-      echo "5984"
-      ;;
-    *)
-      echo "unknown service"
-      ;;
-  esac
+  source $SERVICES/install-${1}.sh && get_ports
 }
 
 function services_help {
@@ -607,7 +393,8 @@ function services_help {
   echo "Service-Specific Commands:"
   echo
   echo "  Usage:"
-  echo "    $BASENAME services <service_name> up"
+  echo "    $BASENAME services <service_name> install"
+  echo "                             ..... up"
   echo "                             ..... down"
   echo "                             ..... start"
   echo "                             ..... stop"
@@ -618,6 +405,8 @@ function services_help {
   echo "                             ..... url <local|tor|both>"
   echo "                             ..... port"
   echo "                             ..... size"
+  echo
+  echo "    install                 installs and pulls <service_name>"
   echo
   echo "    up                      builds and starts <service_name>"
   echo

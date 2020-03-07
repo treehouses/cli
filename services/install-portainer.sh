@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# create service directory
-mkdir -p /srv/portainer
-
 function install {
+  # create service directory
+  mkdir -p /srv/portainer
+
   # create yml(s)
   {
     echo "services:"

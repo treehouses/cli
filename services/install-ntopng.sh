@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# create service directory
-mkdir -p /srv/ntopng
-
 function install {
+  # create service directory
+  mkdir -p /srv/ntopng
+
   # create yml(s)
   {
     echo "services:"

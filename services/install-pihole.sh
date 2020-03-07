@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# create service directory
-mkdir -p /srv/pihole
-
 function install {
+  # create service directory
+  mkdir -p /srv/pihole
+
   # create yml(s)
   {
     echo "version: \"3\""

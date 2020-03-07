@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# create service directory
-mkdir -p /srv/nextcloud
-
 function install {
+  # create service directory
+  mkdir -p /srv/nextcloud
+
   # create yml(s)
   {
     echo "services:"

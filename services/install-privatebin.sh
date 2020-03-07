@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# create service directory
-mkdir -p /srv/privatebin
-
 function install {
+  # create service directory
+  mkdir -p /srv/privatebin
+
   # create yml(s)
   {
     echo "version: \"3\""

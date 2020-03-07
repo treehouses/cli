@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# create service directory
-mkdir -p /srv/mastodon
-
 function install {
+  # create service directory
+  mkdir -p /srv/mastodon
+
   # create yml(s)
   {
     echo "version: \"2\""

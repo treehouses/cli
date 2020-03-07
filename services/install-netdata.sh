@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# create service directory
-mkdir -p /srv/netdata
-
 function install {
+  # create service directory
+  mkdir -p /srv/netdata
+
   # create yml(s)
   {
     echo "version: '3'"

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# create service directory
-mkdir -p /srv/planet
-
 function install {
+  # create service directory
+  mkdir -p /srv/planet
+
   # create yml(s)
   {
     echo "services:"

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# create service directory
-mkdir -p /srv/moodle
-
 function install {
+  # create service directory
+  mkdir -p /srv/moodle
+
   # create yml(s)
   {
     echo "version: '2'"

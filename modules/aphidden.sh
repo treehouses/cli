@@ -1,6 +1,6 @@
 function aphidden {
   hide="hidden "
-  apmain $@
+  apmain "$@"
 }
 
 

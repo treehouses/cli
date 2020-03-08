@@ -6,11 +6,6 @@ load test-helper
   assert_success && assert_output -p 'Success'
 }
 
-@test "$clinom tor" {
-  run "${clicmd}" tor
-  assert_success && assert_output -p '.onion'
-}
-
 @test "$clinom tor list" {
   run "${clicmd}" tor list
   assert_success && assert_output -p 'local'
@@ -26,11 +21,6 @@ load test-helper
   assert_success && assert_output -p 'Success'
 }
 
-@test "$clinom tor notice now" {
-  run "${clicmd}" tor notice now
-  assert_success && assert_output -p 'Thanks'
-}
-
 @test "$clinom tor stop" {
   run "${clicmd}" tor stop
   assert_success && assert_output -p 'Success'
@@ -44,6 +34,21 @@ load test-helper
 @test "$clinom tor start" {
   run "${clicmd}" tor start
   assert_success && assert_output -p 'Success'
+}
+
+@test "$clinom tor" {
+  run "${clicmd}" tor
+  assert_success && assert_output -p '.onion'
+}
+
+@test "$clinom tor add 22" {
+  run "${clicmd}" tor add 22
+  assert_success && assert_output -p 'Success'
+}
+
+@test "$clinom tor notice now" {
+  run "${clicmd}" tor notice now
+  assert_success && assert_output -p 'Thanks'
 }
 
 @test "$clinom tor deleteall" {

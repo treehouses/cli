@@ -1,20 +1,18 @@
 #!/usr/bin/env bats
 load test-helper
 
-@test "$clinom wifihidden ${nssidname} (check wifi...press any key to continue)" {
+@test "$clinom wifihidden ${nssidname}" {
   if [[ "${nwifipass}" != "" ]]; then
     skip "Wifi pass is present in test-cli.sh"
   fi
-  run "${clicmd}" wifihidden ${nssidname}
+  run "${clicmd}" wifihidden "${nssidname}" 3>-
   assert_success && assert_output -p 'connected'
-  read -n 1 -s -r
 }
 
-@test "$clinom wifihidden ${nssidname} ${nwifipass} (check wifi...press any key to continue)" {
+@test "$clinom wifihidden ${nssidname} ${nwifipass}" {
   if [[ "${nssidname}" == "YOUR-WIFI-NAME" ]]; then
     skip "No wifi settings set in test-cli.sh"
   fi
-  run "${clicmd}" wifihidden ${nssidname} ${nwifipass}
+  run "${clicmd}" wifihidden "${nssidname}" "${nwifipass}" 3>-
   assert_success && assert_output -p 'connected'
-  read -n 1 -s -r
 }

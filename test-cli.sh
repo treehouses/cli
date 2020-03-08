@@ -1,15 +1,11 @@
 #!/bin/bash
 # These tests are designed to be used
 # with a RPi that is using its ethernet port
-# If the networkmode is Wifi, a lot of the tests
-# will be skipped So be sure to run treehouses default network
-# for static/wireless testing
-export nstaticip=192.168.2.200
+# If the networkmode is Wifi, 
+# a lot of the tests will be skipped 
+# for wireless testing
 export nssidname='YOUR-WIFI-NAME'
 export nwifipass='YOUR-WIFI-PASS'
-export ngateway='192.168.2.200'
-export ndns='192.168.2.200'
-export ndnsmask='192.168.2.200'
 
 function check_missing_packages {
   local missing_deps

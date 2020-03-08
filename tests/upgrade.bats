@@ -8,7 +8,7 @@ load test-helper
 
 @test "$clinom upgrade --check" {
   run "${clicmd}" upgrade --check
-  assert_success && assert_output -p 'true'
+  assert_success
 }
 
 @test "$clinom upgrade -f" {

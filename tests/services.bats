@@ -1,6 +1,22 @@
 #!/usr/bin/env bats
 load test-helper
 
+@test "$clinom services planet info" {
+  run "${clicmd}" services planet info
+  assert_success && assert_output -p 'https://github.com/open-learning-exchange/planet'
+}
+
+@test "$clinom services planet install" {
+  run "${clicmd}" services planet install
+  assert_success && assert_output -p 'installed'
+}
+
+@test "$clinom services planet up" {
+  run "${clicmd}" services planet up
+  sleep 5
+  assert_success && assert_output -p 'planet built and started'
+}
+
 @test "$clinom services available" {
   run "${clicmd}" services available
   assert_success && assert_output -p 'planet'
@@ -8,7 +24,7 @@ load test-helper
 
 @test "$clinom services available full" {
   run "${clicmd}" services available full
-  assert_success && assert_output -p 'planet_yml'
+  assert_success && assert_output -p 'planet'
 }
 
 @test "$clinom services running" {
@@ -36,21 +52,6 @@ load test-helper
   assert_success && assert_output -p 'port 80'
 }
 
-@test "$clinom services planet info" {
-  run "${clicmd}" services planet info
-  assert_success && assert_output -p 'https://github.com/open-learning-exchange/planet'
-}
-
-@test "$clinom services planet install" {
-  run "${clicmd}" services planet install
-  assert_success && assert_output -p 'installed'
-}
-
-@test "$clinom services planet up" {
-  run "${clicmd}" services planet up
-  assert_success && assert_output -p 'planet built and started'
-}
-
 @test "$clinom services planet port" {
   run "${clicmd}" services planet port
   assert_success && assert_output -p '80'
@@ -63,7 +64,7 @@ load test-helper
 
 @test "$clinom services planet url both" {
   run "${clicmd}" services planet url both
-  assert_success && assert_output -p '80'
+  assert_output -p '80'
 }
 
 @test "$clinom services planet autorun" {
@@ -85,3 +86,4 @@ load test-helper
   run "${clicmd}" services planet down
   assert_success && assert_output -p 'planet stopped and removed'
 }
+

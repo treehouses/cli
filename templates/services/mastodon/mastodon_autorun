@@ -1,7 +1,0 @@
-mastodon_autorun=true
-
-if [ "$mastodon_autorun" = true ]; then
-
-  docker-compose -f /srv/mastodon/mastodon.yml -p mastodon up -d
-fi
-

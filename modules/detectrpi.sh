@@ -37,6 +37,7 @@ function detectrpi {
   rpimodels["9020e0"]="RPI3A+"
   rpimodels["a03111"]="RPI4B" # 1gb
   rpimodels["b03111"]="RPI4B" # 2gb
+  rpimodels["b03112"]="RPI4B" # 2gb
   rpimodels["c03111"]="RPI4B" # 4gb
   rpimodels["c03112"]="RPI4B" # 4gb
 
@@ -57,7 +58,7 @@ function detectrpi {
     if [[ "$1" == "" ]];
     then
       echo ${rpimodels[$rpimodel]}
-    elif [[ "$1" == "model" ]] && [[ "$2" == "" ]]; 
+    elif [[ "$1" == "model" ]];
     then
       echo "$rpimodel"
     elif [[ "$1" == "full" ]] && [[ "$2" == "" ]];

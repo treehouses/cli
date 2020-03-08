@@ -47,6 +47,20 @@ function checkrpi {
   fi
 }
 
+function checkargn {
+  local helpfunc
+  if [[ $SCRIPTARGNUM -gt $1 ]]; then
+    echo "Error: Too many arguments."
+    helpfunc="$(echo $SCRIPTARGS | cut -d' ' -f1)"
+    if [[ $helpfunc = "help" ]]; then
+      help
+    else
+      eval "${helpfunc}_help"
+    fi
+    exit 1
+  fi
+}
+
 function checkwrpi {
   local model check
   declare -a wRPIs=("RPIZW" "RPI3A" "RPI3B" "RPI4B")

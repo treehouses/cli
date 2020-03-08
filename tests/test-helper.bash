@@ -1,6 +1,6 @@
 #!/bin/bash
-load './bats-support/load'
-load './bats-assert/load'
+load '../../../bats-support/load'
+load '../../../bats-assert/load'
 
 function check_networkmode {
   if [[ $(pstree -ps $$) == *"ssh"* ]] && [[ $(${clicmd} networkmode) == *wifi* ]]; then

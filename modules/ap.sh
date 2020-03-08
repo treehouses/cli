@@ -1,4 +1,4 @@
-function ap {
+function apmain {
   local mode essid password base_24 channels channel
   mode=$(clean_var "$1")
   essid=$(clean_var "$2")
@@ -35,14 +35,19 @@ function ap {
     cp "$TEMPLATES/network/wlan0/hotspot_shared" /etc/network/interfaces.d/wlan0
     cp "$TEMPLATES/network/eth0-shared.sh" /etc/network/eth0-shared.sh
 
-    echo "ap internet" > /etc/network/mode
+    echo "${hide}ap internet" > /etc/network/mode
+    
   elif [ "$mode" = "local" ]; then
     cp "$TEMPLATES/network/wlan0/hotspot" /etc/network/interfaces.d/wlan0
-
-    echo "ap local" > /etc/network/mode
+    echo "${hide}ap local"
+    echo "${hide}ap local" > /etc/network/mode
   else
     echo "Error: only 'local' and 'internet' modes are supported".
     exit 0
+  fi
+
+  if [[ -v hide ]]; then
+    hide="_hidden"
   fi
 
   cp "$TEMPLATES/network/10-wpa_supplicant" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
@@ -50,13 +55,14 @@ function ap {
 
   if [ -n "$password" ];
   then
-    cp "$TEMPLATES/network/hostapd/password" /etc/hostapd/hostapd.conf
+    echo "$TEMPLATES/network/hostapd/password$hide"
+    cp "$TEMPLATES/network/hostapd/password$hide" /etc/hostapd/hostapd.conf
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/PASSWORD/$password/g" /etc/hostapd/hostapd.conf
     sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
     restart_hotspot >"$LOGFILE" 2>"$LOGFILE"
   else
-    cp "$TEMPLATES/network/hostapd/no_password" /etc/hostapd/hostapd.conf
+    cp "$TEMPLATES/network/hostapd/no_password$hide" /etc/hostapd/hostapd.conf
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
     restart_hotspot >"$LOGFILE" 2>"$LOGFILE"
@@ -74,6 +80,9 @@ function ap {
   echo "This pirateship has anchored successfully!"
 }
 
+function ap {
+  apmain "$@"
+}
 
 function ap_help () {
   echo

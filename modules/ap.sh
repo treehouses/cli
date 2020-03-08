@@ -36,9 +36,10 @@ function apmain {
     cp "$TEMPLATES/network/eth0-shared.sh" /etc/network/eth0-shared.sh
 
     echo "${hide}ap internet" > /etc/network/mode
-    
+
   elif [ "$mode" = "local" ]; then
     cp "$TEMPLATES/network/wlan0/hotspot" /etc/network/interfaces.d/wlan0
+
     echo "${hide}ap local" > /etc/network/mode
   else
     echo "Error: only 'local' and 'internet' modes are supported".

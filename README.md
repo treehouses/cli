@@ -108,3 +108,15 @@ log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
 ```
+
+## Testing
+
+We use the [bats](https://github.com/sstephenson/bats) package.
+Make sure to do testing on a Raspberry Pi. Support for other platforms
+isn't guaranteed. 
+```
+sudo apt install bats
+sudo bats ./tests/blocker.bats # test a single file
+sudo ./test-cli.sh # test everything (variables inside test-cli.sh as well)
+
+```

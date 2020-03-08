@@ -1,9 +1,12 @@
 #!/bin/bash
-if [ ! -f /usr/lib/node_modules/bats-support/load.bash ]; then
-  npm install --unsafe-perm -g bats-support@0.3.0
-fi
 if [ ! -f /usr/lib/node_modules/bats-assert/load.bash ]; then
-  npm install --unsafe-perm -g bats-assert@2.0.0
+  if [ "$(id -u)" -ne 0 ];
+    then
+      echo "Error: Must be run with root permissions"
+      exit 1
+    fi
+  npm install --silent --unsafe-perm -g bats-support@0.3.0 &>/dev/null
+  npm install --silent --unsafe-perm -g bats-assert@2.0.0 &>/dev/null
 fi
 
 load "/usr/lib/node_modules/bats-support/load.bash"

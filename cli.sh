@@ -141,7 +141,7 @@ case $1 in
     bluetooth "$2" "$3"
     ;;
   bluetoothid)
-    checkrpi
+    checkwrpi
     checkargn 2
     bluetoothid "$2"
     ;;
@@ -250,7 +250,7 @@ case $1 in
     networkmode "$2"
     ;;
   button)
-    checkrpi
+    checkwrpi
     checkroot
     checkargn 2
     button "$2"

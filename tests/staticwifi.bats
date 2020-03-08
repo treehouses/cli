@@ -7,16 +7,12 @@ load test-helper
     skip "No wifi settings set in test-cli.sh"
   fi
   run "${clicmd}" staticwifi ${nstaticip} ${ndnsmask} ${ngateway} ${ndns} ${nssidname}
-  assert_success
-  assert_output -p 'Success'
-  read -n 1 -s -r
-}
+  assert_success && assert_output -p 'Success'
+  read -n 1 -s -r }
 
 @test "$clinom staticwifi ${nstaticip} ${ndnsmask} ${ngateway} ${ndns} ${nssidname} ${nwifipass}" {
   if [[ "${ngateway}" == "192.168.2.200" ]]; then
     skip "No wifi settings set in test-cli.sh"
   fi
   run "${clicmd}" staticwifi ${nstaticip} ${ndnsmask} ${ngateway} ${ndns} ${nssidname} ${nwifipass}
-  assert_success
-  assert_output -p 'Success'
-}
+  assert_success && assert_output -p 'Success' }

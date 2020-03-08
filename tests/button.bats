@@ -3,13 +3,9 @@ load test-helper
 
 @test "$clinom button bluetooth (check button...press any key to continue)" {
   run "${clicmd}" button bluetooth
-  assert_success
-  assert_output -p 'button enabled'
-  read -n 1 -s -r
-}
+  assert_success && assert_output -p 'button enabled'
+  read -n 1 -s -r }
 
 @test "$clinom button off" {
   run "${clicmd}" button off
-  assert_success
-  assert_output -p 'button disabled'
-}
+  assert_success && assert_output -p 'button disabled' }

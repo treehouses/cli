@@ -39,7 +39,6 @@ function apmain {
     
   elif [ "$mode" = "local" ]; then
     cp "$TEMPLATES/network/wlan0/hotspot" /etc/network/interfaces.d/wlan0
-    echo "${hide}ap local"
     echo "${hide}ap local" > /etc/network/mode
   else
     echo "Error: only 'local' and 'internet' modes are supported".
@@ -55,7 +54,6 @@ function apmain {
 
   if [ -n "$password" ];
   then
-    echo "$TEMPLATES/network/hostapd/password$hide"
     cp "$TEMPLATES/network/hostapd/password$hide" /etc/hostapd/hostapd.conf
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/PASSWORD/$password/g" /etc/hostapd/hostapd.conf
@@ -81,7 +79,7 @@ function apmain {
 }
 
 function ap {
-  apmain "$@"
+  apmain $@
 }
 
 function ap_help () {

@@ -7,7 +7,8 @@ load test-helper
   fi
   run "${clicmd}" wifihidden ${nssidname}
   assert_success && assert_output -p 'connected'
-  read -n 1 -s -r }
+  read -n 1 -s -r
+}
 
 @test "$clinom wifihidden ${nssidname} ${nwifipass} (check wifi...press any key to continue)" {
   if [[ "${nssidname}" == "YOUR-WIFI-NAME" ]]; then
@@ -15,4 +16,5 @@ load test-helper
   fi
   run "${clicmd}" wifihidden ${nssidname} ${nwifipass}
   assert_success && assert_output -p 'connected'
-  read -n 1 -s -r }
+  read -n 1 -s -r
+}

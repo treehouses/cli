@@ -3,8 +3,10 @@ load test-helper
 
 @test "$clinom bluetoothid" {
   run "${clicmd}" bluetoothid
-  assert_success }
+  assert_success
+}
 
 @test "$clinom bluetoothid number" {
   run "${clicmd}" bluetoothid number
-  assert_success }
+  assert_success
+}

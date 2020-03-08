@@ -3,4 +3,5 @@ load test-helper
 
 @test "$clinom wifistatus" {
   run "${clicmd}" wifistatus
-  assert_success }
+  assert_success
+}

@@ -7,4 +7,5 @@ load test-helper
   fi
   run "${clicmd}" ethernet ${nstaticip} ${ndnsmask} ${ngateway} ${ndns}
   assert_success && assert_output -p 'This pirateship has anchored successfully!'
-  read -n 1 -s -r }
+  read -n 1 -s -r
+}

@@ -7,19 +7,23 @@ load test-helper
 @test "$clinom reboots daily" {
   run "${clicmd}" reboots daily
   run "${clicmd}" reboots daily
-  assert_success && assert_output -p 'daily removed' }
+  assert_success && assert_output -p 'daily removed'
+}
 
 @test "$clinom reboots weekly" {
   run "${clicmd}" reboots weekly
   run "${clicmd}" reboots weekly
-  assert_success && assert_output -p 'weekly removed' }
+  assert_success && assert_output -p 'weekly removed'
+}
 
 @test "$clinom reboots monthly" {
   run "${clicmd}" reboots monthly
   run "${clicmd}" reboots monthly
-  assert_success && assert_output -p 'monthly removed' }
+  assert_success && assert_output -p 'monthly removed'
+}
 
 @test "$clinom reboots cron \"0 * * * *\"" {
   run "${clicmd}" reboots cron "0 * * * *"
   assert_success && assert_output -p 'added'
-  run "${clicmd}" cron delete "0 * * * *" }
+  run "${clicmd}" cron delete "0 * * * *"
+}

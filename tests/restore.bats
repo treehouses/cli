@@ -6,4 +6,5 @@ load test-helper
   if [[ "$output" == *"detected"* ]]; then
     skip "No disk/usb device mounted"
   fi
-  assert_success && assert_output -p 'restoring' }
+  assert_success && assert_output -p 'restoring'
+}

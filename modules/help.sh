@@ -9,6 +9,7 @@ function help_default {
   echo "   sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication"
   echo "   version                                   returns the version of $BASENAME command"
   echo "   image                                     returns version of the system image installed"
+  echo "   detectbluetooth                           detects if bluetooth module is available"
   echo "   detectrpi [model]                         detects the hardware version of a raspberry pi"
   echo "   detect                                    detects the hardware version of any device"
   echo "   ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address"

@@ -79,7 +79,7 @@ function apmain {
 }
 
 function ap {
-  apmain $@
+  apmain "$@"
 }
 
 function ap_help () {

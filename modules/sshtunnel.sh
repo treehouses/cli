@@ -5,7 +5,7 @@ function sshtunnel {
     echo "Error: no tunnel has been set up."
     echo "Run '$BASENAME sshtunnel add' to add a key for the tunnel."
     exit 0
-  fi      
+  fi
   portinterval="$2"
   host="$3"
 

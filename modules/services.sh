@@ -15,7 +15,7 @@ function services {
     else
       echo "$SERVICES directory does not exist"
       exit 1
-    fi    
+    fi
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
     if [ "$command" = "full" ]; then
@@ -366,7 +366,7 @@ function check_tor {
     if ! tor list | grep -w $1; then
       echo "adding port ${1}"
       if [[ $(pstree -ps $$) == *"ssh"* ]]; then
-        screen -dm bash -c "tor add ${1}"
+        screen -dm bash -c "treehouses tor add ${1}"
       else
         tor add $1
       fi

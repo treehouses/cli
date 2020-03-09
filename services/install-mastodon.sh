@@ -82,7 +82,7 @@ function get_size {
 # add info
 function get_info {
   echo "https://github.com/gilir/rpi-mastodon, https://github.com/tootsuite/mastodon"
-  echo                 
+  echo
   echo "\"Mastodon is a free, open-source social network server, a decentralized solution to"
   echo "commercial platforms. It avoids the risks of a single company monopolizing your"
   echo "communication. Anyone can run Mastodon and participate in the social network seamlessly.\""

@@ -23,7 +23,7 @@ function vnc {
 case "$option" in
   "")
     if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "inactive" ]; then
-      echo "VNC is disabled." 
+      echo "VNC is disabled."
       echo "To enable it, use $BASENAME vnc on"
     elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "active" ]; then
       echo "You can now remotely access the system with a VNC client using the IP address: $ipaddress"
@@ -47,7 +47,7 @@ case "$option" in
     reboot_needed
     echo "Success: the vnc service has been started and enabled when the system boots."
     echo "Please reboot the system for changes to take effect."
-    echo "You can then remotely access the system with a VNC client using the IP address: $ipaddress" 
+    echo "You can then remotely access the system with a VNC client using the IP address: $ipaddress"
     ;;
   "off")
     sed -i '/hdmi_group=2/d' /boot/config.txt
@@ -71,7 +71,7 @@ case "$option" in
     if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "active" ]; then
       echo "Please reboot your system."
     fi
-    ;; 
+    ;;
  *)
     echo "Error: only 'on', 'off', 'info' options are supported";
     exit 1;
@@ -100,4 +100,4 @@ function vnc_help {
   echo "  $BASENAME vnc info"
   echo "      Prints a detailed configuration of each required component (boot option, vnc service, x service)."
   echo
-} 
+}

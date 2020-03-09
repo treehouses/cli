@@ -29,6 +29,7 @@ function container {
 }
 
 function container_docker {
+  export DOCKER_HOST=""
   disable_service balena
   stop_service balena
   enable_service docker

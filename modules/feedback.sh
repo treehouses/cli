@@ -20,7 +20,7 @@ function feedback {
     else
       body="{\"text\":\"\`$(hostname)\` \`$ip_address\` \`$(version)\` \`$(detect | sed "s/ /\` \`/1")\`:\\n$message\"}"
     fi
-    if wget -q --spider -T 3 --no-check-certificate "gitter.im"; then
+    if wget -q --spider -T 3 --no-check-certificate www.gitter.im; then
       curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token"   "$channel" -d  "$body"> "$LOGFILE"
       echo "Thanks for the feedback!"
     else

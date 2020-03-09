@@ -439,6 +439,8 @@ function services_help {
   echo
   echo "    install                 installs and pulls <service_name>"
   echo
+  echo "    cleanup                 uninstalls and removes <service_name>"
+  echo
   echo "    up                      builds and starts <service_name>"
   echo
   echo "    down                    stops and removes <service_name>"

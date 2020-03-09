@@ -1,11 +1,11 @@
 function wificountry {
   local country
   country=$1
-  country_codes="US CA JP DE NL IT PT LU NO FI DK CH CZ ES GB KR CN FR HK SG TW BR
+  country_codes=(US CA JP DE NL IT PT LU NO FI DK CH CZ ES GB KR CN FR HK SG TW BR
                  IL SA LB AE ZA AR AU AT BO CL GR IS IN IE KW LI LT MX MA NZ PL PR
                  SK SI TH UY PA RU KW LI LT MX MA NZ PL PR SK SI TH UY PA RU EG TT
                  TR CR EC HN KE UA VN BG CY EE MU RO CS ID PE VE JM BH OM JO BM CO
-                 DO GT PH LK SV TN PK QA DZ"
+                 DO GT PH LK SV TN PK QA DZ)
 
   case "$1" in
     "")
@@ -20,27 +20,30 @@ function wificountry {
       ;;
 
     *)
-      if [[ "$country_codes" == *"$country"* ]]; then
-        if [ -e /etc/wpa_supplicant/wpa_supplicant.conf ]; then
-          if grep -q "^country=" /etc/wpa_supplicant/wpa_supplicant.conf ; then
-            sed -i --follow-symlinks "s/^country=.*/country=$country/g" /etc/wpa_supplicant/wpa_supplicant.conf
+      for country_code in "${country_codes[@]}"
+      do
+        if [ "$country" = "$country_code" ]; then
+          if [ -e /etc/wpa_supplicant/wpa_supplicant.conf ]; then
+            if grep -q "^country=" /etc/wpa_supplicant/wpa_supplicant.conf ; then
+              sed -i --follow-symlinks "s/^country=.*/country=$country/g" /etc/wpa_supplicant/wpa_supplicant.conf
+            else
+              sed -i --follow-symlinks "1i country=$country" /etc/wpa_supplicant/wpa_supplicant.conf
+            fi
           else
-            sed -i --follow-symlinks "1i country=$country" /etc/wpa_supplicant/wpa_supplicant.conf
+            echo "country=$country" > /etc/wpa_supplicant/wpa_supplicant.conf
           fi
-        else
-          echo "country=$country" > /etc/wpa_supplicant/wpa_supplicant.conf
+          iw reg set "$country" 2> "$LOGFILE";
+
+          if [ -f /run/wifi-country-unset ] && hash rfkill 2> "$LOGFILE"; then
+            rfkill unblock wifi
+          fi
+
+          echo "$country" > /etc/rpi-wifi-country
+
+          echo "Success: the wifi country has been set to $country"
+          exit 0
         fi
-        iw reg set "$country" 2> "$LOGFILE";
-
-        if [ -f /run/wifi-country-unset ] && hash rfkill 2> "$LOGFILE"; then
-          rfkill unblock wifi
-        fi
-
-        echo "$country" > /etc/rpi-wifi-country
-
-        echo "Success: the wifi country has been set to $country"
-        exit 0
-      fi
+      done
 
       echo "error: invalid country code"
       exit 1

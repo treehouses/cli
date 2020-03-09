@@ -293,8 +293,13 @@ function services {
               echo "planet should not be cleaned up"
               exit 0
             fi
-            services $service_name down
-            docker rmi "$(docker images --format '{{.Repository}}' | grep $service_name)"
+            if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+              echo "${service_name}.yml not found"
+              exit 1
+            else
+              docker-compose -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
+              echo "${service_name} stopped and removed"
+            fi
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
               port=$(get_port $service_name | sed -n "$i p")

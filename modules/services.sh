@@ -335,7 +335,7 @@ function check_tor {
     if ! tor list | grep -w $1; then
       echo "adding port ${1}"
       if [[ $(pstree -ps $$) == *"ssh"* ]]; then
-        screen -dm bash -c "tor add ${1}"
+        screen -dm bash -c "treehouses tor add ${1}"
       else
         tor add $1
       fi

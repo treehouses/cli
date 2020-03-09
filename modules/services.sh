@@ -287,15 +287,19 @@ function services {
           echo "$(source $SERVICES/install-${service_name}.sh && get_size)M"
           ;;
         cleanup)
-          # skip planet
-          if [ "$service_name" = "planet" ]; then
-            echo "planet should not be cleaned up"
-            exit 0
+          if check_available_services $service_name; then
+            # skip planet
+            if [ "$service_name" = "planet" ]; then
+              echo "planet should not be cleaned up"
+              exit 0
+            fi
+            services $service_name down
+            docker rmi $(docker images --format '{{.Repository}}' | grep $service_name)
+            rm -rf /srv/${service_name}
+            echo "${service_name} cleaned up"
+          else
+            echo "unknown service"
           fi
-          services $service_name down
-          docker rmi $(docker images --format '{{.Repository}}' | grep $service_name)
-          rm -rf /srv/${service_name}
-          echo "${service_name} cleaned up"
           ;;
         *)
           echo "unknown command"

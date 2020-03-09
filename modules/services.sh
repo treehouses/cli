@@ -297,11 +297,12 @@ function services {
             docker rmi "$(docker images --format '{{.Repository}}' | grep $service_name)"
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
-              if [ "$(tor status)" = "active" ] && (tor list | grep -w $1); then
+              port=$(get_port $service_name | sed -n "$i p")
+              if [ "$(tor status)" = "active" ] && (tor list | grep -w port); then
                 if [[ $(pstree -ps $$) == *"ssh"* ]]; then
-                  screen -dm bash -c "treehouses tor delete ${1}"
+                  screen -dm bash -c "treehouses tor delete $port"
                 else
-                  treehouses tor delete $1
+                  tor delete $port
                 fi
               fi
             done

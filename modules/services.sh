@@ -286,6 +286,37 @@ function services {
         size)
           echo "$(source $SERVICES/install-${service_name}.sh && get_size)M"
           ;;
+        cleanup)
+          if check_available_services $service_name; then
+            # skip planet
+            if [ "$service_name" = "planet" ]; then
+              echo "planet should not be cleaned up"
+              exit 0
+            fi
+            if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+              echo "${service_name}.yml not found"
+              exit 1
+            else
+              docker-compose -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
+              echo "${service_name} stopped and removed"
+            fi
+            for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            do
+              port=$(get_port $service_name | sed -n "$i p")
+              if [ "$(tor status)" = "active" ] && (tor list | grep -w $port); then
+                if [[ $(pstree -ps $$) == *"ssh"* ]]; then
+                  screen -dm bash -c "treehouses tor delete $port"
+                else
+                  tor delete $port
+                fi
+              fi
+            done
+            rm -rf /srv/${service_name}
+            echo "${service_name} cleaned up"
+          else
+            echo "unknown service"
+          fi
+          ;;
         *)
           echo "unknown command"
           ;;
@@ -407,6 +438,8 @@ function services_help {
   echo "                             ..... size"
   echo
   echo "    install                 installs and pulls <service_name>"
+  echo
+  echo "    cleanup                 uninstalls and removes <service_name>"
   echo
   echo "    up                      builds and starts <service_name>"
   echo

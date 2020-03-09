@@ -298,7 +298,7 @@ function services {
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
               port=$(get_port $service_name | sed -n "$i p")
-              if [ "$(tor status)" = "active" ] && (tor list | grep -w port); then
+              if [ "$(tor status)" = "active" ] && (tor list | grep -w $port); then
                 if [[ $(pstree -ps $$) == *"ssh"* ]]; then
                   screen -dm bash -c "treehouses tor delete $port"
                 else

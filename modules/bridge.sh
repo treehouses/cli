@@ -71,7 +71,7 @@ function bridge {
     wificountry="US"
     if [ -r /etc/rpi-wifi-country ];
     then
-      wificountry=$(cat /etc/rpi-wifi-country)
+      wificountry=$(</etc/rpi-wifi-country)
     fi
     echo "country=$wificountry"
   } > /etc/wpa_supplicant/wpa_supplicant.conf

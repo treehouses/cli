@@ -294,7 +294,7 @@ function services {
               exit 0
             fi
             services $service_name down
-            docker rmi $(docker images --format '{{.Repository}}' | grep $service_name)
+            docker rmi "$(docker images --format '{{.Repository}}' | grep $service_name)"
             rm -rf /srv/${service_name}
             echo "${service_name} cleaned up"
           else

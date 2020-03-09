@@ -62,15 +62,15 @@ function default_network {
 }
 
 function default_tunnel {
-  tor destroy > "$LOGFILE"
-  openvpn off > "$LOGFILE"
-  sshtunnel remove > "$LOGFILE"
+  treehouses tor destroy > "$LOGFILE"
+  treehouses openvpn off > "$LOGFILE"
+  treehouses sshtunnel remove > "$LOGFILE"
 }
 
 function default_notice {
-  tor notice off > "$LOGFILE"
-  openvpn notice off > "$LOGFILE"
-  sshtunnel notice off > "$LOGFILE"
+  treehouses tor notice off > "$LOGFILE"
+  treehouses openvpn notice off > "$LOGFILE"
+  treehouses sshtunnel notice off > "$LOGFILE"
 }
 
 

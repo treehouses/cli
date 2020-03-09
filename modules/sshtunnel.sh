@@ -173,7 +173,7 @@ function sshtunnel {
       portcouchdb=$((portinterval + 84))
       portnewcouchdb=$((portinterval + 82))
       portmunin=$((portinterval + 49))
-      feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$portinterval\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(networkmode)"
+      treehouses feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$portinterval\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tunnel_report" ]; then
         status="on"

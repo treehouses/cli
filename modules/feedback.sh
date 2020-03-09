@@ -6,10 +6,6 @@ if [ ! -z "$gitter_channel" ]; then
 fi
 
 function feedback {
-  if ! wget -q --spider -T 3 --no-check-certificate $channel; then
-    echo "Error: internet is down or can't access gitter, please try again"
-    exit 1
-  fi
   local message ip6_regex ip4_regex ip_address body
   message="$*"
   ip6_regex="^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))$"
@@ -24,8 +20,13 @@ function feedback {
     else
       body="{\"text\":\"\`$(hostname)\` \`$ip_address\` \`$(version)\` \`$(detect | sed "s/ /\` \`/1")\`:\\n$message\"}"
     fi
-    curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token"   "$channel" -d  "$body"> "$LOGFILE"
-    echo "Thanks for the feedback!"
+    if wget -q --spider -T 3 --no-check-certificate "gitter.im"; then
+      curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token"   "$channel" -d  "$body"> "$LOGFILE"
+      echo "Thanks for the feedback!"
+    else
+      echo "Error: internet is down or can't access gitter, please try again"
+      exit 1
+    fi
   else
     echo "No feedback was submitted."
   fi

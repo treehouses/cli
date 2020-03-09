@@ -50,7 +50,7 @@ function bridge {
   fi
 
   cp "$TEMPLATES/network/dnsmasq/bridge" "/etc/dnsmasq.conf"
-  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces 
+  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/wlan0/bridge" /etc/network/interfaces.d/ap0
 
   if [ -z "$hotspotpassword" ];

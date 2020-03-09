@@ -3,7 +3,7 @@ function sshkey () {
   if [ "$1" == "add" ]; then
     shift
     echo "$@" >> /root/.ssh/authorized_keys
-    chmod 600 /root/.ssh/authorized_keys    
+    chmod 600 /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then
       mkdir -p /root/.ssh /home/pi/.ssh
       chmod 700 /root/.ssh /home/pi/.ssh
@@ -89,7 +89,7 @@ function sshkey () {
         else
           echo "$file does not exist."
         fi
-      done    
+      done
     elif [ "$2" == "addteam" ]; then
       if [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
         echo "Error: missing arguments"

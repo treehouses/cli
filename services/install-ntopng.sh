@@ -42,7 +42,7 @@ function get_size {
 # add info
 function get_info {
   echo "https://github.com/ntop/ntopng"
-  echo                 
+  echo
   echo "\"ntopng is the next generation version of the original ntop,"
   echo "a network traffic probe that monitors network usage. ntopng is"
   echo "based on libpcap and it has been written in a portable way in order"

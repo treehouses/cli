@@ -1,5 +1,5 @@
 function temperature () {
-  check_missing_packages "bc" 
+  check_missing_packages "bc"
   local reading number0 number fraction resultA resultB
   check_missing_packages "bc"
   #Uses `vgencmd measure_temp` command to find CPU temperature of Raspberry Pi
@@ -10,7 +10,7 @@ function temperature () {
     "")
       echo $number
       ;;
-    "celsius") 
+    "celsius")
       echo $number"°C"
       ;;
     "fahrenheit")
@@ -37,7 +37,7 @@ function temperature_help {
   echo "  Example:"
   echo "    $BASENAME temperature"
   echo "    47.2"
-  echo 
+  echo
   echo "    $BASENAME temperature celsius"
   echo "    47.2°C"
   echo

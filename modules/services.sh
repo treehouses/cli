@@ -15,7 +15,7 @@ function services {
     else
       echo "$SERVICES directory does not exist"
       exit 1
-    fi    
+    fi
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
     if [ "$command" = "full" ]; then

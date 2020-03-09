@@ -19,7 +19,7 @@ function default {
   fi
 
   rename "raspberrypi" > "$LOGFILE" 2>"$LOGFILE"
-  default_notice 
+  default_notice
   default_tunnel
   default_network
   echo 'Success: the rpi has been reset to default, please reboot your device'
@@ -57,7 +57,7 @@ function default_network {
       } > /etc/network/interfaces.d/usb0
       ;;
   esac
-  
+
   reboot_needed
 }
 

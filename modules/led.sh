@@ -184,7 +184,7 @@ function thanksgiving {
 
   set_brightness 1 0
   for i in {0..1}
-  do 
+  do
     set_brightness 0 0 && sleep 0.25
     set_brightness 0 1 && sleep 0.25
   done
@@ -388,7 +388,7 @@ function led_help {
   echo "|#D    Pi 3B/ 4B     +-+                +---+"
   echo "|#I   \/  +--+      | |                 +---+"
   echo "|#S  ()() |  | CAM  +-+                 |USB|"
-  echo "|#P   ()  +--+  #                       +---+"  
+  echo "|#P   ()  +--+  #                       +---+"
   echo "|#Y             #                      +----+"
   echo -e "|\e[5m\e[32m[] \e[25m\e[39m           +----+ # +-+             | NET|"
   echo -e "|\e[5m\e[31m[] \e[25m\e[39m()+---+ |      | # |A|         ()+------+"

@@ -113,10 +113,11 @@ sdbench                                   displays read and write speed of micro
 
 We use the [bats](https://github.com/sstephenson/bats) package.
 Make sure to do testing on a Raspberry Pi. Support for other platforms
-isn't guaranteed. 
+isn't guaranteed.
 ```
 sudo apt install bats
 sudo bats ./tests/blocker.bats # test a single file
+nssidname='Wifiname' nwifipass='wifipass' sudo ./tests/wifi.bats
 sudo ./test-cli.sh # test everything (variables inside test-cli.sh as well)
 
 ```

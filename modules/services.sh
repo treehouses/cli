@@ -337,7 +337,7 @@ function check_tor {
       if [[ $(pstree -ps $$) == *"ssh"* ]]; then
         screen -dm bash -c "treehouses tor add ${1}"
       else
-        treehouses tor add $1
+        tor add $1
       fi
     fi
   fi

@@ -3,6 +3,8 @@
 function install {
   # create service directory
   mkdir -p /srv/pihole
+  service dnsmasq stop
+  touch /var/log/pihole.log
 
   # create yml(s)
   {

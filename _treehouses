@@ -34,7 +34,7 @@ _treehouses_complete()
   reboots_cmds="now in cron daily weekly monthly"
   rtc_cmds="on off"
   rtc_on_cmds="ds3231 rasclock"
-  services_cmds="available installed running ports kolibri mastodon moodle netdata nextcloud ntopng pihole planet portainer privatebin"
+  services_cmds="available installed running ports kolibri mastodon moodle netdata nextcloud ntopng pihole planet portainer privatebin couchdb"
   sshkey_cmds="add list delete deleteall addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"

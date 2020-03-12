@@ -48,6 +48,19 @@ function remote {
     else
       echo false
     fi
+  elif [ "$option" = "commands" ]; then
+    source $SCRIPTFOLDER/_treehouses
+    case "$2" in
+      "")
+        echo $commands
+        ;;
+      ap|aphidden)
+        echo ${${2}_cmds}
+        ;;
+      *)
+        echo ""
+        ;;
+    esac
   else
     echo "unknown command option"
     echo "usage: $BASENAME remote [status | upgrade | services | version]"

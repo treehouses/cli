@@ -337,7 +337,11 @@ function check_available_services {
 }
 
 function docker_compose_up {
-  if docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
+  if [ ! -f /srv/${1}/${1}.yml ]; then
+    echo "/srv/${1}/${1}.yml not found"
+    echo "try running '$BASENAME services ${1} install' first"
+    exit 1
+  elif docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
     echo "${1} built and started"
   else
     echo "error building ${1}"

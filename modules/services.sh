@@ -43,6 +43,8 @@ function services {
           results+="${i%%_*}"
         elif [[ $i == *"-"* ]]; then
           results+="${i%%-*}"
+        else
+          results+=$i
         fi
         results+=" "
       done

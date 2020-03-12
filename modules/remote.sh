@@ -49,16 +49,19 @@ function remote {
       echo false
     fi
   elif [ "$option" = "commands" ]; then
-    source $SCRIPTFOLDER/_treehouses
+    source $SCRIPTFOLDER/_treehouses && _treehouses_complete
     case "$2" in
       "")
         echo $commands
         ;;
-      ap|aphidden)
-        echo ${${2}_cmds}
+      ap|aphidden|apchannel|blocker|bluetooth|bootoption|bootoption_second|
+      button|camera|container|coralevn|cron|discover|detectrpi|help|led|log|
+      memory|networkmode|ntp|openvpn|reboots|rtc|rtc_on|services|sshkey|ssh|
+      sshtunnel|temperature|tor|usb|notice|remote|verbose|vnc)
+        eval "echo \${${2}_cmds}"
         ;;
       *)
-        echo ""
+        echo "unknown command"
         ;;
     esac
   else

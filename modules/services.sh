@@ -113,7 +113,7 @@ function services {
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
-            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon)
+            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|couchdb)
               check_space $service_name
               docker_compose_up $service_name
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
@@ -129,12 +129,6 @@ function services {
               do
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
-              ;;
-            couchdb)
-              check_space "treehouses/couchdb"
-              create_yml "couchdb"
-              docker_compose_up "couchdb"
-              check_tor "5984"
               ;;
             *)
               echo "unknown service"
@@ -338,7 +332,11 @@ function check_available_services {
 }
 
 function docker_compose_up {
-  if docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
+  if [ ! -f /srv/${1}/${1}.yml ]; then
+    echo "/srv/${1}/${1}.yml not found"
+    echo "try running '$BASENAME services ${1} install' first"
+    exit 1
+  elif docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
     echo "${1} built and started"
   else
     echo "error building ${1}"

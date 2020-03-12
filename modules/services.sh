@@ -21,12 +21,13 @@ function services {
     if [ "$command" = "full" ]; then
       docker ps -a
     elif [ -z "$command" ]; then
-      installed=$(docker images --format '{{.Repository}}' | sed -e 's:.*/::' -e 's:.*-::')
-      array=($installed)
-      IFS=$'\n' sorted=($(sort <<<"${array[*]}"))
-      unset IFS
       available=($(services available))
-      comm -12 <(printf '%s\n' "${sorted[@]}") <(printf '%s\n' "${available[@]}")
+      for service in "${available[@]}"
+      do
+        if [ -d /srv/$service ]; then
+          echo $service
+        fi
+      done
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then

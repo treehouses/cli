@@ -3,12 +3,12 @@ function discover {
   check_missing_packages "nmap"
 
   option=$1
-  
-  if [ "$#" -gt 2 ]; then 
+
+  if [ "$#" -gt 2 ]; then
     echo "Too many arguments."
     discover_help
     exit 1
-  fi 
+  fi
 
   if [ $option = "rpi" ] || [ $option = "interface" ]; then
     if [ $# -gt 1 ]; then
@@ -19,7 +19,7 @@ function discover {
   fi
 
   if [ $option = "scan" ] || [ $option = "ping" ] || [ $option = "ports" ]; then
-    if [ -z $2 ]; then 
+    if [ -z $2 ]; then
       echo "You need to provide an IP address or URL for this command".
       exit 1
     fi
@@ -42,7 +42,7 @@ function discover {
       ;;
     interface)
       nmap --iflist
-      ;; 
+      ;;
     ping)
       nmap -sP $ip
       ;;

@@ -9,7 +9,7 @@ function install {
     echo "version: \"3\""
     echo
     echo "# https://github.com/pi-hole/docker-pi-hole/blob/master/README.md"
-    echo 
+    echo
     echo "services:"
     echo "  pihole:"
     echo "    container_name: pihole"

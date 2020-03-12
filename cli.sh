@@ -378,7 +378,7 @@ case $1 in
   sdbench)
     checkroot
     sdbench
-    ;;    
+    ;;
   help)
     checkargn 2
     help "$2"

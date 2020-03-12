@@ -393,7 +393,7 @@ function services_help {
   echo "  privatebin   PrivateBin is a minimalist, open source online pastebin"
   echo "  portainer    Portainer is a lightweight management UI for Docker environments"
   echo "  ntopng       Ntopng is a network traffic probe that monitors network usage"
-  echo "  couchdb      Apache CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang."
+  echo "  couchdb      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
   echo
   echo
   echo "Top-Level Commands:"

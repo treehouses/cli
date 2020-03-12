@@ -1,6 +1,10 @@
 function password () {
-  chpasswd <<< "pi:$1"
-  echo "Success: the password has been changed"
+  if [[ $1 == "" ]]; then
+    log_and_exit1 "Error: Password not entered"
+  else
+    chpasswd <<< "pi:$1"
+    echo "Success: the password has been changed"
+  fi
 }
 
 function password_help () {

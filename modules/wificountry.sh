@@ -62,7 +62,7 @@ function wificountry_help {
   echo
   echo "  $BASENAME wificountry"
   echo "      This will display the current wifi country setting."
-  echo 
+  echo
   echo "  $BASENAME wificountry US"
   echo "      This will set the wifi country to 'US'."
   echo "      This configuration is used in all commands (wifi, bridge, hotspot)."

@@ -87,3 +87,7 @@ load test-helper
   assert_success && assert_output -p 'portainer stopped and removed'
 }
 
+@test "$clinom services portainer cleanup" {
+  run "${clicmd}" services portainer cleanup
+  assert_success && assert_output -p 'cleaned up'
+}

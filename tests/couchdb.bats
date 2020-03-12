@@ -87,3 +87,7 @@ load test-helper
   assert_success && assert_output -p 'couchdb stopped and removed'
 }
 
+@test "$clinom services couchdb cleanup" {
+  run "${clicmd}" services couchdb cleanup
+  assert_success && assert_output -p 'cleaned up'
+}

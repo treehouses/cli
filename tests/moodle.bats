@@ -87,3 +87,7 @@ load test-helper
   assert_success && assert_output -p 'moodle stopped and removed'
 }
 
+@test "$clinom services moodle cleanup" {
+  run "${clicmd}" services moodle cleanup
+  assert_success && assert_output -p 'cleaned up'
+}

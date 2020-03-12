@@ -7,6 +7,7 @@ SCRIPTARGNUM=$#
 
 source "$SCRIPTFOLDER/modules/config.sh"
 source "$SCRIPTFOLDER/modules/log.sh"
+source "$SCRIPTFOLDER/modules/detectbluetooth.sh"
 source "$SCRIPTFOLDER/modules/detectrpi.sh"
 source "$SCRIPTFOLDER/modules/globals.sh"
 source "$SCRIPTFOLDER/modules/ap.sh"
@@ -102,6 +103,10 @@ case $1 in
     checkargn 1
     detect
     ;;
+  detectbluetooth)
+    checkargn 1
+    detectbluetooth
+    ;;
   detectrpi)
     checkargn 2
     detectrpi "$2"
@@ -136,7 +141,7 @@ case $1 in
     bluetooth "$2" "$3"
     ;;
   bluetoothid)
-    checkrpi
+    checkwrpi
     checkargn 2
     bluetoothid "$2"
     ;;
@@ -245,7 +250,7 @@ case $1 in
     networkmode "$2"
     ;;
   button)
-    checkrpi
+    checkwrpi
     checkroot
     checkargn 2
     button "$2"

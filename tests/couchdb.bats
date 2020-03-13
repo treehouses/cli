@@ -17,6 +17,12 @@ load test-helper
   assert_success && assert_output -p 'couchdb built and started'
 }
 
+@test "$clinom services couchdb restart" {
+  run "${clicmd}" services couchdb restart
+  sleep 5
+  assert_success && assert_output -p 'couchdb built and started'
+}
+
 @test "$clinom services available" {
   run "${clicmd}" services available
   assert_success && assert_output -p 'couchdb'

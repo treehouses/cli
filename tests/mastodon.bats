@@ -17,6 +17,12 @@ load test-helper
   assert_success && assert_output -p 'mastodon built and started'
 }
 
+@test "$clinom services mastodon restart" {
+  run "${clicmd}" services mastodon restart
+  sleep 5
+  assert_success && assert_output -p 'mastodon built and started'
+}
+
 @test "$clinom services available" {
   run "${clicmd}" services available
   assert_success && assert_output -p 'mastodon'

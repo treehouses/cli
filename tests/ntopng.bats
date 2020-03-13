@@ -17,6 +17,12 @@ load test-helper
   assert_success && assert_output -p 'ntopng built and started'
 }
 
+@test "$clinom services ntopng restart" {
+  run "${clicmd}" services ntopng restart
+  sleep 5
+  assert_success && assert_output -p 'ntopng built and started'
+}
+
 @test "$clinom services available" {
   run "${clicmd}" services available
   assert_success && assert_output -p 'ntopng'

@@ -17,6 +17,11 @@ load test-helper
   assert_success && assert_output -p 'portainer built and started'
 }
 
+@test "$clinom services portainer restart" {
+  run "${clicmd}" services portainer restart
+  sleep 5
+  assert_success && assert_output -p 'portainer built and started'
+}
 @test "$clinom services available" {
   run "${clicmd}" services available
   assert_success && assert_output -p 'portainer'

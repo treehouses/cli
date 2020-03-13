@@ -17,6 +17,12 @@ load test-helper
   assert_success && assert_output -p 'nextcloud built and started'
 }
 
+@test "$clinom services nextcloud restart" {
+  run "${clicmd}" services nextcloud restart
+  sleep 5
+  assert_success && assert_output -p 'nextcloud built and started'
+}
+
 @test "$clinom services available" {
   run "${clicmd}" services available
   assert_success && assert_output -p 'nextcloud'

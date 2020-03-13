@@ -17,6 +17,12 @@ load test-helper
   assert_success && assert_output -p 'netdata built and started'
 }
 
+@test "$clinom services netdata restart" {
+  run "${clicmd}" services netdata restart
+  sleep 5
+  assert_success && assert_output -p 'netdata built and started'
+}
+
 @test "$clinom services available" {
   run "${clicmd}" services available
   assert_success && assert_output -p 'netdata'

@@ -17,6 +17,12 @@ load test-helper
   assert_success && assert_output -p 'kolibri built and started'
 }
 
+@test "$clinom services kolibri restart" {
+  run "${clicmd}" services kolibri restart
+  sleep 5
+  assert_success && assert_output -p 'kolibri built and started'
+}
+
 @test "$clinom services available" {
   run "${clicmd}" services available
   assert_success && assert_output -p 'kolibri'

@@ -17,6 +17,12 @@ load test-helper
   assert_success && assert_output -p 'pihole built and started'
 }
 
+@test "$clinom services pihole restart" {
+  run "${clicmd}" services pihole restart
+  sleep 5
+  assert_success && assert_output -p 'pihole built and started'
+}
+
 @test "$clinom services available" {
   run "${clicmd}" services available
   assert_success && assert_output -p 'pihole'

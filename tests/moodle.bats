@@ -17,6 +17,12 @@ load test-helper
   assert_success && assert_output -p 'moodle built and started'
 }
 
+@test "$clinom services moodle restart" {
+  run "${clicmd}" services moodle restart
+  sleep 5
+  assert_success && assert_output -p 'moodle built and started'
+}
+
 @test "$clinom services available" {
   run "${clicmd}" services available
   assert_success && assert_output -p 'moodle'

@@ -38,6 +38,7 @@ password <password>                       changes the password for 'pi' user
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
 version                                   returns the version of cli.sh command
 image                                     returns version of the system image installed
+detectbluetooth                           detects if bluetooth module is available
 detectrpi [model]                         detects the hardware version of a raspberry pi
 detect                                    detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
@@ -89,6 +90,7 @@ services [service_name] [command]         executes the given command on the spec
            [privatebin]                   PrivateBin is a minimalist, open source online pastebin
            [portainer]                    Portainer is a lightweight management UI for Docker environments
            [ntopng]                       Ntopng is a network traffic probe that monitors network usage
+           [couchdb]                      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
@@ -107,17 +109,4 @@ remote [status|upgrade|services]          helps with treehouses remote android a
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
-```
-
-## Testing
-
-We use the [bats](https://github.com/sstephenson/bats) package.
-Make sure to do testing on a Raspberry Pi. Support for other platforms
-isn't guaranteed.
-```
-sudo apt install bats
-sudo bats ./tests/blocker.bats # test a single file
-nssidname='Wifiname' nwifipass='wifipass' sudo ./tests/wifi.bats
-sudo ./test-cli.sh # test everything (variables inside test-cli.sh as well)
-
 ```

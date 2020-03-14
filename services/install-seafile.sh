@@ -16,7 +16,10 @@ function install {
     echo "      - \"8085:8000\""
     echo "      - \"8086:8082\""
     echo "    environment:        "
-    echo "      -   "
+    echo "      - SEAFILE_NAME=Seaflail"
+    echo "      - SEAFILE_ADDRESS=kqjq6iamy5wwyetuac743s26wf5erahqlqnskod324wpakem7qrs5uyd.onion "
+    echo "      - SEAFILE_ADMIN=hiroyuki.terauchi.japan@gmail.com "
+    echo "      - SEAFILE_ADMIN_PW=1526821th "
     echo "    volumes:          "
     echo "      - /home/data/seafile:/seafile "
   } > /srv/seafile/seafile.yml

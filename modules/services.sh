@@ -267,7 +267,7 @@ function services {
               fi
               echo $tor_url
             done
-          elif [ "$command_option" = "both" ]; then
+          elif [ "$command_option" = "" ]; then
             services $service_name url local
             services $service_name url tor
           else

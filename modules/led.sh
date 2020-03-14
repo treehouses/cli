@@ -429,4 +429,7 @@ function led_help {
   echo "  $BASENAME led onam"
   echo "      This will set the mode of the led to onam"
   echo
-}
+  echo "  $BASENAME led newyear"
+  echo "      This will set the mode of the led to newyear"
+  echo
+  }

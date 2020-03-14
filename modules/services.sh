@@ -115,7 +115,7 @@ function services {
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
-            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|couchdb)
+            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|couchdb|seafile)
               check_space $service_name
               docker_compose_up $service_name
               for i in $(seq 1 "$(get_port $service_name | wc -l)")

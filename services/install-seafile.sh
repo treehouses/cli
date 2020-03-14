@@ -15,8 +15,8 @@ function install {
     echo "    ports:"
     echo "      - \"8085:8000\""
     echo "      - \"8086:8082\""
-    echo "    env_file:        "
-    echo "      - seafile.env  "
+    echo "    environment:        "
+    echo "      -   "
     echo "    volumes:          "
     echo "      - /home/data/seafile:/seafile "
   } > /srv/seafile/seafile.yml

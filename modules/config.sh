@@ -11,6 +11,7 @@ NC='\033[0m'
 LOGFILE=/dev/null
 LOG=0
 BLOCKER=0
+WIFICOUNTRY="US"
 
 if [[ -f "$CONFIGFILE" ]]; then
   source "$CONFIGFILE"

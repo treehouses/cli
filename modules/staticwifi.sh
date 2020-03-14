@@ -1,5 +1,5 @@
 function staticwifi {
-  local essid password wificountry
+  local essid password
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/wlan0/static" /etc/network/interfaces.d/wlan0
 
@@ -26,12 +26,7 @@ function staticwifi {
   {
     echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
     echo "update_config=1"
-    wificountry="US"
-    if [ -r /etc/rpi-wifi-country ];
-    then
-      wificountry=$(cat /etc/rpi-wifi-country)
-    fi
-    echo "country=$wificountry"
+    echo "country=$WIFICOUNTRY"
   } > /etc/wpa_supplicant/wpa_supplicant.conf
 
   if [ -z "$password" ];

@@ -1,5 +1,5 @@
 function bridge {
-  local wifiessid hotspotessid wifipassword hotspotpassword base_24 channels channel wificountry
+  local wifiessid hotspotessid wifipassword hotspotpassword base_24 channels channel
   case $(detectrpi) in
     RPI3B|RPIZW|RPI3B+|RPI3A+|RPI4B)
       ;;
@@ -68,12 +68,7 @@ function bridge {
   {
     echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
     echo "update_config=1"
-    wificountry="US"
-    if [ -r /etc/rpi-wifi-country ];
-    then
-      wificountry=$(</etc/rpi-wifi-country)
-    fi
-    echo "country=$wificountry"
+    echo "country=$WIFICOUNTRY"
   } > /etc/wpa_supplicant/wpa_supplicant.conf
 
   if [ -z "$wifipassword" ];

@@ -37,7 +37,6 @@ function default_network {
 
   rm -rf /etc/hostapd.conf
   rm -rf /etc/network/interfaces.d/*
-  rm -rf /etc/rpi-wifi-country
 
   stop_service hostapd
   stop_service dnsmasq

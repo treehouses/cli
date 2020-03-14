@@ -198,7 +198,6 @@ _treehouses_complete()
       "*")
         ;;
     esac
-  fi
   elif [ $COMP_CWORD -eq 4 ]
   then
     case "$prev" in

@@ -2,7 +2,14 @@ function bluetooth {
   local status macfile macadd btidfile bid nname
   status=$1
 
-  if [ "$status" = "on" ]; then
+  if [ -z "$status" ]; then
+    if [[ "$(sudo service bluetooth status | grep "Active:")" ]]; then
+      echo "on"
+    else
+      echo "off"
+    fi
+
+  elif [ "$status" = "on" ]; then
     cp "$TEMPLATES/bluetooth/hotspot" /etc/systemd/system/dbus-org.bluez.service
     enable_service rpibluetooth
     restart_service bluetooth

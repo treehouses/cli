@@ -69,6 +69,9 @@ function bluetooth_help {
   echo "Switches between hotspot / regular bluetooth mode, or displays the bluetooth mac address"
   echo
   echo "Example:"
+  echo "  $BASENAME bluetooth"
+  echo "      off"
+  echo 
   echo "  $BASENAME bluetooth on"
   echo "      This will start the bluetooth server, which lets the user control the raspberry pi using the mobile app."
   echo

@@ -115,18 +115,9 @@ function services {
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
-            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|couchdb|mariadb)
+            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|pihole|couchdb|mariadb)
               check_space $service_name
               docker_compose_up $service_name
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
-              do
-                check_tor "$(get_port $service_name | sed -n "$i p")"
-              done
-              ;;
-            pihole)
-              check_space "pihole"
-              service dnsmasq stop
-              docker_compose_up "pihole"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
                 check_tor "$(get_port $service_name | sed -n "$i p")"

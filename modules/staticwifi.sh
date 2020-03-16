@@ -3,6 +3,8 @@ function staticwifi {
 
   if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
     echo "Error: argument(s) missing"
+    echo "Usage: $BASENAME staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]"
+    echo "ip, mask, gateway, dns, and ESSID are required fields"
     exit 1
   fi
 

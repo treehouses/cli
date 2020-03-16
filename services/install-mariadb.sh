@@ -10,6 +10,7 @@ function install {
     echo "services:"
     echo "  mariadb:"
     echo "    image: jsurf/rpi-mariadb"
+    echo "    container_name: rpi-mariadb"
     echo "    ports:"
     echo "      - 3306:3306"
     echo "    environment:"

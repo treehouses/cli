@@ -241,20 +241,23 @@ function services {
               local_url+=$(get_port $service_name | sed -n "$i p")
               if [ "$service_name" = "pihole" ]; then
                 local_url+="/admin"
+              elif [ "$service_name" = "couchdb" ]; then
+                local_url+="/_utils"
               fi
               echo $local_url
             done
           elif [ "$command_option" = "tor" ]; then
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
-              if tor ; then
+              if [ "$(tor status)" = "active" ]; then
                 tor_url=$(tor)
                 tor_url+=":"
                 tor_url+=$(get_port $service_name | sed -n "$i p")
               fi
-
               if [ "$service_name" = "pihole" ]; then
                 tor_url+="/admin"
+              elif [ "$service_name" = "couchdb" ]; then
+                tor_url+="/_utils"
               fi
               echo $tor_url
             done

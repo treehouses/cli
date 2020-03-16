@@ -427,6 +427,7 @@ function services_help {
   echo
   echo "  Usage:"
   echo "    $BASENAME services <service_name> install"
+  echo "                             ..... cleanup"
   echo "                             ..... up"
   echo "                             ..... down"
   echo "                             ..... start"

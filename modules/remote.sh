@@ -58,7 +58,7 @@ function remote {
         for i in "${commands_array[@]}"
         do
           if [[ $i != *"second_cmds"* ]]; then
-            echo $i
+            eval "echo \${$i}"
           fi
         done
         ;;
@@ -66,7 +66,7 @@ function remote {
         for i in "${commands_array[@]}"
         do
           if [[ $i == *"second_cmds"* ]]; then
-            echo $if
+            eval "echo \${$i}"
           fi
         done
         ;;

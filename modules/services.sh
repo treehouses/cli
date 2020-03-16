@@ -267,7 +267,8 @@ function services {
               fi
               echo $tor_url
             done
-          elif [ "$command_option" = "" ]; then
+          #DEPRECATED#### TO DO: Remove both
+          elif [ "$command_option" = "both" ] || [ "$command_option" = "" ]; then
             services $service_name url local
             services $service_name url tor
           else
@@ -434,7 +435,7 @@ function services_help {
   echo "                             ..... autorun [true|false]"
   echo "                             ..... ps"
   echo "                             ..... info"
-  echo "                             ..... url <local|tor|both>"
+  echo "                             ..... url <local|tor>"
   echo "                             ..... port"
   echo "                             ..... size"
   echo
@@ -460,10 +461,9 @@ function services_help {
   echo
   echo "    info                    gives some information about <service_name>"
   echo
-  echo "    url                     <requires one of the options given below>"
+  echo "    url                     lists both the local and tor url for <service_name>"
   echo "        <local>                 lists the local url for <service_name>"
   echo "        <tor>                   lists the tor url for <service_name>"
-  echo "        <both>                  lists both the local and tor url for <service_name>"
   echo
   echo "    port                    lists the ports used by <service_name>"
   echo

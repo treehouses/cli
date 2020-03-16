@@ -53,7 +53,6 @@ function camera {
 
     "*")
       camera_help
-      exit 0
     ;;
   esac
 }

@@ -72,6 +72,7 @@ function services {
     else
       case "$command" in
         install)
+          check_space "$service_name"
           if [ "$service_name" = "planet" ]; then
             if source $SERVICES/install-planet.sh && install ; then
               echo "planet installed"
@@ -94,7 +95,6 @@ function services {
         up)
           case "$service_name" in
             planet)
-              check_space "planet"
               if [ -f /srv/planet/pwd/credentials.yml ]; then
                 if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
                   echo "planet built and started"
@@ -115,7 +115,7 @@ function services {
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
-            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|couchdb)
+            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|couchdb|mariadb)
               check_space $service_name
               docker_compose_up $service_name
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
@@ -124,7 +124,6 @@ function services {
               done
               ;;
             pihole)
-              check_space "pihole"
               service dnsmasq stop
               docker_compose_up "pihole"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
@@ -250,20 +249,23 @@ function services {
               local_url+=$(get_port $service_name | sed -n "$i p")
               if [ "$service_name" = "pihole" ]; then
                 local_url+="/admin"
+              elif [ "$service_name" = "couchdb" ]; then
+                local_url+="/_utils"
               fi
               echo $local_url
             done
           elif [ "$command_option" = "tor" ]; then
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
-              if tor ; then
+              if [ "$(tor status)" = "active" ]; then
                 tor_url=$(tor)
                 tor_url+=":"
                 tor_url+=$(get_port $service_name | sed -n "$i p")
               fi
-
               if [ "$service_name" = "pihole" ]; then
                 tor_url+="/admin"
+              elif [ "$service_name" = "couchdb" ]; then
+                tor_url+="/_utils"
               fi
               echo $tor_url
             done
@@ -395,6 +397,7 @@ function services_help {
   echo "  portainer    Portainer is a lightweight management UI for Docker environments"
   echo "  ntopng       Ntopng is a network traffic probe that monitors network usage"
   echo "  couchdb      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
+  echo "  mariadb      MariaDB is a community-developed fork of the MySQL relational database management system"
   echo
   echo
   echo "Top-Level Commands:"

@@ -115,7 +115,7 @@ function services {
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
-            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|pihole|couchdb)
+            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|pihole|couchdb|mariadb)
               check_space $service_name
               docker_compose_up $service_name
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
@@ -385,6 +385,7 @@ function services_help {
   echo "  portainer    Portainer is a lightweight management UI for Docker environments"
   echo "  ntopng       Ntopng is a network traffic probe that monitors network usage"
   echo "  couchdb      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
+  echo "  mariadb      MariaDB is a community-developed fork of the MySQL relational database management system"
   echo
   echo
   echo "Top-Level Commands:"

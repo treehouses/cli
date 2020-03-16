@@ -72,6 +72,7 @@ function services {
     else
       case "$command" in
         install)
+          check_space "$service_name"
           if [ "$service_name" = "planet" ]; then
             if source $SERVICES/install-planet.sh && install ; then
               echo "planet installed"
@@ -94,7 +95,6 @@ function services {
         up)
           case "$service_name" in
             planet)
-              check_space "planet"
               if [ -f /srv/planet/pwd/credentials.yml ]; then
                 if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
                   echo "planet built and started"
@@ -115,9 +115,17 @@ function services {
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
-            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|pihole|couchdb|mariadb)
+            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|couchdb|mariadb)
               check_space $service_name
               docker_compose_up $service_name
+              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+              do
+                check_tor "$(get_port $service_name | sed -n "$i p")"
+              done
+              ;;
+            pihole)
+              service dnsmasq stop
+              docker_compose_up "pihole"
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
                 check_tor "$(get_port $service_name | sed -n "$i p")"

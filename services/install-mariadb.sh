@@ -14,16 +14,6 @@ function install {
     echo "      - 3306:3306"
     echo "    environment:"
     echo "      - MYSQL_ROOT_PASSWORD=my-secret-pw"
-#    echo "    cap_add:"
-#    echo "      - SYS_PTRACE"
-#    echo "    security_opt:"
-#    echo "      - apparmor:unconfined"
-#    echo "    volumes:"
-#    echo "      - /etc/passwd:/host/etc/passwd:ro"
-#    echo "      - /etc/os-release:/host/etc/os-release:ro"
-#    echo "      - /etc/group:/host/etc/group:ro"
-#    echo "      - /proc:/host/proc:ro"
-#    echo "      - /sys:/host/sys:ro"
   } > /srv/mariadb/mariadb.yml
 
   # add autorun
@@ -50,7 +40,7 @@ function get_size {
 
 # add info
 function get_info {
-  echo "https://github.com/JSurf/docker-rpi-mariadb"
+  echo "https://mariadb.org/"
   echo
   echo "MariaDB is a community-developed fork of the MySQL relational database management system"
 }

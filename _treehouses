@@ -1,0 +1,216 @@
+#!/bin/bash
+
+_treehouses_complete()
+{
+  local cur prev
+
+  # Valid top-level completions
+  commands="ap aphidden apchannel blocker bluetooth bluetoothid bootoption bridge burn button camera clone \
+            container coralenv cron default detect detectbluetooth detectrpi discover ethernet expandfs \
+            feedback help image internet led locale log memory networkmode ntp openvpn password \
+            rebootneeded reboots rename remote restore rtc sdbench services speedtest ssh sshkey sshtunnel \
+            staticwifi temperature timezone tor upgrade usb verbose version vnc wifi wificountry wifihidden wifistatus"
+  ap_cmds="local internet"
+  aphidden_cmds="local internet"
+  apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
+  blocker_cmds="0 1 2 3 4 max"
+  bluetooth_cmds="on off pause mac id button"
+  bootoption_cmds="console desktop"
+  button_cmds="off bluetooth"
+  camera_cmds="on off capture"
+  container_cmds="none docker balena"
+  coralenv_cmds="install demo-on demo-off demo-always-on"
+  cron_cmds="list 0W tor timestamp add delete deleteall"
+  discover_cmds="rpi scan interface ping ports mac"
+  detectrpi_cmds="model"
+  help_cmds=$commands
+  led_cmds="green red dance thanksgiving christmas newyear lunarnewyear valentine carnival onam"
+  log_cmds="0 1 2 3 4 show max"
+  memory_cmds="total used free"
+  networkmode_cmds="info"
+  ntp_cmds="local internet"
+  openvpn_cmds="use show delete notice start stop load"
+  reboots_cmds="now in cron daily weekly monthly"
+  rtc_cmds="on off"
+  services_cmds="available installed running ports kolibri mastodon moodle netdata nextcloud ntopng pihole planet portainer privatebin couchdb mariadb"
+  sshkey_cmds="add list delete deleteall github addgithubusername deletegithubusername addgithubgroup"
+  ssh_cmds="on off"
+  sshtunnel_cmds="add remove list key notice check"
+  temperature_cmds="celsius fahrenheit"
+  tor_cmds="list add delete deleteall start stop destroy notice status refresh"
+  usb_cmds="on off"
+  remote_cmds="status upgrade services version"
+  verbose_cmds="on off"
+  vnc_cmds="on off info"
+
+  notice_cmds="on off add delete list now"
+  rtc_second_cmds="ds3231 rasclock"
+  bluetooth_second_cmds="number"
+  bootoption_second_cmds="autologin"
+  led_second_cmds="heartbeat default-on oneshot timer cpu0 gpio input backlight none kbd"
+  services_second_cmds="full"
+  services_second_cmds2="install up down start stop restart autorun ps info url port size"
+  sshkey_second_cmds="adduser deleteuser addteam"
+  remote_second_cmds="available installed running"
+
+  services_third_cmds="true false"
+  services_third_cmds2="local tor both"
+
+  COMPREPLY=()
+  cur=${COMP_WORDS[COMP_CWORD]}
+  prev=${COMP_WORDS[COMP_CWORD-1]}
+
+  if [ $COMP_CWORD -eq 1 ]
+  then
+    COMPREPLY=( $(compgen -W "${commands}" -- $cur) )
+  elif [ $COMP_CWORD -eq 2 ]
+  then
+    case "$prev" in
+      "ap")
+        COMPREPLY=( $(compgen -W "$ap_cmds" -- $cur) )
+        ;;
+      "aphidden")
+        COMPREPLY=( $(compgen -W "$aphidden_cmds" -- $cur) )
+        ;;
+      "apchannel")
+        COMPREPLY=( $(compgen -W "$apchannel_cmds" -- $cur) ) #cannot ascending order
+        ;;
+      "blocker")
+        COMPREPLY=( $(compgen -W "$blocker_cmds" -- $cur) )
+        ;;        
+      "bluetooth")
+        COMPREPLY=( $(compgen -W "$bluetooth_cmds" -- $cur) )
+        ;;
+      "bootoption")
+        COMPREPLY=( $(compgen -W "$bootoption_cmds" -- $cur) )
+        ;;
+      "button")
+        COMPREPLY=( $(compgen -W "$button_cmds" -- $cur) )
+        ;;
+      "camera")
+        COMPREPLY=( $(compgen -W "$camera_cmds" -- $cur) )
+        ;;
+      "container")
+        COMPREPLY=( $(compgen -W "$container_cmds" -- $cur) )
+        ;;
+      "coralenv")
+        COMPREPLY=( $(compgen -W "$coralenv_cmds" -- $cur) )
+        ;;
+      "cron")
+        COMPREPLY=( $(compgen -W "$cron_cmds" -- $cur) )
+        ;;
+      "discover")
+        COMPREPLY=( $(compgen -W "$discover_cmds" -- $cur) )
+        ;;
+      "detectrpi")
+        COMPREPLY=( $(compgen -W "$detectrpi_cmds" -- $cur) )
+        ;;      
+      "help")
+        COMPREPLY=( $(compgen -W "$help_cmds" -- $cur) )
+        ;;
+      "led")
+        COMPREPLY=( $(compgen -W "$led_cmds" -- $cur) )
+        ;;
+      "memory")
+        COMPREPLY=( $(compgen -W "$memory_cmds" -- $cur) )
+        ;;
+      "networkmode")
+        COMPREPLY=( $(compgen -W "$networkmode_cmds" -- $cur) )
+        ;;
+      "ntp")
+        COMPREPLY=( $(compgen -W "$ntp_cmds" -- $cur) )
+        ;;
+      "openvpn")
+        COMPREPLY=( $(compgen -W "$openvpn_cmds" -- $cur) )
+        ;;
+      "rtc")
+        COMPREPLY=( $(compgen -W "$rtc_cmds" -- $cur) )
+        ;;
+      "reboots")
+        COMPREPLY=( $(compgen -W "$reboots_cmds" -- $cur) )
+        ;;
+      "services")
+        COMPREPLY=( $(compgen -W "$services_cmds" -- $cur) )
+        ;;
+      "sshkey")
+        COMPREPLY=( $(compgen -W "$sshkey_cmds" -- $cur) )
+        ;;
+      "ssh")
+        COMPREPLY=( $(compgen -W "$ssh_cmds" -- $cur) )
+        ;;
+      "sshtunnel")
+        COMPREPLY=( $(compgen -W "$sshtunnel_cmds" -- $cur) )
+        ;;
+      "temperature")
+        COMPREPLY=( $(compgen -W "$temperature_cmds" -- $cur) )
+        ;;
+      "tor")
+        COMPREPLY=( $(compgen -W "$tor_cmds" -- $cur) )
+        ;;
+      "verbose")
+        COMPREPLY=( $(compgen -W "$verbose_cmds" -- $cur) )
+        ;;
+      "log")
+        COMPREPLY=( $(compgen -W "$log_cmds" -- $cur) )
+        ;;
+      "usb")
+        COMPREPLY=( $(compgen -W "$usb_cmds" -- $cur) )
+        ;;
+      "vnc")
+        COMPREPLY=( $(compgen -W "$vnc_cmds" -- $cur) )
+        ;;
+      "remote")
+        COMPREPLY=( $(compgen -W "$remote_cmds" -- $cur) )
+        ;;
+      "*")
+        ;;
+    esac
+  elif [ $COMP_CWORD -eq 3 ]
+  then
+    case "$prev" in
+      "console"|"desktop")
+        COMPREPLY=( $(compgen -W "$bootoption_second_cmds" -- $cur) )
+        ;;
+      "notice")
+        COMPREPLY=( $(compgen -W "$notice_cmds" -- $cur) )
+        ;;
+      "on")
+        COMPREPLY=( $(compgen -W "$rtc_second_cmds" -- $cur) )
+        ;;
+      "id")
+        COMPREPLY=( $(compgen -W "$bluetooth_second_cmds" -- $cur) )
+        ;;
+      "green"|"red")
+        COMPREPLY=( $(compgen -W "$led_second_cmds" -- $cur) )
+        ;;
+      "available"|"installed"|"running")
+        COMPREPLY=( $(compgen -W "$services_second_cmds" -- $cur) )
+        ;;
+      "planet"|"kolibri"|"nextcloud"|"netdata"|"mastodon"|"moodle"|"pihole"|"privatebin"|"portainer"|"ntopng"|"couchdb"|"mariadb")
+        COMPREPLY=( $(compgen -W "$services_second_cmds2" -- $cur) )
+        ;;
+      "github")
+        COMPREPLY=( $(compgen -W "$sshkey_second_cmds" -- $cur) )
+        ;;
+      "services")
+        COMPREPLY=( $(compgen -W "$remote_second_cmds" -- $cur) )
+        ;;
+      "*")
+        ;;
+    esac
+  elif [ $COMP_CWORD -eq 4 ]
+  then
+    case "$prev" in
+      "autorun")
+        COMPREPLY=( $(compgen -W "$services_third_cmds" -- $cur) )
+        ;;
+      "url")
+        COMPREPLY=( $(compgen -W "$services_third_cmds2" -- $cur) )
+        ;;
+      "*")
+        ;;
+    esac
+  fi
+}
+
+complete -F _treehouses_complete treehouses

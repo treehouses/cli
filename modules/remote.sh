@@ -54,10 +54,7 @@ function remote {
       "")
         echo $commands
         ;;
-      ap|aphidden|apchannel|blocker|bluetooth|bootoption|bootoption_second|
-      button|camera|container|coralevn|cron|discover|detectrpi|help|led|log|
-      memory|networkmode|ntp|openvpn|reboots|rtc|rtc_on|services|sshkey|ssh|
-      sshtunnel|temperature|tor|usb|notice|remote|verbose|vnc)
+      ap|aphidden|apchannel|blocker|bluetooth|bootoption|bootoption_second|button|camera|container|coralevn|cron|discover|detectrpi|help|led|log|memory|networkmode|ntp|openvpn|reboots|rtc|rtc_on|services|sshkey|ssh|sshtunnel|temperature|tor|usb|notice|remote|verbose|vnc)
         eval "echo \${${2}_cmds}"
         ;;
       *)

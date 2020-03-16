@@ -21,12 +21,13 @@ function services {
     if [ "$command" = "full" ]; then
       docker ps -a
     elif [ -z "$command" ]; then
-      installed=$(docker images --format '{{.Repository}}' | sed -e 's:.*/::' -e 's:.*-::')
-      array=($installed)
-      IFS=$'\n' sorted=($(sort <<<"${array[*]}"))
-      unset IFS
       available=($(services available))
-      comm -12 <(printf '%s\n' "${sorted[@]}") <(printf '%s\n' "${available[@]}")
+      for service in "${available[@]}"
+      do
+        if [ -d /srv/$service ]; then
+          echo $service
+        fi
+      done
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
@@ -42,6 +43,8 @@ function services {
           results+="${i%%_*}"
         elif [[ $i == *"-"* ]]; then
           results+="${i%%-*}"
+        else
+          results+=$i
         fi
         results+=" "
       done
@@ -112,19 +115,13 @@ function services {
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
               ;;
-            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|pihole)
+            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|pihole|couchdb)
               check_space $service_name
               docker_compose_up $service_name
               for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
-              ;;
-            couchdb)
-              check_space "treehouses/couchdb"
-              create_yml "couchdb"
-              docker_compose_up "couchdb"
-              check_tor "5984"
               ;;
             *)
               echo "unknown service"
@@ -328,7 +325,11 @@ function check_available_services {
 }
 
 function docker_compose_up {
-  if docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
+  if [ ! -f /srv/${1}/${1}.yml ]; then
+    echo "/srv/${1}/${1}.yml not found"
+    echo "try running '$BASENAME services ${1} install' first"
+    exit 1
+  elif docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
     echo "${1} built and started"
   else
     echo "error building ${1}"
@@ -383,7 +384,7 @@ function services_help {
   echo "  privatebin   PrivateBin is a minimalist, open source online pastebin"
   echo "  portainer    Portainer is a lightweight management UI for Docker environments"
   echo "  ntopng       Ntopng is a network traffic probe that monitors network usage"
-  echo "  couchdb      Apache CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang."
+  echo "  couchdb      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
   echo
   echo
   echo "Top-Level Commands:"

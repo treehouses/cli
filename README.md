@@ -91,6 +91,7 @@ services [service_name] [command]         executes the given command on the spec
            [portainer]                    Portainer is a lightweight management UI for Docker environments
            [ntopng]                       Ntopng is a network traffic probe that monitors network usage
            [couchdb]                      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
+           [mariadb]                      MariaDB is a community-developed fork of the MySQL relational database management system
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

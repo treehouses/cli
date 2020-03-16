@@ -49,7 +49,7 @@ function remote {
       echo false
     fi
   elif [ "$option" = "commands" ]; then
-    source $SCRIPTFOLDER/_treehouses && _treehouses_complete
+    source $SCRIPTFOLDER/_treehouses && _treehouses_complete 2>/dev/null
     case "$2" in
       "")
         echo $commands

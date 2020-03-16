@@ -44,4 +44,5 @@ function get_info {
   echo "https://mariadb.org/"
   echo
   echo "MariaDB is a community-developed fork of the MySQL relational database management system"
+  echo "Connect to database with 'mysql -h\"127.0.0.1\" -P\"3306\" -uroot -p\"my-secret-pw\"'"
 }

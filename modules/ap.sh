@@ -43,7 +43,7 @@ function apmain {
     echo "${hide}ap local" > /etc/network/mode
   else
     echo "Error: only 'local' and 'internet' modes are supported".
-    exit 0
+    exit 1
   fi
 
   if [[ -v hide ]]; then

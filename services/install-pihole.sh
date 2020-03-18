@@ -3,13 +3,15 @@
 function install {
   # create service directory
   mkdir -p /srv/pihole
+  service dnsmasq stop
+  touch /var/log/pihole.log
 
   # create yml(s)
   {
     echo "version: \"3\""
     echo
     echo "# https://github.com/pi-hole/docker-pi-hole/blob/master/README.md"
-    echo 
+    echo
     echo "services:"
     echo "  pihole:"
     echo "    container_name: pihole"
@@ -28,7 +30,6 @@ function install {
     echo "    volumes:"
     echo "      - './etc-pihole/:/etc/pihole/'"
     echo "      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'"
-    echo "    # run $(touch ./var-log/pihole.log) first unless you like errors"
     echo "    # - './var-log/pihole.log:/var/log/pihole.log'"
     echo "    dns:"
     echo "      - 127.0.0.1"

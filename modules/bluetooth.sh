@@ -3,7 +3,7 @@ function bluetooth {
   status=$1
 
   if [ -z "$status" ]; then
-    if [[ "$(service bluetooth status | grep "Active:")" =~ "running" ]]; then
+    if [[ "$(service rpibluetooth status | grep "Active:")" =~ "running" ]]; then
       echo "on"
     else
       echo "off"

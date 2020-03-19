@@ -2,7 +2,7 @@ function networkmode {
   local network_mode interfaces ifaces
   network_mode="default"
   if [ -f "/etc/network/mode" ]; then
-    network_mode=$(cat "/etc/network/mode")
+    network_mode=$(</etc/network/mode)
   fi
 
   interfaces=()
@@ -99,7 +99,7 @@ function get_staticnetwork_info {
   gateway=$(sed -n "s/.*gateway \\(.*\\)/\\1/p" "/etc/network/interfaces.d/$interface")
   dns=$(sed -n "s/.*dns-nameservers \\(.*\\)/\\1/p" "/etc/network/interfaces.d/$interface")
   echo -n "$interface: static, ip: $ip_address, netmask: $netmask, gateway: $gateway, dns: $dns"
-  if [ "$interface" == "wlan0" ]; then 
+  if [ "$interface" == "wlan0" ]; then
     network_name=$(sed -n "s/.*ssid=\"\\(.*\\)\"/\\1/p" /etc/wpa_supplicant/wpa_supplicant.conf)
     echo -n ", essid: $network_name, "
     if grep -q "key_mgmt=NONE" "/etc/wpa_supplicant/wpa_supplicant.conf"; then

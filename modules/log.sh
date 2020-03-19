@@ -1,4 +1,4 @@
-# uses logger command to log to /var/log/syslog 
+# uses logger command to log to /var/log/syslog
 # logit "text" "whether or not to write to screen" "logging level"
 # e.g. logit "i logged some text"
 # e.g. logit "error: MISSION ABORT" "" "ERROR"
@@ -14,7 +14,7 @@ function logit() {
       "WARNING")
 	    if [[ "$LOG" -gt "1" ]]; then
           logger -p local0.warning -t @treehouses/cli "WARNING: $1"
-		fi 
+		fi
         ;;
 	  # Stuff did break
       "ERROR")

@@ -47,18 +47,25 @@ function checkrpi {
   fi
 }
 
-function checkwrpi {
-  local model check
-  declare -a wRPIs=("RPIZW" "RPI3A" "RPI3B" "RPI4B")
-  model="$(detectrpi)"
-  check="${model:0:5}"
-  for i in "${wRPIs[@]}"; do
-    if [ "$i" == "$check" ]; then
-      return 1
+function checkargn {
+  local helpfunc
+  if [[ $SCRIPTARGNUM -gt $1 ]]; then
+    echo "Error: Too many arguments."
+    helpfunc="$(echo $SCRIPTARGS | cut -d' ' -f1)"
+    if [[ $helpfunc = "help" ]]; then
+      help
+    else
+      eval "${helpfunc}_help"
     fi
-  done
-  echo "Bluetooth does not exist on this device"
-  exit 1
+    exit 1
+  fi
+}
+
+function checkwrpi {
+  if [[ $(detectbluetooth) == "false" ]]; then
+    echo "Bluetooth does not exist on this device"
+    exit 1
+  fi
 }
 
 function checkwifi {

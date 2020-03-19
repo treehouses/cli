@@ -437,7 +437,6 @@ function services_help {
   echo
   echo "  Usage:"
   echo "    $BASENAME services <service_name> install"
-  echo "                             ..... cleanup"
   echo "                             ..... up"
   echo "                             ..... down"
   echo "                             ..... start"
@@ -445,14 +444,14 @@ function services_help {
   echo "                             ..... restart"
   echo "                             ..... autorun [true|false]"
   echo "                             ..... ps"
-  echo "                             ..... info"
   echo "                             ..... url <local|tor>"
   echo "                             ..... port"
+  echo "                             ..... info"
   echo "                             ..... size"
+  echo "                             ..... cleanup"
+  echo "                             ..... icon"
   echo
   echo "    install                 installs and pulls <service_name>"
-  echo
-  echo "    cleanup                 uninstalls and removes <service_name>"
   echo
   echo "    up                      builds and starts <service_name>"
   echo
@@ -470,15 +469,19 @@ function services_help {
   echo
   echo "    ps                      outputs the containers related to <service_name>"
   echo
-  echo "    info                    gives some information about <service_name>"
-  echo
   echo "    url                     lists both the local and tor url for <service_name>"
   echo "        <local>                 lists the local url for <service_name>"
   echo "        <tor>                   lists the tor url for <service_name>"
   echo
   echo "    port                    lists the ports used by <service_name>"
   echo
+  echo "    info                    gives some information about <service_name>"
+  echo
   echo "    size                    outputs the size of <service_name>"
+  echo
+  echo "    cleanup                 uninstalls and removes <service_name>"
+  echo
+  echo "    icon                    outputs the svg code for the <service_name>'s icon"
   echo
   echo "  Examples:"
   echo

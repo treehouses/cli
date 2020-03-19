@@ -5,7 +5,14 @@ function bluetooth {
   checkargn 3
   status=$1
 
-  if [ "$status" = "on" ]; then
+  if [ -z "$status" ]; then
+    if [[ "$(service rpibluetooth status | grep "Active:")" =~ "running" ]]; then
+      echo "on"
+    else
+      echo "off"
+    fi
+
+  elif [ "$status" = "on" ]; then
     cp "$TEMPLATES/bluetooth/hotspot" /etc/systemd/system/dbus-org.bluez.service
     enable_service rpibluetooth
     restart_service bluetooth
@@ -65,6 +72,9 @@ function bluetooth_help {
   echo "Switches between hotspot / regular bluetooth mode, or displays the bluetooth mac address"
   echo
   echo "Example:"
+  echo "  $BASENAME bluetooth"
+  echo "      off"
+  echo 
   echo "  $BASENAME bluetooth on"
   echo "      This will start the bluetooth server, which lets the user control the raspberry pi using the mobile app."
   echo

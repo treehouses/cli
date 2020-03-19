@@ -32,7 +32,7 @@ function bluetooth {
     if [ ! -f "${btidfile}" ]; then
       echo "No ID. Bluetooth service is not on."
       exit 0
-    fi
+    fi         
 
     bid=$(cat ${btidfile})
     nname=$(uname -n)
@@ -43,12 +43,15 @@ function bluetooth {
         ;;
       "number")
         echo "${bid}"
-        ;;
+        ;; 
       *)
         echo "Argument not valid; leave blank or use \"number\""
         exit 1
         ;;
     esac
+
+   elif [ "$status" = "button" ]; then
+     button bluetooth
 
   else
     echo "Error: only 'on', 'off', 'pause' options are supported";
@@ -57,7 +60,7 @@ function bluetooth {
 
 function bluetooth_help {
   echo
-  echo "Usage: $BASENAME bluetooth <on|off|pause|mac|id>"
+  echo "Usage: $BASENAME bluetooth <on|off|pause|mac|id|button>"
   echo
   echo "Switches between hotspot / regular bluetooth mode, or displays the bluetooth mac address"
   echo
@@ -78,6 +81,10 @@ function bluetooth_help {
   echo
   echo "  $BASENAME bluetooth id"
   echo "      This will display the network name along with the bluetooth id number"
+  echo 
+  echo "  $BASENAME bluetooth button"
+  echo "      When the GPIO pin 18 is on the bluetooth will ne turned off"
+  echo "      Otherwise the bluetooth mode will be changed to hotspot"
   echo
   echo "  $BASENAME bluetooth id number"
   echo "      This will display the bluetooth id number"

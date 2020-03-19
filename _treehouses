@@ -14,7 +14,7 @@ _treehouses_complete()
   aphidden_cmds="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
   blocker_cmds="0 1 2 3 4 max"
-  bluetooth_cmds="on off pause mac id"
+  bluetooth_cmds="on off pause mac id button"
   bootoption_cmds="console desktop"
   bootoption_second_cmds="autologin"
   button_cmds="off bluetooth"

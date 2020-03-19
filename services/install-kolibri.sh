@@ -48,7 +48,7 @@ function get_info {
 # add svg icon
 function get_icon {
   cat <<EOF
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 234.6 193.6">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 234.6 193.6">
   <path fill="#99B1A3" d="M113.7 35.5l7.7 6.7L127 34z"/>
   <path fill="#C7E1D1" d="M131.9 41.9L127 34l-5.6 8.2z"/>
   <path fill="#87AFA6" d="M113.7 35.5l-9.8 11.2 17.5-4.5z"/>

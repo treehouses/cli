@@ -80,12 +80,19 @@ function services {
               exit 1
             fi
           elif source $SERVICES/install-${service_name}.sh && install ; then
-            if docker-compose -f /srv/${service_name}/${service_name}.yml pull ; then
-              echo "${service_name} installed"
-            else
-              echo "error pulling docker image"
-              exit 1
-            fi
+            retries=0
+            while [ "$retries" -lt 2 ];
+            do
+              if ! docker-compose -f /srv/${service_name}/${service_name}.yml pull ; then
+                echo "retrying pull"
+                ((retries+=1))
+              else
+                echo "${service_name} installed"
+                exit 0
+              fi
+            done
+            echo "error pulling docker image"
+            exit 1
           else
             echo "error running install script"
             exit 1

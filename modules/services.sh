@@ -318,10 +318,10 @@ function services {
           fi
           ;;
         icon)
-          if source $SERVICES/install-${service_name}.sh && get_icon; then
-            :
+          if [ ! -e $SERVICE/install-${service_name}.sh ]; then
+            echo "${service_name} install script not found"
           else
-            echo "$SERVICES/install-${service_name}.sh not found"
+            source $SERVICES/install-${service_name}.sh && get_icon
           fi
           ;;
         *)

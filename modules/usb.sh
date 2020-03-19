@@ -1,5 +1,7 @@
 function usb {
   local command
+  checkroot
+  checkargn 2
   # check if hub-ctrl binary exists
   if [ ! -e /usr/local/bin/hub-ctrl ]; then
     echo "required binary 'hub-ctrl' not found"

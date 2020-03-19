@@ -1,5 +1,6 @@
 function image {
-    cat /boot/version.txt
+  checkargn 1
+  cat /boot/version.txt
 }
 
 function image_help {

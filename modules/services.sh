@@ -93,8 +93,8 @@ function services {
           fi
           ;;
         up)
-          case "$service_name" in
-            planet)
+          if check_available_services $service_name; then
+            if [ "$service_name" = "planet" ]; then
               if [ -f /srv/planet/pwd/credentials.yml ]; then
                 if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
                   echo "planet built and started"
@@ -110,31 +110,17 @@ function services {
                   exit 1
                 fi
               fi
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
-              do
-                check_tor "$(get_port $service_name | sed -n "$i p")"
-              done
-              ;;
-            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|couchdb|mariadb)
+            else
               check_space $service_name
               docker_compose_up $service_name
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            fi
+            for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
-              ;;
-            pihole)
-              service dnsmasq stop
-              docker_compose_up "pihole"
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
-              do
-                check_tor "$(get_port $service_name | sed -n "$i p")"
-              done
-              ;;
-            *)
-              echo "unknown service"
-              ;;
-          esac
+          else
+            echo "unknown service"
+          fi
           ;;
         down)
           if check_available_services $service_name; then

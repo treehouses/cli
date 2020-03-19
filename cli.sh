@@ -73,11 +73,11 @@ do
   cmd=${cmd%%.*}
   if [ "$cmd" = "$1" ]; then
     find=1
-    shift
-    eval "$cmd" $@
+    eval $@
+    break
   fi
 done
-if [ find != 1 ]; then
+if [ "$find" != 1 ]; then
   help
 fi
 

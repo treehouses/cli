@@ -12,7 +12,7 @@ do
   cmd=${cmd%%.*}
   if [ "$cmd" = "$1" ]; then
     find=1
-    eval $@
+    eval "$@"
     break
   fi
 done

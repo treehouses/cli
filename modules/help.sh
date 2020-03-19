@@ -24,7 +24,6 @@ function help_default {
   echo "          [password] [hotspotPassword]"
   echo "   container <none|docker|balena>            enables (and start) the desired container"
   echo "   bluetooth <on|off|pause|mac|id|button>    switches bluetooth from regular to hotspot mode and shows id or MAC address"
-  echo "                               [number]"
   echo "   ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)"
   echo "   aphidden <local|internet> <ESSID>         creates a hidden mobile ap, with or without internet access"
   echo "            [password]"

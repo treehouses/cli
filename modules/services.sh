@@ -318,7 +318,7 @@ function services {
           fi
           ;;
         icon)
-          source $SERVICES/install-${service_name}.sh && get_info
+          source $SERVICES/install-${service_name}.sh && get_icon
           ;;
         *)
           echo "unknown command"

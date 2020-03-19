@@ -32,7 +32,7 @@ function bluetooth {
     if [ ! -f "${btidfile}" ]; then
       echo "No ID. Bluetooth service is not on."
       exit 0
-    fi         
+    fi
 
     bid=$(cat ${btidfile})
     nname=$(uname -n)
@@ -43,7 +43,7 @@ function bluetooth {
         ;;
       "number")
         echo "${bid}"
-        ;; 
+        ;;
       *)
         echo "Argument not valid; leave blank or use \"number\""
         exit 1

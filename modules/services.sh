@@ -72,6 +72,7 @@ function services {
     else
       case "$command" in
         install)
+          check_space "$service_name"
           if [ "$service_name" = "planet" ]; then
             if source $SERVICES/install-planet.sh && install ; then
               echo "planet installed"
@@ -92,9 +93,8 @@ function services {
           fi
           ;;
         up)
-          case "$service_name" in
-            planet)
-              check_space "planet"
+          if check_available_services $service_name; then
+            if [ "$service_name" = "planet" ]; then
               if [ -f /srv/planet/pwd/credentials.yml ]; then
                 if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
                   echo "planet built and started"
@@ -110,32 +110,17 @@ function services {
                   exit 1
                 fi
               fi
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
-              do
-                check_tor "$(get_port $service_name | sed -n "$i p")"
-              done
-              ;;
-            kolibri|nextcloud|moodle|privatebin|portainer|netdata|ntopng|mastodon|couchdb)
+            else
               check_space $service_name
               docker_compose_up $service_name
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            fi
+            for i in $(seq 1 "$(get_port $service_name | wc -l)")
               do
                 check_tor "$(get_port $service_name | sed -n "$i p")"
               done
-              ;;
-            pihole)
-              check_space "pihole"
-              service dnsmasq stop
-              docker_compose_up "pihole"
-              for i in $(seq 1 "$(get_port $service_name | wc -l)")
-              do
-                check_tor "$(get_port $service_name | sed -n "$i p")"
-              done
-              ;;
-            *)
-              echo "unknown service"
-              ;;
-          esac
+          else
+            echo "unknown service"
+          fi
           ;;
         down)
           if check_available_services $service_name; then
@@ -250,24 +235,28 @@ function services {
               local_url+=$(get_port $service_name | sed -n "$i p")
               if [ "$service_name" = "pihole" ]; then
                 local_url+="/admin"
+              elif [ "$service_name" = "couchdb" ]; then
+                local_url+="/_utils"
               fi
               echo $local_url
             done
           elif [ "$command_option" = "tor" ]; then
             for i in $(seq 1 "$(get_port $service_name | wc -l)")
             do
-              if tor ; then
+              if [ "$(tor status)" = "active" ]; then
                 tor_url=$(tor)
                 tor_url+=":"
                 tor_url+=$(get_port $service_name | sed -n "$i p")
               fi
-
               if [ "$service_name" = "pihole" ]; then
                 tor_url+="/admin"
+              elif [ "$service_name" = "couchdb" ]; then
+                tor_url+="/_utils"
               fi
               echo $tor_url
             done
-          elif [ "$command_option" = "both" ]; then
+          #DEPRECATED#### TO DO: Remove both
+          elif [ "$command_option" = "both" ] || [ "$command_option" = "" ]; then
             services $service_name url local
             services $service_name url tor
           else
@@ -312,6 +301,13 @@ function services {
             echo "${service_name} cleaned up"
           else
             echo "unknown service"
+          fi
+          ;;
+        icon)
+          if [ ! -e $SERVICES/install-${service_name}.sh ]; then
+            echo "${service_name} install script not found"
+          else
+            source $SERVICES/install-${service_name}.sh && get_icon
           fi
           ;;
         *)
@@ -394,6 +390,7 @@ function services_help {
   echo "  portainer    Portainer is a lightweight management UI for Docker environments"
   echo "  ntopng       Ntopng is a network traffic probe that monitors network usage"
   echo "  couchdb      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
+  echo "  mariadb      MariaDB is a community-developed fork of the MySQL relational database management system"
   echo
   echo
   echo "Top-Level Commands:"
@@ -433,14 +430,14 @@ function services_help {
   echo "                             ..... restart"
   echo "                             ..... autorun [true|false]"
   echo "                             ..... ps"
-  echo "                             ..... info"
-  echo "                             ..... url <local|tor|both>"
+  echo "                             ..... url <local|tor>"
   echo "                             ..... port"
+  echo "                             ..... info"
   echo "                             ..... size"
+  echo "                             ..... cleanup"
+  echo "                             ..... icon"
   echo
   echo "    install                 installs and pulls <service_name>"
-  echo
-  echo "    cleanup                 uninstalls and removes <service_name>"
   echo
   echo "    up                      builds and starts <service_name>"
   echo
@@ -458,16 +455,19 @@ function services_help {
   echo
   echo "    ps                      outputs the containers related to <service_name>"
   echo
-  echo "    info                    gives some information about <service_name>"
-  echo
-  echo "    url                     <requires one of the options given below>"
+  echo "    url                     lists both the local and tor url for <service_name>"
   echo "        <local>                 lists the local url for <service_name>"
   echo "        <tor>                   lists the tor url for <service_name>"
-  echo "        <both>                  lists both the local and tor url for <service_name>"
   echo
   echo "    port                    lists the ports used by <service_name>"
   echo
+  echo "    info                    gives some information about <service_name>"
+  echo
   echo "    size                    outputs the size of <service_name>"
+  echo
+  echo "    cleanup                 uninstalls and removes <service_name>"
+  echo
+  echo "    icon                    outputs the svg code for the <service_name>'s icon"
   echo
   echo "  Examples:"
   echo

@@ -1,5 +1,13 @@
 function staticwifi {
   local essid password wificountry
+
+  if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
+    echo "Error: argument(s) missing"
+    echo "Usage: $BASENAME staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]"
+    echo "ip, mask, gateway, dns, and ESSID are required fields"
+    exit 1
+  fi
+
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/wlan0/static" /etc/network/interfaces.d/wlan0
 

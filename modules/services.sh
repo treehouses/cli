@@ -318,7 +318,11 @@ function services {
           fi
           ;;
         icon)
-          source $SERVICES/install-${service_name}.sh && get_icon
+          if source $SERVICES/install-${service_name}.sh && get_icon; then
+            :
+          else
+            echo "$SERVICES/install-${service_name}.sh not found"
+          fi
           ;;
         *)
           echo "unknown command"

@@ -317,6 +317,9 @@ function services {
             echo "unknown service"
           fi
           ;;
+        icon)
+          source $SERVICES/install-${service_name}.sh && get_info
+          ;;
         *)
           echo "unknown command"
           ;;

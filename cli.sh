@@ -72,11 +72,14 @@ do
   cmd=$(basename "$f")
   cmd=${cmd%%.*}
   if [ "$cmd" = "$1" ]; then
+    find=1
     shift
-    echo "$cmd $@"
     eval "$cmd" $@
   fi
 done
+if [ find != 1 ]; then
+  help
+fi
 
 if [ $? -eq 0 ]; then
   logit "$SCRIPTARGS" "1"

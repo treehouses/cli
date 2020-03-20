@@ -2,7 +2,7 @@ function remote {
   local option results
   checkroot
   checkrpi
-  checkargn 3
+  checkargn 7
   option="$1"
 
   if [ "$option" = "status" ]; then

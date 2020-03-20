@@ -69,7 +69,10 @@ function services {
   else
     if [ -z "$command" ]; then
       echo "no command given"
-      exit 1
+      # exit 1
+    elif ! check_available_services $service_name; then
+      echo "unknown service"
+      # exit 1
     else
       case "$command" in
         install)
@@ -94,70 +97,70 @@ function services {
           fi
           ;;
         up)
-          if check_available_services $service_name; then
-            if [ "$service_name" = "planet" ]; then
-              if [ -f /srv/planet/pwd/credentials.yml ]; then
-                if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
-                  echo "planet built and started"
-                else
-                  echo "error building planet"
-                  exit 1
-                fi
+          # if check_available_services $service_name; then
+          if [ "$service_name" = "planet" ]; then
+            if [ -f /srv/planet/pwd/credentials.yml ]; then
+              if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
+                echo "planet built and started"
               else
-                if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d ; then
-                  echo "planet built and started"
-                else
-                  echo "error building planet"
-                  exit 1
-                fi
+                echo "error building planet"
+                exit 1
               fi
             else
-              check_space $service_name
-              docker_compose_up $service_name
+              if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d ; then
+                echo "planet built and started"
+              else
+                echo "error building planet"
+                exit 1
+              fi
             fi
-            for i in $(seq 1 "$(get_port $service_name | wc -l)")
-              do
-                check_tor "$(get_port $service_name | sed -n "$i p")"
-              done
           else
-            echo "unknown service"
+            check_space $service_name
+            docker_compose_up $service_name
           fi
+          for i in $(seq 1 "$(get_port $service_name | wc -l)")
+          do
+            check_tor "$(get_port $service_name | sed -n "$i p")"
+          done
+          # else
+          #   echo "unknown service"
+          # fi
           ;;
         down)
-          if check_available_services $service_name; then
-            if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
-              echo "${service_name}.yml not found"
-            else
-              docker-compose -f /srv/${service_name}/${service_name}.yml down
-              echo "${service_name} stopped and removed"
-            fi
+          # if check_available_services $service_name; then
+          if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+            echo "${service_name}.yml not found"
           else
-            echo "unknown service"
+            docker-compose -f /srv/${service_name}/${service_name}.yml down
+            echo "${service_name} stopped and removed"
           fi
+          # else
+          #   echo "unknown service"
+          # fi
           ;;
         start)
-          if check_available_services $service_name; then
-            if docker ps -a | grep -q $service_name; then
-              docker-compose -f /srv/${service_name}/${service_name}.yml start
-              echo "${service_name} started"
-            else
-              echo "${service_name} not found"
-            fi
+          # if check_available_services $service_name; then
+          if docker ps -a | grep -q $service_name; then
+            docker-compose -f /srv/${service_name}/${service_name}.yml start
+            echo "${service_name} started"
           else
-            echo "unknown service"
+            echo "${service_name} not found"
           fi
+          # else
+          #   echo "unknown service"
+          # fi
           ;;
         stop)
-          if check_available_services $service_name; then
-            if docker ps -a | grep -q $service_name; then
-              docker-compose -f /srv/${service_name}/${service_name}.yml stop
-              echo "${service_name} stopped"
-            else
-              echo "${service_name} not found"
-            fi
+          # if check_available_services $service_name; then
+          if docker ps -a | grep -q $service_name; then
+            docker-compose -f /srv/${service_name}/${service_name}.yml stop
+            echo "${service_name} stopped"
           else
-            echo "unknown service"
+            echo "${service_name} not found"
           fi
+          # else
+          #   echo "unknown service"
+          # fi
           ;;
         restart)
           services $service_name stop
@@ -274,35 +277,35 @@ function services {
           echo "$(source $SERVICES/install-${service_name}.sh && get_size)M"
           ;;
         cleanup)
-          if check_available_services $service_name; then
+          # if check_available_services $service_name; then
             # skip planet
-            if [ "$service_name" = "planet" ]; then
-              echo "planet should not be cleaned up"
-              exit 0
-            fi
-            if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
-              echo "${service_name}.yml not found"
-              exit 1
-            else
-              docker-compose -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
-              echo "${service_name} stopped and removed"
-            fi
-            for i in $(seq 1 "$(get_port $service_name | wc -l)")
-            do
-              port=$(get_port $service_name | sed -n "$i p")
-              if [ "$(tor status)" = "active" ] && (tor list | grep -w $port); then
-                if [[ $(pstree -ps $$) == *"ssh"* ]]; then
-                  screen -dm bash -c "treehouses tor delete $port"
-                else
-                  tor delete $port
-                fi
-              fi
-            done
-            rm -rf /srv/${service_name}
-            echo "${service_name} cleaned up"
-          else
-            echo "unknown service"
+          if [ "$service_name" = "planet" ]; then
+            echo "planet should not be cleaned up"
+            exit 0
           fi
+          if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+            echo "${service_name}.yml not found"
+            exit 1
+          else
+            docker-compose -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
+            echo "${service_name} stopped and removed"
+          fi
+          for i in $(seq 1 "$(get_port $service_name | wc -l)")
+          do
+            port=$(get_port $service_name | sed -n "$i p")
+            if [ "$(tor status)" = "active" ] && (tor list | grep -w $port); then
+              if [[ $(pstree -ps $$) == *"ssh"* ]]; then
+                screen -dm bash -c "treehouses tor delete $port"
+              else
+                tor delete $port
+              fi
+            fi
+          done
+          rm -rf /srv/${service_name}
+          echo "${service_name} cleaned up"
+          # else
+          #   echo "unknown service"
+          # fi
           ;;
         icon)
           if [ ! -e $SERVICES/install-${service_name}.sh ]; then

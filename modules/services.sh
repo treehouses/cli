@@ -72,6 +72,7 @@ function services {
       exit 1
     elif ! check_available_services $service_name; then
       echo "ERROR: unknown service"
+      echo "try running '$BASENAME services available' to see the list of available services"
       exit 1
     else
       case "$command" in

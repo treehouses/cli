@@ -63,6 +63,7 @@ function help_default {
   echo "              [ntopng]                       Ntopng is a network traffic probe that monitors network usage"
   echo "              [couchdb]                      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
   echo "              [mariadb]                      MariaDB is a community-developed fork of the MySQL relational database management system"
+  echo "              [seafile]                      Seafile is an open-source, cross-platform file-hosting software system"
   echo "   tor [list|add|delete|deleteall|start]     deals with services on tor hidden network"
   echo "       [stop|destroy|notice|status|refresh]"
   echo "   bootoption <console|desktop> [autologin]  sets the boot mode"

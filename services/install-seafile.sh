@@ -13,7 +13,7 @@ function install {
     echo "    image: treehouses/rpi-seafile"
     echo "    ports:"
     echo "      - \"8085:8000\""
-    echo "      - \"8086:8082\""
+    echo "      - \"8086:8086\""
     echo "    environment:        "
     echo "      - SEAFILE_NAME=Seafile"
     echo "      - SEAFILE_ADDRESS=$(treehouses tor) "

@@ -298,7 +298,8 @@ function services {
           fi
           ;;
         *)
-          echo "unknown command"
+          echo "ERROR: unknown command"
+          exit 1
           ;;
       esac
     fi

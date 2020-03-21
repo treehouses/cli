@@ -49,7 +49,7 @@ function checkrpi {
 
 function checkargn {
   local helpfunc
-  if [[ $(($SCRIPTARGNUM-1)) -gt $1 ]]; then
+  if [[ $((SCRIPTARGNUM-1)) -gt $1 ]]; then
     echo "Error: Too many arguments."
     helpfunc="$(echo $SCRIPTARGS | cut -d' ' -f1)"
     if [[ $helpfunc = "help" ]]; then

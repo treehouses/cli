@@ -1,5 +1,7 @@
 function bluetoothid () {
   local btidfile bid nname
+  checkwrpi
+  checkargn $# 1
   #check if bluetooth has an id
   btidfile=/etc/bluetooth-id
   if [ ! -f "${btidfile}" ]; then

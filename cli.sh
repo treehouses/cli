@@ -283,6 +283,9 @@ case $1 in
     checkroot
     usb "$2"
     ;;
+  sdcard)
+    download_and_burn "$2"
+    ;;
   help)
     help "$2"
     ;;

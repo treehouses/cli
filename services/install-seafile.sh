@@ -11,7 +11,7 @@ function install {
     echo "services:"
     echo "  seafile:"
     echo "    container_name: seafile"
-    echo "    image: hirotochigi/seafile-rpi"
+    echo "    image: treehouses/seafile-rpi"
     echo "    ports:"
     echo "      - \"8085:8000\""
     echo "      - \"8086:8082\""

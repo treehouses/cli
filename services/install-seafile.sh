@@ -39,6 +39,7 @@ function install {
 # add port(s)
 function get_ports {
   echo "8085"
+  echo "8086"
 }
 
 # add size (in MB)

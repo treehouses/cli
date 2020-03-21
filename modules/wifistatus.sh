@@ -10,7 +10,7 @@ function wifistatus {
   # display strength of signal in dBm and layman terms
   local signal signalStrength
   checkrpi
-  checkargn 2
+  checkargn $# 0
   signal=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p' | sed -e 's/Signal level=//g' | sed -e 's/dBm//g')
   signalStrength=$(iwconfig wlan0 | sed -n 's/.*\(Signal level=-.*\)/\1/p' | sed -e 's/Signal level=//g')
 

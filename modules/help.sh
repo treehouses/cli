@@ -85,7 +85,7 @@ function help_default {
 }
 
 function help {
-  checkargn 2
+  checkargn $# 1
   if [ -z "$1" ]; then
     help_default
   else

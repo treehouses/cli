@@ -1,7 +1,7 @@
 function vnc {
   local option bootoptionstatus vncservicestatus xservicestatus ipaddress isgraphical
   checkroot
-  checkargn 2
+  checkargn $# 1
   option=$1
   bootoptionstatus=$(systemctl is-enabled graphical.target)
   vncservicestatus=$(systemctl is-active vncserver-x11-serviced)

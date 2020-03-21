@@ -3,71 +3,88 @@
 ## About
 The treehouses services module relies on install scripts for each individual service.
 
-These install scripts create the necessary docker-compose yml files and contain different information about the service, such as the size of the service and the port it uses.
+These install scripts create the necessary docker-compose yml file(s) and contain different information about the service, such as the size of the service and the port it uses.
 
 These install scripts are named `install-<service>.sh` and are located inside the `/services/`directory.
+
+Look at the pre-existing install scripts in `/services/` for examples.
 
 An empty install script is shown [below](#Template).
 
 ## Adding a new service
-Using the [below](#Template) template, fill in the sections as required.
+Using the [template](#Template), fill in the sections as required.
 
-Look at the pre-existing install scripts in `/services/` for examples.
+1. create service directory
 
-#### create service directory
-Replace `<service>`
-```
-  mkdir -p /srv/<service>
-```
-with the name of your service.
+   Replace `<service>` with the name of your service.
+   ```
+     mkdir -p /srv/<service>
+   ```
 
-Additionally, if your service requires any special commands to be run before being used, add them here.
+   Additionally, if your service requires any special commands to be run before being used, add them here.
 
-#### create yml(s)
-Add the lines to create your yml file(s).
+2. create yml(s)
 
-Replace `<service>/<service>`
-```
-  } > /srv/<service>/<service>.yml
-```
-with the name of your service.
+   Add your yml file(s).
 
-#### add autorun
+   Replace `<service>/<service>` with the name of your service.
+   ```
+     } > /srv/<service>/<service>.yml
+   ```
 
+3. add autorun
 
-#### add port(s)
-Replace `<port>`
-```
-  echo "<port>"
-```
-with the port your service uses.
+   Replace `<service>`s with the name of your service.
+   ```
+   {
+     echo "<service>_autorun=true"
+     echo
+     echo "if [ \"\$<service>_autorun\" = true ]; then"
+     echo "  docker-compose -f /srv/<service>/<service>.yml -p <service> up -d"
+     echo "fi"
+     echo
+     echo
+   } > /srv/<service>/autorun
+   ```
 
-#### add size (in MB)
-Replace `<size>`
-```
-  echo "<size>"
-```
-with the size of your service in MB.
+4. add port(s)
 
-#### add info
-Replace `<url>`
-```
-  echo "<url>"
-```
-with the url of your service (eg. GitHub repository).
+   Replace `<port>` with the port(s) your service uses.
+   
+   If your service uses multiple ports, add each port on their own individual lines.
+   ```
+     echo "<port>"
+   ```
 
-Replace `<description>`
-```
-  echo "\"<description>\""
-```
-with a short description of your service.
+5. add size (in MB)
 
-#### add svg icon
-Replace `<svg icon code>`
-```
-  <svg icon code>
-```
-with the svg icon code of your service.
+   Replace `<size>` with the size of your service in MB (leave out the MB units).
+   ```
+     echo "<size>"
+   ```
+
+6. add info
+
+   Replace `<url>` with the url of your service (eg. GitHub repository).
+   ```
+     echo "<url>"
+   ```
+
+   Replace `<description>` with a short description of your service.
+   ```
+     echo "\"<description>\""
+   ```
+
+7. add svg icon
+
+   Replace `<svg icon code>` with the svg icon code of your service.
+
+   Note that `EOF` cannot have any whitespace in front of it.
+   ```
+     cat <<EOF
+     <svg icon code>
+   EOF
+   ```
 
 Save the file as `install-<service>.sh` inside the `/services/` directory.
 
@@ -82,7 +99,6 @@ function install {
   # create yml(s)
   {
 
-
   } > /srv/<service>/<service>.yml
 
   # add autorun
@@ -95,7 +111,6 @@ function install {
     echo
     echo
   } > /srv/<service>/autorun
-}
 }
 
 # add port(s)

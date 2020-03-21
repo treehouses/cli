@@ -82,7 +82,7 @@ Using the [template](#Template), fill in the sections as required.
    Note that `EOF` cannot have any whitespace in front of it.
    ```
      cat <<EOF
-     <svg icon code>
+   <svg icon code>
    EOF
    ```
 

@@ -57,9 +57,9 @@ function services {
     for i in "${array[@]}"
     do
       port_string=""
-      for j in $(seq 1 "$(get_port $i | wc -l)")
+      for j in $(seq 1 "$(services $i port | wc -l)")
       do
-        port_string+=$(get_port $i | sed -n "$j p")
+        port_string+=$(services $i port | sed -n "$j p")
         port_string+=" "
       done
       if [ ! -z "$port_string" ]; then
@@ -115,9 +115,9 @@ function services {
               check_space $service_name
               docker_compose_up $service_name
             fi
-            for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            for i in $(seq 1 "$(services $service_name port | wc -l)")
               do
-                check_tor "$(get_port $service_name | sed -n "$i p")"
+                check_tor "$(services $service_name port | sed -n "$i p")"
               done
           else
             echo "unknown service"
@@ -229,11 +229,11 @@ function services {
           ;;
         url)
           if [ "$command_option" = "local" ]; then
-            for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            for i in $(seq 1 "$(services $service_name port | wc -l)")
             do
               local_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
               local_url+=":"
-              local_url+=$(get_port $service_name | sed -n "$i p")
+              local_url+=$(services $service_name port | sed -n "$i p")
               if [ "$service_name" = "pihole" ]; then
                 local_url+="/admin"
               elif [ "$service_name" = "couchdb" ]; then
@@ -242,12 +242,12 @@ function services {
               echo $local_url
             done
           elif [ "$command_option" = "tor" ]; then
-            for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            for i in $(seq 1 "$(services $service_name port | wc -l)")
             do
               if [ "$(tor status)" = "active" ]; then
                 tor_url=$(tor)
                 tor_url+=":"
-                tor_url+=$(get_port $service_name | sed -n "$i p")
+                tor_url+=$(services $service_name port | sed -n "$i p")
               fi
               if [ "$service_name" = "pihole" ]; then
                 tor_url+="/admin"
@@ -265,7 +265,7 @@ function services {
           fi
           ;;
         port)
-          get_port $service_name
+          source $SERVICES/install-${1}.sh && get_ports
           ;;
         info)
           source $SERVICES/install-${service_name}.sh && get_info
@@ -287,9 +287,9 @@ function services {
               docker-compose -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
               echo "${service_name} stopped and removed"
             fi
-            for i in $(seq 1 "$(get_port $service_name | wc -l)")
+            for i in $(seq 1 "$(services $service_name port | wc -l)")
             do
-              port=$(get_port $service_name | sed -n "$i p")
+              port=$(services $service_name port | sed -n "$i p")
               if [ "$(tor status)" = "active" ] && (tor list | grep -w $port); then
                 if [[ $(pstree -ps $$) == *"ssh"* ]]; then
                   screen -dm bash -c "treehouses tor delete $port"
@@ -370,10 +370,6 @@ function check_tor {
       fi
     fi
   fi
-}
-
-function get_port {
-  source $SERVICES/install-${1}.sh && get_ports
 }
 
 function services_help {

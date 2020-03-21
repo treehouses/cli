@@ -133,7 +133,7 @@ function get_info {
 # add svg icon
 function get_icon {
   cat <<EOF
-  <svg icon code>
+<svg icon code>
 EOF
 }
 ```

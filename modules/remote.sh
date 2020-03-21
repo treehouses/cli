@@ -50,30 +50,7 @@ function remote {
     fi
   elif [ "$option" = "commands" ]; then
     source $SCRIPTFOLDER/_treehouses && _treehouses_complete 2>/dev/null
-    case "$2" in
-      "")
-        echo $commands
-        ;;
-      first)
-        for i in "${commands_array[@]}"
-        do
-          if [[ $i != *"second_cmds"* ]]; then
-            eval "echo \${$i}"
-          fi
-        done
-        ;;
-      second)
-        for i in "${commands_array[@]}"
-        do
-          if [[ $i == *"second_cmds"* ]]; then
-            eval "echo \${$i}"
-          fi
-        done
-        ;;
-      *)
-        echo "unknown command"
-        ;;
-    esac
+    echo "$every_command"
   else
     echo "unknown command option"
     echo "usage: $BASENAME remote [status | upgrade | services | version | commands]"

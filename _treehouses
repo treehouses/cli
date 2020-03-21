@@ -77,7 +77,7 @@ _treehouses_complete()
         ;;
       "blocker")
         COMPREPLY=( $(compgen -W "$blocker_cmds" -- $cur) )
-        ;;        
+        ;;
       "bluetooth")
         COMPREPLY=( $(compgen -W "$bluetooth_cmds" -- $cur) )
         ;;
@@ -104,7 +104,7 @@ _treehouses_complete()
         ;;
       "detectrpi")
         COMPREPLY=( $(compgen -W "$detectrpi_cmds" -- $cur) )
-        ;;      
+        ;;
       "help")
         COMPREPLY=( $(compgen -W "$help_cmds" -- $cur) )
         ;;
@@ -211,6 +211,448 @@ _treehouses_complete()
         ;;
     esac
   fi
+  every_command=""
+  read -r -d '' every_command <<'EOF'
+treehouses ap local
+treehouses ap internet
+treehouses apchannel
+treehouses aphidden local
+treehouses aphidden internet
+treehouses blocker
+treehouses blocker max
+treehouses blocker 4
+treehouses blocker 3
+treehouses blocker 2
+treehouses blocker 1
+treehouses blocker 0
+treehouses bluetooth off
+treehouses bluetooth pause
+treehouses bluetooth on
+treehouses bluetooth mac
+treehouses bluetooth id
+treehouses bluetooth id number
+treehouses bluetoothid
+treehouses bluetoothid number
+treehouses bootoption console
+treehouses bootoption console autologin
+treehouses bootoption desktop
+treehouses bootoption desktop autologin
+treehouses bridge
+treehouses burn
+treehouses button off
+treehouses button bluetooth
+treehouses camera
+treehouses clone
+treehouses container
+treehouses container balena
+treehouses container none
+treehouses container docker
+treehouses coralenv
+treehouses services couchdb info
+treehouses services couchdb install
+treehouses services couchdb up
+treehouses services couchdb restart
+treehouses services available
+treehouses services available full
+treehouses services running
+treehouses services running full
+treehouses services installed
+treehouses services installed full
+treehouses services ports
+treehouses services couchdb port
+treehouses services couchdb ps
+treehouses services couchdb url both
+treehouses services couchdb autorun
+treehouses services couchdb autorun true
+treehouses services couchdb stop
+treehouses services couchdb down
+treehouses services couchdb cleanup
+treehouses cron tor
+treehouses cron timestamp
+treehouses cron 0W
+treehouses cron list
+treehouses default
+treehouses default network
+treehouses default tunnel
+treehouses default notice
+treehouses detect
+treehouses detectrpi
+treehouses detectrpi model
+treehouses discover rpi
+treehouses discover scan google.com
+treehouses discover scan scanme.nmap.org
+treehouses discover interface
+treehouses discover ping google.com
+treehouses discover ports localhost
+treehouses discover mac b8:29:eb:9f:42:8b
+treehouses ethernet
+treehouses expandfs
+treehouses feedback
+treehouses help
+treehouses help apchannel
+treehouses help aphidden
+treehouses help ap
+treehouses help blocker
+treehouses help bluetoothid
+treehouses help bluetooth
+treehouses help bootoption
+treehouses help bridge
+treehouses help burn
+treehouses help button
+treehouses help camera
+treehouses help clone
+treehouses help container
+treehouses help coralenv
+treehouses help cron
+treehouses help default
+treehouses help detectrpi
+treehouses help detect
+treehouses help discover
+treehouses help ethernet
+treehouses help expandfs
+treehouses help feedback
+treehouses help image
+treehouses help internet
+treehouses help led
+treehouses help locale
+treehouses help log
+treehouses help memory
+treehouses help networkmode
+treehouses help ntp
+treehouses help openvpn
+treehouses help password
+treehouses help rebootneeded
+treehouses help reboots
+treehouses help remote
+treehouses help rename
+treehouses help restore
+treehouses help rtc
+treehouses help sdbench
+treehouses help services
+treehouses help speedtest
+treehouses help sshkey
+treehouses help ssh
+treehouses help sshtunnel
+treehouses help staticwifi
+treehouses help temperature
+treehouses help timezone
+treehouses help tor
+treehouses help upgrade
+treehouses help usb
+treehouses help verbose
+treehouses help version
+treehouses help vnc
+treehouses help wificountry
+treehouses help wifihidden
+treehouses help wifi
+treehouses help wifistatus
+treehouses image
+treehouses internet
+treehouses services kolibri info
+treehouses services kolibri install
+treehouses services kolibri up
+treehouses services kolibri restart
+treehouses services available
+treehouses services available full
+treehouses services running
+treehouses services running full
+treehouses services installed
+treehouses services installed full
+treehouses services ports
+treehouses services kolibri port
+treehouses services kolibri ps
+treehouses services kolibri url both
+treehouses services kolibri autorun
+treehouses services kolibri autorun true
+treehouses services kolibri stop
+treehouses services kolibri down
+treehouses services kolibri cleanup
+treehouses led green heartbeat
+treehouses led red default-on
+treehouses led
+treehouses led red
+treehouses led dance
+treehouses led thanksgiving
+treehouses led christmas
+treehouses led lunarnewyear
+treehouses led valentine
+treehouses led carnival
+treehouses led onam
+treehouses locale en_US
+treehouses log
+treehouses log max
+treehouses log 4
+treehouses log 3
+treehouses log 2
+treehouses log 1
+treehouses log 0
+treehouses log show
+treehouses log show 5
+treehouses services mariadb info
+treehouses services mariadb install
+treehouses services mariadb up
+treehouses services mariadb restart
+treehouses services available
+treehouses services available full
+treehouses services running
+treehouses services running full
+treehouses services installed
+treehouses services installed full
+treehouses services ports
+treehouses services mariadb port
+treehouses services mariadb ps
+treehouses services mariadb url both
+treehouses services mariadb autorun
+treehouses services mariadb autorun true
+treehouses services mariadb stop
+treehouses services mariadb down
+treehouses services mariadb cleanup
+treehouses services mastodon info
+treehouses services mastodon install
+treehouses services mastodon up
+treehouses services mastodon restart
+treehouses services available
+treehouses services available full
+treehouses services running
+treehouses services running full
+treehouses services installed
+treehouses services installed full
+treehouses services ports
+treehouses services mastodon port
+treehouses services mastodon ps
+treehouses services mastodon url both
+treehouses services mastodon autorun
+treehouses services mastodon autorun true
+treehouses services mastodon stop
+treehouses services mastodon down
+treehouses services mastodon cleanup
+treehouses memory
+treehouses memory -g
+treehouses memory total
+treehouses memory used
+treehouses memory free -m
+treehouses services moodle info
+treehouses services moodle install
+treehouses services moodle up
+treehouses services moodle restart
+treehouses services available
+treehouses services available full
+treehouses services running
+treehouses services running full
+treehouses services installed
+treehouses services installed full
+treehouses services ports
+treehouses services moodle port
+treehouses services moodle ps
+treehouses services moodle url both
+treehouses services moodle autorun
+treehouses services moodle autorun true
+treehouses services moodle stop
+treehouses services moodle down
+treehouses services moodle cleanup
+treehouses services netdata info
+treehouses services netdata install
+treehouses services netdata up
+treehouses services netdata restart
+treehouses services available
+treehouses services available full
+treehouses services running
+treehouses services running full
+treehouses services installed
+treehouses services installed full
+treehouses services ports
+treehouses services netdata port
+treehouses services netdata ps
+treehouses services netdata url both
+treehouses services netdata autorun
+treehouses services netdata autorun true
+treehouses services netdata stop
+treehouses services netdata down
+treehouses services netdata cleanup
+treehouses networkmode
+treehouses networkmode info
+treehouses services nextcloud info
+treehouses services nextcloud install
+treehouses services nextcloud up
+treehouses services nextcloud restart
+treehouses services available
+treehouses services available full
+treehouses services running
+treehouses services running full
+treehouses services installed
+treehouses services installed full
+treehouses services ports
+treehouses services nextcloud port
+treehouses services nextcloud ps
+treehouses services nextcloud url both
+treehouses services nextcloud autorun
+treehouses services nextcloud autorun true
+treehouses services nextcloud stop
+treehouses services nextcloud down
+treehouses services nextcloud cleanup
+treehouses services ntopng info
+treehouses services ntopng install
+treehouses services ntopng up
+treehouses services ntopng restart
+treehouses services available
+treehouses services available full
+treehouses services running
+treehouses services running full
+treehouses services installed
+treehouses services installed full
+treehouses services ports
+treehouses services ntopng port
+treehouses services ntopng ps
+treehouses services ntopng url both
+treehouses services ntopng autorun
+treehouses services ntopng autorun true
+treehouses services ntopng stop
+treehouses services ntopng down
+treehouses services ntopng cleanup
+treehouses ntp local
+treehouses ntp internet
+treehouses openvpn
+treehouses password
+treehouses services pihole info
+treehouses services pihole install
+treehouses services pihole up
+treehouses services pihole restart
+treehouses services available
+treehouses services available full
+treehouses services running
+treehouses services running full
+treehouses services installed
+treehouses services installed full
+treehouses services ports
+treehouses services pihole port
+treehouses services pihole ps
+treehouses services pihole url both
+treehouses services pihole autorun
+treehouses services pihole autorun true
+treehouses services pihole stop
+treehouses services pihole down
+treehouses services pihole cleanup
+treehouses services portainer info
+treehouses services portainer install
+treehouses services portainer up
+treehouses services portainer restart
+treehouses services available
+treehouses services available full
+treehouses services running
+treehouses services running full
+treehouses services installed
+treehouses services installed full
+treehouses services ports
+treehouses services portainer port
+treehouses services portainer ps
+treehouses services portainer url both
+treehouses services portainer autorun
+treehouses services portainer autorun true
+treehouses services portainer stop
+treehouses services portainer down
+treehouses services portainer cleanup
+treehouses services privatebin info
+treehouses services privatebin install
+treehouses services privatebin up
+treehouses services privatebin restart
+treehouses services available
+treehouses services available full
+treehouses services running
+treehouses services running full
+treehouses services installed
+treehouses services installed full
+treehouses services ports
+treehouses services privatebin port
+treehouses services privatebin ps
+treehouses services privatebin url both
+treehouses services privatebin autorun
+treehouses services privatebin autorun true
+treehouses services privatebin stop
+treehouses services privatebin down
+treehouses services privatebin cleanup
+treehouses rebootneeded
+treehouses reboots now
+treehouses reboots in
+treehouses reboots daily
+treehouses reboots weekly
+treehouses reboots monthly
+treehouses reboots cron
+treehouses remote status
+treehouses remote upgrade
+treehouses remote services available
+treehouses remote version
+treehouses rename treehouses
+treehouses restore
+treehouses rtc on rasclock
+treehouses rtc on ds3231
+treehouses rtc off
+treehouses services planet info
+treehouses services planet install
+treehouses services planet up
+treehouses services planet restart
+treehouses services available
+treehouses services available full
+treehouses services running
+treehouses services running full
+treehouses services installed
+treehouses services installed full
+treehouses services ports
+treehouses services planet port
+treehouses services planet ps
+treehouses services planet url both
+treehouses services planet autorun
+treehouses services planet autorun true
+treehouses services planet stop
+treehouses services planet down
+treehouses services planet cleanup
+treehouses speedtest
+treehouses speedtest -h
+treehouses ssh
+treehouses sshkey add
+treehouses sshkey list
+treehouses sshkey delete
+treehouses sshkey deleteall
+treehouses sshkey github adduser
+treehouses sshkey github deleteuser
+treehouses sshkey github addteam
+treehouses sshtunnel
+treehouses staticwifi
+treehouses temperature
+treehouses temperature fahrenheit
+treehouses temperature celsius
+treehouses timezone
+treehouses tor add
+treehouses tor list
+treehouses tor status
+treehouses tor refresh
+treehouses tor stop
+treehouses tor delete
+treehouses tor start
+treehouses tor
+treehouses tor add
+treehouses tor notice now
+treehouses tor deleteall
+treehouses -treehouses tor destroy
+treehouses -treehouses upgrade
+treehouses upgrade --check
+treehouses upgrade -f
+treehouses upgrade
+treehouses usb
+treehouses usb on
+treehouses usb off
+treehouses verbose
+treehouses verbose on
+treehouses verbose off
+treehouses version
+treehouses vnc
+treehouses vnc off
+treehouses vnc on
+treehouses vnc info
+treehouses wifi
+treehouses wificountry
+treehouses wifihidden
+treehouses wifistatus
+EOF
 }
 
 complete -F _treehouses_complete treehouses

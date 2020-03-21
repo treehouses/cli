@@ -1,6 +1,6 @@
 function discover {
   local option ip mac mac_ip
-  checkargn 3
+  checkargn $# 2
   check_missing_packages "nmap"
 
   option=$1

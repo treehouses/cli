@@ -2,7 +2,7 @@ function burn {
     local device
     checkrpi
     checkroot
-    checkargn 2
+    checkargn $# 1
     device="$1"
     if [ -z "$device" ]; then
         device="/dev/sdb"

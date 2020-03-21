@@ -2,7 +2,7 @@ function ntp {
   local status
   checkrpi
   checkroot
-  checkargn 2
+  checkargn $# 1
   status="$1"
 
   if [ "$status" = "internet" ]; then

@@ -2,7 +2,7 @@ function ap {
   local mode essid password base_24 channels channel
   checkrpi
   checkroot
-  checkargn 5
+  checkargn $# 4
   mode=$(clean_var "$1")
   essid=$(clean_var "$2")
   password=$(clean_var "$3")

@@ -8,15 +8,14 @@ _treehouses_complete()
   commands="ap aphidden apchannel blocker bluetooth bluetoothid bootoption bridge burn button camera clone \
             container coralenv cron default detect detectbluetooth detectrpi discover ethernet expandfs \
             feedback help image internet led locale log memory networkmode ntp openvpn password \
-            rebootneeded reboots rename restore rtc sdbench services speedtest ssh sshkey sshtunnel \
+            rebootneeded reboots rename remote restore rtc sdbench services speedtest ssh sshkey sshtunnel \
             staticwifi temperature timezone tor upgrade usb verbose version vnc wifi wificountry wifihidden wifistatus"
-  ap_cmdas="local internet"
+  ap_cmds="local internet"
   aphidden_cmds="local internet"
   apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
   blocker_cmds="0 1 2 3 4 max"
-  bluetooth_cmds="on off pause mac id"
+  bluetooth_cmds="on off pause mac id button"
   bootoption_cmds="console desktop"
-  bootoption_second_cmds="autologin"
   button_cmds="off bluetooth"
   camera_cmds="on off capture"
   container_cmds="none docker balena"
@@ -25,7 +24,7 @@ _treehouses_complete()
   discover_cmds="rpi scan interface ping ports mac"
   detectrpi_cmds="model"
   help_cmds=$commands
-  led_cmds="green red dance thanksgiving christmas newyear lunarnewyear valentine carnival"
+  led_cmds="green red dance thanksgiving christmas newyear lunarnewyear valentine carnival onam"
   log_cmds="0 1 2 3 4 show max"
   memory_cmds="total used free"
   networkmode_cmds="info"
@@ -33,22 +32,29 @@ _treehouses_complete()
   openvpn_cmds="use show delete notice start stop load"
   reboots_cmds="now in cron daily weekly monthly"
   rtc_cmds="on off"
-  rtc_on_cmds="ds3231 rasclock"
-  services_cmds="available installed running ports kolibri mastodon moodle netdata nextcloud ntopng pihole planet portainer privatebin couchdb"
-  sshkey_cmds="add list delete deleteall addgithubusername deletegithubusername addgithubgroup"
+  services_cmds="available installed running ports kolibri mastodon moodle netdata nextcloud ntopng pihole planet portainer privatebin couchdb mariadb"
+  sshkey_cmds="add list delete deleteall github addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"
-  sshtunnel_cmds="add remove list key notice"
+  sshtunnel_cmds="add remove list key notice check"
   temperature_cmds="celsius fahrenheit"
   tor_cmds="list add delete deleteall start stop destroy notice status refresh"
   usb_cmds="on off"
-  notice_cmds="on off add delete list"
   remote_cmds="status upgrade services version"
-
-# upgrade_cmds="" I am not sure whether we should put autocompletion here.
-
   verbose_cmds="on off"
   vnc_cmds="on off info"
 
+  notice_cmds="on off add delete list now"
+  rtc_second_cmds="ds3231 rasclock"
+  bluetooth_second_cmds="number"
+  bootoption_second_cmds="autologin"
+  led_second_cmds="heartbeat default-on oneshot timer cpu0 gpio input backlight none kbd"
+  services_second_cmds="full"
+  services_second_cmds2="install up down start stop restart autorun ps info url port size"
+  sshkey_second_cmds="adduser deleteuser addteam"
+  remote_second_cmds="available installed running"
+
+  services_third_cmds="true false"
+  services_third_cmds2="local tor both"
 
   COMPREPLY=()
   cur=${COMP_WORDS[COMP_CWORD]}
@@ -62,6 +68,9 @@ _treehouses_complete()
     case "$prev" in
       "ap")
         COMPREPLY=( $(compgen -W "$ap_cmds" -- $cur) )
+        ;;
+      "aphidden")
+        COMPREPLY=( $(compgen -W "$aphidden_cmds" -- $cur) )
         ;;
       "apchannel")
         COMPREPLY=( $(compgen -W "$apchannel_cmds" -- $cur) ) #cannot ascending order
@@ -150,8 +159,8 @@ _treehouses_complete()
       "vnc")
         COMPREPLY=( $(compgen -W "$vnc_cmds" -- $cur) )
         ;;
-      "wifistatus")
-        COMPREPLY=( $(compgen -W "$wifistatus_cmds" -- $cur) )
+      "remote")
+        COMPREPLY=( $(compgen -W "$remote_cmds" -- $cur) )
         ;;
       "*")
         ;;
@@ -159,14 +168,44 @@ _treehouses_complete()
   elif [ $COMP_CWORD -eq 3 ]
   then
     case "$prev" in
-      "console")
-        COMPREPLY=( $(compgen -W "$bootoption_second_cmds" -- $cur) )
-        ;;
-      "desktop")
+      "console"|"desktop")
         COMPREPLY=( $(compgen -W "$bootoption_second_cmds" -- $cur) )
         ;;
       "notice")
         COMPREPLY=( $(compgen -W "$notice_cmds" -- $cur) )
+        ;;
+      "on")
+        COMPREPLY=( $(compgen -W "$rtc_second_cmds" -- $cur) )
+        ;;
+      "id")
+        COMPREPLY=( $(compgen -W "$bluetooth_second_cmds" -- $cur) )
+        ;;
+      "green"|"red")
+        COMPREPLY=( $(compgen -W "$led_second_cmds" -- $cur) )
+        ;;
+      "available"|"installed"|"running")
+        COMPREPLY=( $(compgen -W "$services_second_cmds" -- $cur) )
+        ;;
+      "planet"|"kolibri"|"nextcloud"|"netdata"|"mastodon"|"moodle"|"pihole"|"privatebin"|"portainer"|"ntopng"|"couchdb"|"mariadb")
+        COMPREPLY=( $(compgen -W "$services_second_cmds2" -- $cur) )
+        ;;
+      "github")
+        COMPREPLY=( $(compgen -W "$sshkey_second_cmds" -- $cur) )
+        ;;
+      "services")
+        COMPREPLY=( $(compgen -W "$remote_second_cmds" -- $cur) )
+        ;;
+      "*")
+        ;;
+    esac
+  elif [ $COMP_CWORD -eq 4 ]
+  then
+    case "$prev" in
+      "autorun")
+        COMPREPLY=( $(compgen -W "$services_third_cmds" -- $cur) )
+        ;;
+      "url")
+        COMPREPLY=( $(compgen -W "$services_third_cmds2" -- $cur) )
         ;;
       "*")
         ;;

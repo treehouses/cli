@@ -1,4 +1,5 @@
 function detect {
+  checkargn 1
   if [ "$(detectrpi)" != "nonrpi" ]; then
     echo "rpi $(detectrpi)"
   elif [ -d "/vagrant" ]; then

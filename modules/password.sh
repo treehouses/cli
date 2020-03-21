@@ -1,4 +1,7 @@
 function password () {
+  checkrpi
+  checkroot
+  checkargn 2
   if [[ $1 == "" ]]; then
     log_and_exit1 "Error: Password not entered"
   else

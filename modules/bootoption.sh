@@ -1,5 +1,8 @@
 function bootoption {
   local option
+  checkrpi
+  checkroot
+  checkargn 3
   option="$1"
   if [ "$option" = "console" ]; then
     systemctl set-default multi-user.target > "$LOGFILE"

@@ -67,7 +67,7 @@ function memory_free {
 }
 
 function memory() {
-  checkargn 3
+  checkargn $# 2
   check_missing_packages "bc"
 
   if [ "$1" == "total" ] ; then

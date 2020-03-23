@@ -1,5 +1,5 @@
 function image {
-  checkargn 1
+  checkargn $# 0
   cat /boot/version.txt
 }
 

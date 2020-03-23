@@ -31,7 +31,7 @@ function rtc {
   local status clock
   checkrpi
   checkroot
-  checkargn 3
+  checkargn $# 2
   status="$1"
   clock="$2"
 

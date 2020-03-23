@@ -1,7 +1,7 @@
 function sshkey () {
   local keys githubusername auth_files teams team_id members
   checkroot
-  checkargn 6
+  checkargn $# 5
   if [ "$1" == "add" ]; then
     shift
     echo "$@" >> /root/.ssh/authorized_keys

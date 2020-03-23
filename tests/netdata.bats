@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'netdata/netdata'
 }
 
-@test "$clinom services netdata url both" {
-  run "${clicmd}" services netdata url both
+@test "$clinom services netdata url" {
+  run "${clicmd}" services netdata url
   assert_output -p '19999'
 }
 

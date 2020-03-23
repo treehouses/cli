@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'gilir/rpi-mastodon'
 }
 
-@test "$clinom services mastodon url both" {
-  run "${clicmd}" services mastodon url both
+@test "$clinom services mastodon url" {
+  run "${clicmd}" services mastodon url
   assert_output -p '3000'
 }
 

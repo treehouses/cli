@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'treehouses/couchdb'
 }
 
-@test "$clinom services couchdb url both" {
-  run "${clicmd}" services couchdb url both
+@test "$clinom services couchdb url" {
+  run "${clicmd}" services couchdb url
   assert_output -p '5984'
 }
 

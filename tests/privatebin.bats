@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'treehouses/privatebin'
 }
 
-@test "$clinom services privatebin url both" {
-  run "${clicmd}" services privatebin url both
+@test "$clinom services privatebin url" {
+  run "${clicmd}" services privatebin url
   assert_output -p '8083'
 }
 

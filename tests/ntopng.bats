@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'jonbackhaus/ntopng'
 }
 
-@test "$clinom services ntopng url both" {
-  run "${clicmd}" services ntopng url both
+@test "$clinom services ntopng url" {
+  run "${clicmd}" services ntopng url
   assert_output -p '8084'
 }
 

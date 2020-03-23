@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'pihole/pihole'
 }
 
-@test "$clinom services pihole url both" {
-  run "${clicmd}" services pihole url both
+@test "$clinom services pihole url" {
+  run "${clicmd}" services pihole url
   assert_output -p '8053'
 }
 

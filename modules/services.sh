@@ -431,7 +431,7 @@ function services_help {
   echo "                             ..... restart"
   echo "                             ..... autorun [true|false]"
   echo "                             ..... ps"
-  echo "                             ..... url <local|tor>"
+  echo "                             ..... url [local|tor|both]"
   echo "                             ..... port"
   echo "                             ..... info"
   echo "                             ..... size"
@@ -457,8 +457,9 @@ function services_help {
   echo "    ps                      outputs the containers related to <service_name>"
   echo
   echo "    url                     lists both the local and tor url for <service_name>"
-  echo "        <local>                 lists the local url for <service_name>"
-  echo "        <tor>                   lists the tor url for <service_name>"
+  echo "        [local]                 lists the local url for <service_name>"
+  echo "        [tor]                   lists the tor url for <service_name>"
+  echo "        [both]                  lists both the local and tor url for <service_name>"
   echo
   echo "    port                    lists the ports used by <service_name>"
   echo

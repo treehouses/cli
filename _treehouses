@@ -231,6 +231,7 @@ treehouses bluetooth on
 treehouses bluetooth mac
 treehouses bluetooth id
 treehouses bluetooth id number
+treehouses bluetooth button
 treehouses bluetoothid
 treehouses bluetoothid number
 treehouses bootoption console
@@ -242,16 +243,22 @@ treehouses burn
 treehouses button off
 treehouses button bluetooth
 treehouses camera
+treehouses camera on
+treehouses camera off
+treehouses camera capture
 treehouses clone
 treehouses container
 treehouses container balena
 treehouses container none
 treehouses container docker
-treehouses coralenv
 treehouses coralenv install
 treehouses coralenv demo-on
 treehouses coralenv demo-always-on
 treehouses coralenv demo-off
+treehouses cron
+treehouses cron add
+treehouses cron delete
+treehouses cron deleteall
 treehouses cron tor
 treehouses cron timestamp
 treehouses cron 0W
@@ -337,6 +344,7 @@ treehouses internet
 treehouses led green heartbeat
 treehouses led red default-on
 treehouses led
+treehouses led green
 treehouses led red
 treehouses led dance
 treehouses led thanksgiving
@@ -345,6 +353,7 @@ treehouses led lunarnewyear
 treehouses led valentine
 treehouses led carnival
 treehouses led onam
+treehouses led newyear
 treehouses locale
 treehouses log
 treehouses log max
@@ -355,23 +364,42 @@ treehouses log 1
 treehouses log 0
 treehouses log show
 treehouses log show 5
-treehouses memory
 treehouses memory -g
+treehouses memory -m
+treehouses memory
+treehouses memory total -g
+treehouses memory total -m
 treehouses memory total
+treehouses memory used -g
+treehouses memory used -m
 treehouses memory used
+treehouses memory free -g
 treehouses memory free -m
+treehouses memory free
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp local
 treehouses ntp internet
 treehouses openvpn
+treehouses openvpn use
+treehouses openvpn show
+treehouses openvpn delete
+treehouses openvpn start
+treehouses openvpn stop
+treehouses openvpn load
+treehouses openvpn notice
+treehouses openvpn notice on
+treehouses openvpn notice add
+treehouses openvpn notice delete
+treehouses openvpn notice list
+treehouses openvpn notice off
 treehouses password
 treehouses services available
 treehouses services available full
-treehouses services running
-treehouses services running full
 treehouses services installed
 treehouses services installed full
+treehouses services running
+treehouses services running full
 treehouses services ports
 treehouses services kolibri info
 treehouses services kolibri install
@@ -386,10 +414,12 @@ treehouses services kolibri url both
 treehouses services kolibri autorun
 treehouses services kolibri autorun true
 treehouses services kolibri autorun false
+treehouses services kolibri start
 treehouses services kolibri stop
 treehouses services kolibri down
 treehouses services kolibri cleanup
 treehouses services kolibri icon
+treehouses services kolibri size
 treehouses services couchdb info
 treehouses services couchdb install
 treehouses services couchdb up
@@ -403,10 +433,12 @@ treehouses services couchdb url both
 treehouses services couchdb autorun
 treehouses services couchdb autorun true
 treehouses services couchdb autorun false
+treehouses services couchdb start
 treehouses services couchdb stop
 treehouses services couchdb down
 treehouses services couchdb cleanup
 treehouses services couchdb icon
+treehouses services couchdb size
 treehouses services mariadb info
 treehouses services mariadb install
 treehouses services mariadb up
@@ -420,10 +452,12 @@ treehouses services mariadb url both
 treehouses services mariadb autorun
 treehouses services mariadb autorun true
 treehouses services mariadb autorun false
+treehouses services mariadb start
 treehouses services mariadb stop
 treehouses services mariadb down
 treehouses services mariadb cleanup
 treehouses services mariadb icon
+treehouses services mariadb size
 treehouses services mastodon info
 treehouses services mastodon install
 treehouses services mastodon up
@@ -437,10 +471,12 @@ treehouses services mastodon url both
 treehouses services mastodon autorun
 treehouses services mastodon autorun true
 treehouses services mastodon autorun false
+treehouses services mastodon start
 treehouses services mastodon stop
 treehouses services mastodon down
 treehouses services mastodon cleanup
 treehouses services mastodon icon
+treehouses services mastodon size
 treehouses services moodle info
 treehouses services moodle install
 treehouses services moodle up
@@ -454,10 +490,12 @@ treehouses services moodle url both
 treehouses services moodle autorun
 treehouses services moodle autorun true
 treehouses services moodle autorun false
+treehouses services moodle start
 treehouses services moodle stop
 treehouses services moodle down
 treehouses services moodle cleanup
 treehouses services moodle icon
+treehouses services moodle size
 treehouses services netdata info
 treehouses services netdata install
 treehouses services netdata up
@@ -471,10 +509,12 @@ treehouses services netdata url both
 treehouses services netdata autorun
 treehouses services netdata autorun true
 treehouses services netdata autorun false
+treehouses services netdata start
 treehouses services netdata stop
 treehouses services netdata down
 treehouses services netdata cleanup
 treehouses services netdata icon
+treehouses services netdata size
 treehouses services nextcloud info
 treehouses services nextcloud install
 treehouses services nextcloud up
@@ -488,10 +528,12 @@ treehouses services nextcloud url both
 treehouses services nextcloud autorun
 treehouses services nextcloud autorun true
 treehouses services nextcloud autorun false
+treehouses services nextcloud start
 treehouses services nextcloud stop
 treehouses services nextcloud down
 treehouses services nextcloud cleanup
 treehouses services nextcloud icon
+treehouses services nextcloud size
 treehouses services ntopng info
 treehouses services ntopng install
 treehouses services ntopng up
@@ -505,10 +547,12 @@ treehouses services ntopng url both
 treehouses services ntopng autorun
 treehouses services ntopng autorun true
 treehouses services ntopng autorun false
+treehouses services ntopng start
 treehouses services ntopng stop
 treehouses services ntopng down
 treehouses services ntopng cleanup
 treehouses services ntopng icon
+treehouses services ntopng size
 treehouses services pihole info
 treehouses services pihole install
 treehouses services pihole up
@@ -522,10 +566,12 @@ treehouses services pihole url both
 treehouses services pihole autorun
 treehouses services pihole autorun true
 treehouses services pihole autorun false
+treehouses services pihole start
 treehouses services pihole stop
 treehouses services pihole down
 treehouses services pihole cleanup
 treehouses services pihole icon
+treehouses services pihole size
 treehouses services portainer info
 treehouses services portainer install
 treehouses services portainer up
@@ -539,10 +585,12 @@ treehouses services portainer url both
 treehouses services portainer autorun
 treehouses services portainer autorun true
 treehouses services portainer autorun false
+treehouses services portainer start
 treehouses services portainer stop
 treehouses services portainer down
 treehouses services portainer cleanup
 treehouses services portainer icon
+treehouses services portainer size
 treehouses services privatebin info
 treehouses services privatebin install
 treehouses services privatebin up
@@ -556,10 +604,12 @@ treehouses services privatebin url both
 treehouses services privatebin autorun
 treehouses services privatebin autorun true
 treehouses services privatebin autorun false
+treehouses services privatebin start
 treehouses services privatebin stop
 treehouses services privatebin down
 treehouses services privatebin cleanup
 treehouses services privatebin icon
+treehouses services privatebin size
 treehouses services planet info
 treehouses services planet install
 treehouses services planet up
@@ -573,11 +623,14 @@ treehouses services planet url both
 treehouses services planet autorun
 treehouses services planet autorun true
 treehouses services planet autorun false
+treehouses services planet start
 treehouses services planet stop
 treehouses services planet down
 treehouses services planet cleanup
 treehouses services planet icon
+treehouses services planet size
 treehouses rebootneeded
+treehouses reboots
 treehouses reboots now
 treehouses reboots in
 treehouses reboots daily
@@ -587,15 +640,21 @@ treehouses reboots cron
 treehouses remote status
 treehouses remote upgrade
 treehouses remote services available
+treehouses remote services installed
+treehouses remote services running
 treehouses remote version
+treehouses remote commands
 treehouses rename
 treehouses restore
+treehouses rtc on
 treehouses rtc on rasclock
 treehouses rtc on ds3231
 treehouses rtc off
+treehouses sdbench
 treehouses speedtest
 treehouses speedtest -h
-treehouses ssh
+treehouses ssh on
+treehouses ssh off
 treehouses sshkey add
 treehouses sshkey list
 treehouses sshkey delete
@@ -603,7 +662,18 @@ treehouses sshkey deleteall
 treehouses sshkey github adduser
 treehouses sshkey github deleteuser
 treehouses sshkey github addteam
-treehouses sshtunnel
+treehouses sshtunnel add
+treehouses sshtunnel remove
+treehouses sshtunnel list
+treehouses sshtunnel check
+treehouses sshtunnel key
+treehouses sshtunnel notice
+treehouses sshtunnel notice on
+treehouses sshtunnel notice off
+treehouses sshtunnel notice add
+treehouses sshtunnel notice delete
+treehouses sshtunnel notice list
+treehouses sshtunnel notice now
 treehouses staticwifi
 treehouses temperature
 treehouses temperature fahrenheit
@@ -617,13 +687,17 @@ treehouses tor stop
 treehouses tor delete
 treehouses tor start
 treehouses tor
+treehouses tor notice on
+treehouses tor notice off
 treehouses tor notice now
+treehouses tor notice add
+treehouses tor notice delete
+treehouses tor notice list
 treehouses tor deleteall
 treehouses tor destroy
 treehouses upgrade
 treehouses upgrade --check
 treehouses upgrade -f
-treehouses usb
 treehouses usb on
 treehouses usb off
 treehouses verbose

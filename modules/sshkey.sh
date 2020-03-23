@@ -105,6 +105,10 @@ function sshkey () {
         sshkey github adduser "$member"
       done <<< "$members"
     fi
+  else
+    echo "Error: "
+    echo "Usage: $BASENAME sshkey "
+    exit 1
 #DEPRECATED####
   elif [ "$1" == "addgithubusername" ]; then
     if [ -z "$2" ]; then
@@ -117,7 +121,7 @@ function sshkey () {
       keys=$(sed 's#$# '$2'#' <<< $keys)
       sshkey add "$keys"
     fi
-#############
+###############
 #DEPRECATED####
   elif [ "$1" == "deletegithubusername" ]; then
     if [ -z "$2" ]; then
@@ -158,7 +162,7 @@ function sshkey () {
 }
 function sshkey_help () {
   echo
-  echo "Usage: $BASENAME sshkey <add|list|delete|addgithubusername|addgithubgroup>"
+  echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
   echo
   echo "Used for adding or removing ssh keys for authentication"
   echo

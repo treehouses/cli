@@ -1,5 +1,6 @@
 function detectrpi {
   local rpimodel found
+  checkargn $# 1
   declare -A rpimodels
   rpimodels["Beta"]="BETA"
   rpimodels["0002"]="RPIB"

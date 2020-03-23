@@ -23,7 +23,7 @@ function help_default {
   echo "   bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot"
   echo "          [password] [hotspotPassword]"
   echo "   container <none|docker|balena>            enables (and start) the desired container"
-  echo "   bluetooth <on|off|pause|mac|id> [number]  switches bluetooth from regular to hotspot mode and shows id or MAC address"
+  echo "   bluetooth <on|off|pause|button|mac|id>    switches bluetooth from regular to hotspot mode and shows id or MAC address"
   echo "   ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)"
   echo "   aphidden <local|internet> <ESSID>         creates a hidden mobile ap, with or without internet access"
   echo "            [password]"
@@ -63,6 +63,7 @@ function help_default {
   echo "              [ntopng]                       Ntopng is a network traffic probe that monitors network usage"
   echo "              [couchdb]                      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
   echo "              [mariadb]                      MariaDB is a community-developed fork of the MySQL relational database management system"
+  echo "              [seafile]                      Seafile is an open-source, cross-platform file-hosting software system"
   echo "   tor [list|add|delete|deleteall|start]     deals with services on tor hidden network"
   echo "       [stop|destroy|notice|status|refresh]"
   echo "   bootoption <console|desktop> [autologin]  sets the boot mode"
@@ -85,6 +86,7 @@ function help_default {
 }
 
 function help {
+  checkargn $# 1
   if [ -z "$1" ]; then
     help_default
   else

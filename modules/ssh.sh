@@ -1,5 +1,7 @@
 function ssh {
   local status
+  checkroot
+  checkargn $# 1
   status=$1
   if [ "$status" = "on" ]; then
     enable_service ssh

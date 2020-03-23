@@ -1,4 +1,6 @@
 function container {
+  checkroot
+  checkargn $# 1
   case "$1" in
     docker)
       container_docker;

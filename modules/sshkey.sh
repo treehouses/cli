@@ -109,10 +109,6 @@ function sshkey () {
       echo "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
       exit 1
     fi
-  else
-    echo "Error: unsupported command"
-    echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
-    exit 1
 #DEPRECATED####
   elif [ "$1" == "addgithubusername" ]; then
     if [ -z "$2" ]; then
@@ -162,6 +158,10 @@ function sshkey () {
       sshkey addgithubusername "$member"
     done <<< "$members"
 ###############
+  else
+    echo "Error: unsupported command"
+    echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
+    exit 1
   fi
 }
 function sshkey_help () {

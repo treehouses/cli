@@ -2,7 +2,7 @@ function bridge {
   local wifiessid hotspotessid wifipassword hotspotpassword base_24 channels channel wificountry
   checkrpi
   checkroot
-  checkargn 6
+  checkargn $# 5
   case $(detectrpi) in
     RPI3B|RPIZW|RPI3B+|RPI3A+|RPI4B)
       ;;

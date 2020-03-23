@@ -2,7 +2,7 @@ function remote {
   local option results
   checkroot
   checkrpi
-  checkargn 7
+  checkargn $# 2
   option="$1"
 
   if [ "$option" = "status" ]; then
@@ -48,15 +48,18 @@ function remote {
     else
       echo false
     fi
+  elif [ "$option" = "commands" ]; then
+    source $SCRIPTFOLDER/_treehouses && _treehouses_complete 2>/dev/null
+    echo "$every_command"
   else
     echo "unknown command option"
-    echo "usage: $BASENAME remote [status | upgrade | services | version]"
+    echo "usage: $BASENAME remote [status | upgrade | services | version | commands]"
   fi
 }
 
 function remote_help {
   echo
-  echo "Usage: $BASENAME remote [status | upgrade | services | version]"
+  echo "Usage: $BASENAME remote [status | upgrade | services | version | commands]"
   echo
   echo "Returns a string representation of the current status of the Raspberry Pi"
   echo "Used for Treehouses Remote"
@@ -80,5 +83,8 @@ function remote_help {
   echo "$BASENAME remote version <version_number>"
   echo "true if <version_number> >= \"remote_min_version\" in package.json"
   echo "false otherwise"
+  echo
+  echo "$BASENAME remote commands"
+  echo "returns a list of all commands for tab completion"
   echo
 }

@@ -2,7 +2,7 @@
 # /dev/null is the void (output and errors vanish) $(tty) is the terminal screen
 function verbose {
   checkroot
-  checkargn 2
+  checkargn $# 1
   case "$1" in
     "")
       if [[ "$LOGFILE" == /dev/null ]]

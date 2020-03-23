@@ -1,6 +1,6 @@
 function led {
   checkrpi
-  checkargn 3
+  checkargn $# 2
   color="$1"
   trigger="$2"
 

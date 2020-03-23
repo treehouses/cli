@@ -2,7 +2,7 @@ function wifihidden {
   local wifinetwork wifipassword wificountry
   checkrpi
   checkroot
-  checkargn 3
+  checkargn $# 2
   if [ -z "$1" ]; then
     echo "Error: name of the network missing"
     exit 1

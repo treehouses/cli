@@ -1,6 +1,6 @@
 {
   "name": "@treehouses/cli",
-  "version": "1.16.4",
+  "version": "1.16.8",
   "remote": "2251",
   "description": "Thin command-line interface for Raspberry Pi low level configuration.",
   "main": "cli.sh",
@@ -26,7 +26,7 @@
     "ssh", "sshkey", "sshtunnel", "tor", "openvpn", "coral",
     "services", "container", "docker", "balena", "pihole",
     "kolibri", "moodle", "netdata", "nextcloud", "ntopng", "planet",
-    "portainer", "privatebin", "mastodon", "couchdb", "mariadb"
+    "portainer", "privatebin", "mastodon", "couchdb", "mariadb", "seafile"
   ],
   "author": {
     "name": "OLE treehouses team",

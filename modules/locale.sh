@@ -1,7 +1,7 @@
 function locale {
   local locale encoding
   checkroot
-  checkargn 2
+  checkargn $# 1
   locale="$1"
   if [ -z "$locale" ];
   then

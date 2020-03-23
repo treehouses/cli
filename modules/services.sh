@@ -275,6 +275,7 @@ function services {
           ;;
         cleanup)
           if check_available_services $service_name; then
+            services $service_name autorun false
             # skip planet
             if [ "$service_name" = "planet" ]; then
               echo "planet should not be cleaned up"

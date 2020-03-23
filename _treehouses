@@ -667,6 +667,25 @@ treehouses services privatebin url
 treehouses services privatebin url both
 treehouses services privatebin url local
 treehouses services privatebin url tor
+treehouses services seafile autorun
+treehouses services seafile autorun false
+treehouses services seafile autorun true
+treehouses services seafile cleanup
+treehouses services seafile down
+treehouses services seafile icon
+treehouses services seafile info
+treehouses services seafile install
+treehouses services seafile port
+treehouses services seafile ps
+treehouses services seafile restart
+treehouses services seafile size
+treehouses services seafile start
+treehouses services seafile stop
+treehouses services seafile up
+treehouses services seafile url
+treehouses services seafile url both
+treehouses services seafile url local
+treehouses services seafile url tor
 treehouses services running
 treehouses services running full
 treehouses speedtest

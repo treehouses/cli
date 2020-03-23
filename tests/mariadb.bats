@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'jsurf/rpi-mariadb'
 }
 
-@test "$clinom services mariadb url both" {
-  run "${clicmd}" services mariadb url both
+@test "$clinom services mariadb url" {
+  run "${clicmd}" services mariadb url
   assert_output -p '3306'
 }
 

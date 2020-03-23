@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'treehouses/kolibri'
 }
 
-@test "$clinom services kolibri url both" {
-  run "${clicmd}" services kolibri url both
+@test "$clinom services kolibri url" {
+  run "${clicmd}" services kolibri url
   assert_output -p '8080'
 }
 

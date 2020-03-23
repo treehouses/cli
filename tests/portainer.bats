@@ -67,8 +67,8 @@ load test-helper
   assert_success && assert_output -p 'portainer/portainer'
 }
 
-@test "$clinom services portainer url both" {
-  run "${clicmd}" services portainer url both
+@test "$clinom services portainer url" {
+  run "${clicmd}" services portainer url
   assert_output -p '9000'
 }
 

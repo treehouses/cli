@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'treehouses/planet'
 }
 
-@test "$clinom services planet url both" {
-  run "${clicmd}" services planet url both
+@test "$clinom services planet url" {
+  run "${clicmd}" services planet url
   assert_output -p '80'
 }
 

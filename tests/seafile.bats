@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'treehouses/rpi-seafile'
 }
 
-@test "$clinom services seafile url both" {
-  run "${clicmd}" services seafile url both
+@test "$clinom services seafile url" {
+  run "${clicmd}" services seafile url
   assert_output -p '8085'
 }
 

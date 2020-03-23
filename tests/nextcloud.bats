@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'nextcloud'
 }
 
-@test "$clinom services nextcloud url both" {
-  run "${clicmd}" services nextcloud url both
+@test "$clinom services nextcloud url" {
+  run "${clicmd}" services nextcloud url
   assert_output -p '8081'
 }
 

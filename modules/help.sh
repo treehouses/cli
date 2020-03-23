@@ -1,14 +1,14 @@
 function help_default {
   helpdefault=""
   read -r -d '' helpdefault <<'EOF'
-Usage: $BASENAME
+Usage: treehouses
    help [command]                            gives you a more detailed info about the command or will output this
    verbose <on|off>                          makes each command print more output (might not work with treehouses remote)
    expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
    rename <hostname>                         changes hostname
    password <password>                       changes the password for 'pi' user
    sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
-   version                                   returns the version of $BASENAME command
+   version                                   returns the version of treehouses command
    image                                     returns version of the system image installed
    detectbluetooth                           detects if bluetooth module is available
    detectrpi [model]                         detects the hardware version of a raspberry pi
@@ -35,7 +35,7 @@ Usage: $BASENAME
    vnc [on|off|info]                         enables or disables the vnc server service
    default                                   sets a raspbian back to default configuration
    wificountry <country>                     sets the wifi country
-   upgrade                                   upgrades $BASENAME package using npm
+   upgrade                                   upgrades treehouses package using npm
    sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
              <key|portinterval> [user@host]
    led [green|red] [mode]                    sets the led mode
@@ -53,7 +53,7 @@ Usage: $BASENAME
    internet                                  checks if the rpi has access to internet
    services [service_name] [command]         executes the given command on the specified service
               [planet]                       Planet Learning is a generic learning system built in Angular & CouchDB
-              [kolibri]                      Kolibri is a learning platform using DJango
+              [kolibri]                      Kolibri is a learning platform using Django
               [nextcloud]                    Nextcloud is a safe home for all your data, files, etc
               [netdata]                      Netdata is a distributed, real-time performance and health monitoring for systems
               [mastodon]                     Mastodon is a free, open-source social network server

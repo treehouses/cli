@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'jonbackhaus/ntopng'
 }
 
-@test "$clinom services ntopng url both" {
-  run "${clicmd}" services ntopng url both
+@test "$clinom services ntopng url" {
+  run "${clicmd}" services ntopng url
   assert_output -p '8084'
 }
 
@@ -91,6 +91,11 @@ load test-helper
 @test "$clinom services ntopng down" {
   run "${clicmd}" services ntopng down
   assert_success && assert_output -p 'ntopng stopped and removed'
+}
+
+@test "$clinom services ntopng icon" {
+  run "${clicmd}" services ntopng icon
+  assert_success && assert_output -p 'svg'
 }
 
 @test "$clinom services ntopng cleanup" {

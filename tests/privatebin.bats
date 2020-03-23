@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'treehouses/privatebin'
 }
 
-@test "$clinom services privatebin url both" {
-  run "${clicmd}" services privatebin url both
+@test "$clinom services privatebin url" {
+  run "${clicmd}" services privatebin url
   assert_output -p '8083'
 }
 
@@ -91,6 +91,11 @@ load test-helper
 @test "$clinom services privatebin down" {
   run "${clicmd}" services privatebin down
   assert_success && assert_output -p 'privatebin stopped and removed'
+}
+
+@test "$clinom services privatebin icon" {
+  run "${clicmd}" services privatebin icon
+  assert_success && assert_output -p 'svg'
 }
 
 @test "$clinom services privatebin cleanup" {

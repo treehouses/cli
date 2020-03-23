@@ -85,9 +85,6 @@ function remote_help {
   echo "false otherwise"
   echo
   echo "$BASENAME remote commands"
-  echo "returns a list of top-level commands for tab completion"
-  echo
-  echo "$BASENAME remote commands <module>"
-  echo "returns a list of <module> commands for tab completion"
+  echo "returns a list of all commands for tab completion"
   echo
 }

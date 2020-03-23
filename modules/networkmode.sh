@@ -1,6 +1,6 @@
 function networkmode {
   local network_mode interfaces ifaces
-  checkargn 2
+  checkargn $# 1
   network_mode="default"
   if [ -f "/etc/network/mode" ]; then
     network_mode=$(</etc/network/mode)

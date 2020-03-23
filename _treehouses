@@ -32,7 +32,7 @@ _treehouses_complete()
   openvpn_cmds="use show delete notice start stop load"
   reboots_cmds="now in cron daily weekly monthly"
   rtc_cmds="on off"
-  services_cmds="available installed running ports kolibri mastodon moodle netdata nextcloud ntopng pihole planet portainer privatebin couchdb mariadb"
+  services_cmds="available installed running ports kolibri mastodon moodle netdata nextcloud ntopng pihole planet portainer privatebin couchdb mariadb seafile"
   sshkey_cmds="add list delete deleteall github addgithubusername deletegithubusername addgithubgroup"
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice check"
@@ -186,7 +186,7 @@ _treehouses_complete()
       "available"|"installed"|"running")
         COMPREPLY=( $(compgen -W "$services_second_cmds" -- $cur) )
         ;;
-      "planet"|"kolibri"|"nextcloud"|"netdata"|"mastodon"|"moodle"|"pihole"|"privatebin"|"portainer"|"ntopng"|"couchdb"|"mariadb")
+      "planet"|"kolibri"|"nextcloud"|"netdata"|"mastodon"|"moodle"|"pihole"|"privatebin"|"portainer"|"ntopng"|"couchdb"|"mariadb"|"seafile")
         COMPREPLY=( $(compgen -W "$services_second_cmds2" -- $cur) )
         ;;
       "github")

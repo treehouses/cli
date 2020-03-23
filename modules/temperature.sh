@@ -1,7 +1,7 @@
 function temperature () {
   local reading number0 number fraction resultA resultB
   checkrpi
-  checkargn 2
+  checkargn $# 1
   check_missing_packages "bc"
   #Uses `vgencmd measure_temp` command to find CPU temperature of Raspberry Pi
   reading=$(vcgencmd measure_temp)

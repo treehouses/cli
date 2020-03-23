@@ -4,7 +4,7 @@ function button {
   local mode
   checkwrpi
   checkroot
-  checkargn 2
+  checkargn $# 1
   mode=$1
 
   if [ "$mode" = "off" ]; then

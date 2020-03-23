@@ -1,5 +1,5 @@
 function detectbluetooth {
-  checkargn 1
+  checkargn $# 0
   if dmesg | grep -iq 'blue'; then
     echo "true"
   else

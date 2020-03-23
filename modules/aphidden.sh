@@ -85,6 +85,9 @@ function aphidden_help () {
   echo "When the Raspberry pi is connected to a network via an ethernet cable this command"
   echo "creates a wireless access point that users can connect to via wifi. If the mode is"
   echo "'internet' the ethernet connection will be shared in the access point."
+  echo "On device please note you must set SSID manually because access point is hidden"
+  echo "On device connecting to ap must use Gateway and Static IP Address. DHCP isn't supported. e.g."
+  echo "Static IP Address: 192.168.2.2, Gateway: 192.168.2.1 with examples used below:"
   echo
   echo "Examples:"
   echo "  $BASENAME aphidden local apname apPassword"

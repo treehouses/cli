@@ -83,6 +83,8 @@ function ap_help () {
   echo "Usage: $BASENAME ap <local|internet> <ESSID> [password]"
   echo
   echo "Creates a mobile ap. If the mode is 'internet' the ethernet connection will be shared in the ap."
+  echo "On device connecting to ap must use Gateway and Static IP Address. DHCP isn't supported. e.g."
+  echo "Static IP Address: 192.168.2.2, Gateway: 192.168.2.1 with examples used below:"
   echo
   echo "Examples:"
   echo "  $BASENAME ap local apname apPassword"

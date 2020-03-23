@@ -341,19 +341,37 @@ treehouses help wifi
 treehouses help wifistatus
 treehouses image
 treehouses internet
-treehouses led green heartbeat
-treehouses led red default-on
 treehouses led
-treehouses led green
 treehouses led red
+treehouses led red default-on
+treehouses led red oneshot
+treehouses led red heartbeat
+treehouses led red timer
+treehouses led red cpu0
+treehouses led red gpio
+treehouses led red input
+treehouses led red backlight
+treehouses led red none
+treehouses led red kbd-
+treehouses led green
+treehouses led green default-on
+treehouses led green oneshot
+treehouses led green heartbeat
+treehouses led green timer
+treehouses led green cpu0
+treehouses led green gpio
+treehouses led green input
+treehouses led green backlight
+treehouses led green none
+treehouses led green kbd-
 treehouses led dance
 treehouses led thanksgiving
 treehouses led christmas
+treehouses led newyear
 treehouses led lunarnewyear
 treehouses led valentine
 treehouses led carnival
 treehouses led onam
-treehouses led newyear
 treehouses locale
 treehouses log
 treehouses log max

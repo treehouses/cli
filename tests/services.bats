@@ -93,6 +93,11 @@ load test-helper
   assert_success && assert_output -p 'planet stopped and removed'
 }
 
+@test "$clinom services planet icon" {
+  run "${clicmd}" services planet icon
+  assert_success && assert_output -p 'svg'
+}
+
 @test "$clinom services planet cleanup" {
   run "${clicmd}" services planet cleanup
   assert_success && assert_output -p 'cleaned up'

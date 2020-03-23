@@ -93,6 +93,11 @@ load test-helper
   assert_success && assert_output -p 'kolibri stopped and removed'
 }
 
+@test "$clinom services kolibri icon" {
+  run "${clicmd}" services kolibri icon
+  assert_success && assert_output -p 'svg'
+}
+
 @test "$clinom services kolibri cleanup" {
   run "${clicmd}" services kolibri cleanup
   assert_success && assert_output -p 'cleaned up'

@@ -93,6 +93,11 @@ load test-helper
   assert_success && assert_output -p 'mariadb stopped and removed'
 }
 
+@test "$clinom services mariadb icon" {
+  run "${clicmd}" services mariadb icon
+  assert_success && assert_output -p 'svg'
+}
+
 @test "$clinom services mariadb cleanup" {
   run "${clicmd}" services mariadb cleanup
   assert_success && assert_output -p 'cleaned up'

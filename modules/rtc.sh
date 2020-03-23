@@ -29,6 +29,9 @@ function write_rtc {
 
 function rtc {
   local status clock
+  checkrpi
+  checkroot
+  checkargn $# 2
   status="$1"
   clock="$2"
 

@@ -1,4 +1,6 @@
 function default {
+  checkroot
+  checkargn $# 1
   if [ "$1" == "notice" ] ; then
     default_notice
     echo 'Success: the message has been reset to default';

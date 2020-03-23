@@ -1,4 +1,5 @@
 function version {
+  checkargn $# 0
   node -p "require('$SCRIPTFOLDER/package.json').version"
 }
 

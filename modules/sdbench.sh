@@ -1,5 +1,7 @@
 function sdbench {
   local datamb filenm wrcmd rdcmd wrresult rdresult config
+  checkroot
+  checkargn $# 0
   datamb=${1:-128}
   filenm=~/test.dat
   trap 'rm -f "${filenm}"' EXIT

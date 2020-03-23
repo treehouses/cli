@@ -1,5 +1,7 @@
 function timezone {
   local timezone
+  checkroot
+  checkargn $# 1
   timezone="$1"
   if [ -z "$timezone" ];
   then

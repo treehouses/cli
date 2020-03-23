@@ -23,7 +23,7 @@ function help_default {
   echo "   bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot"
   echo "          [password] [hotspotPassword]"
   echo "   container <none|docker|balena>            enables (and start) the desired container"
-  echo "   bluetooth <on|off|pause|mac|id> [number]  switches bluetooth from regular to hotspot mode and shows id or MAC address"
+  echo "   bluetooth <on|off|pause|button|mac|id>    switches bluetooth from regular to hotspot mode and shows id or MAC address"
   echo "   ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)"
   echo "   aphidden <local|internet> <ESSID>         creates a hidden mobile ap, with or without internet access"
   echo "            [password]"
@@ -50,19 +50,20 @@ function help_default {
   echo "   reboots <now|in|cron>                     reboots at given frequency | removes it if reboot task active"
   echo "           <daily|weekly|monthly>"
   echo "   internet                                  checks if the rpi has access to internet"
-  echo "   services <service_name> [command]         executes the given command on the specified service"
-  echo "              <planet>                       Planet Learning is a generic learning system built in Angular & CouchDB"
-  echo "              <kolibri>                      Kolibri is a learning platform using DJango"
-  echo "              <nextcloud>                    Nextcloud is a safe home for all your data, files, etc"
-  echo "              <netdata>                      Netdata is a distributed, real-time performance and health monitoring for systems"
-  echo "              <mastodon>                     Mastodon is a free, open-source social network server"
-  echo "              <moodle>                       Moodle is a learning management system built in PHP"
-  echo "              <pihole>                       Pi-hole is a DNS sinkhole that protects your devices from unwanted content"
-  echo "              <privatebin>                   PrivateBin is a minimalist, open source online pastebin"
-  echo "              <portainer>                    Portainer is a lightweight management UI for Docker environments"
-  echo "              <ntopng>                       Ntopng is a network traffic probe that monitors network usage"
-  echo "              <couchdb>                      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
-  echo "              <mariadb>                      MariaDB is a community-developed fork of the MySQL relational database management system"
+  echo "   services [service_name] [command]         executes the given command on the specified service"
+  echo "              [planet]                       Planet Learning is a generic learning system built in Angular & CouchDB"
+  echo "              [kolibri]                      Kolibri is a learning platform using DJango"
+  echo "              [nextcloud]                    Nextcloud is a safe home for all your data, files, etc"
+  echo "              [netdata]                      Netdata is a distributed, real-time performance and health monitoring for systems"
+  echo "              [mastodon]                     Mastodon is a free, open-source social network server"
+  echo "              [moodle]                       Moodle is a learning management system built in PHP"
+  echo "              [pihole]                       Pi-hole is a DNS sinkhole that protects your devices from unwanted content"
+  echo "              [privatebin]                   PrivateBin is a minimalist, open source online pastebin"
+  echo "              [portainer]                    Portainer is a lightweight management UI for Docker environments"
+  echo "              [ntopng]                       Ntopng is a network traffic probe that monitors network usage"
+  echo "              [couchdb]                      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
+  echo "              [mariadb]                      MariaDB is a community-developed fork of the MySQL relational database management system"
+  echo "              [seafile]                      Seafile is an open-source, cross-platform file-hosting software system"
   echo "                           [install|cleanup|up|down|start|stop|restart]"
   echo "                           [autorun <true|false>|ps|info]"
   echo "                           [url <local|tor|both>|port|size]"
@@ -88,6 +89,7 @@ function help_default {
 }
 
 function help {
+  checkargn $# 1
   if [ -z "$1" ]; then
     help_default
   else

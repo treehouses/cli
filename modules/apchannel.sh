@@ -1,5 +1,7 @@
 function apchannel {
   local new_channel current_channel
+  checkrpi
+  checkargn $# 1
   new_channel="$1"
   if [ "$(networkmode)" == "bridge" ] || [ "$(networkmode)" == "ap local" ] || [ "$(networkmode)" == "ap internet" ]; then
     current_channel=$(sed -n 's/channel=\(.*\)/\1/p' /etc/hostapd/hostapd.conf )

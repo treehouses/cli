@@ -93,6 +93,11 @@ load test-helper
   assert_success && assert_output -p 'pihole stopped and removed'
 }
 
+@test "$clinom services pihole icon" {
+  run "${clicmd}" services pihole icon
+  assert_success && assert_output -p 'svg'
+}
+
 @test "$clinom services pihole cleanup" {
   run "${clicmd}" services pihole cleanup
   assert_success && assert_output -p 'cleaned up'

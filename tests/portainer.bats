@@ -92,6 +92,11 @@ load test-helper
   assert_success && assert_output -p 'portainer stopped and removed'
 }
 
+@test "$clinom services portainer icon" {
+  run "${clicmd}" services portainer icon
+  assert_success && assert_output -p 'svg'
+}
+
 @test "$clinom services portainer cleanup" {
   run "${clicmd}" services portainer cleanup
   assert_success && assert_output -p 'cleaned up'

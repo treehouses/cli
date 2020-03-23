@@ -93,6 +93,11 @@ load test-helper
   assert_success && assert_output -p 'netdata stopped and removed'
 }
 
+@test "$clinom services netdata icon" {
+  run "${clicmd}" services netdata icon
+  assert_success && assert_output -p 'svg'
+}
+
 @test "$clinom services netdata cleanup" {
   run "${clicmd}" services netdata cleanup
   assert_success && assert_output -p 'cleaned up'

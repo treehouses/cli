@@ -93,6 +93,11 @@ load test-helper
   assert_success && assert_output -p 'mastodon stopped and removed'
 }
 
+@test "$clinom services mastodon icon" {
+  run "${clicmd}" services mastodon icon
+  assert_success && assert_output -p 'svg'
+}
+
 @test "$clinom services mastodon cleanup" {
   run "${clicmd}" services mastodon cleanup
   assert_success && assert_output -p 'cleaned up'

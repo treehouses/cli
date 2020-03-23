@@ -93,6 +93,11 @@ load test-helper
   assert_success && assert_output -p 'ntopng stopped and removed'
 }
 
+@test "$clinom services ntopng icon" {
+  run "${clicmd}" services ntopng icon
+  assert_success && assert_output -p 'svg'
+}
+
 @test "$clinom services ntopng cleanup" {
   run "${clicmd}" services ntopng cleanup
   assert_success && assert_output -p 'cleaned up'

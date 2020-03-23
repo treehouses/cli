@@ -93,6 +93,11 @@ load test-helper
   assert_success && assert_output -p 'nextcloud stopped and removed'
 }
 
+@test "$clinom services nextcloud icon" {
+  run "${clicmd}" services nextcloud icon
+  assert_success && assert_output -p 'svg'
+}
+
 @test "$clinom services nextcloud cleanup" {
   run "${clicmd}" services nextcloud cleanup
   assert_success && assert_output -p 'cleaned up'

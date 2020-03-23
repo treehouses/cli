@@ -93,6 +93,11 @@ load test-helper
   assert_success && assert_output -p 'seafile stopped and removed'
 }
 
+@test "$clinom services seafile icon" {
+  run "${clicmd}" services seafile icon
+  assert_success && assert_output -p 'svg'
+}
+
 @test "$clinom services seafile cleanup" {
   run "${clicmd}" services seafile cleanup
   assert_success && assert_output -p 'cleaned up'

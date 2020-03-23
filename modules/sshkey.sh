@@ -1,5 +1,7 @@
 function sshkey () {
   local keys githubusername auth_files teams team_id members
+  checkroot
+  checkargn $# 5
   if [ "$1" == "add" ]; then
     shift
     echo "$@" >> /root/.ssh/authorized_keys
@@ -102,6 +104,10 @@ function sshkey () {
       while read -r member; do
         sshkey github adduser "$member"
       done <<< "$members"
+    else
+      echo "Error: unsupported command"
+      echo "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
+      exit 1
     fi
 #DEPRECATED####
   elif [ "$1" == "addgithubusername" ]; then
@@ -115,7 +121,7 @@ function sshkey () {
       keys=$(sed 's#$# '$2'#' <<< $keys)
       sshkey add "$keys"
     fi
-#############
+###############
 #DEPRECATED####
   elif [ "$1" == "deletegithubusername" ]; then
     if [ -z "$2" ]; then
@@ -152,11 +158,15 @@ function sshkey () {
       sshkey addgithubusername "$member"
     done <<< "$members"
 ###############
+  else
+    echo "Error: unsupported command"
+    echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
+    exit 1
   fi
 }
 function sshkey_help () {
   echo
-  echo "Usage: $BASENAME sshkey <add|list|delete|addgithubusername|addgithubgroup>"
+  echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
   echo
   echo "Used for adding or removing ssh keys for authentication"
   echo

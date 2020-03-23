@@ -52,7 +52,7 @@ wifistatus                                displays signal strength in dBm and la
 bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot
        [password] [hotspotPassword]
 container <none|docker|balena>            enables (and start) the desired container
-bluetooth <on|off|pause|mac|id> [number]  switches bluetooth from regular to hotspot mode and shows id or MAC address
+bluetooth <on|off|pause|button|mac|id>    switches bluetooth from regular to hotspot mode and shows id or MAC address
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
 aphidden <local|internet> <ESSID>         creates a hidden mobile ap with or without internet access
          [password]
@@ -91,6 +91,8 @@ services [service_name] [command]         executes the given command on the spec
            [portainer]                    Portainer is a lightweight management UI for Docker environments
            [ntopng]                       Ntopng is a network traffic probe that monitors network usage
            [couchdb]                      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
+           [mariadb]                      MariaDB is a community-developed fork of the MySQL relational database management system
+           [seafile]                      Seafile is an open-source, cross-platform file-hosting software system
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

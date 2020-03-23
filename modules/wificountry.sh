@@ -1,5 +1,8 @@
 function wificountry {
   local country
+  checkrpi
+  checkroot
+  checkargn $# 1
   country=$1
   country_codes=(US CA JP DE NL IT PT LU NO FI DK CH CZ ES GB KR CN FR HK SG TW BR
                  IL SA LB AE ZA AR AU AT BO CL GR IS IN IE KW LI LT MX MA NZ PL PR

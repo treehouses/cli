@@ -1,5 +1,8 @@
 function restore {
   local device a b
+  checkrpi
+  checkroot
+  checkargn $# 1
   device="$1"
   if [ -z "$device" ]; then
       device="/dev/sdb"

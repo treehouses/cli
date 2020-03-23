@@ -1,5 +1,8 @@
 function aphidden {
   local mode essid password base_24 channels channel
+  checkrpi
+  checkroot
+  checkargn $# 4
   mode=$(clean_var "$1")
   essid=$(clean_var "$2")
   password=$(clean_var "$3")
@@ -42,7 +45,7 @@ function aphidden {
     echo "hidden ap local" > /etc/network/mode
   else
     echo "Error: only 'local' and 'internet' modes are supported".
-    exit 0
+    exit 1
   fi
 
   cp "$TEMPLATES/network/10-wpa_supplicant" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant

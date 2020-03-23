@@ -1,5 +1,8 @@
 function ntp {
   local status
+  checkrpi
+  checkroot
+  checkargn $# 1
   status="$1"
 
   if [ "$status" = "internet" ]; then
@@ -27,7 +30,7 @@ function ntp {
     echo "Success: please reboot you rpi to apply changes."
   else
     echo "Error: only local or internet are supported options"
-    exit 0
+    exit 1
   fi
 }
 

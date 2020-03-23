@@ -1,4 +1,5 @@
 function reboots {
+  checkargn $# 2
   case "$1" in
     "")
       echo "No timeframe selected. For how to use \"reboots\" run: $BASENAME help reboots"

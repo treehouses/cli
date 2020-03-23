@@ -1,5 +1,6 @@
 function upgrade {
   local tag last_version
+  checkargn $# 2
   tag=$1
   if [ -z "$tag" ] && [ "$tag" != "--check" ];
   then

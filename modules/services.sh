@@ -1,6 +1,7 @@
 function services {
   local service_name command command_option service results installed
   local array running port_string found local_url tor_url
+  checkargn $# 3
   service_name="$1"
   command="$2"
   command_option="$3"
@@ -255,8 +256,7 @@ function services {
               fi
               echo $tor_url
             done
-          #DEPRECATED#### TO DO: Remove both
-          elif [ "$command_option" = "both" ] || [ "$command_option" = "" ]; then
+          elif [ "$command_option" = "" ]; then
             services $service_name url local
             services $service_name url tor
           else
@@ -391,6 +391,7 @@ function services_help {
   echo "  ntopng       Ntopng is a network traffic probe that monitors network usage"
   echo "  couchdb      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
   echo "  mariadb      MariaDB is a community-developed fork of the MySQL relational database management system"
+  echo "  seafile      Seafile is an open-source, cross-platform file-hosting software system"
   echo
   echo
   echo "Top-Level Commands:"
@@ -430,7 +431,7 @@ function services_help {
   echo "                             ..... restart"
   echo "                             ..... autorun [true|false]"
   echo "                             ..... ps"
-  echo "                             ..... url <local|tor>"
+  echo "                             ..... url [local|tor]"
   echo "                             ..... port"
   echo "                             ..... info"
   echo "                             ..... size"
@@ -456,8 +457,8 @@ function services_help {
   echo "    ps                      outputs the containers related to <service_name>"
   echo
   echo "    url                     lists both the local and tor url for <service_name>"
-  echo "        <local>                 lists the local url for <service_name>"
-  echo "        <tor>                   lists the tor url for <service_name>"
+  echo "        [local]                 lists the local url for <service_name>"
+  echo "        [tor]                   lists the tor url for <service_name>"
   echo
   echo "    port                    lists the ports used by <service_name>"
   echo

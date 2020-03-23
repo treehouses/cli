@@ -35,6 +35,8 @@ function apply_blocker {
 }
 
 function blocker {
+  checkroot
+  checkargn $# 1
   case "$1" in
     "")
 	  case "$BLOCKER" in

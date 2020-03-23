@@ -1,5 +1,8 @@
 function ntp {
   local status
+  checkrpi
+  checkroot
+  checkargn $# 1
   status="$1"
 
   if [ "$status" = "internet" ]; then

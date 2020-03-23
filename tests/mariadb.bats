@@ -3,7 +3,7 @@ load test-helper
 
 @test "$clinom services mariadb info" {
   run "${clicmd}" services mariadb info
-  assert_success && assert_output -p 'https://github.com/JSurf/docker-rpi-mariadb'
+  assert_success && assert_output -p 'https://mariadb.org/'
 }
 
 @test "$clinom services mariadb install" {

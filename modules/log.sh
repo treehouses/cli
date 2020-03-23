@@ -46,6 +46,8 @@ function log_and_exit1() {
 # Can also show the log
 function log {
   local lines
+  checkroot
+  checkargn $# 2
   lines="$2"
   case "$1" in
     "")

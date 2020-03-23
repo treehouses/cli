@@ -104,10 +104,14 @@ function sshkey () {
       while read -r member; do
         sshkey github adduser "$member"
       done <<< "$members"
+    else
+      echo "Error: unsupported command"
+      echo "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
+      exit 1
     fi
   else
-    echo "Error: "
-    echo "Usage: $BASENAME sshkey "
+    echo "Error: unsupported command"
+    echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
     exit 1
 #DEPRECATED####
   elif [ "$1" == "addgithubusername" ]; then

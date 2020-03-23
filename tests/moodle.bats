@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'treehouses/moodle'
 }
 
-@test "$clinom services moodle url both" {
-  run "${clicmd}" services moodle url both
+@test "$clinom services moodle url" {
+  run "${clicmd}" services moodle url
   assert_output -p '80'
 }
 

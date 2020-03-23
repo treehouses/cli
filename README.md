@@ -43,7 +43,7 @@ Commands | Description
 `discover <scan\|interface\|ping\|ports\|mac>` <br> `discover <rpi> [ipaddress\|url\|macaddress]` | performs network scan and discovers all raspberry pis on the network
 `wifi <ESSID> [password]` | connects to a wifi network
 `wifihidden <ESSID> [password]` | connects to a hidden wifi network
-`staticwifi <ip> <mask> <gateway> <dns>` <br> `staticwifi <ESSID> [password]` | configures rpi wifi interface to a static ip address
+`staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]` | configures rpi wifi interface to a static ip address
 `wifistatus` | displays signal strength in dBm and layman nomenclature
 `bridge <ESSID> <hotspotESSID> [password] [hotspotPassword]` | configures the rpi to bridge the wlan interface over a hotspot
 `container <none\|docker\|balena>` | enables (and start) the desired container

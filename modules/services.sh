@@ -11,7 +11,7 @@ function services {
     if [ -d "$SERVICES" ]; then
       for file in $SERVICES/*
       do
-        if [[ ! "$file" =~ "README.md" ]]; then
+        if [[ ! $file = *"README.md"* ]]; then
           echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//'
         fi
       done

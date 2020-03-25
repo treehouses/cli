@@ -389,13 +389,12 @@ function services_help {
   echo "Top-Level Commands:"
   echo
   echo "  Usage:"
-  echo "    $BASENAME services available [full]"
+  echo "    $BASENAME services available"
   echo "              ..... installed [full]"
   echo "              ..... running [full]"
   echo "              ..... ports"
   echo
   echo "    available               lists all available services"
-  echo "        [full]                  full details"
   echo
   echo "    installed               lists all installed services"
   echo "        [full]                  full details"

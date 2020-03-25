@@ -11,7 +11,9 @@ function services {
     if [ -d "$SERVICES" ]; then
       for file in $SERVICES/*
       do
-        echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//'
+        if [[ ! "$file" =~ "README.md" ]]; then
+          echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//'
+        fi
       done
     else
       echo "ERROR: $SERVICES directory does not exist"

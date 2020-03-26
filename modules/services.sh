@@ -278,12 +278,7 @@ function services {
           fi
           ;;
         port)
-          if [ ! -f $SERVICES/install-${service_name}.sh ]; then
-            echo "ERROR: $SERVICES/install-${service_name}.sh not found"
-            exit 1
-          else
-            source $SERVICES/install-${1}.sh && get_ports
-          fi
+          source $SERVICES/install-${service_name}.sh && get_ports
           ;;
         info)
           source $SERVICES/install-${service_name}.sh && get_info

@@ -1,7 +1,6 @@
 function services {
   local service_name command command_option service results installed
   local array running port_string found local_url tor_url
-  # checkargn $# 3
   service_name="$1"
   command="$2"
   command_option="$3"

@@ -21,9 +21,7 @@ function services {
     fi
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
-    if [ "$command" = "full" ]; then
-      docker ps -a
-    elif [ -z "$command" ]; then
+    if [ -z "$command" ]; then
       available=($(services available))
       for service in "${available[@]}"
       do
@@ -31,6 +29,12 @@ function services {
           echo $service
         fi
       done
+    elif [ "$command" = "full" ]; then
+      docker ps -a
+    else
+      echo "ERROR: unknown command option"
+      echo "USAGE: $BASENAME services installed <full>"
+      exit 1
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then

@@ -211,7 +211,7 @@ function services {
             echo "service autorun set to true"
           # stop service from autostarting
           elif [ "$command_option" = "false" ]; then
-            if [ -e /boot/autorun ]; then
+            if [ -f /boot/autorun ]; then
               # if autorun lines exist, set flag to false
               sed -i "/${service_name}_autorun=true/c\\${service_name}_autorun=false" /boot/autorun
             fi

@@ -157,8 +157,15 @@ function services {
           ;;
         stop)
           if docker ps -a | grep -q $service_name; then
-            docker-compose -f /srv/${service_name}/${service_name}.yml stop
-            echo "${service_name} stopped"
+            if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
+              echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
+              echo "try running '$BASENAME services ${service_name} install' first"
+              exit 1
+            else
+              if docker-compose -f /srv/${service_name}/${service_name}.yml stop; then
+                echo "${service_name} stopped"
+              fi
+            fi
           else
             echo "${service_name} not found"
           fi

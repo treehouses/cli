@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'treehouses/couchdb'
 }
 
-@test "$clinom services couchdb url both" {
-  run "${clicmd}" services couchdb url both
+@test "$clinom services couchdb url" {
+  run "${clicmd}" services couchdb url
   assert_output -p '5984'
 }
 
@@ -91,6 +91,11 @@ load test-helper
 @test "$clinom services couchdb down" {
   run "${clicmd}" services couchdb down
   assert_success && assert_output -p 'couchdb stopped and removed'
+}
+
+@test "$clinom services couchdb icon" {
+  run "${clicmd}" services couchdb icon
+  assert_success && assert_output -p 'svg'
 }
 
 @test "$clinom services couchdb cleanup" {

@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'treehouses/planet'
 }
 
-@test "$clinom services planet url both" {
-  run "${clicmd}" services planet url both
+@test "$clinom services planet url" {
+  run "${clicmd}" services planet url
   assert_output -p '80'
 }
 
@@ -91,6 +91,11 @@ load test-helper
 @test "$clinom services planet down" {
   run "${clicmd}" services planet down
   assert_success && assert_output -p 'planet stopped and removed'
+}
+
+@test "$clinom services planet icon" {
+  run "${clicmd}" services planet icon
+  assert_success && assert_output -p 'svg'
 }
 
 @test "$clinom services planet cleanup" {

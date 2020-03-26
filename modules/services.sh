@@ -133,7 +133,7 @@ function services {
           done
           ;;
         down)
-          if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+          if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
             echo "${service_name}.yml not found"
           else
             docker-compose -f /srv/${service_name}/${service_name}.yml down
@@ -142,6 +142,9 @@ function services {
           ;;
         start)
           if docker ps -a | grep -q $service_name; then
+            if [ ! -f /srv/]
+
+
             if docker-compose -f /srv/${service_name}/${service_name}.yml start; then
               echo "${service_name} started"
             else
@@ -167,7 +170,7 @@ function services {
           ;;
         autorun)
           if [ -z "$command_option" ]; then
-            if [ ! -e /boot/autorun ]; then
+            if [ ! -f /boot/autorun ]; then
               echo "false"
             else
               found=false
@@ -186,7 +189,7 @@ function services {
           # make service autostart
           elif [ "$command_option" = "true" ]; then
             # if no autorun file, create one
-            if [ ! -e /boot/autorun ]; then
+            if [ ! -f /boot/autorun ]; then
               {
                 echo "#!/bin/bash"
                 echo
@@ -204,7 +207,7 @@ function services {
             done < /boot/autorun
             # if lines aren't found, add them
             if [ "$found" = false ]; then
-              if [ ! -e /srv/${service_name}/autorun ]; then
+              if [ ! -f /srv/${service_name}/autorun ]; then
                 echo "ERROR: ${service_name} autorun file not found"
                 echo "run \"$BASENAME services ${service_name} install\" first"
                 exit 1
@@ -284,7 +287,7 @@ function services {
             echo "planet should not be cleaned up"
             exit 0
           fi
-          if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+          if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
             echo "ERROR: ${service_name}.yml not found"
             exit 1
           else
@@ -306,7 +309,7 @@ function services {
           echo "${service_name} cleaned up"
           ;;
         icon)
-          if [ ! -e $SERVICES/install-${service_name}.sh ]; then
+          if [ ! -f $SERVICES/install-${service_name}.sh ]; then
             echo "${service_name} install script not found"
           else
             source $SERVICES/install-${service_name}.sh && get_icon

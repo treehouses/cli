@@ -5,7 +5,7 @@ _treehouses_complete()
   local cur prev
 
   # Valid top-level completions
-  commands="ap aphidden apchannel blocker bluetooth bluetoothid bootoption bridge burn button camera clone \
+  commands="ap aphidden apchannel blocker bluetooth bootoption bridge burn button camera clone \
             container coralenv cron default detect detectbluetooth detectrpi discover ethernet expandfs \
             feedback help image internet led locale log memory networkmode ntp openvpn password \
             rebootneeded reboots rename remote restore rtc sdbench services speedtest ssh sshkey sshtunnel \
@@ -232,8 +232,6 @@ treehouses bluetooth mac
 treehouses bluetooth off
 treehouses bluetooth on
 treehouses bluetooth pause
-treehouses bluetoothid
-treehouses bluetoothid number
 treehouses bootoption console
 treehouses bootoption console autologin
 treehouses bootoption desktop

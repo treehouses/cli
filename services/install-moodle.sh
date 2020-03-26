@@ -16,7 +16,7 @@ function install {
     echo "    - POSTGRES_USER=moodle"
     echo "    - POSTGRES_PASSWORD=moodle"
     echo "  moodle:"
-    echo "    image: treehouses/moodle:rpi-latest"
+    echo "    image: treehouses/moodle:rpi-alpine-latest"
     echo "    ports:"
     echo "      - \"8082:8082\""
     echo "    environment:"

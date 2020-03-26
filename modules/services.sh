@@ -38,9 +38,7 @@ function services {
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
-    if [ "$command" = "full" ]; then
-      docker ps
-    elif [ -z "$command" ]; then
+    if [ -z "$command" ]; then
       running=$(docker ps --format '{{.Names}}')
       array=($running)
       results=""
@@ -56,6 +54,12 @@ function services {
         results+=" "
       done
       echo ${results} | tr ' ' '\n' | uniq | xargs
+    elif [ "$command" = "full" ]; then
+      docker ps
+    else
+      echo "ERROR: unknown command option"
+      echo "USAGE: $BASENAME services running <full>"
+      exit 1
     fi
   # list all ports used by services
   elif [ "$service_name" = "ports" ]; then

@@ -1,7 +1,7 @@
 function container {
   checkroot
   checkargn $# 1
-  check_missing_packages('docker-ce')
+  check_missing_packages "docker-ce"
   if ! which balena &>/dev/null
   then
     echo "balena is not installed" 

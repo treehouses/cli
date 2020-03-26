@@ -20,6 +20,7 @@ function install {
     echo "    ports:"
     echo "      - \"8082:80\""
     echo "    environment:"
+    echo "    - NGINX_PORT=80"
     echo "    - MOODOLE_DB_URL=postgres"
     echo "    - MOODOLE_DB_NAME=moodle"
     echo "    - MOODOLE_DB_USER=moodle"

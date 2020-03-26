@@ -435,7 +435,6 @@ treehouses rtc on ds3231
 treehouses rtc on rasclock
 treehouses sdbench
 treehouses services available
-treehouses services available full
 treehouses services couchdb autorun
 treehouses services couchdb autorun false
 treehouses services couchdb autorun true

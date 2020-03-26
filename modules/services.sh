@@ -1,13 +1,13 @@
 function services {
   local service_name command command_option service results installed
   local array running port_string found local_url tor_url
-  checkargn $# 3
   service_name="$1"
   command="$2"
   command_option="$3"
 
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
+    checkargn $# 1
     if [ -d "$SERVICES" ]; then
       for file in $SERVICES/*
       do
@@ -21,6 +21,7 @@ function services {
     fi
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
+    checkargn $# 2
     if [ -z "$command" ]; then
       available=($(services available))
       for service in "${available[@]}"
@@ -38,6 +39,7 @@ function services {
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
+    checkargn $# 2
     if [ -z "$command" ]; then
       running=$(docker ps --format '{{.Names}}')
       array=($running)
@@ -63,6 +65,7 @@ function services {
     fi
   # list all ports used by services
   elif [ "$service_name" = "ports" ]; then
+    checkargn $# 1
     array=($(services available))
     for i in "${array[@]}"
     do
@@ -87,6 +90,7 @@ function services {
     else
       case "$command" in
         install)
+          checkargn $# 2
           check_space "$service_name"
           if [ "$service_name" = "planet" ]; then
             if source $SERVICES/install-planet.sh && install ; then
@@ -115,6 +119,7 @@ function services {
           fi
           ;;
         up)
+          checkargn $# 2
           if [ "$service_name" = "planet" ]; then
             if [ -f /srv/planet/pwd/credentials.yml ]; then
               if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
@@ -141,6 +146,7 @@ function services {
           done
           ;;
         down)
+          checkargn $# 2
           if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
             echo "${service_name}.yml not found"
           else
@@ -149,6 +155,7 @@ function services {
           fi
           ;;
         start)
+          checkargn $# 2
           if docker ps -a | grep -q $service_name; then
             docker-compose -f /srv/${service_name}/${service_name}.yml start
             echo "${service_name} started"
@@ -157,6 +164,7 @@ function services {
           fi
           ;;
         stop)
+          checkargn $# 2
           if docker ps -a | grep -q $service_name; then
             docker-compose -f /srv/${service_name}/${service_name}.yml stop
             echo "${service_name} stopped"
@@ -165,10 +173,12 @@ function services {
           fi
           ;;
         restart)
+          checkargn $# 2
           services $service_name stop
           services $service_name up
           ;;
         autorun)
+          checkargn $# 3
           if [ -z "$command_option" ]; then
             if [ ! -e /boot/autorun ]; then
               echo "false"
@@ -231,9 +241,11 @@ function services {
           fi
           ;;
         ps)
+          checkargn $# 2
           docker ps -a | grep $service_name
           ;;
         url)
+          checkargn $# 3
           if [ "$command_option" = "local" ]; then
             for i in $(seq 1 "$(services $service_name port | wc -l)")
             do
@@ -272,15 +284,19 @@ function services {
           fi
           ;;
         port)
+          checkargn $# 2
           source $SERVICES/install-${1}.sh && get_ports
           ;;
         info)
+          checkargn $# 2
           source $SERVICES/install-${service_name}.sh && get_info
           ;;
         size)
+          checkargn $# 2
           echo "$(source $SERVICES/install-${service_name}.sh && get_size)M"
           ;;
         cleanup)
+          checkargn $# 2
           services $service_name autorun false
           # skip planet
           if [ "$service_name" = "planet" ]; then
@@ -309,6 +325,7 @@ function services {
           echo "${service_name} cleaned up"
           ;;
         icon)
+          checkargn $# 2
           if [ ! -e $SERVICES/install-${service_name}.sh ]; then
             echo "${service_name} install script not found"
           else

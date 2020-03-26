@@ -295,6 +295,7 @@ function services {
           fi
           if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
             echo "ERROR: ${service_name}.yml not found"
+            echo "try running '$BASENAME services ${service_name} install' first"
             exit 1
           else
             docker-compose -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans

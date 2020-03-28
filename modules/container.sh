@@ -4,8 +4,10 @@ function container {
   check_missing_packages "docker-ce"
   if ! which balena &>/dev/null
   then
-    echo "balena is not installed" 
-    exit 1
+   echo "Missing required programs: balena"
+   echo "On Debian/Ubuntu try https://www.balena.io/engine/"
+   echo " ln-sr /usr/bin/balena /usr/bin/balena"
+  exit 1
   fi
   case "$1" in
     docker)

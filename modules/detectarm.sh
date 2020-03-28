@@ -4,7 +4,7 @@ function detectarm {
     echo "rpi required"
     exit 1
   else
-    cat /proc/cpuinfo | grep "model name" | grep -oP '(?<=\().*(?=\))' -m1
+    < /proc/cpuinfo grep "model name" | grep -oP '(?<=\().*(?=\))' -m1
   fi
 }
 

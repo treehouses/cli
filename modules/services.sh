@@ -22,9 +22,7 @@ function services {
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
     checkargn $# 2
-    if [ "$command" = "full" ]; then
-      docker ps -a
-    elif [ -z "$command" ]; then
+    if [ -z "$command" ]; then
       available=($(services available))
       for service in "${available[@]}"
       do
@@ -32,13 +30,17 @@ function services {
           echo $service
         fi
       done
+    elif [ "$command" = "full" ]; then
+      docker ps -a
+    else
+      echo "ERROR: unknown command option"
+      echo "USAGE: $BASENAME services installed <full>"
+      exit 1
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
     checkargn $# 2
-    if [ "$command" = "full" ]; then
-      docker ps
-    elif [ -z "$command" ]; then
+    if [ -z "$command" ]; then
       running=$(docker ps --format '{{.Names}}')
       array=($running)
       results=""
@@ -54,6 +56,12 @@ function services {
         results+=" "
       done
       echo ${results} | tr ' ' '\n' | uniq | xargs
+    elif [ "$command" = "full" ]; then
+      docker ps
+    else
+      echo "ERROR: unknown command option"
+      echo "USAGE: $BASENAME services running <full>"
+      exit 1
     fi
   # list all ports used by services
   elif [ "$service_name" = "ports" ]; then
@@ -159,7 +167,9 @@ function services {
               fi
             fi
           else
-            echo "${service_name} not found"
+            echo "ERROR: ${service_name} container not found"
+            echo "try running '$BASENAME services $service_name up' first to create the container"
+            exit 1
           fi
           ;;
         stop)
@@ -175,7 +185,9 @@ function services {
               fi
             fi
           else
-            echo "${service_name} not found"
+            echo "ERROR: ${service_name} container not found"
+            echo "try running '$BASENAME services $service_name up' first to create the container"
+            exit 1
           fi
           ;;
         restart)
@@ -225,7 +237,7 @@ function services {
             if [ "$found" = false ]; then
               if [ ! -f /srv/${service_name}/autorun ]; then
                 echo "ERROR: ${service_name} autorun file not found"
-                echo "run \"$BASENAME services ${service_name} install\" first"
+                echo "run \"$BASENAME services $service_name install\" first"
                 exit 1
               fi
               cat /srv/${service_name}/autorun >> /boot/autorun
@@ -337,6 +349,20 @@ function services {
           ;;
         *)
           echo "ERROR: unknown command"
+          echo "USAGE: $BASENAME services $service_name install"
+          echo "                                ..... up"
+          echo "                                ..... down"
+          echo "                                ..... start"
+          echo "                                ..... stop"
+          echo "                                ..... restart"
+          echo "                                ..... autorun [true|false]"
+          echo "                                ..... ps"
+          echo "                                ..... url [local|tor]"
+          echo "                                ..... port"
+          echo "                                ..... info"
+          echo "                                ..... size"
+          echo "                                ..... cleanup"
+          echo "                                ..... icon"
           exit 1
           ;;
       esac

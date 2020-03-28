@@ -160,7 +160,9 @@ function services {
             docker-compose -f /srv/${service_name}/${service_name}.yml start
             echo "${service_name} started"
           else
-            echo "${service_name} not found"
+            echo "ERROR: ${service_name} container not found"
+            echo "try running '$BASENAME services $service_name up' first to create the container"
+            exit 1
           fi
           ;;
         stop)
@@ -169,7 +171,9 @@ function services {
             docker-compose -f /srv/${service_name}/${service_name}.yml stop
             echo "${service_name} stopped"
           else
-            echo "${service_name} not found"
+            echo "ERROR: ${service_name} container not found"
+            echo "try running '$BASENAME services $service_name up' first to create the container"
+            exit 1
           fi
           ;;
         restart)
@@ -219,7 +223,7 @@ function services {
             if [ "$found" = false ]; then
               if [ ! -e /srv/${service_name}/autorun ]; then
                 echo "ERROR: ${service_name} autorun file not found"
-                echo "run \"$BASENAME services ${service_name} install\" first"
+                echo "run \"$BASENAME services $service_name install\" first"
                 exit 1
               fi
               cat /srv/${service_name}/autorun >> /boot/autorun
@@ -334,6 +338,20 @@ function services {
           ;;
         *)
           echo "ERROR: unknown command"
+          echo "USAGE: $BASENAME services $service_name install"
+          echo "                                ..... up"
+          echo "                                ..... down"
+          echo "                                ..... start"
+          echo "                                ..... stop"
+          echo "                                ..... restart"
+          echo "                                ..... autorun [true|false]"
+          echo "                                ..... ps"
+          echo "                                ..... url [local|tor]"
+          echo "                                ..... port"
+          echo "                                ..... info"
+          echo "                                ..... size"
+          echo "                                ..... cleanup"
+          echo "                                ..... icon"
           exit 1
           ;;
       esac

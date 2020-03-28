@@ -6,7 +6,7 @@ _treehouses_complete()
 
   # Valid top-level completions
   commands="ap aphidden apchannel blocker bluetooth bootoption bridge burn button camera clone \
-            container coralenv cron default detect detectbluetooth detectrpi discover ethernet expandfs \
+            container coralenv cron default detect detectbluetooth detectrpi detectarm discover ethernet expandfs \
             feedback help image internet led locale log memory networkmode ntp openvpn password \
             rebootneeded reboots rename remote restore rtc sdbench services speedtest ssh sshkey sshtunnel \
             staticwifi temperature timezone tor upgrade usb verbose version vnc wifi wificountry wifihidden wifistatus"
@@ -266,6 +266,7 @@ treehouses default network
 treehouses default notice
 treehouses default tunnel
 treehouses detect
+treehouses detectarm
 treehouses detectbluetooth
 treehouses detectrpi
 treehouses detectrpi model

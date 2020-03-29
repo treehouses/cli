@@ -1,17 +1,19 @@
 function services {
   local service_name command command_option service results installed
   local array running port_string found local_url tor_url
-  checkargn $# 3
   service_name="$1"
   command="$2"
   command_option="$3"
 
   # list all services available to be installed
   if [ "$service_name" = "available" ]; then
+    checkargn $# 1
     if [ -d "$SERVICES" ]; then
       for file in $SERVICES/*
       do
-        echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//'
+        if [[ ! $file = *"README.md"* ]]; then
+          echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//'
+        fi
       done
     else
       echo "ERROR: $SERVICES directory does not exist"
@@ -19,9 +21,8 @@ function services {
     fi
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
-    if [ "$command" = "full" ]; then
-      docker ps -a
-    elif [ -z "$command" ]; then
+    checkargn $# 2
+    if [ -z "$command" ]; then
       available=($(services available))
       for service in "${available[@]}"
       do
@@ -29,12 +30,17 @@ function services {
           echo $service
         fi
       done
+    elif [ "$command" = "full" ]; then
+      docker ps -a
+    else
+      echo "ERROR: unknown command option"
+      echo "USAGE: $BASENAME services installed <full>"
+      exit 1
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
-    if [ "$command" = "full" ]; then
-      docker ps
-    elif [ -z "$command" ]; then
+    checkargn $# 2
+    if [ -z "$command" ]; then
       running=$(docker ps --format '{{.Names}}')
       array=($running)
       results=""
@@ -50,9 +56,16 @@ function services {
         results+=" "
       done
       echo ${results} | tr ' ' '\n' | uniq | xargs
+    elif [ "$command" = "full" ]; then
+      docker ps
+    else
+      echo "ERROR: unknown command option"
+      echo "USAGE: $BASENAME services running <full>"
+      exit 1
     fi
   # list all ports used by services
   elif [ "$service_name" = "ports" ]; then
+    checkargn $# 1
     array=($(services available))
     for i in "${array[@]}"
     do
@@ -77,6 +90,7 @@ function services {
     else
       case "$command" in
         install)
+          checkargn $# 2
           check_space "$service_name"
           if [ "$service_name" = "planet" ]; then
             if source $SERVICES/install-planet.sh && install ; then
@@ -105,6 +119,7 @@ function services {
           fi
           ;;
         up)
+          checkargn $# 2
           if [ "$service_name" = "planet" ]; then
             if [ -f /srv/planet/pwd/credentials.yml ]; then
               if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
@@ -125,13 +140,14 @@ function services {
             check_space $service_name
             docker_compose_up $service_name
           fi
-          for i in $(seq 1 "$(get_port $service_name | wc -l)")
+          for i in $(seq 1 "$(services $service_name port | wc -l)")
           do
-            check_tor "$(get_port $service_name | sed -n "$i p")"
+            check_tor "$(services $service_name port | sed -n "$i p")"
           done
           ;;
         down)
-          if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+          checkargn $# 2
+          if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
             echo "${service_name}.yml not found"
           else
             docker-compose -f /srv/${service_name}/${service_name}.yml down
@@ -139,28 +155,50 @@ function services {
           fi
           ;;
         start)
+          checkargn $# 2
           if docker ps -a | grep -q $service_name; then
-            docker-compose -f /srv/${service_name}/${service_name}.yml start
-            echo "${service_name} started"
+            if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
+              echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
+              echo "try running '$BASENAME services ${service_name} install' first"
+              exit 1
+            else
+              if docker-compose -f /srv/${service_name}/${service_name}.yml start; then
+                echo "${service_name} started"
+              fi
+            fi
           else
-            echo "${service_name} not found"
+            echo "ERROR: ${service_name} container not found"
+            echo "try running '$BASENAME services $service_name up' first to create the container"
+            exit 1
           fi
           ;;
         stop)
+          checkargn $# 2
           if docker ps -a | grep -q $service_name; then
-            docker-compose -f /srv/${service_name}/${service_name}.yml stop
-            echo "${service_name} stopped"
+            if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
+              echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
+              echo "try running '$BASENAME services ${service_name} install' first"
+              exit 1
+            else
+              if docker-compose -f /srv/${service_name}/${service_name}.yml stop; then
+                echo "${service_name} stopped"
+              fi
+            fi
           else
-            echo "${service_name} not found"
+            echo "ERROR: ${service_name} container not found"
+            echo "try running '$BASENAME services $service_name up' first to create the container"
+            exit 1
           fi
           ;;
         restart)
+          checkargn $# 2
           services $service_name stop
           services $service_name up
           ;;
         autorun)
+          checkargn $# 3
           if [ -z "$command_option" ]; then
-            if [ ! -e /boot/autorun ]; then
+            if [ ! -f /boot/autorun ]; then
               echo "false"
             else
               found=false
@@ -179,7 +217,7 @@ function services {
           # make service autostart
           elif [ "$command_option" = "true" ]; then
             # if no autorun file, create one
-            if [ ! -e /boot/autorun ]; then
+            if [ ! -f /boot/autorun ]; then
               {
                 echo "#!/bin/bash"
                 echo
@@ -197,9 +235,9 @@ function services {
             done < /boot/autorun
             # if lines aren't found, add them
             if [ "$found" = false ]; then
-              if [ ! -e /srv/${service_name}/autorun ]; then
+              if [ ! -f /srv/${service_name}/autorun ]; then
                 echo "ERROR: ${service_name} autorun file not found"
-                echo "run \"$BASENAME services ${service_name} install\" first"
+                echo "run \"$BASENAME services $service_name install\" first"
                 exit 1
               fi
               cat /srv/${service_name}/autorun >> /boot/autorun
@@ -209,7 +247,7 @@ function services {
             echo "service autorun set to true"
           # stop service from autostarting
           elif [ "$command_option" = "false" ]; then
-            if [ -e /boot/autorun ]; then
+            if [ -f /boot/autorun ]; then
               # if autorun lines exist, set flag to false
               sed -i "/${service_name}_autorun=true/c\\${service_name}_autorun=false" /boot/autorun
             fi
@@ -221,9 +259,11 @@ function services {
           fi
           ;;
         ps)
+          checkargn $# 2
           docker ps -a | grep $service_name
           ;;
         url)
+          checkargn $# 3
           if [ "$command_option" = "local" ]; then
             for i in $(seq 1 "$(services $service_name port | wc -l)")
             do
@@ -262,30 +302,36 @@ function services {
           fi
           ;;
         port)
-          source $SERVICES/install-${1}.sh && get_ports
+          checkargn $# 2
+          source $SERVICES/install-${service_name}.sh && get_ports
           ;;
         info)
+          checkargn $# 2
           source $SERVICES/install-${service_name}.sh && get_info
           ;;
         size)
+          checkargn $# 2
           echo "$(source $SERVICES/install-${service_name}.sh && get_size)M"
           ;;
         cleanup)
+          checkargn $# 2
+          services $service_name autorun false
           # skip planet
           if [ "$service_name" = "planet" ]; then
             echo "planet should not be cleaned up"
             exit 0
           fi
-          if [ ! -e /srv/${service_name}/${service_name}.yml ]; then
+          if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
             echo "ERROR: ${service_name}.yml not found"
+            echo "try running '$BASENAME services ${service_name} install' first"
             exit 1
           else
             docker-compose -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
             echo "${service_name} stopped and removed"
           fi
-          for i in $(seq 1 "$(get_port $service_name | wc -l)")
+          for i in $(seq 1 "$(services $service_name port | wc -l)")
           do
-            port=$(get_port $service_name | sed -n "$i p")
+            port=$(services $service_name port | sed -n "$i p")
             if [ "$(tor status)" = "active" ] && (tor list | grep -w $port); then
               if [[ $(pstree -ps $$) == *"ssh"* ]]; then
                 screen -dm bash -c "treehouses tor delete $port"
@@ -298,14 +344,25 @@ function services {
           echo "${service_name} cleaned up"
           ;;
         icon)
-          if [ ! -e $SERVICES/install-${service_name}.sh ]; then
-            echo "${service_name} install script not found"
-          else
-            source $SERVICES/install-${service_name}.sh && get_icon
-          fi
+          checkargn $# 2
+          source $SERVICES/install-${service_name}.sh && get_icon
           ;;
         *)
           echo "ERROR: unknown command"
+          echo "USAGE: $BASENAME services $service_name install"
+          echo "                                ..... up"
+          echo "                                ..... down"
+          echo "                                ..... start"
+          echo "                                ..... stop"
+          echo "                                ..... restart"
+          echo "                                ..... autorun [true|false]"
+          echo "                                ..... ps"
+          echo "                                ..... url [local|tor]"
+          echo "                                ..... port"
+          echo "                                ..... info"
+          echo "                                ..... size"
+          echo "                                ..... cleanup"
+          echo "                                ..... icon"
           exit 1
           ;;
       esac
@@ -388,13 +445,12 @@ function services_help {
   echo "Top-Level Commands:"
   echo
   echo "  Usage:"
-  echo "    $BASENAME services available [full]"
+  echo "    $BASENAME services available"
   echo "              ..... installed [full]"
   echo "              ..... running [full]"
   echo "              ..... ports"
   echo
   echo "    available               lists all available services"
-  echo "        [full]                  full details"
   echo
   echo "    installed               lists all installed services"
   echo "        [full]                  full details"

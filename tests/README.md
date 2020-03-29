@@ -14,7 +14,7 @@ Example:
 sudo su
 apt install bats
 cd tests
-bats ./blocker.bats # test a single file
+bats ./services/moodle.bats # test a single file
 nssidname='Wifiname' nwifipass='wifipass' ./wifi.bats
 ```
 

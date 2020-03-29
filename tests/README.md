@@ -10,12 +10,22 @@ SSH session.
 
 Example:
 
+```bash
+sudo su
+apt install bats
+cd tests
+bats ./blocker.bats # test a single file
+nssidname='Wifiname' nwifipass='wifipass' ./wifi.bats
 ```
-sudo apt install bats
-sudo bats ./tests/blocker.bats # test a single file
-nssidname='Wifiname' nwifipass='wifipass' sudo ./tests/wifi.bats
-sudo ./tests/test-cli.sh # test everything (variables inside test-cli.sh as well)
 
+Also:
+```bash
+./test-cli.sh all # test everything (variables inside test-cli.sh as well)
+./test-cli.sh services
+./test-cli.sh wifi
+./test-cli.sh ap
+./test-cli.sh nonet # all modules that don't require an internet connection
+./test-cli.sh nonetblue # no internet and no bluetooth
 ```
 
 Note: Some tests are not included because they have restarts

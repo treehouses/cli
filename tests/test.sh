@@ -20,7 +20,7 @@ case "$1" in
     time bats ./*.bats ./*/*.bats
   ;;
   services)
-    time bats ./services* ./services/*
+    time bats ./services*
   ;;
   wifi)
     time bats ./wifi*
@@ -39,7 +39,7 @@ case "$1" in
          ./p* ./r* ./temperature* ./timezone* ./usb.bats ./verbose* ./version*
   ;;
   *)
-    echo "Only 'all', 'services', 'wifi', 'ap', 'noninternet' options are supported"
+    echo "Only 'all', 'services', 'wifi', 'ap', 'nonet', 'nonetblue' options are supported"
     exit 1
   ;;
 esac

@@ -18,16 +18,16 @@ bats ./services/moodle.bats # test a single file
 nssidname='Wifiname' nwifipass='wifipass' ./wifi.bats
 ```
 
-`test-cli.sh` gives extra information ontop of running the tests using bats including
+`test.sh` gives extra information ontop of running the tests using bats including
 Image release, CLI version, and git branch name
 ```bash
-./test-cli.sh detect.bats detectrpi.bats # pick what you want
-./test-cli.sh all # test everything (variables inside test-cli.sh as well)
-./test-cli.sh services
-./test-cli.sh wifi
-./test-cli.sh ap
-./test-cli.sh nonet # all modules that don't require an internet connection
-./test-cli.sh nonetblue # no internet and no bluetooth
+./test.sh detect.bats detectrpi.bats # pick what you want
+./test.sh all # test everything (variables inside test.sh as well)
+./test.sh services
+./test.sh wifi
+./test.sh ap
+./test.sh nonet # all modules that don't require an internet connection
+./test.sh nonetblue # no internet and no bluetooth
 ```
 
 Note: Some tests are not included because they have restarts

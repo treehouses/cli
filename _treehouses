@@ -539,12 +539,13 @@ treehouses wifihidden
 treehouses wifistatus
 EOF
   idx=$COMP_CWORD
-  ((idx=idx+1))
-  subcmds=$(echo "$every_command" \
-    | grep "$COMP_LINE" \
-    | awk -v idx="$idx" '{print $idx}' \
-    | uniq \
-    | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g')
+  ((idx=idx+1)) # We want the next word           # COMP_LINE is the line you typed in terminal
+  subcmds=$(echo "$every_command" \               # COMP_WORDS is array form of COMP_LINE
+    | grep "$COMP_LINE" \                         # COMP_CWORD is the word your currently on that you typed
+    | awk -v idx="$idx" '{print $idx}' \          # grab next word after what you typed available in every_command
+    | uniq \                                      # remove duplicate lines because next word is in many commands
+    | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g') # change newlines to spaces
+  # COMPREPLY is what bash reads when you do tabtab So our completion goes in there
   COMPREPLY=( $(compgen -W "${subcmds}" -- ${COMP_WORDS[COMP_CWORD]}) )
 }
 

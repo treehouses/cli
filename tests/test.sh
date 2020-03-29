@@ -17,7 +17,7 @@ case "$1" in
     time bats "$@"
   ;;
   all)
-    time bats ./*.bats ./*/*.bats
+    time bats ./*.bats ./services/*.bats
   ;;
   services)
     time bats ./services*

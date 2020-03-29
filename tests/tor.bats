@@ -27,6 +27,7 @@ load test-helper
 }
 
 @test "$clinom tor stop" {
+  sleep 5
   run "${clicmd}" tor stop
   assert_success && assert_output -p 'Success'
 }

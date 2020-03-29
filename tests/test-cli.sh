@@ -7,7 +7,15 @@
 export nssidname='YOUR-WIFI-NAME'
 export nwifipass='YOUR-WIFI-PASS'
 
+echo
+echo "Branch  - $(git rev-parse --abbrev-ref HEAD)"
+echo "Image   - $(../cli.sh image)"
+echo "Version - $(../cli.sh version)"
+echo
 case "$1" in
+  *.bats)
+    time bats "$@"
+  ;;
   all)
     time bats ./*.bats ./*/*.bats
   ;;

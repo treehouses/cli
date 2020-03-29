@@ -18,8 +18,10 @@ bats ./services/moodle.bats # test a single file
 nssidname='Wifiname' nwifipass='wifipass' ./wifi.bats
 ```
 
-Also:
+`test-cli.sh` gives extra information ontop of running the tests using bats including
+Image release, CLI version, and git branch name
 ```bash
+./test-cli.sh detect.bats detectrpi.bats # pick what you want
 ./test-cli.sh all # test everything (variables inside test-cli.sh as well)
 ./test-cli.sh services
 ./test-cli.sh wifi

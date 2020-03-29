@@ -16,7 +16,7 @@ function install {
     echo "      - \"8086:8086\""
     echo "    environment:        "
     echo "      - SEAFILE_NAME=Seafile"
-    echo "      - SEAFILE_ADDRESS=$(treehouses tor) "
+    echo "      - SEAFILE_ADDRESS=$(treehouses tor | grep .onion) "
     echo "      - SEAFILE_ADMIN=example@seafile.com "
     echo "      - SEAFILE_ADMIN_PW=seacret "
     echo "    volumes:          "

@@ -11,16 +11,6 @@ load test-helper
   assert_success && assert_output -p 'Success'
 }
 
-@test "$clinom tor deleteall" {
-  run "${clicmd}" tor deleteall
-  assert_success && assert_output -p 'All ports'
-}
-
-@test "$clinom tor destroy" {
-  run "${clicmd}" tor destroy
-  assert_success && assert_output -p 'Success'
-}
-
 @test "$clinom tor list" {
   run "${clicmd}" tor list
   assert_success && assert_output -p 'local'

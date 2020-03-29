@@ -23,6 +23,7 @@ Image release, CLI version, and git branch name
 ```bash
 ./test.sh detect.bats detectrpi.bats # pick what you want
 ./test.sh all # test everything (variables inside test.sh as well)
+yes | ./test.sh all # skip pressing any key to move forward for network tests
 ./test.sh services
 ./test.sh wifi
 ./test.sh ap
@@ -32,3 +33,24 @@ Image release, CLI version, and git branch name
 
 Note: Some tests are not included because they have restarts
 (test manually w/out bats commands)
+
+Example output:
+```bash
+root@treehouses:~/cli/tests# ./test.sh detect.bats detectrpi.bats
+
+Branch  - tests-time
+Image   - release-125
+Version - 1.16.25
+
+ ✓  detect
+ ✓  detectrpi
+ ✓  detectrpi model
+
+3 tests, 0 failures
+
+real    0m2.460s
+user    0m1.617s
+sys     0m1.048s
+
+root@treehouses:~/cli/tests#
+```

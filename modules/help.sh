@@ -51,7 +51,7 @@ Usage: treehouses
    reboots <now|in|cron>                     reboots at given frequency | removes it if reboot task active
            <daily|weekly|monthly>
    internet                                  checks if the rpi has access to internet
-   services [service_name] [command]         executes the given command on the specified service
+   services [service_name] <command>         executes the given command on the specified service
             <available> <installed [full]>
             <running [full]> <ports>
               [planet]     <install>         Planet Learning is a generic learning system built in Angular & CouchDB

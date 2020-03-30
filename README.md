@@ -118,8 +118,9 @@ Feel free to make a pull request to our repository
 Remember the following files
 will have to be updated to add a feature:
 ```
-/modules/help.sh
-README.md
-/modules/<featurefile>
-_treehouses
+/modules/help.sh       # help text
+README.md              # readme
+_treehouses            # tabcompletion
+/modules/<featurefile> # bash
+/tests/<featurefile>   # bash bats tests
 ```

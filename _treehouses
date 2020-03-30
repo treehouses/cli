@@ -240,7 +240,6 @@ treehouses services couchdb start
 treehouses services couchdb stop
 treehouses services couchdb up
 treehouses services couchdb url
-treehouses services couchdb url both
 treehouses services couchdb url local
 treehouses services couchdb url tor
 treehouses services installed
@@ -261,7 +260,6 @@ treehouses services kolibri start
 treehouses services kolibri stop
 treehouses services kolibri up
 treehouses services kolibri url
-treehouses services kolibri url both
 treehouses services kolibri url local
 treehouses services kolibri url tor
 treehouses services mariadb autorun
@@ -280,7 +278,6 @@ treehouses services mariadb start
 treehouses services mariadb stop
 treehouses services mariadb up
 treehouses services mariadb url
-treehouses services mariadb url both
 treehouses services mariadb url local
 treehouses services mariadb url tor
 treehouses services mastodon autorun
@@ -299,7 +296,6 @@ treehouses services mastodon start
 treehouses services mastodon stop
 treehouses services mastodon up
 treehouses services mastodon url
-treehouses services mastodon url both
 treehouses services mastodon url local
 treehouses services mastodon url tor
 treehouses services moodle autorun
@@ -318,7 +314,6 @@ treehouses services moodle start
 treehouses services moodle stop
 treehouses services moodle up
 treehouses services moodle url
-treehouses services moodle url both
 treehouses services moodle url local
 treehouses services moodle url tor
 treehouses services netdata autorun
@@ -337,7 +332,6 @@ treehouses services netdata start
 treehouses services netdata stop
 treehouses services netdata up
 treehouses services netdata url
-treehouses services netdata url both
 treehouses services netdata url local
 treehouses services netdata url tor
 treehouses services nextcloud autorun
@@ -356,7 +350,6 @@ treehouses services nextcloud start
 treehouses services nextcloud stop
 treehouses services nextcloud up
 treehouses services nextcloud url
-treehouses services nextcloud url both
 treehouses services nextcloud url local
 treehouses services nextcloud url tor
 treehouses services ntopng autorun
@@ -375,7 +368,6 @@ treehouses services ntopng start
 treehouses services ntopng stop
 treehouses services ntopng up
 treehouses services ntopng url
-treehouses services ntopng url both
 treehouses services ntopng url local
 treehouses services ntopng url tor
 treehouses services pihole autorun
@@ -394,7 +386,6 @@ treehouses services pihole start
 treehouses services pihole stop
 treehouses services pihole up
 treehouses services pihole url
-treehouses services pihole url both
 treehouses services pihole url local
 treehouses services pihole url tor
 treehouses services planet autorun
@@ -413,7 +404,6 @@ treehouses services planet start
 treehouses services planet stop
 treehouses services planet up
 treehouses services planet url
-treehouses services planet url both
 treehouses services planet url local
 treehouses services planet url tor
 treehouses services portainer autorun
@@ -432,7 +422,6 @@ treehouses services portainer start
 treehouses services portainer stop
 treehouses services portainer up
 treehouses services portainer url
-treehouses services portainer url both
 treehouses services portainer url local
 treehouses services portainer url tor
 treehouses services ports
@@ -452,7 +441,6 @@ treehouses services privatebin start
 treehouses services privatebin stop
 treehouses services privatebin up
 treehouses services privatebin url
-treehouses services privatebin url both
 treehouses services privatebin url local
 treehouses services privatebin url tor
 treehouses services seafile autorun
@@ -471,7 +459,6 @@ treehouses services seafile start
 treehouses services seafile stop
 treehouses services seafile up
 treehouses services seafile url
-treehouses services seafile url both
 treehouses services seafile url local
 treehouses services seafile url tor
 treehouses services running

@@ -58,6 +58,7 @@ treehouses default network
 treehouses default notice
 treehouses default tunnel
 treehouses detect
+treehouses detectarm
 treehouses detectbluetooth
 treehouses detectrpi
 treehouses detectrpi model

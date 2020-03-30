@@ -113,3 +113,13 @@ log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
 ```
+## Add a feature
+Feel free to make a pull request to our repository
+Remember the following files
+will have to be updated to add a feature:
+```
+/modules/help.sh
+README.md
+/modules/<featurefile>
+_treehouses
+```

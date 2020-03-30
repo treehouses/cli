@@ -68,8 +68,8 @@ load test-helper
   assert_success && assert_output -p 'jsurf/rpi-mariadb'
 }
 
-@test "$clinom services mariadb url both" {
-  run "${clicmd}" services mariadb url both
+@test "$clinom services mariadb url" {
+  run "${clicmd}" services mariadb url
   assert_output -p '3306'
 }
 
@@ -91,6 +91,11 @@ load test-helper
 @test "$clinom services mariadb down" {
   run "${clicmd}" services mariadb down
   assert_success && assert_output -p 'mariadb stopped and removed'
+}
+
+@test "$clinom services mariadb icon" {
+  run "${clicmd}" services mariadb icon
+  assert_success && assert_output -p 'svg'
 }
 
 @test "$clinom services mariadb cleanup" {

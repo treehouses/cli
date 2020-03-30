@@ -26,11 +26,6 @@ load test-helper
   assert_success
 }
 
-@test "$clinom help bluetoothid" {
-  run "${clicmd}" help bluetoothid
-  assert_success
-}
-
 @test "$clinom help bluetooth" {
   run "${clicmd}" help bluetooth
   assert_success

@@ -31,12 +31,13 @@ function tpuremove {
 function coraltpu {
   checkrpi
   checkroot
-  checkargn $# 2
   case "$1" in
     install)
+      checkargn $# 2
       tpuinstall "$2"
     ;;
     remove)
+      checkargn $# 1
       tpuremove
     ;;
     *)

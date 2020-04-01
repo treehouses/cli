@@ -114,7 +114,8 @@ blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hos
 sdbench                                   displays read and write speed of micro SD card
 ```
 ## Add a feature
-Feel free to make a pull request to our repository
+Feel free to make a pull request to our repository.
+
 Remember the following files
 will have to be updated to add a feature:
 ```

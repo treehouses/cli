@@ -115,7 +115,6 @@ sdbench                                   displays read and write speed of micro
 ```
 ## Add a feature
 Feel free to make a pull request to our repository.
-
 Remember the following files
 will have to be updated to add a feature:
 ```

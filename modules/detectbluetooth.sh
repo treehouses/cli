@@ -1,6 +1,6 @@
 function detectbluetooth {
   checkargn $# 0
-  if hcitool dev | grep -E -o -q ':[^ ]+'; then
+  if hcitool dev | grep -q 'hci0'; then
     echo "true"
   else
     echo "false"

@@ -1,6 +1,6 @@
 function detectbluetooth {
   checkargn $# 0
-  if hciconfig hci0 | grep -q 'No such device'; then
+  if hciconfig hci0 2>&1 | grep -q 'No such device'; then
     echo "false"
   else
     echo "true"

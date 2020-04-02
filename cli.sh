@@ -4,7 +4,7 @@ SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 SCRIPTARGS="$*"
 
-for f in $SCRIPTFOLDER/modules/*
+for f in $SCRIPTFOLDER/modules/*.sh
 do
   source "$f"
   cmd=$(basename "$f")

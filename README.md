@@ -102,7 +102,7 @@ openvpn [use|show|delete]                 helps setting up an openvpn client
 coralenv [install|demo-on|demo-off]       plays with the coral environmental board
          [demo-always-on]
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory
-temperature [celsius|fahrenheit]          displays raspberry pi's CPU temperature
+temperature [celsius|fahrenheit|kelvin]   displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
 camera [on|off|capture]                   enables camera, disables camera, captures png photo
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs

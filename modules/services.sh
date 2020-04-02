@@ -83,10 +83,6 @@ function services {
     if [ -z "$command" ]; then
       echo "ERROR: no command given"
       exit 1
-    elif ! check_available_services $service_name; then
-      echo "ERROR: unknown service"
-      echo "try running '$BASENAME services available' to see the list of available services"
-      exit 1
     else
       check_available_services $service_name
       check_arm $service_name

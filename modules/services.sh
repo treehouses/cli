@@ -389,12 +389,12 @@ function check_arm {
   arms=($(source $SERVICES/install-${1}.sh && supported_arms))
   for i in "${arms[@]}"
   do
-    if [ "$detectarm" = "$i" ]; then
+    if [ "$(detectarm)" = "$i" ]; then
       return 0
     fi
   done
   echo "ERROR: unsupported arm"
-  echo "user arm: $detectarm"
+  echo "user arm: $(detectarm)"
   echo "supported arm(s): ${arms[*]}"
   exit 1
   # return 1

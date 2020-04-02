@@ -284,7 +284,13 @@ case $1 in
     usb "$2"
     ;;
   sdcard)
-    download_and_burn "$2"
+    checkroot
+    shift
+    case "${1}" in
+      'downloadandburn'  ) download_and_burn "$2";;
+      'erase'												) erase_sd "$2";;
+      *																		) help ;; 
+    esac 
     ;;
   help)
     help "$2"

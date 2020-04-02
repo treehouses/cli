@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load test-helper
+load ../test-helper
 
 @test "$clinom services portainer info" {
   run "${clicmd}" services portainer info
@@ -24,11 +24,6 @@ load test-helper
 }
 @test "$clinom services available" {
   run "${clicmd}" services available
-  assert_success && assert_output -p 'portainer'
-}
-
-@test "$clinom services available full" {
-  run "${clicmd}" services available full
   assert_success && assert_output -p 'portainer'
 }
 

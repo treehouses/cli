@@ -3,14 +3,13 @@
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 SCRIPTARGS="$*"
-SCRIPTARGNUM=$#
 
 for f in $SCRIPTFOLDER/modules/*
 do
   source "$f"
   cmd=$(basename "$f")
   cmd=${cmd%%.*}
-  if [ "$cmd" = "$1" ]; then
+  if [ "$cmd" = "$1" ] && [ "$1" != "globals" ] && [ "$1" != "config" ]; then
     find=1
   fi
 done

@@ -20,6 +20,10 @@ function temperature () {
       resultB=$(echo "$resultA+32" | bc)
       echo $resultB"°F"
       ;;
+    "kelvin")
+      result=$(echo "$number+273.15" | bc)
+      echo $result"K"
+      ;;
     *)
       echo "not a valid option"
       echo
@@ -44,5 +48,8 @@ function temperature_help {
   echo
   echo "    $BASENAME temperature fahrenheit"
   echo "    117.0°F"
+  echo
+  echo "    $BASENAME temperature kelvin"
+  echo "    320.35K"
   echo
 }

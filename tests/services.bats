@@ -28,11 +28,6 @@ load test-helper
   assert_success && assert_output -p 'planet'
 }
 
-@test "$clinom services available full" {
-  run "${clicmd}" services available full
-  assert_success && assert_output -p 'planet'
-}
-
 @test "$clinom services running" {
   run "${clicmd}" services running
   assert_success && assert_output -p 'planet'

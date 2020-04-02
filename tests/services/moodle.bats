@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load test-helper
+load ../test-helper
 
 @test "$clinom services moodle info" {
   run "${clicmd}" services moodle info
@@ -25,11 +25,6 @@ load test-helper
 
 @test "$clinom services available" {
   run "${clicmd}" services available
-  assert_success && assert_output -p 'moodle'
-}
-
-@test "$clinom services available full" {
-  run "${clicmd}" services available full
   assert_success && assert_output -p 'moodle'
 }
 

@@ -1,9 +1,6 @@
 #!/usr/bin/env bats
 load test-helper
 
-#!/usr/bin/env bats
-load test-helper
-
 @test "$clinom detectrpi" {
   run "${clicmd}" detectrpi
   assert_success

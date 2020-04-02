@@ -24,6 +24,7 @@ load test-helper
 
 @test "$clinom reboots cron \"0 * * * *\"" {
   run "${clicmd}" reboots cron "0 * * * *"
+  sleep 5
   assert_success && assert_output -p 'added'
   run "${clicmd}" cron delete "0 * * * *"
 }

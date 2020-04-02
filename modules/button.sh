@@ -1,8 +1,10 @@
-#!/bin/bash
 # treehouses button off                        => disables button ~ it does nothing
 # treehouses button bluetooth                  => bluetooth will be ON when cable is off and OFF when cable is on
-
 function button {
+  local mode
+  checkwrpi
+  checkroot
+  checkargn $# 1
   mode=$1
 
   if [ "$mode" = "off" ]; then
@@ -37,9 +39,9 @@ function button {
 
 
 function button_help () {
-  echo ""
-  echo "Usage: treehouses button <off|bluetooth>"
-  echo ""
+  echo
+  echo "Usage: $BASENAME button <off|bluetooth>"
+  echo
   echo "Gives the gpio pin 18 an action."
   echo "              Pin 1 Pin2"
   echo "           +3V3 [ ] [ ] +5V"
@@ -63,14 +65,14 @@ function button_help () {
   echo "        GPIO 26 [ ] [ ] GPIO 20 / MOSI"
   echo "            GND [ ] [ ] GPIO 21 / SCLK"
   echo "             Pin 39 Pin 40"
-  echo ""
-  echo ""
+  echo
+  echo
   echo "Examples:"
-  echo "  treehouses button off"
+  echo "  $BASENAME button off"
   echo "      Disables the action that is run when the GPIO pin 18 is on"
-  echo ""
-  echo "  treehouses button bluetooth"
+  echo
+  echo "  $BASENAME button bluetooth"
   echo "      When the GPIO pin 18 is on the bluetooth will be turned off".
   echo "      Otherwise the bluetooth mode will be changed to hotspot."
-  echo ""
+  echo
 }

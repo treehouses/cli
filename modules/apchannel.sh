@@ -1,8 +1,9 @@
-#!/bin/bash
-
 function apchannel {
+  local new_channel current_channel
+  checkrpi
+  checkargn $# 1
   new_channel="$1"
-  if [ "$(networkmode)" == "bridge" ] || [ "$(networkmode)" == "ap local" ] || [ "$(networkmode)" == "ap internet" ]; then
+  if [ "$(networkmode)" == "bridge" ] || [[ "$(networkmode)" == *"ap local"* ]] || [[ "$(networkmode)" == *"ap internet"* ]]; then
     current_channel=$(sed -n 's/channel=\(.*\)/\1/p' /etc/hostapd/hostapd.conf )
   else
     echo "Error: the current network mode ($(networkmode)) has no config for channel"
@@ -28,17 +29,17 @@ function apchannel {
 }
 
 function apchannel_help {
-  echo ""
-  echo "Usage: $(basename "$0") apchannel [channel]"
-  echo ""
+  echo
+  echo "Usage: $BASENAME apchannel [channel]"
+  echo
   echo "Prints out or sets the ap channel."
-  echo ""
+  echo
   echo "Example:"
-  echo "  $(basename "$0") apchannel"
+  echo "  $BASENAME apchannel"
   echo "      This will print out the current ap channel"
-  echo ""
-  echo "  $(basename "$0") apchannel 6"
+  echo
+  echo "  $BASENAME apchannel 6"
   echo "      This will set the ap channel to 6."
   echo "      A reboot is required to apply the changes."
-  echo ""
+  echo
 }

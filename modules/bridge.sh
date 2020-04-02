@@ -1,6 +1,8 @@
-#!/bin/bash
-
 function bridge {
+  local wifiessid hotspotessid wifipassword hotspotpassword base_24 channels channel wificountry
+  checkrpi
+  checkroot
+  checkargn $# 5
   case $(detectrpi) in
     RPI3B|RPIZW|RPI3B+|RPI3A+|RPI4B)
       ;;
@@ -32,11 +34,6 @@ function bridge {
     fi
   fi
 
-  if [[ "$hotspotessid" =~ [^a-zA-Z_-] ]]; then
-    echo "Error: hotspot essid can only contains alphabet, dashes and underscores"
-    exit 1 
-  fi 
-
   if [ -n "$wifipassword" ];
   then
     if [ ${#wifipassword} -lt 8 ];
@@ -56,7 +53,7 @@ function bridge {
   fi
 
   cp "$TEMPLATES/network/dnsmasq/bridge" "/etc/dnsmasq.conf"
-  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces 
+  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/wlan0/bridge" /etc/network/interfaces.d/ap0
 
   if [ -z "$hotspotpassword" ];
@@ -77,7 +74,7 @@ function bridge {
     wificountry="US"
     if [ -r /etc/rpi-wifi-country ];
     then
-      wificountry=$(cat /etc/rpi-wifi-country)
+      wificountry=$(</etc/rpi-wifi-country)
     fi
     echo "country=$wificountry"
   } > /etc/wpa_supplicant/wpa_supplicant.conf
@@ -124,27 +121,27 @@ function bridge {
 }
 
 function bridge_help {
-  echo ""
-  echo "Usage: $(basename "$0") bridge <WifiESSID> <HotspotESSID> [WifiPassword] [HotspotPassword]"
-  echo ""
+  echo
+  echo "Usage: $BASENAME bridge <WifiESSID> <HotspotESSID> [WifiPassword] [HotspotPassword]"
+  echo
   echo "Bridges the wlan0 interface to ap0, creating a hotspot with desired configuration."
-  echo ""
+  echo
   echo "Examples:"
-  echo "  $(basename "$0") bridge MyWifi MyHotspot"
+  echo "  $BASENAME bridge MyWifi MyHotspot"
   echo "      This will connect to 'MyWifi' which is an open essid, and create an open hotspot called 'MyHotspot'"
-  echo ""
-  echo "  $(basename "$0") bridge MyWifi MyHotspot 12345678"
+  echo
+  echo "  $BASENAME bridge MyWifi MyHotspot 12345678"
   echo "      This will connect to 'MyWifi' which has a password '12345678', and create an open hotspot called 'MyHotspot'"
-  echo ""
-  echo "  $(basename "$0") bridge MyWifi MyHotspot 12345678 hotspot123"
+  echo
+  echo "  $BASENAME bridge MyWifi MyHotspot 12345678 hotspot123"
   echo "      This will connect to 'MyWifi' which has a password '12345678', and create a password hotspot called 'MyHotspot' with the password 'hotspot123'"
-  echo ""
-  echo "  $(basename "$0") bridge MyWifi MyHotspot \"\" 12345678"
+  echo
+  echo "  $BASENAME bridge MyWifi MyHotspot \"\" 12345678"
   echo "      This will connect to 'MyWifi' which is an open essid, and create a password hotspot called 'MyHotspot' with the password '12345678'"
-  echo ""
+  echo
   echo "  This command can be used with the argument '--ip=x.y.z.w' to specify the base ip (x.y.z) for the clients/ap."
-  echo ""
-  echo "  $(basename "$0") bridge MyWifi MyHotspot \"\" 12345678 --ip=192.168.2.2"
+  echo
+  echo "  $BASENAME bridge MyWifi MyHotspot \"\" 12345678 --ip=192.168.2.2"
   echo "      All the clients of this network will have an ip under the network 192.168.2.0"
-  echo ""
+  echo
 }

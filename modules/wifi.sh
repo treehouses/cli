@@ -1,7 +1,8 @@
-#!/bin/bash
-
 function wifi {
-
+  local wifinetwork wifipassword wificountry
+  checkrpi
+  checkroot
+  checkargn $# 2
   if [ -z "$1" ]; then
     echo "Error: name of the network missing"
     exit 1
@@ -48,28 +49,30 @@ function wifi {
       echo "  key_mgmt=NONE"
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
-    restart_wifi >/dev/null 2>/dev/null
-    echo "open wifi network"
+    restart_wifi >"$LOGFILE" 2>"$LOGFILE"
+    checkwifi
+    echo "connected to open wifi network"
   else
     wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
-    restart_wifi >/dev/null 2>/dev/null
-    echo "password network"
+    restart_wifi >"$LOGFILE" 2>"$LOGFILE"
+    checkwifi
+    echo "connected to password network"
   fi
 
   echo "wifi" > /etc/network/mode
 }
 
 function wifi_help {
-  echo ""
-  echo "Usage: $(basename "$0") wifi <ESSID> [password]"
-  echo ""
+  echo
+  echo "Usage: $BASENAME wifi <ESSID> [password]"
+  echo
   echo "Connects to a wifi network"
-  echo ""
+  echo
   echo "Example:"
-  echo "  $(basename "$0") wifi home homewifipassword"
+  echo "  $BASENAME wifi home homewifipassword"
   echo "      Connects to a wifi network named 'home' with password 'homewifipassword'."
-  echo ""
-  echo "  $(basename "$0") wifi yourwifiname"
+  echo
+  echo "  $BASENAME wifi yourwifiname"
   echo "      Connects to an open wifi network named 'yourwifiname'."
-  echo ""
+  echo
 }

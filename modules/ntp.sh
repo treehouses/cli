@@ -1,10 +1,12 @@
-#!/bin/bash
-
 function ntp {
+  local status
+  checkrpi
+  checkroot
+  checkargn $# 1
   status="$1"
 
   if [ "$status" = "internet" ]; then
-    rm -rf /boot/time &> /dev/null
+    rm -rf /boot/time &> "$LOGFILE"
     sed -i "s/server 127\.127\.1\.0//" /etc/ntp.conf
     sed -i "s/fudge 127\.127\.1\.0 stratum 10//" /etc/ntp.conf
     sed -i "s/restrict 192\.168\.0\.0 mask 255\.255\.0\.0 nomodify notrap//" /etc/ntp.conf
@@ -27,21 +29,22 @@ function ntp {
     reboot_needed
     echo "Success: please reboot you rpi to apply changes."
   else
-    echo "Error: only on, off options are supported"
-    exit 0
+    echo "Error: only local or internet are supported options"
+    exit 1
   fi
 }
 
 function ntp_help {
-  echo ""
-  echo "Usage: $(basename "$0") ntp <local|internet>"
-  echo ""
+  echo
+  echo "Usage: $BASENAME ntp <local|internet>"
+  echo
   echo "Enables or disables time through ntp servers"
-  echo ""
+  echo
   echo "Example:"
-  echo "  $(basename "$0") ntp internet"
+  echo "  $BASENAME ntp internet"
   echo "    Configures treehouses as a client with timing sourced from the internet"
-  echo ""
-  echo "  $(basename "$0") ntp local"
+  echo
+  echo "  $BASENAME ntp local"
   echo "    Configures treehouses as a server with timing sourced from the onboard clock"
+  echo
 }

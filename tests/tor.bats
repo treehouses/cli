@@ -6,6 +6,11 @@ load test-helper
   assert_success && assert_output -p 'Success'
 }
 
+@test "$clinom tor start" {
+  run "${clicmd}" tor start
+  assert_success && assert_output -p 'Success'
+}
+
 @test "$clinom tor list" {
   run "${clicmd}" tor list
   assert_success && assert_output -p 'local'
@@ -22,6 +27,7 @@ load test-helper
 }
 
 @test "$clinom tor stop" {
+  sleep 5
   run "${clicmd}" tor stop
   assert_success && assert_output -p 'Success'
 }
@@ -49,14 +55,4 @@ load test-helper
 @test "$clinom tor notice now" {
   run "${clicmd}" tor notice now
   assert_success && assert_output -p 'Thanks'
-}
-
-@test "$clinom tor deleteall" {
-  run "${clicmd}" tor deleteall
-  assert_success && assert_output -p 'All ports'
-}
-
-@test "$clinom tor destroy" {
-  run "${clicmd}" tor destroy
-  assert_success && assert_output -p 'Success'
 }

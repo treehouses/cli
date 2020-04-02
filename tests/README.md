@@ -10,13 +10,47 @@ SSH session.
 
 Example:
 
+```bash
+sudo su
+apt install bats
+cd tests
+bats ./services/moodle.bats # test a single file
+nssidname='Wifiname' nwifipass='wifipass' ./wifi.bats
 ```
-sudo apt install bats
-sudo bats ./tests/blocker.bats # test a single file
-nssidname='Wifiname' nwifipass='wifipass' sudo ./tests/wifi.bats
-sudo ./tests/test-cli.sh # test everything (variables inside test-cli.sh as well)
 
+`test.sh` gives extra information ontop of running the tests using bats including
+Image release, CLI version, and git branch name
+```bash
+./test.sh detect.bats detectrpi.bats # pick what you want
+./test.sh all # test everything (variables inside test.sh as well)
+yes | ./test.sh all # skip pressing any key to move forward for network tests
+./test.sh services
+./test.sh wifi
+./test.sh ap
+./test.sh nonet # all modules that don't require an internet connection
+./test.sh nonetblue # no internet and no bluetooth
 ```
 
 Note: Some tests are not included because they have restarts
 (test manually w/out bats commands)
+
+Example output:
+```bash
+root@treehouses:~/cli/tests# ./test.sh detect.bats detectrpi.bats
+
+Branch  - tests-time
+Image   - release-125
+Version - 1.16.25
+
+ ✓  detect
+ ✓  detectrpi
+ ✓  detectrpi model
+
+3 tests, 0 failures
+
+real    0m2.460s
+user    0m1.617s
+sys     0m1.048s
+
+root@treehouses:~/cli/tests#
+```

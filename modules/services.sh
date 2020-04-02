@@ -344,8 +344,12 @@ function services {
           echo "${service_name} cleaned up"
           ;;
         icon)
-          checkargn $# 2
-          source $SERVICES/install-${service_name}.sh && get_icon
+          checkargn $# 3
+          if [ "$command_option" = "oneline" ]; then
+            source $SERVICES/install-${service_name}.sh && get_icon_one_line
+          else
+            source $SERVICES/install-${service_name}.sh && get_icon
+          fi
           ;;
         *)
           echo "ERROR: unknown command"

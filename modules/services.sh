@@ -346,7 +346,7 @@ function services {
         icon)
           checkargn $# 3
           if [ "$command_option" = "oneline" ]; then
-            source $SERVICES/install-${service_name}.sh && get_icon | tr '\n' ' '
+            echo "$(source $SERVICES/install-${service_name}.sh && get_icon | tr '\n' ' ')"
           else
             source $SERVICES/install-${service_name}.sh && get_icon
           fi

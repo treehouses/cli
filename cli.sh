@@ -288,8 +288,8 @@ case $1 in
     shift
     case "${1}" in
       'downloadandburn'  ) download_and_burn "$2";;
-      'erase'												) erase_sd "$2";;
-      *																		) help ;; 
+      'erase'            ) erase_sd "$2";;
+      *                  ) help ;; 
     esac 
     ;;
   help)

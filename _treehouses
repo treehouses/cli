@@ -491,6 +491,7 @@ treehouses staticwifi
 treehouses temperature
 treehouses temperature celsius
 treehouses temperature fahrenheit
+treehouses temperature kelvin
 treehouses timezone
 treehouses tor
 treehouses tor add

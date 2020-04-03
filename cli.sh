@@ -14,8 +14,8 @@ do
     find=1
   fi
 done
-start_spinner
 if [ "$find" = 1 ]; then
+  start_spinner
   eval "$@"
 else
   help

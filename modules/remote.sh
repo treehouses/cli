@@ -52,13 +52,16 @@ function remote {
     source $SCRIPTFOLDER/_treehouses && _treehouses_complete 2>/dev/null
     echo "$every_command"
   elif [ "$option" = "json" ]; then
-    json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"]}"
+    json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"}}\n"
 
     available_str=$(services available | sed 's/^\|$/"/g' | paste -d, -s)
     installed_str=$(services installed | sed 's/^\|$/"/g' | paste -d, -s)
-    running_str=$(services running | sed 's/^\|$/"/g' | paste -d, -s)
+    running_str="\""
+    running_str+=$(services running | tr ' ' ',')
+    running_str+="\""
+    running_str=${running_str//,/\",\"}
 
-    printf "$json_fmt" "$available_str" "$installed_str" "$running_str"
+    printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "$icon_str"
   else
     echo "unknown command option"
     echo "usage: $BASENAME remote [status | upgrade | services | version | commands | json]"

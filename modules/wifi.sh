@@ -56,7 +56,7 @@ function wifimain {
         echo "   scan_ssid=1"
         echo " connected to hidden open network"
       else
-        echo "connecetd to open wifinetwork"
+        echo "connected to open wifinetwork"
       fi	
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf

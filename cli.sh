@@ -15,9 +15,6 @@ channel="https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages"
 if [ ! -z "$gitter_channel" ]; then
   channel="$gitter_channel"
 fi
-declare -A rtcclockdata
-rtcclockdata["rasclock"]="dtoverlay=i2c-rtc,pcf2127"
-rtcclockdata["ds3231"]="dtoverlay=i2c-rtc,ds3231"
 
 # global config variables (defaults)
 LOGFILE=/dev/null

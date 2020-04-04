@@ -56,9 +56,7 @@ function remote {
 
     available_str=$(services available | sed 's/^\|$/"/g' | paste -d, -s)
     installed_str=$(services installed | sed 's/^\|$/"/g' | paste -d, -s)
-    running_str="\""
-    running_str+=$(services running | tr ' ' ',')
-    running_str+="\""
+    running_str=\"$(services running | tr ' ' ',')\"
     running_str=${running_str//,/\",\"}
 
     available=($(services available))

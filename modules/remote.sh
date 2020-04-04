@@ -61,13 +61,17 @@ function remote {
     running_str+="\""
     running_str=${running_str//,/\",\"}
 
-    icon_str=""
+    available=($(services available))
+    for i in "${available[@]}"
+    do
+      icon_str+="\"$i\":\"$(services $i icon oneline)\","
+    done
 
     info_str=""
 
     autorun_str=""
 
-    printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "$icon_str" "$info_str" "$autorun_str"
+    printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "$info_str" "$autorun_str"
   else
     echo "unknown command option"
     echo "usage: $BASENAME remote [status | upgrade | services | version | commands | json]"

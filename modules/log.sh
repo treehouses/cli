@@ -5,7 +5,7 @@
 # e.g. logit "i am in the log but not written to terminal window" "1"
 # What gets logged depends on the logging level set by log command
 function logit() {
-  if [[ ! "$LOG" == "0" && ! "$LOG" == "max" ]]; then
+  if [[ ! "$LOG" == "0" ]]; then
     case "$3" in
       "")
         logger -p local0.info -t @treehouses/cli "INFO: $1"
@@ -67,9 +67,6 @@ function log {
 	    "4")
 		  logit "log 4: level is set to Info, Warning, Error, and Debug"
 		  ;;
-		"max")
-		  logit "log X: level is set to max"
-		  ;;
 	  esac
       exit 0;
       ;;
@@ -101,12 +98,8 @@ function log {
       fi
 	  grep "@treehouses/cli" /var/log/syslog | tail -n "$lines"
 	  ;;
-	"max")
-	  LOG=max
-	  logit "log X: level set to max" "" "DEBUG"
-	  ;;
     *)
-      log_and_exit1 "Error: only '0' '1' '2' '3' '4' 'show' 'max' options are supported"
+      log_and_exit1 "Error: only '0' '1' '2' '3' '4' 'show' options are supported"
       ;;
   esac
   conf_var_update "LOG" "$LOG"
@@ -114,7 +107,7 @@ function log {
 
 function log_help {
   echo
-  echo "Usage: $BASENAME log <0|1|2|3|4|show|max>"
+  echo "Usage: $BASENAME log <0|1|2|3|4|show>"
   echo
   echo "Example:"
   echo "  $BASENAME log"
@@ -142,8 +135,5 @@ function log_help {
   echo "  $BASENAME log show 5"
   echo "      Shows 5 lines of log which is at (/var/log/syslog)"
   echo "      @treehouses/cli: temperature fahrenheit"
-  echo
-  echo "  $BASENAME log max"
-  echo "      log X: level set to max"
   echo
 }

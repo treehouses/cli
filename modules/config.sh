@@ -16,12 +16,6 @@ if [[ -f "$CONFIGFILE" ]]; then
   source "$CONFIGFILE"
 fi
 
-# writes bash trace to screen and to syslog
-if [[ "$LOG" == "max" ]]; then
-  set -x
-  exec 1> >(tee >(logger -t @treehouses/cli)) 2>&1
-fi
-
 # updates config variables "LOG" "1" Requires root
 function conf_var_update() {
   if [[ -f "$CONFIGFILE" && $(cat $CONFIGFILE) = *"$1"* ]]

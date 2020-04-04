@@ -6,11 +6,6 @@ load test-helper
   assert_success && assert_output -p 'log is'
 }
 
-@test "$clinom log max" {
-  run "${clicmd}" log max
-  assert_success && assert_output -p 'log X'
-}
-
 @test "$clinom log 4" {
   run "${clicmd}" log 4
   assert_success && assert_output -p 'log 4'

@@ -1,8 +1,8 @@
-function wifi {
+function wifimain {
   local wifinetwork wifipassword wificountry
   checkrpi
   checkroot
-  checkargn $# 2
+  checkargn $# 3
   if [ -z "$1" ]; then
     echo "Error: name of the network missing"
     exit 1
@@ -19,6 +19,10 @@ function wifi {
       exit 1
     fi
   fi
+
+  if [ -v hide ]; then
+    hide="_hidden"
+  fi    
 
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/wlan0/default" /etc/network/interfaces.d/wlan0
@@ -47,11 +51,30 @@ function wifi {
       echo "network={"
       echo "  ssid=\"$wifinetwork\""
       echo "  key_mgmt=NONE"
+      if [ "$hide" == "_hidden" ];
+      then
+        echo "   scan_ssid=1"
+        echo " connected to hidden open network"
+      else
+        echo "connecetd to open wifinetwork"
+      fi	
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     checkwifi
-    echo "connected to open wifi network"
+  elif [[ -n "$wifipassword" ]] && [[ "$hide" == "_hidden" ]];
+  then
+    {	  
+    echo "network={"
+    echo "  ssid=\"$wifinetwork\""
+    echo "  scan_ssid=1"
+    echo "  key_mgmt=WPA-PSK"
+    echo "  psk=\"$wifipassword\""
+    echo "}"
+    } >> /etc/wpa_supplicant/wpa_supplicant.conf
+    restart_wifi >"$LOGFILE" 2>"$LOGFILE"
+    checkwifi  
+    echo "connected to hidden password network"
   else
     wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
@@ -60,6 +83,10 @@ function wifi {
   fi
 
   echo "wifi" > /etc/network/mode
+}
+
+function wifi {
+  wifimain "$@"
 }
 
 function wifi_help {

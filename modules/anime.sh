@@ -1,4 +1,5 @@
 function anime {
+  checkargn $# 0
   local query time1 result cnt
   query=$(cat <<EOF
 query(\$timestamp: Int) {
@@ -39,6 +40,6 @@ function anime_help {
   echo
   echo "Example:"
   echo "  $BASENAME anime"
-  echo "      Shows the latest 25 animes, and descriptions from random time in the last month"
+  echo "      Shows the latest 25 animes, and descriptions from the last month"
   echo
 }

@@ -65,7 +65,7 @@ function remote {
     for i in "${available[@]}"
     do
       icon_str+="\"$i\":\"$(services $i icon oneline)\","
-      info_str+="\"$i\":\"$(services $i ifno)\","
+      info_str+="\"$i\":\"$(services $i info)\","
     done
 
     autorun_str=""

@@ -29,6 +29,11 @@ function install {
   } > /srv/ntopng/autorun
 }
 
+# add supported arm(s)
+function supported_arms {
+  echo "v7l"
+}
+
 # add port(s)
 function get_ports {
   echo "8084"

@@ -51,18 +51,18 @@ function wifimain {
       echo "network={"
       echo "  ssid=\"$wifinetwork\""
       echo "  key_mgmt=NONE"
-      if [ "$hide" == "_hidden" ];
-      then
-        echo "   scan_ssid=1"
-        echo " connected to hidden open network"
-      else
-        echo "connected to open wifinetwork"
+      if [ -v hide ]; then      
+        echo " scan_ssid=1"
       fi	
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     checkwifi
-  elif [[ -n "$wifipassword" ]] && [[ "$hide" == "_hidden" ]];
+    if ! [ -v hide ]; then  
+      echo "connected to open network"
+    else
+      echo "connected to hidden open network"    
+  elif [[ -n "$wifipassword" ]] && [[ -v hide ]];
   then
     {	  
     echo "network={"

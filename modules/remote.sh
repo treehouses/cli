@@ -64,11 +64,10 @@ function remote {
     do
       icon_str+="\"$i\":\"$(services $i icon oneline)\","
       info_str+="\"$i\":\"$(services $i info)\","
+      autorun_str+="\"$i\":\"$(services $i autorun)\","
     done
 
-    autorun_str=""
-
-    printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "$autorun_str"
+    printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}"
   else
     echo "unknown command option"
     echo "usage: $BASENAME remote [status | upgrade | services | version | commands | json]"

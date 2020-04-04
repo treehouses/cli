@@ -6,7 +6,7 @@ SCRIPTARGS="$*"
 
 if [[ "$1" == "-"* ]]; then
   if [ ${#1} -gt 2 ] || [ ${#1} -lt 2 ] || [[ ${1:1} != *[[abefhkmnptuvxBCHP]* ]]; then
-    echo "Error: option not supported please see 'set --help' for available options"
+    echo "Error: $1 option not supported please use [-abefhkmnptuvxBCHP] see 'set --help' for usage"
     exit 1
   else
     set "$1"

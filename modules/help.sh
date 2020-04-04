@@ -4,7 +4,7 @@ function help_default {
 
 Usage: treehouses [-abefhkmnptuvxBCHP] [command] ...
 
-dash (-) options are the same as 'set --help'
+for [-abefhkmnptuvxBCHP] usage check 'set --help'
 
 Commands:
 

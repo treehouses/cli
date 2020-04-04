@@ -27,7 +27,7 @@ If you run into any problems check if your RPi is supported [here](https://githu
 ```
 Usage: treehouses [-abefhkmnptuvxBCHP] [command] ...
 
-dash (-) options are the same as 'set --help'
+for [-abefhkmnptuvxBCHP] usage check 'set --help'
 
 Commands:
 

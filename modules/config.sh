@@ -46,7 +46,7 @@ function config {
         exit 1
       fi
       if [[ -f "$CONFIGFILE" && $(cat $CONFIGFILE) = *"$2"* ]]; then
-        sed -i '/'"$varname"'=/d' $CONFIGFILE
+        sed -i '/'"$varname"'=/d' "$CONFIGFILE"
         sync;
         echo "Successfully deleted variable"
       else

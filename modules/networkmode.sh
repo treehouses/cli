@@ -65,6 +65,7 @@ function networkmode {
     fi
   else
     networkmode_help
+    exit 1
   fi
 }
 

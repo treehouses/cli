@@ -83,11 +83,9 @@ function services {
     if [ -z "$command" ]; then
       echo "ERROR: no command given"
       exit 1
-    elif ! check_available_services $service_name; then
-      echo "ERROR: unknown service"
-      echo "try running '$BASENAME services available' to see the list of available services"
-      exit 1
     else
+      check_available_services $service_name
+      check_arm $service_name
       case "$command" in
         install)
           checkargn $# 2
@@ -374,17 +372,6 @@ function services {
   fi
 }
 
-function check_available_services {
-  array=($(services available))
-  for service in "${array[@]}"
-  do
-    if [ "${1}" == "$service" ]; then
-      return 0
-    fi
-  done
-  return 1
-}
-
 function docker_compose_up {
   if [ ! -f /srv/${1}/${1}.yml ]; then
     echo "ERROR: /srv/${1}/${1}.yml not found"
@@ -396,6 +383,35 @@ function docker_compose_up {
     echo "ERROR: cannot build ${1}"
     exit 1
   fi
+}
+
+function check_arm {
+  arms=($(source $SERVICES/install-${1}.sh && supported_arms))
+  for i in "${arms[@]}"
+  do
+    if [ "$(detectarm)" = "$i" ]; then
+      return 0
+    fi
+  done
+  echo "ERROR: unsupported arm"
+  echo "user arm: $(detectarm)"
+  echo "supported arm(s): ${arms[*]}"
+  exit 1
+  # return 1
+}
+
+function check_available_services {
+  array=($(services available))
+  for service in "${array[@]}"
+  do
+    if [ "${1}" == "$service" ]; then
+      return 0
+    fi
+  done
+  echo "ERROR: unknown service"
+  echo "try running '$BASENAME services available' to see the list of available services"
+  exit 1
+  # return 1
 }
 
 function check_space {

@@ -138,6 +138,7 @@ function services {
             fi
           else
             check_space $service_name
+            validate_yml $service_name
             docker_compose_up $service_name
           fi
           for i in $(seq 1 "$(services $service_name port | wc -l)")

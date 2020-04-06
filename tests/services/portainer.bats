@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load test-helper
+load ../test-helper
 
 @test "$clinom services portainer info" {
   run "${clicmd}" services portainer info
@@ -24,11 +24,6 @@ load test-helper
 }
 @test "$clinom services available" {
   run "${clicmd}" services available
-  assert_success && assert_output -p 'portainer'
-}
-
-@test "$clinom services available full" {
-  run "${clicmd}" services available full
   assert_success && assert_output -p 'portainer'
 }
 
@@ -67,8 +62,8 @@ load test-helper
   assert_success && assert_output -p 'portainer/portainer'
 }
 
-@test "$clinom services portainer url both" {
-  run "${clicmd}" services portainer url both
+@test "$clinom services portainer url" {
+  run "${clicmd}" services portainer url
   assert_output -p '9000'
 }
 
@@ -90,6 +85,11 @@ load test-helper
 @test "$clinom services portainer down" {
   run "${clicmd}" services portainer down
   assert_success && assert_output -p 'portainer stopped and removed'
+}
+
+@test "$clinom services portainer icon" {
+  run "${clicmd}" services portainer icon
+  assert_success && assert_output -p 'svg'
 }
 
 @test "$clinom services portainer cleanup" {

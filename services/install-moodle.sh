@@ -8,21 +8,20 @@ function install {
   {
     echo "version: '2'"
     echo "services:"
-    echo "  moodledb_rpi:"
+    echo "  postgres:"
     echo "    image: arm32v7/postgres:11"
-    echo "    container_name: moodledb_rpi"
     echo "    environment:"
     echo "    # MAKE SURE THIS ONE SAME WITH THE MOODLE"
     echo "    - POSTGRES_DATABASE=moodle"
     echo "    - POSTGRES_USER=moodle"
     echo "    - POSTGRES_PASSWORD=moodle"
-    echo "  moodle_rpi:"
-    echo "    image: treehouses/moodle:rpi-latest"
-    echo "    container_name: moodle_rpi"
+    echo "  moodle:"
+    echo "    image: treehouses/moodle:rpi-alpine-latest"
     echo "    ports:"
-    echo "      - \"8082:80\""
+    echo "      - \"8082:8082\""
     echo "    environment:"
-    echo "    - MOODOLE_DB_URL=moodledb_rpi"
+    echo "    - NGINX_PORT=8082"
+    echo "    - MOODOLE_DB_URL=postgres"
     echo "    - MOODOLE_DB_NAME=moodle"
     echo "    - MOODOLE_DB_USER=moodle"
     echo "    - MOODOLE_DB_PASS=moodle"
@@ -41,6 +40,11 @@ function install {
     echo
     echo
   } > /srv/moodle/autorun
+}
+
+# add supported arm(s)
+function supported_arms {
+  echo "v7l"
 }
 
 # add port(s)

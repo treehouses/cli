@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load test-helper
+load ../test-helper
 
 @test "$clinom services nextcloud info" {
   run "${clicmd}" services nextcloud info
@@ -25,11 +25,6 @@ load test-helper
 
 @test "$clinom services available" {
   run "${clicmd}" services available
-  assert_success && assert_output -p 'nextcloud'
-}
-
-@test "$clinom services available full" {
-  run "${clicmd}" services available full
   assert_success && assert_output -p 'nextcloud'
 }
 
@@ -68,8 +63,8 @@ load test-helper
   assert_success && assert_output -p 'nextcloud'
 }
 
-@test "$clinom services nextcloud url both" {
-  run "${clicmd}" services nextcloud url both
+@test "$clinom services nextcloud url" {
+  run "${clicmd}" services nextcloud url
   assert_output -p '8081'
 }
 
@@ -91,6 +86,11 @@ load test-helper
 @test "$clinom services nextcloud down" {
   run "${clicmd}" services nextcloud down
   assert_success && assert_output -p 'nextcloud stopped and removed'
+}
+
+@test "$clinom services nextcloud icon" {
+  run "${clicmd}" services nextcloud icon
+  assert_success && assert_output -p 'svg'
 }
 
 @test "$clinom services nextcloud cleanup" {

@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load test-helper
+load ../test-helper
 
 @test "$clinom services netdata info" {
   run "${clicmd}" services netdata info
@@ -25,11 +25,6 @@ load test-helper
 
 @test "$clinom services available" {
   run "${clicmd}" services available
-  assert_success && assert_output -p 'netdata'
-}
-
-@test "$clinom services available full" {
-  run "${clicmd}" services available full
   assert_success && assert_output -p 'netdata'
 }
 
@@ -68,8 +63,8 @@ load test-helper
   assert_success && assert_output -p 'netdata/netdata'
 }
 
-@test "$clinom services netdata url both" {
-  run "${clicmd}" services netdata url both
+@test "$clinom services netdata url" {
+  run "${clicmd}" services netdata url
   assert_output -p '19999'
 }
 
@@ -91,6 +86,11 @@ load test-helper
 @test "$clinom services netdata down" {
   run "${clicmd}" services netdata down
   assert_success && assert_output -p 'netdata stopped and removed'
+}
+
+@test "$clinom services netdata icon" {
+  run "${clicmd}" services netdata icon
+  assert_success && assert_output -p 'svg'
 }
 
 @test "$clinom services netdata cleanup" {

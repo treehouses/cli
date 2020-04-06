@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load test-helper
+load ../test-helper
 
 @test "$clinom services kolibri info" {
   run "${clicmd}" services kolibri info
@@ -25,11 +25,6 @@ load test-helper
 
 @test "$clinom services available" {
   run "${clicmd}" services available
-  assert_success && assert_output -p 'kolibri'
-}
-
-@test "$clinom services available full" {
-  run "${clicmd}" services available full
   assert_success && assert_output -p 'kolibri'
 }
 
@@ -68,8 +63,8 @@ load test-helper
   assert_success && assert_output -p 'treehouses/kolibri'
 }
 
-@test "$clinom services kolibri url both" {
-  run "${clicmd}" services kolibri url both
+@test "$clinom services kolibri url" {
+  run "${clicmd}" services kolibri url
   assert_output -p '8080'
 }
 
@@ -91,6 +86,11 @@ load test-helper
 @test "$clinom services kolibri down" {
   run "${clicmd}" services kolibri down
   assert_success && assert_output -p 'kolibri stopped and removed'
+}
+
+@test "$clinom services kolibri icon" {
+  run "${clicmd}" services kolibri icon
+  assert_success && assert_output -p 'svg'
 }
 
 @test "$clinom services kolibri cleanup" {

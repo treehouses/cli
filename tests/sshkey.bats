@@ -16,18 +16,15 @@ load test-helper
   assert_success && assert_output -p 'deleted'
 }
 
-@test "$clinom sshkey deleteall" {
-  run "${clicmd}" sshkey deleteall
-  assert_success && assert_output -p 'all sshkeys'
-}
+@test "$clinom sshkey deleteall (manually test w/out bats - deletes all sshkeys)" {}
 
 @test "$clinom sshkey github adduser dogi" {
-  run "${clicmd}" sshkey adduser dogi
+  run "${clicmd}" sshkey github adduser dogi
   assert_success
 }
 
 @test "$clinom sshkey github deleteuser dogi" {
-  run "${clicmd}" sshkey deleteuser dogi
+  run "${clicmd}" sshkey github deleteuser dogi
   assert_success
 }
 

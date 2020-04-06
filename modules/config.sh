@@ -10,6 +10,7 @@ function conf_var_update() {
 }
 
 function config {
+  local varname
   checkroot
   checkargn $# 3
   case "$1" in
@@ -22,17 +23,31 @@ function config {
       fi
     ;;
     update)
+      if [ -z "$2" ] || [ -z "$3" ]; then
+        echo "Error: missing varname or varvalue"
+        exit 1
+      fi
       conf_var_update "$2" "$3"
       echo "Successfully updated variable"
     ;;
     add)
+      if [ -z "$2" ] || [ -z "$3" ]; then
+        echo "Error: missing varname or varvalue"
+        exit 1
+      fi
       conf_var_update "$2" "$3"
       echo "Successfully added variable"
     ;;
     delete)
       checkargn $# 2
+      varname="$2"
+      if [ -z "$2" ]; then
+        echo "Error: missing varname"
+        exit 1
+      fi
       if [[ -f "$CONFIGFILE" && $(cat $CONFIGFILE) = *"$2"* ]]; then
-        sed -i "/\b$2\b/d" $CONFIGFILE
+        sed -i '/'"$varname"'=/d' $CONFIGFILE
+        sync;
         echo "Successfully deleted variable"
       else
         echo "Error: $2 doesn't exist; please run 'treehouses config' to show all variables"

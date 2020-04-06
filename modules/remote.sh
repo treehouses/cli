@@ -44,9 +44,9 @@ function remote {
       exit 1
     fi
     if [ "$2" -ge "$(node -p "require('$SCRIPTFOLDER/package.json').remote")" ]; then
-      echo true
+      echo "version: true"
     else
-      echo false
+      echo "version: false"
     fi
   elif [ "$option" = "commands" ]; then
     source $SCRIPTFOLDER/_treehouses && _treehouses_complete 2>/dev/null

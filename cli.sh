@@ -3,6 +3,33 @@
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 SCRIPTARGS="$*"
+CONFIGFILE=/etc/treehouses.conf
+BASENAME=$(basename "$0")
+TEMPLATES="$SCRIPTFOLDER/templates"
+SERVICES="$SCRIPTFOLDER/services"
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+token="adfab56b2f10b85f94db25f18e51a4b465dbd670"
+channel="https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages"
+# set on ../templates/network/tor_report.sh
+if [ ! -z "$gitter_channel" ]; then
+  channel="$gitter_channel"
+fi
+
+# global config variables (defaults)
+LOGFILE=/dev/null
+LOG=0
+BLOCKER=0
+
+if [[ -f "$CONFIGFILE" ]]; then
+  source "$CONFIGFILE"
+fi
+
+if [[ "$LOG" == "max" ]]; then
+  set -x
+  exec 1> >(tee >(logger -t @treehouses/cli)) 2>&1
+fi
 
 for f in $SCRIPTFOLDER/modules/*.sh
 do

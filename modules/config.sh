@@ -60,7 +60,7 @@ function config {
       echo "Successfully cleared config"
     ;;
     *)
-      echo "Error: only 'update' 'add' 'delete' 'clear' 'clioverview' options are supported"
+      echo "Error: only 'update' 'add' 'delete', and 'clear' options are supported"
       exit 1
     ;;
   esac

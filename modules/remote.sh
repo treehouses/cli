@@ -62,7 +62,7 @@ function remote {
     available=($(services available))
     for i in "${available[@]}"
     do
-      icon_str+="\"$i\":\"$(services $i icon oneline)\","
+      icon_str+="\"$i\":\"$(services $i icon oneline | sed 's/"/\\"/g')\","
       info_str+="\"$i\":\"$(services $i info | tr '\n' ' ' | sed 's/"/\\"/g')\","
       autorun_str+="\"$i\":\"$(services $i autorun)\","
     done

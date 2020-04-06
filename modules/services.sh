@@ -427,6 +427,14 @@ function check_tor {
   fi
 }
 
+function validate_yml {
+  if docker-compose --project-directory /srv/${1} -f /srv/${1}/${1}.yml config | grep -q "WARNING"; then
+    echo "ERROR: unable to validate yml"
+    echo "check that environment variables are correctly set"
+    exit 1
+  fi
+}
+
 function services_help {
   echo
   echo "Available Services:"

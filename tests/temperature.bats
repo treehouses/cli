@@ -15,3 +15,8 @@ load test-helper
   run "${clicmd}" temperature celsius
   assert_success && assert_output -p 'C'
 }
+
+@test "$clinom temperature kelvin" {
+  run "${clicmd}" temperature kelvin
+  assert_success && assert_output -p 'K'
+}

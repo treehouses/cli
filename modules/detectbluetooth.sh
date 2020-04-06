@@ -1,9 +1,9 @@
 function detectbluetooth {
   checkargn $# 0
-  if dmesg | grep -iq 'blue'; then
-    echo "true"
-  else
+  if hciconfig hci0 2>&1 | grep -q 'No such device'; then
     echo "false"
+  else
+    echo "true"
   fi
 }
 

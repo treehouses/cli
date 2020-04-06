@@ -40,7 +40,7 @@ function networkmode {
     elif [ "$network_mode" == "bridge" ]; then
       echo "wlan0: $(get_wpa_supplicant_settings)"
       echo "ap0: $(get_hostapd_settings)"
-    elif [ "$network_mode" == "ap local" ] || [ "$network_mode" == "ap internet" ]; then
+    elif [[ "$network_mode" == *"ap local"* ]] || [[ "$network_mode" == *"ap internet"* ]]; then
       get_ap_settings "$network_mode"
     elif [ "$network_mode" == "static wifi" ]; then
       get_staticnetwork_info "wlan0"
@@ -64,7 +64,8 @@ function networkmode {
       done
     fi
   else
-    echo "$network_mode"
+    networkmode_help
+    exit 1
   fi
 }
 
@@ -79,7 +80,7 @@ function get_ap_settings {
   else
     echo -n "wlan0: ap essid: $(get_ap_name), ap has password, ip: $(get_ipv4_ip wlan0),"
   fi
-  if [ "$1" == "ap local" ]; then
+  if [[ "$1" == *"ap local"* ]]; then
     echo " not sharing internet"
   else
     echo " sharing internet"

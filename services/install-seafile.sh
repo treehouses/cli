@@ -54,11 +54,12 @@ function get_size {
 
 # add info
 function get_info {
-  echo "https://github.com/treehouses/seafile"
+  echo "https://github.com/treehouses/rpi-seafile"
   echo
-  echo "\"A minimalist, open source online pastebin where the server has"
-  echo "zero knowledge of pasted data. Data is encrypted/decrypted in the"
-  echo "browser using 256 bits AES. https://seafile.info/\""
+  echo "\"Seafile is an open source file sync&share solution designed for"
+  echo "high reliability, performance and productivity. Sync, share and"
+  echo "collaborate across devices and teams. Build your team's knowledge"
+  echo "base with Seafile's built-in Wiki feature. https://www.seafile.com/\""
 }
 
 # add svg icon

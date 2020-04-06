@@ -33,7 +33,7 @@ function upgrade {
 
 function upgrade_help {
   echo
-  echo "Usage: $BASENAME upgrade [-f] [tag] [--check]"
+  echo "Usage: $BASENAME upgrade [tag] [--check]"
   echo
   echo "Upgrades $BASENAME package using npm"
   echo

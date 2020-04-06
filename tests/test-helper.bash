@@ -19,7 +19,7 @@ function check_networkmode {
 
 setup() {
   export clinom="cli.sh"
-  export clicmd="${BATS_TEST_DIRNAME}/../cli.sh"
+  export clicmd="../cli.sh"
 }
 
 teardown() { 

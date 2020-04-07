@@ -1,0 +1,1 @@
+sudo grep $(whoami) /etc/shadow | sed -E "s/$(whoami):.*:/$(whoami):\!:/1"

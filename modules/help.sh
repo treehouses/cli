@@ -68,7 +68,7 @@ Usage: treehouses
       [couchdb]      <url [local|tor]>       CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
       [mariadb]      <port>                  MariaDB is a community-developed fork of the MySQL relational database management system
       [seafile]      <size>                  Seafile is an open-source, cross-platform file-hosting software system
-      [turtleblocksjs]      <size>           Turtle Blocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art based on snap-together visual programming elements.      
+      [turtleblocksjs]                       Turtle Blocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art based on snap-together visual programming elements.      
    tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
        [stop|destroy|notice|status|refresh]
    bootoption <console|desktop> [autologin]  sets the boot mode

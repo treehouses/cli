@@ -24,6 +24,7 @@ Usage: treehouses
    wifistatus                                displays signal strength in dBm and layman nomenclature
    bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot
           [password] [hotspotPassword]
+   config [update|add|delete|clear]          commands for interacting with config file
    container <none|docker|balena>            enables (and start) the desired container
    bluetooth <on|off|pause|button|mac|id>    switches bluetooth from regular to hotspot mode and shows id or MAC address
    ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
@@ -36,7 +37,7 @@ Usage: treehouses
    vnc [on|off|info]                         enables or disables the vnc server service
    default                                   sets a raspbian back to default configuration
    wificountry <country>                     sets the wifi country
-   upgrade                                   upgrades treehouses package using npm
+   upgrade [tag] [--check]                   upgrades treehouses package using npm
    sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
              <key|portinterval> [user@host]
    led [green|red] [mode]                    sets the led mode
@@ -52,20 +53,22 @@ Usage: treehouses
    reboots <now|in|cron>                     reboots at given frequency | removes it if reboot task active
            <daily|weekly|monthly>
    internet                                  checks if the rpi has access to internet
-   services [service_name] [command]         executes the given command on the specified service
-              [planet]                       Planet Learning is a generic learning system built in Angular & CouchDB
-              [kolibri]                      Kolibri is a learning platform using Django
-              [nextcloud]                    Nextcloud is a safe home for all your data, files, etc
-              [netdata]                      Netdata is a distributed, real-time performance and health monitoring for systems
-              [mastodon]                     Mastodon is a free, open-source social network server
-              [moodle]                       Moodle is a learning management system built in PHP
-              [pihole]                       Pi-hole is a DNS sinkhole that protects your devices from unwanted content
-              [privatebin]                   PrivateBin is a minimalist, open source online pastebin
-              [portainer]                    Portainer is a lightweight management UI for Docker environments
-              [ntopng]                       Ntopng is a network traffic probe that monitors network usage
-              [couchdb]                      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
-              [mariadb]                      MariaDB is a community-developed fork of the MySQL relational database management system
-              [seafile]                      Seafile is an open-source, cross-platform file-hosting software system
+   services                                  executes the given command on the specified service
+      <available|installed [full]            list available, and installed services
+      ports|running [full]>                  list ports used by services and services running
+      [planet]       <install>               Planet Learning is a generic learning system built in Angular & CouchDB
+      [kolibri]      <cleanup>               Kolibri is a learning platform using DJango
+      [nextcloud]    <up>                    Nextcloud is a safe home for all your data, files, etc
+      [netdata]      <down>                  Netdata is a distributed, real-time performance and health monitoring for systems
+      [mastodon]     <start>                 Mastodon is a free, open-source social network server
+      [moodle]       <stop>                  Moodle is a learning management system built in PHP
+      [pihole]       <restart>               Pi-hole is a DNS sinkhole that protects your devices from unwanted content
+      [privatebin]   <autorun [true|false]>  PrivateBin is a minimalist, open source online pastebin
+      [portainer]    <ps>                    Portainer is a lightweight management UI for Docker environments
+      [ntopng]       <info>                  Ntopng is a network traffic probe that monitors network usage
+      [couchdb]      <url [local|tor]>       CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
+      [mariadb]      <port>                  MariaDB is a community-developed fork of the MySQL relational database management system
+      [seafile]      <size>                  Seafile is an open-source, cross-platform file-hosting software system
    tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
        [stop|destroy|notice|status|refresh]
    bootoption <console|desktop> [autologin]  sets the boot mode
@@ -74,16 +77,18 @@ Usage: treehouses
    coralenv [install|demo-on|demo-off]       plays with the coral environmental board
             [demo-always-on]
    memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory
-   temperature [celsius|fahrenheit]          displays raspberry pi's CPU temperature
+   temperature [celsius|fahrenheit|kelvin]   displays raspberry pi's CPU temperature
    speedtest                                 tests internet download and upload speed
    camera [on|off|capture]                   enables camera, disables camera, captures png photo
    cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
         [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
    usb [on|off]                              turns usb ports on or off
    remote [status|upgrade|services|version]  helps with treehouses remote android app
+          [commands|json]
    log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
    blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
    sdbench                                   displays read and write speed of micro SD card
+   inspire [joke|qotd|random]                displays quote based on user input
 EOF
   echo "$helpdefault"
 }

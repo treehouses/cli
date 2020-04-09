@@ -41,6 +41,11 @@ treehouses container
 treehouses container balena
 treehouses container docker
 treehouses container none
+treehouses config
+treehouses config update
+treehouses config add
+treehouses config delete
+treehouses config clear
 treehouses coralenv demo-always-on
 treehouses coralenv demo-off
 treehouses coralenv demo-on
@@ -130,6 +135,10 @@ treehouses help wificountry
 treehouses help wifihidden
 treehouses help wifistatus
 treehouses image
+treehouses inspire
+treehouses inspire joke
+treehouses inspire qotd
+treehouses inspire random
 treehouses internet
 treehouses led
 treehouses led carnival
@@ -212,6 +221,7 @@ treehouses reboots monthly
 treehouses reboots now
 treehouses reboots weekly
 treehouses remote commands
+treehouses remote json
 treehouses remote services available
 treehouses remote services installed
 treehouses remote services running
@@ -232,6 +242,7 @@ treehouses services couchdb autorun true
 treehouses services couchdb cleanup
 treehouses services couchdb down
 treehouses services couchdb icon
+treehouses services couchdb icon oneline
 treehouses services couchdb info
 treehouses services couchdb install
 treehouses services couchdb port
@@ -252,6 +263,7 @@ treehouses services kolibri autorun true
 treehouses services kolibri cleanup
 treehouses services kolibri down
 treehouses services kolibri icon
+treehouses services kolibri icon oneline
 treehouses services kolibri info
 treehouses services kolibri install
 treehouses services kolibri port
@@ -270,6 +282,7 @@ treehouses services mariadb autorun true
 treehouses services mariadb cleanup
 treehouses services mariadb down
 treehouses services mariadb icon
+treehouses services mariadb icon oneline
 treehouses services mariadb info
 treehouses services mariadb install
 treehouses services mariadb port
@@ -288,6 +301,7 @@ treehouses services mastodon autorun true
 treehouses services mastodon cleanup
 treehouses services mastodon down
 treehouses services mastodon icon
+treehouses services mastodon icon oneline
 treehouses services mastodon info
 treehouses services mastodon install
 treehouses services mastodon port
@@ -306,6 +320,7 @@ treehouses services moodle autorun true
 treehouses services moodle cleanup
 treehouses services moodle down
 treehouses services moodle icon
+treehouses services moodle icon oneline
 treehouses services moodle info
 treehouses services moodle install
 treehouses services moodle port
@@ -324,6 +339,7 @@ treehouses services netdata autorun true
 treehouses services netdata cleanup
 treehouses services netdata down
 treehouses services netdata icon
+treehouses services netdata icon oneline
 treehouses services netdata info
 treehouses services netdata install
 treehouses services netdata port
@@ -342,6 +358,7 @@ treehouses services nextcloud autorun true
 treehouses services nextcloud cleanup
 treehouses services nextcloud down
 treehouses services nextcloud icon
+treehouses services nextcloud icon oneline
 treehouses services nextcloud info
 treehouses services nextcloud install
 treehouses services nextcloud port
@@ -360,6 +377,7 @@ treehouses services ntopng autorun true
 treehouses services ntopng cleanup
 treehouses services ntopng down
 treehouses services ntopng icon
+treehouses services ntopng icon oneline
 treehouses services ntopng info
 treehouses services ntopng install
 treehouses services ntopng port
@@ -378,6 +396,7 @@ treehouses services pihole autorun true
 treehouses services pihole cleanup
 treehouses services pihole down
 treehouses services pihole icon
+treehouses services pihole icon oneline
 treehouses services pihole info
 treehouses services pihole install
 treehouses services pihole port
@@ -396,6 +415,7 @@ treehouses services planet autorun true
 treehouses services planet cleanup
 treehouses services planet down
 treehouses services planet icon
+treehouses services planet icon oneline
 treehouses services planet info
 treehouses services planet install
 treehouses services planet port
@@ -414,6 +434,7 @@ treehouses services portainer autorun true
 treehouses services portainer cleanup
 treehouses services portainer down
 treehouses services portainer icon
+treehouses services portainer icon oneline
 treehouses services portainer info
 treehouses services portainer install
 treehouses services portainer port
@@ -433,6 +454,7 @@ treehouses services privatebin autorun true
 treehouses services privatebin cleanup
 treehouses services privatebin down
 treehouses services privatebin icon
+treehouses services privatebin icon oneline
 treehouses services privatebin info
 treehouses services privatebin install
 treehouses services privatebin port
@@ -451,6 +473,7 @@ treehouses services seafile autorun true
 treehouses services seafile cleanup
 treehouses services seafile down
 treehouses services seafile icon
+treehouses services seafile icon oneline
 treehouses services seafile info
 treehouses services seafile install
 treehouses services seafile port
@@ -492,6 +515,7 @@ treehouses staticwifi
 treehouses temperature
 treehouses temperature celsius
 treehouses temperature fahrenheit
+treehouses temperature kelvin
 treehouses timezone
 treehouses tor
 treehouses tor add

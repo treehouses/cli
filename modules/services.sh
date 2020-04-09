@@ -196,6 +196,9 @@ function services {
           services $service_name stop
           services $service_name up
           ;;
+        rebuild)
+          docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml build
+          ;;
         autorun)
           checkargn $# 3
           if [ -z "$command_option" ]; then

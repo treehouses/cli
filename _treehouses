@@ -523,13 +523,13 @@ treehouses tor delete
 treehouses tor deleteall
 treehouses tor destroy
 treehouses tor list
+treehouses tor notice
 treehouses tor notice add
 treehouses tor notice delete
 treehouses tor notice list
 treehouses tor notice now
 treehouses tor notice off
 treehouses tor notice on
-treehouses tor notice to
 treehouses tor refresh
 treehouses tor start
 treehouses tor status

@@ -255,7 +255,7 @@ function services {
             echo "service autorun set to false"
           else
             echo "ERROR: unknown command option"
-            echo "USAGE: $BASENAME services $service_name autorun <true | false>"
+            echo "USAGE: $BASENAME services $service_name autorun [true | false]"
             exit 1
           fi
           ;;
@@ -298,7 +298,7 @@ function services {
             services $service_name url tor
           else
             echo "ERROR: unknown command option"
-            echo "USAGE: $BASENAME services $service_name url <local | tor>"
+            echo "USAGE: $BASENAME services $service_name url [local | tor]"
             exit 1
           fi
           ;;

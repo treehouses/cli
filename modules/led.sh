@@ -76,7 +76,7 @@ function led {
       ;;
     heavymetal)
       checkroot
-      echo echo "leds are set to heavymetal mode."
+      echo "leds are set to heavymetal mode."
       echo "Look at your RPi leds, both leds will be in this pattern..."
       echo "Both LED: off; only at start"
       echo "Red LED: on 0.025 sec"

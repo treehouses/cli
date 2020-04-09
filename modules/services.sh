@@ -103,7 +103,7 @@ function services {
             retries=0
             while [ "$retries" -lt 2 ];
             do
-              if ! docker-compose -f /srv/${service_name}/${service_name}.yml pull ; then
+              if ! docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml pull ; then
                 echo "retrying pull"
                 ((retries+=1))
               else
@@ -151,7 +151,7 @@ function services {
           if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
             echo "${service_name}.yml not found"
           else
-            docker-compose -f /srv/${service_name}/${service_name}.yml down
+            docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down
             echo "${service_name} stopped and removed"
           fi
           ;;
@@ -163,7 +163,7 @@ function services {
               echo "try running '$BASENAME services ${service_name} install' first"
               exit 1
             else
-              if docker-compose -f /srv/${service_name}/${service_name}.yml start; then
+              if docker-compose --project-directory /srv/$service_namee -f /srv/${service_name}/${service_name}.yml start; then
                 echo "${service_name} started"
               fi
             fi
@@ -181,7 +181,7 @@ function services {
               echo "try running '$BASENAME services ${service_name} install' first"
               exit 1
             else
-              if docker-compose -f /srv/${service_name}/${service_name}.yml stop; then
+              if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml stop; then
                 echo "${service_name} stopped"
               fi
             fi
@@ -327,7 +327,7 @@ function services {
             echo "try running '$BASENAME services ${service_name} install' first"
             exit 1
           else
-            docker-compose -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
+            docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
             echo "${service_name} stopped and removed"
           fi
           for i in $(seq 1 "$(services $service_name port | wc -l)")
@@ -413,7 +413,7 @@ function docker_compose_up {
     echo "ERROR: /srv/${1}/${1}.yml not found"
     echo "try running '$BASENAME services ${1} install' first"
     exit 1
-  elif docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
+  elif docker-compose --project-directory /srv/$service_name -f /srv/${1}/${1}.yml -p ${1} up -d ; then
     echo "${1} built and started"
   else
     echo "ERROR: cannot build ${1}"

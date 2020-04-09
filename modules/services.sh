@@ -12,7 +12,10 @@ function services {
       for file in $SERVICES/*
       do
         if [[ ! $file = *"README.md"* ]]; then
-          echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//'
+          service=$(echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//')
+          if check_arm $service; then
+            echo $service
+          fi
         fi
       done
     else
@@ -85,7 +88,6 @@ function services {
       exit 1
     else
       check_available_services $service_name
-      check_arm $service_name
       case "$command" in
         install)
           checkargn $# 2
@@ -393,11 +395,7 @@ function check_arm {
       return 0
     fi
   done
-  echo "ERROR: unsupported arm"
-  echo "user arm: $(detectarm)"
-  echo "supported arm(s): ${arms[*]}"
-  exit 1
-  # return 1
+  return 1
 }
 
 function check_available_services {

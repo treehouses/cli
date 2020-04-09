@@ -57,7 +57,7 @@ function version {
       the latest Raspbian image by installing packages, purging packages and              .
       . executing custom commands, and then finally creates a bootable    .    .
 .            .img file that can be burned to the microSD card.     .
-    . @treehouses/control is A Python script running on Raspberry Pi 3 to  .
+    . @treehouses/control is A Python script running on a Raspberry Pi to  .
      receive commands (SSID & password) from / send executed results to an                                     .
   .                      Android Device over bluetooth              .
   zzzzzz zz zzzzzzzzz zzzzzz,  zzzzzzz zzzzzzz, zzzz zzzzzz, zzzzzzz zzzzz-  .

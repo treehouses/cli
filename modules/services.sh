@@ -354,8 +354,8 @@ function services {
           ;;
         environment)
           checkargn $# 3
-          if [ "$command_option" = "edit" ]; then
-            if source $SERVICES/install-${service_name}.sh && uses_env; then
+          if source $SERVICES/install-${service_name}.sh && uses_env; then
+            if [ "$command_option" = "edit" ]; then
               if [ -e /srv/$service_name/.env ]; then
                 vim /srv/$service_name/.env
               else
@@ -363,15 +363,15 @@ function services {
                 echo "try running '$BASENAME services $service_name install' first"
                 exit 1
               fi
+            elif [ "$command_option" = "check" ]; then
+              docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
             else
-              echo "$service_name does not take environment variables"
+              echo "ERROR: unknown command option"
+              echo "USAGE: $BASENAME services $service_name environment <edit | check>"
+              exit 1
             fi
-          elif [ "$command_option" = "check" ]; then
-            docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
           else
-            echo "ERROR: unknown command option"
-            echo "USAGE: $BASENAME services $service_name environment <edit | check>"
-            exit 1
+            echo "$service_name does not use environment variables"
           fi
           ;;
         *)

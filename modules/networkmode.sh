@@ -64,8 +64,7 @@ function networkmode {
       done
     fi
   else
-    networkmode_help
-    exit 1
+    echo "$network_mode"
   fi
 }
 

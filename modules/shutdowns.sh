@@ -11,7 +11,7 @@ function shutdowns {
       shutdown now
       ;;
     "in")
-       echo "shutting down in "$2" seconds. Press crtl+c to cancel"
+       echo "shutting down in $2 seconds. Press crtl+c to cancel"
        sleep "$2"
        shutdown now
        ;;

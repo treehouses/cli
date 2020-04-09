@@ -20,3 +20,8 @@ load test-helper
   run "${clicmd}" remote version 2060
   assert_success
 }
+
+@test "$clinom remote commands" {
+  run "${clicmd}" remote commands
+  assert_success
+}

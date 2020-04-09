@@ -21,7 +21,7 @@ function inspire() {
 
 function inspire_help {
   echo
-  echo "  Usage: $BASENAME inspire [fortune|joke|qotd|random]"
+  echo "  Usage: $BASENAME inspire [joke|qotd|random]"
   echo
   echo "  Prints out inspirational quote based on input."
   echo

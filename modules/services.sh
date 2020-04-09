@@ -138,7 +138,7 @@ function services {
             fi
           else
             check_space $service_name
-            validate_yml $service_name
+            # validate_yml $service_name
             docker_compose_up $service_name
           fi
           for i in $(seq 1 "$(services $service_name port | wc -l)")
@@ -352,6 +352,19 @@ function services {
             source $SERVICES/install-${service_name}.sh && get_icon
           fi
           ;;
+        environment)
+          checkargn $# 2
+          if [ source $SERVICES/install-${service_name}.sh && uses_env ]; then
+            if [ -e /srv/$service_name/.env ]; then
+              vim /srv/$service_name/.env
+            else
+              echo "ERROR: /srv/$service_name/.env not found"
+              echo "try running '$BASENAME services $service_name install' first"
+              exit 1
+            fi
+          else
+            echo "$service_name does not take environment variables"
+          fi
         *)
           echo "ERROR: unknown command"
           echo "USAGE: $BASENAME services $service_name install"
@@ -428,13 +441,13 @@ function check_tor {
   fi
 }
 
-function validate_yml {
-  if docker-compose --project-directory /srv/${1} -f /srv/${1}/${1}.yml config | grep -q "WARNING"; then
-    echo "ERROR: unable to validate yml"
-    echo "check that environment variables are correctly set"
-    exit 1
-  fi
-}
+# function validate_yml {
+#   if docker-compose --project-directory /srv/${1} -f /srv/${1}/${1}.yml config | grep -q "WARNING"; then
+#     echo "ERROR: unable to validate yml"
+#     echo "check that environment variables are correctly set"
+#     exit 1
+#   fi
+# }
 
 function services_help {
   echo

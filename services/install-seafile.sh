@@ -14,14 +14,23 @@ function install {
     echo "    ports:"
     echo "      - \"8085:8000\""
     echo "      - \"8086:8086\""
-    echo "    environment:        "
+    echo "    environment:"
     echo "      - SEAFILE_NAME=Seafile"
-    echo "      - SEAFILE_ADDRESS=$(treehouses tor) "
-    echo "      - SEAFILE_ADMIN=example@seafile.com "
-    echo "      - SEAFILE_ADMIN_PW=seacret "
-    echo "    volumes:          "
-    echo "      - /home/data/seafile:/seafile "
+    echo "      - SEAFILE_ADDRESS=$(treehouses tor)"
+    # echo "      - SEAFILE_ADMIN=example@seafile.com"
+    # echo "      - SEAFILE_ADMIN_PW=seacret"
+    echo "      - SEAFILE_ADMIN=${SEAFILE_ADMIN_VAR}"
+    echo "      - SEAFILE_ADMIN_PW=${SEAFILE_ADMIN_PW_VAR}"
+    echo "    volumes:"
+    echo "      - /home/data/seafile:/seafile"
   } > /srv/seafile/seafile.yml
+
+  # create .env
+  {
+    echo "SEAFILE_NAME_VAR="
+    echo "SEAFILE_ADMIN_VAR="
+    echo "SEAFILE_ADMIN_PW_VAR="
+  } > /srv/seafile/.env
 
   # add autorun
   {
@@ -33,6 +42,11 @@ function install {
     echo
     echo
   } > /srv/seafile/autorun
+}
+
+# environment var
+function uses_env {
+  return true
 }
 
 # add port(s)

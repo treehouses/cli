@@ -74,18 +74,6 @@ function led {
       echo "Red LED: 5 off: 5 on"
       lunarnewyear > "$LOGFILE"
       ;;
-    heavymetal)
-      checkroot
-      echo echo "leds are set to heavymetal mode."
-      echo "Look at your RPi leds, both leds will be in this pattern..."
-      echo "Both LED: off; only at start"
-      echo "Red LED: on 0.025 sec"
-      echo "Red LED: off 0.025 sec"
-      echo "Green LED: on 0.025 sec"
-      echo "Green LED: off 0.025 sec"
-      echo "this will happen 20 times"
-      heavymetal > "$LOGFILE"
-      ;;
     valentine)
       checkroot
       echo "leds are set to valentine mode."
@@ -210,25 +198,6 @@ function thanksgiving {
     set_brightness 0 0 && sleep 0.25
     set_brightness 1 1
     set_brightness 0 1 && sleep 0.25
-  done
-
-  led red "$current_red"
-  led green "$current_green"
-}
-
-function heavymetal {
-  current_red=$(led "red")
-  current_green=$(led "green")
-
-  set_brightness 0 0 && sleep 0.5    # green off
-  set_brightness 1 0 && sleep 0.5    # red off
-
-  for i in {0..19}
-  do
-    set_brightness 0 1 && sleep 0.025
-    set_brightness 0 0 && sleep 0.025  
-    set_brightness 1 1 && sleep 0.025
-    set_brightness 1 0 && sleep 0.025
   done
 
   led red "$current_red"
@@ -464,8 +433,5 @@ function led_help {
   echo
   echo "  $BASENAME led onam"
   echo "      This will set the mode of the led to onam"
-  echo
-  echo "  $BASENAME led heavymetal"
-  echo "      This will set the mode of the led to heavymetal"
   echo
 }

@@ -354,7 +354,7 @@ function services {
           ;;
         environment)
           checkargn $# 2
-          if [ source $SERVICES/install-${service_name}.sh && uses_env ]; then
+          if source $SERVICES/install-${service_name}.sh && uses_env; then
             if [ -e /srv/$service_name/.env ]; then
               vim /srv/$service_name/.env
             else

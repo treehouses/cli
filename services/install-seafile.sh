@@ -46,7 +46,7 @@ function install {
 
 # environment var
 function uses_env {
-  return true
+  echo true
 }
 
 # add port(s)

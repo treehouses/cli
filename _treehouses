@@ -488,6 +488,10 @@ treehouses services seafile url local
 treehouses services seafile url tor
 treehouses services running
 treehouses services running full
+treehouses shutdown 
+treehouses shutdown now
+treehouses shutdown in
+treehouses shutdown -f
 treehouses speedtest
 treehouses speedtest -h
 treehouses ssh off

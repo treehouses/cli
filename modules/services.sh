@@ -255,7 +255,7 @@ function services {
             echo "service autorun set to false"
           else
             echo "ERROR: unknown command option"
-            echo "USAGE: $BASENAME services autorun <true | false>"
+            echo "USAGE: $BASENAME services $service_name autorun <true | false>"
             exit 1
           fi
           ;;
@@ -298,7 +298,7 @@ function services {
             services $service_name url tor
           else
             echo "ERROR: unknown command option"
-            echo "USAGE: $BASENAME services url <local | tor>"
+            echo "USAGE: $BASENAME services $service_name url <local | tor>"
             exit 1
           fi
           ;;
@@ -353,17 +353,25 @@ function services {
           fi
           ;;
         environment)
-          checkargn $# 2
-          if source $SERVICES/install-${service_name}.sh && uses_env; then
-            if [ -e /srv/$service_name/.env ]; then
-              vim /srv/$service_name/.env
+          checkargn $# 3
+          if [ "$command_option" = "edit" ]; then
+            if source $SERVICES/install-${service_name}.sh && uses_env; then
+              if [ -e /srv/$service_name/.env ]; then
+                vim /srv/$service_name/.env
+              else
+                echo "ERROR: /srv/$service_name/.env not found"
+                echo "try running '$BASENAME services $service_name install' first"
+                exit 1
+              fi
             else
-              echo "ERROR: /srv/$service_name/.env not found"
-              echo "try running '$BASENAME services $service_name install' first"
-              exit 1
+              echo "$service_name does not take environment variables"
             fi
+          elif [ "$command_option" = "check" ]; then
+            docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
           else
-            echo "$service_name does not take environment variables"
+            echo "ERROR: unknown command option"
+            echo "USAGE: $BASENAME services $service_name environment <edit | check>"
+            exit 1
           fi
           ;;
         *)

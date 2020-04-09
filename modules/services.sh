@@ -76,7 +76,7 @@ function services {
         port_string+=" "
       done
       if [ ! -z "$port_string" ]; then
-        printf "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
+        printf "%-15s %15s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
       fi
     done
   else

@@ -365,6 +365,7 @@ function services {
           else
             echo "$service_name does not take environment variables"
           fi
+          ;;
         *)
           echo "ERROR: unknown command"
           echo "USAGE: $BASENAME services $service_name install"

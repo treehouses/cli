@@ -40,7 +40,7 @@ do
   fi
 done
 if [ "$find" = 1 ]; then
-  $@
+  "$@"
 else
   help
 fi

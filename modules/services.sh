@@ -88,13 +88,6 @@ function services {
       exit 1
     else
       check_available_services $service_name
-      check_arm $service_name
-      if ! check_arm $service_name; then
-        echo "ERROR: unsupported arm"
-        echo "user arm: $(detectarm)"
-        echo "supported arm(s): ${arms[*]}"
-        exit 1
-      fi
       case "$command" in
         install)
           checkargn $# 2
@@ -402,10 +395,6 @@ function check_arm {
       return 0
     fi
   done
-  # echo "ERROR: unsupported arm"
-  # echo "user arm: $(detectarm)"
-  # echo "supported arm(s): ${arms[*]}"
-  # exit 1
   return 1
 }
 

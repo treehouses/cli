@@ -107,6 +107,7 @@ function services {
                 echo "retrying pull"
                 ((retries+=1))
               else
+                services $service_name environment edit
                 echo "${service_name} installed"
                 exit 0
               fi

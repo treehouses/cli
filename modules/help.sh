@@ -24,6 +24,7 @@ Usage: treehouses
    wifistatus                                displays signal strength in dBm and layman nomenclature
    bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot
           [password] [hotspotPassword]
+   config [update|add|delete|clear]          commands for interacting with config file
    container <none|docker|balena>            enables (and start) the desired container
    bluetooth <on|off|pause|button|mac|id>    switches bluetooth from regular to hotspot mode and shows id or MAC address
    ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
@@ -83,6 +84,7 @@ Usage: treehouses
         [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
    usb [on|off]                              turns usb ports on or off
    remote [status|upgrade|services|version]  helps with treehouses remote android app
+          [commands|json]
    log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
    blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
    sdbench                                   displays read and write speed of micro SD card

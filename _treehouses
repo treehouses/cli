@@ -41,6 +41,11 @@ treehouses container
 treehouses container balena
 treehouses container docker
 treehouses container none
+treehouses config
+treehouses config update
+treehouses config add
+treehouses config delete
+treehouses config clear
 treehouses coralenv demo-always-on
 treehouses coralenv demo-off
 treehouses coralenv demo-on
@@ -211,6 +216,7 @@ treehouses reboots monthly
 treehouses reboots now
 treehouses reboots weekly
 treehouses remote commands
+treehouses remote json
 treehouses remote services available
 treehouses remote services installed
 treehouses remote services running

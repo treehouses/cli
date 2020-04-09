@@ -135,6 +135,10 @@ treehouses help wificountry
 treehouses help wifihidden
 treehouses help wifistatus
 treehouses image
+treehouses inspire
+treehouses inspire joke
+treehouses inspire qotd
+treehouses inspire random
 treehouses internet
 treehouses led
 treehouses led carnival
@@ -167,6 +171,7 @@ treehouses led red oneshot
 treehouses led red timer
 treehouses led thanksgiving
 treehouses led valentine
+treehouses led heavymetal
 treehouses locale
 treehouses log
 treehouses log 0
@@ -518,6 +523,7 @@ treehouses tor delete
 treehouses tor deleteall
 treehouses tor destroy
 treehouses tor list
+treehouses tor notice
 treehouses tor notice add
 treehouses tor notice delete
 treehouses tor notice list

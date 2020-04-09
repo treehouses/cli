@@ -9,6 +9,7 @@ function version {
     contribs+="\n$(curl -s "https://api.github.com/repos/treehouses/control/contributors" | jq '.[].login')"
     result=""
     read -r -d '' result <<'EOF'
+
    ______________________________________________________________________
   |:..                                                      ``:::%%%%%%HH|
   |%%%:::::..                    I n t r o                     `:::::%%%%|
@@ -74,7 +75,7 @@ function version {
     | |_ | |  |  __/|  __/| | | || (_) || |_| |\__ \|  __/\__ \ _ | || (_) |    
      \__||_|   \___| \___||_| |_| \___/  \__,_||___/ \___||___/(_)|_| \___/     
 EOF
-    final=$(echo -e "$result\n\n\n$contribs" | sed 's/"/   .    .    .     ./g' | awk '!x[$0]++')
+    final=$(echo -e "$result\n\n\n$contribs" | sed 's/"/      .       .       .       /g' | awk '!x[$0]++')
     while IFS= read -r line; do
       echo "$line"
       sleep 0.3

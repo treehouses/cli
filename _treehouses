@@ -314,6 +314,25 @@ treehouses services mastodon up
 treehouses services mastodon url
 treehouses services mastodon url local
 treehouses services mastodon url tor
+treehouses services mongodb autorun
+treehouses services mongodb autorun false
+treehouses services mongodb autorun true
+treehouses services mongodb cleanup
+treehouses services mongodb down
+treehouses services mongodb icon
+treehouses services mongodb icon oneline
+treehouses services mongodb info
+treehouses services mongodb install
+treehouses services mongodb port
+treehouses services mongodb ps
+treehouses services mongodb restart
+treehouses services mongodb size
+treehouses services mongodb start
+treehouses services mongodb stop
+treehouses services mongodb up
+treehouses services mongodb url
+treehouses services mongodb url local
+treehouses services mongodb url tor
 treehouses services moodle autorun
 treehouses services moodle autorun false
 treehouses services moodle autorun true

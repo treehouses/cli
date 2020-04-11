@@ -9,7 +9,7 @@ function install {
     echo "version: '3'"
     echo "services:"
     echo "  turtleblocksjs:"
-    echo "    image: treehouses/turtleblocksjs:balena"
+    echo "    image: treehouses/turtleblocksjs:latest"
     echo "    ports:"
     echo "      - 31001:80"
   } > /srv/turtleblocksjs/turtleblocksjs.yml

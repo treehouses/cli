@@ -2,7 +2,7 @@
 
 function install {
   # create service directory
-  mkdir -p /srv/seafile
+  mkdir -p /srv/mongo
 
   # create yml(s)
   {
@@ -56,7 +56,7 @@ function get_size {
 
 # add info
 function get_info {
-  echo "\"https://github.com/treehouses/rpi-mogno"
+  echo "\"https://github.com/treehouses/rpi-mongo"
   echo ""
   echo "MongoDB is a general purpose, document-based, " 
   echo "distributed database built for modern "

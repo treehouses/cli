@@ -41,6 +41,11 @@ treehouses container
 treehouses container balena
 treehouses container docker
 treehouses container none
+treehouses config
+treehouses config update
+treehouses config add
+treehouses config delete
+treehouses config clear
 treehouses coralenv demo-always-on
 treehouses coralenv demo-off
 treehouses coralenv demo-on
@@ -130,6 +135,10 @@ treehouses help wificountry
 treehouses help wifihidden
 treehouses help wifistatus
 treehouses image
+treehouses inspire
+treehouses inspire joke
+treehouses inspire qotd
+treehouses inspire random
 treehouses internet
 treehouses led
 treehouses led carnival
@@ -162,6 +171,7 @@ treehouses led red oneshot
 treehouses led red timer
 treehouses led thanksgiving
 treehouses led valentine
+treehouses led heavymetal
 treehouses locale
 treehouses log
 treehouses log 0
@@ -211,6 +221,7 @@ treehouses reboots monthly
 treehouses reboots now
 treehouses reboots weekly
 treehouses remote commands
+treehouses remote json
 treehouses remote services available
 treehouses remote services installed
 treehouses remote services running
@@ -531,6 +542,7 @@ treehouses tor delete
 treehouses tor deleteall
 treehouses tor destroy
 treehouses tor list
+treehouses tor notice
 treehouses tor notice add
 treehouses tor notice delete
 treehouses tor notice list
@@ -550,6 +562,7 @@ treehouses verbose
 treehouses verbose off
 treehouses verbose on
 treehouses version
+treehouses version contributors
 treehouses vnc
 treehouses vnc info
 treehouses vnc off

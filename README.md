@@ -36,7 +36,7 @@ expandfs                                  expands the partition of the RPI image
 rename <hostname>                         changes hostname
 password <password>                       changes the password for 'pi' user
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
-version                                   returns the version of cli.sh command
+version [contributors]                    returns the version of cli.sh command
 image                                     returns version of the system image installed
 detectbluetooth                           detects if bluetooth module is available
 detectrpi [model]                         detects the hardware version of a raspberry pi
@@ -52,6 +52,7 @@ staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a sta
 wifistatus                                displays signal strength in dBm and layman nomenclature
 bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot
        [password] [hotspotPassword]
+config [update|add|delete|clear]          commands for interacting with config file
 container <none|docker|balena>            enables (and start) the desired container
 bluetooth <on|off|pause|button|mac|id>    switches bluetooth from regular to hotspot mode and shows id or MAC address
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
@@ -111,10 +112,12 @@ camera [on|off|capture]                   enables camera, disables camera, captu
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off
-remote [status|upgrade|services]          helps with treehouses remote android app
+remote [status|upgrade|services|version]  helps with treehouses remote android app
+       [commands|json]
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
+inspire [joke|qotd|random]                displays quote based on user input
 ```
 ## Add a feature
 Feel free to make a pull request to our repository.  

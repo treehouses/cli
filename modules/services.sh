@@ -458,7 +458,7 @@ function services_help {
   echo "  couchdb      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
   echo "  mariadb      MariaDB is a community-developed fork of the MySQL relational database management system"
   echo "  seafile      Seafile is an open-source, cross-platform file-hosting software system"
-  echo
+  echo "  mongodb      MongoDB is a general purpose, distributed, document-based, NoSQL database."
   echo
   echo "Top-Level Commands:"
   echo

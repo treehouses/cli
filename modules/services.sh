@@ -444,7 +444,7 @@ function services_help {
   echo "  couchdb         CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
   echo "  mariadb         MariaDB is a community-developed fork of the MySQL relational database management system"
   echo "  seafile         Seafile is an open-source, cross-platform file-hosting software system"
-  echo "  turtleblocksjs  Turtle Blocks is an activity with a Logo-inspired graphical \"turtle\" "
+  echo "  turtleblocksjs  TurtleBlocks is an activity with a Logo-inspired graphical \"turtle\" "
   echo
   echo
   echo "Top-Level Commands:"

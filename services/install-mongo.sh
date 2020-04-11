@@ -6,15 +6,15 @@ function install {
 
   # create yml(s)
   {
-    echo "version: \"3\""
+    echo "version: '3'"
     echo
     echo "services:"
     echo "  mongo:"
     echo "    image: treehouses/rpi-mongo"
     echo "    restart: always "
     echo "    environment: "
-    echo "      - MONGO_INITDB_ROOT_USERNAME: root "
-    echo "      - MONGO_INITDB_ROOT_PASSWORD: example "
+    echo "      MONGO_INITDB_ROOT_USERNAME: root "
+    echo "      MONGO_INITDB_ROOT_PASSWORD: example "
     echo "    volumes : "
     echo "      - /home/data/mongo:/data/db "
     echo "  mongo-express: "

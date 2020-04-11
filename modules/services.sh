@@ -12,7 +12,10 @@ function services {
       for file in $SERVICES/*
       do
         if [[ ! $file = *"README.md"* ]]; then
-          echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//'
+          service=$(echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//')
+          if check_arm $service; then
+            echo $service
+          fi
         fi
       done
     else
@@ -76,7 +79,7 @@ function services {
         port_string+=" "
       done
       if [ ! -z "$port_string" ]; then
-        printf "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
+        printf "%-15s %15s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
       fi
     done
   else
@@ -85,7 +88,6 @@ function services {
       exit 1
     else
       check_available_services $service_name
-      check_arm $service_name
       case "$command" in
         install)
           checkargn $# 2
@@ -393,11 +395,7 @@ function check_arm {
       return 0
     fi
   done
-  echo "ERROR: unsupported arm"
-  echo "user arm: $(detectarm)"
-  echo "supported arm(s): ${arms[*]}"
-  exit 1
-  # return 1
+  return 1
 }
 
 function check_available_services {
@@ -447,19 +445,20 @@ function services_help {
   echo
   echo "Available Services:"
   echo
-  echo "  planet       Planet Learning is a generic learning system built in Angular & CouchDB"
-  echo "  kolibri      Kolibri is a learning platform using DJango"
-  echo "  nextcloud    Nextcloud is a safe home for all your data, files, etc"
-  echo "  netdata      Netdata is a distributed, real-time performance and health monitoring for systems"
-  echo "  mastodon     Mastodon is a free, open-source social network server"
-  echo "  moodle       Moodle is a Learning management system built in PHP"
-  echo "  pihole       Pi-hole is a DNS sinkhole that protects your devices from unwanted content"
-  echo "  privatebin   PrivateBin is a minimalist, open source online pastebin"
-  echo "  portainer    Portainer is a lightweight management UI for Docker environments"
-  echo "  ntopng       Ntopng is a network traffic probe that monitors network usage"
-  echo "  couchdb      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
-  echo "  mariadb      MariaDB is a community-developed fork of the MySQL relational database management system"
-  echo "  seafile      Seafile is an open-source, cross-platform file-hosting software system"
+  echo "  planet          Planet Learning is a generic learning system built in Angular & CouchDB"
+  echo "  kolibri         Kolibri is a learning platform using DJango"
+  echo "  nextcloud       Nextcloud is a safe home for all your data, files, etc"
+  echo "  netdata         Netdata is a distributed, real-time performance and health monitoring for systems"
+  echo "  mastodon        Mastodon is a free, open-source social network server"
+  echo "  moodle          Moodle is a Learning management system built in PHP"
+  echo "  pihole          Pi-hole is a DNS sinkhole that protects your devices from unwanted content"
+  echo "  privatebin      PrivateBin is a minimalist, open source online pastebin"
+  echo "  portainer       Portainer is a lightweight management UI for Docker environments"
+  echo "  ntopng          Ntopng is a network traffic probe that monitors network usage"
+  echo "  couchdb         CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
+  echo "  mariadb         MariaDB is a community-developed fork of the MySQL relational database management system"
+  echo "  seafile         Seafile is an open-source, cross-platform file-hosting software system"
+  echo "  turtleblocksjs  TurtleBlocks is an activity with a Logo-inspired graphical \"turtle\" "
   echo
   echo
   echo "Top-Level Commands:"

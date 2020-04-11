@@ -8,7 +8,7 @@ Usage: treehouses
    rename <hostname>                         changes hostname
    password <password>                       changes the password for 'pi' user
    sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
-   version                                   returns the version of treehouses command
+   version [contributors]                    returns the version of treehouses command
    image                                     returns version of the system image installed
    detectbluetooth                           detects if bluetooth module is available
    detectrpi [model]                         detects the hardware version of a raspberry pi
@@ -69,6 +69,7 @@ Usage: treehouses
       [couchdb]      <url [local|tor]>       CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
       [mariadb]      <port>                  MariaDB is a community-developed fork of the MySQL relational database management system
       [seafile]      <size>                  Seafile is an open-source, cross-platform file-hosting software system
+      [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art      
    tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
        [stop|destroy|notice|status|refresh]
    bootoption <console|desktop> [autologin]  sets the boot mode
@@ -88,6 +89,7 @@ Usage: treehouses
    log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
    blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
    sdbench                                   displays read and write speed of micro SD card
+   inspire [joke|qotd|random]                displays quote based on user input
 EOF
   echo "$helpdefault"
 }

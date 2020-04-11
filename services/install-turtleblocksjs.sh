@@ -26,6 +26,12 @@ function install {
   } > /srv/turtleblocksjs/autorun
 }
 
+# add supported arm(s)
+function supported_arms {
+  echo "v7l"
+  echo "v6l"
+}
+
 # add port(s)
 function get_ports {
   echo "31001"

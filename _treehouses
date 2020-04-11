@@ -486,6 +486,25 @@ treehouses services seafile up
 treehouses services seafile url
 treehouses services seafile url local
 treehouses services seafile url tor
+treehouses services turtleblocksjs autorun
+treehouses services turtleblocksjs autorun false
+treehouses services turtleblocksjs autorun true
+treehouses services turtleblocksjs cleanup
+treehouses services turtleblocksjs down
+treehouses services turtleblocksjs icon
+treehouses services turtleblocksjs icon oneline
+treehouses services turtleblocksjs info
+treehouses services turtleblocksjs install
+treehouses services turtleblocksjs port
+treehouses services turtleblocksjs ps
+treehouses services turtleblocksjs restart
+treehouses services turtleblcoksjs size
+treehouses services turtleblocksjs start
+treehouses services turtleblcoksjs stop
+treehouses services turtleblocksjs up
+treehouses services turtleblocksjs url
+treehouses services turtleblocksjs url local
+treehouses services turtleblocksjs url tor
 treehouses services running
 treehouses services running full
 treehouses speedtest

@@ -62,7 +62,7 @@ function get_info {
   echo "distributed database built for modern "
   echo "application developers and for the cloud era. " 
   echo "No database makes you more productive. "
-  echo "Mongo Express also installed as an admin interface"\""
+  echo "Mongo Express also installed as an admin interface"\"
 }
 
 # add svg icon

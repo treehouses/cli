@@ -9,9 +9,9 @@ function install {
     echo "version: '3'"
     echo "services:"
     echo "  turtleblocksjs:"
-    echo "    image: treehouses/turtleblocksjs:latest"
+    echo "    image: treehouses/turtleblocksjs"
     echo "    ports:"
-    echo "      - 31001:80"
+    echo "      - 8084:80"
   } > /srv/turtleblocksjs/turtleblocksjs.yml
 
   # add autorun
@@ -34,7 +34,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "31001"
+  echo "8084"
 }
 
 # add size (in MB)

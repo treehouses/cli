@@ -12,7 +12,7 @@ function install {
     echo "  mongo:"
     echo "    image: treehouses/rpi-mongo"
     echo "    restart: always "
-    echo "    environment:        "
+    echo "    environment: "
     echo "      - MONGO_INITDB_ROOT_USERNAME: root "
     echo "      - MONGO_INITDB_ROOT_PASSWORD: example "
     echo "    volumes : "

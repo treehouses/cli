@@ -61,7 +61,7 @@ Usage: treehouses
       [nextcloud]    <up>                    Nextcloud is a safe home for all your data, files, etc
       [netdata]      <down>                  Netdata is a distributed, real-time performance and health monitoring for systems
       [mastodon]     <start>                 Mastodon is a free, open-source social network server
-      [mongodb]      <stop>                  MongoDB is a general purpose, distributed, document-based, NoSQL database.
+      [mongo]        <stop>                  MongoDB is a general purpose, distributed, document-based, NoSQL database.
       [moodle]       <restart>               Moodle is a learning management system built in PHP
       [pihole]       <autorun [true|false]>  Pi-hole is a DNS sinkhole that protects your devices from unwanted content
       [privatebin]   <ps>                    PrivateBin is a minimalist, open source online pastebin

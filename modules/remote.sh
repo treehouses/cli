@@ -50,7 +50,11 @@ function remote {
     fi
   elif [ "$option" = "commands" ]; then
     source $SCRIPTFOLDER/_treehouses && _treehouses_complete 2>/dev/null
-    echo "$every_command"
+    while IFS= read -r line;
+    do
+      cmd_str+="\"$line\","
+    done <<< "$every_command"
+    printf "{["%s"]}\n" "${cmd_str::-1}"
   elif [ "$option" = "json" ]; then
     json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"}}\n"
 

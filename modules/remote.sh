@@ -50,7 +50,19 @@ function remote {
     fi
   elif [ "$option" = "commands" ]; then
     source $SCRIPTFOLDER/_treehouses && _treehouses_complete 2>/dev/null
-    echo "$every_command"
+    if [ -z "$2" ]; then
+      echo "$every_command"
+    elif [ "$2" = "json" ]; then
+      while IFS= read -r line;
+      do
+        cmd_str+="\"$line\","
+      done <<< "$every_command"
+      printf "{\"commands\":["%s"]}\n" "${cmd_str::-1}"
+    else
+      echo "Error: incorrect command"
+      echo "Usage: $BASENAME remote commands [json]"
+      exit 1
+    fi
   elif [ "$option" = "allservices" ]; then
     json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"}}\n"
 
@@ -101,7 +113,7 @@ function remote_help {
   echo "true if <version_number> >= \"remote_min_version\" in package.json"
   echo "false otherwise"
   echo
-  echo "$BASENAME remote commands"
+  echo "$BASENAME remote commands [json]"
   echo "returns a list of all commands for tab completion"
   echo
   echo "$BASENAME remote allservices"

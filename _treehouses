@@ -221,7 +221,7 @@ treehouses reboots monthly
 treehouses reboots now
 treehouses reboots weekly
 treehouses remote commands
-treehouses remote json
+treehouses remote allservices
 treehouses remote services available
 treehouses remote services installed
 treehouses remote services running
@@ -500,7 +500,7 @@ treehouses services turtleblocksjs ps
 treehouses services turtleblocksjs restart
 treehouses services turtleblcoksjs size
 treehouses services turtleblocksjs start
-treehouses services turtleblcoksjs stop
+treehouses services turtleblocksjs stop
 treehouses services turtleblocksjs up
 treehouses services turtleblocksjs url
 treehouses services turtleblocksjs url local

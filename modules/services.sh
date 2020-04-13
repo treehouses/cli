@@ -151,6 +151,7 @@ function services {
             echo "${service_name}.yml not found"
           else
             docker-compose -f /srv/${service_name}/${service_name}.yml down
+            remove_tor_port
             echo "${service_name} stopped and removed"
           fi
           ;;
@@ -329,17 +330,7 @@ function services {
             docker-compose -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
             echo "${service_name} stopped and removed"
           fi
-          for i in $(seq 1 "$(services $service_name port | wc -l)")
-          do
-            port=$(services $service_name port | sed -n "$i p")
-            if [ "$(tor status)" = "active" ] && (tor list | grep -w $port); then
-              if [[ $(pstree -ps $$) == *"ssh"* ]]; then
-                screen -dm bash -c "treehouses tor delete $port"
-              else
-                tor delete $port
-              fi
-            fi
-          done
+          remove_tor_port
           rm -rf /srv/${service_name}
           echo "${service_name} cleaned up"
           ;;
@@ -371,19 +362,6 @@ function services {
           ;;
       esac
     fi
-  fi
-}
-
-function docker_compose_up {
-  if [ ! -f /srv/${1}/${1}.yml ]; then
-    echo "ERROR: /srv/${1}/${1}.yml not found"
-    echo "try running '$BASENAME services ${1} install' first"
-    exit 1
-  elif docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
-    echo "${1} built and started"
-  else
-    echo "ERROR: cannot build ${1}"
-    exit 1
   fi
 }
 
@@ -439,6 +417,33 @@ function check_tor {
       fi
     fi
   fi
+}
+
+function docker_compose_up {
+  if [ ! -f /srv/${1}/${1}.yml ]; then
+    echo "ERROR: /srv/${1}/${1}.yml not found"
+    echo "try running '$BASENAME services ${1} install' first"
+    exit 1
+  elif docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
+    echo "${1} built and started"
+  else
+    echo "ERROR: cannot build ${1}"
+    exit 1
+  fi
+}
+
+function remove_tor_port {
+  for i in $(seq 1 "$(services $service_name port | wc -l)")
+  do
+    port=$(services $service_name port | sed -n "$i p")
+    if [ "$(tor status)" = "active" ] && (tor list | grep -w $port); then
+      if [[ $(pstree -ps $$) == *"ssh"* ]]; then
+        screen -dm bash -c "treehouses tor delete $port"
+      else
+        tor delete $port
+      fi
+    fi
+  done
 }
 
 function services_help {

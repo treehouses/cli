@@ -54,7 +54,7 @@ function remote {
     do
       cmd_str+="\"$line\","
     done <<< "$every_command"
-    printf "{["%s"]}\n" "${cmd_str::-1}"
+    printf "{\"commands\":["%s"]}\n" "${cmd_str::-1}"
   elif [ "$option" = "json" ]; then
     json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"}}\n"
 

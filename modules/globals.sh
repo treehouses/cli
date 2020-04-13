@@ -68,6 +68,13 @@ function checkwrpi {
   fi
 }
 
+function checkinternet {
+  if [[ $(internet) == "false" ]]; then
+    echo "Internet is not connected"
+    exit 1
+  fi
+}
+
 function checkwifi {
   if iwconfig wlan0 | grep -q "ESSID:off/any"; then
     echo "wifi is not connected"

@@ -113,7 +113,7 @@ function remote_help {
   echo "true if <version_number> >= \"remote_min_version\" in package.json"
   echo "false otherwise"
   echo
-  echo "$BASENAME remote commands"
+  echo "$BASENAME remote commands [json]"
   echo "returns a list of all commands for tab completion"
   echo
   echo "$BASENAME remote json"

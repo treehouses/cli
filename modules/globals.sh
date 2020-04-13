@@ -63,14 +63,14 @@ function checkargn {
 
 function checkwrpi {
   if [[ $(detectbluetooth) == "false" ]]; then
-    echo "Bluetooth does not exist on this device"
+    echo "Error: no Bluetooth device detected"
     exit 1
   fi
 }
 
 function checkinternet {
   if [[ $(internet) == "false" ]]; then
-    echo "Internet is not connected"
+    echo "Error: no Internet found"
     exit 1
   fi
 }

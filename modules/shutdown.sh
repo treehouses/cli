@@ -3,7 +3,9 @@ function shutdown {
   checkroot
   case "$1" in
     "")
-      /sbin/shutdown
+      echo "Shutting down in 60 seconds. Press crtl+c to cancel"
+      sleep 60
+      /sbin/shutdown now
        ;;
     "now")
       /sbin/shutdown now 
@@ -24,22 +26,22 @@ function shutdown {
 
 function shutdown_help {
   echo
-  echo "  Usage: $BASENAME shutdown <now|in|force>"
+  echo "Usage: $BASENAME shutdown <now|in|force>"
   echo
-  echo "  Shutdowns system"
+  echo "Shuts down the system"
   echo
-  echo "  Example:"
+  echo "Example:"
   echo "  $BASENAME shutdown"
-  echo "  System shutdowns in 60 seconds. shutdown -c to cancel"
+  echo "      System shutdown in 60 seconds. 'ctrl+c' to cancel"
   echo
   echo "  $BASENAME shutdown now"
-  echo "  System shutdowns immediately"
+  echo "      System shutdown immediately"
   echo 
-  echo " $BASENAME shutdown in <time in seconds>"
-  echo " System will shutdown after the specified time. ctrl+c to cancel"
+  echo "  $BASENAME shutdown in <time in seconds>"
+  echo "      System will shutdown after the specified time. 'ctrl+c' to cancel"
   echo 
-  echo " $BASENAME shutdown force"
-  echo " System will force shutdown"
+  echo "  $BASENAME shutdown force"
+  echo "      System will force shutdown"
   echo
 }
 

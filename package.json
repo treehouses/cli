@@ -26,7 +26,7 @@
     "ssh", "sshkey", "sshtunnel", "tor", "openvpn", "coral",
     "services", "container", "docker", "balena", "pihole", "turtleblocks",
     "kolibri", "moodle", "netdata", "nextcloud", "ntopng", "planet",
-    "portainer", "privatebin", "mastodon", "couchdb", "mariadb", "seafile"
+    "portainer", "privatebin", "mastodon", "couchdb", "mariadb", "seafile", "iot"
   ],
   "author": {
     "name": "OLE treehouses team",

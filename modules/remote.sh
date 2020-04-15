@@ -18,12 +18,16 @@ function remote {
       echo "Installed: $(services installed)"
     elif [ "$2" = "running" ]; then
       echo "Running: $(services running)"
+    else
+      echo "Error: incorrect command"
+      echo "Usage: $BASENAME remote services <available | installed | running>"
+      exit 1
     fi
   elif [ "$option" = "version" ]; then
     checkargn $# 2
     if [ -z "$2" ]; then
-      echo "version number required"
-      echo "usage: $BASENAME remote version <version_number>"
+      echo "Error: version number required"
+      echo "Usage: $BASENAME remote version <version_number>"
       exit 1
     fi
     if ! [[ "$2" =~ ^[0-9]+$ ]]; then
@@ -31,9 +35,9 @@ function remote {
       exit 1
     fi
     if [ "$2" -ge "$(node -p "require('$SCRIPTFOLDER/package.json').remote")" ]; then
-      echo "version: true"
+      echo "Version: true"
     else
-      echo "version: false"
+      echo "Version: false"
     fi
   elif [ "$option" = "commands" ]; then
     checkargn $# 2
@@ -70,8 +74,8 @@ function remote {
 
     printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}"
   else
-    echo "unknown command option"
-    echo "usage: $BASENAME remote [status | upgrade | services | version | commands | allservices]"
+    echo "Unknown command option"
+    echo "Usage: $BASENAME remote [status | upgrade | services | version | commands | allservices]"
   fi
 }
 

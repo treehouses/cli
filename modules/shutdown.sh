@@ -26,7 +26,7 @@ function shutdown {
 
 function shutdown_help {
   echo
-  echo "Usage: $BASENAME shutdown <now|in|force>"
+  echo "Usage: $BASENAME shutdown [now|in|force]"
   echo
   echo "Shuts down the system"
   echo

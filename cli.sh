@@ -25,9 +25,14 @@ if [[ -f "$CONFIGFILE" ]]; then
   source "$CONFIGFILE"
 fi
 
-if [[ "$LOG" == "max" ]]; then
-  set -x
-  exec 1> >(tee >(logger -t @treehouses/cli)) 2>&1
+if [[ "$1" == "-"* ]]; then
+  if [ ${#1} -gt 2 ] || [ ${#1} -lt 2 ] || [[ ${1:1} != *[[abefhkmnptuvxBCHP]* ]]; then
+    echo "Error: $1 option not supported please use [-abefhkmnptuvxBCHP] see 'set --help' for usage"
+    exit 1
+  else
+    set "$1"
+    shift
+  fi
 fi
 
 for f in $SCRIPTFOLDER/modules/*.sh

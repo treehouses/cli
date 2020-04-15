@@ -13,18 +13,18 @@ function shutdown {
       sleep "$2"
       /sbin/shutdown now
       ;;
-    "-f") 
+    "force") 
       /sbin/shutdown -f
       ;;
     *)
-       echo "Error: only now, in and -f commands works"
+       echo "Error: only now, in and force commands works"
        ;;       
   esac
 } 
 
 function shutdown_help {
   echo
-  echo "  Usage: $BASENAME shutdown <now|in|-f>"
+  echo "  Usage: $BASENAME shutdown <now|in|force>"
   echo
   echo "  Shutdowns system"
   echo
@@ -38,7 +38,7 @@ function shutdown_help {
   echo " $BASENAME shutdown in <time in seconds>"
   echo " System will shutdown after the specified time. ctrl+c to cancel"
   echo 
-  echo " $BASENAME shutdown -f"
+  echo " $BASENAME shutdown force"
   echo " System will force shutdown"
   echo
 }

@@ -491,7 +491,7 @@ treehouses services running full
 treehouses shutdown 
 treehouses shutdown now
 treehouses shutdown in
-treehouses shutdown -f
+treehouses shutdown force
 treehouses speedtest
 treehouses speedtest -h
 treehouses ssh off

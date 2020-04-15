@@ -25,9 +25,8 @@ If you run into any problems check if your RPi is supported [here](https://githu
 ## Features
 
 ```
-Usage: treehouses [-abefhkmnptuvxBCHP] [command] ...
+Usage: treehouses [command] ...
 
-for [-abefhkmnptuvxBCHP] usage check 'set --help'
 
 Commands:
 

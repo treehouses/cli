@@ -7,9 +7,14 @@ function bluetooth {
 
   if [ -z "$status" ]; then
     if [[ "$(service rpibluetooth status | grep "Active:")" =~ "running" ]]; then
-      echo "on"
+      echo "rpibluetooth service status: on"
     else
-      echo "off"
+      echo "rpibluetooth service status: off"
+    fi
+    if [[ "$(service bluetooth status | grep "Active:")" =~ "running" ]]; then
+      echo "bluetooth service status: on"
+    else
+      echo "bluetooth service status: off"
     fi
 
   elif [ "$status" = "on" ]; then
@@ -76,7 +81,8 @@ function bluetooth_help {
   echo
   echo "Example:"
   echo "  $BASENAME bluetooth"
-  echo "      off"
+  echo "      rpibluetooth service status: on"
+  echo "      bluetooth service status: on"
   echo 
   echo "  $BASENAME bluetooth on"
   echo "      This will start the bluetooth server, which lets the user control the raspberry pi using the mobile app."

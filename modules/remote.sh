@@ -2,38 +2,25 @@ function remote {
   local option results
   checkroot
   checkrpi
-  checkargn $# 2
   option="$1"
 
   if [ "$option" = "status" ]; then
-    results=""
-    results+="$(internet) "
-    results+="$(bluetooth mac) "
-    results+="$(image) "
-    results+="$(version) "
-    results+="$(detectrpi)"
-
-    echo ${results}
+    checkargn $# 1
+    echo "$(internet) $(bluetooth mac) $(image) $(version) $(detectrpi)"
   elif [ "$option" = "upgrade" ]; then
+    checkargn $# 1
     upgrade --check
   elif [ "$option" = "services" ]; then
+    checkargn $# 2
     if [ "$2" = "available" ]; then
-      results="Available: "
-      results+="$(services available)"
-
-      echo ${results}
+      echo "Available: $(services available)"
     elif [ "$2" = "installed" ]; then
-      results="Installed: "
-      results+="$(services installed)"
-
-      echo ${results}
+      echo "Installed: $(services installed)"
     elif [ "$2" = "running" ]; then
-      results="Running: "
-      results+="$(services running)"
-
-      echo ${results}
+      echo "Running: $(services running)"
     fi
   elif [ "$option" = "version" ]; then
+    checkargn $# 2
     if [ -z "$2" ]; then
       echo "version number required"
       echo "usage: $BASENAME remote version <version_number>"
@@ -49,6 +36,7 @@ function remote {
       echo "version: false"
     fi
   elif [ "$option" = "commands" ]; then
+    checkargn $# 2
     source $SCRIPTFOLDER/_treehouses && _treehouses_complete 2>/dev/null
     if [ -z "$2" ]; then
       echo "$every_command"
@@ -64,6 +52,7 @@ function remote {
       exit 1
     fi
   elif [ "$option" = "allservices" ]; then
+    checkargn $# 1
     json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"}}\n"
 
     available_str=$(services available | sed 's/^\|$/"/g' | paste -d, -s)

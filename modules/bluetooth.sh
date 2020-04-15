@@ -63,14 +63,19 @@ function bluetooth {
    elif [ "$status" = "button" ]; then
      button bluetooth
 
+   elif [ "$status" = "log" ]; then
+     checkargn $# 1
+     echo "press (ctrl+c) to cancel"
+     journalctl -u rpibluetooth -u bluetooth -f
+
   else
-    echo "Error: only 'on', 'off', 'pause' options are supported";
+    echo "Error: only 'on', 'off', 'pause', 'mac', 'id', 'button', 'log' options are supported";
   fi
 }
 
 function bluetooth_help {
   echo
-  echo "Usage: $BASENAME bluetooth <on|off|pause|mac|id|button>"
+  echo "Usage: $BASENAME bluetooth <on|off|pause|mac|id|button|log>"
   echo
   echo "Switches between hotspot / regular bluetooth mode, or displays the bluetooth mac address"
   echo
@@ -101,5 +106,9 @@ function bluetooth_help {
   echo
   echo "  $BASENAME bluetooth id number"
   echo "      This will display the bluetooth id number"
+  echo
+  echo "  $BASENAME bluetooth log"
+  echo "      This will follow and display the real time logs of bluetooth services"
+  echo "      (ctrl+c) to cancel"
   echo
 }

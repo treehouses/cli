@@ -70,7 +70,7 @@ function bluetooth {
 
 function bluetooth_help {
   echo
-  echo "Usage: $BASENAME bluetooth <on|off|pause|mac|id|button>"
+  echo "Usage: $BASENAME bluetooth [on|off|pause|mac|id|button]"
   echo
   echo "Switches between hotspot / regular bluetooth mode, or displays the bluetooth mac address"
   echo

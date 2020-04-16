@@ -20,7 +20,7 @@ function remote {
       echo $results
     elif [ "$2" = "running" ]; then
       results="Running: $(services running)"
-      ehco $results
+      echo $results
     else
       echo "Error: incorrect command"
       echo "Usage: $BASENAME remote services <available | installed | running>"

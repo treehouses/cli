@@ -7,6 +7,7 @@ function version {
     contribs+="\n$(curl -s "https://api.github.com/repos/treehouses/remote/contributors" | jq '.[].login')"
     contribs+="\n$(curl -s "https://api.github.com/repos/treehouses/builder/contributors" | jq '.[].login')"
     contribs+="\n$(curl -s "https://api.github.com/repos/treehouses/control/contributors" | jq '.[].login')"
+    contribs=$(echo -e "$contribs" | sort)
     result=""
     read -r -d '' result <<'EOF'
 

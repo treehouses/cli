@@ -64,6 +64,7 @@ function bluetooth {
     esac
 
    elif [ "$status" = "button" ]; then
+     checkargn $# 1
      button bluetooth
 
   else

@@ -80,8 +80,8 @@ function remote {
 
     printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}"
   else
-    echo "unknown command option"
-    echo "usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"
+    echo "Unknown command option"
+    echo "Usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"
   fi
 }
 

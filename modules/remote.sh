@@ -38,9 +38,9 @@ function remote {
       exit 1
     fi
     if [ "$2" -ge "$(node -p "require('$SCRIPTFOLDER/package.json').remote")" ]; then
-      echo "Version: true"
+      echo "version: true"
     else
-      echo "Version: false"
+      echo "version: false"
     fi
   elif [ "$option" = "commands" ]; then
     checkargn $# 2

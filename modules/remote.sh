@@ -7,7 +7,7 @@ function remote {
   if [ "$option" = "check" ]; then
     checkargn $# 1
     echo "$(bluetooth mac) $(image) $(version) $(detectrpi)"
-  if [ "$option" = "status" ]; then
+  elif [ "$option" = "status" ]; then
     checkargn $# 1
     echo "$(internet) $(bluetooth mac) $(image) $(version) $(detectrpi)"
   elif [ "$option" = "upgrade" ]; then

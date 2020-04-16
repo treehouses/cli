@@ -13,11 +13,14 @@ function remote {
   elif [ "$option" = "services" ]; then
     checkargn $# 2
     if [ "$2" = "available" ]; then
-      echo "Available: $(services available)"
+      results="Available: $(services available)"
+      echo $results
     elif [ "$2" = "installed" ]; then
-      echo "Installed: $(services installed)"
+      results="Installed: $(services installed)"
+      echo $results
     elif [ "$2" = "running" ]; then
-      echo "Running: $(services running)"
+      results="Running: $(services running)"
+      ehco $results
     else
       echo "Error: incorrect command"
       echo "Usage: $BASENAME remote services <available | installed | running>"

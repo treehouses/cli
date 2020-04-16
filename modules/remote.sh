@@ -2,44 +2,38 @@ function remote {
   local option results
   checkroot
   checkrpi
-  checkargn $# 2
   option="$1"
 
   if [ "$option" = "check" ]; then
     checkargn $# 1
     echo "$(bluetooth mac) $(image) $(version) $(detectrpi)"
-  elif [ "$option" = "status" ]; then
-    results=""
-    results+="$(internet) "
-    results+="$(bluetooth mac) "
-    results+="$(image) "
-    results+="$(version) "
-    results+="$(detectrpi)"
-
-    echo ${results}
+  if [ "$option" = "status" ]; then
+    checkargn $# 1
+    echo "$(internet) $(bluetooth mac) $(image) $(version) $(detectrpi)"
   elif [ "$option" = "upgrade" ]; then
+    checkargn $# 1
     upgrade --check
   elif [ "$option" = "services" ]; then
+    checkargn $# 2
     if [ "$2" = "available" ]; then
-      results="Available: "
-      results+="$(services available)"
-
-      echo ${results}
+      results="Available: $(services available)"
+      echo $results
     elif [ "$2" = "installed" ]; then
-      results="Installed: "
-      results+="$(services installed)"
-
-      echo ${results}
+      results="Installed: $(services installed)"
+      echo $results
     elif [ "$2" = "running" ]; then
-      results="Running: "
-      results+="$(services running)"
-
-      echo ${results}
+      results="Running: $(services running)"
+      echo $results
+    else
+      echo "Error: incorrect command"
+      echo "Usage: $BASENAME remote services <available | installed | running>"
+      exit 1
     fi
   elif [ "$option" = "version" ]; then
+    checkargn $# 2
     if [ -z "$2" ]; then
-      echo "version number required"
-      echo "usage: $BASENAME remote version <version_number>"
+      echo "Error: version number required"
+      echo "Usage: $BASENAME remote version <version_number>"
       exit 1
     fi
     if ! [[ "$2" =~ ^[0-9]+$ ]]; then
@@ -52,6 +46,7 @@ function remote {
       echo "version: false"
     fi
   elif [ "$option" = "commands" ]; then
+    checkargn $# 2
     source $SCRIPTFOLDER/_treehouses && _treehouses_complete 2>/dev/null
     if [ -z "$2" ]; then
       echo "$every_command"
@@ -67,6 +62,7 @@ function remote {
       exit 1
     fi
   elif [ "$option" = "allservices" ]; then
+    checkargn $# 1
     json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"}}\n"
 
     available_str=$(services available | sed 's/^\|$/"/g' | paste -d, -s)

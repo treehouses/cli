@@ -36,7 +36,7 @@ expandfs                                  expands the partition of the RPI image
 rename <hostname>                         changes hostname
 password <password>                       changes the password for 'pi' user
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
-version                                   returns the version of cli.sh command
+version [contributors]                    returns the version of cli.sh command
 image                                     returns version of the system image installed
 detectbluetooth                           detects if bluetooth module is available
 detectrpi [model]                         detects the hardware version of a raspberry pi
@@ -54,7 +54,8 @@ bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan 
        [password] [hotspotPassword]
 config [update|add|delete|clear]          commands for interacting with config file
 container <none|docker|balena>            enables (and start) the desired container
-bluetooth <on|off|pause|button|mac|id>    switches bluetooth from regular to hotspot mode and shows id or MAC address
+bluetooth [on|off|pause|button|mac|id]    switches bluetooth from regular to hotspot mode and shows id or MAC address
+          [status]
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
 aphidden <local|internet> <ESSID>         creates a hidden mobile ap with or without internet access
          [password]
@@ -97,6 +98,7 @@ services                                  executes the given command on the spec
    [couchdb]      <url [local|tor]>       CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
    [mariadb]      <port>                  MariaDB is a community-developed fork of the MySQL relational database management system
    [seafile]      <size>                  Seafile is an open-source, cross-platform file-hosting software system
+   [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art       
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
@@ -111,8 +113,8 @@ camera [on|off|capture]                   enables camera, disables camera, captu
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off
-remote [status|upgrade|services|version]  helps with treehouses remote android app
-       [commands|json]
+remote [check|status|upgrade|services]    helps with treehouses remote android app
+       [version|commands|allservices]
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card

@@ -2,41 +2,38 @@ function remote {
   local option results
   checkroot
   checkrpi
-  checkargn $# 2
   option="$1"
 
-  if [ "$option" = "status" ]; then
-    results=""
-    results+="$(internet) "
-    results+="$(bluetooth mac) "
-    results+="$(image) "
-    results+="$(version) "
-    results+="$(detectrpi)"
-
-    echo ${results}
+  if [ "$option" = "check" ]; then
+    checkargn $# 1
+    echo "$(bluetooth mac) $(image) $(version) $(detectrpi)"
+  elif [ "$option" = "status" ]; then
+    checkargn $# 1
+    echo "$(internet) $(bluetooth mac) $(image) $(version) $(detectrpi)"
   elif [ "$option" = "upgrade" ]; then
+    checkargn $# 1
     upgrade --check
   elif [ "$option" = "services" ]; then
+    checkargn $# 2
     if [ "$2" = "available" ]; then
-      results="Available: "
-      results+="$(services available)"
-
-      echo ${results}
+      results="Available: $(services available)"
+      echo $results
     elif [ "$2" = "installed" ]; then
-      results="Installed: "
-      results+="$(services installed)"
-
-      echo ${results}
+      results="Installed: $(services installed)"
+      echo $results
     elif [ "$2" = "running" ]; then
-      results="Running: "
-      results+="$(services running)"
-
-      echo ${results}
+      results="Running: $(services running)"
+      echo $results
+    else
+      echo "Error: incorrect command"
+      echo "Usage: $BASENAME remote services <available | installed | running>"
+      exit 1
     fi
   elif [ "$option" = "version" ]; then
+    checkargn $# 2
     if [ -z "$2" ]; then
-      echo "version number required"
-      echo "usage: $BASENAME remote version <version_number>"
+      echo "Error: version number required"
+      echo "Usage: $BASENAME remote version <version_number>"
       exit 1
     fi
     if ! [[ "$2" =~ ^[0-9]+$ ]]; then
@@ -49,9 +46,23 @@ function remote {
       echo "version: false"
     fi
   elif [ "$option" = "commands" ]; then
+    checkargn $# 2
     source $SCRIPTFOLDER/_treehouses && _treehouses_complete 2>/dev/null
-    echo "$every_command"
-  elif [ "$option" = "json" ]; then
+    if [ -z "$2" ]; then
+      echo "$every_command"
+    elif [ "$2" = "json" ]; then
+      while IFS= read -r line;
+      do
+        cmd_str+="\"$line\","
+      done <<< "$every_command"
+      printf "{\"commands\":["%s"]}\n" "${cmd_str::-1}"
+    else
+      echo "Error: incorrect command"
+      echo "Usage: $BASENAME remote commands [json]"
+      exit 1
+    fi
+  elif [ "$option" = "allservices" ]; then
+    checkargn $# 1
     json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"}}\n"
 
     available_str=$(services available | sed 's/^\|$/"/g' | paste -d, -s)
@@ -69,17 +80,25 @@ function remote {
 
     printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}"
   else
-    echo "unknown command option"
-    echo "usage: $BASENAME remote [status | upgrade | services | version | commands | json]"
+    echo "Unknown command option"
+    echo "Usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"
   fi
 }
 
 function remote_help {
   echo
-  echo "Usage: $BASENAME remote [status | upgrade | services | version | commands | json]"
+  echo "Usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"
   echo
   echo "Returns a string representation of the current status of the Raspberry Pi"
   echo "Used for Treehouses Remote"
+  echo
+  echo "$BASENAME remote check"
+  echo "<bluetooth mac> <image> <version> <detectrpi>"
+  echo "     │            │           │        │"
+  echo "     │            │           │        └── model number of rpi"
+  echo "     │            │           └─────────── current cli version"
+  echo "     │            └─────────────────────── current treehouses image version"
+  echo "     └──────────────────────────────────── bluetooth mac address"
   echo
   echo "$BASENAME remote status"
   echo "<internet> <bluetooth mac> <image> <version> <detectrpi>"
@@ -101,10 +120,10 @@ function remote_help {
   echo "true if <version_number> >= \"remote_min_version\" in package.json"
   echo "false otherwise"
   echo
-  echo "$BASENAME remote commands"
+  echo "$BASENAME remote commands [json]"
   echo "returns a list of all commands for tab completion"
   echo
-  echo "$BASENAME remote json"
+  echo "$BASENAME remote allservices"
   echo "returns json string of services"
   echo
 }

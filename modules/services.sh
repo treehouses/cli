@@ -408,7 +408,7 @@ function check_space {
 function check_tor {
   if [ "$(tor status)" = "active" ]; then
     echo "tor active"
-    if ! tor list | grep -w $1; then
+    if ! tor ports | grep -w $1; then
       echo "adding port ${1}"
       if [[ $(pstree -ps $$) == *"ssh"* ]]; then
         screen -dm bash -c "treehouses tor add ${1}"
@@ -436,7 +436,7 @@ function remove_tor_port {
   for i in $(seq 1 "$(services $service_name port | wc -l)")
   do
     port=$(services $service_name port | sed -n "$i p")
-    if [ "$(tor status)" = "active" ] && (tor list | grep -w $port); then
+    if [ "$(tor status)" = "active" ] && (tor ports | grep -w $port); then
       if [[ $(pstree -ps $$) == *"ssh"* ]]; then
         screen -dm bash -c "treehouses tor delete $port"
       else

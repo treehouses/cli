@@ -139,7 +139,9 @@ function services {
             fi
           else
             check_space $service_name
-            # validate_yml $service_name
+            if [ $(source $SERVICES/install-${service_name}.sh && uses_env) = "true" ]; then
+              validate_yml $service_name
+            fi
             docker_compose_up $service_name
           fi
           for i in $(seq 1 "$(services $service_name port | wc -l)")
@@ -451,20 +453,27 @@ function check_tor {
   fi
 }
 
-# function validate_yml {
-#   if docker-compose --project-directory /srv/${1} -f /srv/${1}/${1}.yml config | grep -q "WARNING"; then
-#     echo "ERROR: unable to validate yml"
-#     echo "check that environment variables are correctly set"
-#     exit 1
-#   fi
-# }
+function validate_yml {
+  if [ ! -f /srv/${1}/.env ]; then
+    echo "ERROR: /srv/${1}/.env not found"
+    exit 1
+  else
+    while read -r line; do
+      if [[ $line == *"= "* ]] | [[ $line == *"=\n"* ]] | [[ $line == *"=\t"* ]]; then
+        echo "ERROR: unset environment variable:"
+        echo $line
+        exit 1
+      fi
+    done < /srv/${1}/.env
+  fi
+}
 
 function services_help {
   echo
   echo "Available Services:"
   echo
   echo "  planet       Planet Learning is a generic learning system built in Angular & CouchDB"
-  echo "  kolibri      Kolibri is a learning platform using DJango"
+  echo "  kolibri      Kolibri is a learning platform using Django"
   echo "  nextcloud    Nextcloud is a safe home for all your data, files, etc"
   echo "  netdata      Netdata is a distributed, real-time performance and health monitoring for systems"
   echo "  mastodon     Mastodon is a free, open-source social network server"

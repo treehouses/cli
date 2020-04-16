@@ -24,6 +24,7 @@ treehouses bluetooth mac
 treehouses bluetooth off
 treehouses bluetooth on
 treehouses bluetooth pause
+treehouses bluetooth status
 treehouses bootoption console
 treehouses bootoption console autologin
 treehouses bootoption desktop
@@ -220,6 +221,7 @@ treehouses reboots in
 treehouses reboots monthly
 treehouses reboots now
 treehouses reboots weekly
+treehouses remote check
 treehouses remote commands
 treehouses remote allservices
 treehouses remote services available
@@ -507,6 +509,10 @@ treehouses services turtleblocksjs url local
 treehouses services turtleblocksjs url tor
 treehouses services running
 treehouses services running full
+treehouses shutdown 
+treehouses shutdown now
+treehouses shutdown in
+treehouses shutdown force
 treehouses speedtest
 treehouses speedtest -h
 treehouses ssh off

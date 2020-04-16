@@ -4,7 +4,10 @@ function remote {
   checkrpi
   option="$1"
 
-  if [ "$option" = "status" ]; then
+  if [ "$option" = "check" ]; then
+    checkargn $# 1
+    echo "$(bluetooth mac) $(image) $(version) $(detectrpi)"
+  elif [ "$option" = "status" ]; then
     checkargn $# 1
     echo "$(internet) $(bluetooth mac) $(image) $(version) $(detectrpi)"
   elif [ "$option" = "upgrade" ]; then
@@ -78,16 +81,24 @@ function remote {
     printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}"
   else
     echo "Unknown command option"
-    echo "Usage: $BASENAME remote [status | upgrade | services | version | commands | allservices]"
+    echo "Usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"
   fi
 }
 
 function remote_help {
   echo
-  echo "Usage: $BASENAME remote [status | upgrade | services | version | commands | allservices]"
+  echo "Usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"
   echo
   echo "Returns a string representation of the current status of the Raspberry Pi"
   echo "Used for Treehouses Remote"
+  echo
+  echo "$BASENAME remote check"
+  echo "<bluetooth mac> <image> <version> <detectrpi>"
+  echo "     │            │           │        │"
+  echo "     │            │           │        └── model number of rpi"
+  echo "     │            │           └─────────── current cli version"
+  echo "     │            └─────────────────────── current treehouses image version"
+  echo "     └──────────────────────────────────── bluetooth mac address"
   echo
   echo "$BASENAME remote status"
   echo "<internet> <bluetooth mac> <image> <version> <detectrpi>"

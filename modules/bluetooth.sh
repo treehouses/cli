@@ -2,7 +2,7 @@ function bluetooth {
   local status macfile macadd btidfile bid nname
   checkwrpi
   checkroot
-  checkargn $# 2
+  checkargn $# 1
   status=$1
 
   if [ -z "$status" ]; then

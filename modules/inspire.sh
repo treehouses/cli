@@ -3,6 +3,7 @@
 function inspire() {
   checkrpi
   checkargn $# 1
+  checkinternet
   case "$1" in
     "")
       curl -s 'https://api.quotable.io/random' | python3 -c "import sys, json; print(json.load(sys.stdin)['content'])"

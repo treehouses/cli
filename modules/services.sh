@@ -458,13 +458,15 @@ function validate_yml {
     echo "ERROR: /srv/${1}/.env not found"
     exit 1
   else
+    echo "validating yml"
     while read -r line; do
-      if [[ $line == *"= "* ]] | [[ $line == *"=\n"* ]] | [[ $line == *"=\t"* ]]; then
+      if [[ $line == *=[[:space:]]* ]] || [[ $line =~ "="$ ]]; then
         echo "ERROR: unset environment variable:"
         echo $line
         exit 1
       fi
     done < /srv/${1}/.env
+    echo "valid yml"
   fi
 }
 

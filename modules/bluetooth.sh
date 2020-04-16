@@ -25,6 +25,7 @@ function bluetooth {
     fi
 
   elif [ "$status" = "on" ]; then
+    checkargn $# 1
     cp "$TEMPLATES/bluetooth/hotspot" /etc/systemd/system/dbus-org.bluez.service
     enable_service rpibluetooth
     restart_service bluetooth
@@ -33,6 +34,7 @@ function bluetooth {
     echo "Success: the bluetooth service has been started."
 
   elif [ "$status" = "off" ] || [ "$status" = "pause" ]; then
+    checkargn $# 1
     cp "$TEMPLATES/bluetooth/default" /etc/systemd/system/dbus-org.bluez.service
     disable_service rpibluetooth
     stop_service rpibluetooth
@@ -45,6 +47,7 @@ function bluetooth {
     echo "Success: the bluetooth service has been switched to default, and the service has been stopped."
 
   elif [ "$status" = "mac" ]; then
+    checkargn $# 1
     macfile=/sys/kernel/debug/bluetooth/hci0/identity
     macadd=$(cat ${macfile})
     echo "${macadd:0:17}"
@@ -73,6 +76,7 @@ function bluetooth {
     esac
 
    elif [ "$status" = "button" ]; then
+     checkargn $# 1
      button bluetooth
 
   else

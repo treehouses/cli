@@ -20,7 +20,7 @@ function tor {
     exit 0
   fi
 
-  if [ "$1" = "list" ]; then
+  if [ "$1" = "ports" ]; then
     echo "external <=> local"
     grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g'
   elif [ "$1" = "add" ]; then
@@ -184,7 +184,7 @@ function tor_help {
   echo "  $BASENAME tor"
   echo "      Outputs the hostname of the tor service"
   echo
-  echo "  $BASENAME tor list"
+  echo "  $BASENAME tor ports"
   echo "      Outputs the ports that are exposed on the tor network"
   echo "      Example:"
   echo "        external <=> local"

@@ -70,7 +70,7 @@ Usage: treehouses
       [mariadb]      <port>                  MariaDB is a community-developed fork of the MySQL relational database management system
       [seafile]      <size>                  Seafile is an open-source, cross-platform file-hosting software system
       [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art      
-   tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
+   tor [ports|add|delete|deleteall|start]    deals with services on tor hidden network
        [stop|destroy|notice|status|refresh]
    bootoption <console|desktop> [autologin]  sets the boot mode
    openvpn [use|show|delete]                 helps setting up an openvpn client

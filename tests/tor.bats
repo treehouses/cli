@@ -11,8 +11,8 @@ load test-helper
   assert_success && assert_output -p 'Success'
 }
 
-@test "$clinom tor list" {
-  run "${clicmd}" tor list
+@test "$clinom tor ports" {
+  run "${clicmd}" tor ports
   assert_success && assert_output -p 'local'
 }
 

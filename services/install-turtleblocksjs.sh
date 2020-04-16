@@ -44,7 +44,7 @@ function get_size {
 
 # add info
 function get_info {
-  echo "https://github.com/ole-vi/turtleblocksjs"
+  echo "https://github.com/treehouses/turtleblocksjs"
   echo
   echo "Turtle Blocks is an activity with a Logo-inspired graphical \"turtle\""
   echo "that draws colorful art based on snap-together visual programming elements."

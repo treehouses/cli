@@ -25,7 +25,8 @@ function install {
     echo "      - \"443:443/tcp\""
     echo "    environment:"
     echo "      TZ: 'America/New_York'"
-    echo "      WEBPASSWORD: ''"
+    # echo "      WEBPASSWORD: ''"
+    echo "      WEBPASSWORD: \${WEBPASSWORD_VAR}"
     echo "    # Volumes store your data between container upgrades"
     echo "    volumes:"
     echo "      - './etc-pihole/:/etc/pihole/'"
@@ -41,6 +42,11 @@ function install {
     echo "    # restart: unless-stopped"
   } > /srv/pihole/pihole.yml
 
+  # create .env with default values
+  {
+    echo "WEBPASSWORD_VAR=piholepass"
+  } > /srv/pihole/.env
+
   # add autorun
   {
     echo "pihole_autorun=true"
@@ -52,6 +58,11 @@ function install {
     echo
     echo
   } > /srv/pihole/autorun
+}
+
+# environment var
+function uses_env {
+  echo true
 }
 
 # add port(s)

@@ -81,11 +81,10 @@ function bluetooth {
 
    elif [ "$status" = "log" ]; then
      checkargn $# 1
-     echo "press (ctrl+c) to cancel"
      journalctl -u rpibluetooth -u bluetooth --no-pager
 
   else
-    echo "Error: only 'on', 'off', 'pause', 'mac', 'id', 'button', 'log' options are supported";
+    echo "Error: only 'on', 'off', 'pause', 'mac', 'id', 'button', 'log', and 'status' options are supported";
   fi
 }
 

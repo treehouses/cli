@@ -25,10 +25,10 @@ function install {
     echo "      - /home/data/seafile:/seafile"
   } > /srv/seafile/seafile.yml
 
-  # create .env
+  # create .env with default values
   {
-    echo "SEAFILE_ADMIN_VAR="
-    echo "SEAFILE_ADMIN_PW_VAR="
+    echo "SEAFILE_ADMIN_VAR=example@seafile.com"
+    echo "SEAFILE_ADMIN_PW_VAR=seacret"
   } > /srv/seafile/.env
 
   # add autorun

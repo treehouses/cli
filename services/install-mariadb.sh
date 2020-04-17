@@ -13,8 +13,14 @@ function install {
     echo "    ports:"
     echo "      - 3306:3306"
     echo "    environment:"
-    echo "      - MYSQL_ROOT_PASSWORD=my-secret-pw"
+    # echo "      - MYSQL_ROOT_PASSWORD=my-secret-pw"
+    echo "      - MYSQL_ROOT_PASSWORD=\${MYSQL_ROOT_PASSWORD_VAR}"
   } > /srv/mariadb/mariadb.yml
+
+  # create .env with default values
+  {
+    echo "MYSQL_ROOT_PASSWORD_VAR=my-secret-pw"
+  } > /srv/mariadb/.env
 
   # add autorun
   {
@@ -26,6 +32,11 @@ function install {
     echo
     echo
   } > /srv/mariadb/autorun
+}
+
+# environment var
+function uses_env {
+  echo true
 }
 
 # add port(s)

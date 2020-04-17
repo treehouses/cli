@@ -82,7 +82,7 @@ function bluetooth {
    elif [ "$status" = "log" ]; then
      checkargn $# 1
      echo "press (ctrl+c) to cancel"
-     journalctl -u rpibluetooth -u bluetooth -f
+     journalctl -u rpibluetooth -u bluetooth --no-pager
 
   else
     echo "Error: only 'on', 'off', 'pause', 'mac', 'id', 'button', 'log' options are supported";
@@ -128,7 +128,6 @@ function bluetooth_help {
   echo "      This will display the bluetooth id number"
   echo
   echo "  $BASENAME bluetooth log"
-  echo "      This will follow and display the real time logs of bluetooth services"
-  echo "      (ctrl+c) to cancel"
+  echo "      This will display the logs of bluetooth services"
   echo
 }

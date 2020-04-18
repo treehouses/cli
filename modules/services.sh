@@ -139,7 +139,7 @@ function services {
             fi
           else
             check_space $service_name
-            if [ $(source $SERVICES/install-${service_name}.sh && uses_env) = "true" ]; then
+            if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
               validate_yml $service_name
             fi
             docker_compose_up $service_name
@@ -357,7 +357,7 @@ function services {
           ;;
         environment)
           checkargn $# 3
-          if [ $(source $SERVICES/install-${service_name}.sh && uses_env) = "true" ]; then
+          if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
             if [ "$command_option" = "edit" ]; then
               if [ -e /srv/$service_name/.env ]; then
                 vim /srv/$service_name/.env

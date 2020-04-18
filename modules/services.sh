@@ -12,7 +12,10 @@ function services {
       for file in $SERVICES/*
       do
         if [[ ! $file = *"README.md"* ]]; then
-          echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//'
+          service=$(echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//')
+          if check_arm $service; then
+            echo $service
+          fi
         fi
       done
     else
@@ -76,18 +79,15 @@ function services {
         port_string+=" "
       done
       if [ ! -z "$port_string" ]; then
-        printf "%-10s %20s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
+        printf "%-15s %15s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
       fi
     done
   else
     if [ -z "$command" ]; then
       echo "ERROR: no command given"
       exit 1
-    elif ! check_available_services $service_name; then
-      echo "ERROR: unknown service"
-      echo "try running '$BASENAME services available' to see the list of available services"
-      exit 1
     else
+      check_available_services $service_name
       case "$command" in
         install)
           checkargn $# 2
@@ -151,6 +151,7 @@ function services {
             echo "${service_name}.yml not found"
           else
             docker-compose -f /srv/${service_name}/${service_name}.yml down
+            remove_tor_port
             echo "${service_name} stopped and removed"
           fi
           ;;
@@ -329,17 +330,7 @@ function services {
             docker-compose -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
             echo "${service_name} stopped and removed"
           fi
-          for i in $(seq 1 "$(services $service_name port | wc -l)")
-          do
-            port=$(services $service_name port | sed -n "$i p")
-            if [ "$(tor status)" = "active" ] && (tor list | grep -w $port); then
-              if [[ $(pstree -ps $$) == *"ssh"* ]]; then
-                screen -dm bash -c "treehouses tor delete $port"
-              else
-                tor delete $port
-              fi
-            fi
-          done
+          remove_tor_port
           rm -rf /srv/${service_name}
           echo "${service_name} cleaned up"
           ;;
@@ -374,6 +365,17 @@ function services {
   fi
 }
 
+function check_arm {
+  arms=($(source $SERVICES/install-${1}.sh && supported_arms))
+  for i in "${arms[@]}"
+  do
+    if [ "$(detectarm)" = "$i" ]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
 function check_available_services {
   array=($(services available))
   for service in "${array[@]}"
@@ -382,20 +384,10 @@ function check_available_services {
       return 0
     fi
   done
-  return 1
-}
-
-function docker_compose_up {
-  if [ ! -f /srv/${1}/${1}.yml ]; then
-    echo "ERROR: /srv/${1}/${1}.yml not found"
-    echo "try running '$BASENAME services ${1} install' first"
-    exit 1
-  elif docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
-    echo "${1} built and started"
-  else
-    echo "ERROR: cannot build ${1}"
-    exit 1
-  fi
+  echo "ERROR: unknown service"
+  echo "try running '$BASENAME services available' to see the list of available services"
+  exit 1
+  # return 1
 }
 
 function check_space {
@@ -427,23 +419,51 @@ function check_tor {
   fi
 }
 
+function docker_compose_up {
+  if [ ! -f /srv/${1}/${1}.yml ]; then
+    echo "ERROR: /srv/${1}/${1}.yml not found"
+    echo "try running '$BASENAME services ${1} install' first"
+    exit 1
+  elif docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
+    echo "${1} built and started"
+  else
+    echo "ERROR: cannot build ${1}"
+    exit 1
+  fi
+}
+
+function remove_tor_port {
+  for i in $(seq 1 "$(services $service_name port | wc -l)")
+  do
+    port=$(services $service_name port | sed -n "$i p")
+    if [ "$(tor status)" = "active" ] && (tor list | grep -w $port); then
+      if [[ $(pstree -ps $$) == *"ssh"* ]]; then
+        screen -dm bash -c "treehouses tor delete $port"
+      else
+        tor delete $port
+      fi
+    fi
+  done
+}
+
 function services_help {
   echo
   echo "Available Services:"
   echo
-  echo "  planet       Planet Learning is a generic learning system built in Angular & CouchDB"
-  echo "  kolibri      Kolibri is a learning platform using DJango"
-  echo "  nextcloud    Nextcloud is a safe home for all your data, files, etc"
-  echo "  netdata      Netdata is a distributed, real-time performance and health monitoring for systems"
-  echo "  mastodon     Mastodon is a free, open-source social network server"
-  echo "  moodle       Moodle is a Learning management system built in PHP"
-  echo "  pihole       Pi-hole is a DNS sinkhole that protects your devices from unwanted content"
-  echo "  privatebin   PrivateBin is a minimalist, open source online pastebin"
-  echo "  portainer    Portainer is a lightweight management UI for Docker environments"
-  echo "  ntopng       Ntopng is a network traffic probe that monitors network usage"
-  echo "  couchdb      CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
-  echo "  mariadb      MariaDB is a community-developed fork of the MySQL relational database management system"
-  echo "  seafile      Seafile is an open-source, cross-platform file-hosting software system"
+  echo "  planet          Planet Learning is a generic learning system built in Angular & CouchDB"
+  echo "  kolibri         Kolibri is a learning platform using DJango"
+  echo "  nextcloud       Nextcloud is a safe home for all your data, files, etc"
+  echo "  netdata         Netdata is a distributed, real-time performance and health monitoring for systems"
+  echo "  mastodon        Mastodon is a free, open-source social network server"
+  echo "  moodle          Moodle is a Learning management system built in PHP"
+  echo "  pihole          Pi-hole is a DNS sinkhole that protects your devices from unwanted content"
+  echo "  privatebin      PrivateBin is a minimalist, open source online pastebin"
+  echo "  portainer       Portainer is a lightweight management UI for Docker environments"
+  echo "  ntopng          Ntopng is a network traffic probe that monitors network usage"
+  echo "  couchdb         CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
+  echo "  mariadb         MariaDB is a community-developed fork of the MySQL relational database management system"
+  echo "  seafile         Seafile is an open-source, cross-platform file-hosting software system"
+  echo "  turtleblocksjs  TurtleBlocks is an activity with a Logo-inspired graphical \"turtle\" "
   echo
   echo
   echo "Top-Level Commands:"

@@ -20,10 +20,12 @@ treehouses blocker max
 treehouses bluetooth button
 treehouses bluetooth id
 treehouses bluetooth id number
+treehouses bluetooth log
 treehouses bluetooth mac
 treehouses bluetooth off
 treehouses bluetooth on
 treehouses bluetooth pause
+treehouses bluetooth status
 treehouses bootoption console
 treehouses bootoption console autologin
 treehouses bootoption desktop
@@ -41,6 +43,11 @@ treehouses container
 treehouses container balena
 treehouses container docker
 treehouses container none
+treehouses config
+treehouses config update
+treehouses config add
+treehouses config delete
+treehouses config clear
 treehouses coralenv demo-always-on
 treehouses coralenv demo-off
 treehouses coralenv demo-on
@@ -130,6 +137,10 @@ treehouses help wificountry
 treehouses help wifihidden
 treehouses help wifistatus
 treehouses image
+treehouses inspire
+treehouses inspire joke
+treehouses inspire qotd
+treehouses inspire random
 treehouses internet
 treehouses led
 treehouses led carnival
@@ -162,6 +173,7 @@ treehouses led red oneshot
 treehouses led red timer
 treehouses led thanksgiving
 treehouses led valentine
+treehouses led heavymetal
 treehouses locale
 treehouses log
 treehouses log 0
@@ -210,7 +222,9 @@ treehouses reboots in
 treehouses reboots monthly
 treehouses reboots now
 treehouses reboots weekly
+treehouses remote check
 treehouses remote commands
+treehouses remote allservices
 treehouses remote services available
 treehouses remote services installed
 treehouses remote services running
@@ -475,8 +489,31 @@ treehouses services seafile up
 treehouses services seafile url
 treehouses services seafile url local
 treehouses services seafile url tor
+treehouses services turtleblocksjs autorun
+treehouses services turtleblocksjs autorun false
+treehouses services turtleblocksjs autorun true
+treehouses services turtleblocksjs cleanup
+treehouses services turtleblocksjs down
+treehouses services turtleblocksjs icon
+treehouses services turtleblocksjs icon oneline
+treehouses services turtleblocksjs info
+treehouses services turtleblocksjs install
+treehouses services turtleblocksjs port
+treehouses services turtleblocksjs ps
+treehouses services turtleblocksjs restart
+treehouses services turtleblcoksjs size
+treehouses services turtleblocksjs start
+treehouses services turtleblocksjs stop
+treehouses services turtleblocksjs up
+treehouses services turtleblocksjs url
+treehouses services turtleblocksjs url local
+treehouses services turtleblocksjs url tor
 treehouses services running
 treehouses services running full
+treehouses shutdown 
+treehouses shutdown now
+treehouses shutdown in
+treehouses shutdown force
 treehouses speedtest
 treehouses speedtest -h
 treehouses ssh off
@@ -512,6 +549,7 @@ treehouses tor delete
 treehouses tor deleteall
 treehouses tor destroy
 treehouses tor list
+treehouses tor notice
 treehouses tor notice add
 treehouses tor notice delete
 treehouses tor notice list
@@ -531,6 +569,7 @@ treehouses verbose
 treehouses verbose off
 treehouses verbose on
 treehouses version
+treehouses version contributors
 treehouses vnc
 treehouses vnc info
 treehouses vnc off

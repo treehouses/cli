@@ -24,8 +24,7 @@ function install {
     echo "      - \"8053:80/tcp\""
     echo "      - \"443:443/tcp\""
     echo "    environment:"
-    echo "      TZ: 'America/New_York'"
-    # echo "      WEBPASSWORD: ''"
+    echo "      TZ: \${TZ_VAR}"
     echo "      WEBPASSWORD: \${WEBPASSWORD_VAR}"
     echo "    # Volumes store your data between container upgrades"
     echo "    volumes:"
@@ -44,6 +43,7 @@ function install {
 
   # create .env with default values
   {
+    echo "TZ_VAR=America/New_York"
     echo "WEBPASSWORD_VAR=piholepass"
   } > /srv/pihole/.env
 

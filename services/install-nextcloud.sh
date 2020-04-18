@@ -28,6 +28,11 @@ function install {
   } > /srv/nextcloud/autorun
 }
 
+# environment var
+function uses_env {
+  echo false
+}
+
 # add port(s)
 function get_ports {
   echo "8081"

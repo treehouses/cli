@@ -36,6 +36,11 @@ function install {
   } > /srv/netdata/autorun
 }
 
+# environment var
+function uses_env {
+  echo false
+}
+
 # add port(s)
 function get_ports {
   echo "19999"

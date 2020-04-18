@@ -17,8 +17,6 @@ function install {
     echo "    environment:"
     echo "      - SEAFILE_NAME=Seafile"
     echo "      - SEAFILE_ADDRESS=$(treehouses tor)"
-    # echo "      - SEAFILE_ADMIN=example@seafile.com"
-    # echo "      - SEAFILE_ADMIN_PW=seacret"
     echo "      - SEAFILE_ADMIN=\${SEAFILE_ADMIN_VAR}"
     echo "      - SEAFILE_ADMIN_PW=\${SEAFILE_ADMIN_PW_VAR}"
     echo "    volumes:"

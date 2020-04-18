@@ -13,7 +13,6 @@ function install {
     echo "    ports:"
     echo "      - 3306:3306"
     echo "    environment:"
-    # echo "      - MYSQL_ROOT_PASSWORD=my-secret-pw"
     echo "      - MYSQL_ROOT_PASSWORD=\${MYSQL_ROOT_PASSWORD_VAR}"
   } > /srv/mariadb/mariadb.yml
 

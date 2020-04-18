@@ -31,6 +31,11 @@ function install {
   } > /srv/portainer/autorun
 }
 
+# environment var
+function uses_env {
+  echo false
+}
+
 # add port(s)
 function get_ports {
   echo "9000"

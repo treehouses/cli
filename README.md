@@ -90,7 +90,7 @@ services                                  executes the given command on the spec
    [mastodon]     <stop>                  Mastodon is a free, open-source social network server
    [moodle]       <restart>               Moodle is a learning management system built in PHP
    [pihole]       <autorun [true|false]>  Pi-hole is a DNS sinkhole that protects your devices from unwanted content
-   [privatebin]   <ps>  PrivateBin is a minimalist, open source online pastebin
+   [privatebin]   <ps>                    PrivateBin is a minimalist, open source online pastebin
    [portainer]    <url [local|tor]>       Portainer is a lightweight management UI for Docker environments
    [ntopng]       <port>                  Ntopng is a network traffic probe that monitors network usage
    [couchdb]      <info>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang

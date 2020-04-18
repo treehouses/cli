@@ -73,15 +73,34 @@ function remote {
     available=($(services available))
     for i in "${available[@]}"
     do
-      icon_str+="\"$i\":\"$(services $i icon oneline | sed 's/"/\\"/g')\","
-      info_str+="\"$i\":\"$(services $i info | tr '\n' ' ' | sed 's/"/\\"/g')\","
-      autorun_str+="\"$i\":\"$(services $i autorun)\","
+      icon_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_icon | sed 's/^[ \t]*//;s/[ \t]*$//' | tr '\n' ' ' | sed 's/"/\\"/g')\","
+      info_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_info | tr '\n' ' ' | sed 's/"/\\"/g')\","
+      autorun_str+="\"$i\":\"$(autorun_helper $i)\","
     done
 
     printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}"
   else
     echo "Unknown command option"
     echo "Usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"
+  fi
+}
+
+function autorun_helper {
+  if [ ! -f /boot/autorun ]; then
+    echo "false"
+  else
+    found=false
+    while read -r line; do
+      if [[ $line == "${1}_autorun=true" ]]; then
+        found=true
+        break
+      fi
+    done < /boot/autorun
+    if [ "$found" = true ]; then
+      echo "true"
+    else
+      echo "false"
+    fi
   fi
 }
 

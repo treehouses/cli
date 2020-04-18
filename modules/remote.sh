@@ -91,7 +91,7 @@ function autorun_helper {
   else
     found=false
     while read -r line; do
-      if [[ $line == "${service_name}_autorun=true" ]]; then
+      if [[ $line == "${1}_autorun=true" ]]; then
         found=true
         break
       fi

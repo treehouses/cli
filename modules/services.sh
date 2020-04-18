@@ -462,6 +462,7 @@ function validate_yml {
       if [[ $line == *=[[:space:]]* ]] || [[ $line =~ "="$ ]]; then
         echo "ERROR: unset environment variable:"
         echo $line
+        echo "try running '$BASENAME services $1 environment edit' to edit environment variables"
         exit 1
       fi
     done < /srv/${1}/.env

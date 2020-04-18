@@ -84,18 +84,20 @@ services                                  executes the given command on the spec
    <available|installed [full]            list available, and installed services
    ports|running [full]>                  list ports used by services and services running
    [planet]       <install>               Planet Learning is a generic learning system built in Angular & CouchDB
-   [kolibri]      <cleanup>               Kolibri is a learning platform using DJango
-   [nextcloud]    <up>                    Nextcloud is a safe home for all your data, files, etc
-   [netdata]      <down>                  Netdata is a distributed, real-time performance and health monitoring for systems
-   [mastodon]     <start>                 Mastodon is a free, open-source social network server
-   [moodle]       <stop>                  Moodle is a learning management system built in PHP
-   [pihole]       <restart>               Pi-hole is a DNS sinkhole that protects your devices from unwanted content
-   [privatebin]   <autorun [true|false]>  PrivateBin is a minimalist, open source online pastebin
-   [portainer]    <ps>                    Portainer is a lightweight management UI for Docker environments
-   [ntopng]       <info>                  Ntopng is a network traffic probe that monitors network usage
-   [couchdb]      <url [local|tor]>       CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
-   [mariadb]      <port>                  MariaDB is a community-developed fork of the MySQL relational database management system
-   [seafile]      <size>                  Seafile is an open-source, cross-platform file-hosting software system
+   [kolibri]      <up>                    Kolibri is a learning platform using DJango
+   [nextcloud]    <down>                  Nextcloud is a safe home for all your data, files, etc
+   [netdata]      <start>                 Netdata is a distributed, real-time performance and health monitoring for systems
+   [mastodon]     <stop>                  Mastodon is a free, open-source social network server
+   [moodle]       <restart>               Moodle is a learning management system built in PHP
+   [pihole]       <autorun [true|false]>  Pi-hole is a DNS sinkhole that protects your devices from unwanted content
+   [privatebin]   <ps>  PrivateBin is a minimalist, open source online pastebin
+   [portainer]    <url [local|tor]>       Portainer is a lightweight management UI for Docker environments
+   [ntopng]       <port>                  Ntopng is a network traffic probe that monitors network usage
+   [couchdb]      <info>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
+   [mariadb]      <size>                  MariaDB is a community-developed fork of the MySQL relational database management system
+   [seafile]      <cleanup>               Seafile is an open-source, cross-platform file-hosting software system
+                  <icon>
+                  <environment [edit|check]>
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

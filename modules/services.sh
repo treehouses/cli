@@ -393,6 +393,7 @@ function services {
           echo "                                ..... size"
           echo "                                ..... cleanup"
           echo "                                ..... icon"
+          echo "                                ..... environment [edit|check]"
           exit 1
           ;;
       esac
@@ -531,6 +532,7 @@ function services_help {
   echo "                             ..... size"
   echo "                             ..... cleanup"
   echo "                             ..... icon"
+  echo "                             ..... environment [edit|check]"
   echo
   echo "    install                 installs and pulls <service_name>"
   echo
@@ -563,6 +565,10 @@ function services_help {
   echo "    cleanup                 uninstalls and removes <service_name>"
   echo
   echo "    icon                    outputs the svg code for the <service_name>'s icon"
+  echo
+  echo "    environment"
+  echo "        [edit]                  opens vim to edit the .env file for <service_name>"
+  echo "        [check]                 outputs the contents of the .yml for <service_name> with the currently configured environment variables"
   echo
   echo "  Examples:"
   echo

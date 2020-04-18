@@ -73,8 +73,8 @@ function remote {
     available=($(services available))
     for i in "${available[@]}"
     do
-      icon_str+="\"$i\":\"$(source $SERVICES/install-{i}.sh && get_icon | sed 's/^[ \t]*//;s/[ \t]*$//' | tr '\n' ' ' | sed 's/"/\\"/g')\","
-      info_str+="\"$i\":\"$(source $SERVICES/install-{i}.sh && get_info | tr '\n' ' ' | sed 's/"/\\"/g')\","
+      icon_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_icon | sed 's/^[ \t]*//;s/[ \t]*$//' | tr '\n' ' ' | sed 's/"/\\"/g')\","
+      info_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_info | tr '\n' ' ' | sed 's/"/\\"/g')\","
       autorun_str+="\"$i\":\"$(autorun_helper $i)\","
     done
 

@@ -140,6 +140,11 @@ function install {
   } > /srv/<service>/autorun
 }
 
+# environment var
+function uses_env {
+  echo true/false
+}
+
 # add port(s)
 function get_ports {
   echo "<port>"

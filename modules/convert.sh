@@ -1,17 +1,17 @@
 function convert {
   checkargn $# 2
-  input=$1 
-  output=$2  
-  if [[ "$input" != "" ]] && [[ "$output" != "" ]]; then
-    inputFileType=`echo "$input" | sed 's/.*\.//'`
-    outputFileType=`echo "$output" | sed 's/.*\.//'`
+  inputFile=$1 
+  outputFile=$2  
+  if [[ "$inputFile" != "" ]] && [[ "$outputFile" != "" ]]; then
+    inputFileType=`echo "$inputFile" | sed 's/.*\.//'`
+    outputFileType=`echo "$outputFile" | sed 's/.*\.//'`
     types=('mp4' 'avi' 'flv' 'wmv' 'mkv')
     for i in "${types[@]}"; do
       if [ "$inputFileType" == $i ]; then
         video
       fi	
       done
-  elif [ $input == "" ]; then
+  elif [ $inputFile == "" ]; then
     echo "Error: no input file"
   else 
     echo "Error: atleast one output file format needed"
@@ -19,10 +19,10 @@ function convert {
 }  
 
 function video {	
-  ffmpeg -i $input $output -hide_banner
+  ffmpeg -i $inputFile $outputFile -hide_banner
   status=$?
   if [ "$status" == 0 ]; then
-    echo "$input has been successfully converted to $output"
+    echo "$inputFile has been successfully converted to $outputFile"
   else
     echo "Error:convertion unsuccessful"
   fi  
@@ -33,7 +33,7 @@ function convert_help {
   echo "Usage: $BASENAME convert"
   echo
   echo "Example:"
-  echo "  $BASENAME convert <input file> <output file>"
+  echo "  $BASENAME convert <video file input> <video file output>"
   echo "    convert the input video file format to output video file format "
 }
 

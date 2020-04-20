@@ -1,32 +1,50 @@
 function convert {
   checkargn $# 2
-  inputFile=$1 
-  outputFile=$2  
+  inputFile=$1
+  outputFile=$2
   if [[ "$inputFile" != "" ]] && [[ "$outputFile" != "" ]]; then
-    inputFileType=$(echo ${inputFile} | sed 's/.*\.//' )
-    outputFileType=$(echo ${outputFile} | sed 's/.*\.//' )
-    types=('mp4' 'avi' 'flv' 'wmv' 'mkv')
-    for i in "${types[@]}"; do
+    inputFileType=${inputFile##*.}
+    outputFileType=${outFile##*.}
+    videoFileTypes=('mp4' 'avi' 'flv' 'wmv' 'mkv')
+    audioFileTypes=('mp3' 'wav' 'ogg')
+    for i in "${videoFileTypes[@]}"; do
       if [ "$inputFileType" == $i ]; then
         video
-      fi	
-      done
+      fi
+    done
+    for i in "${audioFileTypes[@]}"; do
+      if [ "$inputFileType" == $i ]; then
+        audio
+      fi
+    done
   elif [ $inputFile == "" ]; then
     echo "Error: no input file"
-  else 
+  else
     echo "Error: atleast one output file format needed"
   fi
-}  
+}
 
-function video {	
+function video {
   ffmpeg -i $inputFile $outputFile -hide_banner
   status=$?
   if [ "$status" == 0 ]; then
     echo "$inputFile has been successfully converted to $outputFile"
   else
-    echo "Error:convertion unsuccessful"
-  fi  
+    echo "convertion unsuccessful"
+  fi
 }
+
+function audio {
+  ffmpeg -i $inputFile $outputFile
+  status=$?
+  if [ "$status" == 0 ]; then
+    echo "$inputFile has been successfully converted to $outputFile"
+  else
+    echo "convertion unsuccessful"
+  fi
+}
+
+
 
 function convert_help {
   echo

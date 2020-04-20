@@ -356,7 +356,7 @@ function services {
           fi
           ;;
         environment)
-          checkargn $# 3
+          checkargn $# 4
           if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
             if [ -e /srv/$service_name/.env ]; then
               if [ "$command_option" = "edit" ]; then
@@ -372,7 +372,7 @@ function services {
                   done 9< /srv/$service_name/.env
                   echo "New environment file:"
                   cat /srv/$service_name/.env
-                elif [ "$4" = "interactive" ]; then
+                elif [ "$4" = "vim" ]; then
                   vim /srv/$service_name/.env
                 else
                   echo "ERROR: unknown command option"

@@ -91,7 +91,8 @@ Usage: treehouses
    blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
    sdbench                                   displays read and write speed of micro SD card
    inspire [joke|qotd|random]                displays quote based on user input
-   shutdown [now|in|force]                   shutdown the system 
+   shutdown [now|in|force]                   shutdown the system
+   convert                                   converts video and audio formats 
 EOF
   echo "$helpdefault"
 }

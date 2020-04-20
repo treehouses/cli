@@ -368,8 +368,8 @@ function services {
                     echo $line
                     echo "New:"
                     newline="${line%%=*}="
-                    printf $newline
-                    read userinput
+                    printf "%s" $newline
+                    read -r userinput
                     sed -i "/$line/c\\$newline$userinput" /srv/$service_name/.env
                   done 9< /srv/$service_name/.env
                   echo $seperator

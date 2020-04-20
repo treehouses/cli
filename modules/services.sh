@@ -361,7 +361,9 @@ function services {
             if [ -e /srv/$service_name/.env ]; then
               if [ "$command_option" = "edit" ]; then
                 if [ -z "$4" ]; then
+                  seperator="--------------------"
                   while read -r -u 9 line; do
+                    echo $seperator
                     echo "Current:"
                     echo $line
                     echo "New:"
@@ -370,13 +372,15 @@ function services {
                     read userinput
                     sed -i "/$line/c\\$newline$userinput" /srv/$service_name/.env
                   done 9< /srv/$service_name/.env
+                  echo $seperator
                   echo "New environment file:"
                   cat /srv/$service_name/.env
+                  echo $seperator
                 elif [ "$4" = "vim" ]; then
                   vim /srv/$service_name/.env
                 else
                   echo "ERROR: unknown command option"
-                  echo "USAGE: $BASENAME services $service_name environment edit [interactive]"
+                  echo "USAGE: $BASENAME services $service_name environment edit [vim]"
                   exit 1
                 fi
               elif [ "$command_option" = "check" ]; then

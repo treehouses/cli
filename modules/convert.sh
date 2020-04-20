@@ -20,7 +20,7 @@ function convert {
 
 function video {	
   ffmpeg -i $inputFile $outputFile -hide_banner
-  status=$?
+  status=$?https://github.com/treehouses/cli
   if [ "$status" == 0 ]; then
     echo "$inputFile has been successfully converted to $outputFile"
   else
@@ -34,6 +34,6 @@ function convert_help {
   echo
   echo "Example:"
   echo "  $BASENAME convert <video file input> <video file output>"
-  echo "    convert the input video file format to output video file format "
+  echo "      convert the input video file format to output video file format "
 }
 

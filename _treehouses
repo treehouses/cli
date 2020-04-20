@@ -272,6 +272,7 @@ treehouses services mariadb cleanup
 treehouses services mariadb down
 treehouses services mariadb environment check
 treehouses services mariadb environment edit
+treehouses services mariadb environment edit vim
 treehouses services mariadb icon
 treehouses services mariadb icon oneline
 treehouses services mariadb info
@@ -312,6 +313,7 @@ treehouses services moodle cleanup
 treehouses services moodle down
 treehouses services moodle environment check
 treehouses services moodle environment edit
+treehouses services moodle environment edit vim
 treehouses services moodle icon
 treehouses services moodle icon oneline
 treehouses services moodle info
@@ -390,6 +392,7 @@ treehouses services pihole cleanup
 treehouses services pihole down
 treehouses services pihole environment check
 treehouses services pihole environment edit
+treehouses services pihole environment edit vim
 treehouses services pihole icon
 treehouses services pihole icon oneline
 treehouses services pihole info
@@ -469,6 +472,7 @@ treehouses services seafile cleanup
 treehouses services seafile down
 treehouses services seafile environment check
 treehouses services seafile environment edit
+treehouses services seafile environment edit vim
 treehouses services seafile icon
 treehouses services seafile icon oneline
 treehouses services seafile info

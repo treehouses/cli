@@ -3,8 +3,8 @@ function convert {
   inputFile=$1 
   outputFile=$2  
   if [[ "$inputFile" != "" ]] && [[ "$outputFile" != "" ]]; then
-    inputFileType=$(echo ${inputFile} | sed 's/.*\.//')
-    outputFileType=$(echo ${outputFile} | sed 's/.*\.//')
+    inputFileType=$(echo $inputFile | sed 's/.*\.//')
+    outputFileType=$(echo $outputFile | sed 's/.*\.//')
     types=('mp4' 'avi' 'flv' 'wmv' 'mkv')
     for i in "${types[@]}"; do
       if [ "$inputFileType" == $i ]; then

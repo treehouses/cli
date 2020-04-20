@@ -33,6 +33,11 @@ function uses_env {
   echo false
 }
 
+# add supported arm(s)
+function supported_arms {
+  echo "v7l"
+}
+
 # add port(s)
 function get_ports {
   echo "8081"

@@ -473,7 +473,7 @@ function docker_compose_up {
     echo "ERROR: /srv/${1}/${1}.yml not found"
     echo "try running '$BASENAME services ${1} install' first"
     exit 1
-  elif docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
+  elif docker-compose --project-directory /srv/${1} -f /srv/${1}/${1}.yml -p ${1} up -d ; then
     echo "${1} built and started"
   else
     echo "ERROR: cannot build ${1}"

@@ -83,14 +83,19 @@ function bluetooth {
      checkargn $# 1
      journalctl -u rpibluetooth -u bluetooth --no-pager
 
+   elif [ "$status" = "restart" ]; then
+     bluetooth off &>"$LOGFILE"
+     bluetooth on &>"$LOGFILE"
+     echo "Success: the bluetooth service has been restarted."
+
   else
-    echo "Error: only 'on', 'off', 'pause', 'mac', 'id', 'button', 'log', and 'status' options are supported";
+    echo "Error: only 'on', 'off', 'pause', 'restart', 'mac', 'id', 'button', 'log', and 'status' options are supported";
   fi
 }
 
 function bluetooth_help {
   echo
-  echo "Usage: $BASENAME bluetooth [on|off|pause|mac|id|button|status|log]"
+  echo "Usage: $BASENAME bluetooth [on|off|pause|restart|mac|id|button|status|log]"
   echo
   echo "Switches between hotspot / regular bluetooth mode, or displays the bluetooth mac address"
   echo
@@ -112,6 +117,9 @@ function bluetooth_help {
   echo "  $BASENAME bluetooth pause"
   echo "      Performs the same as '$BASENAME bluetooth off'"
   echo "      The only difference is that this command will not remove the bluetooth device id."
+  echo
+  echo "  $BASENAME bluetooth restart"
+  echo "      This will restart the bluetooth server using $BASENAME bleutooth 'off' and 'on'"
   echo
   echo "  $BASENAME bluetooth  mac"
   echo "      This will display the bluetooth MAC address"

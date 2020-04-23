@@ -69,7 +69,8 @@ Usage: treehouses
       [ntopng]       <info>                  Ntopng is a network traffic probe that monitors network usage
       [couchdb]      <url [local|tor]>       CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
       [mariadb]      <port>                  MariaDB is a community-developed fork of the MySQL relational database management system
-      [seafile]      <size>                  Seafile is an open-source, cross-platform file-hosting software system
+      [mongodb]      <size>                  MongoDB is a general purpose, distributed, document-based, NoSQL database.
+      [seafile]                              Seafile is an open-source, cross-platform file-hosting software system
       [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art      
    tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
        [stop|destroy|notice|status|refresh]

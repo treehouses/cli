@@ -73,10 +73,9 @@ function services {
     for i in "${array[@]}"
     do
       port_string=""
-      for j in $(seq 1 "$(services $i port | wc -l)")
+      for j in $(seq 1 "$(source $SERVICES/install-${i}.sh && get_ports | wc -l)")
       do
-        port_string+=$(services $i port | sed -n "$j p")
-        port_string+=" "
+        port_string+="$(source $SERVICES/install-${i}.sh && get_ports | sed -n "$j p") "
       done
       if [ ! -z "$port_string" ]; then
         printf "%-15s %15s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"

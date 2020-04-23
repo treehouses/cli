@@ -21,7 +21,7 @@ function install {
     echo "nextcloud_autorun=true"
     echo
     echo "if [ \"\$nextcloud_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/nextcloud/nextcloud.yml -p nextcloud up -d"
+    echo "  treehouses services nextcloud up"
     echo "fi"
     echo
     echo

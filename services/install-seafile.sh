@@ -34,7 +34,7 @@ function install {
     echo "seafile_autorun=true"
     echo
     echo "if [ \"\$seafile_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/seafile/seafile.yml -p seafile up -d"
+    echo "  treehouses services seafile up"
     echo "fi"
     echo
     echo

@@ -53,7 +53,7 @@ function install {
     echo
     echo "if [ \"\$pihole_autorun\" = true ]; then"
     echo "  service dnsmasq stop"
-    echo "  docker-compose -f /srv/pihole/pihole.yml -p pihole up -d"
+    echo "  treehouses services pihole up"
     echo "fi"
     echo
     echo

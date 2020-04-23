@@ -26,7 +26,7 @@ function install {
     echo "mariadb_autorun=true"
     echo
     echo "if [ \"\$mariadb_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/mariadb/mariadb.yml -p mariadb up -d"
+    echo "  treehouses services mariadb up"
     echo "fi"
     echo
     echo

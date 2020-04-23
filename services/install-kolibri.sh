@@ -21,7 +21,7 @@ function install {
     echo "kolibri_autorun=true"
     echo
     echo "if [ \"\$kolibri_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/kolibri/kolibri.yml -p kolibri up -d"
+    echo "  treehouses services kolibri up"
     echo "fi"
     echo
     echo

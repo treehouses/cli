@@ -19,7 +19,7 @@ function install {
     echo "turtleblocksjs_autorun=true"
     echo
     echo "if [ \"\$turtleblocksjs_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/turtleblocksjs/turtleblocksjs.yml -p turtleblocksjs up -d"
+    echo "  treehouses services turtleblocksjs up"
     echo "fi"
     echo
     echo

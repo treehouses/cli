@@ -61,7 +61,7 @@ function install {
     echo "mastodon_autorun=true"
     echo
     echo "if [ \"\$mastodon_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/mastodon/mastodon.yml -p mastodon up -d"
+    echo "  treehouses services mastodon up"
     echo "fi"
     echo
     echo

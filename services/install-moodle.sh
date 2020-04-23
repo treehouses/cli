@@ -47,7 +47,7 @@ function install {
     echo "moodle_autorun=true"
     echo
     echo "if [ \"\$moodle_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/moodle/moodle.yml -p moodle up -d"
+    echo "  treehouses services moodle up"
     echo "fi"
     echo
     echo

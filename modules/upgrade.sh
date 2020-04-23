@@ -12,6 +12,7 @@ function upgrade {
       exit
     fi
     npm install -g '@treehouses/cli@latest'
+    curl "https://raw.githubusercontent.com/treehouses/control/master/server.py" -o usr/local/bin/bluetooth-server.py
   elif [ "$tag" == "--check" ];
   then
     if [ "$(internet)" == "false" ];
@@ -28,6 +29,7 @@ function upgrade {
     echo "true $last_version"
   else
     npm install -g "@treehouses/cli@${tag}"
+    curl "https://raw.githubusercontent.com/treehouses/control/master/server.py" -o usr/local/bin/bluetooth-server.py
   fi
 }
 

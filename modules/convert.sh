@@ -23,6 +23,7 @@ function convert {
     echo "Error :no otput file"
   else
     convert_help
+  fi
 }
 
 function video {

@@ -265,11 +265,10 @@ function services {
         url)
           checkargn $# 3
           if [ "$command_option" = "local" ]; then
-            for i in $(seq 1 "$(services $service_name port | wc -l)")
+            base_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+            for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
             do
-              local_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
-              local_url+=":"
-              local_url+=$(services $service_name port | sed -n "$i p")
+              local_url="$base_url:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
               if [ "$service_name" = "pihole" ]; then
                 local_url+="/admin"
               elif [ "$service_name" = "couchdb" ]; then

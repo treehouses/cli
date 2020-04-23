@@ -4,16 +4,10 @@ function convert {
   outputFile=$2
   if [[ "$inputFile" != "" ]] && [[ "$outputFile" != "" ]]; then
     inputFileType=${inputFile##*.}
-<<<<<<< HEAD
     outputFileType=${outFile##*.}
     videoFileTypes=('mp4' 'avi' 'flv' 'wmv' 'mkv')
     audioFileTypes=('mp3' 'wav' 'ogg')
     for i in "${videoFileTypes[@]}"; do
-=======
-    outputFileType=${outputFile##*.}
-    types=('mp4' 'avi' 'flv' 'wmv' 'mkv')
-    for i in "${types[@]}"; do
->>>>>>> 8247bbe739dec56e60d2a6039e8bddc6ee7288fe
       if [ "$inputFileType" == $i ]; then
         video
       fi
@@ -25,9 +19,10 @@ function convert {
     done
   elif [ $inputFile == "" ]; then
     echo "Error: no input file"
+  elif [ $outputFile == "" ]; then
+    echo "Error :no otput file"
   else
-    echo "Error: atleast one output file format needed"
-  fi
+    convert_help
 }
 
 function video {

@@ -77,7 +77,7 @@ function detectrpi {
       log_and_exit1 "Error: only 'detectrpi', and 'detectrpi model' commands supported"
     fi
   else
-    if grep -q "Raspberry Pi" "/sys/firmware/devicetree/base/model"; then
+    if grep -q -s "Raspberry Pi" "/sys/firmware/devicetree/base/model"; then
       echo "RPI"
     else
       echo "nonrpi"

@@ -131,6 +131,7 @@ function get_icon {
     <polygon class="fil1" points="4972,6315 4701,6621 4023,5877 3273,5320 3544,5014 4179,5719 " />
     <!--create top right to bottom left rectangle-->
     <polygon class="fil1" points="4127,4836 4531,4912 4226,5871 4118,6799 3714,6723 4007,5821 " />
+    </g>
   </g>
 </svg>
 EOF

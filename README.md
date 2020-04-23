@@ -89,7 +89,7 @@ services                                  executes the given command on the spec
    [nextcloud]    <up>                    Nextcloud is a safe home for all your data, files, etc
    [netdata]      <down>                  Netdata is a distributed, real-time performance and health monitoring for systems
    [mastodon]     <start>                 Mastodon is a free, open-source social network server
-   [mongodb]      <stop>                  MongoDB is a general purpose, distributed, document-based, NoSQL database
+   [seafile]      <stop>                  Seafile is an open-source, cross-platform file-hosting software system 
    [moodle]       <restart>               Moodle is a learning management system built in PHP
    [pihole]       <autorun [true|false]>  Pi-hole is a DNS sinkhole that protects your devices from unwanted content
    [privatebin]   <ps>                    PrivateBin is a minimalist, open source online pastebin
@@ -97,7 +97,7 @@ services                                  executes the given command on the spec
    [ntopng]       <url [local|tor]>       Ntopng is a network traffic probe that monitors network usage
    [couchdb]      <port>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
    [mariadb]      <size>                  MariaDB is a community-developed fork of the MySQL relational database management system
-   [seafile]                              Seafile is an open-source, cross-platform file-hosting software system
+   [mongodb]                              MongoDB is a general purpose, distributed, document-based, NoSQL database
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

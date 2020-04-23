@@ -2,41 +2,35 @@
 
 function install {
   # create service directory
-  mkdir -p /srv/mongo
+  mkdir -p /srv/mongodb
 
   # create yml(s)
   {
     echo "version: '3'"
     echo
     echo "services:"
-    echo "  mongo:"
+    echo "  mongodb:"
     echo "    image: treehouses/rpi-mongo"
     echo "    restart: always "
+    echo "    ports:"
+    echo "      -  \"27017:27017"\"
+    echo "      -  \"27018:27018"\"
+    echo "      -  \"27019:27019"\"
     echo "    environment: "
     echo "      MONGO_INITDB_ROOT_USERNAME: root "
     echo "      MONGO_INITDB_ROOT_PASSWORD: example "
-    echo "    volumes : "
-    echo "      - /home/data/mongo:/data/db "
-    echo "  mongo-express: "
-    echo "    image: treehouses/rpi-mongo-express "
-    echo "    restart: always "
-    echo "    ports: "
-    echo "      - 8090:8081"
-    echo "    environment: "
-    echo "      ME_CONFIG_MONGODB_ADMINUSERNAME: root "
-    echo "      ME_CONFIG_MONGODB_ADMINPASSWORD: example "
-  } > /srv/mongo/mongo.yml
+  } > /srv/mongodb/mongodb.yml
 
   # add autorun
   {
-    echo "mongo_autorun=true"
+    echo "mongodb_autorun=true"
     echo
-    echo "if [ \"\$mongo_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/mongo/mongo.yml -p mongo up -d"
+    echo "if [ \"\$mongodb_autorun\" = true ]; then"
+    echo "  docker-compose -f /srv/mongodb/mongodb.yml -p mongodb up -d"
     echo "fi"
     echo
     echo
-  } > /srv/mongo/autorun
+  } > /srv/mongodb/autorun
 }
 
 # add supported arm(s)
@@ -46,7 +40,9 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "8090"
+  echo "27017"
+  echo "27018"
+  echo "27019"
 }
 
 # add size (in MB)

@@ -1,6 +1,7 @@
-#!/bin/bash
-
 function camera {
+  local directory timestamp config configtemp savetype
+  checkrpi
+  checkargn $# 1
   directory="/home/pi/Pictures/"
   timestamp=$(date +"%Y%m%d-%H%M%S")
   config="/boot/config.txt"
@@ -10,9 +11,9 @@ function camera {
   case "$1" in
     "")
       if grep -q "start_x=1" ${config} ; then
-          echo "Config file has Camera settings which are currently enabled. Use \"$(basename "$0") help camera\" for more commands."
+          echo "Config file has Camera settings which are currently enabled. Use \"$BASENAME help camera\" for more commands."
       else
-          echo "Config file has Camera settings which are currently disabled. Use \"$(basename "$0") help camera\" for more commands."
+          echo "Config file has Camera settings which are currently disabled. Use \"$BASENAME help camera\" for more commands."
       fi
     ;;
 
@@ -23,7 +24,7 @@ function camera {
         cat ${configtemp} > ${config}
         echo "Camera settings have been enabled. A reboot is needed in order to use the camera."
       elif grep -q "start_x=1" ${config} ; then
-        echo "Camera is already enabled. Use \"$(basename "$0") camera capture\" to take a photo."
+        echo "Camera is already enabled. Use \"$BASENAME camera capture\" to take a photo."
         echo "If you are having issues using the camera, try rebooting."
       else
         echo "Something went wrong."
@@ -48,33 +49,32 @@ function camera {
         exit 1
       else
         echo "Camera is capturing and storing a time-stamped ${savetype} photo in ${directory}."
-        raspistill -e ${savetype} -n -o "${directory}$(basename "$0")-${timestamp}.png" && echo "Success: Pictures generated"
+        raspistill -e ${savetype} -n -o "${directory}$BASENAME-${timestamp}.png" && echo "Success: Pictures generated"
       fi
     ;;
 
     "*")
       camera_help
-      exit 0
     ;;
   esac
 }
 
 function camera_help {
-  echo ""
-  echo "  Usage: $(basename "$0") camera [on|off|capture]      enables camera, disables camera, captures png photo"
-  echo ""
+  echo
+  echo "  Usage: $BASENAME camera [on|off|capture]      enables camera, disables camera, captures png photo"
+  echo
   echo "  Example:"
-  echo "    $(basename "$0") camera"
-  echo "      Config file has Camera settings which are currently disabled. Use \"$(basename "$0") help camera\" for more commands."
-  echo ""
-  echo "    $(basename "$0") camera on"
-  echo "      Camera is already enabled. Use \"$(basename "$0") camera capture\" to take a photo."
+  echo "    $BASENAME camera"
+  echo "      Config file has Camera settings which are currently disabled. Use \"$BASENAME help camera\" for more commands."
+  echo
+  echo "    $BASENAME camera on"
+  echo "      Camera is already enabled. Use \"$BASENAME camera capture\" to take a photo."
   echo "      If you are having issues using the camera, try rebooting."
-  echo ""
-  echo "    $(basename "$0") camera off"
+  echo
+  echo "    $BASENAME camera off"
   echo "      Camera has been disabled. Reboot needed for settings to take effect."
-  echo ""
-  echo "    $(basename "$0") camera capture"
+  echo
+  echo "    $BASENAME camera capture"
   echo "      Camera is capturing and storing a time-stamped photo in ${directory}."
-  echo ""
+  echo
 }

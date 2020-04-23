@@ -1,6 +1,8 @@
-#!/bin/bash
-
 function restore {
+  local device a b
+  checkrpi
+  checkroot
+  checkargn $# 1
   device="$1"
   if [ -z "$device" ]; then
       device="/dev/sdb"
@@ -9,10 +11,10 @@ function restore {
 
   a=$(fdisk -l |grep /dev/mmcblk0: | grep -P '\d+ (?=bytes)' -o)
   #echo "$a - /dev/mmcblk0"
-  
+
   b=$(fdisk -l |grep "$device": | grep -P '\d+ (?=bytes)' -o)
   #echo "$b - /dev/sdb"
-  
+
   if [ -z "$a" ] || [ -z "$b" ]; then
       echo "Error: the device $device wasn't detected"
       return 1
@@ -25,16 +27,17 @@ function restore {
 }
 
 function restore_help {
-  echo ""
-  echo "Usage: $(basename "$0") restore [device path]"
-  echo ""
+  echo
+  echo "Usage: $BASENAME restore [device path]"
+  echo
   echo "restores a treehouses image to an SDCard"
   echo "and is the logical brother of 'treehouses clone'"
-  echo ""
+  echo
   echo "Example:"
-  echo "  $(basename "$0") restore"
+  echo "  $BASENAME restore"
   echo "      Will restore the current system to /dev/sdb (by default)."
-  echo ""
-  echo "  $(basename "$0") restore /dev/sda"
+  echo
+  echo "  $BASENAME restore /dev/sda"
   echo "      Will restore the current system to /dev/sda"
+  echo
 }

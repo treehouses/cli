@@ -1,6 +1,6 @@
-#!/bin/bash
-
 function default {
+  checkroot
+  checkargn $# 1
   if [ "$1" == "notice" ] ; then
     default_notice
     echo 'Success: the message has been reset to default';
@@ -20,8 +20,8 @@ function default {
     exit 0
   fi
 
-  rename "raspberrypi" > /dev/null 2>/dev/null
-  default_notice 
+  rename "raspberrypi" > "$LOGFILE" 2>"$LOGFILE"
+  default_notice
   default_tunnel
   default_network
   echo 'Success: the rpi has been reset to default, please reboot your device'
@@ -59,45 +59,45 @@ function default_network {
       } > /etc/network/interfaces.d/usb0
       ;;
   esac
-  
+
   reboot_needed
 }
 
 function default_tunnel {
-  treehouses tor destroy > /dev/null
-  treehouses openvpn off > /dev/null
-  treehouses sshtunnel remove > /dev/null
+  treehouses tor destroy > "$LOGFILE"
+  treehouses openvpn off > "$LOGFILE"
+  treehouses sshtunnel remove > "$LOGFILE"
 }
 
 function default_notice {
-  treehouses tor notice off > /dev/null
-  treehouses openvpn notice off > /dev/null
-  treehouses sshtunnel notice off > /dev/null
+  treehouses tor notice off > "$LOGFILE"
+  treehouses openvpn notice off > "$LOGFILE"
+  treehouses sshtunnel notice off > "$LOGFILE"
 }
 
 
 function default_help {
-  echo ""
-  echo "Usage: $(basename "$0") default [network]"
-  echo ""
+  echo
+  echo "Usage: $BASENAME default [network]"
+  echo
   echo "Resets the raspberry pi to default."
   echo "You can also just default the network by specifying it."
-  echo ""
+  echo
   echo "Example:"
-  echo "  $(basename "$0") default"
+  echo "  $BASENAME default"
   echo "      This will allow you to return back to the original configuration for all the services and settings which were set for the image when it was first installed."
   echo "      This will not delete any new files you created."
-  echo ""
-  echo "  $(basename "$0") default network"
+  echo
+  echo "  $BASENAME default network"
   echo "      This will return the network back to the original configuration of when installed."
   echo "      This will not delete any new files you created."
-  echo ""
-  echo "  $(basename "$0") default tunnel"
+  echo
+  echo "  $BASENAME default tunnel"
   echo "      This will return the tunnel back to the original configuration of when installed."
   echo "      This will not delete any new files you created."
-  echo ""
-  echo "  $(basename "$0") default notice"
+  echo
+  echo "  $BASENAME default notice"
   echo "      This will return the message back to its original configuration of when installed."
   echo "      This will not delete any new files you created."
-  echo ""
+  echo
 }

@@ -1,7 +1,7 @@
-#!/bin/bash
-
-function rename () { 
-
+function rename () {
+  local CURRENT_HOSTNAME
+  checkroot
+  checkargn $# 1
   if
     [[ ${1:0:1} == "-" ]] || #checks beginning for "-"
     [[ ${1: -1} == "-" ]] || #checks end for "-"
@@ -9,7 +9,7 @@ function rename () {
     [[ ${#1} -gt "64" ]] || #Checks for length greater than 64
     [ -z "$1" ]; #Checks if variable is empty
   then
-    echo "Unsuccessful: Make sure to remove special characters."  
+    echo "Unsuccessful: Make sure to remove special characters."
   else
     CURRENT_HOSTNAME=$(< /etc/hostname tr -d " \\t\\n\\r")
     echo "$1" > /etc/hostname
@@ -20,13 +20,13 @@ function rename () {
 }
 
 function rename_help () {
-  echo ""
-  echo "Usage: $(basename "$0") rename <hostname>"
-  echo ""
+  echo
+  echo "Usage: $BASENAME rename <hostname>"
+  echo
   echo "Changes the hostname"
-  echo ""
+  echo
   echo "Example:"
-  echo "  $(basename "$0") rename rpi"
+  echo "  $BASENAME rename rpi"
   echo "      Sets the hostname to 'rpi'."
-  echo ""
+  echo
 }

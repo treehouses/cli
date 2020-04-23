@@ -1,9 +1,8 @@
-#!/bin/bash
-
 function reboots {
+  checkargn $# 2
   case "$1" in
     "")
-      echo "No timeframe selected. For how to use \"reboots\" run: $(basename "$0") help reboots"
+      echo "No timeframe selected. For how to use \"reboots\" run: $BASENAME help reboots"
       echo ; echo "Tasks scheduled:"
       crontab -l
       ;;
@@ -21,7 +20,7 @@ function reboots {
         echo "Rebooting with frequency of \"$2\" added"
       elif [[ $(crontab -l | grep "$2") == "$2 reboot" ]]; then
         echo "Reboot frequency of \"$2\" already established"
-        echo "To delete it, use: $(basename "$0") cron delete \"$2\""
+        echo "To delete it, use: $BASENAME cron delete \"$2\""
       else
         reboots_help
       fi
@@ -67,21 +66,21 @@ function reboots {
 }
 
 function reboots_help {
-  echo ""
-  echo "  Usage: $(basename "$0") reboots <now|in|cron|daily|weekly|monthly>"
-  echo ""
+  echo
+  echo "  Usage: $BASENAME reboots <now|in|cron|daily|weekly|monthly>"
+  echo
   echo "  Reboots system at selected time and removes it if reboot task already active"
-  echo ""
+  echo
   echo "  Example:"
-  echo "  $(basename "$0") reboots daily"
+  echo "  $BASENAME reboots daily"
   echo "  System will reboot daily at 00:00"
-  echo ""
-  echo "  $(basename "$0") reboots in 120"
+  echo
+  echo "  $BASENAME reboots in 120"
   echo "  System will reboot in 120 seconds. ctrl+c to cancel."
-  echo ""
-  echo "  $(basename "$0") reboots cron \"0 * * * *\""
+  echo
+  echo "  $BASENAME reboots cron \"0 * * * *\""
   echo "  Rebooting with frequency of \"0 * * * *\" added"
-  echo ""
+  echo
   echo "  Set frequency: * * * * *"
   echo "                 │ │ │ │ │"
   echo "                 │ │ │ │ └── day of the week    (* | #/# | 0 - 6 or Sun to Sat)"
@@ -89,5 +88,5 @@ function reboots_help {
   echo "                 │ │ └────── day of the month   (* | #/# | 1 - 31)"
   echo "                 │ └──────── hour               (* | #/# | 0 - 23)"
   echo "                 └────────── minute             (* | #/# | 0 - 59)"
-  echo ""
+  echo
 }

@@ -1,39 +1,33 @@
-#!/bin/bash
-TEMPLATES="$SCRIPTFOLDER/templates"
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m'
-
 function start_service {
-  if [ "$(systemctl is-active "$1" 2>/dev/null)" = "inactive" ]
+  if [ "$(systemctl is-active "$1" 2>"$LOGFILE")" = "inactive" ]
   then
-    systemctl start "$1" >/dev/null 2>/dev/null
+    systemctl start "$1" >"$LOGFILE" 2>"$LOGFILE"
   fi
 }
 
 function restart_service {
-  systemctl stop "$1" >/dev/null 2>/dev/null
-  systemctl start "$1" >/dev/null 2>/dev/null
+  systemctl stop "$1" >"$LOGFILE" 2>"$LOGFILE"
+  systemctl start "$1" >"$LOGFILE" 2>"$LOGFILE"
 }
 
 function stop_service {
-  if [ "$(systemctl is-active "$1" 2>/dev/null)" = "active" ]
+  if [ "$(systemctl is-active "$1" 2>"$LOGFILE")" = "active" ]
   then
-    systemctl stop "$1" >/dev/null 2>/dev/null
+    systemctl stop "$1" >"$LOGFILE" 2>"$LOGFILE"
   fi
 }
 
 function enable_service {
-  if [ "$(systemctl is-enabled "$1" 2>/dev/null)" = "disabled" ]
+  if [ "$(systemctl is-enabled "$1" 2>"$LOGFILE")" = "disabled" ]
   then
-    systemctl enable "$1" >/dev/null 2>/dev/null
+    systemctl enable "$1" >"$LOGFILE" 2>"$LOGFILE"
   fi
 }
 
 function disable_service {
-  if [ "$(systemctl is-enabled "$1" 2>/dev/null)" = "enabled" ]
+  if [ "$(systemctl is-enabled "$1" 2>"$LOGFILE")" = "enabled" ]
   then
-    systemctl disable "$1" >/dev/null 2>/dev/null
+    systemctl disable "$1" >"$LOGFILE" 2>"$LOGFILE"
   fi
 }
 
@@ -46,9 +40,45 @@ function checkroot {
 }
 
 function checkrpi {
-  if [ "$(detectrpi)" == "nonrpi" ]; 
+  if [ "$(detectrpi)" == "nonrpi" ];
   then
     echo "Error: Must be run with rpi system"
+    exit 1
+  fi
+}
+
+function checkargn {
+  local helpfunc
+  if [[ $1 -gt $2 ]]; then
+    echo "Error: Too many arguments."
+    helpfunc="$(echo $SCRIPTARGS | cut -d' ' -f1)"
+    if [[ $helpfunc = "help" ]]; then
+      help
+    else
+      eval "${helpfunc}_help"
+    fi
+    exit 1
+  fi
+}
+
+function checkwrpi {
+  if [[ $(detectbluetooth) == "false" ]]; then
+    echo "Error: no Bluetooth device detected"
+    exit 1
+  fi
+}
+
+function checkinternet {
+  if [[ $(internet) == "false" ]]; then
+    echo "Error: no Internet found"
+    exit 1
+  fi
+}
+
+function checkwifi {
+  if iwconfig wlan0 | grep -q "ESSID:off/any"; then
+    echo "wifi is not connected"
+    echo "check SSID and password and try again"
     exit 1
   fi
 }
@@ -89,7 +119,7 @@ function restart_wifi {
 
 function clean_var {
   if echo "$1" | grep -q "\-\-ip="; then
-    echo ""
+    echo
   else
     echo "$1"
   fi
@@ -103,12 +133,13 @@ function reboot_needed {
 
   touch "/etc/reboot-needed"
 
-  if ! grep -q "@reboot root /etc/reboot-needed.sh" "/etc/crontab" 2>/dev/null ; then
+  if ! grep -q "@reboot root /etc/reboot-needed.sh" "/etc/crontab" 2>"$LOGFILE" ; then
     echo "@reboot root /etc/reboot-needed.sh" >> "/etc/crontab"
   fi
 }
 
 function get_ipv4_ip {
+  local interface
   interface="$1"
   if iface_exists "$interface"; then
     if [ "$interface" == "ap0" ]; then
@@ -120,6 +151,7 @@ function get_ipv4_ip {
 }
 
 function iface_exists {
+  local interface
   interface="$1"
   if grep -q "$interface:" < /proc/net/dev ; then
     return 0
@@ -129,10 +161,11 @@ function iface_exists {
 }
 
 function check_missing_packages {
+  local missing_deps
   missing_deps=()
   for command in "$@"; do
-    if ! type $command &>/dev/null ; then
-        missing_deps+=( "$command" )
+    if [ "$(dpkg-query -W -f='${Status}' $command 2>"$LOGFILE" | grep -c 'ok installed')" -eq 0 ]; then
+      missing_deps+=( "$command" )
     fi
   done
 

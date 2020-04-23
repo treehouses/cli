@@ -1,6 +1,0 @@
-#!/bin/sh
-
-sleep 1
-docker start bell
-
-node /root/ole/server.js

@@ -1,6 +1,7 @@
-#!/bin/bash
-
 function ssh {
+  local status
+  checkroot
+  checkargn $# 1
   status=$1
   if [ "$status" = "on" ]; then
     enable_service ssh
@@ -16,16 +17,16 @@ function ssh {
 }
 
 function ssh_help {
-  echo ""
-  echo "Usage: $(basename "$0") ssh <on|off>"
-  echo ""
+  echo
+  echo "Usage: $BASENAME ssh <on|off>"
+  echo
   echo "Enables or disables the SSH service"
-  echo ""
+  echo
   echo "Example:"
-  echo "  $(basename "$0") ssh on"
+  echo "  $BASENAME ssh on"
   echo "      The SSH service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using SSH."
-  echo ""
-  echo "  $(basename "$0") ssh off"
+  echo
+  echo "  $BASENAME ssh off"
   echo "      The SSH service will be disabled."
-  echo ""
+  echo
 }

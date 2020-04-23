@@ -1,12 +1,23 @@
-#!/bin/bash
-
-function ap {
+function apmain {
+  local mode essid password base_24 channels channel
+  checkrpi
+  checkroot
+  checkargn $# 4
   mode=$(clean_var "$1")
   essid=$(clean_var "$2")
   password=$(clean_var "$3")
   base_24=$(echo "${@: -1}" | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}' | awk '{sub(/.$/,""); gsub("--ip=","", $0); print}')
   channels=(1 6 11)
   channel=${channels[$((RANDOM % ${#channels[@]}))]};
+
+  if [ -n "$essid" ]
+  then
+    if [ ${#essid} -gt 32 ]
+    then
+      echo "Error: essid must be no greater than 32 characters"
+      exit 1
+    fi
+  fi
 
   if [ -n "$password" ];
   then
@@ -17,24 +28,29 @@ function ap {
     fi
   fi
 
-  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces 
+  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/eth0/default" /etc/network/interfaces.d/eth0
-  cp "$TEMPLATES/network/dhcpcd/modular" /etc/dhcpcd.conf 
-  cp "$TEMPLATES/network/dnsmasq/hotspot" /etc/dnsmasq.conf 
+  cp "$TEMPLATES/network/dhcpcd/modular" /etc/dhcpcd.conf
+  cp "$TEMPLATES/network/dnsmasq/hotspot" /etc/dnsmasq.conf
   cp "$TEMPLATES/network/hostapd/default" /etc/default/hostapd
 
   if [ "$mode" = "internet" ]; then
     cp "$TEMPLATES/network/wlan0/hotspot_shared" /etc/network/interfaces.d/wlan0
     cp "$TEMPLATES/network/eth0-shared.sh" /etc/network/eth0-shared.sh
 
-    echo "ap internet" > /etc/network/mode
+    echo "${hide}ap internet" > /etc/network/mode
+
   elif [ "$mode" = "local" ]; then
     cp "$TEMPLATES/network/wlan0/hotspot" /etc/network/interfaces.d/wlan0
 
-    echo "ap local" > /etc/network/mode
+    echo "${hide}ap local" > /etc/network/mode
   else
     echo "Error: only 'local' and 'internet' modes are supported".
-    exit 0
+    exit 1
+  fi
+
+  if [[ -v hide ]]; then
+    hide="_hidden"
   fi
 
   cp "$TEMPLATES/network/10-wpa_supplicant" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
@@ -42,16 +58,16 @@ function ap {
 
   if [ -n "$password" ];
   then
-    cp "$TEMPLATES/network/hostapd/password" /etc/hostapd/hostapd.conf
+    cp "$TEMPLATES/network/hostapd/password$hide" /etc/hostapd/hostapd.conf
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/PASSWORD/$password/g" /etc/hostapd/hostapd.conf
     sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
-    restart_hotspot >/dev/null 2>/dev/null
-  else 
-    cp "$TEMPLATES/network/hostapd/no_password" /etc/hostapd/hostapd.conf
+    restart_hotspot >"$LOGFILE" 2>"$LOGFILE"
+  else
+    cp "$TEMPLATES/network/hostapd/no_password$hide" /etc/hostapd/hostapd.conf
     sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
     sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
-    restart_hotspot >/dev/null 2>/dev/null
+    restart_hotspot >"$LOGFILE" 2>"$LOGFILE"
   fi
 
   if [ -n "$base_24" ];
@@ -66,33 +82,36 @@ function ap {
   echo "This pirateship has anchored successfully!"
 }
 
+function ap {
+  apmain "$@"
+}
 
 function ap_help () {
-  echo ""
-  echo "Usage: treehouses ap <local|internet> <ESSID> [password]"
-  echo ""
+  echo
+  echo "Usage: $BASENAME ap <local|internet> <ESSID> [password]"
+  echo
   echo "Creates a mobile ap. If the mode is 'internet' the ethernet connection will be shared in the ap."
-  echo ""
+  echo
   echo "Examples:"
-  echo "  treehouses ap local apname apPassword"
-  echo "      Creates a ap with ESSID 'apname' and password 'apPassword'."
+  echo "  $BASENAME ap local apname apPassword"
+  echo "      Creates an ap with ESSID 'apname' and password 'apPassword'."
   echo "      This hotspot will not share the ethernet connection if present."
-  echo ""
-  echo "  treehouses ap local apname"
+  echo
+  echo "  $BASENAME ap local apname"
   echo "      Creates an open ap with ESSID 'apname'."
   echo "      This hotspot will not share ethernet connection when present."
-  echo ""
-  echo "  treehouses ap internet apname apPassword"
-  echo "      Creates a ap with ESSID 'apname' and password 'apPassword'."
+  echo
+  echo "  $BASENAME ap internet apname apPassword"
+  echo "      Creates an ap with ESSID 'apname' and password 'apPassword'."
   echo "      This hotspot will share the ethernet connection when present."
-  echo ""
-  echo "  treehouses ap internet apname"
+  echo
+  echo "  $BASENAME ap internet apname"
   echo "      Creates an open ap with ESSID 'apname'."
   echo "      This hotspot will share the ethernet connection when present."
-  echo ""
+  echo
   echo "  This command can be used with the argument '--ip=x.y.z.w' to specify the base ip (x.y.z) for the clients/ap."
-  echo ""
-  echo "  treehouses ap internet apname --ip=192.168.2.24"
+  echo
+  echo "  $BASENAME ap internet apname --ip=192.168.2.24"
   echo "      All the clients of this network will have an ip under the network 192.168.2.0"
-  echo ""
+  echo
 }

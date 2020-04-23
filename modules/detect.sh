@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function detect {
+  checkargn $# 0
   if [ "$(detectrpi)" != "nonrpi" ]; then
     echo "rpi $(detectrpi)"
   elif [ -d "/vagrant" ]; then
@@ -16,12 +15,13 @@ function detect {
 
 
 function detect_help {
-  echo ""
-  echo "Usage: $(basename "$0") detect"
-  echo ""
+  echo
+  echo "Usage: $BASENAME detect"
+  echo
   echo "Detects and outputs the hardware info"
-  echo ""
+  echo
   echo "Example:"
-  echo "  $(basename "$0") detect"
+  echo "  $BASENAME detect"
   echo "      Prints the hardware info"
+  echo
 }

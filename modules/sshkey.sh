@@ -142,5 +142,5 @@ function sshkey_help () {
   echo "      Downloads the public keys of the group members and adds them to authorized_keys"
   echo "      A access_token is required to make this work, it can be generated in the following link"
   echo "      https://github.com/settings/tokens"
-  echo ""
+  echo
 }

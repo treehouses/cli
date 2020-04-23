@@ -54,8 +54,8 @@ bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan 
        [password] [hotspotPassword]
 config [update|add|delete|clear]          commands for interacting with config file
 container <none|docker|balena>            enables (and start) the desired container
-bluetooth [on|off|pause|button|mac|id]    switches bluetooth from regular to hotspot mode and shows id or MAC address
-          [status|log]
+bluetooth [on|off|pause|restart|button]   switches bluetooth from regular to hotspot mode and shows id or MAC address
+          [mac|id|status|log]
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
 aphidden <local|internet> <ESSID>         creates a hidden mobile ap with or without internet access
          [password]
@@ -97,7 +97,8 @@ services                                  executes the given command on the spec
    [ntopng]       <info>                  Ntopng is a network traffic probe that monitors network usage
    [couchdb]      <url [local|tor]>       CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
    [mariadb]      <port>                  MariaDB is a community-developed fork of the MySQL relational database management system
-   [seafile]      <size>                  Seafile is an open-source, cross-platform file-hosting software system
+   [mongodb]      <size>                  MongoDB is a general purpose, distributed, document-based, NoSQL database
+   [seafile]                              Seafile is an open-source, cross-platform file-hosting software system
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art       
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]

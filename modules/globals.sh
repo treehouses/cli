@@ -175,3 +175,46 @@ function check_missing_packages {
       exit 1
   fi
 }
+
+# Credits: https://www.shellscript.sh/tips/spinner/
+function spinner() {
+  spinner="/|\\-/|\\-"
+  tput civis
+  while :
+  do
+    for i in $(seq 0 7)
+    do
+      echo -n "${spinner:$i:1}"
+      echo -en "\010"
+      sleep 0.5
+    done
+  done
+}
+
+function kill_spinner() {
+  if [[ "$KILLDONE" != 1 ]]; then
+    kill -9 $SPINPID
+    KILLDONE=1
+  fi
+  tput cvvis
+  return
+}
+
+function start_spinner() {
+  local tree carg cstring
+  tree=$(pstree -ps $$)
+  cstring="discover wifi wifihidden bridge container upgrade
+           led clone restore burn services speedtest usb"
+  carg="$(echo $SCRIPTARGS | cut -d' ' -f1)"
+  if [[ $tree == *"python"* ]] || [[ $tree == *"cron"* ]] || \
+     [[ ! "$cstring" == *"$carg"* ]]
+  then
+    NOSPIN=1
+    return
+  fi
+  set -m
+  trap kill_spinner {0..15}
+  spinner &
+  SPINPID=$!
+  disown
+}

@@ -20,7 +20,7 @@ function convert {
   elif [ $inputFile == "" ]; then
     echo "Error: no input file"
   elif [ $outputFile == "" ]; then
-    echo "Error :no otput file"
+    echo "Error :no output file"
   else
     convert_help
   fi

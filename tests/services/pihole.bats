@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load test-helper
+load ../test-helper
 
 @test "$clinom services pihole info" {
   run "${clicmd}" services pihole info
@@ -25,11 +25,6 @@ load test-helper
 
 @test "$clinom services available" {
   run "${clicmd}" services available
-  assert_success && assert_output -p 'pihole'
-}
-
-@test "$clinom services available full" {
-  run "${clicmd}" services available full
   assert_success && assert_output -p 'pihole'
 }
 
@@ -68,8 +63,8 @@ load test-helper
   assert_success && assert_output -p 'pihole/pihole'
 }
 
-@test "$clinom services pihole url both" {
-  run "${clicmd}" services pihole url both
+@test "$clinom services pihole url" {
+  run "${clicmd}" services pihole url
   assert_output -p '8053'
 }
 
@@ -91,6 +86,11 @@ load test-helper
 @test "$clinom services pihole down" {
   run "${clicmd}" services pihole down
   assert_success && assert_output -p 'pihole stopped and removed'
+}
+
+@test "$clinom services pihole icon" {
+  run "${clicmd}" services pihole icon
+  assert_success && assert_output -p 'svg'
 }
 
 @test "$clinom services pihole cleanup" {

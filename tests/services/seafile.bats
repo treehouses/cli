@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load test-helper
+load ../test-helper
 
 @test "$clinom services seafile info" {
   run "${clicmd}" services seafile info
@@ -25,11 +25,6 @@ load test-helper
 
 @test "$clinom services available" {
   run "${clicmd}" services available
-  assert_success && assert_output -p 'seafile'
-}
-
-@test "$clinom services available full" {
-  run "${clicmd}" services available full
   assert_success && assert_output -p 'seafile'
 }
 
@@ -68,8 +63,8 @@ load test-helper
   assert_success && assert_output -p 'treehouses/rpi-seafile'
 }
 
-@test "$clinom services seafile url both" {
-  run "${clicmd}" services seafile url both
+@test "$clinom services seafile url" {
+  run "${clicmd}" services seafile url
   assert_output -p '8085'
 }
 
@@ -91,6 +86,11 @@ load test-helper
 @test "$clinom services seafile down" {
   run "${clicmd}" services seafile down
   assert_success && assert_output -p 'seafile stopped and removed'
+}
+
+@test "$clinom services seafile icon" {
+  run "${clicmd}" services seafile icon
+  assert_success && assert_output -p 'svg'
 }
 
 @test "$clinom services seafile cleanup" {

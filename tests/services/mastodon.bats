@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load test-helper
+load ../test-helper
 
 @test "$clinom services mastodon info" {
   run "${clicmd}" services mastodon info
@@ -25,11 +25,6 @@ load test-helper
 
 @test "$clinom services available" {
   run "${clicmd}" services available
-  assert_success && assert_output -p 'mastodon'
-}
-
-@test "$clinom services available full" {
-  run "${clicmd}" services available full
   assert_success && assert_output -p 'mastodon'
 }
 
@@ -68,8 +63,8 @@ load test-helper
   assert_success && assert_output -p 'gilir/rpi-mastodon'
 }
 
-@test "$clinom services mastodon url both" {
-  run "${clicmd}" services mastodon url both
+@test "$clinom services mastodon url" {
+  run "${clicmd}" services mastodon url
   assert_output -p '3000'
 }
 
@@ -91,6 +86,11 @@ load test-helper
 @test "$clinom services mastodon down" {
   run "${clicmd}" services mastodon down
   assert_success && assert_output -p 'mastodon stopped and removed'
+}
+
+@test "$clinom services mastodon icon" {
+  run "${clicmd}" services mastodon icon
+  assert_success && assert_output -p 'svg'
 }
 
 @test "$clinom services mastodon cleanup" {

@@ -36,6 +36,7 @@ function install {
 # add supported arm(s)
 function supported_arms {
   echo "v7l"
+  echo "v6l"
 }
 
 # add port(s)
@@ -47,7 +48,7 @@ function get_ports {
 
 # add size (in MB)
 function get_size {
-  echo "996"
+  echo "258"
 }
 
 # add info
@@ -57,8 +58,7 @@ function get_info {
   echo "MongoDB is a general purpose, document-based, " 
   echo "distributed database built for modern "
   echo "application developers and for the cloud era. " 
-  echo "No database makes you more productive. "
-  echo "Mongo Express also installed as an admin interface"\"
+  echo "No database makes you more productive. "\"
 }
 
 # add svg icon

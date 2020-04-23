@@ -12,7 +12,20 @@ function bluetooth {
       echo "off"
     fi
 
+  elif [ "$status" = "status" ]; then
+    if [[ "$(service bluetooth status | grep "Active:")" =~ "running" ]]; then
+      echo "bluetooth service status: on"
+    else
+      echo "bluetooth service status: off"
+    fi
+    if [[ "$(service rpibluetooth status | grep "Active:")" =~ "running" ]]; then
+      echo "rpibluetooth service status: on"
+    else
+      echo "rpibluetooth service status: off"
+    fi
+
   elif [ "$status" = "on" ]; then
+    checkargn $# 1
     cp "$TEMPLATES/bluetooth/hotspot" /etc/systemd/system/dbus-org.bluez.service
     enable_service rpibluetooth
     restart_service bluetooth
@@ -21,6 +34,7 @@ function bluetooth {
     echo "Success: the bluetooth service has been started."
 
   elif [ "$status" = "off" ] || [ "$status" = "pause" ]; then
+    checkargn $# 1
     cp "$TEMPLATES/bluetooth/default" /etc/systemd/system/dbus-org.bluez.service
     disable_service rpibluetooth
     stop_service rpibluetooth
@@ -33,6 +47,7 @@ function bluetooth {
     echo "Success: the bluetooth service has been switched to default, and the service has been stopped."
 
   elif [ "$status" = "mac" ]; then
+    checkargn $# 1
     macfile=/sys/kernel/debug/bluetooth/hci0/identity
     macadd=$(cat ${macfile})
     echo "${macadd:0:17}"
@@ -61,22 +76,31 @@ function bluetooth {
     esac
 
    elif [ "$status" = "button" ]; then
+     checkargn $# 1
      button bluetooth
 
+   elif [ "$status" = "log" ]; then
+     checkargn $# 1
+     journalctl -u rpibluetooth -u bluetooth --no-pager
+
   else
-    echo "Error: only 'on', 'off', 'pause' options are supported";
+    echo "Error: only 'on', 'off', 'pause', 'mac', 'id', 'button', 'log', and 'status' options are supported";
   fi
 }
 
 function bluetooth_help {
   echo
-  echo "Usage: $BASENAME bluetooth <on|off|pause|mac|id|button>"
+  echo "Usage: $BASENAME bluetooth [on|off|pause|mac|id|button|status|log]"
   echo
   echo "Switches between hotspot / regular bluetooth mode, or displays the bluetooth mac address"
   echo
   echo "Example:"
   echo "  $BASENAME bluetooth"
-  echo "      off"
+  echo "      on"
+  echo
+  echo "  $BASENAME bluetooth status"
+  echo "      bluetooth service status: on"
+  echo "      rpibluetooth service status: on"
   echo 
   echo "  $BASENAME bluetooth on"
   echo "      This will start the bluetooth server, which lets the user control the raspberry pi using the mobile app."
@@ -101,5 +125,8 @@ function bluetooth_help {
   echo
   echo "  $BASENAME bluetooth id number"
   echo "      This will display the bluetooth id number"
+  echo
+  echo "  $BASENAME bluetooth log"
+  echo "      This will display the logs of bluetooth services"
   echo
 }

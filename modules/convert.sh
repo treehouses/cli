@@ -28,7 +28,7 @@ function convert {
 
 function video {
   ffmpeg -i $inputFile $outputFile -hide_banner
-  status=$?https://github.com/treehouses/cli
+  status=$?
   if [ "$status" == 0 ]; then
     echo "$inputFile has been successfully converted to $outputFile"
   else

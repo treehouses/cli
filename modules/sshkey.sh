@@ -117,9 +117,9 @@ function sshkey () {
 }
 
 function sshkey_help () {
-  echo ""
-  echo "Usage: $(basename "$0") sshkey <add|list|delete|deleteall|github>"
-  echo ""
+  echo
+  echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
+  echo
   echo "Used for adding or removing ssh keys for authentication"
   echo
   echo "Example:"

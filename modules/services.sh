@@ -278,20 +278,19 @@ function services {
               echo $local_url
             done
           elif [ "$command_option" = "tor" ]; then
-            for i in $(seq 1 "$(services $service_name port | wc -l)")
-            do
-              if [ "$(tor status)" = "active" ]; then
-                tor_url=$(tor)
-                tor_url+=":"
-                tor_url+=$(services $service_name port | sed -n "$i p")
-              fi
-              if [ "$service_name" = "pihole" ]; then
-                tor_url+="/admin"
-              elif [ "$service_name" = "couchdb" ]; then
-                tor_url+="/_utils"
-              fi
-              echo $tor_url
-            done
+            if [ "$(tor status)" = "active" ]; then
+              base_tor=$(tor)
+              for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
+              do
+                tor_url="$base_tor:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
+                if [ "$service_name" = "pihole" ]; then
+                  tor_url+="/admin"
+                elif [ "$service_name" = "couchdb" ]; then
+                  tor_url+="/_utils"
+                fi
+                echo $tor_url
+              done
+            fi
           elif [ "$command_option" = "" ]; then
             services $service_name url local
             services $service_name url tor

@@ -119,11 +119,11 @@ function get_icon {
     <!--top right circle-->
     <circle class="fil0" cx="7289" cy="4679" r="800" />
     <!--top left circle-->
-    <circle class="fil0" cx="2979" cy="2604" r="800" />
+    <circle class="fil0" cx="2979" cy="2609" r="800" />
     <!--bottom left circle-->
     <circle class="fil0" cx="879" cy="6989" r="800" />
     <!--bottom right circle-->
-    <circle class="fil0" cx="5302" cy="8989" r="800" />
+    <circle class="fil0" cx="5309" cy="8989" r="800" />
     <!--create asterisk-->
     <!--create middle right to left rectangle-->
     <polygon class="fil1" points="4981,5332 5105,5717 4122,5932 3265,6303 3140,5918 4068,5721 " />

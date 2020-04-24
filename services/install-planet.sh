@@ -117,13 +117,13 @@ function get_icon {
     <path class="fil0" d="M2472 3984c-504,0 -881,-60 -1342,-228 -138,-50 -231,-133 -328,-53 -94,153 1340,916 2163,917 883,0 1353,-332 1791,-831 248,-283 906,-1372 843,-1622 -194,-52 -240,282 -571,623 -265,273 -339,358 -666,581 -476,324 -1158,613 -1890,613z" />
     <!--create four circles-->
     <!--top right circle-->
-    <circle class="fil0" cx="7289" cy="4679" r="800" />
+    <circle class="fil0" cx="7089" cy="4879" r="760" />
     <!--top left circle-->
-    <circle class="fil0" cx="2979" cy="2609" r="800" />
+    <circle class="fil0" cx="3179" cy="2904" r="760" />
     <!--bottom left circle-->
-    <circle class="fil0" cx="879" cy="6989" r="800" />
+    <circle class="fil0" cx="1179" cy="6789" r="760" />
     <!--bottom right circle-->
-    <circle class="fil0" cx="5309" cy="8989" r="800" />
+    <circle class="fil0" cx="5102" cy="8789" r="760" />
     <!--create asterisk-->
     <!--create middle right to left rectangle-->
     <polygon class="fil1" points="4981,5332 5105,5717 4122,5932 3265,6303 3140,5918 4068,5721 " />

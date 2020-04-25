@@ -109,61 +109,13 @@ function sshkey () {
       echo "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
       exit 1
     fi
-#DEPRECATED####
-  elif [ "$1" == "addgithubusername" ]; then
-    if [ -z "$2" ]; then
-      echo "Error: missing argument"
-      echo "Usage: $BASENAME sshkey addgithubusername <username>"
-      exit 1
-    fi
-    keys=$(curl -s "https://github.com/$2.keys")
-    if [ ! -z "$keys" ]; then
-      keys=$(sed 's#$# '$2'#' <<< $keys)
-      sshkey add "$keys"
-    fi
-###############
-#DEPRECATED####
-  elif [ "$1" == "deletegithubusername" ]; then
-    if [ -z "$2" ]; then
-      echo "Error: missing argument"
-      echo "Usage: $BASENAME sshkey deletegithubusername \"<username>\""
-      exit 1
-    fi
-    githubusername="$2"
-    auth_files="/root/.ssh/authorized_keys /home/pi/.ssh/authorized_keys"
-    for file in $auth_files; do
-      if [ -f "$file" ]; then
-        if grep -q " $githubusername$" $file; then
-          sed -i "/ $githubusername$/d" $file
-	  echo "$githubusername's key(s) deleted from $file"
-        else
-          echo "$githubusername does not exist"
-        fi
-      else
-        echo "$file does not exist."
-      fi
-    done
-###############
-#DEPRECATED####
-  elif [ "$1" == "addgithubgroup" ]; then
-    if [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
-      echo "Error: missing arguments"
-      echo "Usage: $BASENAME sshkey addgithubgroup <organization> <team_name> <access_token>"
-      exit 1
-    fi
-    teams=$(curl -s -X GET "https://api.github.com/orgs/$2/teams" -H "Authorization: token $4")
-    team_id=$(echo "$teams" | jq ".[] | select(.name==\"$3\").id")
-    members=$(curl -s -X GET "https://api.github.com/teams/$team_id/members" -H "Authorization: token $4" | jq ".[].login" -r)
-    while read -r member; do
-      sshkey addgithubusername "$member"
-    done <<< "$members"
-###############
-  else
-    echo "Error: unsupported command"
-    echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
-    exit 1
+  else	
+    echo "Error: unsupported command"	
+    echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"	
+    exit 1    
   fi
 }
+
 function sshkey_help () {
   echo
   echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
@@ -188,17 +140,6 @@ function sshkey_help () {
   echo
   echo "  $BASENAME sshkey github addteam <organization> <team_name> <access_token>"
   echo "      Downloads the public keys of the group members and adds them to authorized_keys"
-  echo "      A access_token is required to make this work, it can be generated in the following link"
-  echo "      https://github.com/settings/tokens"
-  echo
-  echo "  $BASENAME sshkey addgithubusername <username>"
-  echo "      (DEPRECATED) Downloads the public keys of the github username and adds them to authorized_keys"
-  echo
-  echo "  $BASENAME sshkey deletegithubusername <username>"
-  echo "      (DEPRECATED) Deletes all ssh keys related to this user"
-  echo
-  echo "  $BASENAME sshkey addgithubgroup <organization> <team_name> <access_token>"
-  echo "      (DEPRECATED) Downloads the public keys of the group members and adds them to authorized_keys"
   echo "      A access_token is required to make this work, it can be generated in the following link"
   echo "      https://github.com/settings/tokens"
   echo

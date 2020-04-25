@@ -26,7 +26,8 @@ Usage: treehouses
           [password] [hotspotPassword]
    config [update|add|delete|clear]          commands for interacting with config file
    container <none|docker|balena>            enables (and start) the desired container
-   bluetooth <on|off|pause|button|mac|id>    switches bluetooth from regular to hotspot mode and shows id or MAC address
+   bluetooth [on|off|pause|restart|button]   switches bluetooth from regular to hotspot mode and shows id or MAC address
+             [mac|id|status|log]
    ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
    aphidden <local|internet> <ESSID>         creates a hidden mobile ap, with or without internet access
             [password]
@@ -54,22 +55,23 @@ Usage: treehouses
            <daily|weekly|monthly>
    internet                                  checks if the rpi has access to internet
    services                                  executes the given command on the specified service
-      <available|installed [full]            list available, and installed services
-      ports|running [full]>                  list ports used by services and services running
+      <available|installed [full]>           list available, and installed services
+      <ports|running [full]>                 list ports used by services and services running
       [planet]       <install>               Planet Learning is a generic learning system built in Angular & CouchDB
-      [kolibri]      <cleanup>               Kolibri is a learning platform using DJango
-      [nextcloud]    <up>                    Nextcloud is a safe home for all your data, files, etc
-      [netdata]      <down>                  Netdata is a distributed, real-time performance and health monitoring for systems
-      [mastodon]     <start>                 Mastodon is a free, open-source social network server
-      [moodle]       <stop>                  Moodle is a learning management system built in PHP
-      [pihole]       <restart>               Pi-hole is a DNS sinkhole that protects your devices from unwanted content
+      [kolibri]      <up>                    Kolibri is a learning platform using DJango
+      [nextcloud]    <start>                 Nextcloud is a safe home for all your data, files, etc
+      [netdata]      <restart>               Netdata is a distributed, real-time performance and health monitoring for systems
+      [mastodon]     <stop>                  Mastodon is a free, open-source social network server
+      [moodle]       <down>                  Moodle is a learning management system built in PHP
+      [pihole]       <cleanup>               Pi-hole is a DNS sinkhole that protects your devices from unwanted content
       [privatebin]   <autorun [true|false]>  PrivateBin is a minimalist, open source online pastebin
-      [portainer]    <ps>                    Portainer is a lightweight management UI for Docker environments
+      [portainer]    <url [local|tor]>       Portainer is a lightweight management UI for Docker environments
       [ntopng]       <info>                  Ntopng is a network traffic probe that monitors network usage
-      [couchdb]      <url [local|tor]>       CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
-      [mariadb]      <port>                  MariaDB is a community-developed fork of the MySQL relational database management system
-      [seafile]      <size>                  Seafile is an open-source, cross-platform file-hosting software system
-      [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art      
+      [couchdb]      <size>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
+      [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
+      [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
+      [seafile]      <environment <edit>>    Seafile is an open-source, cross-platform file-hosting software system
+      [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
    tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
        [stop|destroy|notice|status|refresh]
    bootoption <console|desktop> [autologin]  sets the boot mode
@@ -84,12 +86,13 @@ Usage: treehouses
    cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
         [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
    usb [on|off]                              turns usb ports on or off
-   remote [status|upgrade|services|version]  helps with treehouses remote android app
-          [commands|json]
+   remote [check|status|upgrade|services]    helps with treehouses remote android app
+          [version|commands|allservices]
    log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
    blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
    sdbench                                   displays read and write speed of micro SD card
    inspire [joke|qotd|random]                displays quote based on user input
+   shutdown [now|in|force]                   shutdown the system 
 EOF
   echo "$helpdefault"
 }

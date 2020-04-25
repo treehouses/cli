@@ -55,15 +55,16 @@ function install {
     echo "planet_autorun=true"
     echo
     echo "if [ \"\$planet_autorun\" = true ]; then"
-    echo "  if [ -f /srv/planet/pwd/credentials.yml ]; then"
-    echo "    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d"
-    echo "  else"
-    echo "    docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d"
-    echo "  fi"
+    echo "  treehouses services planet up"
     echo "fi"
     echo
     echo
   } > /srv/planet/autorun
+}
+
+# environment var
+function uses_env {
+  echo false
 }
 
 # add supported arm(s)

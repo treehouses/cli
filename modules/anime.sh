@@ -1,5 +1,6 @@
 function anime {
   checkargn $# 0
+  checkinternet
   local query time1 result cnt
   query=$(cat <<EOF
 query(\$timestamp: Int) {

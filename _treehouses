@@ -20,10 +20,13 @@ treehouses blocker max
 treehouses bluetooth button
 treehouses bluetooth id
 treehouses bluetooth id number
+treehouses bluetooth log
 treehouses bluetooth mac
 treehouses bluetooth off
 treehouses bluetooth on
 treehouses bluetooth pause
+treehouses bluetooth restart
+treehouses bluetooth status
 treehouses bootoption console
 treehouses bootoption console autologin
 treehouses bootoption desktop
@@ -220,8 +223,9 @@ treehouses reboots in
 treehouses reboots monthly
 treehouses reboots now
 treehouses reboots weekly
+treehouses remote check
 treehouses remote commands
-treehouses remote json
+treehouses remote allservices
 treehouses remote services available
 treehouses remote services installed
 treehouses remote services running
@@ -238,10 +242,14 @@ treehouses sdbench
 treehouses services available
 treehouses services installed
 treehouses services installed full
+$(services_cmds)
 treehouses services ports
 treehouses services running
 treehouses services running full
-$(services_cmds)
+treehouses shutdown 
+treehouses shutdown now
+treehouses shutdown in
+treehouses shutdown force
 treehouses speedtest
 treehouses speedtest -h
 treehouses ssh off
@@ -332,6 +340,9 @@ treehouses services $line autorun false
 treehouses services $line autorun true
 treehouses services $line cleanup
 treehouses services $line down
+treehouses services $line environment check
+treehouses services $line environment edit
+treehouses services $line environment edit vim
 treehouses services $line icon
 treehouses services $line icon oneline
 treehouses services $line info

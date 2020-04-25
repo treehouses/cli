@@ -21,8 +21,7 @@ function install {
     echo "ntopng_autorun=true"
     echo
     echo "if [ \"\$ntopng_autorun\" = true ]; then"
-    echo "  docker volume create ntopng_data"
-    echo "  docker run --name ntopng -d -p 8090:8090 -v /var/run/docker.sock:/var/run/docker.sock -v ntopng_data:/data jonbackhaus/ntopng --http-port=8090"
+    echo "  treehouses services ntopng up"
     echo "fi"
     echo
     echo

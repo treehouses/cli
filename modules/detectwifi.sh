@@ -15,6 +15,6 @@ function detectwifi_help {
   echo
   echo "Example:"
   echo "  $BASENAME detectwifi"
-  echo "  true"
+  echo "    true"
   echo
 }

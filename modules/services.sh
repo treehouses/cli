@@ -107,7 +107,8 @@ function services {
                 echo "retrying pull"
                 ((retries+=1))
               else
-                services $service_name environment edit
+                # services $service_name environment edit
+                # TODO: figure out how to make this work with remote
                 echo "${service_name} installed"
                 exit 0
               fi

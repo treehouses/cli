@@ -13,6 +13,7 @@ Usage: treehouses
    detectbluetooth                           detects if bluetooth module is available
    detectrpi [model]                         detects the hardware version of a raspberry pi
    detectarm                                 detects the arm version of a raspberry pi
+   detectwifi                                detects if wifi module is available
    detect                                    detects the hardware version of any device
    ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
    discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network

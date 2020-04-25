@@ -346,7 +346,7 @@ treehouses services $line up
 treehouses services $line url
 treehouses services $line url local
 treehouses services $line url tor\n"
-  done <<< $(echo "$(<./modules/help.sh)" | grep -ozP '(?s)   services\K.*?(?=\n   tor)' | sed 's/.*\[\([^]^|]*\)\].*/\1/g' | sed -e '1,3d')
+  done <<< $(echo "$(</usr/lib/node_modules/@treehouses/cli/modules/help.sh)" | grep -ozP '(?s)   services\K.*?(?=\n   tor)' | sed 's/.*\[\([^]^|]*\)\].*/\1/g' | sed -e '1,3d')
 }
 
 complete -F _treehouses_complete treehouses ./cli.sh

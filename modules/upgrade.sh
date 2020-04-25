@@ -26,6 +26,14 @@ function upgrade {
       exit
     fi
     echo "true $last_version"
+  elif [ "$tag" == "bluetooth" ];
+    if [ "$(internet)" == "true" ]; then
+      curl -s "https://raw.githubusercontent.com/treehouses/control/master/server.py" -o /usr/local/bin/bluetooth-server.py
+      bluetooth restart
+      echo "Successfully updated and restarted bluetooth server"
+    else
+      echo "Error: internet not available"
+    fi
   else
     npm install -g "@treehouses/cli@${tag}"
   fi
@@ -33,7 +41,7 @@ function upgrade {
 
 function upgrade_help {
   echo
-  echo "Usage: $BASENAME upgrade [tag] [--check]"
+  echo "Usage: $BASENAME upgrade [tag|bluetooth] [--check]"
   echo
   echo "Upgrades $BASENAME package using npm"
   echo
@@ -47,5 +55,8 @@ function upgrade_help {
   echo
   echo " $BASENAME upgrade --check"
   echo "    checks if there is a new version of the package, outputs false if there isnt, outputs true + version if there is"
+  echo
+  echo " $BASENAME upgrade bluetooth"
+  echo "    This will upgrade the bluetooth server to the latest if internet is available and restart bluetooth"
   echo
 }

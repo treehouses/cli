@@ -11,12 +11,12 @@ load test-helper
   assert_success
 }
 
-@test "$clinom upgrade -f" {
-  run "${clicmd}" upgrade -f
+@test "$clinom upgrade" {
+  run "${clicmd}" upgrade
   assert_success
 }
 
-@test "$clinom upgrade" {
-  run "${clicmd}" upgrade
+@test "$clinom upgrade bluetooth" {
+  run "${clicmd}" upgrade bluetooth
   assert_success
 }

@@ -107,9 +107,8 @@ function services {
                 echo "retrying pull"
                 ((retries+=1))
               else
-                # services $service_name environment edit
-                # TODO: figure out how to make this work with remote
                 echo "${service_name} installed"
+                echo "modify default environment variables by running '$BASENAME services ${service_name} environment edit'"
                 exit 0
               fi
             done

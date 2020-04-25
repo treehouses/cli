@@ -3,7 +3,7 @@
 function install {
   # create service directory
   mkdir -p /srv/seafile
-  if [ "$(tor status)" = "inactive" ]; then
+  if [ "$(tor status)" = "inactive" ] || [[ "$(tor status)" =~ "Error" ]]; then
     address=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
   else
     address=$(tor)

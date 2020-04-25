@@ -26,10 +26,13 @@ function upgrade {
       exit
     fi
     echo "true $last_version"
-  elif [ "$tag" == "bluetooth" ];
+  elif [ "$tag" == "bluetooth" ]; then
+    checkargn $# 1
+    checkwrpi
+    checkroot
     if [ "$(internet)" == "true" ]; then
       curl -s "https://raw.githubusercontent.com/treehouses/control/master/server.py" -o /usr/local/bin/bluetooth-server.py
-      bluetooth restart
+      bluetooth restart &>"$LOGFILE"
       echo "Successfully updated and restarted bluetooth server"
     else
       echo "Error: internet not available"

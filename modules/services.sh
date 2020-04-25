@@ -344,10 +344,10 @@ function services {
           fi
           ;;
         environment)
-          checkargn $# 4
           if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
             if [ -e /srv/$service_name/.env ]; then
               if [ "$command_option" = "edit" ]; then
+                checkargn $# 4
                 if [ -z "$4" ]; then
                   seperator="--------------------"
                   while read -r -u 9 line; do
@@ -372,6 +372,7 @@ function services {
                   exit 1
                 fi
               elif [ "$command_option" = "check" ]; then
+                checkargn $# 3
                 docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
               else
                 echo "ERROR: unknown command option"

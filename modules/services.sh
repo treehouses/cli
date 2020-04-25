@@ -73,10 +73,9 @@ function services {
     for i in "${array[@]}"
     do
       port_string=""
-      for j in $(seq 1 "$(services $i port | wc -l)")
+      for j in $(seq 1 "$(source $SERVICES/install-${i}.sh && get_ports | wc -l)")
       do
-        port_string+=$(services $i port | sed -n "$j p")
-        port_string+=" "
+        port_string+="$(source $SERVICES/install-${i}.sh && get_ports | sed -n "$j p") "
       done
       if [ ! -z "$port_string" ]; then
         printf "%-15s %15s %-5s\n" "$i" "port" "$(echo $port_string | xargs | sed -e 's/ /, /g')"
@@ -270,11 +269,10 @@ function services {
         url)
           checkargn $# 3
           if [ "$command_option" = "local" ]; then
-            for i in $(seq 1 "$(services $service_name port | wc -l)")
+            base_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+            for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
             do
-              local_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
-              local_url+=":"
-              local_url+=$(services $service_name port | sed -n "$i p")
+              local_url="$base_url:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
               if [ "$service_name" = "pihole" ]; then
                 local_url+="/admin"
               elif [ "$service_name" = "couchdb" ]; then
@@ -283,20 +281,19 @@ function services {
               echo $local_url
             done
           elif [ "$command_option" = "tor" ]; then
-            for i in $(seq 1 "$(services $service_name port | wc -l)")
-            do
-              if [ "$(tor status)" = "active" ]; then
-                tor_url=$(tor)
-                tor_url+=":"
-                tor_url+=$(services $service_name port | sed -n "$i p")
-              fi
-              if [ "$service_name" = "pihole" ]; then
-                tor_url+="/admin"
-              elif [ "$service_name" = "couchdb" ]; then
-                tor_url+="/_utils"
-              fi
-              echo $tor_url
-            done
+            if [ "$(tor status)" = "active" ]; then
+              base_tor=$(tor)
+              for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
+              do
+                tor_url="$base_tor:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
+                if [ "$service_name" = "pihole" ]; then
+                  tor_url+="/admin"
+                elif [ "$service_name" = "couchdb" ]; then
+                  tor_url+="/_utils"
+                fi
+                echo $tor_url
+              done
+            fi
           elif [ "$command_option" = "" ]; then
             services $service_name url local
             services $service_name url tor
@@ -528,6 +525,7 @@ function services_help {
   echo "  ntopng          Ntopng is a network traffic probe that monitors network usage"
   echo "  couchdb         CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
   echo "  mariadb         MariaDB is a community-developed fork of the MySQL relational database management system"
+  echo "  mongodb         MongoDB is a general purpose, distributed, document-based, NoSQL database."
   echo "  seafile         Seafile is an open-source, cross-platform file-hosting software system"
   echo "  turtleblocksjs  TurtleBlocks is an activity with a Logo-inspired graphical \"turtle\" "
   echo

@@ -26,8 +26,8 @@ Usage: treehouses
           [password] [hotspotPassword]
    config [update|add|delete|clear]          commands for interacting with config file
    container <none|docker|balena>            enables (and start) the desired container
-   bluetooth [on|off|pause|button|mac|id]    switches bluetooth from regular to hotspot mode and shows id or MAC address
-             [status|log]
+   bluetooth [on|off|pause|restart|button]   switches bluetooth from regular to hotspot mode and shows id or MAC address
+             [mac|id|status|log]
    ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
    aphidden <local|internet> <ESSID>         creates a hidden mobile ap, with or without internet access
             [password]
@@ -55,23 +55,23 @@ Usage: treehouses
            <daily|weekly|monthly>
    internet                                  checks if the rpi has access to internet
    services                                  executes the given command on the specified service
-      <available|installed [full]            list available, and installed services
-      ports|running [full]>                  list ports used by services and services running
+      <available|installed [full]>           list available, and installed services
+      <ports|running [full]>                 list ports used by services and services running
       [planet]       <install>               Planet Learning is a generic learning system built in Angular & CouchDB
-      [kolibri]        <up>                  Kolibri is a learning platform using DJango
-      [nextcloud]      <down>                Nextcloud is a safe home for all your data, files, etc
-      [netdata]        <start>               Netdata is a distributed, real-time performance and health monitoring for systems
-      [mastodon]       <stop>                Mastodon is a free, open-source social network server
-      [moodle]         <restart>             Moodle is a learning management system built in PHP
-      [pihole]         <autorun [true|false]>Pi-hole is a DNS sinkhole that protects your devices from unwanted content
-      [privatebin]     <ps>                  PrivateBin is a minimalist, open source online pastebin
-      [portainer]      <url [local|tor]>     Portainer is a lightweight management UI for Docker environments
-      [ntopng]         <port>                Ntopng is a network traffic probe that monitors network usage
-      [couchdb]        <info>                CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
-      [mariadb]        <size>                MariaDB is a community-developed fork of the MySQL relational database management system
-      [seafile]        <cleanup>             Seafile is an open-source, cross-platform file-hosting software system
-      [turtleblocksjs] <icon>                TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
-                       <environment <edit [vim]|check>>
+      [kolibri]      <up>                    Kolibri is a learning platform using DJango
+      [nextcloud]    <start>                 Nextcloud is a safe home for all your data, files, etc
+      [netdata]      <restart>               Netdata is a distributed, real-time performance and health monitoring for systems
+      [mastodon]     <stop>                  Mastodon is a free, open-source social network server
+      [moodle]       <down>                  Moodle is a learning management system built in PHP
+      [pihole]       <cleanup>               Pi-hole is a DNS sinkhole that protects your devices from unwanted content
+      [privatebin]   <autorun [true|false]>  PrivateBin is a minimalist, open source online pastebin
+      [portainer]    <url [local|tor]>       Portainer is a lightweight management UI for Docker environments
+      [ntopng]       <info>                  Ntopng is a network traffic probe that monitors network usage
+      [couchdb]      <size>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
+      [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
+      [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
+      [seafile]      <environment <edit>>    Seafile is an open-source, cross-platform file-hosting software system
+      [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art       
    tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
        [stop|destroy|notice|status|refresh]
    bootoption <console|desktop> [autologin]  sets the boot mode

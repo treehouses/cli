@@ -40,6 +40,7 @@ do
   fi
 done
 if [ "$find" = 1 ]; then
+  start_spinner
   "$@"
 else
   help
@@ -47,4 +48,8 @@ fi
 
 if [ $? -eq 0 ]; then
   logit "$SCRIPTARGS" "1"
+fi
+
+if [[ ! -v NOSPIN ]]; then
+  tput cvvis
 fi

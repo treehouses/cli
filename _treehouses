@@ -326,6 +326,9 @@ treehouses services mongodb autorun false
 treehouses services mongodb autorun true
 treehouses services mongodb cleanup
 treehouses services mongodb down
+treehouses services mongodb environment check
+treehouses services mongodb environment edit
+treehouses services mongodb environment edit vim
 treehouses services mongodb icon
 treehouses services mongodb icon oneline
 treehouses services mongodb info

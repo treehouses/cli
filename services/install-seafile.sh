@@ -3,6 +3,11 @@
 function install {
   # create service directory
   mkdir -p /srv/seafile
+  if [ "$(tor status)" = "inactive" ]; then
+    address=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+  else
+    address=$(tor)
+  fi
 
   # create yml(s)
   {
@@ -14,13 +19,13 @@ function install {
     echo "    ports:"
     echo "      - \"8085:8000\""
     echo "      - \"8086:8086\""
-    echo "    environment:        "
+    echo "    environment:"
     echo "      - SEAFILE_NAME=Seafile"
-    echo "      - SEAFILE_ADDRESS=$(treehouses tor) "
-    echo "      - SEAFILE_ADMIN=example@seafile.com "
-    echo "      - SEAFILE_ADMIN_PW=seacret "
-    echo "    volumes:          "
-    echo "      - /home/data/seafile:/seafile "
+    echo "      - SEAFILE_ADDRESS=$address"
+    echo "      - SEAFILE_ADMIN=example@seafile.com"
+    echo "      - SEAFILE_ADMIN_PW=seacret"
+    echo "    volumes:"
+    echo "      - /home/data/seafile:/seafile"
   } > /srv/seafile/seafile.yml
 
   # add autorun

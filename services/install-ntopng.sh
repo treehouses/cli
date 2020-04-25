@@ -29,6 +29,11 @@ function install {
   } > /srv/ntopng/autorun
 }
 
+# environment var
+function uses_env {
+  echo false
+}
+
 # add supported arm(s)
 function supported_arms {
   echo "v7l"

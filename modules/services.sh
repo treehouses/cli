@@ -102,11 +102,12 @@ function services {
             retries=0
             while [ "$retries" -lt 2 ];
             do
-              if ! docker-compose -f /srv/${service_name}/${service_name}.yml pull ; then
+              if ! docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml pull ; then
                 echo "retrying pull"
                 ((retries+=1))
               else
                 echo "${service_name} installed"
+                echo "modify default environment variables by running '$BASENAME services ${service_name} environment edit'"
                 exit 0
               fi
             done
@@ -137,6 +138,9 @@ function services {
             fi
           else
             check_space $service_name
+            if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
+              validate_yml $service_name
+            fi
             docker_compose_up $service_name
           fi
           for i in $(seq 1 "$(services $service_name port | wc -l)")
@@ -149,7 +153,7 @@ function services {
           if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
             echo "${service_name}.yml not found"
           else
-            docker-compose -f /srv/${service_name}/${service_name}.yml down
+            docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down
             remove_tor_port
             echo "${service_name} stopped and removed"
           fi
@@ -162,7 +166,7 @@ function services {
               echo "try running '$BASENAME services ${service_name} install' first"
               exit 1
             else
-              if docker-compose -f /srv/${service_name}/${service_name}.yml start; then
+              if docker-compose --project-directory /srv/$service_namee -f /srv/${service_name}/${service_name}.yml start; then
                 echo "${service_name} started"
               fi
             fi
@@ -180,7 +184,7 @@ function services {
               echo "try running '$BASENAME services ${service_name} install' first"
               exit 1
             else
-              if docker-compose -f /srv/${service_name}/${service_name}.yml stop; then
+              if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml stop; then
                 echo "${service_name} stopped"
               fi
             fi
@@ -254,7 +258,7 @@ function services {
             echo "service autorun set to false"
           else
             echo "ERROR: unknown command option"
-            echo "USAGE: $BASENAME services autorun <true | false>"
+            echo "USAGE: $BASENAME services $service_name autorun [true | false]"
             exit 1
           fi
           ;;
@@ -295,7 +299,7 @@ function services {
             services $service_name url tor
           else
             echo "ERROR: unknown command option"
-            echo "USAGE: $BASENAME services url <local | tor>"
+            echo "USAGE: $BASENAME services $service_name url [local | tor]"
             exit 1
           fi
           ;;
@@ -324,7 +328,7 @@ function services {
             echo "try running '$BASENAME services ${service_name} install' first"
             exit 1
           else
-            docker-compose -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
+            docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
             echo "${service_name} stopped and removed"
           fi
           remove_tor_port
@@ -337,6 +341,52 @@ function services {
             echo "$(source $SERVICES/install-${service_name}.sh && get_icon | sed 's/^[ \t]*//;s/[ \t]*$//' | tr '\n' ' ')"
           else
             source $SERVICES/install-${service_name}.sh && get_icon
+          fi
+          ;;
+        environment)
+          if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
+            if [ -e /srv/$service_name/.env ]; then
+              if [ "$command_option" = "edit" ]; then
+                checkargn $# 4
+                kill_spinner
+                if [ -z "$4" ]; then
+                  seperator="--------------------"
+                  while read -r -u 9 line; do
+                    echo $seperator
+                    echo "Current:"
+                    echo $line
+                    echo "New:"
+                    newline="${line%%=*}="
+                    printf "%s" $newline
+                    read -r userinput
+                    sed -i "/$line/c\\$newline$userinput" /srv/$service_name/.env
+                  done 9< /srv/$service_name/.env
+                  echo $seperator
+                  echo "New environment file:"
+                  cat /srv/$service_name/.env
+                  echo $seperator
+                elif [ "$4" = "vim" ]; then
+                  vim /srv/$service_name/.env
+                else
+                  echo "ERROR: unknown command option"
+                  echo "USAGE: $BASENAME services $service_name environment edit [vim]"
+                  exit 1
+                fi
+              elif [ "$command_option" = "check" ]; then
+                checkargn $# 3
+                docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
+              else
+                echo "ERROR: unknown command option"
+                echo "USAGE: $BASENAME services $service_name environment <edit | check>"
+                exit 1
+              fi
+            else
+              echo "ERROR: /srv/$service_name/.env not found"
+              echo "try running '$BASENAME services $service_name install' first"
+              exit 1
+            fi
+          else
+            echo "$service_name does not use environment variables"
           fi
           ;;
         *)
@@ -355,6 +405,7 @@ function services {
           echo "                                ..... size"
           echo "                                ..... cleanup"
           echo "                                ..... icon"
+          echo "                                ..... environment <edit [vim]|check>"
           exit 1
           ;;
       esac
@@ -421,7 +472,7 @@ function docker_compose_up {
     echo "ERROR: /srv/${1}/${1}.yml not found"
     echo "try running '$BASENAME services ${1} install' first"
     exit 1
-  elif docker-compose -f /srv/${1}/${1}.yml -p ${1} up -d ; then
+  elif docker-compose --project-directory /srv/${1} -f /srv/${1}/${1}.yml -p ${1} up -d ; then
     echo "${1} built and started"
   else
     echo "ERROR: cannot build ${1}"
@@ -441,6 +492,23 @@ function remove_tor_port {
       fi
     fi
   done
+}
+
+function validate_yml {
+  if [ ! -f /srv/${1}/.env ]; then
+    echo "ERROR: /srv/${1}/.env not found"
+    exit 1
+  else
+    while read -r line; do
+      if [[ $line == *=[[:space:]]* ]] || [[ $line =~ "="$ ]]; then
+        echo "ERROR: unset environment variable:"
+        echo $line
+        echo "try running '$BASENAME services $1 environment edit' to edit environment variables"
+        exit 1
+      fi
+    done < /srv/${1}/.env
+    echo "valid yml"
+  fi
 }
 
 function services_help {
@@ -506,6 +574,7 @@ function services_help {
   echo "                             ..... size"
   echo "                             ..... cleanup"
   echo "                             ..... icon"
+  echo "                             ..... environment <edit [vim]|check>"
   echo
   echo "    install                 installs and pulls <service_name>"
   echo
@@ -538,6 +607,11 @@ function services_help {
   echo "    cleanup                 uninstalls and removes <service_name>"
   echo
   echo "    icon                    outputs the svg code for the <service_name>'s icon"
+  echo
+  echo "    environment"
+  echo "        <edit>                  edit the .env file for <service_name>"
+  echo "            [vim]                   opens vim to edit the .env file for <service_name>"
+  echo "        <check>                 outputs the contents of the .yml for <service_name> with the currently configured environment variables"
   echo
   echo "  Examples:"
   echo

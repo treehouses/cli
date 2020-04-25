@@ -70,6 +70,7 @@ treehouses detectarm
 treehouses detectbluetooth
 treehouses detectrpi
 treehouses detectrpi model
+treehouses detectwifi
 treehouses discover interface
 treehouses discover mac b8:29:eb:9f:42:8b
 treehouses discover ping google.com

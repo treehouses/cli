@@ -22,22 +22,33 @@ function install {
     echo "    environment:"
     echo "      - SEAFILE_NAME=Seafile"
     echo "      - SEAFILE_ADDRESS=$address"
-    echo "      - SEAFILE_ADMIN=example@seafile.com"
-    echo "      - SEAFILE_ADMIN_PW=seacret"
+    echo "      - SEAFILE_ADMIN=\${SEAFILE_ADMIN_VAR}"
+    echo "      - SEAFILE_ADMIN_PW=\${SEAFILE_ADMIN_PW_VAR}"
     echo "    volumes:"
     echo "      - /home/data/seafile:/seafile"
   } > /srv/seafile/seafile.yml
+
+  # create .env with default values
+  {
+    echo "SEAFILE_ADMIN_VAR=example@seafile.com"
+    echo "SEAFILE_ADMIN_PW_VAR=seacret"
+  } > /srv/seafile/.env
 
   # add autorun
   {
     echo "seafile_autorun=true"
     echo
     echo "if [ \"\$seafile_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/seafile/seafile.yml -p seafile up -d"
+    echo "  treehouses services seafile up"
     echo "fi"
     echo
     echo
   } > /srv/seafile/autorun
+}
+
+# environment var
+function uses_env {
+  echo true
 }
 
 # add supported arm(s)

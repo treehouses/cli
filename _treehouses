@@ -302,6 +302,7 @@ treehouses tor stop
 treehouses upgrade
 treehouses upgrade --check
 treehouses upgrade -f
+treehouses upgrade bluetooth
 treehouses usb off
 treehouses usb on
 treehouses verbose

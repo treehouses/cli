@@ -2,7 +2,7 @@ function upgrade {
   local tag last_version
   checkargn $# 2
   tag=$1
-  if [ -z "$tag" ] && [ "$tag" != "--check" ];
+  if [ -z "$tag" ];
   then
     checkroot
     last_version=$(npm show @treehouses/cli version)
@@ -26,6 +26,10 @@ function upgrade {
       exit
     fi
     echo "true $last_version"
+  # added to replace to-be-deprecated `treehouses upgrade -f` command
+  elif [ "$tag" == "force" ];
+  then
+    npm install -g "@treehouses/cli@-f"
   else
     npm install -g "@treehouses/cli@${tag}"
   fi
@@ -44,6 +48,9 @@ function upgrade_help {
   echo
   echo " $BASENAME upgrade tag"
   echo "    This will upgrade the $BASENAME package to the version with the specified tag"
+  echo
+  echo " $BASENAME upgrade force"
+  echo "    This will upgrade the $BASENAME package to the version with the -f tag"
   echo
   echo " $BASENAME upgrade --check"
   echo "    checks if there is a new version of the package, outputs false if there isnt, outputs true + version if there is"

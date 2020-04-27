@@ -80,8 +80,16 @@ function bluetooth {
      button bluetooth
 
    elif [ "$status" = "log" ]; then
-     checkargn $# 1
-     journalctl -u rpibluetooth -u bluetooth --no-pager
+     if [ "$2" = "" ]; then
+       checkargn $# 1
+       journalctl -u rpibluetooth -u bluetooth --no-pager
+     elif [ "$2" = "follow" ]; then
+       echo "press (ctrl + c) to exit"
+       journalctl -u rpibluetooth -u bluetooth -f
+     else
+       echo "Argument not valid; leave blank or use \"follow\""
+       exit 1
+     fi
 
    elif [ "$status" = "restart" ]; then
      bluetooth off &>"$LOGFILE"
@@ -136,5 +144,9 @@ function bluetooth_help {
   echo
   echo "  $BASENAME bluetooth log"
   echo "      This will display the logs of bluetooth services"
+  echo
+  echo "  $BASENAME bluetooth log follow"
+  echo "      This will display the logs as they come in live of the bluetooth services"
+  echo "      press (ctrl + c) to exit"
   echo
 }

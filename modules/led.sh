@@ -103,6 +103,14 @@ function led {
       echo "Both LED: 2 sec on; 6 blink; 4 on"
       carnival > "$LOGFILE"
       ;;
+    stpatricks)
+      checkroot
+      echo "leds are set to stpatricks mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Green LED: blink 2 times; on 1 sec; off 1 sec; this will happen 5 times"
+      echo "Green LED: flash 20 times; on 2 sec"
+      stpatricks > "$LOGFILE"
+      ;;
     "")
       if [ ! -z "$currentGreen" ]; then
         echo -e "$green: $currentGreen"
@@ -391,10 +399,39 @@ function carnival {
   led green "$current_green"
 }
 
+function stpatricks {
+  current_red=$(led "red")
+  current_green=$(led "green")
+  
+  set_brightness 1 0    # red off
+  set_brightness 0 0    # green off
+  
+  for i in {0..4}
+  do
+    set_brightness 0 1 && sleep 0.25
+    set_brightness 0 0 && sleep 0.25           
+    set_brightness 0 1 && sleep 0.25
+    set_brightness 0 0 && sleep 0.25
+    set_brightness 0 1 && sleep 1  
+    set_brightness 0 0 && sleep 1 
+  done
+
+  for i in {0..19}
+  do
+    set_brightness 0 1 && sleep 0.05
+    set_brightness 0 0 && sleep 0.05
+  done
+
+  set_brightness 0 1 && sleep 2
+
+  led green "$current_green"
+  led red "$current_red"
+}
+
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear|valentine|carnival]"
+  echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear|valentine|carnival|stpatricks]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -460,12 +497,15 @@ function led_help {
   echo "      This wil set the mode of the led to lunarnewyear"
   echo
   echo "  $BASENAME led carnival"
-  echo "     This will set mode of the led to carnival"
+  echo "     This will set the mode of the led to carnival"
   echo
   echo "  $BASENAME led onam"
   echo "      This will set the mode of the led to onam"
   echo
   echo "  $BASENAME led heavymetal"
   echo "      This will set the mode of the led to heavymetal"
+  echo
+  echo "  $BASENAME led stpatricks"
+  echo "     This will set the mode of the led to stpatricks"
   echo
 }

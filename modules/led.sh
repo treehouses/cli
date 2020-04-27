@@ -107,9 +107,9 @@ function led {
       checkroot
       echo "leds are set to stpatricks mode."
       echo "Look at your RPi leds, both leds will be in this pattern..."
-      echo "Green LED: on 1 sec"
-      echo "Green LED: off 1 sec"
+      echo "Green LED: on 1 sec; off 1 sec"
       stpatricks > "$LOGFILE"
+      ;;
     "")
       if [ ! -z "$currentGreen" ]; then
         echo -e "$green: $currentGreen"
@@ -408,7 +408,7 @@ function stpatricks {
   for i in {0..9}
   do
     set_brightness 0 1 && sleep 1  # green on
-    set_brightness 0 0 && sleep 0.5  # green off
+    set_brightness 0 0 && sleep 1  # green off
   done
 
   led green "$current_green"

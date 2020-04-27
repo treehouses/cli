@@ -107,7 +107,8 @@ function led {
       checkroot
       echo "leds are set to stpatricks mode."
       echo "Look at your RPi leds, both leds will be in this pattern..."
-      echo "Green LED: on 1 sec; off 1 sec"
+      echo "Green LED: blink 2 times; on 1 sec; off 1 sec"
+      echo "Green LED: blink 10 times; on 2 sec"
       stpatricks > "$LOGFILE"
       ;;
     "")
@@ -402,10 +403,10 @@ function stpatricks {
   current_red=$(led "red")
   current_green=$(led "green")
   
-  set_brightness 1 0 && sleep 0.5    # red off
-  set_brightness 0 0 && sleep 0.5    # green off
+  set_brightness 1 0    # red off
+  set_brightness 0 0    # green off
   
-  for i in {0..9}
+  for i in {0..4}
   do
     set_brightness 0 1 && sleep 0.25
     set_brightness 0 0 && sleep 0.25           
@@ -414,6 +415,14 @@ function stpatricks {
     set_brightness 0 1 && sleep 1  
     set_brightness 0 0 && sleep 1 
   done
+
+  for i in {0..9}
+  do
+    set_brightness 0 1 && sleep 0.25
+    set_brightness 0 0 && sleep 0.25
+  done
+
+  set_brightness 0 1 && sleep 2
 
   led green "$current_green"
   led red "$current_red"

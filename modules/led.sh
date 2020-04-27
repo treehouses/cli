@@ -416,10 +416,10 @@ function stpatricks {
     set_brightness 0 0 && sleep 1 
   done
 
-  for i in {0..9}
+  for i in {0..19}
   do
-    set_brightness 0 1 && sleep 0.025
-    set_brightness 0 0 && sleep 0.025
+    set_brightness 0 1 && sleep 0.05
+    set_brightness 0 0 && sleep 0.05
   done
 
   set_brightness 0 1 && sleep 2

@@ -2,7 +2,9 @@ function upgrade {
   local tag last_version
   checkargn $# 2
   tag=$1
-  if [ -z "$tag" ] && [ "$tag" != "--check" ];
+  # `--check` to be deprecated at some point
+  # `check` should now work
+  if [ -z "$tag" ];
   then
     checkroot
     last_version=$(npm show @treehouses/cli version)
@@ -12,7 +14,7 @@ function upgrade {
       exit
     fi
     npm install -g '@treehouses/cli@latest'
-  elif [ "$tag" == "--check" ];
+  elif [ "$tag" == "check" ] || [ "$tag" == "--check" ];
   then
     if [ "$(internet)" == "false" ];
     then
@@ -54,8 +56,8 @@ function upgrade_help {
   echo " $BASENAME upgrade tag"
   echo "    This will upgrade the $BASENAME package to the version with the specified tag"
   echo
-  echo " $BASENAME upgrade --check"
-  echo "    checks if there is a new version of the package, outputs false if there isnt, outputs true + version if there is"
+  echo " $BASENAME upgrade check"
+  echo "    checks if there is a new version of the package, outputs false if there isn't, outputs true + version if there is"
   echo
   echo " $BASENAME upgrade bluetooth"
   echo "    This will upgrade the bluetooth server to the latest if internet is available and restart bluetooth"

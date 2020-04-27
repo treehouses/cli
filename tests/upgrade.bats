@@ -20,3 +20,8 @@ load test-helper
   run "${clicmd}" upgrade bluetooth
   assert_success
 }
+
+@test "$clinom upgrade check" {
+  run "${clicmd}" upgrade check
+  assert_success
+}

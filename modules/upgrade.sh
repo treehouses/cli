@@ -14,7 +14,7 @@ function upgrade {
       exit
     fi
     npm install -g '@treehouses/cli@latest'
-  elif [ "$tag" == "--check" ] || [ "$tag" == "check" ];
+  elif [ "$tag" == "check" ] || [ "$tag" == "--check" ];
   then
     if [ "$(internet)" == "false" ];
     then
@@ -46,9 +46,6 @@ function upgrade_help {
   echo
   echo " $BASENAME upgrade tag"
   echo "    This will upgrade the $BASENAME package to the version with the specified tag"
-  echo
-  echo " $BASENAME upgrade --check"
-  echo "    checks if there is a new version of the package, outputs false if there isn't, outputs true + version if there is"
   echo
   echo " $BASENAME upgrade check"
   echo "    checks if there is a new version of the package, outputs false if there isn't, outputs true + version if there is"

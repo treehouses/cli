@@ -66,7 +66,7 @@ ssh <on|off>                              enables or disables the ssh service
 vnc [on|off|info]                         enables or disables the vnc server service
 default                                   sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
-upgrade [tag] [--check]                   upgrades cli.sh package using npm
+upgrade [tag|--check|check]               upgrades cli.sh package using npm
 sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
           <key|portinterval> [user@host]
 led [green|red] [mode]                    sets the led mode

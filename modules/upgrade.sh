@@ -4,7 +4,7 @@ function upgrade {
   tag=$1
   # `--check` to be deprecated at some point
   # `check` should now work
-  if [ -z "$tag" ] && [ "$tag" != "--check" ]  && [ "$tag" != "check" ];
+  if [ -z "$tag" ];
   then
     checkroot
     last_version=$(npm show @treehouses/cli version)

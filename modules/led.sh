@@ -407,6 +407,8 @@ function stpatricks {
   
   for i in {0..9}
   do
+    set_brightness 0 0 && sleep 0.025  # green off
+    set_brightness 0 1 && sleep 0.025  # green on
     set_brightness 0 1 && sleep 1  # green on
     set_brightness 0 0 && sleep 1  # green off
   done

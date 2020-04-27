@@ -52,7 +52,4 @@ function upgrade_help {
   echo " $BASENAME upgrade force"
   echo "    This will upgrade the $BASENAME package to the version with the -f tag"
   echo
-  echo " $BASENAME upgrade --check"
-  echo "    checks if there is a new version of the package, outputs false if there isnt, outputs true + version if there is"
-  echo
 }

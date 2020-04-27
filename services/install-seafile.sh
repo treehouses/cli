@@ -3,6 +3,11 @@
 function install {
   # create service directory
   mkdir -p /srv/seafile
+  if [ "$(tor status)" = "inactive" ] || [[ "$(tor status)" =~ "Error" ]]; then
+    address=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+  else
+    address=$(tor)
+  fi
 
   # create yml(s)
   {
@@ -16,7 +21,7 @@ function install {
     echo "      - \"8086:8086\""
     echo "    environment:"
     echo "      - SEAFILE_NAME=Seafile"
-    echo "      - SEAFILE_ADDRESS=$(tor)"
+    echo "      - SEAFILE_ADDRESS=$address"
     echo "      - SEAFILE_ADMIN=\${SEAFILE_ADMIN_VAR}"
     echo "      - SEAFILE_ADMIN_PW=\${SEAFILE_ADMIN_PW_VAR}"
     echo "    volumes:"

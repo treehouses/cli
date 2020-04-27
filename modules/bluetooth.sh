@@ -88,6 +88,7 @@ function bluetooth {
        journalctl -u rpibluetooth -u bluetooth -f
      else
        echo "Argument not valid; leave blank or use \"follow\""
+       exit 1
      fi
 
    elif [ "$status" = "restart" ]; then

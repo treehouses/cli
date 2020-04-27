@@ -31,6 +31,7 @@ function upgrade {
     checkroot
     checkwrpi
     checkinternet
+    cp /usr/local/bin/bluetooth-server.py "/usr/local/bin/bluetooth-server.py.$(date +"%Y%m%d%H%m%S")"
     curl -s "https://raw.githubusercontent.com/treehouses/control/master/server.py" -o /usr/local/bin/bluetooth-server.py
     bluetooth restart &>"$LOGFILE"
     echo "Successfully updated and restarted bluetooth server"

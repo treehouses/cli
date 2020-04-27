@@ -597,7 +597,6 @@ treehouses tor start
 treehouses tor status
 treehouses tor stop
 treehouses upgrade
-treehouses upgrade --check
 treehouses upgrade -f
 treehouses upgrade check
 treehouses usb off

@@ -30,3 +30,8 @@ load test-helper
   run "${clicmd}" bluetooth id number
   assert_success
 }
+
+@test "$clinom bluetooth log" {
+  run "${clicmd}" bluetooth log
+  assert_success
+}

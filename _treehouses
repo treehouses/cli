@@ -218,6 +218,11 @@ treehouses openvpn start
 treehouses openvpn stop
 treehouses openvpn use
 treehouses password
+treehouses power conservative
+treehouses power ondemand
+treehouses power performance
+treehouses power powersave
+treehouses power userspace
 treehouses rebootneeded
 treehouses reboots
 treehouses reboots cron

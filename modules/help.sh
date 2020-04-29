@@ -43,6 +43,7 @@ Usage: treehouses
    sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
              <key|portinterval> [user@host]
    led [green|red] [mode]                    sets the led mode
+   power [mode]                              sets the power scaling
    rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
    ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
    networkmode                               outputs the current network mode

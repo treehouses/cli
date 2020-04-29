@@ -10,11 +10,7 @@ Usage: treehouses
    sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
    version [contributors]                    returns the version of treehouses command
    image                                     returns version of the system image installed
-   detectbluetooth                           detects if bluetooth module is available
-   detectrpi [model]                         detects the hardware version of a raspberry pi
-   detectarm                                 detects the arm version of a raspberry pi
-   detectwifi                                detects if wifi module is available
-   detect                                    detects the hardware version of any device
+   detect [bluetooth|rpi|arm|wifi]           detects the hardware version of any device
    ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
    discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
             <rpi> [ipaddress|url|macaddress]

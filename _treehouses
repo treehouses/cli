@@ -4,7 +4,7 @@ _treehouses_complete()
 {
   local idx subcmds
   every_command=""
-  read -r -d '' every_command <<'EOF'
+  read -r -d '' every_command <<EOF
 treehouses ap internet
 treehouses ap local
 treehouses apchannel
@@ -21,6 +21,7 @@ treehouses bluetooth button
 treehouses bluetooth id
 treehouses bluetooth id number
 treehouses bluetooth log
+treehouses bluetooth log follow
 treehouses bluetooth mac
 treehouses bluetooth off
 treehouses bluetooth on
@@ -176,6 +177,7 @@ treehouses led red timer
 treehouses led thanksgiving
 treehouses led valentine
 treehouses led heavymetal
+treehouses led stpatricks
 treehouses locale
 treehouses log
 treehouses log 0
@@ -241,309 +243,10 @@ treehouses rtc on ds3231
 treehouses rtc on rasclock
 treehouses sdbench
 treehouses services available
-treehouses services couchdb autorun
-treehouses services couchdb autorun false
-treehouses services couchdb autorun true
-treehouses services couchdb cleanup
-treehouses services couchdb down
-treehouses services couchdb icon
-treehouses services couchdb icon oneline
-treehouses services couchdb info
-treehouses services couchdb install
-treehouses services couchdb port
-treehouses services couchdb ps
-treehouses services couchdb restart
-treehouses services couchdb size
-treehouses services couchdb start
-treehouses services couchdb stop
-treehouses services couchdb up
-treehouses services couchdb url
-treehouses services couchdb url local
-treehouses services couchdb url tor
 treehouses services installed
 treehouses services installed full
-treehouses services kolibri autorun
-treehouses services kolibri autorun false
-treehouses services kolibri autorun true
-treehouses services kolibri cleanup
-treehouses services kolibri down
-treehouses services kolibri icon
-treehouses services kolibri icon oneline
-treehouses services kolibri info
-treehouses services kolibri install
-treehouses services kolibri port
-treehouses services kolibri ps
-treehouses services kolibri restart
-treehouses services kolibri size
-treehouses services kolibri start
-treehouses services kolibri stop
-treehouses services kolibri up
-treehouses services kolibri url
-treehouses services kolibri url local
-treehouses services kolibri url tor
-treehouses services mariadb autorun
-treehouses services mariadb autorun false
-treehouses services mariadb autorun true
-treehouses services mariadb cleanup
-treehouses services mariadb down
-treehouses services mariadb environment check
-treehouses services mariadb environment edit
-treehouses services mariadb environment edit vim
-treehouses services mariadb icon
-treehouses services mariadb icon oneline
-treehouses services mariadb info
-treehouses services mariadb install
-treehouses services mariadb port
-treehouses services mariadb ps
-treehouses services mariadb restart
-treehouses services mariadb size
-treehouses services mariadb start
-treehouses services mariadb stop
-treehouses services mariadb up
-treehouses services mariadb url
-treehouses services mariadb url local
-treehouses services mariadb url tor
-treehouses services mastodon autorun
-treehouses services mastodon autorun false
-treehouses services mastodon autorun true
-treehouses services mastodon cleanup
-treehouses services mastodon down
-treehouses services mastodon icon
-treehouses services mastodon icon oneline
-treehouses services mastodon info
-treehouses services mastodon install
-treehouses services mastodon port
-treehouses services mastodon ps
-treehouses services mastodon restart
-treehouses services mastodon size
-treehouses services mastodon start
-treehouses services mastodon stop
-treehouses services mastodon up
-treehouses services mastodon url
-treehouses services mastodon url local
-treehouses services mastodon url tor
-treehouses services mongodb autorun
-treehouses services mongodb autorun false
-treehouses services mongodb autorun true
-treehouses services mongodb cleanup
-treehouses services mongodb down
-treehouses services mongodb environment check
-treehouses services mongodb environment edit
-treehouses services mongodb environment edit vim
-treehouses services mongodb icon
-treehouses services mongodb icon oneline
-treehouses services mongodb info
-treehouses services mongodb install
-treehouses services mongodb port
-treehouses services mongodb ps
-treehouses services mongodb restart
-treehouses services mongodb size
-treehouses services mongodb start
-treehouses services mongodb stop
-treehouses services mongodb up
-treehouses services mongodb url
-treehouses services mongodb url local
-treehouses services mongodb url tor
-treehouses services moodle autorun
-treehouses services moodle autorun false
-treehouses services moodle autorun true
-treehouses services moodle cleanup
-treehouses services moodle down
-treehouses services moodle environment check
-treehouses services moodle environment edit
-treehouses services moodle environment edit vim
-treehouses services moodle icon
-treehouses services moodle icon oneline
-treehouses services moodle info
-treehouses services moodle install
-treehouses services moodle port
-treehouses services moodle ps
-treehouses services moodle restart
-treehouses services moodle size
-treehouses services moodle start
-treehouses services moodle stop
-treehouses services moodle up
-treehouses services moodle url
-treehouses services moodle url local
-treehouses services moodle url tor
-treehouses services netdata autorun
-treehouses services netdata autorun false
-treehouses services netdata autorun true
-treehouses services netdata cleanup
-treehouses services netdata down
-treehouses services netdata icon
-treehouses services netdata icon oneline
-treehouses services netdata info
-treehouses services netdata install
-treehouses services netdata port
-treehouses services netdata ps
-treehouses services netdata restart
-treehouses services netdata size
-treehouses services netdata start
-treehouses services netdata stop
-treehouses services netdata up
-treehouses services netdata url
-treehouses services netdata url local
-treehouses services netdata url tor
-treehouses services nextcloud autorun
-treehouses services nextcloud autorun false
-treehouses services nextcloud autorun true
-treehouses services nextcloud cleanup
-treehouses services nextcloud down
-treehouses services nextcloud icon
-treehouses services nextcloud icon oneline
-treehouses services nextcloud info
-treehouses services nextcloud install
-treehouses services nextcloud port
-treehouses services nextcloud ps
-treehouses services nextcloud restart
-treehouses services nextcloud size
-treehouses services nextcloud start
-treehouses services nextcloud stop
-treehouses services nextcloud up
-treehouses services nextcloud url
-treehouses services nextcloud url local
-treehouses services nextcloud url tor
-treehouses services ntopng autorun
-treehouses services ntopng autorun false
-treehouses services ntopng autorun true
-treehouses services ntopng cleanup
-treehouses services ntopng down
-treehouses services ntopng icon
-treehouses services ntopng icon oneline
-treehouses services ntopng info
-treehouses services ntopng install
-treehouses services ntopng port
-treehouses services ntopng ps
-treehouses services ntopng restart
-treehouses services ntopng size
-treehouses services ntopng start
-treehouses services ntopng stop
-treehouses services ntopng up
-treehouses services ntopng url
-treehouses services ntopng url local
-treehouses services ntopng url tor
-treehouses services pihole autorun
-treehouses services pihole autorun false
-treehouses services pihole autorun true
-treehouses services pihole cleanup
-treehouses services pihole down
-treehouses services pihole environment check
-treehouses services pihole environment edit
-treehouses services pihole environment edit vim
-treehouses services pihole icon
-treehouses services pihole icon oneline
-treehouses services pihole info
-treehouses services pihole install
-treehouses services pihole port
-treehouses services pihole ps
-treehouses services pihole restart
-treehouses services pihole size
-treehouses services pihole start
-treehouses services pihole stop
-treehouses services pihole up
-treehouses services pihole url
-treehouses services pihole url local
-treehouses services pihole url tor
-treehouses services planet autorun
-treehouses services planet autorun false
-treehouses services planet autorun true
-treehouses services planet cleanup
-treehouses services planet down
-treehouses services planet icon
-treehouses services planet icon oneline
-treehouses services planet info
-treehouses services planet install
-treehouses services planet port
-treehouses services planet ps
-treehouses services planet restart
-treehouses services planet size
-treehouses services planet start
-treehouses services planet stop
-treehouses services planet up
-treehouses services planet url
-treehouses services planet url local
-treehouses services planet url tor
-treehouses services portainer autorun
-treehouses services portainer autorun false
-treehouses services portainer autorun true
-treehouses services portainer cleanup
-treehouses services portainer down
-treehouses services portainer icon
-treehouses services portainer icon oneline
-treehouses services portainer info
-treehouses services portainer install
-treehouses services portainer port
-treehouses services portainer ps
-treehouses services portainer restart
-treehouses services portainer size
-treehouses services portainer start
-treehouses services portainer stop
-treehouses services portainer up
-treehouses services portainer url
-treehouses services portainer url local
-treehouses services portainer url tor
+$(services_cmds)
 treehouses services ports
-treehouses services privatebin autorun
-treehouses services privatebin autorun false
-treehouses services privatebin autorun true
-treehouses services privatebin cleanup
-treehouses services privatebin down
-treehouses services privatebin icon
-treehouses services privatebin icon oneline
-treehouses services privatebin info
-treehouses services privatebin install
-treehouses services privatebin port
-treehouses services privatebin ps
-treehouses services privatebin restart
-treehouses services privatebin size
-treehouses services privatebin start
-treehouses services privatebin stop
-treehouses services privatebin up
-treehouses services privatebin url
-treehouses services privatebin url local
-treehouses services privatebin url tor
-treehouses services seafile autorun
-treehouses services seafile autorun false
-treehouses services seafile autorun true
-treehouses services seafile cleanup
-treehouses services seafile down
-treehouses services seafile environment check
-treehouses services seafile environment edit
-treehouses services seafile environment edit vim
-treehouses services seafile icon
-treehouses services seafile icon oneline
-treehouses services seafile info
-treehouses services seafile install
-treehouses services seafile port
-treehouses services seafile ps
-treehouses services seafile restart
-treehouses services seafile size
-treehouses services seafile start
-treehouses services seafile stop
-treehouses services seafile up
-treehouses services seafile url
-treehouses services seafile url local
-treehouses services seafile url tor
-treehouses services turtleblocksjs autorun
-treehouses services turtleblocksjs autorun false
-treehouses services turtleblocksjs autorun true
-treehouses services turtleblocksjs cleanup
-treehouses services turtleblocksjs down
-treehouses services turtleblocksjs icon
-treehouses services turtleblocksjs icon oneline
-treehouses services turtleblocksjs info
-treehouses services turtleblocksjs install
-treehouses services turtleblocksjs port
-treehouses services turtleblocksjs ps
-treehouses services turtleblocksjs restart
-treehouses services turtleblcoksjs size
-treehouses services turtleblocksjs start
-treehouses services turtleblocksjs stop
-treehouses services turtleblocksjs up
-treehouses services turtleblocksjs url
-treehouses services turtleblocksjs url local
-treehouses services turtleblocksjs url tor
 treehouses services running
 treehouses services running full
 treehouses shutdown 
@@ -598,6 +301,9 @@ treehouses tor status
 treehouses tor stop
 treehouses upgrade
 treehouses upgrade force
+treehouses upgrade -f
+treehouses upgrade bluetooth
+treehouses upgrade check
 treehouses usb off
 treehouses usb on
 treehouses verbose
@@ -629,6 +335,34 @@ EOF
     | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g')
   # COMPREPLY is what bash reads when you do tabtab So our completion goes in there
   COMPREPLY=( $(compgen -W "${subcmds}" -- ${COMP_WORDS[COMP_CWORD]}) )
+}
+
+function services_cmds {
+  while IFS= read -r line;
+  do
+    printf "treehouses services $line autorun
+treehouses services $line autorun false
+treehouses services $line autorun true
+treehouses services $line cleanup
+treehouses services $line down
+treehouses services $line environment check
+treehouses services $line environment edit
+treehouses services $line environment edit vim
+treehouses services $line icon
+treehouses services $line icon oneline
+treehouses services $line info
+treehouses services $line install
+treehouses services $line port
+treehouses services $line ps
+treehouses services $line restart
+treehouses services $line size
+treehouses services $line start
+treehouses services $line stop
+treehouses services $line up
+treehouses services $line url
+treehouses services $line url local
+treehouses services $line url tor\n"
+  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
 }
 
 complete -F _treehouses_complete treehouses ./cli.sh

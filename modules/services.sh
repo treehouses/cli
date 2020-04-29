@@ -350,7 +350,6 @@ function services {
               if [ -z "$command_option" ]; then
                 docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
               elif [ "$command_option" = "edit" ]; then
-                # checkargn $# 4
                 kill_spinner
                 if [ -z "$4" ]; then
                   seperator="--------------------"
@@ -375,9 +374,6 @@ function services {
                   echo "USAGE: $BASENAME services $service_name environment edit [vim]"
                   exit 1
                 fi
-              # elif [ "$command_option" = "check" ]; then
-              #   checkargn $# 3
-              #   docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
               else
                 echo "ERROR: unknown command option"
                 echo "USAGE: $BASENAME services $service_name environment <edit | check>"

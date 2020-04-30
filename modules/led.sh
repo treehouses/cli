@@ -137,7 +137,7 @@ function led {
     checkroot
 
     if ! grep -q "$trigger" "$led/trigger" 2>"$LOGFILE"; then
-      echo -e "${RED}Error:${NC} unkown led mode '$trigger'"
+      echo -e "${RED}Error:${NC} unknown led mode '$trigger'"
       exit 1
     fi
 

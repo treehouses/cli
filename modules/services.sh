@@ -347,12 +347,12 @@ function services {
           checkargn $# 4
           if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
             if [ -e /srv/$service_name/.env ]; then
+              seperator="--------------------"
               if [ -z "$command_option" ]; then
                 docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
               elif [ "$command_option" = "edit" ]; then
                 kill_spinner
                 if [ -z "$4" ]; then
-                  seperator="--------------------"
                   while read -r -u 9 line; do
                     echo $seperator
                     echo "Current:"
@@ -374,6 +374,18 @@ function services {
                   echo "USAGE: $BASENAME services $service_name environment edit [vim]"
                   exit 1
                 fi
+              elif [ "$command_option" = "available" ]; then
+                for file in /srv/$service_name/*
+                do
+                  if [[ $file = *".env" ]]; then
+                    echo $seperator
+                    echo "${file##*/}" | sed 's/.env$//'
+                    cat $file
+                    echo $seperator
+                  fi
+                done
+              elif [ "$command_option" = "select" ]; then
+                cp /srv/$service_name/$4.env /srv/$service_name/.env
               else
                 echo "ERROR: unknown command option"
                 echo "USAGE: $BASENAME services $service_name environment [edit]"

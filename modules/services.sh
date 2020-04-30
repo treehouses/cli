@@ -383,7 +383,6 @@ function services {
                 do
                   if [[ $file = *".env" ]]; then
                     echo $seperator
-                    # echo "${file##*/}" | sed 's/.env$//'
                     echo ">> ${file##*/}"
                     cat $file
                     echo $seperator

@@ -71,7 +71,7 @@ upgrade [tag|check|bluetooth]             upgrades treehouses package using npm
 sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
           <key|portinterval> [user@host]
 led [green|red] [mode]                    sets the led mode
-power [mode|freq]                         sets the power mode or check CPU frequency
+power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode

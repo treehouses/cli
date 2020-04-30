@@ -8,6 +8,9 @@ function power {
         #     echo "changing threshold"
         #     changethreshhold
         #     ;;
+        current)
+            checkroot
+            echo "Power mode is currently $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)"
         ondemand)
             checkroot
             echo "Moves speed from min to max at about 90% load"

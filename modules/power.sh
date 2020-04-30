@@ -53,7 +53,7 @@ function changegovernor {
         time='$time'
         syslog='$syslog'
         echo "Set governor to $RESULT"
-        echo "CPU frequency is now ${/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq}"
+        echo "CPU frequency is now $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq)"
     else
         echo "Did not recognize mode"
     fi

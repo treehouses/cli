@@ -376,7 +376,7 @@ function services {
                 fi
               else
                 echo "ERROR: unknown command option"
-                echo "USAGE: $BASENAME services $service_name environment <edit | check>"
+                echo "USAGE: $BASENAME services $service_name environment [edit]"
                 exit 1
               fi
             else

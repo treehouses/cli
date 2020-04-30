@@ -28,7 +28,7 @@ function power {
             echo "all cores set at maximum frequency"
             changegovernor "performance"
             ;; 
-        *)     
+    esac     
 }
 
 function changegovernor {

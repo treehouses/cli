@@ -28,6 +28,13 @@ function power {
             echo "all cores set at maximum frequency"
             changegovernor "performance"
             ;; 
+        "")
+            echo "please choose one of the 5 modes"
+            ;;
+        *)
+            echo -e "Error: power '$mode' does not exist"
+            exit 1
+            ;;
     esac     
 }
 

@@ -51,11 +51,6 @@ function changegovernor {
     sudo echo $1 | sudo tee /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor > /dev/null 2>&1
     RESULT=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
     if [ "$RESULT" == "$1" ]; then
-        local_fs='$local_fs'
-        network='$network'
-        named='$named'
-        time='$time'
-        syslog='$syslog'
         echo "Scaling governor set to $RESULT"
     else
         echo "Failure, may need to use sudo"

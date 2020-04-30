@@ -344,7 +344,7 @@ treehouses services $line autorun false
 treehouses services $line autorun true
 treehouses services $line cleanup
 treehouses services $line down
-treehouses services $line environment check
+treehouses services $line environment
 treehouses services $line environment edit
 treehouses services $line environment edit vim
 treehouses services $line icon

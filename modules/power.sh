@@ -10,17 +10,17 @@ function power {
         #     ;;
         ondemand)
             checkroot
-            echo "Power setting changed to ondemand"
+            echo "Moves speed from min to max at about 90% load"
             changegovernor "ondemand"
             ;;
         conservative)
             checkroot 
-            echo "Power setting changed to conservative"
+            echo "Gradually switch frequencies at about 90% load"
             changegovernor "conservative"
             ;;
         userspace)
             checkroot
-            echo "Power setting changed to userspace"
+            echo "Use user specified frequency" # may need to create new functions to better use this setting
             changegovernor "userspace"
             ;;
         powersave)
@@ -56,9 +56,9 @@ function changegovernor {
         named='$named'
         time='$time'
         syslog='$syslog'
-        echo "Set scaling governor to $RESULT"
+        echo "Scaling governor set to $RESULT"
     else
-        echo "Did not recognize mode"
+        echo "Failure, may need to use sudo"
     fi
 }
 

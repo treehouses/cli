@@ -73,5 +73,6 @@ function upgrade_help {
   echo
   echo " $BASENAME upgrade bluetooth branchname"
   echo "    This will do the same as the above but use the 'branchname' branch on the bluetooth server repository"
+  echo "    https://github.com/treehouses/control"
   echo
 }

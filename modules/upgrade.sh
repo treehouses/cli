@@ -1,5 +1,5 @@
 function upgrade {
-  local tag last_version
+  local tag last_version branch existed_in_remote
   checkargn $# 2
   tag=$1
   if [ -z "$tag" ];
@@ -30,12 +30,21 @@ function upgrade {
   then
     npm install -g -f "@treehouses/cli"
   elif [ "$tag" == "bluetooth" ]; then
-    checkargn $# 1
+    checkargn $# 2
     checkroot
     checkwrpi
     checkinternet
+    if [ "$2" = "" ]; then
+      branch="master"
+    else
+      branch="$2"
+      existed_in_remote=$(git ls-remote -h https://github.com/treehouses/control.git ${branch})
+      if [[ -z ${existed_in_remote} ]]; then
+        log_and_exit1 "Error: branch specified not found on bluetooth server repository"
+      fi
+    fi
     cp /usr/local/bin/bluetooth-server.py "/usr/local/bin/bluetooth-server.py.$(date +'%Y%m%d%H%m%S')"
-    curl -s "https://raw.githubusercontent.com/treehouses/control/master/server.py" -o /usr/local/bin/bluetooth-server.py
+    curl -s "https://raw.githubusercontent.com/treehouses/control/${branch}/server.py" -o /usr/local/bin/bluetooth-server.py
     bluetooth restart &>"$LOGFILE"
     echo "Successfully updated and restarted bluetooth server"
   else
@@ -64,5 +73,9 @@ function upgrade_help {
   echo
   echo " $BASENAME upgrade bluetooth"
   echo "    This will upgrade the bluetooth server to the latest if internet is available and restart bluetooth"
+  echo
+  echo " $BASENAME upgrade bluetooth branchname"
+  echo "    This will do the same as the above but use the 'branchname' branch on the bluetooth server repository"
+  echo "    https://github.com/treehouses/control"
   echo
 }

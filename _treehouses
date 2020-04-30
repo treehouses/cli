@@ -301,7 +301,6 @@ treehouses tor status
 treehouses tor stop
 treehouses upgrade
 treehouses upgrade force
-treehouses upgrade -f
 treehouses upgrade bluetooth
 treehouses upgrade check
 treehouses usb off

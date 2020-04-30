@@ -27,8 +27,10 @@ Vagrant.configure(2) do |config|
     cli.vm.provider "virtualbox" do |vb|
       vb.memory = "666"
     end
-
-    cli.vm.network "forwarded_port", guest: 22, host: 2222, host_ip: "127.0.0.1", id: "ssh", auto_correct: true
+    
+    # there are known problems with certain verions or vagrant/virtualbox for windows, feel free to switch the comment
+    cli.vm.network "forwarded_port", guest: 22, host: 2222, host_ip: "0.0.0.0", id: "ssh", auto_correct: true
+    #cli.vm.network "forwarded_port", guest: 22, host: 2222, host_ip: "127.0.0.1", id: "ssh", auto_correct: true
 
     # Prevent TTY Errors (copied from laravel/homestead: "homestead.rb" file)... By default this is "bash -l".
     cli.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"

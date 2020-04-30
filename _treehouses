@@ -219,6 +219,7 @@ treehouses openvpn stop
 treehouses openvpn use
 treehouses password
 treehouses power conservative
+treehouses power freq
 treehouses power ondemand
 treehouses power performance
 treehouses power powersave

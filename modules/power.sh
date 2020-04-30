@@ -3,36 +3,40 @@ function power {
     checkargn $# 2
     mode="$1"
     case "$mode" in
-        threshold)
-            checkroot
-            echo "changing threshold"
-            changethreshhold
-            ;;
+        # threshold)
+        #     checkroot
+        #     echo "changing threshold"
+        #     changethreshhold
+        #     ;;
         ondemand)
             checkroot
-            echo "power setting changed to ondemand"
+            echo "Power setting changed to ondemand"
             changegovernor "ondemand"
             ;;
         conservative)
             checkroot 
-            echo "power setting changed to conservative"
+            echo "Power setting changed to conservative"
             changegovernor "conservative"
             ;;
         userspace)
             checkroot
-            echo "power setting changed to userspace"
+            echo "Power setting changed to userspace"
             changegovernor "userspace"
             ;;
         powersave)
             checkroot
-            echo "all cores set at minimum frequency"
+            echo "All cores set at minimum frequency"
             changegovernor "powersave"
             ;;
         performance)
             checkroot
-            echo "all cores set at maximum frequency"
+            echo "All cores set at maximum frequency"
             changegovernor "performance"
             ;; 
+        freq)
+            checkroot
+            echo "CPU frequency is now $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq)"
+            ;;
         "")
             echo "Error: please choose one of the 5 modes"
             ;;
@@ -52,8 +56,7 @@ function changegovernor {
         named='$named'
         time='$time'
         syslog='$syslog'
-        echo "Set governor to $RESULT"
-        echo "CPU frequency is now $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq)"
+        echo "Set scaling governor to $RESULT"
     else
         echo "Did not recognize mode"
     fi

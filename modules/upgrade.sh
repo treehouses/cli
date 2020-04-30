@@ -28,7 +28,7 @@ function upgrade {
     echo "true $last_version"
   elif [ "$tag" == "force" ];
   then
-    npm install -g "@treehouses/cli@-f"
+    npm install -g -f "@treehouses/cli"
   elif [ "$tag" == "bluetooth" ]; then
     checkargn $# 1
     checkroot

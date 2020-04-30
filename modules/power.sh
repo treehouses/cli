@@ -1,4 +1,4 @@
-function power{
+function power {
     checkrpi
     checkargn $# 2
     mode="$1"
@@ -31,7 +31,7 @@ function power{
         "")     
 }
 
-function changegovernor{
+function changegovernor {
     sudo echo $1 | sudo tee /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor > /dev/null 2>&1
     RESULT=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
     if [ "$RESULT" == "$1" ]; then

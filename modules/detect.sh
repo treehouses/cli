@@ -145,7 +145,7 @@ function detect {
       checkargn $# 1
       detectwifi
       ;;
-    "*")
+    *)
       echo "Error: only '', 'rpi', 'arm', 'bluetooth', 'wifi' options supported."
       ;;
   esac

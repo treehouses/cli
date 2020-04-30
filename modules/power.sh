@@ -1,6 +1,6 @@
 function power {
     checkrpi
-    checkargn $# 2
+    checkargn $# 1
     mode="$1"
     case "$mode" in
         # threshold)
@@ -57,5 +57,35 @@ function changegovernor {
     fi
 }
 
+function power_help {
+    echo "Usage: $BASENAME power [mode]"
+    echo "       $BASENAME power freq"
+    echo
+    echo " Where to find all modes: cat /sys/class/leds/led0/trigger"
+    echo
+    echo " OPTIONS OF MODES: "
+    echo "  ondemand                    Default mode; moves speed from min to max at about 90% load"
+    echo "  conservative                Gradually switch frequencies at about 90% load"
+    echo "  usespace                    Use user specified frequency"
+    echo "  powersave                   All cores set at minimum frequency"
+    echo "  performance                 All cores set at maximum frequency"
+    echo
+    echo "Example:"
+    echo "  $BASENAME power ondemand" 
+    echo "      This will set the power mode to ondemand" 
+    echo "  $BASENAME power conservative" 
+    echo "      This will set the power mode to conservative" 
+    echo "  $BASENAME power usespace" 
+    echo "      This will set the power mode to userspace" 
+    echo "  $BASENAME power powersave" 
+    echo "      This will set the power mode to powersave" 
+    echo "  $BASENAME power performance" 
+    echo "      This will set the power mode to performance" 
+    echo "  $BASENAME power freq" 
+    echo "      This will return the current CPU frequency" 
+    echo
+
+ 
+}
 # TODO: Let user change their CPU threshold
 # cat /sys/devices/system/cpu/cpufreq/ondemand/up_threshold

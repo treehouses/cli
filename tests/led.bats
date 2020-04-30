@@ -65,3 +65,8 @@ load test-helper
   run "${clicmd}" led stpatricks
   assert_success && assert_output -p 'red led'
 }
+
+@test "$clinom led random" {
+  run "${clicmd}" led random
+  assert_success
+}

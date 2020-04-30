@@ -385,7 +385,12 @@ function services {
                   fi
                 done
               elif [ "$command_option" = "select" ]; then
-                cp /srv/$service_name/$4.env /srv/$service_name/.env
+                if [ -f /srv/$service_name/$4.env ]; then
+                  cp /srv/$service_name/$4.env /srv/$service_name/.env
+                else
+                  echo "ERROR: $4.env not found"
+                  exit 1
+                fi
               else
                 echo "ERROR: unknown command option"
                 echo "USAGE: $BASENAME services $service_name environment [edit]"

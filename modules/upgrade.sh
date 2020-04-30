@@ -28,7 +28,8 @@ function upgrade {
     echo "true $last_version"
   elif [ "$tag" == "force" ];
   then
-    npm install -g "@treehouses/cli@-f"
+    checkargn $# 2
+    npm install -g -f "@treehouses/cli@${2}"
   elif [ "$tag" == "bluetooth" ]; then
     checkargn $# 1
     checkroot
@@ -57,8 +58,9 @@ function upgrade_help {
   echo " $BASENAME upgrade tag"
   echo "    This will upgrade the $BASENAME package to the version with the specified tag"
   echo
-  echo " $BASENAME upgrade force"
-  echo "    This will upgrade the $BASENAME package to the version with the -f tag"
+  echo " $BASENAME upgrade force 1.11.4"
+  echo "    This will upgrade the $BASENAME package to the version forcibly"
+
   echo " $BASENAME upgrade check"
   echo "    checks if there is a new version of the package, outputs false if there isn't, outputs true + version if there is"
   echo

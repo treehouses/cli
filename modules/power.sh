@@ -43,6 +43,6 @@ function changegovernor {
         echo "Set governor to $RESULT"
         #echo $RESULT > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     else
-        echo "Did not recognize mode"\
+        echo "Did not recognize mode"
     fi
 }

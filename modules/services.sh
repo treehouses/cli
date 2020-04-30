@@ -375,18 +375,23 @@ function services {
                   exit 1
                 fi
               elif [ "$command_option" = "available" ]; then
+                echo $seperator
+                echo ">> currently selected .env"
+                cat /srv/$service_name/.env
+                echo $seperator
                 for file in /srv/$service_name/*
                 do
                   if [[ $file = *".env" ]]; then
                     echo $seperator
-                    echo "${file##*/}" | sed 's/.env$//'
+                    # echo "${file##*/}" | sed 's/.env$//'
+                    echo ">> ${file##*/}"
                     cat $file
                     echo $seperator
                   fi
                 done
               elif [ "$command_option" = "select" ]; then
-                if [ -f /srv/$service_name/$4.env ]; then
-                  cp /srv/$service_name/$4.env /srv/$service_name/.env
+                if [ -f /srv/$service_name/$4 ]; then
+                  cp /srv/$service_name/$4 /srv/$service_name/.env
                 else
                   echo "ERROR: $4.env not found"
                   exit 1

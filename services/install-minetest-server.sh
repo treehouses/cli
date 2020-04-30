@@ -22,6 +22,14 @@ function install {
     echo "    restart: unless-stopped"
   } > /srv/minetest-server/minetest-server.yml
 
+  # create .env with default values
+  {
+    echo "PUID=1000"
+    echo "PGID=1000"
+    echo "TZ=Europe/London"
+    echo "CLI_ARGS=\" --gameid minetest --worldname world\""
+  } > /srv/minetest-server/.env
+
   # add autorun
   {
     echo "minetest-server_autorun=true"
@@ -36,7 +44,7 @@ function install {
 
 # environment var
 function uses_env {
-  echo false
+  echo true
 }
 
 # add supported arm(s)

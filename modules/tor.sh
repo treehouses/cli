@@ -158,7 +158,7 @@ function tor {
       fi
       echo "Status: $status"
     else
-      echo "Error: only 'on' and 'off' options are supported."
+      echo "Error: only 'on', 'off', 'now', 'add', 'delete', and 'list' options are supported."
     fi
   elif [ "$1" = "status" ]; then
     systemctl is-active tor

@@ -11,4 +11,7 @@ function detectrpi_help {
   echo "  $BASENAME detectrpi model"
   echo "      Prints the model number of the RPi"
   echo
+  echo "  $BASENAME detectrpi full"
+  echo "      Prints the full model of the RPi"
+  echo
 }

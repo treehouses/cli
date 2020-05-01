@@ -1,5 +1,6 @@
 function detectrpi {
   local rpimodel found
+  checkargn $# 1
   declare -A rpimodels
   rpimodels["Beta"]="BETA"
   rpimodels["0002"]="RPIB"
@@ -73,7 +74,7 @@ function detectrpi {
       rpimodel=$(tr -d '\0' </sys/firmware/devicetree/base/model)
       echo "$rpimodel"
     else
-      log_and_exit1 "Error: only 'detectrpi', and 'detectrpi model' commands supported"
+      log_and_exit1 "Error: only 'detectrpi', 'detectrpi model', and 'detectrpi full' commands supported"
     fi
   else
     if grep -q -s "Raspberry Pi" "/sys/firmware/devicetree/base/model"; then
@@ -166,6 +167,9 @@ function detect_help {
   echo
   echo "  $BASENAME detect rpi model"
   echo "      Prints the model number of the RPi"
+  echo
+  echo "  $BASENAME detect rpi full"
+  echo "      Prints the full model of the RPi"
   echo
   echo "  $BASENAME detect arm"
   echo "      Prints arm version"

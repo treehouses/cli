@@ -52,8 +52,14 @@ EOF
       echo "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
       exit 1
     fi
+  elif [ "$option" = "modules" ]; then
+    checkargn $# 1
+    lsmod
+  elif [ "$option" = "params" ]; then
+    checkargn $# 1
+    echo $(</proc/cmdline) | tr ' ' '\n' | sed '/^$/d'
   else
-    echo "Error: only 'console', 'console autologin', 'desktop', 'desktop autologin' options are supported."
+    echo "Error: only 'console', 'console autologin', 'desktop', 'desktop autologin', 'modules', 'params' options are supported."
     exit 1
   fi
 }
@@ -61,7 +67,7 @@ EOF
 
 function bootoption_help {
   echo
-  echo "Usage: $BASENAME bootoption <console|console autologin|desktop|desktop autologin>"
+  echo "Usage: $BASENAME bootoption <modules|params|console|console autologin|desktop|desktop autologin>"
   echo
   echo "Changes the boot mode, to console or desktop"
   echo
@@ -77,5 +83,11 @@ function bootoption_help {
   echo
   echo "  $BASENAME bootoption desktop autologin"
   echo "      The rpi will boot to desktop by default and autologin in the user that run the command"
+  echo
+  echo "  $BASENAME bootoption params"
+  echo "      Shows parameters the system booted with"
+  echo
+  echo "  $BASENAME bootoption modules"
+  echo "      Shows modules the kernel loaded at boot"
   echo
 }

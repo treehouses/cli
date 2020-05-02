@@ -32,6 +32,8 @@ treehouses bootoption console
 treehouses bootoption console autologin
 treehouses bootoption desktop
 treehouses bootoption desktop autologin
+treehouses bootoption modules
+treehouses bootoption params
 treehouses bridge
 treehouses burn
 treehouses button bluetooth

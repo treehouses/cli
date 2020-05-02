@@ -17,7 +17,7 @@ function disablepassword {
   then
     log_an_exit1 "Password authentication is already disabled"
   else
-    sed -i "s/^#PasswordAuthentication*/PasswordAuthentication no/" /etc/ssh/sshd_config
+    sed -i "s/^#PasswordAuthentication yes/PasswordAuthentication no/" /etc/ssh/sshd_config
     echo "Successfully disabled password authentication"
   fi
 }

@@ -73,25 +73,26 @@ function services {
         running_services=($(services running))
 	basic_info=$(services ${service} info)
         echo "$basic_info"
+	echo 
         if [ -d /srv/$service ]; then
-          echo "$service status: installed"
+          echo "status: installed"
         else
-          echo "$service status: not installed"
+          echo "status: not installed"
         fi
         for i in "${running_services[@]}"
         do
           if [ $i == $service ]; then
-            echo "running"
+            echo "        running"
           fi
         done
         autorun_status=$(services ${service} autorun)
-        echo "autorun status: $autorun_status"
+        echo "autorun: $autorun_status"
         local_url=$(services ${service} url local)
-        echo "local url: $local_url"
+        echo "url: $local_url"
 	tor_url=$(services ${service} url tor)
-        echo "tor url: $tor_url"
+        echo "tor: $tor_url"
         port_number=$(services ${service} port)
-        echo "Port number: $port_number"
+        echo "port: $port_number"
 	size=$(services ${service} size)
         echo "size: $size"
       fi

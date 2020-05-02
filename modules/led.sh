@@ -111,6 +111,11 @@ function led {
       echo "Green LED: flash 20 times; on 2 sec"
       stpatricks > "$LOGFILE"
       ;;
+    random)
+      checkroot
+      random
+      return
+      ;;
     "")
       if [ ! -z "$currentGreen" ]; then
         echo -e "$green: $currentGreen"
@@ -428,10 +433,21 @@ function stpatricks {
   led red "$current_red"
 }
 
+function random {
+  rando="$(led_help | grep "led \[" \
+    | cut -d "[" -f2 \
+    | cut -d "]" -f1 \
+    | sed -n '1!p' \
+    | sed 's/|/\n/g' \
+    | sed -e '/^random$/d' \
+    | shuf -n 1)"
+  led "$rando"
+}
+
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear|valentine|carnival|stpatricks]"
+  echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear|valentine|carnival|stpatricks|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -507,5 +523,8 @@ function led_help {
   echo
   echo "  $BASENAME led stpatricks"
   echo "     This will set the mode of the led to stpatricks"
+  echo
+  echo "  $BASENAME led random"
+  echo "     This will set the mode of the led to one of the above festivities"
   echo
 }

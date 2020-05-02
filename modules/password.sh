@@ -4,7 +4,7 @@ function password () {
   checkargn $# 1
   if [[ $1 == "" ]]; then
     log_and_exit1 "Error: Password not entered"
-  else if [[ $1 == "disable"]]; then
+  elif [[ $1 == "disable"]]; then
     disablepassword 
   else
     chpasswd <<< "pi:$1"

@@ -178,6 +178,7 @@ treehouses led thanksgiving
 treehouses led valentine
 treehouses led heavymetal
 treehouses led stpatricks
+treehouses led random
 treehouses locale
 treehouses log
 treehouses log 0
@@ -218,6 +219,13 @@ treehouses openvpn start
 treehouses openvpn stop
 treehouses openvpn use
 treehouses password
+treehouses power conservative
+treehouses power current
+treehouses power freq
+treehouses power ondemand
+treehouses power performance
+treehouses power powersave
+treehouses power userspace
 treehouses rebootneeded
 treehouses reboots
 treehouses reboots cron
@@ -300,7 +308,7 @@ treehouses tor start
 treehouses tor status
 treehouses tor stop
 treehouses upgrade
-treehouses upgrade -f
+treehouses upgrade force
 treehouses upgrade bluetooth
 treehouses upgrade check
 treehouses usb off
@@ -344,7 +352,7 @@ treehouses services $line autorun false
 treehouses services $line autorun true
 treehouses services $line cleanup
 treehouses services $line down
-treehouses services $line environment check
+treehouses services $line environment
 treehouses services $line environment edit
 treehouses services $line environment edit vim
 treehouses services $line icon

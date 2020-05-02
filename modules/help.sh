@@ -39,10 +39,14 @@ Usage: treehouses
    vnc [on|off|info]                         enables or disables the vnc server service
    default                                   sets a raspbian back to default configuration
    wificountry <country>                     sets the wifi country
-   upgrade [tag|check|bluetooth]             upgrades treehouses package using npm
+   upgrade [tag|check|bluetooth|force]       upgrades treehouses package using npm
    sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
              <key|portinterval> [user@host]
    led [green|red] [mode]                    sets the led mode
+       [dance|thanksgiving|christmas]
+       [newyear|lunarnewyear|valentine]
+       [carnival|stpatricks|random] 
+   power [freq |<mode>]                      sets the power scaling or check CPU frequency
    rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
    ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
    networkmode                               outputs the current network mode
@@ -71,7 +75,7 @@ Usage: treehouses
       [couchdb]      <size>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
       [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
       [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
-      [seafile]      <environment <edit>>    Seafile is an open-source, cross-platform file-hosting software system
+      [seafile]      <environment [edit]>    Seafile is an open-source, cross-platform file-hosting software system
       [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
    tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
        [stop|destroy|notice|status|refresh]

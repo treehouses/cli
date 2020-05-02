@@ -13,10 +13,12 @@ function password {
 }
 
 function disablepassword {
-  if grep -Fxq "s/^PasswordAuthentication no" /etc/ssh/sshd_config then
+  if grep -Fxq "s/^PasswordAuthentication no" /etc/ssh/sshd_config 
+  then
     log_an_exit1 "Password authentication is already disabled"
   else
     sed -i "s/^#PasswordAuthentication*/PasswordAuthentication no/" /etc/ssh/sshd_config
+    echo "Successfully disabled password authentication"
   fi
 }
 

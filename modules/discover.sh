@@ -38,6 +38,10 @@ function discover {
       nmap --iflist | grep DC:A6:32
       nmap --iflist | grep B8:27:EB
       ;;
+    wifi)
+      checkroot
+      iwlist wlan0 scanning | grep -E 'Cell |Encryption|Quality|Last beacon|ESSID'
+      ;;
     scan)
       nmap -v -A -T4  $ip
       ;;
@@ -70,13 +74,15 @@ function discover {
 
 function discover_help {
   echo
-  echo "Usage: $BASENAME discover <rpi|scan|hostinterface|ping|ports ip|ping|ports[ipaddress|url]>"
+  echo "Usage: $BASENAME discover <wifi|rpi|scan|hostinterface|ping|ports ip|ping|ports[ipaddress|url]>"
   echo
   echo "Scans the network provdied and shows the open ports. Can scan for all raspberry pis on the network as well."
   echo
   echo "Example:"
   echo " $BASENAME discover rpi"
   echo "    Detects raspberry pis on the network."
+  echo " $BASENAME discover wifi"
+  echo "    Detects devices hosting wifi."
   echo " $BASENAME discover scan 192.168.7.149"
   echo "    Performs a network scan of the provided ip address."
   echo " $BASENAME discover scan scanme.nmap.org"

@@ -22,7 +22,7 @@ function wifimain {
 
   if [ -v hide ]; then
     hide="_hidden"
-  fi 
+  fi
 
   if [ "$(networkmode)" == *"aphidden"* ]; then
     echo "Error: please run '$BASENAME default network' first"

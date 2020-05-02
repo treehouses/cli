@@ -4,8 +4,6 @@ function services {
   service_name="$1"
   command="$2"
   command_option="$3"
-
-  # list all services available to be installed
   if [ "$service_name" = "available" ]; then
     checkargn $# 1
     if [ -d "$SERVICES" ]; then
@@ -66,6 +64,38 @@ function services {
       echo "USAGE: $BASENAME services running <full>"
       exit 1
     fi
+  #list general information about services
+  elif [[ "$2" == "" ]]; then 
+    service_list=($(services available))
+    for service in "${service_list[@]}"
+    do
+      if [ $service == $service_name ]; then
+        running_services=($(services running))
+	      basic_info=$(services ${service} info)
+        echo "$basic_info"
+        if [ -d /srv/$service ]; then
+          echo "$service status: installed"
+        else
+          echo "$service status: not installed"
+        fi
+        for i in "${running_services[@]}"
+        do
+          if [ $i == $service ]; then
+            echo "running"
+          fi
+        done
+        autorun_status=($(services $service autorun))
+        echo "autorun status: $autorun_status"
+        local_url=$(services ${service} url local)
+        echo "local url: $local_url"
+	      tor_url=$(services ${service} url tor)
+        echo "tor url: $tor_url"
+        port_number=$(services ${service} port)
+        echo "Port number: $port_number"
+	      size=$(services ${service} size)
+        echo "size: $size"
+	    fi
+    done
   # list all ports used by services
   elif [ "$service_name" = "ports" ]; then
     checkargn $# 1

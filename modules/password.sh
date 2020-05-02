@@ -1,4 +1,4 @@
-function password () {
+function password {
   checkrpi
   checkroot
   checkargn $# 1
@@ -12,11 +12,11 @@ function password () {
   fi
 }
 
-function disablepassword() {
+function disablepassword {
   sed -i "s/^PasswordAuthentication*/PasswordAuthentication no/" /etc/ssh/sshd_config
 }
 
-function password_help () {
+function password_help {
   echo
   echo "Usage: $BASENAME password <password>"
   echo

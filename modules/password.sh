@@ -6,6 +6,8 @@ function password {
     log_and_exit1 "Error: Password not entered"
   elif [ $1 == "disable" ]; then
     disablepassword 
+  elif [ $1 == "enable" ]; then
+    enablepassword
   else
     chpasswd <<< "pi:$1"
     echo "Success: the password has been changed"
@@ -17,11 +19,20 @@ function disablepassword {
   then
     log_and_exit1 "Password authentication is already disabled"
   else
-    sed -i "s/^#PasswordAuthentication yes/PasswordAuthentication no/" /etc/ssh/sshd_config
+    sed -i "s/^PasswordAuthentication yes/PasswordAuthentication no/" /etc/ssh/sshd_config
     echo "Successfully disabled password authentication"
   fi
 }
 
+function enablepassword {
+  if grep -Fxq "PasswordAuthentication yes" /etc/ssh/sshd_config 
+  then
+    log_and_exit1 "Password authentication is already enabled"
+  else
+    sed -i "s/^PasswordAuthentication no/PasswordAuthentication yes/" /etc/ssh/sshd_config
+    echo "Successfully disabled password authentication"
+  fi
+}
 function password_help {
   echo
   echo "Usage: $BASENAME password <password>"

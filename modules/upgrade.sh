@@ -91,7 +91,7 @@ function upgrade_help {
   echo "    https://github.com/treehouses/control"
   echo
   echo " $BASENAME upgrade cli branchname"
-  echo "    This will upgrade the cli to the specified branch on github"
+  echo "    This will upgrade the cli to the specified 'branchname' branch on github"
   echo "    https://github.com/treehouses/cli"
   echo
 }

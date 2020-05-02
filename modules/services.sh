@@ -408,7 +408,7 @@ function services {
                   fi
                 done
               elif [ "$command_option" = "select" ]; then
-                if [ -f /srv/$service_name/$4 ]; then
+                if [ -f /srv/$service_name/$4.env ]; then
                   cp /srv/$service_name/$4.env /srv/$service_name/.env
                 else
                   echo "ERROR: /srv/$service_name/$4.env not found"

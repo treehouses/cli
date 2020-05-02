@@ -444,7 +444,7 @@ function services {
           echo "                                ..... size"
           echo "                                ..... cleanup"
           echo "                                ..... icon"
-          echo "                                ..... environment [edit [vim]]"
+          echo "                                ..... environment [new|edit [vim]|available|select]"
           exit 1
           ;;
       esac
@@ -613,7 +613,7 @@ function services_help {
   echo "                             ..... size"
   echo "                             ..... cleanup"
   echo "                             ..... icon"
-  echo "                             ..... environment [edit [vim]]"
+  echo "                             ..... environment [new|edit [vim]|available|select]"
   echo
   echo "    install                 installs and pulls <service_name>"
   echo
@@ -648,8 +648,11 @@ function services_help {
   echo "    icon                    outputs the svg code for the <service_name>'s icon"
   echo
   echo "    environment             outputs the contents of the .yml for <service_name> with the currently configured environment variables"
+  echo "        [new]                   creates a new .env file with given name"
   echo "        [edit]                  edit the .env file for <service_name>"
   echo "            [vim]                   opens vim to edit the .env file for <service_name>"
+  echo "        [available]             lists available .env files for <service_name>"
+  echo "        [select]                selects given .env file to be used with <service_name>"
   echo
   echo "  Examples:"
   echo

@@ -125,8 +125,12 @@ shutdown [now|in|force]                   shutdown the system
 ```
 
 ## Folder Overview
-[services readme](https://github.com/treehouses/cli/tree/master/services/README.md)
-[tests readme](https://github.com/treehouses/cli/tree/master/tests/README.md)
+- /modules : functions
+- [/services](https://github.com/treehouses/cli/tree/master/services/README.md) : docker service install scripts
+- [/tests](https://github.com/treehouses/cli/tree/master/tests/README.md) : test the modules
+- /templates : templates for networking
+
+
 
 ## Add a feature
 Feel free to make a pull request to our repository.  

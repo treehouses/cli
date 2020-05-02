@@ -22,7 +22,11 @@ function wifimain {
 
   if [ -v hide ]; then
     hide="_hidden"
-  fi    
+  fi 
+
+  if [ "$(networkmode)" == *"aphidden"* ]; then
+    echo "Error: please run '$BASENAME default network' first"
+  fi
 
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/wlan0/default" /etc/network/interfaces.d/wlan0

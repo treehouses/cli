@@ -39,6 +39,7 @@ function discover {
       nmap --iflist | grep B8:27:EB
       ;;
     wifi)
+      checkargn $# 1
       checkroot
       iwlist wlan0 scanning | grep -E 'Cell |Encryption|Quality|Last beacon|ESSID'
       ;;

@@ -15,34 +15,36 @@ function password {
 }
 
 function disablepassword {
+  checkroot
   if grep -Fq "#PasswordAuthentication" /etc/ssh/sshd_config 
   then
     sed -in "s/^#PasswordAuthentication.*/PasswordAuthentication no/" /etc/ssh/sshd_config 
     echo "Successfully disabled password authentication"
-    echo /etc/init.d/ssh reload 
+    /etc/init.d/ssh reload 
   elif grep -Fxq "PasswordAuthentication no" /etc/ssh/sshd_config 
   then
     log_and_exit1 "Password authentication is already disabled"
   else
     sed -i "s/^PasswordAuthentication yes/PasswordAuthentication no/" /etc/ssh/sshd_config
     echo "Successfully disabled password authentication"
-    echo /etc/init.d/ssh reload
+    /etc/init.d/ssh reload
   fi
 }
 
 function enablepassword {
+  checkroot
   if grep -Fq "#PasswordAuthentication" /etc/ssh/sshd_config
   then
     sed -in "s/^#PasswordAuthentication.*/PasswordAuthentication yes/" /etc/ssh/sshd_config
     echo "Successfully enabled password authentication"
-    echo /etc/init.d/ssh reload
+    /etc/init.d/ssh reload
   elif grep -Fxq "PasswordAuthentication yes" /etc/ssh/sshd_config 
   then
     log_and_exit1 "Password authentication is already enabled"
   else
     sed -i "s/^PasswordAuthentication no/PasswordAuthentication yes/" /etc/ssh/sshd_config
     echo "Successfully enabled password authentication"
-    echo /etc/init.d/ssh reload
+    /etc/init.d/ssh reload
   fi
 }
 function password_help {

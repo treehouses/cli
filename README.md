@@ -124,7 +124,7 @@ inspire [joke|qotd|random]                displays quote based on user input
 shutdown [now|in|force]                   shutdown the system           
 ```
 
-## Additional Readmes
+## Additional README's
 - [Services](https://github.com/treehouses/cli/tree/master/services/README.md)
 - [Tests](https://github.com/treehouses/cli/tree/master/tests/README.md)
 

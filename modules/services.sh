@@ -103,8 +103,10 @@ function services {
             while [ "$retries" -lt 5 ];
             do
               if ! docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml pull ; then
-                echo "retrying pull in 6 seconds"
-                sleep 6
+                if [ "$retries" -lt 4 ]; then
+                  echo "retrying pull in 6 seconds"
+                  sleep 6
+                fi
                 ((retries+=1))
               else
                 echo "${service_name} installed"

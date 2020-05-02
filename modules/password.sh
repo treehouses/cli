@@ -17,7 +17,7 @@ function password {
 function disablepassword {
   if grep -Fxq "#PasswordAuthentication yes" /etc/ssh/sshd_config || grep -Fxq "#PasswordAuthentication no" /etc/ssh/sshd_config
   then
-    sed -i "s/^#PasswordAuthentication /PasswordAuthentication no/" /etc/ssh/sshd_config 
+    sed -i "s/^#PasswordAuthentication*/PasswordAuthentication no/" /etc/ssh/sshd_config 
     echo "Successfully disabled password authentication" 
   elif grep -Fxq "PasswordAuthentication no" /etc/ssh/sshd_config 
   then
@@ -31,7 +31,7 @@ function disablepassword {
 function enablepassword {
   if grep -Fxq "#PasswordAuthentication yes" /etc/ssh/sshd_config || grep -Fxq "#PasswordAuthentication no" /etc/ssh/sshd_config
   then
-    sed -i "s/^#PasswordAuthentication /PasswordAuthentication yes/" /etc/ssh/sshd_config
+    sed -i "s/^#PasswordAuthentication*/PasswordAuthentication yes/" /etc/ssh/sshd_config
     echo "Successfully enabled password authentication"
   elif grep -Fxq "PasswordAuthentication yes" /etc/ssh/sshd_config 
   then

@@ -350,6 +350,25 @@ function services {
               seperator="--------------------"
               if [ -z "$command_option" ]; then
                 docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
+              elif [ "$command_option" = "new" ]; then
+                kill_spinner
+                if [ -z "$4" ]; then
+                  echo "name is required for new env file"
+                  exit 1
+                else
+                  cp /srv/$service_name/.env /srv/$service_name/$4.env
+                fi
+                while read -r -u 9 line; do
+                  echo $seperator
+                  newline="${line%%=*}="
+                  printf "%s" $newline
+                  read -r userinput
+                  sed -i "/$line/c\\$newline$userinput" /srv/$service_name/$4.env
+                done 9< /srv/$service_name/.env
+                echo $seperator
+                echo "New environment file:"
+                cat /srv/$service_name/$4.env
+                echo $seperator
               elif [ "$command_option" = "edit" ]; then
                 kill_spinner
                 if [ -z "$4" ]; then

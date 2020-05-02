@@ -353,7 +353,7 @@ function services {
               elif [ "$command_option" = "new" ]; then
                 kill_spinner
                 if [ -z "$4" ]; then
-                  echo "name is required for new env file"
+                  echo "ERROR: a name is required for the new env file"
                   exit 1
                 else
                   cp /srv/$service_name/.env /srv/$service_name/$4.env
@@ -402,21 +402,21 @@ function services {
                 do
                   if [[ $file = *".env" ]]; then
                     echo $seperator
-                    echo ">> ${file##*/}"
+                    echo ">> ${file##*/}" | sed 's/.env$//'
                     cat $file
                     echo $seperator
                   fi
                 done
               elif [ "$command_option" = "select" ]; then
                 if [ -f /srv/$service_name/$4 ]; then
-                  cp /srv/$service_name/$4 /srv/$service_name/.env
+                  cp /srv/$service_name/$4.env /srv/$service_name/.env
                 else
-                  echo "ERROR: $4.env not found"
+                  echo "ERROR: /srv/$service_name/$4.env not found"
                   exit 1
                 fi
               else
                 echo "ERROR: unknown command option"
-                echo "USAGE: $BASENAME services $service_name environment [edit]"
+                echo "USAGE: $BASENAME services $service_name environment [new | edit | available | select]"
                 exit 1
               fi
             else

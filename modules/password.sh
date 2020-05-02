@@ -4,10 +4,16 @@ function password () {
   checkargn $# 1
   if [[ $1 == "" ]]; then
     log_and_exit1 "Error: Password not entered"
+  else if [[ $1 == "disable"]]
+    disablepassword 
   else
     chpasswd <<< "pi:$1"
     echo "Success: the password has been changed"
   fi
+}
+
+function disablepassword() {
+  sed -i "s/^PasswordAuthentication*/PasswordAuthentication no/" /etc/ssh/sshd_config
 }
 
 function password_help () {

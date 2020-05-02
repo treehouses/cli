@@ -24,7 +24,7 @@ function power {
             ;;
         userspace)
             checkroot
-            echo "Use user specified frequency" # may need to create new functions to better use this setting
+            echo "Allows any program to set CPU's frequency"
             changegovernor "userspace"
             ;;
         powersave)
@@ -68,7 +68,7 @@ function power_help {
     echo " OPTIONS OF MODES: "
     echo "  ondemand                    Default mode; moves speed from min to max at about 90% load"
     echo "  conservative                Gradually switch frequencies at about 90% load"
-    echo "  usespace                    Use user specified frequency"
+    echo "  usespace                    Allows any program to set CPU's frequency"
     echo "  powersave                   All cores set at minimum frequency"
     echo "  performance                 All cores set at maximum frequency"
     echo
@@ -88,8 +88,6 @@ function power_help {
     echo "  $BASENAME power freq" 
     echo "      This will return the current CPU frequency" 
     echo
-
- 
 }
 # TODO: Let user change their CPU threshold
 # cat /sys/devices/system/cpu/cpufreq/ondemand/up_threshold

@@ -124,11 +124,9 @@ inspire [joke|qotd|random]                displays quote based on user input
 shutdown [now|in|force]                   shutdown the system           
 ```
 
-## Overview
-- [/modules](https://github.com/treehouses/cli/tree/master/modules) : CLI features are inside this directory.
-- [/services](https://github.com/treehouses/cli/tree/master/services/README.md) : CLI services are inside this directory.
-- [/tests](https://github.com/treehouses/cli/tree/master/tests/README.md) : CLI tests are inside this directory.
-- [/templates](https://github.com/treehouses/cli/tree/master/templates) : CLI templates for networking are inside this directory. 
+## Additional Readme's
+- [Services](https://github.com/treehouses/cli/tree/master/services/README.md)
+- [Tests](https://github.com/treehouses/cli/tree/master/tests/README.md)
 
 ## Add a feature
 Feel free to make a pull request to our repository.  

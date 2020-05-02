@@ -44,7 +44,7 @@ Usage: treehouses
              <key|portinterval> [user@host]
    led [green|red] [mode]                    sets the led mode
        [dance|thanksgiving|christmas]
-       [newyear|lunarnewyear|valentine|
+       [newyear|lunarnewyear|valentine]
        [carnival|stpatricks|random]
    rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
    ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server

@@ -95,6 +95,7 @@ function services {
         echo "port: $port_number"
 	size=$(services ${service} size)
         echo "size: $size"
+	echo "$(echo $port_number | wc -l)"
       fi
     done
   # list all ports used by services

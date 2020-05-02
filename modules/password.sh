@@ -15,7 +15,11 @@ function password {
 }
 
 function disablepassword {
-  if grep -Fxq "PasswordAuthentication no" /etc/ssh/sshd_config 
+  if grep -Fxq "#PasswordAuthentication yes" /etc/ssh/sshd_config || grep -Fxq "#PasswordAuthentication no" /etc/ssh/sshd_config
+  then
+    sed -i "s/^#PasswordAuthentication yes/PasswordAuthentication no/" /etc/ssh/sshd_config 
+    "Successfully enabled password authentication" 
+  elif grep -Fxq "PasswordAuthentication no" /etc/ssh/sshd_config 
   then
     log_and_exit1 "Password authentication is already disabled"
   else
@@ -25,22 +29,30 @@ function disablepassword {
 }
 
 function enablepassword {
-  if grep -Fxq "PasswordAuthentication yes" /etc/ssh/sshd_config 
+  if grep -Fxq "#PasswordAuthentication yes" /etc/ssh/sshd_config || grep -Fxq "#PasswordAuthentication no" /etc/ssh/sshd_config
+  then
+    sed -i "s/^#PasswordAuthentication no/PasswordAuthentication yes/" /etc/ssh/sshd_config
+    "Successfully enabled password authentication"
+  elif grep -Fxq "PasswordAuthentication yes" /etc/ssh/sshd_config 
   then
     log_and_exit1 "Password authentication is already enabled"
   else
     sed -i "s/^PasswordAuthentication no/PasswordAuthentication yes/" /etc/ssh/sshd_config
-    echo "Successfully disabled password authentication"
+    echo "Successfully enabled password authentication"
   fi
 }
 function password_help {
   echo
   echo "Usage: $BASENAME password <password>"
+  echo "       $BASENAME password [disable|enable]"
   echo
   echo "Changes the password for 'pi' user"
   echo
   echo "Example:"
   echo "  $BASENAME password ABC"
   echo "      Sets the password for 'pi' user to 'ABC'."
-  echo
+  echo "  $BASENAME password disable"
+  echo "      Disables password authentication (only passphrase allowed)"
+  echo "  $BASENAME password enable"
+  echo "      Enables password authentiaction (password or passphrase allowed)"
 }

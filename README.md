@@ -123,6 +123,11 @@ sdbench                                   displays read and write speed of micro
 inspire [joke|qotd|random]                displays quote based on user input
 shutdown [now|in|force]                   shutdown the system           
 ```
+
+## Folder Overview
+[services readme](https://github.com/treehouses/cli/tree/master/services/README.md)
+[tests readme](https://github.com/treehouses/cli/tree/master/tests/README.md)
+
 ## Add a feature
 Feel free to make a pull request to our repository.  
 Remember the following files

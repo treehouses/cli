@@ -45,7 +45,8 @@ Usage: treehouses
    led [green|red] [mode]                    sets the led mode
        [dance|thanksgiving|christmas]
        [newyear|lunarnewyear|valentine]
-       [carnival|stpatricks|random]
+       [carnival|stpatricks|random] 
+   power [freq |<mode>]                      sets the power scaling or check CPU frequency
    rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
    ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
    networkmode                               outputs the current network mode

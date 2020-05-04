@@ -88,14 +88,13 @@ function services {
         autorun_status=$(services ${service} autorun)
         echo "autorun: $autorun_status"
         local_url=$(services ${service} url local)
-        echo "url: $local_url"
-	tor_url=$(services ${service} url tor)
-        echo "tor: $tor_url"
+	echo "url: "$local_url | sed -e 's/ /\n     /g2'
+        tor_url=$(services ${service} url tor)
+	echo "tor: "${tor_url} | sed -e 's/ /\n     /g2'
         port_number=$(services ${service} port)
-        echo "port: $port_number"
-	size=$(services ${service} size)
+	echo "port: "${port_number} | sed -e 's/ /\n      /g2'
+        size=$(services ${service} size)
         echo "size: $size"
-	echo "$(echo $port_number | wc -l)"
       fi
     done
   # list all ports used by services

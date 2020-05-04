@@ -347,7 +347,8 @@ EOF
 function services_cmds {
   while IFS= read -r line;
   do
-    printf "treehouses services $line autorun
+    printf "treehouses services $line
+treehouses services $line autorun
 treehouses services $line autorun false
 treehouses services $line autorun true
 treehouses services $line cleanup

@@ -311,6 +311,7 @@ treehouses upgrade
 treehouses upgrade force
 treehouses upgrade bluetooth
 treehouses upgrade check
+treehouses usb
 treehouses usb off
 treehouses usb on
 treehouses verbose

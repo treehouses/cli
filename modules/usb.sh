@@ -56,7 +56,8 @@ function usb {
     elif [ "$command" = "" ]; then
       lsusb -t
     else
-      echo "unknown command"
+      echo "Error: unknown command"
+      usb_help
     fi
   fi
 }

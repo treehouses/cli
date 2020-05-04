@@ -590,7 +590,8 @@ function services_help {
   echo "Service-Specific Commands:"
   echo
   echo "  Usage:"
-  echo "    $BASENAME services <service_name> install"
+  echo "    $BASENAME services <service_name>"
+  echo "                             ..... install"
   echo "                             ..... up"
   echo "                             ..... down"
   echo "                             ..... start"
@@ -605,6 +606,8 @@ function services_help {
   echo "                             ..... cleanup"
   echo "                             ..... icon"
   echo "                             ..... environment [edit [vim]]"
+  echo
+  echo "    <>                      shows overview of <service_name>"
   echo
   echo "    install                 installs and pulls <service_name>"
   echo

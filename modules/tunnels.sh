@@ -4,14 +4,10 @@ function tunnels {
       checkargn $# 3
       email="$2"
       sitename="$3"
-      echo $email
-      echo $sitename
       check_missing_packages pagekite
-      curl http://pagekite.net/pk/ | sed -e s/https:/http:/g | sudo bash
-      #the commented out line would run the process of setting up pagekite in the background as a screen
-      #sudo -u screen -dm curl http://pagekite.net/pk/ | sed -e s/https:/http:/g | sudo bash
+      screen -dm curl http://pagekite.net/pk/ | sed -e s/https:/http:/g | sudo bash
       printf "Y \n $email \n $sitename \n Y \n Y \n" | /usr/local/bin/pagekite.py --signup
-      #printf "Y\n$email\n$sitename\nY\n" | /usr/local/bin/pagekite.py --signup
+      echo "You may now visit the site you created at: $sitename.pagekite.me"
       ;;
     info)
       echo "https://github.com/pagekite/PyPagekite"

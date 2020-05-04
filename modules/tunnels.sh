@@ -5,8 +5,8 @@ function tunnels {
       email="$2"
       sitename="$3"
       check_missing_packages pagekite
-      screen -dm curl http://pagekite.net/pk/ | sed -e s/https:/http:/g | sudo bash
-      printf "Y \n $email \n $sitename \n Y \n Y \n" | /usr/local/bin/pagekite.py --signup
+      #screen -dm bash -c 'curl http://pagekite.net/pk/ | sed -e s/https:/http:/g | sudo bash'
+      screen -dmS pagekite bash -c "printf \"Y \n $email \n $sitename \n Y \n Y \n\" | /usr/local/bin/pagekite.py --signup"
       ;;
     info)
       echo "https://github.com/pagekite/PyPagekite"

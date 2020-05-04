@@ -1,4 +1,5 @@
 function gpio {
+  checkargn $# 0
   pinout | sed -ne "/-------./,/----|/ p"
   echo
   model="$(treehouses detectrpi)"

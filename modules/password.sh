@@ -17,11 +17,13 @@ function password {
 function disablepassword {
   checkroot
   passwd -l pi
+  echo "Password disabled successfully"
 }
 
 function enablepassword {
   checkroot
   passwd -u pi
+  echo "Password enabled successfully"
 }
 
 function password_help () {

@@ -74,11 +74,11 @@ function services {
         basic_info=$(services ${service} info)
         echo "$basic_info"
         echo
-	if [ -d /srv/$service ]; then
-	  echo "status: installed"
-	else
-	  echo "status: not installed"
-	fi
+        if [ -d /srv/$service ]; then
+          echo "status: installed"
+        else
+          echo "status: not installed"
+        fi
         for i in "${running_services[@]}"
         do
           if [ $i == $service ]; then
@@ -88,11 +88,11 @@ function services {
         autorun_status=$(services ${service} autorun)
         echo "autorun: $autorun_status"
         local_url=$(services ${service} url local)
-	echo "url: "$local_url | sed -e 's/ /\n     /g2'
+        echo "url: "$local_url | sed -e 's/ /\n     /g2'
         tor_url=$(services ${service} url tor)
-	echo "tor: "${tor_url} | sed -e 's/ /\n     /g2'
+        echo "tor: "${tor_url} | sed -e 's/ /\n     /g2'
         port_number=$(services ${service} port)
-	echo "port: "${port_number} | sed -e 's/ /\n      /g2'
+        echo "port: "${port_number} | sed -e 's/ /\n      /g2'
         size=$(services ${service} size)
         echo "size: $size"
       fi

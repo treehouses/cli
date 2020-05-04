@@ -609,6 +609,8 @@ function services_help {
   echo
   echo "    <>                      shows overview of <service_name>"
   echo
+  echo "    <>                      shows overview of <service_name>"
+  echo
   echo "    install                 installs and pulls <service_name>"
   echo
   echo "    up                      builds and starts <service_name>"

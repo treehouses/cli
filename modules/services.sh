@@ -5,8 +5,11 @@ function services {
   command="$2"
   command_option="$3"
 
+  if [ -z "$service_name" ]; then
+    echo "ERROR: no command given"
+    exit 1
   # list all services available to be installed
-  if [ "$service_name" = "available" ]; then
+  elif [ "$service_name" = "available" ]; then
     checkargn $# 1
     if [ -d "$SERVICES" ]; then
       for file in $SERVICES/*

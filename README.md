@@ -105,6 +105,7 @@ services                                  executes the given command on the spec
    [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
    [seafile]      <environment [edit]>    Seafile is an open-source, cross-platform file-hosting software system
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art       
+   [musicblocks]                          Music Blocks is a programming language and collection of manipulative tools for exploring musical and mathematical concepts in an integrative and fun way. 
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

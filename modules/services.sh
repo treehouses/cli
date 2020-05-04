@@ -64,18 +64,18 @@ function services {
       echo "USAGE: $BASENAME services running <full>"
       exit 1
     fi
-  #list general information about services
+  # list general information about services
   elif [[ "$2" == "" ]]; then
     service_list=($(services available))
     for service in "${service_list[@]}"
     do
-      if [ $service == $service_name ]; then
-        running_services=($(services running))
-	basic_info=$(services ${service} info)
-        echo "$basic_info"
-	echo 
-        if [ -d /srv/$service ]; then
-          echo "status: installed"
+    if [ $service == $service_name ]; then
+      running_services=($(services running))
+      basic_info=$(services ${service} info)
+      echo "$basic_info"
+      echo
+	if [ -d /srv/$service ]; then
+	  echo "status: installed"
         else
           echo "status: not installed"
         fi

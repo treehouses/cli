@@ -69,16 +69,16 @@ function services {
     service_list=($(services available))
     for service in "${service_list[@]}"
     do
-    if [ $service == $service_name ]; then
-      running_services=($(services running))
-      basic_info=$(services ${service} info)
-      echo "$basic_info"
-      echo
+      if [ $service == $service_name ]; then
+        running_services=($(services running))
+        basic_info=$(services ${service} info)
+        echo "$basic_info"
+        echo
 	if [ -d /srv/$service ]; then
 	  echo "status: installed"
-        else
-          echo "status: not installed"
-        fi
+	else
+	  echo "status: not installed"
+	fi
         for i in "${running_services[@]}"
         do
           if [ $i == $service ]; then

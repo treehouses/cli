@@ -1,7 +1,7 @@
 function tunnels {
   case "$1" in
     pagekite)
-      checkargn $# 4
+      checkargn $# 3
       email="$2"
       sitename="$3"
       check_missing_packages pagekite

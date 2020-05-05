@@ -2,25 +2,25 @@ function sshtunnel {
   local portinterval host hostname portssh portweb portcouchdb
   local portnewcouchdb portmunin keys option value status
   checkroot
-  checkargn $# 3
   checkargn $# 4
-  if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
-    echo "Error: no tunnel has been set up."
-    echo "Run '$BASENAME sshtunnel add' to add a key for the tunnel."
-    exit 1
-  fi
   portinterval="$2"
   host="$3"
   tunnelno="$4"
 
-  if [ -z "$host" ];
-  then
-    host="ole@pirate.ole.org"
-  fi
-
   if [ -z "$tunnelno" ];
   then
     tunnelno=0
+  fi
+
+  if { [ ! -f "/etc/tunnel$tunnelno" ] || [ ! -f "/etc/cron.d/autossh$tunnelno" ]; }  && [ "$1" != "add" ]; then
+    echo "Error: no tunnel has been set up."
+    echo "Run '$BASENAME sshtunnel add' to add a key for the tunnel."
+    exit 1
+  fi
+
+  if [ -z "$host" ];
+  then
+    host="ole@pirate.ole.org"
   fi
 
   if [ -z "$1" ]; then
@@ -59,7 +59,7 @@ function sshtunnel {
     {
       echo "#!/bin/bash"
       echo
-      echo "if ! ps auxf | grep \"autossh\" | grep \"\-M$monitor\"; then"
+      echo "if ! ps auxf | grep \"autossh\" | grep \"\-M$monitor \"; then"
       echo "/usr/bin/autossh -f -T -N -q -4 -M$monitor -R $portssh:127.0.1.1:22 -R $portcouchdb:127.0.1.1:5984 -R $portweb:127.0.1.1:80 -R $portnewcouchdb:127.0.1.1:2200 -R $portmunin:127.0.1.1:4949 $host"
       echo "fi"
     } > /etc/tunnel$tunnelno
@@ -67,14 +67,14 @@ function sshtunnel {
     chmod +x /etc/tunnel$tunnelno
 
     if ! grep -q "\\-f \"/etc/tunnel$tunnelno\"" /etc/rc.local 2>"$LOGFILE"; then
-      sed -i 's/^exit 0/if [ -f "\/etc\/tunnel$tunnelno" ];\nthen\n  \/etc\/tunnel$tunnelno\nfi\nexit 0/g' /etc/rc.local
+      sed -i "s/^exit 0/if [ -f \"\/etc\/tunnel$tunnelno\" ];\nthen\n  \/etc\/tunnel$tunnelno\nfi\nexit 0/g" /etc/rc.local
     fi
 
     {
       echo "MAILTO=root"
       echo "*/5 * * * * root /etc/tunnel$tunnelno"
     } > /etc/cron.d/autossh$tunnelno
-  elif [ "$1" = "remove" ]; 
+  elif [ "$1" = "remove" ]; then
     if [ ! -z "$2" ]; then
       tunnelno="$2";
     fi
@@ -95,7 +95,8 @@ function sshtunnel {
       tunnelno="$2";
     fi
     if [ -f "/etc/tunnel$tunnelno" ]; then
-      portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel$tunnelno)
+      monitor=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel$tunnelno | tail -n1)
+      portinterval=$((monitor - tunnelno))
       portssh=$((portinterval + 22))
       portweb=$((portinterval + 80))
       portcouchdb=$((portinterval + 84))
@@ -109,7 +110,7 @@ function sshtunnel {
       echo "    2200 -> $portnewcouchdb"
       echo "    4949 -> $portmunin"
       echo "    5984 -> $portcouchdb"
-      echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel$tunnelno | tail -n2)"
+      echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel$tunnelno | tail -n2 | head -1 )"
     else
       echo "Error: a tunnel has not been set up yet"
       exit 1
@@ -137,7 +138,7 @@ function sshtunnel {
       echo -e "[${RED}MISSING${NC}] /etc/rc.local doesn't start /etc/tunnel$tunnelno if exists"
     fi
 
-    portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel$tunnelno)
+    portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel$tunnelno | tail -n1)
     if ps auxf | grep "autossh" | grep "\-M$portinterval"; then
       echo -e "[${GREEN}OK${NC}] autossh pid: $(ps auxf | grep "autossh" | grep "\-M$portinterval" | awk '{print $2}')"
     else
@@ -194,14 +195,15 @@ function sshtunnel {
       if [ ! -z "$3" ]; then
         tunnelno="$3";
       fi
-      portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel$tunnelno)
+      monitor=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel$tunnelno | tail -n1)
+      portinterval=$((monitor - tunnelno))
       portssh=$((portinterval + 22))
       portweb=$((portinterval + 80))
       portcouchdb=$((portinterval + 84))
       portnewcouchdb=$((portinterval + 82))
       portmunin=$((portinterval + 49))
-      treehouses feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel$tunnelno | tail -n2):$portinterval\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
-    elif [ -z "$option" ]; then
+      treehouses feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel$tunnelno | tail -n2 | head -1 ):$monitor\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+    elif [ "$option" = "status" ]; then
       if [ ! -z "$3" ]; then
         tunnelno="$3";
       fi
@@ -211,8 +213,15 @@ function sshtunnel {
         status="off"
       fi
       echo "Status: $status"
+    elif [ -z "$option" ]; then
+      if [ -f "/etc/cron.d/tunnel_report$tunnelno" ]; then
+        status="on"
+      else
+        status="off"
+      fi
+      echo "Status: $status"
     else
-      echo "Error: only 'on' and 'off' options are supported."
+      echo "Error: only 'on', 'off', 'add', 'delete', 'list', 'now', 'status' options are supported."
     fi
   else
     echo "Error: only 'add', 'remove', 'list', 'check', 'key', 'notice' options are supported";

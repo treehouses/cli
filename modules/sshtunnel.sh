@@ -27,7 +27,7 @@ function sshtunnel {
     "$1" ="list"
   fi
 
-  monitor=$(($portinterval+$tunnelno))
+  monitor=$((portinterval+tunnelno))
   hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
 
   if [ "$1" = "add" ]; then

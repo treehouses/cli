@@ -72,6 +72,10 @@ upgrade [tag|check|bluetooth|force]       upgrades treehouses package using npm
 sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
           <key|portinterval> [user@host]
 led [green|red] [mode]                    sets the led mode
+    [dance|thanksgiving|christmas]
+    [newyear|lunarnewyear|valentine]
+    [carnival|stpatricks|random]
+power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode
@@ -124,7 +128,12 @@ sdbench                                   displays read and write speed of micro
 inspire [joke|qotd|random]                displays quote based on user input
 shutdown [now|in|force]                   shutdown the system           
 ```
-## Add a feature
+
+## Additional README's
+- [Services](https://github.com/treehouses/cli/tree/master/services/README.md)
+- [Tests](https://github.com/treehouses/cli/tree/master/tests/README.md)
+
+## Add a new feature
 Feel free to make a pull request to our repository.  
 Remember the following files
 will have to be updated to add a feature:

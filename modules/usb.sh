@@ -53,6 +53,8 @@ function usb {
       /usr/local/bin/hub-ctrl -h 1 -P 1 -p
 
       echo "usb ports turned off"
+    elif [ "$command" = "" ]; then
+      lsusb -t
     else
       echo "unknown command"
     fi
@@ -67,6 +69,9 @@ function usb_help {
   echo "Note: cannot control individual usb ports"
   echo
   echo "Example:"
+  echo
+  echo "  $BASENAME usb"
+  echo "      Prints usb device information"
   echo
   echo "  $BASENAME usb on"
   echo "      Turns the usb ports on"

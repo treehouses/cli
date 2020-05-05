@@ -5,20 +5,6 @@ function discover {
 
   option=$1
 
-  if [ "$#" -gt 2 ]; then
-    echo "Too many arguments."
-    discover_help
-    exit 1
-  fi
-
-  if [ $option = "rpi" ] || [ $option = "interface" ]; then
-    if [ $# -gt 1 ]; then
-      echo "Too many arguments."
-      discover_help
-      exit 1
-    fi
-  fi
-
   if [ $option = "scan" ] || [ $option = "ping" ] || [ $option = "ports" ]; then
     if [ -z $2 ]; then
       echo "You need to provide an IP address or URL for this command".
@@ -26,15 +12,10 @@ function discover {
     fi
     ip=$2
   fi
-  if [ $option = "mac" ]; then
-    if ! [[ "$2" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]]; then
-        echo "Invalid mac address"
-        exit 1
-    fi
-    mac=$2
-  fi
+
   case $option in
     rpi)
+      checkargn $# 1
       nmap --iflist | grep DC:A6:32
       nmap --iflist | grep B8:27:EB
       ;;
@@ -47,6 +28,7 @@ function discover {
       nmap -v -A -T4  $ip
       ;;
     interface)
+      checkargn $# 1
       nmap --iflist
       ;;
     ping)
@@ -56,6 +38,11 @@ function discover {
       nmap --open $ip
       ;;
     mac)
+      if ! [[ "$2" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]]; then
+        echo "Invalid mac address"
+        exit 1
+      fi
+      mac=$2
       mac_ip=$(arp -n |grep -i "$mac" |awk '{print $1}')
       if [ -z "$mac_ip" ]
       then

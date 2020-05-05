@@ -59,7 +59,7 @@ function sshtunnel {
     {
       echo "#!/bin/bash"
       echo
-      echo "if ! ps auxf | grep \"autossh\" | grep \"\-M$monitor \"; then"
+      echo "if ! pgrep -f \"(autossh)*(\-M$monitor) \"; then"
       echo "/usr/bin/autossh -f -T -N -q -4 -M$monitor -R $portssh:127.0.1.1:22 -R $portcouchdb:127.0.1.1:5984 -R $portweb:127.0.1.1:80 -R $portnewcouchdb:127.0.1.1:2200 -R $portmunin:127.0.1.1:4949 $host"
       echo "fi"
     } > /etc/tunnel$tunnelno
@@ -139,8 +139,8 @@ function sshtunnel {
     fi
 
     portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel$tunnelno | tail -n1)
-    if ps auxf | grep "autossh" | grep "\-M$portinterval"; then
-      echo -e "[${GREEN}OK${NC}] autossh pid: $(ps auxf | grep "autossh" | grep "\-M$portinterval" | awk '{print $2}')"
+    if pgrep "(autossh)*(\-M$portinterval)"; then
+      echo -e "[${GREEN}OK${NC}] autossh pid: $("(autossh)*(\-M$portinterval)")"
     else
       echo -e "[${RED}MISSING${NC}] autossh not running"
     fi

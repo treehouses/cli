@@ -58,6 +58,7 @@ function usb {
     else
       echo "Error: unknown command"
       usb_help
+      exit 1
     fi
   fi
 }

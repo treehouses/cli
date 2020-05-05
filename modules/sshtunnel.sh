@@ -155,9 +155,9 @@ function sshtunnel {
       if [ ! -z "$3" ]; then
         tunnelno="$3";
       fi
-      cp "$TEMPLATES/network/tunnel_report.sh" /etc/tunnel_report$tunnelno.sh
+      cp "$TEMPLATES/network/tunnel_report.sh" /etc/tunnel_report.sh
       if [ ! -f "/etc/cron.d/tunnel_report$tunnelno" ]; then
-        echo "*/1 * * * * root if [ -f \"/etc/tunnel$tunnelno\" ]; then /etc/tunnel_report$tunnelno.sh; fi" > /etc/cron.d/tunnel_report$tunnelno
+        echo "*/1 * * * * root if [ -f \"/etc/tunnel$tunnelno\" ]; then /etc/tunnel_report.sh $tunnelno; fi" > /etc/cron.d/tunnel_report$tunnelno
       fi
       if [ ! -f "/etc/tunnel_report_channels.txt" ]; then
         echo "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" >> /etc/tunnel_report_channels.txt
@@ -189,7 +189,10 @@ function sshtunnel {
         echo "No channels found. No message send"
       fi
     elif [ "$option" = "off" ]; then
-      rm -rf /etc/tunnel_report$tunnelno.sh /etc/cron.d/tunnel_report$tunnelno /etc/tunnel_report_channels.txt || true
+      if [ ! -z "$3" ]; then
+        tunnelno="$3";
+      fi
+      rm -rf /etc/cron.d/tunnel_report$tunnelno || true
       echo "OK."
     elif [ "$option" = "now" ]; then
       if [ ! -z "$3" ]; then

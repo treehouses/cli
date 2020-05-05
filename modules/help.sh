@@ -18,6 +18,7 @@ Usage: treehouses
    ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
    discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
             <rpi> [ipaddress|url|macaddress]
+            <wifi>
    wifi <ESSID> [password]                   connects to a wifi network
    wifihidden <ESSID> [password]             connects to a hidden wifi network
    staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
@@ -45,7 +46,8 @@ Usage: treehouses
    led [green|red] [mode]                    sets the led mode
        [dance|thanksgiving|christmas]
        [newyear|lunarnewyear|valentine]
-       [carnival|stpatricks|random]
+       [carnival|stpatricks|random] 
+   power [freq |<mode>]                      sets the power scaling or check CPU frequency
    rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
    ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
    networkmode                               outputs the current network mode

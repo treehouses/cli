@@ -13,7 +13,7 @@ function power {
       checkroot
       echo "Power mode is currently $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)"
       ;;
-    ondemand)
+    default | ondemand)
       checkroot
       echo "Moves speed from min to max at about 90% load"
       changegovernor "ondemand"
@@ -44,10 +44,12 @@ function power {
       ;;
     "")
       echo "Error: please choose one of the 5 modes"
+      power_help
       exit 1
       ;;
     *)
       echo "Error: power '$mode' does not exist"
+      power_help
       exit 1
       ;;
   esac     
@@ -68,13 +70,16 @@ function power_help {
   echo "       $BASENAME power [current|freq]"
   echo
   echo "Options of modes:"
-  echo "  ondemand                    Default mode; moves speed from min to max at about 90% load"
+  echo "  default                     ondemand mode; moves speed from min to max at about 90% load"
+  echo "  ondemand                    moves speed from min to max at about 90% load"
   echo "  conservative                Gradually switch frequencies at about 90% load"
   echo "  usespace                    Allows any program to set CPU's frequency"
   echo "  powersave                   All cores set at minimum frequency"
   echo "  performance                 All cores set at maximum frequency"
   echo
   echo "Example:"
+   echo "  $BASENAME power default" 
+  echo "      This will set the power mode to default (ondemand)" 
   echo "  $BASENAME power ondemand" 
   echo "      This will set the power mode to ondemand" 
   echo "  $BASENAME power conservative" 

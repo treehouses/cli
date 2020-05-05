@@ -79,6 +79,7 @@ treehouses discover ports localhost
 treehouses discover rpi
 treehouses discover scan google.com
 treehouses discover scan scanme.nmap.org
+treehouses discover wifi
 treehouses ethernet
 treehouses expandfs
 treehouses feedback
@@ -221,6 +222,7 @@ treehouses openvpn use
 treehouses password
 treehouses power conservative
 treehouses power current
+treehouses power default
 treehouses power freq
 treehouses power ondemand
 treehouses power performance
@@ -311,6 +313,7 @@ treehouses upgrade
 treehouses upgrade force
 treehouses upgrade bluetooth
 treehouses upgrade check
+treehouses usb
 treehouses usb off
 treehouses usb on
 treehouses verbose

@@ -344,13 +344,14 @@ function services {
           fi
           ;;
         environment)
-          checkargn $# 4
           if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
             if [ -e /srv/$service_name/.env ]; then
               seperator="--------------------"
               if [ -z "$command_option" ]; then
+                checkargn $# 2
                 docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
               elif [ "$command_option" = "new" ]; then
+                checkargn $# 4
                 kill_spinner
                 if [ -z "$4" ]; then
                   echo "ERROR: a name is required for the new env file"
@@ -370,6 +371,7 @@ function services {
                 cat /srv/$service_name/$4.env
                 echo $seperator
               elif [ "$command_option" = "edit" ]; then
+                checkargn $# 4
                 kill_spinner
                 if [ -z "$4" ]; then
                   while read -r -u 9 line; do
@@ -394,6 +396,7 @@ function services {
                   exit 1
                 fi
               elif [ "$command_option" = "available" ]; then
+                checkargn $# 3
                 echo $seperator
                 echo ">> currently selected .env"
                 cat /srv/$service_name/.env
@@ -408,6 +411,7 @@ function services {
                   fi
                 done
               elif [ "$command_option" = "select" ]; then
+                checkargn $# 4
                 if [ -f /srv/$service_name/$4.env ]; then
                   cp /srv/$service_name/$4.env /srv/$service_name/.env
                 else

@@ -220,6 +220,8 @@ treehouses openvpn start
 treehouses openvpn stop
 treehouses openvpn use
 treehouses password
+treehouses password disable
+treehouses password enable
 treehouses power conservative
 treehouses power current
 treehouses power default

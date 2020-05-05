@@ -6,7 +6,7 @@ Usage: treehouses
    verbose <on|off>                          makes each command print more output (might not work with treehouses remote)
    expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
    rename <hostname>                         changes hostname
-   password <password>                       changes the password for 'pi' user
+   password <password|disable|enable>        changes the password for 'pi' user or disables/enables password authentication
    sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
    version [contributors]                    returns the version of treehouses command
    image                                     returns version of the system image installed

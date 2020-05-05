@@ -221,6 +221,7 @@ treehouses openvpn use
 treehouses password
 treehouses power conservative
 treehouses power current
+treehouses power default
 treehouses power freq
 treehouses power ondemand
 treehouses power performance

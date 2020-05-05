@@ -51,7 +51,9 @@ function sshtunnel {
     {
       echo "#!/bin/bash"
       echo
+      echo "if ! ps auxf | grep \"autossh\" | grep \"$host\"; then"
       echo "/usr/bin/autossh -f -T -N -q -4 -M$portinterval -R $portssh:127.0.1.1:22 -R $portcouchdb:127.0.1.1:5984 -R $portweb:127.0.1.1:80 -R $portnewcouchdb:127.0.1.1:2200 -R $portmunin:127.0.1.1:4949 $host"
+      echo "fi"
     } > /etc/tunnel
 
     chmod +x /etc/tunnel
@@ -175,7 +177,7 @@ function sshtunnel {
       portcouchdb=$((portinterval + 84))
       portnewcouchdb=$((portinterval + 82))
       portmunin=$((portinterval + 49))
-      treehouses feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$portinterval\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+      treehouses feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n2):$portinterval\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tunnel_report" ]; then
         status="on"

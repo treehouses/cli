@@ -64,7 +64,7 @@ function sshtunnel {
 
     {
       echo "MAILTO=root"
-      echo "*/5 * * * * root if [ ! "$\(pidof autossh\)" ]; then /etc/tunnel; fi"
+      echo "*/5 * * * * root /etc/tunnel"
     } > /etc/cron.d/autossh
   elif [ "$1" = "remove" ]; then
     if [ -f "/etc/tunnel" ]
@@ -95,7 +95,7 @@ function sshtunnel {
       echo "    2200 -> $portnewcouchdb"
       echo "    4949 -> $portmunin"
       echo "    5984 -> $portcouchdb"
-      echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
+      echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n2)"
     else
       echo "Error: a tunnel has not been set up yet"
       exit 1

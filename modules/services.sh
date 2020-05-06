@@ -344,7 +344,7 @@ function services {
           fi
           ;;
         environment)
-          checkargn $# 4
+          # checkargn $# 4
           if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
             if [ -e /srv/$service_name/.env ]; then
               if [ -z "$command_option" ]; then
@@ -375,11 +375,20 @@ function services {
                     request+="\"${line%%=*}\" "
                   done 9< /srv/$service_name/.env
                   echo $request
-                # elif [ "$4" = "send" ]; then
-
-
-
-
+                elif [ "$4" = "send" ]; then
+                  var_count_env=$(wc -l /srv/$service_name/.env | awk '{print $1}')
+                  if [ "$var_count_env" -eq "$(($# - 4))" ]; then
+                    args=("$@")
+                    var=4
+                    while read -r -u 9 line; do
+                      sed -i "/$line/c\\${line%%=*}=${args[$var]}" /srv/$service_name/.env
+                      ((var++))
+                    done 9< /srv/$service_name/.env
+                  else
+                    echo "ERROR: received $(($# - 4)) variable(s)"
+                    echo "$service_name requires $var_count_env variable(s)"
+                    exit 1
+                  fi
                 else
                   echo "ERROR: unknown command option"
                   echo "USAGE: $BASENAME services $service_name environment edit [vim]"

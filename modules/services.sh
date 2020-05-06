@@ -328,7 +328,7 @@ function services {
             echo "try running '$BASENAME services ${service_name} install' first"
             exit 1
           else
-            docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down  -v --rmi all --remove-orphans
+            docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down -v --rmi all --remove-orphans
             echo "${service_name} stopped and removed"
           fi
           remove_tor_port
@@ -369,6 +369,17 @@ function services {
                   echo $seperator
                 elif [ "$4" = "vim" ]; then
                   vim /srv/$service_name/.env
+                elif [ "$4" = "request" ]; then
+                  request="$BASENAME services $service_name environment edit send "
+                  while read -r -u 9 line; do
+                    request+="\"${line%%=*}\" "
+                  done 9< /srv/$service_name/.env
+                  echo $request
+                # elif [ "$4" = "send" ]; then
+
+
+
+
                 else
                   echo "ERROR: unknown command option"
                   echo "USAGE: $BASENAME services $service_name environment edit [vim]"

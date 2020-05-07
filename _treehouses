@@ -361,6 +361,8 @@ treehouses services $line down
 treehouses services $line environment
 treehouses services $line environment edit
 treehouses services $line environment edit vim
+treehouses services $line environment edit request
+treehouses services $line environment edit send
 treehouses services $line icon
 treehouses services $line icon oneline
 treehouses services $line info

@@ -529,7 +529,7 @@ function services_help {
   echo "  mongodb         MongoDB is a general purpose, distributed, document-based, NoSQL database."
   echo "  seafile         Seafile is an open-source, cross-platform file-hosting software system"
   echo "  turtleblocksjs  TurtleBlocks is an activity with a Logo-inspired graphical \"turtle\" "
-  echo "  minetest-server Minetest is an open source infinite-world block sandbox game engine with support for survival and crafting"
+  echo "  minetest        Minetest is an open source infinite-world block sandbox game engine with survival and crafting"
   echo
   echo
   echo "Top-Level Commands:"

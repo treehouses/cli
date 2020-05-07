@@ -344,7 +344,6 @@ function services {
           fi
           ;;
         environment)
-          # checkargn $# 4
           if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
             if [ -e /srv/$service_name/.env ]; then
               if [ -z "$command_option" ]; then
@@ -368,8 +367,10 @@ function services {
                   cat /srv/$service_name/.env
                   echo $seperator
                 elif [ "$4" = "vim" ]; then
+                  checkargn $# 4
                   vim /srv/$service_name/.env
                 elif [ "$4" = "request" ]; then
+                  checkargn $# 4
                   request="$BASENAME services $service_name environment edit send "
                   while read -r -u 9 line; do
                     request+="\"${line%%=*}\" "

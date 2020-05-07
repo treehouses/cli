@@ -392,7 +392,7 @@ function services {
                   fi
                 else
                   echo "ERROR: unknown command option"
-                  echo "USAGE: $BASENAME services $service_name environment edit [vim]"
+                  echo "USAGE: $BASENAME services $service_name environment edit [vim|request|send]"
                   exit 1
                 fi
               else
@@ -425,7 +425,7 @@ function services {
           echo "                                ..... size"
           echo "                                ..... cleanup"
           echo "                                ..... icon"
-          echo "                                ..... environment [edit [vim]]"
+          echo "                                ..... environment [edit [vim|request|send]]"
           exit 1
           ;;
       esac
@@ -594,7 +594,7 @@ function services_help {
   echo "                             ..... size"
   echo "                             ..... cleanup"
   echo "                             ..... icon"
-  echo "                             ..... environment [edit [vim]]"
+  echo "                             ..... environment [edit [vim|request|send]]"
   echo
   echo "    install                 installs and pulls <service_name>"
   echo
@@ -631,6 +631,8 @@ function services_help {
   echo "    environment             outputs the contents of the .yml for <service_name> with the currently configured environment variables"
   echo "        [edit]                  edit the .env file for <service_name>"
   echo "            [vim]                   opens vim to edit the .env file for <service_name>"
+  echo "            [request]               requests the command to edit the .env file for <service_name>"
+  echo "            [send]                  sends the command to edit the .env file for <service_name>"
   echo
   echo "  Examples:"
   echo

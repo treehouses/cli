@@ -11,7 +11,7 @@ function install {
     echo "  musicblocks:"
     echo "    image: treehouses/musicblocks"
     echo "    ports:"
-    echo "      - 3000:80"
+    echo "      - 8088:80"
   } > /srv/musicblocks/musicblocks.yml
 
   # add autorun
@@ -39,7 +39,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "3000"
+  echo "8088"
 }
 
 # add size (in MB)

@@ -101,7 +101,7 @@ services                                  executes the given command on the spec
    [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
    [seafile]      <environment [edit]>    Seafile is an open-source, cross-platform file-hosting software system
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
-   [minetest]                             Minetest is an open source infinite-world block sandbox game engine with support for survival and crafting
+   [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

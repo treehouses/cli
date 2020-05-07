@@ -106,6 +106,7 @@ services                                  executes the given command on the spec
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
+           <modules|params>
 openvpn [use|show|delete]                 helps setting up an openvpn client
         [notice|start|stop|load]
 coralenv [install|demo-on|demo-off]       plays with the coral environmental board

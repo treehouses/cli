@@ -57,7 +57,7 @@ EOF
     lsmod
   elif [ "$option" = "params" ]; then
     checkargn $# 1
-    echo $(</proc/cmdline) | tr ' ' '\n' | sed '/^$/d'
+    echo "$(</proc/cmdline)" | tr ' ' '\n' | sed '/^$/d'
   else
     echo "Error: only 'console', 'console autologin', 'desktop', 'desktop autologin', 'modules', 'params' options are supported."
     exit 1

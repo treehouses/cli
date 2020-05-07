@@ -54,20 +54,6 @@ function gpio {
     echo "GPIO19 (35) (36) GPIO16"
     echo "GPIO26 (37) (38) GPIO20"
     echo "   GND (39) (40) GPIO21"
-  elif [ "$oldrpi" = "True" ] && [ "$prefix" -ne "CM" ]; then
-    echo "   3V3  (1) (2)  5V"
-    echo "  SDA0  (3) (4)  DNC"
-    echo "  SCL0  (5) (6)  0V"
-    echo " GPIO7  (7) (8)  TxD"
-    echo "   DNC  (9) (10) RxD"
-    echo " GPIO0 (11) (12) GPIO1"
-    echo " GPIO2 (13) (14) DNC"
-    echo " GPIO3 (15) (16) GPIO4"
-    echo "   DNC (17) (18) GPIO5"
-    echo "  MOSI (19) (20) DNC"
-    echo "  MISO (21) (22) GPIO6"
-    echo "  SCLK (23) (24) CE0"
-    echo "   DNC (25) (26) CE1"
   else
     pinout
   fi

@@ -382,7 +382,7 @@ function services {
                     args=("$@")
                     var=4
                     while read -r -u 9 line; do
-                      sed -i "/$line/c\\${line%%=*}=${args[$var]}" /srv/$service_name/.env
+                      sed -i -e "s~$line~${line%%=*}=${args[$var]}~" /srv/$service_name/.env
                       ((var++))
                     done 9< /srv/$service_name/.env
                   else

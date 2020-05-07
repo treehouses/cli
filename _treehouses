@@ -69,11 +69,12 @@ treehouses default network
 treehouses default notice
 treehouses default tunnel
 treehouses detect
-treehouses detectarm
-treehouses detectbluetooth
-treehouses detectrpi
-treehouses detectrpi model
-treehouses detectwifi
+treehouses detect arm
+treehouses detect bluetooth
+treehouses detect rpi
+treehouses detect rpi full
+treehouses detect rpi model
+treehouses detect wifi
 treehouses discover interface
 treehouses discover mac b8:29:eb:9f:42:8b
 treehouses discover ping google.com
@@ -81,6 +82,7 @@ treehouses discover ports localhost
 treehouses discover rpi
 treehouses discover scan google.com
 treehouses discover scan scanme.nmap.org
+treehouses discover wifi
 treehouses ethernet
 treehouses expandfs
 treehouses feedback
@@ -101,7 +103,6 @@ treehouses help coralenv
 treehouses help cron
 treehouses help default
 treehouses help detect
-treehouses help detectrpi
 treehouses help discover
 treehouses help ethernet
 treehouses help expandfs
@@ -221,6 +222,17 @@ treehouses openvpn start
 treehouses openvpn stop
 treehouses openvpn use
 treehouses password
+treehouses password disable
+treehouses password enable
+treehouses power conservative
+treehouses power current
+treehouses power default
+treehouses power freq
+treehouses power ondemand
+treehouses power performance
+treehouses power powersave
+treehouses power status
+treehouses power userspace
 treehouses rebootneeded
 treehouses reboots
 treehouses reboots cron
@@ -303,9 +315,11 @@ treehouses tor start
 treehouses tor status
 treehouses tor stop
 treehouses upgrade
+treehouses upgrade cli
 treehouses upgrade force
 treehouses upgrade bluetooth
 treehouses upgrade check
+treehouses usb
 treehouses usb off
 treehouses usb on
 treehouses verbose
@@ -350,6 +364,8 @@ treehouses services $line down
 treehouses services $line environment
 treehouses services $line environment edit
 treehouses services $line environment edit vim
+treehouses services $line environment edit request
+treehouses services $line environment edit send
 treehouses services $line icon
 treehouses services $line icon oneline
 treehouses services $line info

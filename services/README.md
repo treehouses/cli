@@ -69,6 +69,10 @@ Using the [template](#Template), fill in the sections as required.
 
    `echo true` or `echo false` depending on whether or not your service uses environment variables.
 
+1. supported arm check
+
+   `echo "v7l"` and/or `echo "v6l"` depending on supported arm(s).
+
 1. add port(s)
 
    Replace `<port>` with the port(s) your service uses.
@@ -143,6 +147,11 @@ function install {
 # environment var
 function uses_env {
   echo true/false
+}
+
+# add supported arm(s)
+function supported_arms {
+  echo "<arm>"
 }
 
 # add port(s)

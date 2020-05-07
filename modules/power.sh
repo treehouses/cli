@@ -111,19 +111,19 @@ function checkstatus {
   (((STATUS&CAPPED)!=0)) && echo "${BAD}" || echo "${GOOD}"
   echo -n "   Has Occurred Since Last Reboot: "
   (((STATUS&HAS_CAPPED)!=0)) && echo "${BAD}" || echo "${GOOD}"
-    vcgencmd get_throttled
+  vcgencmd get_throttled
 }
 function power_help {
   echo "Usage: $BASENAME power [mode]"
   echo "       $BASENAME power [current|freq]"
   echo "Options of modes:"
-  echo "  status                      Returns status of power"
+  echo "  status                      returns status of power"
   echo "  default                     ondemand mode; moves speed from min to max at about 90% load"
   echo "  ondemand                    moves speed from min to max at about 90% load"
-  echo "  conservative                Gradually switch frequencies at about 90% load"
-  echo "  usespace                    Allows any program to set CPU's frequency"
-  echo "  powersave                   All cores set at minimum frequency"
-  echo "  performance                 All cores set at maximum frequency"
+  echo "  conservative                gradually switch frequencies at about 90% load"
+  echo "  usespace                    allows any program to set CPU's frequency"
+  echo "  powersave                   all cores set at minimum frequency"
+  echo "  performance                 all cores set at maximum frequency"
   echo
   echo "Example:"
   echo "  $BASENAME power status"

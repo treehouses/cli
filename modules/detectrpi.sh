@@ -1,2 +1,2 @@
-# deprecated file which in combination with the loader
-# is making `treehouses detectrpi` happening
+# file which in combination with the loader is making
+# deprecated `treehouses detectrpi` happening

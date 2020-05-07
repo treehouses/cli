@@ -79,9 +79,9 @@ function checkstatus {
   HAS_THROTTLED=0x40000
 
   #Text Colors
-  GREEN=`tput setaf 2`
-  RED=`tput setaf 1`
-  NC=`tput sgr0`
+  GREEN=$(tput setaf 2)
+  RED=$(tput setaf 1)
+  NC=$(tput sgr0)
 
   #Output Strings
   GOOD="${GREEN}NO${NC}"
@@ -92,25 +92,25 @@ function checkstatus {
   STATUS=${STATUS#*=}
 
   echo -n "Status: "
-  (($STATUS!=0)) && echo "${RED}${STATUS}${NC}" || echo "${GREEN}${STATUS}${NC}"
+  ((STATUS!=0)) && echo "${RED}${STATUS}${NC}" || echo "${GREEN}${STATUS}${NC}"
 
   echo "Undervolted:"
   echo -n "   Now: "
-  ((($STATUS&UNDERVOLTED)!=0)) && echo "${BAD}" || echo "${GOOD}"
+  (((STATUS&UNDERVOLTED)!=0)) && echo "${BAD}" || echo "${GOOD}"
   echo -n "   Has Occurred Since Last Reboot: "
-  ((($STATUS&HAS_UNDERVOLTED)!=0)) && echo "${BAD}" || echo "${GOOD}"
+  (((STATUS&HAS_UNDERVOLTED)!=0)) && echo "${BAD}" || echo "${GOOD}"
 
   echo "Throttled:"
   echo -n "   Now: "
-  ((($STATUS&THROTTLED)!=0)) && echo "${BAD}" || echo "${GOOD}"
+  (((STATUS&THROTTLED)!=0)) && echo "${BAD}" || echo "${GOOD}"
   echo -n "   Has Occurred Since Last Reboot: "
-  ((($STATUS&HAS_THROTTLED)!=0)) && echo "${BAD}" || echo "${GOOD}"
+  (((STATUS&HAS_THROTTLED)!=0)) && echo "${BAD}" || echo "${GOOD}"
 
   echo "Frequency Capped:"
   echo -n "   Now: "
-  ((($STATUS&CAPPED)!=0)) && echo "${BAD}" || echo "${GOOD}"
+  (((STATUS&CAPPED)!=0)) && echo "${BAD}" || echo "${GOOD}"
   echo -n "   Has Occurred Since Last Reboot: "
-  ((($STATUS&HAS_CAPPED)!=0)) && echo "${BAD}" || echo "${GOOD}"
+  (((STATUS&HAS_CAPPED)!=0)) && echo "${BAD}" || echo "${GOOD}"
     vcgencmd get_throttled
 }
 function power_help {
@@ -128,7 +128,7 @@ function power_help {
   echo "Example:"
   echo "  $BASENAME power status"
   echo "      This returns the status of the power"
-  echo "  $BASENAME power default" 
+   echo "  $BASENAME power default" 
   echo "      This will set the power mode to default (ondemand)" 
   echo "  $BASENAME power ondemand" 
   echo "      This will set the power mode to ondemand" 

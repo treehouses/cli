@@ -347,10 +347,12 @@ function services {
           fi
           ;;
         environment)
+          checkargn $# 4
           if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
             if [ -e /srv/$service_name/.env ]; then
-              if [ "$command_option" = "edit" ]; then
-                checkargn $# 4
+              if [ -z "$command_option" ]; then
+                docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
+              elif [ "$command_option" = "edit" ]; then
                 kill_spinner
                 if [ -z "$4" ]; then
                   seperator="--------------------"
@@ -375,12 +377,9 @@ function services {
                   echo "USAGE: $BASENAME services $service_name environment edit [vim]"
                   exit 1
                 fi
-              elif [ "$command_option" = "check" ]; then
-                checkargn $# 3
-                docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
               else
                 echo "ERROR: unknown command option"
-                echo "USAGE: $BASENAME services $service_name environment <edit | check>"
+                echo "USAGE: $BASENAME services $service_name environment [edit]"
                 exit 1
               fi
             else
@@ -408,7 +407,7 @@ function services {
           echo "                                ..... size"
           echo "                                ..... cleanup"
           echo "                                ..... icon"
-          echo "                                ..... environment <edit [vim]|check>"
+          echo "                                ..... environment [edit [vim]]"
           exit 1
           ;;
       esac
@@ -577,7 +576,7 @@ function services_help {
   echo "                             ..... size"
   echo "                             ..... cleanup"
   echo "                             ..... icon"
-  echo "                             ..... environment <edit [vim]|check>"
+  echo "                             ..... environment [edit [vim]]"
   echo
   echo "    install                 installs and pulls <service_name>"
   echo
@@ -611,10 +610,9 @@ function services_help {
   echo
   echo "    icon                    outputs the svg code for the <service_name>'s icon"
   echo
-  echo "    environment"
-  echo "        <edit>                  edit the .env file for <service_name>"
+  echo "    environment             outputs the contents of the .yml for <service_name> with the currently configured environment variables"
+  echo "        [edit]                  edit the .env file for <service_name>"
   echo "            [vim]                   opens vim to edit the .env file for <service_name>"
-  echo "        <check>                 outputs the contents of the .yml for <service_name> with the currently configured environment variables"
   echo
   echo "  Examples:"
   echo

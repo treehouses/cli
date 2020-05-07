@@ -128,20 +128,28 @@ function power_help {
   echo "Example:"
   echo "  $BASENAME power status"
   echo "      This returns the status of the power"
-   echo "  $BASENAME power default" 
+  echo
+  echo "  $BASENAME power default" 
   echo "      This will set the power mode to default (ondemand)" 
+  echo
   echo "  $BASENAME power ondemand" 
   echo "      This will set the power mode to ondemand" 
+  echo
   echo "  $BASENAME power conservative" 
   echo "      This will set the power mode to conservative" 
+  echo
   echo "  $BASENAME power usespace" 
   echo "      This will set the power mode to userspace" 
+  echo
   echo "  $BASENAME power powersave" 
   echo "      This will set the power mode to powersave" 
+  echo
   echo "  $BASENAME power performance" 
   echo "      This will set the power mode to performance" 
+  echo
   echo "  $BASENAME power current" 
   echo "      This will return the current power mode" 
+  echo
   echo "  $BASENAME power freq" 
   echo "      This will return the current CPU frequency" 
   echo

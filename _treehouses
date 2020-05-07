@@ -70,6 +70,7 @@ treehouses detect
 treehouses detect arm
 treehouses detect bluetooth
 treehouses detect rpi
+treehouses detect rpi full
 treehouses detect rpi model
 treehouses detect wifi
 treehouses discover interface

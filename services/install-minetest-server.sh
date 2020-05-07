@@ -2,7 +2,7 @@
 
 function install {
   # create service directory
-  mkdir -p /srv/minetest-server
+  mkdir -p /srv/minetest
 
   # create yml(s)
   {
@@ -18,9 +18,9 @@ function install {
     echo "    ports:"
     echo "      - 30000:30000/udp"
     echo "    volumes:"
-    echo "      - \"/srv/minetest-server:/root/.minetest-server\""
+    echo "      - \"/srv/minetest:/root/.minetest-server\""
     echo "    restart: unless-stopped"
-  } > /srv/minetest-server/minetest-server.yml
+  } > /srv/minetest/minetest.yml
 
   # create .env with default values
   {
@@ -32,14 +32,14 @@ function install {
 
   # add autorun
   {
-    echo "minetest-server_autorun=true"
+    echo "minetest_autorun=true"
     echo
-    echo "if [ \"\$minetest-server_autorun\" = true ]; then"
-    echo "  treehouses services minetest-server up"
+    echo "if [ \"\$minetest_autorun\" = true ]; then"
+    echo "  treehouses services minetest up"
     echo "fi"
     echo
     echo
-  } > /srv/minetest-server/autorun
+  } > /srv/minetest/autorun
 }
 
 # environment var
@@ -74,9 +74,6 @@ function get_info {
 # add svg icon
 function get_icon {
   cat <<EOF
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- https://github.com/minetest/minetest_game/blob/master/LICENSE.txt -->
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"

@@ -313,6 +313,7 @@ treehouses tor start
 treehouses tor status
 treehouses tor stop
 treehouses upgrade
+treehouses upgrade cli
 treehouses upgrade force
 treehouses upgrade bluetooth
 treehouses upgrade check

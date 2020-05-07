@@ -16,6 +16,7 @@ function power {
     status)
       checkroot
       checkstatus
+      ;;
     default | ondemand)
       checkroot
       echo "Moves speed from min to max at about 90% load"

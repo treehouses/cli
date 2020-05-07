@@ -29,16 +29,17 @@ if [[ "$LOG" == "max" ]]; then
   set -x
   exec 1> >(tee >(logger -t @treehouses/cli)) 2>&1
 fi
-
+begin=$(date +%s%N)
 for f in $SCRIPTFOLDER/modules/*.sh
 do
   source "$f"
-  cmd=$(basename "$f")
-  cmd=${cmd%%.*}
+  cmd=${f##*/}
+  cmd=${cmd%.*}
   if [ "$cmd" = "$1" ] && [ "$1" != "globals" ]; then
     find=1
   fi
 done
+
 if [ "$find" = 1 ]; then
   start_spinner
   "$@"

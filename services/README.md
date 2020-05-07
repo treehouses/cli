@@ -181,5 +181,5 @@ EOF
 1. echo wrapper function
 Use it in order to echo-wrap docker-compose.yml and .env file.
 ```
-cat {file name} | sed  's/\"/\/\"/g' | sed s/^/\ \ \ \ echo\"/ | sed s/$/\"/ > echo-wrapped
+cat {file name} | sed  's/\"/\/\"/g' | sed s/^/\ \ \ \ echo\ \"/ | sed s/$/\"/ > echo-wrapped
 ```

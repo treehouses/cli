@@ -45,6 +45,7 @@ if [ "$find" = 1 ]; then
 else
   help
 fi
+
 if [ $? -eq 0 ]; then
   logit "$SCRIPTARGS" "1"
 fi

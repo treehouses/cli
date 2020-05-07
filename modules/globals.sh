@@ -62,14 +62,8 @@ function checkargn {
 }
 
 function checkwrpi {
-  local model check
-  declare -a wRPIs=("RPIZW" "RPI3A" "RPI3B" "RPI4B")
-  model="$(detectrpi)"
-  check="${model:0:5}"
-  for i in "${wRPIs[@]}"; do
-    if [ "$i" == "$check" ]; then
-      return 1
-    fi
+  if [[ $(detectbluetooth) == "false" ]]; then
+    echo "Error: no Bluetooth device detected"
     exit 1
   fi
 }

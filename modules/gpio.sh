@@ -7,7 +7,7 @@ function gpio {
   oldrpi="True"
   if [ ${#model} -gt 3 ]; then
     modelnum="${model:3:1}"
-    if [ "$(($modelnum))" -gt 2 ] || [ "$modelnum" = "Z" ]; then
+    if [ $modelnum -gt 2 ] || [ "$modelnum" = "Z" ]; then
       oldrpi="False"
     fi
   fi

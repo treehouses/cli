@@ -189,10 +189,9 @@ function get_size {
 function get_info {
   echo "https://github.com/treehouses/rpi-invoiceninja"
   echo
-  echo "\"Seafile is an open source file sync&share solution designed for"
-  echo "high reliability, performance and productivity. Sync, share and"
-  echo "collaborate across devices and teams. Build your team's knowledge"
-  echo "base with Seafile's built-in Wiki feature. https://www.invoiceninja.com/\""
+  echo "\"Invoiceninja is the leading self-host platform to create invoices," 
+  echo "accept payments, track expenses & time tasks."
+  echo "Support WePay, Stripe, Braintree, PayPal, Zapier, and more!\""
 }
 
 # add svg icon
@@ -207,4 +206,3 @@ function get_icon {
 </svg>
 EOF
 }
-

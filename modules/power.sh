@@ -117,7 +117,7 @@ function power_help {
   echo "Usage: $BASENAME power [mode]"
   echo "       $BASENAME power [current|freq]"
   echo "Options of modes:"
-  echo "  status                      Returns status of power "
+  echo "  status                      Returns status of power"
   echo "  default                     ondemand mode; moves speed from min to max at about 90% load"
   echo "  ondemand                    moves speed from min to max at about 90% load"
   echo "  conservative                Gradually switch frequencies at about 90% load"

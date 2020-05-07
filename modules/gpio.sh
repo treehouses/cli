@@ -1,7 +1,5 @@
 function gpio {
   checkargn $# 0
-  pinout | sed -ne "/-------./,/----|/ p"
-  echo
   model="$(treehouses detectrpi)"
   prefix="${model:0:2}"
   oldrpi="True"
@@ -11,9 +9,31 @@ function gpio {
       oldrpi="False"
     fi
   fi
-  if [ "$prefix" = "CM" ]; then
-    pinout | sed -n "/(1)/,/(200)/ p"
-  elif [ "$oldrpi" = "False" ]; then
+  if [ "$oldrpi" = "False" ]; then
+    if [ "$modelnum" = "Z" ]; then
+      echo ".-------------------------."
+      echo "| oooooooooooooooooooo J8 |"
+      echo "| 1ooooooooooooooooooo   |c"
+      echo "---+       +---+ PiZero  |s"
+      echo "sd|       |SoC|   V1.1  |i"
+      echo "---+|hdmi| +---+  usb pwr |"
+      echo "'---|    |--------| |-| |-'"
+    else
+      echo ",--------------------------------."
+      echo "| oooooooooooooooooooo J8   +======"
+      echo "| 1ooooooooooooooooooo  PoE |   Net"
+      echo "|  Wi                    oo +======"
+      echo "|  Fi  Pi Model $modelnum   V1.1 oo      |"
+      echo "|        ,----.               +===="
+      echo "| |D|    |SoC |               |USB3"
+      echo "| |S|    |    |               +====" 
+      echo "| |I|    '----'                  |"
+      echo "|                   |C|       +===="
+      echo "|                   |S|       |USB2"
+      echo "| pwr   |HD|   |HD| |I||A|    +===="
+      echo "'-| |---|MI|---|MI|----|V|-------'"
+    fi
+    echo
     echo "   3V3  (1) (2)  5V"
     echo " GPIO2  (3) (4)  5V"  
     echo " GPIO3  (5) (6)  GND"
@@ -34,7 +54,7 @@ function gpio {
     echo "GPIO19 (35) (36) GPIO16"
     echo "GPIO26 (37) (38) GPIO20"
     echo "   GND (39) (40) GPIO21"
-  else
+  elif [ "$oldrpi" = "True" ] && [ "$prefix" -ne "CM" ]; then
     echo "   3V3  (1) (2)  5V"
     echo "  SDA0  (3) (4)  DNC"
     echo "  SCL0  (5) (6)  0V"
@@ -48,6 +68,8 @@ function gpio {
     echo "  MISO (21) (22) GPIO6"
     echo "  SCLK (23) (24) CE0"
     echo "   DNC (25) (26) CE1"
+  else
+    pinout
   fi
   echo
 }

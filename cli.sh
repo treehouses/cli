@@ -29,7 +29,7 @@ if [[ "$LOG" == "max" ]]; then
   set -x
   exec 1> >(tee >(logger -t @treehouses/cli)) 2>&1
 fi
-begin=$(date +%s%N)
+
 for f in $SCRIPTFOLDER/modules/*.sh
 do
   source "$f"

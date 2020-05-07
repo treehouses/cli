@@ -6,18 +6,15 @@ Usage: treehouses
    verbose <on|off>                          makes each command print more output (might not work with treehouses remote)
    expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
    rename <hostname>                         changes hostname
-   password <password>                       changes the password for 'pi' user
+   password <password|disable|enable>        changes the password for 'pi' user or disables/enables password authentication
    sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
    version [contributors]                    returns the version of treehouses command
    image                                     returns version of the system image installed
-   detectbluetooth                           detects if bluetooth module is available
-   detectrpi [model]                         detects the hardware version of a raspberry pi
-   detectarm                                 detects the arm version of a raspberry pi
-   detectwifi                                detects if wifi module is available
-   detect                                    detects the hardware version of any device
+   detect [bluetooth|rpi|arm|wifi]           detects the hardware version of any device
    ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
    discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
             <rpi> [ipaddress|url|macaddress]
+            <wifi>
    wifi <ESSID> [password]                   connects to a wifi network
    wifihidden <ESSID> [password]             connects to a hidden wifi network
    staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
@@ -43,6 +40,10 @@ Usage: treehouses
    sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
              <key|portinterval> [user@host]
    led [green|red] [mode]                    sets the led mode
+       [dance|thanksgiving|christmas]
+       [newyear|lunarnewyear|valentine]
+       [carnival|stpatricks|random] 
+   power [status|freq|<mode>]                sets the power scaling or check CPU frequency
    rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
    ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
    networkmode                               outputs the current network mode

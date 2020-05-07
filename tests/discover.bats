@@ -29,3 +29,8 @@ load test-helper
   run "${clicmd}" discover mac b8:29:eb:9f:42:8b
   assert_success
 }
+
+@test "$clinom discover wifi" {
+  run "${clicmd}" discover wifi
+  assert_success
+}

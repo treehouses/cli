@@ -86,37 +86,27 @@ function services {
     done
   else
     if [ -z "$command" ]; then
-      service_list=($(services available))
-      for service in "${service_list[@]}"
-      do
-        if [ $service == $service_name ]; then
-          running_services=($(services running))
-          basic_info=$(services ${service} info)
-          echo "$basic_info"
-          echo
-          if [ -d /srv/$service ]; then
-            echo "status: installed"
-          else
-            echo "status: not installed"
-          fi
-          for i in "${running_services[@]}"
-          do
-            if [ $i == $service ]; then
-              echo "        running"
-            fi
-          done
-          autorun_status=$(services ${service} autorun)
-          echo "autorun: $autorun_status"
-          local_url=$(services ${service} url local)
-          echo "url: "$local_url | sed -e 's/ /\n     /g2'
-          tor_url=$(services ${service} url tor)
-          echo "tor: "${tor_url} | sed -e 's/ /\n     /g2'
-          port_number=$(services ${service} port)
-          echo "port: "${port_number} | sed -e 's/ /\n      /g2'
-          size=$(services ${service} size)
-          echo "size: $size"
+      if [ "check_available_services $service_name" ]; then
+        running_services=($(services running))
+        echo "$(source $SERVICES/install-$service_name.sh && get_info)"
+        echo
+        if [ -d /srv/$service_name ]; then
+          echo "status: installed"
+        else
+          echo "status: not installed"
         fi
-      done
+        for i in "${running_services[@]}"
+        do
+          if [ $i == $service_name ]; then
+            echo "        running"
+          fi
+        done
+          echo "autorun: $(services $service_name autorun)"
+          echo "url: "$(services ${service_name} url local) | sed -e 's/ /\n     /g2'
+          echo "tor: "$(services ${service_name} url tor) | sed -e 's/ /\n     /g2'
+          echo "port: "$(source $SERVICES/install-$service_name.sh && get_ports) | sed -e 's/ /\n      /g2'
+          echo "size: $(source $SERVICES/install-$service_name.sh && get_size)M"
+        fi
     else
       check_available_services $service_name
       case "$command" in

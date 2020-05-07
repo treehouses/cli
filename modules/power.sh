@@ -70,6 +70,7 @@ function changegovernor {
 }
 
 function checkstatus {
+  # Bit representation
   UNDERVOLTED=0x1
   CAPPED=0x2
   THROTTLED=0x4
@@ -86,7 +87,7 @@ function checkstatus {
   GOOD="${GREEN}NO${NC}"
   BAD="${RED}YES${NC}"
 
-  #Get Status, extract hex
+  #Get Status, extract hex values
   STATUS=$(vcgencmd get_throttled)
   STATUS=${STATUS#*=}
 
@@ -96,26 +97,25 @@ function checkstatus {
   echo "Undervolted:"
   echo -n "   Now: "
   ((($STATUS&UNDERVOLTED)!=0)) && echo "${BAD}" || echo "${GOOD}"
-  echo -n "   Run: "
+  echo -n "   Has Occurred Since Last Reboot: "
   ((($STATUS&HAS_UNDERVOLTED)!=0)) && echo "${BAD}" || echo "${GOOD}"
 
   echo "Throttled:"
   echo -n "   Now: "
   ((($STATUS&THROTTLED)!=0)) && echo "${BAD}" || echo "${GOOD}"
-  echo -n "   Run: "
+  echo -n "   Has Occurred Since Last Reboot: "
   ((($STATUS&HAS_THROTTLED)!=0)) && echo "${BAD}" || echo "${GOOD}"
 
   echo "Frequency Capped:"
   echo -n "   Now: "
   ((($STATUS&CAPPED)!=0)) && echo "${BAD}" || echo "${GOOD}"
-  echo -n "   Run: "
+  echo -n "   Has Occurred Since Last Reboot: "
   ((($STATUS&HAS_CAPPED)!=0)) && echo "${BAD}" || echo "${GOOD}"
     vcgencmd get_throttled
 }
 function power_help {
   echo "Usage: $BASENAME power [mode]"
   echo "       $BASENAME power [current|freq]"
-  echo
   echo "Options of modes:"
   echo "  status                      Returns status of power "
   echo "  default                     ondemand mode; moves speed from min to max at about 90% load"

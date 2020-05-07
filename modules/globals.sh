@@ -68,13 +68,6 @@ function checkwrpi {
   fi
 }
 
-function checkwrpi {
-  if [[ $(detectbluetooth) == "false" ]]; then
-    echo "Error: no Bluetooth device detected"
-    exit 1
-  fi
-}
-
 function checkinternet {
   if [[ $(internet) == "false" ]]; then
     echo "Error: no Internet found"

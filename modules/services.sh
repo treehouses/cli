@@ -88,7 +88,7 @@ function services {
     if [ -z "$command" ]; then
       if check_available_services $service_name; then
         running_services=($(services running))
-        echo "$(source $SERVICES/install-$service_name.sh && get_info)"
+        source $SERVICES/install-$service_name.sh && get_info
         echo
         if [ -d /srv/$service_name ]; then
           echo "status: installed"

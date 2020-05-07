@@ -38,7 +38,7 @@ _treehouses_complete()
   ssh_cmds="on off"
   sshtunnel_cmds="add remove list key notice"
   temperature_cmds="celsius fahrenheit"
-  tunnels_cmds="pagekite info"
+  tunnels_cmds="pagekite info pagekite-install"
   tor_cmds="list add delete deleteall start stop destroy notice status refresh"
   usb_cmds="on off"
   notice_cmds="on off add delete list"

@@ -97,4 +97,8 @@ usb [on|off]                              turns usb ports on or off
 remote [status|upgrade|services]          helps with treehouses remote android app
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
+tunnels [info|pagekite]                   provides access to pagekite info and runs pagekite commands
+        [pagekite-install] <email>        installs pagekite, signs up with email, and creates pagekite website with sitename prefix
+        <sitename>
+
 ```

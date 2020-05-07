@@ -68,6 +68,9 @@ function help_default {
   echo "   remote [status|upgrade|services]          helps with treehouses remote android app"
   echo "   log <0|1|2|3|4|show|max>                  gets/sets log level and shows log"
   echo "   blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts"
+  echo "   tunnels [info|pagekite]                   provides access to pagekite info and runs pagekite commands"
+  echo "           [pagekite-install] <email>        installs pagekite, signs up with email, and creates pagekite website with sitename prefix"
+  echo "           <sitename>"
   echo
 }
 

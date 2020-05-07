@@ -1,5 +1,6 @@
 function detectrpi {
   local rpimodel found
+  checkargn $# 1
   declare -A rpimodels
   rpimodels["Beta"]="BETA"
   rpimodels["0002"]="RPIB"
@@ -21,22 +22,30 @@ function detectrpi {
   rpimodels["0015"]="RPIA+"
   rpimodels["a01040"]="RPI2B"
   rpimodels["a01041"]="RPI2B"
+  rpimodels["a02042"]="RPI2B"
   rpimodels["a21041"]="RPI2B"
   rpimodels["a22042"]="RPI2B"
   rpimodels["900021"]="RPIA+"
   rpimodels["900032"]="RPIB+"
+  rpimodels["900061"]="CM"
   rpimodels["900092"]="RPIZ"
   rpimodels["900093"]="RPIZ"
+  rpimodels["920092"]="RPIZ"
   rpimodels["920093"]="RPIZ"
   rpimodels["9000c1"]="RPIZW"
-  rpimodels["a02082"]="RPI3B"
   rpimodels["a020a0"]="CM3"
+  rpimodels["a220a0"]="CM3"
+  rpimodels["a02100"]="CM3+"
+  rpimodels["a02082"]="RPI3B"
   rpimodels["a22082"]="RPI3B"
+  rpimodels["a22083"]="RPI3B"
   rpimodels["a32082"]="RPI3B"
+  rpimodels["a52082"]="RPI3B"
   rpimodels["a020d3"]="RPI3B+"
   rpimodels["9020e0"]="RPI3A+"
   rpimodels["a03111"]="RPI4B" # 1gb
   rpimodels["b03111"]="RPI4B" # 2gb
+  rpimodels["b03112"]="RPI4B" # 2gb
   rpimodels["c03111"]="RPI4B" # 4gb
   rpimodels["c03112"]="RPI4B" # 4gb
 
@@ -54,9 +63,25 @@ function detectrpi {
 
   if [ "$found" == 1 ];
   then
-    echo ${rpimodels[$rpimodel]}
+    if [[ "$1" == "" ]];
+    then
+      echo ${rpimodels[$rpimodel]}
+    elif [[ "$1" == "model" ]];
+    then
+      echo "$rpimodel"
+    elif [[ "$1" == "full" ]] && [[ "$2" == "" ]];
+    then
+      rpimodel=$(tr -d '\0' </sys/firmware/devicetree/base/model)
+      echo "$rpimodel"
+    else
+      log_and_exit1 "Error: only 'detectrpi', 'detectrpi model', and 'detectrpi full' commands supported"
+    fi
   else
-    echo "nonrpi"
+    if grep -q -s "Raspberry Pi" "/sys/firmware/devicetree/base/model"; then
+      echo "RPI"
+    else
+      echo "nonrpi"
+    fi
   fi
 }
 
@@ -69,6 +94,12 @@ function detectrpi_help {
   echo
   echo "Example:"
   echo "  $BASENAME detectrpi"
-  echo "      Prints the model number"
+  echo "      Prints the Raspberry Pi name"
+  echo
+  echo "  $BASENAME detectrpi model"
+  echo "      Prints the model number of the RPi"
+  echo
+  echo "  $BASENAME detectrpi full"
+  echo "      Prints the full model of the RPi"
   echo
 }

@@ -1,5 +1,7 @@
 function tor {
   local port local_port existing_port option value status
+  checkroot
+  checkargn $# 3
   check_missing_packages "tor" "curl"
 
   if { [ ! -d "/var/lib/tor/treehouses" ] || [ ! -f "/var/lib/tor/treehouses/hostname" ]; } && [ "$1" != "start" ] && [ "$1" != "add" ]; then
@@ -147,7 +149,10 @@ function tor {
       rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
       echo "OK."
     elif [ "$option" = "now" ]; then
-       treehouses feedback "$(treehouses tor)\n$(treehouses tor list | sed '1d' | sed "s/  <=> /:/g" | tr "\n" " " | sed 's/.$//')\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+      line1=$(</var/lib/tor/treehouses/hostname)
+      line2=$(grep ^HiddenServicePort /etc/tor/torrc | cut -f 2- -d ' ' | sed -r 's/(.*?) 127.0.0.1:(.*?)/\1:\2/g' | tac | tr -d '\n')
+      line3="\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+      feedback "$line1\n$line2\n$line3"
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tor_report" ]; then
         status="on"
@@ -156,7 +161,7 @@ function tor {
       fi
       echo "Status: $status"
     else
-      echo "Error: only 'on' and 'off' options are supported."
+      echo "Error: only 'on', 'off', 'now', 'add', 'delete', and 'list' options are supported."
     fi
   elif [ "$1" = "status" ]; then
     systemctl is-active tor

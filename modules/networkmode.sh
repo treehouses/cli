@@ -1,8 +1,9 @@
 function networkmode {
   local network_mode interfaces ifaces
+  checkargn $# 1
   network_mode="default"
   if [ -f "/etc/network/mode" ]; then
-    network_mode=$(cat "/etc/network/mode")
+    network_mode=$(</etc/network/mode)
   fi
 
   interfaces=()
@@ -33,14 +34,13 @@ function networkmode {
   esac
 
   if [ "$1" == "info" ]; then
+    checkroot
     if [ "$network_mode" == "wifi" ]; then
-      checkroot
       get_wpa_supplicant_settings
     elif [ "$network_mode" == "bridge" ]; then
-      checkroot
       echo "wlan0: $(get_wpa_supplicant_settings)"
       echo "ap0: $(get_hostapd_settings)"
-    elif [ "$network_mode" == "ap local" ] || [ "$network_mode" == "ap internet" ]; then
+    elif [[ "$network_mode" == *"ap local"* ]] || [[ "$network_mode" == *"ap internet"* ]]; then
       get_ap_settings "$network_mode"
     elif [ "$network_mode" == "static wifi" ]; then
       get_staticnetwork_info "wlan0"
@@ -64,7 +64,12 @@ function networkmode {
       done
     fi
   else
-    echo "$network_mode"
+    if [ "$1" == "" ]; then	   
+      echo "$network_mode"
+    else
+      networkmode_help
+      exit 1
+    fi
   fi
 }
 
@@ -79,7 +84,7 @@ function get_ap_settings {
   else
     echo -n "wlan0: ap essid: $(get_ap_name), ap has password, ip: $(get_ipv4_ip wlan0),"
   fi
-  if [ "$1" == "ap local" ]; then
+  if [[ "$1" == *"ap local"* ]]; then
     echo " not sharing internet"
   else
     echo " sharing internet"
@@ -100,7 +105,7 @@ function get_staticnetwork_info {
   gateway=$(sed -n "s/.*gateway \\(.*\\)/\\1/p" "/etc/network/interfaces.d/$interface")
   dns=$(sed -n "s/.*dns-nameservers \\(.*\\)/\\1/p" "/etc/network/interfaces.d/$interface")
   echo -n "$interface: static, ip: $ip_address, netmask: $netmask, gateway: $gateway, dns: $dns"
-  if [ "$interface" == "wlan0" ]; then 
+  if [ "$interface" == "wlan0" ]; then
     network_name=$(sed -n "s/.*ssid=\"\\(.*\\)\"/\\1/p" /etc/wpa_supplicant/wpa_supplicant.conf)
     echo -n ", essid: $network_name, "
     if grep -q "key_mgmt=NONE" "/etc/wpa_supplicant/wpa_supplicant.conf"; then

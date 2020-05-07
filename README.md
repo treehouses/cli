@@ -108,7 +108,6 @@ services                                  executes the given command on the spec
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art       
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
-tunnels [pagekite|info]                   services to host a local port on a remote url
 bootoption <console|desktop> [autologin]  sets the boot mode
 openvpn [use|show|delete]                 helps setting up an openvpn client
         [notice|start|stop|load]

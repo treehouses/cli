@@ -67,11 +67,12 @@ treehouses default network
 treehouses default notice
 treehouses default tunnel
 treehouses detect
-treehouses detectarm
-treehouses detectbluetooth
-treehouses detectrpi
-treehouses detectrpi model
-treehouses detectwifi
+treehouses detect arm
+treehouses detect bluetooth
+treehouses detect rpi
+treehouses detect rpi full
+treehouses detect rpi model
+treehouses detect wifi
 treehouses discover interface
 treehouses discover mac b8:29:eb:9f:42:8b
 treehouses discover ping google.com
@@ -100,7 +101,6 @@ treehouses help coralenv
 treehouses help cron
 treehouses help default
 treehouses help detect
-treehouses help detectrpi
 treehouses help discover
 treehouses help ethernet
 treehouses help expandfs
@@ -229,6 +229,7 @@ treehouses power freq
 treehouses power ondemand
 treehouses power performance
 treehouses power powersave
+treehouses power status
 treehouses power userspace
 treehouses rebootneeded
 treehouses reboots

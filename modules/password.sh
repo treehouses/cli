@@ -36,8 +36,10 @@ function password_help () {
   echo "Example:"
   echo "  $BASENAME password ABC"
   echo "      Sets the password for 'pi' user to 'ABC'."
+  echo
   echo "  $BASENAME password disable"
   echo "      Disables password authentication (only passphrase allowed)"
+  echo
   echo "  $BASENAME password enable"
   echo "      Enables password authentication (password or passphrase allowed)"
 }

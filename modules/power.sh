@@ -116,6 +116,7 @@ function power_help {
   echo "       $BASENAME power [current|freq]"
   echo
   echo "Options of modes:"
+  echo "  status                      Returns status of power "
   echo "  default                     ondemand mode; moves speed from min to max at about 90% load"
   echo "  ondemand                    moves speed from min to max at about 90% load"
   echo "  conservative                Gradually switch frequencies at about 90% load"
@@ -124,7 +125,9 @@ function power_help {
   echo "  performance                 All cores set at maximum frequency"
   echo
   echo "Example:"
-   echo "  $BASENAME power default" 
+  echo "  $BASENAME power status"
+  echo "      This returns the status of the power"
+  echo "  $BASENAME power default" 
   echo "      This will set the power mode to default (ondemand)" 
   echo "  $BASENAME power ondemand" 
   echo "      This will set the power mode to ondemand" 

@@ -348,7 +348,6 @@ function services {
             if [ -e /srv/$service_name/.env ]; then
               seperator="--------------------"
               if [ -z "$command_option" ]; then
-                checkargn $# 2
                 docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
               elif [ "$command_option" = "new" ]; then
                 checkargn $# 4

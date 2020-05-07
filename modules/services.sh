@@ -86,7 +86,7 @@ function services {
     done
   else
     if [ -z "$command" ]; then
-      if [ "check_available_services $service_name" ]; then
+      if check_available_services $service_name; then
         running_services=($(services running))
         echo "$(source $SERVICES/install-$service_name.sh && get_info)"
         echo
@@ -102,9 +102,9 @@ function services {
           fi
         done
           echo "autorun: $(services $service_name autorun)"
-          echo "url: "$(services ${service_name} url local) | sed -e 's/ /\n     /g2'
-          echo "tor: "$(services ${service_name} url tor) | sed -e 's/ /\n     /g2'
-          echo "port: "$(source $SERVICES/install-$service_name.sh && get_ports) | sed -e 's/ /\n      /g2'
+          echo "url: $(services ${service_name} url local)" | sed ':a;N;$!ba;s/\n/\n     /g'
+          echo "tor: $(services ${service_name} url tor)" | sed ':a;N;$!ba;s/\n/\n     /g'
+          echo "port: $(source $SERVICES/install-$service_name.sh && get_ports)" | sed ':a;N;$!ba;s/\n/\n      /g'
           echo "size: $(source $SERVICES/install-$service_name.sh && get_size)M"
         fi
     else

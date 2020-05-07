@@ -66,7 +66,7 @@ function upgrade {
 
 function upgrade_help {
   echo
-  echo "Usage: $BASENAME upgrade [tag|bluetooth|cli] [--check]"
+  echo "Usage: $BASENAME upgrade [check|tag|cli|bluetooth]"
   echo
   echo "Upgrades $BASENAME package using npm"
   echo

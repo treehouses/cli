@@ -86,27 +86,26 @@ function services {
     done
   else
     if [ -z "$command" ]; then
-      if check_available_services $service_name; then
-        running_services=($(services running))
-        source $SERVICES/install-$service_name.sh && get_info
-        echo
-        if [ -d /srv/$service_name ]; then
-          echo "status: installed"
-        else
-          echo "status: not installed"
+      check_available_services $service_name
+      running_services=($(services running))
+      source $SERVICES/install-$service_name.sh && get_info
+      echo
+      if [ -d /srv/$service_name ]; then
+        echo "status: installed"
+      else
+        echo "status: not installed"
+      fi
+      for i in "${running_services[@]}"
+      do
+        if [ $i == $service_name ]; then
+          echo "        running"
         fi
-        for i in "${running_services[@]}"
-        do
-          if [ $i == $service_name ]; then
-            echo "        running"
-          fi
-        done
-          echo "autorun: $(services $service_name autorun)"
-          echo "url: $(services ${service_name} url local)" | sed ':a;N;$!ba;s/\n/\n     /g'
-          echo "tor: $(services ${service_name} url tor)" | sed ':a;N;$!ba;s/\n/\n     /g'
-          echo "port: $(source $SERVICES/install-$service_name.sh && get_ports)" | sed ':a;N;$!ba;s/\n/\n      /g'
-          echo "size: $(source $SERVICES/install-$service_name.sh && get_size)M"
-        fi
+      done
+      echo "autorun: $(services $service_name autorun)"
+      echo "url: $(services ${service_name} url local)" | sed ':a;N;$!ba;s/\n/\n     /g'
+      echo "tor: $(services ${service_name} url tor)" | sed ':a;N;$!ba;s/\n/\n     /g'
+      echo "port: $(source $SERVICES/install-$service_name.sh && get_ports)" | sed ':a;N;$!ba;s/\n/\n      /g'
+      echo "size: $(source $SERVICES/install-$service_name.sh && get_size)M"
     else
       check_available_services $service_name
       case "$command" in

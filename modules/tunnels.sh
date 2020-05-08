@@ -6,9 +6,21 @@ function tunnels {
       email="$2"
       sitename="$3"
       FILE=~/.pagekite.rc
+      errflag="False"
+      if [[ "$email" = "" ]] || [[ "$email" != *"@"* ]]; then
+        echo "Please enter a valid email address"
+	errflag="True"
+      fi
+      if [ "$sitename" = "" ]; then
+        echo "Please enter a valid site name"
+	errflag="True"
+      fi
+      if [ "$errflag" = "True" ]; then
+        exit 1
+      fi
       check_missing_packages pagekite
       if [ -f "$FILE" ]; then
-	rm $FILE
+        rm $FILE
       fi
       screen -dmS pagekite bash -c "printf \"Y \n $email \n $sitename \n Y \n Y \n\" | /usr/local/bin/pagekite.py --signup"
       echo "Your kite is ready to fly!"

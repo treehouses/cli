@@ -64,7 +64,7 @@ ssh <on|off>                              enables or disables the ssh service
 vnc [on|off|info]                         enables or disables the vnc server service
 default                                   sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
-upgrade [tag|check|bluetooth|force]       upgrades treehouses package using npm
+upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
 sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
           <key|portinterval> [user@host]
 led [green|red] [mode]                    sets the led mode
@@ -101,10 +101,13 @@ services                                  executes the given command on the spec
    [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
    [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
    [seafile]      <environment [edit]>    Seafile is an open-source, cross-platform file-hosting software system
-   [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art       
+   [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
+   [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
+   [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
+           <modules|params>
 openvpn [use|show|delete]                 helps setting up an openvpn client
         [notice|start|stop|load]
 coralenv [install|demo-on|demo-off]       plays with the coral environmental board

@@ -28,7 +28,7 @@ function install {
     echo "PGID=1000"
     echo "TZ=Europe/London"
     echo "CLI_ARGS=\" --gameid minetest --worldname world\""
-  } > /srv/minetest-server/.env
+  } > /srv/minetest/.env
 
   # add autorun
   {
@@ -50,7 +50,6 @@ function uses_env {
 # add supported arm(s)
 function supported_arms {
   echo "v7l"
-  echo "v6l"
 }
 
 # add port(s)

@@ -1,11 +1,11 @@
 function gpio {
   checkargn $# 0
-  model="$(treehouses detectrpi)"
+  model="$(treehouses detect rpi)"
   prefix="${model:0:2}"
   oldrpi="True"
   if [ ${#model} -gt 3 ]; then
     modelnum="${model:3:1}"
-    if [ $modelnum -gt 2 ] || [ "$modelnum" = "Z" ]; then
+    if [ $modelnum -gt 2 ] || [ "${model:3:2}" = "ZW" ]; then
       oldrpi="False"
     fi
   fi
@@ -14,7 +14,7 @@ function gpio {
       echo ".-------------------------."
       echo "| oooooooooooooooooooo J8 |"
       echo "| 1ooooooooooooooooooo   |c"
-      echo "---+       +---+ PiZero  |s"
+      echo "---+       +---+ PiZero W|s"
       echo "sd|       |SoC|   V1.1  |i"
       echo "---+|hdmi| +---+  usb pwr |"
       echo "'---|    |--------| |-| |-'"
@@ -55,6 +55,7 @@ function gpio {
     echo "GPIO26 (37) (38) GPIO20"
     echo "   GND (39) (40) GPIO21"
   else
+    checkinternet
     pinout
   fi
   echo

@@ -110,7 +110,9 @@ function services {
                 ((retries+=1))
               else
                 echo "${service_name} installed"
-                echo "modify default environment variables by running '$BASENAME services ${service_name} environment edit'"
+                if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
+                  echo "modify default environment variables by running '$BASENAME services ${service_name} environment edit'"
+                fi
                 exit 0
               fi
             done

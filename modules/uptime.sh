@@ -1,7 +1,7 @@
 function uptime {
   checkrpi
   checkargn $# 1
-  if [ $1 == "" ]; then
+  if [[ $1 == "" ]]; then
     if ! dpkg-query -W -f='${Status}' uptimed | grep -q "ok installed";
     then
         sudo apt-get install uptimed

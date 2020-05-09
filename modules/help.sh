@@ -73,7 +73,7 @@ Usage: treehouses
       [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
       [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
       [seafile]      <environment [edit]>    Seafile is an open-source, cross-platform file-hosting software system
-      [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful ar
+      [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
       [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
       [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
       [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices, accept payments, track expenses & time tasks.

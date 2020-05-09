@@ -1,6 +1,8 @@
 #!/bin/bash
 
 function install {
+  # create service directory
+  mkdir -p /srv/invoiceninja
 
   # create yml(s)
   {
@@ -28,7 +30,7 @@ function install {
     echo "      - default"
     echo ""
     echo "  app:"
-    echo "    image: hirotochigi/invoiceninja_app "
+    echo "    image: treehouses/rpi-invoiceninja "
     echo "    env_file: .env"
     echo "    restart: always"
     echo "    depends_on:"
@@ -114,7 +116,7 @@ function install {
     echo "    include /etc/nginx/mime.types;"
     echo "    default_type application/octet-stream;"
     echo "    gzip on;"
-    echo "    gzip_disable /"msie6/";"
+    echo "    gzip_disable \"msie6\";"
     echo ""
     echo "    server {"
     echo "        listen      80 default;"
@@ -127,7 +129,7 @@ function install {
     echo "        charset utf-8;"
     echo ""
     echo "        location / {"
-    echo "            try_files $uri $uri/ /index.php?$query_string;"
+    echo "            try_files \$uri \$uri/ /index.php?\$query_string;"
     echo "        }"
     echo ""
     echo "        location = /favicon.ico { access_log off; log_not_found off; }"
@@ -140,7 +142,7 @@ function install {
     echo "            fastcgi_pass backend;"
     echo "            fastcgi_index index.php;"
     echo "            include fastcgi_params;"
-    echo "            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;"
+    echo "            fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;"
     echo "            fastcgi_intercept_errors off;"
     echo "            fastcgi_buffer_size 16k;"
     echo "            fastcgi_buffers 4 16k;"

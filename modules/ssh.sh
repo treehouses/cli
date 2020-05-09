@@ -14,7 +14,7 @@ function ssh {
   elif [ "$status" = "" ]; then
     echo "$(last | grep logged)"
   else 
-    echo "Error: only 'on',or 'off' options are supported"
+    echo "Error: only '', 'on', or 'off' options are supported"
   fi
 }
 

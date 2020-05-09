@@ -23,16 +23,34 @@ Using the [template](#Template), fill in the sections as required.
 
    Additionally, if your service requires any special commands to be run before being used, add them here.
 
-2. create yml(s)
+1. create yml(s)
 
    Add your yml file(s).
 
    Replace `<service>/<service>` with the name of your service.
    ```
-     } > /srv/<service>/<service>.yml
+   } > /srv/<service>/<service>.yml
    ```
 
-3. add autorun
+1. create .env (if needed)
+
+   If your service has environment variables, add them to this .env file.
+   Replace `<service>` with the name of your service.
+   ```
+   {
+     echo "EXAMPLE_VAR="
+   } > /srv/<service>/.env
+   ```
+
+   Remember to edit your .yml to take these environment variables.
+   ```
+   {
+     echo "    environment:"
+     echo "      - EXAMPLE=\${EXAMPLE_VAR}"
+   }
+   ```
+
+1. add autorun
 
    Replace `<service>`s with the name of your service.
    ```
@@ -47,7 +65,15 @@ Using the [template](#Template), fill in the sections as required.
    } > /srv/<service>/autorun
    ```
 
-4. add port(s)
+1. environment variable check
+
+   `echo true` or `echo false` depending on whether or not your service uses environment variables.
+
+1. supported arm check
+
+   `echo "v7l"` and/or `echo "v6l"` depending on supported arm(s).
+
+1. add port(s)
 
    Replace `<port>` with the port(s) your service uses.
    
@@ -56,14 +82,14 @@ Using the [template](#Template), fill in the sections as required.
      echo "<port>"
    ```
 
-5. add size (in MB)
+1. add size (in MB)
 
    Replace `<size>` with the size of your service in MB (leave out the MB units).
    ```
      echo "<size>"
    ```
 
-6. add info
+1. add info
 
    Replace `<url>` with the url of your service (eg. GitHub repository).
    ```
@@ -75,7 +101,7 @@ Using the [template](#Template), fill in the sections as required.
      echo "\"<description>\""
    ```
 
-7. add svg icon
+1. add svg icon
 
    Replace `<svg icon code>` with the svg icon code of your service.
 
@@ -101,6 +127,11 @@ function install {
 
   } > /srv/<service>/<service>.yml
 
+  # create .env with default values
+  {
+    echo "EXAMPLE_VAR="
+  } > /srv/<service>/.env
+
   # add autorun
   {
     echo "<service>_autorun=true"
@@ -111,6 +142,16 @@ function install {
     echo
     echo
   } > /srv/<service>/autorun
+}
+
+# environment var
+function uses_env {
+  echo true/false
+}
+
+# add supported arm(s)
+function supported_arms {
+  echo "<arm>"
 }
 
 # add port(s)

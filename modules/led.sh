@@ -74,6 +74,18 @@ function led {
       echo "Red LED: 5 off: 5 on"
       lunarnewyear > "$LOGFILE"
       ;;
+    heavymetal)
+      checkroot
+      echo "leds are set to heavymetal mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: off; only at start"
+      echo "Red LED: on 0.025 sec"
+      echo "Red LED: off 0.025 sec"
+      echo "Green LED: on 0.025 sec"
+      echo "Green LED: off 0.025 sec"
+      echo "this will happen 20 times"
+      heavymetal > "$LOGFILE"
+      ;;
     valentine)
       checkroot
       echo "leds are set to valentine mode."
@@ -90,6 +102,19 @@ function led {
       echo "Look at your RPi leds, both leds will be in this pattern..."
       echo "Both LED: 2 sec on; 6 blink; 4 on"
       carnival > "$LOGFILE"
+      ;;
+    stpatricks)
+      checkroot
+      echo "leds are set to stpatricks mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Green LED: blink 2 times; on 1 sec; off 1 sec; this will happen 5 times"
+      echo "Green LED: flash 20 times; on 2 sec"
+      stpatricks > "$LOGFILE"
+      ;;
+    random)
+      checkroot
+      random
+      return
       ;;
     "")
       if [ ! -z "$currentGreen" ]; then
@@ -117,7 +142,7 @@ function led {
     checkroot
 
     if ! grep -q "$trigger" "$led/trigger" 2>"$LOGFILE"; then
-      echo -e "${RED}Error:${NC} unkown led mode '$trigger'"
+      echo -e "${RED}Error:${NC} unknown led mode '$trigger'"
       exit 1
     fi
 
@@ -198,6 +223,25 @@ function thanksgiving {
     set_brightness 0 0 && sleep 0.25
     set_brightness 1 1
     set_brightness 0 1 && sleep 0.25
+  done
+
+  led red "$current_red"
+  led green "$current_green"
+}
+
+function heavymetal {
+  current_red=$(led "red")
+  current_green=$(led "green")
+
+  set_brightness 0 0 && sleep 0.5    # green off
+  set_brightness 1 0 && sleep 0.5    # red off
+
+  for i in {0..19}
+  do
+    set_brightness 0 1 && sleep 0.025
+    set_brightness 0 0 && sleep 0.025  
+    set_brightness 1 1 && sleep 0.025
+    set_brightness 1 0 && sleep 0.025
   done
 
   led red "$current_red"
@@ -360,10 +404,50 @@ function carnival {
   led green "$current_green"
 }
 
+function stpatricks {
+  current_red=$(led "red")
+  current_green=$(led "green")
+  
+  set_brightness 1 0    # red off
+  set_brightness 0 0    # green off
+  
+  for i in {0..4}
+  do
+    set_brightness 0 1 && sleep 0.25
+    set_brightness 0 0 && sleep 0.25           
+    set_brightness 0 1 && sleep 0.25
+    set_brightness 0 0 && sleep 0.25
+    set_brightness 0 1 && sleep 1  
+    set_brightness 0 0 && sleep 1 
+  done
+
+  for i in {0..19}
+  do
+    set_brightness 0 1 && sleep 0.05
+    set_brightness 0 0 && sleep 0.05
+  done
+
+  set_brightness 0 1 && sleep 2
+
+  led green "$current_green"
+  led red "$current_red"
+}
+
+function random {
+  rando="$(led_help | grep "led \[" \
+    | cut -d "[" -f2 \
+    | cut -d "]" -f1 \
+    | sed -n '1!p' \
+    | sed 's/|/\n/g' \
+    | sed -e '/^random$/d' \
+    | shuf -n 1)"
+  led "$rando"
+}
+
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear|valentine|carnival]"
+  echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear|valentine|carnival|stpatricks|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -429,9 +513,18 @@ function led_help {
   echo "      This wil set the mode of the led to lunarnewyear"
   echo
   echo "  $BASENAME led carnival"
-  echo "     This will set mode of the led to carnival"
+  echo "     This will set the mode of the led to carnival"
   echo
   echo "  $BASENAME led onam"
   echo "      This will set the mode of the led to onam"
+  echo
+  echo "  $BASENAME led heavymetal"
+  echo "      This will set the mode of the led to heavymetal"
+  echo
+  echo "  $BASENAME led stpatricks"
+  echo "     This will set the mode of the led to stpatricks"
+  echo
+  echo "  $BASENAME led random"
+  echo "     This will set the mode of the led to one of the above festivities"
   echo
 }

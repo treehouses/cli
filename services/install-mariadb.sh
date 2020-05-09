@@ -13,19 +13,29 @@ function install {
     echo "    ports:"
     echo "      - 3306:3306"
     echo "    environment:"
-    echo "      - MYSQL_ROOT_PASSWORD=my-secret-pw"
+    echo "      - MYSQL_ROOT_PASSWORD=\${MYSQL_ROOT_PASSWORD_VAR}"
   } > /srv/mariadb/mariadb.yml
+
+  # create .env with default values
+  {
+    echo "MYSQL_ROOT_PASSWORD_VAR=my-secret-pw"
+  } > /srv/mariadb/.env
 
   # add autorun
   {
     echo "mariadb_autorun=true"
     echo
     echo "if [ \"\$mariadb_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/mariadb/mariadb.yml -p mariadb up -d"
+    echo "  treehouses services mariadb up"
     echo "fi"
     echo
     echo
   } > /srv/mariadb/autorun
+}
+
+# environment var
+function uses_env {
+  echo true
 }
 
 # add supported arm(s)

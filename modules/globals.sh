@@ -63,7 +63,14 @@ function checkargn {
 
 function checkwrpi {
   if [[ $(detectbluetooth) == "false" ]]; then
-    echo "Bluetooth does not exist on this device"
+    echo "Error: no Bluetooth device detected"
+    exit 1
+  fi
+}
+
+function checkinternet {
+  if [[ $(internet) == "false" ]]; then
+    echo "Error: no Internet found"
     exit 1
   fi
 }
@@ -167,4 +174,47 @@ function check_missing_packages {
       echo "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
       exit 1
   fi
+}
+
+# Credits: https://www.shellscript.sh/tips/spinner/
+function spinner() {
+  spinner="/|\\-/|\\-"
+  tput civis
+  while :
+  do
+    for i in $(seq 0 7)
+    do
+      echo -n "${spinner:$i:1}"
+      echo -en "\010"
+      sleep 0.5
+    done
+  done
+}
+
+function kill_spinner() {
+  if [[ "$KILLDONE" != 1 ]]; then
+    kill -9 $SPINPID
+    KILLDONE=1
+  fi
+  tput cvvis
+  return
+}
+
+function start_spinner() {
+  local tree carg cstring
+  tree=$(pstree -ps $$)
+  cstring="discover wifi wifihidden bridge container upgrade
+           led clone restore burn services speedtest usb"
+  carg="$(echo $SCRIPTARGS | cut -d' ' -f1)"
+  if [[ $tree == *"python"* ]] || [[ $tree == *"cron"* ]] || \
+     [[ ! "$cstring" == *"$carg"* ]]
+  then
+    NOSPIN=1
+    return
+  fi
+  set -m
+  trap kill_spinner {0..15}
+  spinner &
+  SPINPID=$!
+  disown
 }

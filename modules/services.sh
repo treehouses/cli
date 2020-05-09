@@ -369,7 +369,7 @@ function services {
                   sed -i "/$line/c\\$newline$userinput" /srv/$service_name/$4.env
                 done 9< /srv/$service_name/.env
                 echo $seperator
-                echo "New environment file:"
+                echo "Created $4.env:"
                 cat /srv/$service_name/$4.env
                 echo $seperator
               elif [ "$command_option" = "edit" ]; then

@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
   end
 
   BOX = "treehouses/buster64"
-  BOX_VERSION = "0.12.5"
+  BOX_VERSION = "0.13.1"
 
   config.vm.define "cli" do |cli|
     cli.vm.box = BOX
@@ -38,6 +38,8 @@ Vagrant.configure(2) do |config|
     cli.vm.provision "shell", inline: <<-SHELL
       ln -sr /vagrant /root/cli
       ln -sr /vagrant /home/vagrant/cli
+      #windows
+      dos2unix /vagrant/*/*/*/* /vagrant/*/*/* /vagrant/*/* /vagrant/*
     SHELL
 
     # Run binding on each startup make sure the mount is available on VM restart

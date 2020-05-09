@@ -356,16 +356,20 @@ EOF
 function services_cmds {
   while IFS= read -r line;
   do
-    printf "treehouses services $line autorun
+    printf "treehouses services $line
+treehouses services $line autorun
 treehouses services $line autorun false
 treehouses services $line autorun true
 treehouses services $line cleanup
 treehouses services $line down
 treehouses services $line environment
+treehouses services $line environment available
 treehouses services $line environment edit
-treehouses services $line environment edit vim
 treehouses services $line environment edit request
 treehouses services $line environment edit send
+treehouses services $line environment edit vim
+treehouses services $line environment new
+treehouses services $line environment select
 treehouses services $line icon
 treehouses services $line icon oneline
 treehouses services $line info

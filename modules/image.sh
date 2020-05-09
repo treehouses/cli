@@ -14,3 +14,4 @@ function image_help {
   echo "      Prints the current version of the system image."
   echo
 }
+

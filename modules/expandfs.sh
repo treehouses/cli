@@ -18,3 +18,4 @@ function expandfs_help {
   echo "      The partition of the SD card in which the raspberry pi image is stored will be expanded to match the available space on the SD card after a reboot"
   echo
 }
+

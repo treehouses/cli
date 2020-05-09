@@ -438,6 +438,7 @@ function services {
                 checkargn $# 4
                 if [ -f /srv/$service_name/$4.env ]; then
                   cp /srv/$service_name/$4.env /srv/$service_name/.env
+                  echo "now using $4.env"
                 else
                   echo "ERROR: /srv/$service_name/$4.env not found"
                   exit 1

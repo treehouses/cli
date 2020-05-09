@@ -34,7 +34,7 @@ function gpio {
       echo "\`-| |---|MI|---|MI|----|V|-------'"
     else 
       if [ ${#model} -gt 4 ]; then
-        # model for 3B+ goes here
+        echo "model for 3B+ goes here"
       else
         echo ",--------------------------------."
 	echo "| oooooooooooooooooooo J8     +===="

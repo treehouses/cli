@@ -1,6 +1,6 @@
 function gpio {
   checkargn $# 0
-  model="$(treehouses detectrpi)"
+  model="$(detectrpi)"
   prefix="${model:0:2}"
   oldrpi="True"
   if [ ${#model} -gt 3 ]; then

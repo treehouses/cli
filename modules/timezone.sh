@@ -34,4 +34,3 @@ function timezone_help {
   echo "      Available timezones are inside /usr/share/zoneinfo/"
   echo
 }
-

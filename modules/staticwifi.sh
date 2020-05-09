@@ -79,4 +79,3 @@ function staticwifi_help {
   echo "      Connects to an open wifi named 'home' and sets the wifi interface IP address to 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
   echo
 }
-

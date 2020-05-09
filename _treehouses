@@ -86,6 +86,7 @@ treehouses discover wifi
 treehouses ethernet
 treehouses expandfs
 treehouses feedback
+treehouses gpio
 treehouses help
 treehouses help ap
 treehouses help apchannel

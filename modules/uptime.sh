@@ -10,6 +10,7 @@ function uptime {
         command uptime
     fi
   elif [ $1 == "boot" ]; then
+    echo "Raspberry Pi booted at:"
     command uptime -s
   else
     echo "Unknown operation provided."  

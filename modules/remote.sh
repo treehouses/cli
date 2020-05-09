@@ -83,7 +83,8 @@ function remote {
     json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')
     for file in $SCRIPTFOLDER/modules/*.sh
     do
-      command=$(basename $file .sh)
+      command=${file##*/}
+      command=${command%.*}
       if [ "$command" != "help" ]; then
         if [ "$command" != "detectrpi" ] && [ "$command" != "globals" ]; then
           json_var=$(echo $json_var | jq --arg key "$command" --arg desc "$(source $file && ${command}_help)" '. += {($key):($desc)}')

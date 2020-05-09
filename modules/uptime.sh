@@ -1,7 +1,7 @@
 function uptime {
   checkrpi
   checkargn $# 1
-  if [[ $1 == "" ]]; then
+  if [ $1 == "" ]; then
     if ! dpkg-query -W -f='${Status}' uptimed | grep -q "ok installed";
     then
         sudo apt-get install uptimed
@@ -9,7 +9,7 @@ function uptime {
     else
         command uptime
     fi
-  elif [[ $1 == "boot"]]; then
+  elif [ $1 == "boot"]; then
     command uptime -s
   else
     echo "Unknown operation provided."  

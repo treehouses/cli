@@ -79,6 +79,18 @@ function remote {
     done
 
     printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}"
+  elif [ "$option" = "help" ]; then
+    json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh)" '{"help":$desc}')
+    for file in $SCRIPTFOLDER/modules/*.sh
+    do
+      command=$(basename $file .sh)
+      if [ "$command" != "help" ]; then
+        if [ "$command" != "detectrpi" ] && [ "$command" != "globals" ]; then
+          json_var=$(echo $json_var | jq --arg key "$command" --arg desc "$(source $file && ${command}_help)" '. += {($key):($desc)}')
+        fi
+      fi
+    done
+    echo ${json_var}
   else
     echo "Unknown command option"
     echo "Usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"

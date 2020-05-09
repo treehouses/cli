@@ -80,7 +80,7 @@ function remote {
 
     printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}"
   elif [ "$option" = "help" ]; then
-    json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh)" '{"help":$desc}')
+    json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')
     for file in $SCRIPTFOLDER/modules/*.sh
     do
       command=$(basename $file .sh)

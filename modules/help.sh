@@ -98,6 +98,7 @@ Usage: treehouses
    sdbench                                   displays read and write speed of micro SD card
    inspire [joke|qotd|random]                displays quote based on user input
    shutdown [now|in|force]                   shutdown the system 
+   uptime [boot]                             displays uptime and boot time of the Raspberry Pi       
 EOF
   echo "$helpdefault"
 }

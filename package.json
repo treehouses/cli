@@ -24,9 +24,9 @@
     "bluetooth", "ethernet", "wifi", "hotspot", "bridge", "vnc",
     "ntp", "timezone", "rtc", "cron", "backup", "clone",
     "ssh", "sshkey", "sshtunnel", "tor", "openvpn", "coral", "iot",
-    "services", "container", "docker", "balena", "pihole", "turtleblocks",
+    "services", "container", "docker", "balena", "pihole", "turtleblocks", "musicblocks",
     "kolibri", "mongodb", "moodle", "netdata", "nextcloud", "ntopng", "planet",
-    "portainer", "privatebin", "mastodon", "couchdb", "mariadb", "seafile"
+    "portainer", "privatebin", "mastodon", "couchdb", "mariadb", "seafile", "minetest"
   ],
   "author": {
     "name": "OLE treehouses team",

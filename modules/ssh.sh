@@ -12,7 +12,7 @@ function ssh {
     stop_service ssh
     echo "Success: the ssh service has been stopped and disabled when the system boots."
   elif [ "$status" = "" ]; then
-    echo "$(last | grep logged)"
+    last | grep logged
   else 
     echo "Error: only '', 'on', or 'off' options are supported"
   fi

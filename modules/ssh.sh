@@ -30,4 +30,3 @@ function ssh_help {
   echo "      The SSH service will be disabled."
   echo
 }
-

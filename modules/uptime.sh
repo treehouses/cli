@@ -5,9 +5,9 @@ function uptime {
   if ! dpkg-query -W -f='${Status}' uptimed | grep "ok installed";
   then
     sudo apt-get install uptimed
-    uptime
+    command uptime
   else
-    uptime
+    command uptime
   fi
 }
 

@@ -39,7 +39,7 @@ Vagrant.configure(2) do |config|
       ln -sr /vagrant /root/cli
       ln -sr /vagrant /home/vagrant/cli
       #windows
-      dos2unix /vagrant/*/*/*/*/
+      dos2unix /vagrant/*/*/*/* /vagrant/*/*/* /vagrant/*/* /vagrant/*
     SHELL
 
     # Run binding on each startup make sure the mount is available on VM restart

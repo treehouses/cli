@@ -8,6 +8,7 @@ function uptime {
         command uptime 
     else
         command uptime
+    fi
   elif [ $1 == "boot" ]; then
     command uptime -s
   else

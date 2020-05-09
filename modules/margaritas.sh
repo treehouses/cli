@@ -2,6 +2,11 @@
 function margaritas {
   checkargn $# 1
   num=$1
+  re='^[0-9]+$'
+  if ! [[ $num =~ $re ]] ; then
+    echo "Please enter a valid number"
+    exit 1
+  fi
   if [ "$num" = "" ]; then
     num=1
   fi

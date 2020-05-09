@@ -2,7 +2,7 @@ function uptime {
   checkrpi
   checkargn $1
 
-  if [! dpkg -s uptimed]; then
+  if ! dpkg -s uptimed >/dev/null 2>&1; then
     sudo apt-get install uptimed
     uptime
   else

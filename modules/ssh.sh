@@ -20,11 +20,14 @@ function ssh {
 
 function ssh_help {
   echo
-  echo "Usage: $BASENAME ssh <on|off>"
+  echo "Usage: $BASENAME ssh [on|off]"
   echo
   echo "Enables or disables the SSH service"
   echo
   echo "Example:"
+  echo "  $BASENAME ssh"
+  echo "      The last SSH connections from ipaddresses will be shown"
+  echo
   echo "  $BASENAME ssh on"
   echo "      The SSH service will be enabled. This will allow devices on your network to be able to connect to the raspberry pi using SSH."
   echo

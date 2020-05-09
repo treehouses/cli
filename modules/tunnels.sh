@@ -9,11 +9,11 @@ function tunnels {
       errflag="False"
       if [[ "$email" = "" ]] || [[ "$email" != *"@"* ]]; then
         echo "Please enter a valid email address"
-	errflag="True"
+        errflag="True"
       fi
       if [ "$sitename" = "" ]; then
         echo "Please enter a valid site name"
-	errflag="True"
+        errflag="True"
       fi
       if [ "$errflag" = "True" ]; then
         exit 1

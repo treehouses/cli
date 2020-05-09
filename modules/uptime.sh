@@ -1,8 +1,8 @@
 function uptime {
   checkrpi
-  checkargn $1
+  checkargn $# 1
 
-  if ! dpkg -s uptimed >/dev/null 2>&1; then
+  if [! dpkg -s uptimed >/dev/null 2>&1]; then
     sudo apt-get install uptimed
     uptime
   else
@@ -11,7 +11,7 @@ function uptime {
 }
 
 function uptime_help {
-  echo "Usage: $BASENAME uptime [mode]"
+  echo "Usage: $BASENAME uptime"
   echo
   echo "Example:"
   echo "  $BASENAME uptime"

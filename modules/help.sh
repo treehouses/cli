@@ -74,6 +74,8 @@ Usage: treehouses
       [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
       [seafile]      <environment [edit]>    Seafile is an open-source, cross-platform file-hosting software system
       [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
+i     [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices, accept payments, track expenses & time tasks.
+
    tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
        [stop|destroy|notice|status|refresh]
    bootoption <console|desktop> [autologin]  sets the boot mode

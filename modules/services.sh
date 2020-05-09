@@ -532,6 +532,7 @@ function services_help {
   echo "  mongodb         MongoDB is a general purpose, distributed, document-based, NoSQL database."
   echo "  seafile         Seafile is an open-source, cross-platform file-hosting software system"
   echo "  turtleblocksjs  TurtleBlocks is an activity with a Logo-inspired graphical \"turtle\" "
+  echo "  invoiceninja    Invoiceninja is the leading self-host platform to create invoices, accept payments, track expenses."
   echo
   echo
   echo "Top-Level Commands:"

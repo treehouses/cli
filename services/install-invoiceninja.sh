@@ -84,7 +84,6 @@ function install {
   {
     echo "MYSQL_DATABASE=ninja"
     echo "MYSQL_ROOT_PASSWORD=pwd"
-    echo ""
     echo "APP_DEBUG=0"
     echo "APP_URL=http://localhost:8000"
     echo "APP_KEY=SomeRandomStringSomeRandomString"

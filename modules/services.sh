@@ -555,7 +555,7 @@ function services_help {
   echo "  turtleblocksjs  TurtleBlocks is an activity with a Logo-inspired graphical \"turtle\" "
   echo "  musicblocks     Music Blocks is a programming language and collection of manipulative tools for exploring musical and mathematical concepts in an integrative and fun way." 
   echo "  minetest        Minetest is an open source infinite-world block sandbox game engine with survival and crafting"
-  echo "  invoiceninja    Invoiceninja is the leading self-host platform to create invoices, accept payments, track expenses."
+  echo "  invoiceninja    Invoiceninja is the leading self-host platform to create invoices."
   echo
   echo
   echo "Top-Level Commands:"

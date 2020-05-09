@@ -319,6 +319,7 @@ treehouses upgrade cli
 treehouses upgrade force
 treehouses upgrade bluetooth
 treehouses upgrade check
+treehouses uptime
 treehouses usb
 treehouses usb off
 treehouses usb on

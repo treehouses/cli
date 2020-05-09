@@ -1,6 +1,6 @@
 function gpio {
   checkargn $# 0
-  model="$(treehouses detect rpi)"
+  model="$(treehouses detectrpi)"
   prefix="${model:0:2}"
   oldrpi="True"
   if [ ${#model} -gt 3 ]; then
@@ -17,13 +17,13 @@ function gpio {
       echo "---+       +---+ PiZero W|s"
       echo "sd|       |SoC|   V1.1  |i"
       echo "---+|hdmi| +---+  usb pwr |"
-      echo "'---|    |--------| |-| |-'"
-    else
+      echo "\`---|    |--------| |-| |-'"
+    elif [ "$modelnum" = "4" ]; then
       echo ",--------------------------------."
       echo "| oooooooooooooooooooo J8   +======"
       echo "| 1ooooooooooooooooooo  PoE |   Net"
       echo "|  Wi                    oo +======"
-      echo "|  Fi  Pi Model $modelnum   V1.1 oo      |"
+      echo "|  Fi  Pi Model 4B   V1.1 oo     |"
       echo "|        ,----.               +===="
       echo "| |D|    |SoC |               |USB3"
       echo "| |S|    |    |               +====" 
@@ -31,7 +31,25 @@ function gpio {
       echo "|                   |C|       +===="
       echo "|                   |S|       |USB2"
       echo "| pwr   |HD|   |HD| |I||A|    +===="
-      echo "'-| |---|MI|---|MI|----|V|-------'"
+      echo "\`-| |---|MI|---|MI|----|V|-------'"
+    else 
+      if [ ${#model} -gt 4 ]; then
+        # model for 3B+ goes here
+      else
+        echo ",--------------------------------."
+	echo "| oooooooooooooooooooo J8     +===="
+	echo "| 1ooooooooooooooooooo        | USB"
+	echo "|                             +===="
+	echo "|      Pi Model 3B  V1.2         |"
+	echo "|      +----+                 +===="
+	echo "| |D|  |SoC |                 | USB"
+	echo "| |S|  |    |                 +===="
+	echo "| |I|  +----+                    |"
+	echo "|                   |C|     +======"
+	echo "|                   |S|     |   Net"
+	echo "| pwr        |HDMI| |I||A|  +======"
+	echo "\`-| |--------|    |----|V|-------'"
+      fi 
     fi
     echo
     echo "   3V3  (1) (2)  5V"

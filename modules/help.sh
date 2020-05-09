@@ -98,6 +98,7 @@ Usage: treehouses
    sdbench                                   displays read and write speed of micro SD card
    inspire [joke|qotd|random]                displays quote based on user input
    shutdown [now|in|force]                   shutdown the system 
+   margaritas [n]                            will print out n-margaritas at a safe pace
 EOF
   echo "$helpdefault"
 }

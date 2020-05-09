@@ -16,6 +16,10 @@ load test-helper
   assert_success
 }
 
+@test "$clinom upgrade force" {
+  run "${clicmd}" upgrade force
+  assert_success
+}
 @test "$clinom upgrade bluetooth" {
   run "${clicmd}" upgrade bluetooth
   assert_success
@@ -23,5 +27,10 @@ load test-helper
 
 @test "$clinom upgrade check" {
   run "${clicmd}" upgrade check
+  assert_success
+}
+
+@test "$clinom upgrade cli master" {
+  run "${clicmd}" upgrade cli master
   assert_success
 }

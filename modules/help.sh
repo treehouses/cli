@@ -6,18 +6,15 @@ Usage: treehouses
    verbose <on|off>                          makes each command print more output (might not work with treehouses remote)
    expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
    rename <hostname>                         changes hostname
-   password <password>                       changes the password for 'pi' user
+   password <password|disable|enable>        changes the password for 'pi' user or disables/enables password authentication
    sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
    version [contributors]                    returns the version of treehouses command
    image                                     returns version of the system image installed
-   detectbluetooth                           detects if bluetooth module is available
-   detectrpi [model]                         detects the hardware version of a raspberry pi
-   detectarm                                 detects the arm version of a raspberry pi
-   detectwifi                                detects if wifi module is available
-   detect                                    detects the hardware version of any device
+   detect [bluetooth|rpi|arm|wifi]           detects the hardware version of any device
    ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
    discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
             <rpi> [ipaddress|url|macaddress]
+            <wifi>
    wifi <ESSID> [password]                   connects to a wifi network
    wifihidden <ESSID> [password]             connects to a hidden wifi network
    staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
@@ -39,10 +36,14 @@ Usage: treehouses
    vnc [on|off|info]                         enables or disables the vnc server service
    default                                   sets a raspbian back to default configuration
    wificountry <country>                     sets the wifi country
-   upgrade [tag|check|bluetooth|force]       upgrades treehouses package using npm
+   upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
    sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
              <key|portinterval> [user@host]
    led [green|red] [mode]                    sets the led mode
+       [dance|thanksgiving|christmas]
+       [newyear|lunarnewyear|valentine]
+       [carnival|stpatricks|random] 
+   power [status|freq|<mode>]                sets the power scaling or check CPU frequency
    rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
    ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
    networkmode                               outputs the current network mode
@@ -71,13 +72,14 @@ Usage: treehouses
       [couchdb]      <size>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
       [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
       [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
-      [seafile]      <environment [new]>     Seafile is an open-source, cross-platform file-hosting software system
-      [turtleblocksjs]            [edit]     TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
-                                  [available]
-                                  [select]
+      [seafile]      <environment>           Seafile is an open-source, cross-platform file-hosting software system
+      [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
+      [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
+      [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
    tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
        [stop|destroy|notice|status|refresh]
    bootoption <console|desktop> [autologin]  sets the boot mode
+              <modules|params>
    openvpn [use|show|delete]                 helps setting up an openvpn client
            [notice|start|stop|load]
    coralenv [install|demo-on|demo-off]       plays with the coral environmental board

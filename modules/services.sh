@@ -169,7 +169,7 @@ function services {
               echo "try running '$BASENAME services ${service_name} install' first"
               exit 1
             else
-              if docker-compose --project-directory /srv/$service_namee -f /srv/${service_name}/${service_name}.yml start; then
+              if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml start; then
                 echo "${service_name} started"
               fi
             fi

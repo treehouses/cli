@@ -183,12 +183,12 @@ function get_ports {
 
 # add size (in MB)
 function get_size {
-  echo "553"
+  echo "1341"
 }
 
 # add info
 function get_info {
-  echo "https://github.com/treehouses/rpi-invoiceninja"
+  echo "https://github.com/ole-vi/invoiceninja"
   echo
   echo "\"Invoiceninja is the leading self-host platform to create invoices," 
   echo "accept payments, track expenses & time tasks."

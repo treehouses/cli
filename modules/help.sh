@@ -72,7 +72,7 @@ Usage: treehouses
       [couchdb]      <size>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
       [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
       [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
-      [seafile]      <environment>           Seafile is an open-source, cross-platform file-hosting software system
+      [seafile]      <config>                Seafile is an open-source, cross-platform file-hosting software system
       [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
       [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
       [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting

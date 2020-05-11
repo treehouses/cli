@@ -363,14 +363,14 @@ treehouses services $line autorun false
 treehouses services $line autorun true
 treehouses services $line cleanup
 treehouses services $line down
-treehouses services $line environment
-treehouses services $line environment available
-treehouses services $line environment edit
-treehouses services $line environment edit request
-treehouses services $line environment edit send
-treehouses services $line environment edit vim
-treehouses services $line environment new
-treehouses services $line environment select
+treehouses services $line config
+treehouses services $line config available
+treehouses services $line config edit
+treehouses services $line config edit request
+treehouses services $line config edit send
+treehouses services $line config edit vim
+treehouses services $line config new
+treehouses services $line config select
 treehouses services $line icon
 treehouses services $line icon oneline
 treehouses services $line info

@@ -1,6 +1,6 @@
 function uptime {
   checkrpi
-  check_missing_packages libusb-dev
+  check_missing_packages uptimed
   checkargn $# 1
 
   if [[ $1 == "" ]]; then

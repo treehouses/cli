@@ -92,7 +92,7 @@ Usage: treehouses
    sdbench                                   displays read and write speed of micro SD card
    inspire [joke|qotd|random]                displays quote based on user input
    shutdown [now|in|force]                   shutdown the system
-   convert                                   converts video and audio formats 
+   convert                                   converts video and audio files 
 EOF
   echo "$helpdefault"
 }

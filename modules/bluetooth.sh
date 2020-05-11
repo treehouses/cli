@@ -129,7 +129,7 @@ function bluetooth_help {
   echo "  $BASENAME bluetooth restart"
   echo "      This will restart the bluetooth server using $BASENAME bleutooth 'off' and 'on'"
   echo
-  echo "  $BASENAME bluetooth  mac"
+  echo "  $BASENAME bluetooth mac"
   echo "      This will display the bluetooth MAC address"
   echo
   echo "  $BASENAME bluetooth id"

@@ -83,6 +83,11 @@ load ../test-helper
   assert_success && assert_output -p 'netdata stopped'
 }
 
+@test "$clinom services netdata start" {
+  run "${clicmd}" services netdata start
+  assert_success && assert_output -p 'netdata started'
+}
+
 @test "$clinom services netdata down" {
   run "${clicmd}" services netdata down
   assert_success && assert_output -p 'netdata stopped and removed'

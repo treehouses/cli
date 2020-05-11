@@ -79,14 +79,31 @@ function bluetooth {
      checkargn $# 1
      button bluetooth
 
+   elif [ "$status" = "log" ]; then
+     if [ "$2" = "" ]; then
+       checkargn $# 1
+       journalctl -u rpibluetooth -u bluetooth --no-pager
+     elif [ "$2" = "follow" ]; then
+       echo "press (ctrl + c) to exit"
+       journalctl -u rpibluetooth -u bluetooth -f
+     else
+       echo "Argument not valid; leave blank or use \"follow\""
+       exit 1
+     fi
+
+   elif [ "$status" = "restart" ]; then
+     bluetooth off &>"$LOGFILE"
+     bluetooth on &>"$LOGFILE"
+     echo "Success: the bluetooth service has been restarted."
+
   else
-    echo "Error: only 'on', 'off', 'pause' options are supported";
+    echo "Error: only 'on', 'off', 'pause', 'restart', 'mac', 'id', 'button', 'log', and 'status' options are supported";
   fi
 }
 
 function bluetooth_help {
   echo
-  echo "Usage: $BASENAME bluetooth [on|off|pause|mac|id|button]"
+  echo "Usage: $BASENAME bluetooth [on|off|pause|restart|mac|id|button|status|log]"
   echo
   echo "Switches between hotspot / regular bluetooth mode, or displays the bluetooth mac address"
   echo
@@ -109,7 +126,10 @@ function bluetooth_help {
   echo "      Performs the same as '$BASENAME bluetooth off'"
   echo "      The only difference is that this command will not remove the bluetooth device id."
   echo
-  echo "  $BASENAME bluetooth  mac"
+  echo "  $BASENAME bluetooth restart"
+  echo "      This will restart the bluetooth server using $BASENAME bleutooth 'off' and 'on'"
+  echo
+  echo "  $BASENAME bluetooth mac"
   echo "      This will display the bluetooth MAC address"
   echo
   echo "  $BASENAME bluetooth id"
@@ -121,5 +141,12 @@ function bluetooth_help {
   echo
   echo "  $BASENAME bluetooth id number"
   echo "      This will display the bluetooth id number"
+  echo
+  echo "  $BASENAME bluetooth log"
+  echo "      This will display the logs of bluetooth services"
+  echo
+  echo "  $BASENAME bluetooth log follow"
+  echo "      This will display the logs as they come in live of the bluetooth services"
+  echo "      press (ctrl + c) to exit"
   echo
 }

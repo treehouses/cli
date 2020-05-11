@@ -24,8 +24,8 @@ function install {
     echo "      - \"8053:80/tcp\""
     echo "      - \"443:443/tcp\""
     echo "    environment:"
-    echo "      TZ: 'America/New_York'"
-    echo "      WEBPASSWORD: ''"
+    echo "      TZ: \${TZ_VAR}"
+    echo "      WEBPASSWORD: \${WEBPASSWORD_VAR}"
     echo "    # Volumes store your data between container upgrades"
     echo "    volumes:"
     echo "      - './etc-pihole/:/etc/pihole/'"
@@ -41,17 +41,28 @@ function install {
     echo "    # restart: unless-stopped"
   } > /srv/pihole/pihole.yml
 
+  # create .env with default values
+  {
+    echo "TZ_VAR=America/New_York"
+    echo "WEBPASSWORD_VAR=piholepass"
+  } > /srv/pihole/.env
+
   # add autorun
   {
     echo "pihole_autorun=true"
     echo
     echo "if [ \"\$pihole_autorun\" = true ]; then"
     echo "  service dnsmasq stop"
-    echo "  docker-compose -f /srv/pihole/pihole.yml -p pihole up -d"
+    echo "  treehouses services pihole up"
     echo "fi"
     echo
     echo
   } > /srv/pihole/autorun
+}
+
+# environment var
+function uses_env {
+  echo true
 }
 
 # add supported arm(s)

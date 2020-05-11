@@ -21,11 +21,16 @@ function install {
     echo "privatebin_autorun=true"
     echo
     echo "if [ \"\$privatebin_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/privatebin/privatebin.yml -p privatebin up -d"
+    echo "  treehouses services privatebin up"
     echo "fi"
     echo
     echo
   } > /srv/privatebin/autorun
+}
+
+# environment var
+function uses_env {
+  echo false
 }
 
 # add supported arm(s)

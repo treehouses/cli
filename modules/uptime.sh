@@ -1,14 +1,10 @@
 function uptime {
   checkrpi
+  check_missing_packages libusb-dev
   checkargn $# 1
+
   if [[ $1 == "" ]]; then
-    if ! dpkg-query -W -f='${Status}' uptimed | grep -q "ok installed";
-    then
-        sudo apt-get install uptimed
-        command uptime 
-    else
-        command uptime
-    fi
+    command uptime 
   elif [ $1 == "boot" ]; then
     echo "Raspberry Pi booted at:"
     command uptime -s

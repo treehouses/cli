@@ -120,7 +120,7 @@ function led {
      echo "Green LED: blink 3 times, off 1 sec on 1 sec"
      echo "Green LED: on 3 secs"
      echo "Loop next two steps 3 times:"
-     echo "  Red LED: on 0.075 sec ;off 0.075 sec"
+     echo "  Red LED: on 0.075 sec off 0.075 sec"
      echo "  Green LED: on 0.075 sec off 0.075 sec"
      easter > "$LOGFILE"
      ;;

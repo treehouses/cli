@@ -489,7 +489,8 @@ function random {
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear|valentine|carnival|stpatricks|random]"
+  echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear]"
+  echo "                     [valentine|carnival|stpatricks|onam|heavymetal|easter|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -565,6 +566,9 @@ function led_help {
   echo
   echo "  $BASENAME led stpatricks"
   echo "     This will set the mode of the led to stpatricks"
+  echo
+  echo "  $BASENAME led easter"
+  echo "     This will set the mode of the led to easter"
   echo
   echo "  $BASENAME led random"
   echo "     This will set the mode of the led to one of the above festivities"

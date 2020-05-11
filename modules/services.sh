@@ -396,7 +396,6 @@ function services {
                 cat /srv/$service_name/$4.env
                 echo $seperator
               elif [ "$command_option" = "edit" ]; then
-                checkargn $# 4
                 kill_spinner
                 if [ -z "$4" ]; then
                   while read -r -u 9 line; do

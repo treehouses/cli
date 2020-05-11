@@ -100,7 +100,7 @@ services                                  executes the given command on the spec
    [couchdb]      <size>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
    [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
    [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
-   [seafile]      <environment [edit]>    Seafile is an open-source, cross-platform file-hosting software system
+   [seafile]      <environment>           Seafile is an open-source, cross-platform file-hosting software system
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
    [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
@@ -127,6 +127,7 @@ blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hos
 sdbench                                   displays read and write speed of micro SD card
 inspire [joke|qotd|random]                displays quote based on user input
 shutdown [now|in|force]                   shutdown the system           
+gpio                                      displays raspberry pi model and corresponding GPIO ports
 ```
 
 ## Additional README's

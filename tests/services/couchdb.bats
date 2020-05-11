@@ -83,6 +83,11 @@ load ../test-helper
   assert_success && assert_output -p 'couchdb stopped'
 }
 
+@test "$clinom services couchdb start" {
+  run "${clicmd}" services couchdb start
+  assert_success && assert_output -p 'couchdb started'
+}
+
 @test "$clinom services couchdb down" {
   run "${clicmd}" services couchdb down
   assert_success && assert_output -p 'couchdb stopped and removed'

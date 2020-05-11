@@ -82,6 +82,11 @@ load ../test-helper
   assert_success && assert_output -p 'portainer stopped'
 }
 
+@test "$clinom services portainer start" {
+  run "${clicmd}" services portainer start
+  assert_success && assert_output -p 'portainer started'
+}
+
 @test "$clinom services portainer down" {
   run "${clicmd}" services portainer down
   assert_success && assert_output -p 'portainer stopped and removed'

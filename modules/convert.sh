@@ -8,12 +8,12 @@ function convert {
     if [ "$status" == 0 ]; then
       echo "$inputFile has been successfully converted to $outputFile"
     else
-      echo "convertion unsuccessful"
+      echo "conversion unsuccessful"
     fi
   elif [ $inputFile == "" ]; then
     echo "Error: no input file"
   elif [ $outputFile == "" ]; then
-    echo "Error :no output file"
+    echo "Error: no output file"
   else
     convert_help
   fi

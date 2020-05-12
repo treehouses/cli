@@ -83,6 +83,11 @@ load ../test-helper
   assert_success && assert_output -p 'seafile stopped'
 }
 
+@test "$clinom services seafile start" {
+  run "${clicmd}" services seafile start
+  assert_success && assert_output -p 'seafile started'
+}
+
 @test "$clinom services seafile down" {
   run "${clicmd}" services seafile down
   assert_success && assert_output -p 'seafile stopped and removed'

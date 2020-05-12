@@ -42,7 +42,8 @@ Usage: treehouses
    led [green|red] [mode]                    sets the led mode
        [dance|thanksgiving|christmas]
        [newyear|lunarnewyear|valentine]
-       [carnival|stpatricks|random] 
+       [carnival|stpatricks|onam]
+       [heavymetal|easter|random] 
    power [status|freq|<mode>]                sets the power scaling or check CPU frequency
    rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
    ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
@@ -98,6 +99,7 @@ Usage: treehouses
    sdbench                                   displays read and write speed of micro SD card
    inspire [joke|qotd|random]                displays quote based on user input
    shutdown [now|in|force]                   shutdown the system 
+   gpio                                      displays raspberry pi model and corresponding GPIO ports
 EOF
   echo "$helpdefault"
 }

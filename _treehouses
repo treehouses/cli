@@ -42,6 +42,7 @@ treehouses camera
 treehouses camera capture
 treehouses camera off
 treehouses camera on
+treehouses changelog
 treehouses clone
 treehouses container
 treehouses container balena
@@ -98,6 +99,7 @@ treehouses help bridge
 treehouses help burn
 treehouses help button
 treehouses help camera
+treehouses help changelog
 treehouses help clone
 treehouses help container
 treehouses help coralenv

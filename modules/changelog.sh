@@ -1,6 +1,6 @@
 function changelog {
 LOGPATH="/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md"
-view <(grep -e '[->]\+' -e ^$ $LOGPATH | sed '1d;2d;3d;4d;5d;')
+view <(grep -e '[->]\+' -e ^$ $LOGPATH | sed '3d;4d;5d;')
 }
 function changelog_help {
   CYAN='\033[1;36m'

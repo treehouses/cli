@@ -1,6 +1,45 @@
 function changelog {
-LOGPATH="/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md"
-view <(grep -e '[->#]\+' -e ^$ $LOGPATH | sed '3d;4d;5d;')
+local LOGPATH displaymode version1 version2 CURRENT
+CURRENT=$(treehouses version)
+LOGPATH=$SCIPTFOLDER/CHANGELOG.md
+if [ ! -f "$LOGPATH" ]; then
+  echo "File does not exist!"
+  exit 1
+fi
+checkargn $# 4
+displaymode="$1"
+version1="$2"
+version2="$3"
+case "$displaymode" in
+  view)
+      view $LOGPATH
+      ;;
+  "")
+      sed '3d;4d;5d;' $LOGPATH | tac #filters out auto generate message and prints bottom to top
+     ;;
+  compare)
+      case "$version1" in
+      "")
+        echo "Error: only 'compare [previous version]' and 'compare [version] [previous version] are supported."
+        exit 1
+        ;;
+      *)
+        case "$version2" in
+         "")
+          sed "/\[$CURRENT\]/!d;s//&\n/;s/.*\n//;:a;/\[$version1\]/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH ##this grabs text between version numbers
+          ;;
+        *)
+          sed "/\[$version1\]/!d;s//&\n/;s/.*\n//;:a;/\[$version2\]/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH
+          ;;
+        esac
+        ;;
+      esac
+      ;;
+  *)
+      echo "Error: only 'view', 'compare' and blank options are supported. "
+      exit 1
+      ;;
+  esac
 }
 function changelog_help {
   CYAN='\033[1;36m'
@@ -12,18 +51,27 @@ function changelog_help {
   echo
   echo "  Example: $BASENAME changelog"
   echo
-  echo -e "  ${CYAN}### Changelog"
+  echo "  - \`treehouses services mariadb icon refactor\` [\`#1255\`](https://github.com/treehouses/cli/pull/1255)"
   echo
-  echo "  #### [1.20.22](https://github.com/treehouses/cli/compare/1.20.21...1.20.22)"
-  echo
-  echo -e "  ${NC}> 12 May 2020"
-  echo
-  echo "  - \`treehouses services privatebin icon refactor\` [\`#1254\`](https://github.com/treehouses/cli/pull/1254)"
+  echo "  > 12 May 2020"
   echo
   echo -e "  ${CYAN}#### [1.20.21](https://github.com/treehouses/cli/compare/1.20.20...1.20.21)"
   echo
-  echo -e "  ${NC}> 12 May 2020"
+  echo -e "  ${NC}- \`treehouses services privatebin icon refactor\` [\`#1254\`](https://github.com/treehouses/cli/pull/1254)"
   echo
-  echo "  - \`treehouses services mariadb icon refactor\` [\`#1255\`](https://github.com/treehouses/cli/pull/1255)"
+  echo "  > 12 May 2020"
+  echo
+  echo "  #### [1.20.22](https://github.com/treehouses/cli/compare/1.20.21...1.20.22)"
+  echo
+  echo -e "  ${CYAN}### Changelog${NC}"
+  echo
+  echo "  Usage: $BASENAME changelog view"
+  echo "    Opens the changelog in vim read only mode."
+  echo
+  echo "  Usage: $BASENAME changelog compare [previous version]"
+  echo "    Displays all changes since a previous version to the current version."
+  echo
+  echo "  Usage: $BASENAME changelog compare [version] [previous version]"
+  echo "    Displays all changes since a previous version to the version specified."
   echo
 }

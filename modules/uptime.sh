@@ -9,9 +9,9 @@ function uptime {
     echo "Raspberry Pi booted at:"
     command uptime -s
   elif [ $1 == "stop" ]; then
-    /etc/init.d/uptimed stop
+    systemctl stop uptimed
   elif [ $1 == "start" ]; then
-    /etc/init.d/uptimed start
+    systemctl start uptimed
   else
     echo "Unknown operation provided."  
   fi  

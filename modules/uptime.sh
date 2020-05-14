@@ -18,7 +18,7 @@ function uptime {
 }
 
 function uptime_help {
-  echo "Usage: $BASENAME uptime [boot]"
+  echo "Usage: $BASENAME uptime [boot|start|stop]"
   echo
   echo "Example:"
   echo "  $BASENAME uptime"
@@ -27,11 +27,10 @@ function uptime_help {
   echo "  $BASENAME uptime boot"
   echo "      This returns when the Raspberry Pi was booted"
   echo
-  echo "  $BASENAME uptime stop"
-  echo "      This stops Uptimed from running in the background"
-  echo
   echo "  $BASENAME uptime start"
   echo "      This starts Uptimed in the background"
   echo
-
+  echo "  $BASENAME uptime stop"
+  echo "      This stops Uptimed from running in the background"
+  echo
 }

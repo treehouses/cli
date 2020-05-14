@@ -1,6 +1,4 @@
-#!/bin/bash
-
-# uses logger command to log to /var/log/syslog 
+# uses logger command to log to /var/log/syslog
 # logit "text" "whether or not to write to screen" "logging level"
 # e.g. logit "i logged some text"
 # e.g. logit "error: MISSION ABORT" "" "ERROR"
@@ -16,7 +14,7 @@ function logit() {
       "WARNING")
 	    if [[ "$LOG" -gt "1" ]]; then
           logger -p local0.warning -t @treehouses/cli "WARNING: $1"
-		fi 
+		fi
         ;;
 	  # Stuff did break
       "ERROR")
@@ -47,7 +45,10 @@ function log_and_exit1() {
 # Sets logging level to be used by the entire app
 # Can also show the log
 function log {
-  local lines="$2"
+  local lines
+  checkroot
+  checkargn $# 2
+  lines="$2"
   case "$1" in
     "")
 	  case "$LOG" in

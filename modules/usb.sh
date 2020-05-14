@@ -1,6 +1,7 @@
-#!/bin/bash
-
 function usb {
+  local command
+  checkroot
+  checkargn $# 1
   # check if hub-ctrl binary exists
   if [ ! -e /usr/local/bin/hub-ctrl ]; then
     echo "required binary 'hub-ctrl' not found"
@@ -21,8 +22,12 @@ function usb {
       /usr/local/bin/hub-ctrl -h 1 -P 2 -p
 
       echo "usb ports turned off"
+    elif [ "$command" = "" ]; then
+      lsusb -t
     else
-      echo "unknown command"
+      echo "Error: unknown command"
+      usb_help
+      exit 1
     fi
   elif [[ $(detectrpi) =~ 'RPI4' ]]; then
     if [ "$command" = "on" ]; then
@@ -35,7 +40,7 @@ function usb {
       echo "usb ports turned on"
     elif [ "$command" = "off" ]; then
       # check for connected ethernet
-      if [ "$(cat /sys/class/net/eth0/carrier)" = "1" ]; then
+      if [ "$(</sys/class/net/eth0/carrier)" = "1" ]; then
         read -r -p "The ethernet port on your Raspberry Pi 4 is connected. Turning off usb power will interfere with your ethernet connection. Do you wish to continue? Y or N" yn
         case $yn in
           [Yy]*)
@@ -52,8 +57,12 @@ function usb {
       /usr/local/bin/hub-ctrl -h 1 -P 1 -p
 
       echo "usb ports turned off"
+    elif [ "$command" = "" ]; then
+      lsusb -t
     else
-      echo "unknown command"
+      echo "Error: unknown command"
+      usb_help
+      exit 1
     fi
   fi
 }
@@ -66,6 +75,9 @@ function usb_help {
   echo "Note: cannot control individual usb ports"
   echo
   echo "Example:"
+  echo
+  echo "  $BASENAME usb"
+  echo "      Prints usb device information"
   echo
   echo "  $BASENAME usb on"
   echo "      Turns the usb ports on"

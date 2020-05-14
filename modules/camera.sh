@@ -1,6 +1,7 @@
-#!/bin/bash
-
 function camera {
+  local directory timestamp config configtemp savetype
+  checkrpi
+  checkargn $# 1
   directory="/home/pi/Pictures/"
   timestamp=$(date +"%Y%m%d-%H%M%S")
   config="/boot/config.txt"
@@ -54,7 +55,6 @@ function camera {
 
     "*")
       camera_help
-      exit 0
     ;;
   esac
 }

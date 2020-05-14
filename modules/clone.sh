@@ -1,6 +1,8 @@
-#!/bin/bash
-
 function clone {
+  local device a b
+  checkrpi
+  checkroot
+  checkargn $# 1
   device="$1"
   if [ -z "$device" ]; then
     device="/dev/sdb"
@@ -33,7 +35,7 @@ function clone {
 
 function clone_help {
   echo
-  echo "Usage: $BASENAME burn [device path]"
+  echo "Usage: $BASENAME clone [device path]"
   echo
   echo "clones your treehouses image to an SDCard"
   echo

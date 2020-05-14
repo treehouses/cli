@@ -1,6 +1,8 @@
-#!/bin/bash
-
 function bridge {
+  local wifiessid hotspotessid wifipassword hotspotpassword base_24 channels channel wificountry
+  checkrpi
+  checkroot
+  checkargn $# 5
   case $(detectrpi) in
     RPI3B|RPIZW|RPI3B+|RPI3A+|RPI4B)
       ;;
@@ -51,7 +53,7 @@ function bridge {
   fi
 
   cp "$TEMPLATES/network/dnsmasq/bridge" "/etc/dnsmasq.conf"
-  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces 
+  cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/wlan0/bridge" /etc/network/interfaces.d/ap0
 
   if [ -z "$hotspotpassword" ];
@@ -72,7 +74,7 @@ function bridge {
     wificountry="US"
     if [ -r /etc/rpi-wifi-country ];
     then
-      wificountry=$(cat /etc/rpi-wifi-country)
+      wificountry=$(</etc/rpi-wifi-country)
     fi
     echo "country=$wificountry"
   } > /etc/wpa_supplicant/wpa_supplicant.conf

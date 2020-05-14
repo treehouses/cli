@@ -1,11 +1,13 @@
-#!/bin/bash
-
 function sshtunnel {
+  local portinterval host hostname portssh portweb portcouchdb
+  local portnewcouchdb portmunin keys option value status
+  checkroot
+  checkargn $# 3
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
     echo "Error: no tunnel has been set up."
     echo "Run '$BASENAME sshtunnel add' to add a key for the tunnel."
-    exit 0
-  fi      
+    exit 1
+  fi
   portinterval="$2"
   host="$3"
 

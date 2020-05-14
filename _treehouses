@@ -321,6 +321,8 @@ treehouses upgrade bluetooth
 treehouses upgrade check
 treehouses uptime
 treehouses uptime boot
+treehouses uptime start
+treehouses uptime stop
 treehouses usb
 treehouses usb off
 treehouses usb on

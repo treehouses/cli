@@ -90,6 +90,7 @@ Usage: treehouses
    camera [on|off|capture]                   enables camera, disables camera, captures png photo
    cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
         [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
+   uptime [boot|start|stop]                  displays uptime and boot time of the Raspberry Pi           
    usb [on|off]                              turns usb ports on or off
    remote [check|status|upgrade|services]    helps with treehouses remote android app
           [version|commands|allservices]
@@ -97,8 +98,7 @@ Usage: treehouses
    blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
    sdbench                                   displays read and write speed of micro SD card
    inspire [joke|qotd|random]                displays quote based on user input
-   shutdown [now|in|force]                   shutdown the system 
-   uptime [boot]                             displays uptime and boot time of the Raspberry Pi       
+   shutdown [now|in|force]                   shutdown the system  
 EOF
   echo "$helpdefault"
 }

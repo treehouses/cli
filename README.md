@@ -20,7 +20,7 @@ sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
 sudo apt-get install -y nodejs
 sudo npm i -g --unsafe-perm @treehouses/cli
 ```
-If you run into any problems check if your RPi is supported [here](https://github.com/treehouses/cli/blob/836c2e9b0bcebfe6afc97706634e7c070d795eac/modules/detectrpi.sh#L5-L42).
+If you run into any problems check if your RPi is supported [here](https://github.com/treehouses/cli/blob/836c2e9b0bcebfe6afc97706634e7c070d795eac/modules/detect.sh#L5-L42).
 
 ## Features
 
@@ -34,17 +34,15 @@ help [command]                            gives you a more detailed info about t
 verbose <on|off>                          makes each command print more output (might not work with treehouses remote)
 expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
 rename <hostname>                         changes hostname
-password <password>                       changes the password for 'pi' user
+password <password|disable|enable>        changes the password for 'pi' user or disables/enables password authentication
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
 version [contributors]                    returns the version of cli.sh command
 image                                     returns version of the system image installed
-detectbluetooth                           detects if bluetooth module is available
-detectrpi [model]                         detects the hardware version of a raspberry pi
-detectarm                                 detects the arm version of a raspberry pi
-detect                                    detects the hardware version of any device
+detect [bluetooth|rpi|arm|wifi]           detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
 discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
          <rpi> [ipaddress|url|macaddress]
+         <wifi>
 wifi <ESSID> [password]                   connects to a wifi network
 wifihidden <ESSID> [password]             connects to a hidden wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
@@ -66,10 +64,15 @@ ssh <on|off>                              enables or disables the ssh service
 vnc [on|off|info]                         enables or disables the vnc server service
 default                                   sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
-upgrade [tag] [--check]                   upgrades cli.sh package using npm
+upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
 sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
           <key|portinterval> [user@host]
 led [green|red] [mode]                    sets the led mode
+    [dance|thanksgiving|christmas]
+    [newyear|lunarnewyear|valentine]
+    [carnival|stpatricks|onam]
+    [heavymetal|easter|random]
+power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode
@@ -83,26 +86,29 @@ reboots <now|in|cron>                     reboots at given frequency | removes i
         <daily|weekly|monthly>
 internet                                  checks if the rpi has access to internet
 services                                  executes the given command on the specified service
-   <available|installed [full]            list available, and installed services
-   ports|running [full]>                  list ports used by services and services running
+   <available|installed [full]>           list available, and installed services
+   <ports|running [full]>                 list ports used by services and services running
    [planet]       <install>               Planet Learning is a generic learning system built in Angular & CouchDB
-   [kolibri]      <cleanup>               Kolibri is a learning platform using DJango
-   [nextcloud]    <up>                    Nextcloud is a safe home for all your data, files, etc
-   [netdata]      <down>                  Netdata is a distributed, real-time performance and health monitoring for systems
-   [mastodon]     <start>                 Mastodon is a free, open-source social network server
-   [moodle]       <stop>                  Moodle is a learning management system built in PHP
-   [pihole]       <restart>               Pi-hole is a DNS sinkhole that protects your devices from unwanted content
+   [kolibri]      <up>                    Kolibri is a learning platform using DJango
+   [nextcloud]    <start>                 Nextcloud is a safe home for all your data, files, etc
+   [netdata]      <restart>               Netdata is a distributed, real-time performance and health monitoring for systems
+   [mastodon]     <stop>                  Mastodon is a free, open-source social network server
+   [moodle]       <down>                  Moodle is a learning management system built in PHP
+   [pihole]       <cleanup>               Pi-hole is a DNS sinkhole that protects your devices from unwanted content
    [privatebin]   <autorun [true|false]>  PrivateBin is a minimalist, open source online pastebin
-   [portainer]    <ps>                    Portainer is a lightweight management UI for Docker environments
+   [portainer]    <url [local|tor]>       Portainer is a lightweight management UI for Docker environments
    [ntopng]       <info>                  Ntopng is a network traffic probe that monitors network usage
-   [couchdb]      <url [local|tor]>       CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
-   [mariadb]      <port>                  MariaDB is a community-developed fork of the MySQL relational database management system
-   [mongodb]      <size>                  MongoDB is a general purpose, distributed, document-based, NoSQL database
-   [seafile]                              Seafile is an open-source, cross-platform file-hosting software system
-   [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art       
+   [couchdb]      <size>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
+   [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
+   [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
+   [seafile]      <config>                Seafile is an open-source, cross-platform file-hosting software system
+   [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
+   [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
+   [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
+           <modules|params>
 openvpn [use|show|delete]                 helps setting up an openvpn client
         [notice|start|stop|load]
 coralenv [install|demo-on|demo-off]       plays with the coral environmental board
@@ -121,8 +127,15 @@ blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hos
 sdbench                                   displays read and write speed of micro SD card
 inspire [joke|qotd|random]                displays quote based on user input
 shutdown [now|in|force]                   shutdown the system           
+gpio                                      displays raspberry pi model and corresponding GPIO ports
+changelog [view|compare]                displays the most recent changes to treehouses
 ```
-## Add a feature
+
+## Additional README's
+- [Services](https://github.com/treehouses/cli/tree/master/services/README.md)
+- [Tests](https://github.com/treehouses/cli/tree/master/tests/README.md)
+
+## Add a new feature
 Feel free to make a pull request to our repository.  
 Remember the following files
 will have to be updated to add a feature:

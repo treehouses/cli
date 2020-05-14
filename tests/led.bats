@@ -60,3 +60,18 @@ load test-helper
   run "${clicmd}" led heavymetal
   assert_success && assert_output -p 'heartbeat'
 }
+
+@test "$clinom led stpatricks" {
+  run "${clicmd}" led stpatricks
+  assert_success && assert_output -p 'red led'
+}
+
+@test "$clinom led easter" {
+  run "${clicmd}" led easter
+  assert_success && assert_output -p 'heartbeat'
+}
+
+@test "$clinom led random" {
+  run "${clicmd}" led random
+  assert_success
+}

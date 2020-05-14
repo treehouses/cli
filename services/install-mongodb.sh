@@ -17,9 +17,15 @@ function install {
     echo "      -  \"27018:27018"\"
     echo "      -  \"27019:27019"\"
     echo "    environment: "
-    echo "      MONGO_INITDB_ROOT_USERNAME: root "
-    echo "      MONGO_INITDB_ROOT_PASSWORD: example "
+    echo "      - MONGO_INITDB_ROOT_USERNAME=\${MONGO_INITDB_ROOT_USERNAME_VAR}"
+    echo "      - MONGO_INITDB_ROOT_PASSWORD=\${MONGO_INITDB_ROOT_PASSWORD_VAR}"
   } > /srv/mongodb/mongodb.yml
+
+  # create .env with default values
+  {
+    echo "MONGO_INITDB_ROOT_USERNAME_VAR=root"
+    echo "MONGO_INITDB_ROOT_PASSWORD_VAR=example"
+  } > /srv/mongodb/.env
 
   # add autorun
   {
@@ -31,6 +37,11 @@ function install {
     echo
     echo
   } > /srv/mongodb/autorun
+}
+
+# environment var
+function uses_env {
+  echo true
 }
 
 # add supported arm(s)

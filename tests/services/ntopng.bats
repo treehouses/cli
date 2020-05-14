@@ -83,6 +83,11 @@ load ../test-helper
   assert_success && assert_output -p 'ntopng stopped'
 }
 
+@test "$clinom services ntopng start" {
+  run "${clicmd}" services ntopng start
+  assert_success && assert_output -p 'ntopng started'
+}
+
 @test "$clinom services ntopng down" {
   run "${clicmd}" services ntopng down
   assert_success && assert_output -p 'ntopng stopped and removed'

@@ -22,8 +22,12 @@ function usb {
       /usr/local/bin/hub-ctrl -h 1 -P 2 -p
 
       echo "usb ports turned off"
+    elif [ "$command" = "" ]; then
+      lsusb -t
     else
-      echo "unknown command"
+      echo "Error: unknown command"
+      usb_help
+      exit 1
     fi
   elif [[ $(detectrpi) =~ 'RPI4' ]]; then
     if [ "$command" = "on" ]; then
@@ -56,7 +60,9 @@ function usb {
     elif [ "$command" = "" ]; then
       lsusb -t
     else
-      echo "unknown command"
+      echo "Error: unknown command"
+      usb_help
+      exit 1
     fi
   fi
 }

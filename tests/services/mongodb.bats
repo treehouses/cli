@@ -78,6 +78,11 @@ load ../test-helper
   assert_success && assert_output -p 'mongodb stopped'
 }
 
+@test "$clinom services mongodb start" {
+  run "${clicmd}" services mongodb start
+  assert_success && assert_output -p 'mongodb started'
+}
+
 @test "$clinom services mongodb down" {
   run "${clicmd}" services mongodb down
   assert_success && assert_output -p 'mongodb stopped and removed'

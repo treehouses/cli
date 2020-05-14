@@ -3,7 +3,7 @@ function convert {
   inputFile=$1
   outputFile=$2
   if [[ "$inputFile" != "" ]] && [[ "$outputFile" != "" ]]; then
-    ffmpeg -i $inputFile $outputFile -hide_banner
+    ffmpeg -i $inputFile $outputFile -hide_banner -max_error_rate 0.0 &>"$LOGFILE"
     status=$?
     if [ "$status" == 0 ]; then
       echo "$inputFile has been successfully converted to $outputFile"
@@ -18,7 +18,7 @@ function convert {
     convert_help
   fi
 }
-  
+
 function convert_help {
   echo
   echo "Usage: $BASENAME convert"

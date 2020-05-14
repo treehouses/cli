@@ -1,7 +1,7 @@
 function changelog {
 local LOGPATH displaymode version1 version2 CURRENT
 CURRENT=$(treehouses version)
-LOGPATH=$SCIPTFOLDER/CHANGELOG.md
+LOGPATH="$SCRIPTFOLDER/CHANGELOG.md"
 checkargn $# 3
 displaymode="$1"
 version1="$2"

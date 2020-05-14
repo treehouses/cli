@@ -13,7 +13,9 @@ function uptime {
   elif [ $1 == "start" ]; then
     systemctl start uptimed
   else
-    echo "Unknown operation provided."  
+    echo "Error: unknown operation provided"
+    uptime_help
+    exit 1
   fi  
 }
 

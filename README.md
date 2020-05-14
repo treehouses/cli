@@ -128,6 +128,7 @@ sdbench                                   displays read and write speed of micro
 inspire [joke|qotd|random]                displays quote based on user input
 shutdown [now|in|force]                   shutdown the system           
 gpio                                      displays raspberry pi model and corresponding GPIO ports
+changelog [view|compare]                displays the most recent changes to treehouses
 ```
 
 ## Additional README's

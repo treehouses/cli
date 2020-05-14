@@ -62,7 +62,7 @@ function checkargn {
 }
 
 function checkwrpi {
-  if [[ $(detectbluetooth) == "false" ]]; then
+  if [[ $(detect bluetooth) == "false" ]]; then
     echo "Error: no Bluetooth device detected"
     exit 1
   fi

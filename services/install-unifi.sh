@@ -8,29 +8,31 @@ function install {
   {
     echo "version: '2.1'"
     echo "services:"
-    echo "unifi:"
-    echo "image: linuxserver/unifi-controller"
-    echo "environment:"
-    echo "  - PUID=\${PUID}"
-    echo "  - PGID=\${PGID}"
-    echo "  - MEM_LIMIT=\${MEM_LIMIT}"
-    echo "ports:"
-    echo "  - 3478:3478/udp"
-    echo "  - 10001:10001/udp"
-    echo "  - 10002:10002"
-    echo "  - 8081:8081"
-    echo "  - 8443:8443"
-    echo "  - 8843:8843"
-    echo "  - 8880:8880"
-    echo "  - 6789:6789"
-    echo "restart: unless-stopped"
+    echo "  unifi-controller:"
+    echo "    image: linuxserver/unifi-controller"
+    echo "    environment:"
+    echo "      - PUID=\${PUID}"
+    echo "      - PGID=\${PGID}"
+    echo "      - MEM_LIMIT=\${MEM_LIMIT}"
+    echo "    ports:"
+    echo "      - 3478:3478/udp"
+    echo "      - 10001:10001/udp"
+    echo "      - 8080:8080"
+    echo "      - 8081:8081"
+    echo "      - 8443:8443"
+    echo "      - 8843:8843"
+    echo "      - 8880:8880"
+    echo "      - 6789:6789"
+    echo "    volumes:"
+    echo "      - \"/srv/unifi:/root/.unifi-controller\""
+    echo "    restart: unless-stopped"
   } > /srv/unifi/unifi.yml
 
   # create .env with default values
   {
     echo "PUID=1000"
     echo "PGID=1000"
-    echo "MEM_LIMIT=1024M #optional"
+    echo "MEM_LIMIT=1024M"
   } > /srv/unifi/.env
 
   # add autorun
@@ -58,14 +60,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "3478"
-  echo "10001"
-  echo "10002"
-  echo "8081"
-  echo "8443"
-  echo "8843"
-  echo "8880"
-  echo "6789"
+  echo "8443 use https"
 }
 
 # add size (in MB)

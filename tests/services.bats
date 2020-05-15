@@ -83,6 +83,11 @@ load test-helper
   assert_success && assert_output -p 'planet stopped'
 }
 
+@test "$clinom services planet start" {
+  run "${clicmd}" services planet start
+  assert_success && assert_output -p 'planet started'
+}
+
 @test "$clinom services planet down" {
   run "${clicmd}" services planet down
   assert_success && assert_output -p 'planet stopped and removed'

@@ -32,7 +32,7 @@ Usage: treehouses
    apchannel [channel]                       sets or prints the current ap channel
    timezone <timezone>                       sets the timezone of the system
    locale <locale>                           sets the system locale
-   ssh <on|off>                              enables or disables the ssh service
+   ssh [on|off]                              enables or disables the ssh service
    vnc [on|off|info]                         enables or disables the vnc server service
    default                                   sets a raspbian back to default configuration
    wificountry <country>                     sets the wifi country
@@ -42,7 +42,8 @@ Usage: treehouses
    led [green|red] [mode]                    sets the led mode
        [dance|thanksgiving|christmas]
        [newyear|lunarnewyear|valentine]
-       [carnival|stpatricks|random] 
+       [carnival|stpatricks|onam]
+       [heavymetal|easter|random] 
    power [status|freq|<mode>]                sets the power scaling or check CPU frequency
    rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
    ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
@@ -72,7 +73,7 @@ Usage: treehouses
       [couchdb]      <size>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
       [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
       [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
-      [seafile]      <environment [edit]>    Seafile is an open-source, cross-platform file-hosting software system
+      [seafile]      <config>                Seafile is an open-source, cross-platform file-hosting software system
       [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
       [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
       [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
@@ -98,6 +99,8 @@ Usage: treehouses
    sdbench                                   displays read and write speed of micro SD card
    inspire [joke|qotd|random]                displays quote based on user input
    shutdown [now|in|force]                   shutdown the system 
+   gpio                                      displays raspberry pi model and corresponding GPIO ports
+   changelog                                 displays the most recent changes to treehouses
 EOF
   echo "$helpdefault"
 }

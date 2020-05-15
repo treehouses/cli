@@ -32,6 +32,8 @@ treehouses bootoption console
 treehouses bootoption console autologin
 treehouses bootoption desktop
 treehouses bootoption desktop autologin
+treehouses bootoption modules
+treehouses bootoption params
 treehouses bridge
 treehouses burn
 treehouses button bluetooth
@@ -40,6 +42,9 @@ treehouses camera
 treehouses camera capture
 treehouses camera off
 treehouses camera on
+treehouses changelog
+treehouses changelog view
+treehouses changelog compare
 treehouses clone
 treehouses container
 treehouses container balena
@@ -84,6 +89,7 @@ treehouses discover wifi
 treehouses ethernet
 treehouses expandfs
 treehouses feedback
+treehouses gpio
 treehouses help
 treehouses help ap
 treehouses help apchannel
@@ -95,6 +101,7 @@ treehouses help bridge
 treehouses help burn
 treehouses help button
 treehouses help camera
+treehouses help changelog
 treehouses help clone
 treehouses help container
 treehouses help coralenv
@@ -179,6 +186,7 @@ treehouses led thanksgiving
 treehouses led valentine
 treehouses led heavymetal
 treehouses led stpatricks
+treehouses led easter
 treehouses led random
 treehouses locale
 treehouses log
@@ -313,6 +321,7 @@ treehouses tor start
 treehouses tor status
 treehouses tor stop
 treehouses upgrade
+treehouses upgrade cli
 treehouses upgrade force
 treehouses upgrade bluetooth
 treehouses upgrade check
@@ -353,14 +362,20 @@ EOF
 function services_cmds {
   while IFS= read -r line;
   do
-    printf "treehouses services $line autorun
+    printf "treehouses services $line
+treehouses services $line autorun
 treehouses services $line autorun false
 treehouses services $line autorun true
 treehouses services $line cleanup
 treehouses services $line down
-treehouses services $line environment
-treehouses services $line environment edit
-treehouses services $line environment edit vim
+treehouses services $line config
+treehouses services $line config available
+treehouses services $line config edit
+treehouses services $line config edit request
+treehouses services $line config edit send
+treehouses services $line config edit vim
+treehouses services $line config new
+treehouses services $line config select
 treehouses services $line icon
 treehouses services $line icon oneline
 treehouses services $line info

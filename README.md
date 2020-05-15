@@ -60,17 +60,18 @@ aphidden <local|internet> <ESSID>         creates a hidden mobile ap with or wit
 apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system
 locale <locale>                           sets the system locale
-ssh <on|off>                              enables or disables the ssh service
+ssh [on|off]                              enables or disables the ssh service
 vnc [on|off|info]                         enables or disables the vnc server service
 default                                   sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
-upgrade [tag|check|bluetooth|force]       upgrades treehouses package using npm
+upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
 sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
           <key|portinterval> [user@host]
 led [green|red] [mode]                    sets the led mode
     [dance|thanksgiving|christmas]
     [newyear|lunarnewyear|valentine]
-    [carnival|stpatricks|random]
+    [carnival|stpatricks|onam]
+    [heavymetal|easter|random]
 power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
@@ -100,12 +101,15 @@ services                                  executes the given command on the spec
    [couchdb]      <size>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
    [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
    [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
-   [seafile]      <environment [edit]>    Seafile is an open-source, cross-platform file-hosting software system
+   [seafile]      <config>                Seafile is an open-source, cross-platform file-hosting software system
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
-   [unifi]                                Unifi is a powerful, enterprise wireless software engine
+   [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
+   [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
+   [unifi]                                Unifi is a powerful, enterprise wireless software engine   
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
+           <modules|params>
 openvpn [use|show|delete]                 helps setting up an openvpn client
         [notice|start|stop|load]
 coralenv [install|demo-on|demo-off]       plays with the coral environmental board
@@ -124,6 +128,8 @@ blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hos
 sdbench                                   displays read and write speed of micro SD card
 inspire [joke|qotd|random]                displays quote based on user input
 shutdown [now|in|force]                   shutdown the system           
+gpio                                      displays raspberry pi model and corresponding GPIO ports
+changelog [view|compare]                displays the most recent changes to treehouses
 ```
 
 ## Additional README's

@@ -29,3 +29,8 @@ load test-helper
   run "${clicmd}" upgrade check
   assert_success
 }
+
+@test "$clinom upgrade cli master" {
+  run "${clicmd}" upgrade cli master
+  assert_success
+}

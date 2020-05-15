@@ -2,13 +2,13 @@
 
 function install {
   # create service directory
-  mkdir -p /srv/unifi-controller
+  mkdir -p /srv/unifi
 
   # create yml(s)
   {
     echo "version: '2.1'"
     echo "services:"
-    echo "unifi-controller:"
+    echo "unifi:"
     echo "image: linuxserver/unifi-controller"
     echo "environment:"
     echo "  - PUID=\${PUID}"
@@ -24,25 +24,25 @@ function install {
     echo "  - 8880:8880"
     echo "  - 6789:6789"
     echo "restart: unless-stopped"
-  } > /srv/unifi-controller/unifi-controller.yml
+  } > /srv/unifi/unifi.yml
 
   # create .env with default values
   {
-    echo "- PUID=1000"
-    echo "- PGID=1000"
-    echo "- MEM_LIMIT=1024M #optional"
-  } > /srv/unifi-controller/.env
+    echo "PUID=1000"
+    echo "PGID=1000"
+    echo "MEM_LIMIT=1024M #optional"
+  } > /srv/unifi/.env
 
   # add autorun
   {
-    echo "unifi-controller_autorun=true"
+    echo "unifi_autorun=true"
     echo
-    echo "if [ \"\$unifi-controller_autorun\" = true ]; then"
-    echo "  treehouses services unifi-controller up"
+    echo "if [ \"\$unifi_autorun\" = true ]; then"
+    echo "  treehouses services unifi up"
     echo "fi"
     echo
     echo
-  } > /srv/unifi-controller/autorun
+  } > /srv/unifi/autorun
 }
 
 # environment var

@@ -10,7 +10,6 @@ function install {
     echo "services:"
     echo "unifi-controller:"
     echo "image: linuxserver/unifi-controller"
-    echo "container_name: unifi-controller"
     echo "environment:"
     echo "  - PUID=\${PUID}"
     echo "  - PGID=\${PGID}"
@@ -78,9 +77,9 @@ function get_size {
 function get_info {
   echo "https://www.ubnt.com/enterprise/#unifi"
   echo
-  echo "The Unifi-controller Controller software is a powerful, enterprise"
-  echo "wireless software engine ideal for high-density client deployments"
-  echo "requiring low latency and high uptime performance"
+  echo "The Unifi Controller software is a powerful, enterprise"
+  echo "wireless software engine ideal for high-density client"
+  echo "deployments requiring low latency and high uptime performance"
 }
 
 # add svg icon

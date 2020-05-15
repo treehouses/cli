@@ -48,6 +48,8 @@ function default_network {
   rm -rf /etc/network/up-bridge.sh
   rm -rf /etc/network/eth0-shared.sh
   rm -rf /etc/network/mode
+  config delete WIFICOUNTRY
+
 
   case $(detectrpi) in
     RPIZ|RPIZW)

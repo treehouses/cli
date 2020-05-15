@@ -50,7 +50,6 @@ function default_network {
   rm -rf /etc/network/mode
   config delete WIFICOUNTRY
 
-
   case $(detectrpi) in
     RPIZ|RPIZW)
       {

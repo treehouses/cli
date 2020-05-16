@@ -21,7 +21,7 @@ function install {
     echo "      - DB_USERNAME=\${DB_USERNAME}"
     echo "      - DB_PASSWORD=\${DB_PASSWORD}"
     echo "    ports:"
-    echo "      - 80:80"
+    echo "      - 90:90"
     echo "    volumes:"
     echo "      - \"/srv/librespeed:/root/.librespeed\""
     echo "    restart: unless-stopped"
@@ -65,7 +65,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "80"
+  echo "90"
 }
 
 # add size (in MB)

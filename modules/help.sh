@@ -97,9 +97,9 @@ Usage: treehouses
    blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
    sdbench                                   displays read and write speed of micro SD card
    inspire [joke|qotd|random]                displays quote based on user input
-   shutdown [now|in|force]                   shutdown the system
    convert <input file> <output file>        converts video and audio files 
    gpio                                      displays raspberry pi model and corresponding GPIO ports
+   shutdown [now|in|force]                   shutdown the system
 EOF
   echo "$helpdefault"
 }

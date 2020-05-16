@@ -29,10 +29,10 @@ function convert {
 
 function convert_help {
   echo
-  echo "Usage: $BASENAME convert"
+  echo "Usage: $BASENAME convert <input file> <output file>"
   echo
   echo "Example:"
-  echo "  $BASENAME convert <input file format> <output file format>"
-  echo "      convert the input file format to output video format "
+  echo "  $BASENAME convert video.mp4 video.mp3"
+  echo "      convert video mp4 file to mp3 format"
 }
 

@@ -9,7 +9,7 @@ function convert {
       frames=""
     fi
     while read -r line || { status=$line && break; }; do
-      if [ -z ${frames+x} ]; then
+      if [ -z $frames ]; then
         echo -ne "conversion running"\\r
       else
         percent=$(bc <<< "scale=2; ($line / $frames) * 100")

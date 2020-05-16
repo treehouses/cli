@@ -21,7 +21,7 @@ function install {
     echo "      - DB_USERNAME=\${DB_USERNAME}"
     echo "      - DB_PASSWORD=\${DB_PASSWORD}"
     echo "    ports:"
-    echo "      - 90:90"
+    echo "      - 90:80"
     echo "    volumes:"
     echo "      - \"/srv/librespeed:/root/.librespeed\""
     echo "    restart: unless-stopped"

@@ -13,7 +13,7 @@ function log2ram {
     curl -s -Lo log2ram.tar.gz https://github.com/azlux/log2ram/archive/master.tar.gz &>"$LOGFILE"
     tar xf log2ram.tar.gz &>"$LOGFILE"
     rm log2ram.tar.gz
-    cd log2ram-master
+    cd log2ram-master || exit
     chmod +x install.sh && ./install.sh &>"$LOGFILE"
     cd ..
     rm -r log2ram-master

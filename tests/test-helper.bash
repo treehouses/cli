@@ -18,10 +18,14 @@ function check_networkmode {
 }
 
 setup() {
+  local DIR=$(realpath $PWD)
+  while [ ! -z "$DIR" ] && [ ! -f "$DIR/cli.sh" ]; do
+    DIR="${DIR%\/*}"
+  done
+  export clicmd="$DIR/cli.sh"
   export clinom="cli.sh"
-  export clicmd="../cli.sh"
 }
 
-teardown() { 
+teardown() {
   if [ -f /etc/treehouses.conf ]; then rm /etc/treehouses.conf; fi
 }

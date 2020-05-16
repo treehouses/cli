@@ -29,11 +29,22 @@ function install {
     echo "netdata_autorun=true"
     echo
     echo "if [ \"\$netdata_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/netdata/netdata.yml -p netdata up -d"
+    echo "  treehouses services netdata up"
     echo "fi"
     echo
     echo
   } > /srv/netdata/autorun
+}
+
+# environment var
+function uses_env {
+  echo false
+}
+
+# add supported arm(s)
+function supported_arms {
+  echo "v7l"
+  echo "v6l"
 }
 
 # add port(s)

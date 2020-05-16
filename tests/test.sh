@@ -35,7 +35,7 @@ case "$1" in
   ;;
   nonetblue)
     time bats ./blocker* ./bootoption* ./burn* ./c* ./detect.bats \
-         ./detectrpi.bats ./expandfs* ./h* ./image* ./l* ./m* ./n* \
+         ./expandfs* ./h* ./image* ./l* ./m* ./n* \
          ./p* ./r* ./temperature* ./timezone* ./usb.bats ./verbose* ./version*
   ;;
   *)

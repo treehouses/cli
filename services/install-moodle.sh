@@ -20,26 +20,48 @@ function install {
     echo "    ports:"
     echo "      - \"8082:8082\""
     echo "    environment:"
-    echo "    - NGINX_PORT=8082"
-    echo "    - MOODOLE_DB_URL=postgres"
-    echo "    - MOODOLE_DB_NAME=moodle"
-    echo "    - MOODOLE_DB_USER=moodle"
-    echo "    - MOODOLE_DB_PASS=moodle"
-    echo "    - MOODOLE_DB_PORT=5432"
-    echo "    - MOODOLE_MAX_BODY_SIZE=200M"
-    echo "    - MOODOLE_BODY_TIMEOUT=300s"
+    echo "    - NGINX_PORT=\${NGINX_PORT_VAR}"
+    echo "    - MOODOLE_DB_URL=\${MOODOLE_DB_URL_VAR}"
+    echo "    - MOODOLE_DB_NAME=\${MOODOLE_DB_NAME_VAR}"
+    echo "    - MOODOLE_DB_USER=\${MOODOLE_DB_USER_VAR}"
+    echo "    - MOODOLE_DB_PASS=\${MOODOLE_DB_PASS_VAR}"
+    echo "    - MOODOLE_DB_PORT=\${MOODOLE_DB_PORT_VAR}"
+    echo "    - MOODOLE_MAX_BODY_SIZE=\${MOODOLE_MAX_BODY_SIZE_VAR}"
+    echo "    - MOODOLE_BODY_TIMEOUT=\${MOODOLE_BODY_TIMEOUT_VAR}"
   } > /srv/moodle/moodle.yml
+
+  # create .env with default values
+  {
+    echo "NGINX_PORT_VAR=8082"
+    echo "MOODOLE_DB_URL_VAR=postgres"
+    echo "MOODOLE_DB_NAME_VAR=moodle"
+    echo "MOODOLE_DB_USER_VAR=moodle"
+    echo "MOODOLE_DB_PASS_VAR=moodle"
+    echo "MOODOLE_DB_PORT_VAR=5432"
+    echo "MOODOLE_MAX_BODY_SIZE_VAR=200M"
+    echo "MOODOLE_BODY_TIMEOUT_VAR=300s"
+  } > /srv/moodle/.env
 
   # add autorun
   {
     echo "moodle_autorun=true"
     echo
     echo "if [ \"\$moodle_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/moodle/moodle.yml -p moodle up -d"
+    echo "  treehouses services moodle up"
     echo "fi"
     echo
     echo
   } > /srv/moodle/autorun
+}
+
+# environment var
+function uses_env {
+  echo true
+}
+
+# add supported arm(s)
+function supported_arms {
+  echo "v7l"
 }
 
 # add port(s)

@@ -24,11 +24,22 @@ function install {
     echo "portainer_autorun=true"
     echo
     echo "if [ \"\$portainer_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/portainer/portainer.yml -p portainer up -d"
+    echo "  treehouses services portainer up"
     echo "fi"
     echo
     echo
   } > /srv/portainer/autorun
+}
+
+# environment var
+function uses_env {
+  echo false
+}
+
+# add supported arm(s)
+function supported_arms {
+  echo "v7l"
+  echo "v6l"
 }
 
 # add port(s)

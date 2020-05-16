@@ -3,6 +3,11 @@
 function install {
   # create service directory
   mkdir -p /srv/seafile
+  if [ "$(tor status)" = "inactive" ] || [[ "$(tor status)" =~ "Error" ]]; then
+    address=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+  else
+    address=$(tor)
+  fi
 
   # create yml(s)
   {
@@ -14,25 +19,42 @@ function install {
     echo "    ports:"
     echo "      - \"8085:8000\""
     echo "      - \"8086:8086\""
-    echo "    environment:        "
+    echo "    environment:"
     echo "      - SEAFILE_NAME=Seafile"
-    echo "      - SEAFILE_ADDRESS=$(treehouses tor) "
-    echo "      - SEAFILE_ADMIN=example@seafile.com "
-    echo "      - SEAFILE_ADMIN_PW=seacret "
-    echo "    volumes:          "
-    echo "      - /home/data/seafile:/seafile "
+    echo "      - SEAFILE_ADDRESS=$address"
+    echo "      - SEAFILE_ADMIN=\${SEAFILE_ADMIN_VAR}"
+    echo "      - SEAFILE_ADMIN_PW=\${SEAFILE_ADMIN_PW_VAR}"
+    echo "    volumes:"
+    echo "      - /home/data/seafile:/seafile"
   } > /srv/seafile/seafile.yml
+
+  # create .env with default values
+  {
+    echo "SEAFILE_ADMIN_VAR=example@seafile.com"
+    echo "SEAFILE_ADMIN_PW_VAR=seacret"
+  } > /srv/seafile/.env
 
   # add autorun
   {
     echo "seafile_autorun=true"
     echo
     echo "if [ \"\$seafile_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/seafile/seafile.yml -p seafile up -d"
+    echo "  treehouses services seafile up"
     echo "fi"
     echo
     echo
   } > /srv/seafile/autorun
+}
+
+# environment var
+function uses_env {
+  echo true
+}
+
+# add supported arm(s)
+function supported_arms {
+  echo "v7l"
+  echo "v6l"
 }
 
 # add port(s)
@@ -48,11 +70,12 @@ function get_size {
 
 # add info
 function get_info {
-  echo "https://github.com/treehouses/seafile"
+  echo "https://github.com/treehouses/rpi-seafile"
   echo
-  echo "\"A minimalist, open source online pastebin where the server has"
-  echo "zero knowledge of pasted data. Data is encrypted/decrypted in the"
-  echo "browser using 256 bits AES. https://seafile.info/\""
+  echo "\"Seafile is an open source file sync&share solution designed for"
+  echo "high reliability, performance and productivity. Sync, share and"
+  echo "collaborate across devices and teams. Build your team's knowledge"
+  echo "base with Seafile's built-in Wiki feature. https://www.seafile.com/\""
 }
 
 # add svg icon

@@ -22,11 +22,22 @@ function install {
     echo "couchdb_autorun=true"
     echo
     echo "if [ \"\$couchdb_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/couchdb/couchdb.yml -p couchdb up -d"
+    echo "  treehouses services couchdb up"
     echo "fi"
     echo
     echo
   } > /srv/couchdb/autorun
+}
+
+# environment var
+function uses_env {
+  echo false
+}
+
+# add supported arm(s)
+function supported_arms {
+  echo "v7l"
+  echo "v6l"
 }
 
 # add port(s)

@@ -64,7 +64,12 @@ function networkmode {
       done
     fi
   else
-    echo "$network_mode"
+    if [ "$1" == "" ]; then	   
+      echo "$network_mode"
+    else
+      networkmode_help
+      exit 1
+    fi
   fi
 }
 

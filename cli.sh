@@ -3,267 +3,54 @@
 SCRIPTPATH=$(realpath "$0")
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 SCRIPTARGS="$*"
+TEMPLATES="$SCRIPTFOLDER/templates"
+SERVICES="$SCRIPTFOLDER/services"
+CONFIGFILE=/etc/treehouses.conf
+BASENAME=$(basename "$0")
+LOGFILE=/dev/null
+LOG=0
+BLOCKER=0
+token="$(echo YWRmYWI1NmIyZjEwYjg1Zjk0ZGIyNWYxOGU1MWE0YjQ2NWRiZDY3MAo= | openssl enc -d -pbkdf2 -a -salt -pass 'pass:I&l_v^diS%%repo')"
+channel="https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages"
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+# set on ../templates/network/tor_report.sh
+if [ ! -z "$gitter_channel" ]; then
+  channel="$gitter_channel"
+fi
+
+if [[ -f "$CONFIGFILE" ]]; then
+  source "$CONFIGFILE"
+fi
+
+if [[ "$LOG" == "max" ]]; then
+  set -x
+  exec 1> >(tee >(logger -t @treehouses/cli)) 2>&1
+fi
 
 for f in $SCRIPTFOLDER/modules/*.sh
 do
   source "$f"
-  cmd=$(basename "$f")
-  cmd=${cmd%%.*}
-  if [ "$cmd" = "$1" ] && [ "$1" != "globals" ] && [ "$1" != "config" ]; then
+  cmd=${f##*/}
+  cmd=${cmd%.*}
+  if [ "$cmd" = "$1" ] && [ "$1" != "globals" ]; then
     find=1
   fi
 done
+
 if [ "$find" = 1 ]; then
-  eval "$@"
+  start_spinner
+  "$@"
 else
   help
 fi
 
-<<<<<<< HEAD
-case $1 in
-  expandfs)
-    checkrpi
-    checkroot
-    expandfs
-    ;;
-  rename)
-    checkroot
-    rename "$2"
-    ;;
-  password)
-    checkrpi
-    checkroot
-    password "$2"
-    ;;
-  sshkey)
-    checkroot
-    shift
-    sshkey "$@"
-    ;;
-  version)
-    version
-    ;;
-  image)
-    image
-    ;;
-  detect)
-    detect
-    ;;
-  detectrpi)
-    detectrpi
-    ;;
-  wifi)
-    checkrpi
-    checkroot
-    wifi "$2" "$3"
-    ;;
-  wifihidden)
-    checkrpi
-    checkroot
-    wifihidden "$2" "$3"
-    ;;
-  staticwifi)
-    checkrpi
-    checkroot
-    staticwifi "$2" "$3" "$4" "$5" "$6" "$7"
-    ;;
-  container)
-    checkroot
-    container "$2"
-    ;;
-  bluetooth)
-    checkwrpi
-    checkroot
-    bluetooth "$2" "$3"
-    ;;
-  bluetoothid)
-    checkrpi
-    bluetoothid "$2"
-    ;;
-  ethernet)
-    checkrpi
-    checkroot
-    ethernet "$2" "$3" "$4" "$5"
-    ;;
-  ap)
-    checkrpi
-    checkroot
-    shift
-    ap "$@"
-    ;;
-  discover)
-    shift
-    discover "$@"
-    ;;
-  timezone)
-    checkroot
-    timezone "$2"
-    ;;
-  locale)
-    checkroot
-    locale "$2"
-    ;;
-  ssh)
-    checkroot
-    ssh "$2"
-    ;;
-  vnc)
-    checkroot
-    vnc "$2"
-    ;;
-  default)
-    checkroot
-    default "$2"
-    ;;
-  upgrade)
-    shift
-    upgrade "$@"
-    ;;
-  bridge)
-    checkrpi
-    checkroot
-    shift
-    bridge "$@"
-    ;;
-  wificountry)
-    checkrpi
-    checkroot
-    wificountry "$2"
-    ;;
-  wifistatus)
-    checkrpi
-    wifistatus "$2"
-    ;;
-  sshtunnel)
-    checkroot
-    sshtunnel "$2" "$3" "$4"
-    ;;
-  led)
-    checkrpi
-    led "$2" "$3"
-    ;;
-  rtc)
-    checkrpi
-    checkroot
-    rtc "$2" "$3"
-    ;;
-  ntp)
-    checkrpi
-    checkroot
-    ntp "$2"
-    ;;
-  networkmode)
-    networkmode "$2"
-    ;;
-  button)
-    checkrpi
-    checkroot
-    button "$2"
-    ;;
-  feedback)
-    shift
-    feedback "$*"
-    ;;
-  apchannel)
-    checkrpi
-    shift
-    apchannel "$1"
-    ;;
-  clone)
-    checkrpi
-    checkroot
-    shift
-    clone "$1"
-    ;;
-  restore)
-    checkrpi
-    checkroot
-    shift
-    restore "$1"
-    ;;
-  burn)
-    checkrpi
-    checkroot
-    shift
-    burn "$1"
-    ;;
-  rebootneeded)
-    rebootneeded
-    ;;
-  reboots)
-    reboots "$2" "$3"
-    ;;
-  internet)
-    internet
-    ;;
-  services)
-    shift
-    services "$@"
-    ;;
-  tor)
-    checkroot
-    shift
-    tor "$@"
-    ;;
-  bootoption)
-    checkrpi
-    checkroot
-    shift
-    bootoption "$*"
-    ;;
-  openvpn)
-    checkroot
-    shift
-    openvpn "$@"
-    ;;
-  coralenv)
-    checkrpi
-    checkroot
-    shift
-    coralenv "$@"
-    ;;
-  memory)
-    shift
-    memory "$@"
-    ;;
-  temperature)
-    checkrpi
-    temperature "$2"
-    ;;
-  speedtest)
-    shift
-    speedtest "$@"
-    ;;
-  camera)
-    checkrpi
-    camera "$2"
-    ;;
-  cron)
-    checkroot
-    cron "$2" "$3"
-    ;;
-  usb)
-    checkroot
-    usb "$2"
-    ;;
-  sdcard)
-    checkroot
-    shift
-    case "${1}" in
-      'downloadandburn'  ) download_and_burn "$2";;
-      'erase'            ) erase_sd "$2";;
-      *                  ) help ;; 
-    esac 
-    ;;
-  help)
-    help "$2"
-    ;;
-  *)
-    help
-    ;;
-esac
-=======
 if [ $? -eq 0 ]; then
   logit "$SCRIPTARGS" "1"
 fi
->>>>>>> 98401c537b45eba234331ad0ba1dee6f72daa785
+
+if [[ ! -v NOSPIN ]]; then
+  tput cvvis
+fi

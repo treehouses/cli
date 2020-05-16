@@ -42,6 +42,9 @@ treehouses camera
 treehouses camera capture
 treehouses camera off
 treehouses camera on
+treehouses changelog
+treehouses changelog view
+treehouses changelog compare
 treehouses clone
 treehouses container
 treehouses container balena
@@ -98,6 +101,7 @@ treehouses help bridge
 treehouses help burn
 treehouses help button
 treehouses help camera
+treehouses help changelog
 treehouses help clone
 treehouses help container
 treehouses help coralenv
@@ -182,6 +186,7 @@ treehouses led thanksgiving
 treehouses led valentine
 treehouses led heavymetal
 treehouses led stpatricks
+treehouses led easter
 treehouses led random
 treehouses locale
 treehouses log
@@ -364,14 +369,14 @@ treehouses services $line autorun false
 treehouses services $line autorun true
 treehouses services $line cleanup
 treehouses services $line down
-treehouses services $line environment
-treehouses services $line environment available
-treehouses services $line environment edit
-treehouses services $line environment edit request
-treehouses services $line environment edit send
-treehouses services $line environment edit vim
-treehouses services $line environment new
-treehouses services $line environment select
+treehouses services $line config
+treehouses services $line config available
+treehouses services $line config edit
+treehouses services $line config edit request
+treehouses services $line config edit send
+treehouses services $line config edit vim
+treehouses services $line config new
+treehouses services $line config select
 treehouses services $line icon
 treehouses services $line icon oneline
 treehouses services $line info

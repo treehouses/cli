@@ -198,6 +198,8 @@ treehouses log 4
 treehouses log max
 treehouses log show
 treehouses log show 5
+treehouses log2ram off
+treehouses log2ram on
 treehouses memory
 treehouses memory -g
 treehouses memory -m

@@ -126,9 +126,10 @@ log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
 inspire [joke|qotd|random]                displays quote based on user input
-shutdown [now|in|force]                   shutdown the system           
+shutdown [now|in|force]                   shutdown the system
 gpio                                      displays raspberry pi model and corresponding GPIO ports
-changelog [view|compare]                displays the most recent changes to treehouses
+changelog [view|compare]                  displays the most recent changes to treehouses
+log2ram [on|off]                          force logs to be stored in ram and only writes to disk on shutdown
 ```
 
 ## Additional README's

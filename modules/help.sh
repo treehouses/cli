@@ -101,6 +101,7 @@ Usage: treehouses
    shutdown [now|in|force]                   shutdown the system 
    gpio                                      displays raspberry pi model and corresponding GPIO ports
    changelog                                 displays the most recent changes to treehouses
+   log2ram [on|off]                          force logs to be stored in ram and only writes to disk on shutdown
 EOF
   echo "$helpdefault"
 }

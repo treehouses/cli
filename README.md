@@ -126,7 +126,7 @@ blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hos
 sdbench                                   displays read and write speed of micro SD card
 inspire [joke|qotd|random]                displays quote based on user input
 shutdown [now|in|force]                   shutdown the system
-convert                                   converts audio and video files
+convert <input file> <output file>        converts audio and video files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 ```
 

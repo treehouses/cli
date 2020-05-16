@@ -23,7 +23,7 @@ function convert {
       echo "conversion unsuccessful"
     fi
   else
-    echo "Error: invalid arguments"
+    log_and_exit1 "Error: invalid arguments"
   fi
 }
 

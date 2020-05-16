@@ -1,8 +1,8 @@
 function convert {
   local frames percent status
   checkargn $# 2
-  inputFile=$1
-  outputFile=$2
+  inputFile="$1"
+  outputFile="$2"
   if [ -e "$inputFile" ] && [[ "$outputFile" != "" ]]; then
     frames=$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of default=nokey=1:noprint_wrappers=1 $inputFile)
     if ! [[ $frames =~ ^[0-9]+$ ]]; then

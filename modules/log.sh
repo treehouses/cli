@@ -1,3 +1,32 @@
+function log2ram {
+  checkrpi
+  checkargn $# 1
+  if [ "$1" = "" ]; then
+    if [[ $(df -h) != *"log2ram"* ]]; then
+      echo "log2ram is off"
+    else
+      echo "log2ram is on"
+    fi
+  elif [ "$1" = "on" ]; then
+    checkinternet
+    curl -s -Lo log2ram.tar.gz https://github.com/azlux/log2ram/archive/master.tar.gz &>"$LOGFILE"
+    tar xf log2ram.tar.gz &>"$LOGFILE"
+    rm log2ram.tar.gz
+    cd log2ram-master || exit
+    chmod +x install.sh && ./install.sh &>"$LOGFILE"
+    cd ..
+    rm -r log2ram-master
+    echo "Successfully enabled log2ram, please reboot"
+  elif [ "$1" = "off" ]; then
+    if [ -f "/usr/local/bin/uninstall-log2ram.sh" ]; then
+      chmod +x /usr/local/bin/uninstall-log2ram.sh && /usr/local/bin/uninstall-log2ram.sh &>"$LOGFILE"
+    fi
+    echo "Sucessfully disabled log2ram"
+  else
+    log_and_exit1 "Error: only '', 'on', and 'off' options supported"
+  fi
+}
+
 # uses logger command to log to /var/log/syslog
 # logit "text" "whether or not to write to screen" "logging level"
 # e.g. logit "i logged some text"
@@ -105,6 +134,9 @@ function log {
 	  LOG=max
 	  logit "log X: level set to max" "" "DEBUG"
 	  ;;
+  "ram")
+    log2ram "$2"
+    ;;
     *)
       log_and_exit1 "Error: only '0' '1' '2' '3' '4' 'show' 'max' options are supported"
       ;;
@@ -114,7 +146,7 @@ function log {
 
 function log_help {
   echo
-  echo "Usage: $BASENAME log <0|1|2|3|4|show|max>"
+  echo "Usage: $BASENAME log [0|1|2|3|4|show|max|ram [on|off]]"
   echo
   echo "Example:"
   echo "  $BASENAME log"
@@ -145,5 +177,17 @@ function log_help {
   echo
   echo "  $BASENAME log max"
   echo "      log X: level set to max"
+  echo
+  echo "  $BASENAME log ram"
+  echo "      log2ram is off"
+  echo "  force logs to be stored in ram and only writes to disk on shutdown"
+  echo "  https://github.com/azlux/log2ram"
+  echo "  Stores logs in 40M (Megabytes) in mount point in memory"
+  echo
+  echo "  $BASENAME log ram on"
+  echo "      Successfully enabled log2ram, please reboot"
+  echo
+  echo "  $BASENAME log ram off"
+  echo "      Successfully disabled log2ram"
   echo
 }

@@ -2,14 +2,10 @@ function wifimain {
   local wifinetwork wifipassword wificountry wifiaddr
   checkrpi
   checkroot
-  checkargn $# 4
+  checkargn $# 3
   if [ -z "$1" ]; then
     echo "Error: name of the network missing"
     exit 1
-  fi
-
-  if [[ ! -z "$3" ]] && [ "$3" != "WPA-EAP" ]; then
-    log_and_exit1 "Error: only 'WPA-EAP' option supported"
   fi
 
   wifinetwork=$1
@@ -74,7 +70,7 @@ function wifimain {
     echo "  scan_ssid=1"
       if [[ ! -z "$3" ]]; then
         echo "  key_mgmt=WPA-EAP"
-        echo "  identity=\"$4\""
+        echo "  identity=\"$3\""
         echo "  password=\"$wifipassword\""
         echo "  phase1=\"peaplabel=0\""
         echo "  phase2=\"auth=MSCHAPV2\""
@@ -94,7 +90,7 @@ function wifimain {
       echo "network={"
       echo "  ssid=\"$wifinetwork\""
       echo "  key_mgmt=WPA-EAP"
-      echo "  identity=\"$4\""
+      echo "  identity=\"$3\""
       echo "  password=\"$wifipassword\""
       echo "  phase1=\"peaplabel=0\""
       echo "  phase2=\"auth=MSCHAPV2\""
@@ -118,7 +114,7 @@ function wifi {
 
 function wifi_help {
   echo
-  echo "Usage: $BASENAME wifi <ESSID> [password] [WPA-EAP]"
+  echo "Usage: $BASENAME wifi <ESSID> [password] [identity]"
   echo
   echo "Connects to a wifi network"
   echo
@@ -129,7 +125,7 @@ function wifi_help {
   echo "  $BASENAME wifi yourwifiname"
   echo "      Connects to an open wifi network named 'yourwifiname'."
   echo
-  echo "  $BASENAME wifi home homewifipassword WPA-EAP username"
-  echo "      Connects to an Enterprise (WPA-EAP) wifi network named 'home' with user 'username' and user password 'homewifipassword'."
+  echo "  $BASENAME wifi home homewifipassword identity"
+  echo "      Connects to an Enterprise (WPA-EAP) wifi network named 'home' with user 'identity' and user password 'homewifipassword'."
   echo
 }

@@ -68,15 +68,15 @@ function wifimain {
     echo "network={"
     echo "  ssid=\"$wifinetwork\""
     echo "  scan_ssid=1"
-      if [[ ! -z "$3" ]]; then
+      if [ -z "$3" ]; then
+        echo "  key_mgmt=WPA-PSK"
+        echo "  psk=\"$wifipassword\""
+      else
         echo "  key_mgmt=WPA-EAP"
         echo "  identity=\"$3\""
         echo "  password=\"$wifipassword\""
         echo "  phase1=\"peaplabel=0\""
         echo "  phase2=\"auth=MSCHAPV2\""
-      else
-        echo "  key_mgmt=WPA-PSK"
-        echo "  psk=\"$wifipassword\""
       fi
     echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
@@ -85,7 +85,9 @@ function wifimain {
     wifiaddr=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
     echo "connected to hidden password network; our wifi ip: $wifiaddr"
   else
-    if [[ ! -z "$3" ]]; then
+    if [ -z "$3" ]; then
+      wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
+    else
     {
       echo "network={"
       echo "  ssid=\"$wifinetwork\""
@@ -96,8 +98,6 @@ function wifimain {
       echo "  phase2=\"auth=MSCHAPV2\""
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
-    else
-      wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
     fi
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     checkwifi

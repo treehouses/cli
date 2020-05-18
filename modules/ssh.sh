@@ -22,7 +22,7 @@ function ssh {
 
 function ssh_help {
   echo
-  echo "Usage: $BASENAME ssh [on|off]"
+  echo "Usage: $BASENAME ssh [on|off|fingerprint]"
   echo
   echo "Enables or disables the SSH service"
   echo

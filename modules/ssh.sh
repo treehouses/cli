@@ -37,6 +37,6 @@ function ssh_help {
   echo "      The SSH service will be disabled."
   echo 
   echo "  $BASENAME ssh fingerprint"
-  echo "      The SSH fingerprint will be printed when the session was first established."
+  echo "      The SSH fingerprint will be printed from when the session was first established."
   echo
 }

@@ -53,15 +53,7 @@ function wifimain {
     {
       echo "network={"
       echo "  ssid=\"$wifinetwork\""
-      if [[ ! -z "$3" ]]; then
-        echo "  key_mgmt=WPA-EAP"
-        echo "  identity=\"$4\""
-        echo "  password=\"XXXXXXXX\""
-        echo "  phase1=\"peaplabel=0\""
-        echo "  phase2=\"auth=MSCHAPV2\""
-      else
-        echo "  key_mgmt=NONE"
-      fi
+      echo "  key_mgmt=NONE"
       if [ -v hide ]; then
         echo " scan_ssid=1"
       fi

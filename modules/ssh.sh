@@ -11,10 +11,12 @@ function ssh {
     disable_service ssh
     stop_service ssh
     echo "Success: the ssh service has been stopped and disabled when the system boots."
+  elif [ "$status" = "fingerprint" ]; then
+    ssh-keygen -l -E sha256 -f /etc/ssh/ssh_host_ecdsa_key.pub | cut -c5-54
   elif [ "$status" = "" ]; then
     last | grep -E "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"
   else 
-    echo "Error: only '', 'on', or 'off' options are supported"
+    echo "Error: only '', 'on', 'off', or 'fingerprint' options are supported"
   fi
 }
 
@@ -33,5 +35,8 @@ function ssh_help {
   echo
   echo "  $BASENAME ssh off"
   echo "      The SSH service will be disabled."
+  echo 
+  echo "  $BASENAME ssh fingerprint"
+  echo "      The SSH fingerprint will be printed when the session was first established."
   echo
 }

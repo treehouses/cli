@@ -105,6 +105,7 @@ services                                  executes the given command on the spec
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
    [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
+   [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
    [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]

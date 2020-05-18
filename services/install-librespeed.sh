@@ -5,51 +5,50 @@ function install {
   mkdir -p /srv/librespeed
 
   # create yml(s)
-  {
-    echo "version: \"2.1\""
-    echo "services:"
-    echo "  librespeed:"
-    echo "    image: linuxserver/librespeed"
-    echo "    environment:"
-    echo "      - PUID=\${PUID}"
-    echo "      - PGID=\${PGID}"
-    echo "      - TZ=\${TZ}"
-    echo "      - PASSWORD=\${PASSWORD}"
-    echo "      - DB_TYPE=\${DB_TYPE}"
-    echo "      - DB_NAME=\${DB_NAME}"
-    echo "      - DB_HOSTNAME=\${DB_HOSTNAME}"
-    echo "      - DB_USERNAME=\${DB_USERNAME}"
-    echo "      - DB_PASSWORD=\${DB_PASSWORD}"
-    echo "    ports:"
-    echo "      - 8089:80"
-    echo "    volumes:"
-    echo "      - \"/srv/librespeed:/root/.librespeed\""
-    echo "    restart: unless-stopped"
-  } > /srv/librespeed/librespeed.yml
+  cat << EOF > /srv/librespeed/librespeed.yml
+version: "2.1"
+services:
+  librespeed:
+    image: linuxserver/librespeed
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - PASSWORD=${PASSWORD}
+      - DB_TYPE=${DB_TYPE}
+      - DB_NAME=${DB_NAME}
+      - DB_HOSTNAME=${DB_HOSTNAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+      - 8089:80
+    volumes:
+      - "/srv/librespeed:/root/.librespeed"
+    restart: unless-stopped
+EOF
 
   # create .env with default values
-  {
-    echo "PUID=1000"
-    echo "PGID=1000"
-    echo "TZ=Europe/London"
-    echo "PASSWORD=PASSWORD"
-    echo "DB_TYPE=sqlite"
-    echo "DB_NAME=DB_NAME"
-    echo "DB_HOSTNAME=DB_HOSTNAME"
-    echo "DB_USERNAME=DB_USERNAME"
-    echo "DB_PASSWORD=DB_PASSWORD"
-  } > /srv/librespeed/.env
+  cat << EOF > /srv/librespeed/.env
+PUID=1000
+PGID=1000
+TZ=Europe/London
+PASSWORD=PASSWORD
+DB_TYPE=sqlite
+DB_NAME=DB_NAME
+DB_HOSTNAME=DB_HOSTNAME
+DB_USERNAME=DB_USERNAME
+DB_PASSWORD=DB_PASSWORD
+EOF
 
   # add autorun
-  {
-    echo "librespeed_autorun=true"
-    echo
-    echo "if [ \"\$librespeed_autorun\" = true ]; then"
-    echo "  treehouses services librespeed up"
-    echo "fi"
-    echo
-    echo
-  } > /srv/librespeed/autorun
+  cat << EOF > /srv/librespeed/autorun
+librespeed_autorun=true
+
+if [ "$librespeed_autorun" = true ]; then
+  treehouses services librespeed up
+fi
+
+EOF
 }
 
 # environment var

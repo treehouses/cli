@@ -25,6 +25,7 @@ if [ "$kolibri_autorun" = true ]; then
 fi
 
 EOF
+}
 
 # environment var
 function uses_env {

@@ -12,7 +12,7 @@ expandfs                                  expands the partition of the RPI image
 rename <hostname>                         changes hostname
 password <password|disable|enable>        changes the password for 'pi' user or disables/enables password authentication
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
-version [contributors]                    returns the version of cli.sh command
+version [contributors]                    returns the version of treehouses command
 image                                     returns version of the system image installed
 detect [bluetooth|rpi|arm|wifi]           detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
@@ -31,7 +31,7 @@ container <none|docker|balena>            enables (and start) the desired contai
 bluetooth [on|off|pause|restart|button]   switches bluetooth from regular to hotspot mode and shows id or MAC address
           [mac|id|status|log]
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
-aphidden <local|internet> <ESSID>         creates a hidden mobile ap with or without internet access
+aphidden <local|internet> <ESSID>         creates a hidden mobile ap, with or without internet access
          [password]
 apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system

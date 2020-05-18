@@ -619,6 +619,7 @@ function services_help {
   echo "  mariadb         MariaDB is a community-developed fork of the MySQL relational database management system"
   echo "  mongodb         MongoDB is a general purpose, distributed, document-based, NoSQL database."
   echo "  seafile         Seafile is an open-source, cross-platform file-hosting software system"
+  echo "  librespeed      Librespeed is a very lightweight Speedtest implemented in Javascript"
   echo "  turtleblocksjs  TurtleBlocks is an activity with a Logo-inspired graphical \"turtle\" "
   echo "  musicblocks     Music Blocks is a programming language and collection of manipulative tools for exploring musical and mathematical concepts in an integrative and fun way." 
   echo "  minetest        Minetest is an open source infinite-world block sandbox game engine with survival and crafting"

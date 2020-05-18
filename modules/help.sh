@@ -74,6 +74,7 @@ Usage: treehouses
       [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
       [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
       [seafile]      <config>                Seafile is an open-source, cross-platform file-hosting software system
+      [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
       [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
       [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
       [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
@@ -98,9 +99,10 @@ Usage: treehouses
    blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
    sdbench                                   displays read and write speed of micro SD card
    inspire [joke|qotd|random]                displays quote based on user input
-   shutdown [now|in|force]                   shutdown the system 
+   convert <input file> <output file>        converts video and audio files 
    gpio                                      displays raspberry pi model and corresponding GPIO ports
    changelog                                 displays the most recent changes to treehouses
+   shutdown [now|in|force]                   shutdown the system
    log2ram [on|off]                          force logs to be stored in ram and only writes to disk on shutdown
 EOF
   echo "$helpdefault"

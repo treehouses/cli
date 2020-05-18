@@ -343,6 +343,7 @@ treehouses wifi
 treehouses wificountry
 treehouses wifihidden
 treehouses wifistatus
+treehouses convert
 EOF
 # COMP_LINE is the line you typed in terminal
 # COMP_WORDS is array form of COMP_LINE

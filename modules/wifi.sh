@@ -2,10 +2,14 @@ function wifimain {
   local wifinetwork wifipassword wificountry wifiaddr
   checkrpi
   checkroot
-  checkargn $# 2
+  checkargn $# 4
   if [ -z "$1" ]; then
     echo "Error: name of the network missing"
     exit 1
+  fi
+
+  if [[ ! -z "$3" ]] && [ "$3" != "WPA-EAP" ]; then
+    log_and_exit1 "Error: only 'WPA-EAP' option supported"
   fi
 
   wifinetwork=$1
@@ -45,15 +49,22 @@ function wifimain {
     echo "country=$wificountry"
   } > /etc/wpa_supplicant/wpa_supplicant.conf
 
-  if [ -z "$wifipassword" ];
-  then
+  if [ -z "$wifipassword" ]; then
     {
       echo "network={"
       echo "  ssid=\"$wifinetwork\""
-      echo "  key_mgmt=NONE"
-      if [ -v hide ]; then      
+      if [[ ! -z "$3" ]]; then
+        echo "  key_mgmt=WPA-EAP"
+        echo "  identity=\"$4\""
+        echo "  password=\"XXXXXXXX\""
+        echo "  phase1=\"peaplabel=0\""
+        echo "  phase2=\"auth=MSCHAPV2\""
+      else
+        echo "  key_mgmt=NONE"
+      fi
+      if [ -v hide ]; then
         echo " scan_ssid=1"
-      fi	
+      fi
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
@@ -64,14 +75,21 @@ function wifimain {
     else
       echo "connected to hidden open network; our wifi ip: $wifiaddr"
     fi  
-  elif [[ -n "$wifipassword" ]] && [[ -v hide ]];
-  then
-    {	  
+  elif [[ -n "$wifipassword" ]] && [[ -v hide ]]; then
+    {
     echo "network={"
     echo "  ssid=\"$wifinetwork\""
     echo "  scan_ssid=1"
-    echo "  key_mgmt=WPA-PSK"
-    echo "  psk=\"$wifipassword\""
+      if [[ ! -z "$3" ]]; then
+        echo "  key_mgmt=WPA-EAP"
+        echo "  identity=\"$4\""
+        echo "  password=\"$wifipassword\""
+        echo "  phase1=\"peaplabel=0\""
+        echo "  phase2=\"auth=MSCHAPV2\""
+      else
+        echo "  key_mgmt=WPA-PSK"
+        echo "  psk=\"$wifipassword\""
+      fi
     echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
@@ -79,7 +97,20 @@ function wifimain {
     wifiaddr=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
     echo "connected to hidden password network; our wifi ip: $wifiaddr"
   else
-    wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
+    if [[ ! -z "$3" ]]; then
+    {
+      echo "network={"
+      echo "  ssid=\"$wifinetwork\""
+      echo "  key_mgmt=WPA-EAP"
+      echo "  identity=\"$4\""
+      echo "  password=\"$wifipassword\""
+      echo "  phase1=\"peaplabel=0\""
+      echo "  phase2=\"auth=MSCHAPV2\""
+      echo "}"
+    } >> /etc/wpa_supplicant/wpa_supplicant.conf
+    else
+      wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
+    fi
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     checkwifi
     wifiaddr=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
@@ -95,7 +126,7 @@ function wifi {
 
 function wifi_help {
   echo
-  echo "Usage: $BASENAME wifi <ESSID> [password]"
+  echo "Usage: $BASENAME wifi <ESSID> [password] [WPA-EAP]"
   echo
   echo "Connects to a wifi network"
   echo
@@ -105,5 +136,8 @@ function wifi_help {
   echo
   echo "  $BASENAME wifi yourwifiname"
   echo "      Connects to an open wifi network named 'yourwifiname'."
+  echo
+  echo "  $BASENAME wifi home homewifipassword WPA-EAP username"
+  echo "      Connects to an Enterprise (WPA-EAP) wifi network named 'home' with user 'username' and user password 'homewifipassword'."
   echo
 }

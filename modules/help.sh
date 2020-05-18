@@ -42,7 +42,7 @@ Usage: treehouses
    led [green|red] [mode]                    sets the led mode
        [dance|thanksgiving|christmas]
        [newyear|lunarnewyear|valentine]
-       [carnival|stpatricks|onam]
+       [carnival|stpatricks|onam|diwali]
        [heavymetal|easter|random] 
    power [status|freq|<mode>]                sets the power scaling or check CPU frequency
    rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified

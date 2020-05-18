@@ -328,6 +328,7 @@ function diwali {
 
   for i in {0..5}                            # Green LED
   do
+<<<<<<< HEAD
     set_brightness 0 1 && sleep 0.025        # green on
     set_brightness 0 0 && sleep 0.025        # green OFF
   done
@@ -339,6 +340,17 @@ function diwali {
   done
 
   for i in {0..5}                            # Both LEDs
+=======
+  	set_brightness 0 1 && sleep 0.025		# green on
+    set_brightness 0 0 && sleep 0.025		# green OFF
+  done
+  for i in {0..5}					# Red LED
+  do
+    set_brightness 1 1 && sleep 0.025 	# red on
+	  set_brightness 1 0 && sleep 0.025		  # red OFF
+  done	
+  for i in {0..5}					# Both LEDs
+>>>>>>> 35851acafb66b8e97f4f7e85a554b858a3a2724d
   do
     set_brightness 1 1 && set_brightness 0 1
     sleep 0.025

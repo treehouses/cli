@@ -83,6 +83,11 @@ load ../test-helper
   assert_success && assert_output -p 'moodle stopped'
 }
 
+@test "$clinom services moodle start" {
+  run "${clicmd}" services moodle start
+  assert_success && assert_output -p 'moodle started'
+}
+
 @test "$clinom services moodle down" {
   run "${clicmd}" services moodle down
   assert_success && assert_output -p 'moodle stopped and removed'

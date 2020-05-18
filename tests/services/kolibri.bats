@@ -83,6 +83,11 @@ load ../test-helper
   assert_success && assert_output -p 'kolibri stopped'
 }
 
+@test "$clinom services kolibri start" {
+  run "${clicmd}" services kolibri start
+  assert_success && assert_output -p 'kolibri started'
+}
+
 @test "$clinom services kolibri down" {
   run "${clicmd}" services kolibri down
   assert_success && assert_output -p 'kolibri stopped and removed'

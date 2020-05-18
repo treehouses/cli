@@ -22,7 +22,7 @@ function tunnels {
       if [ -f "$FILE" ]; then
         rm $FILE
       fi
-      screen -dmS pagekite bash -c "printf \"Y \n $email \n $sitename \n Y \n Y \n\" | /usr/local/bin/pagekite.py --signup"
+      screen -dmS pagekite bash -c "printf \"Y \n $email \n $sitename \n Y \n Y \n\" | pagekite --signup"
       echo "Your kite is ready to fly!"
       echo
       echo "Note: To complete the signup process, check your e-mail (and spam folders) for activation instructions."

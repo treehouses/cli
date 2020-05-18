@@ -5,7 +5,7 @@ function install {
   mkdir -p /srv/kolibri
 
   # create yml(s)
-cat << EOF > /srv/kolibri/kolibri.yml
+  cat << EOF > /srv/kolibri/kolibri.yml
 services:
   kolibri:
     image: treehouses/kolibri
@@ -17,7 +17,7 @@ version: "2"
 EOF
 
   # add autorun
-cat << EOF > /srv/kolibri/autorun
+  cat << EOF > /srv/kolibri/autorun
 kolibri_autorun=true
 
 if [ "$kolibri_autorun" = true ]; then

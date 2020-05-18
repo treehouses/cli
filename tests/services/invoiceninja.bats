@@ -78,6 +78,11 @@ load ../test-helper
   assert_success && assert_output -p 'invoiceninja stopped'
 }
 
+@test "$clinom services invoiceninja start" {
+  run "${clicmd}" services invoiceninja start
+  assert_success
+}
+
 @test "$clinom services invoiceninja down" {
   run "${clicmd}" services invoiceninja down
   assert_success && assert_output -p 'invoiceninja stopped and removed'

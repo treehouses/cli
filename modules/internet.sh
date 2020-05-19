@@ -1,6 +1,5 @@
-#!/bin/bash
-
 function internet {
+  checkargn $# 0
   if wget -q --spider -T 3 --no-check-certificate https://www.google.com; then
     echo "true"
     exit 0
@@ -9,14 +8,14 @@ function internet {
 }
 
 function internet_help {
-  echo ""
-  echo "Usage: $(basename "$0") internet"
-  echo ""
+  echo
+  echo "Usage: $BASENAME internet"
+  echo
   echo "Outputs true if the rpi can reach internet, or false if it doesn't"
-  echo ""
+  echo
   echo "Example:"
-  echo "  $(basename "$0") internet"
+  echo "  $BASENAME internet"
   echo "      the rpi has access to internet -> output: true"
   echo "      the rpi doesn't have access to internet -> output: false"
-  echo ""
+  echo
 }

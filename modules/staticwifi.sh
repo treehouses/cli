@@ -1,6 +1,16 @@
-#!/bin/bash
-
 function staticwifi {
+  local essid password wificountry
+  checkrpi
+  checkroot
+  checkargn $# 6
+
+  if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
+    echo "Error: argument(s) missing"
+    echo "Usage: $BASENAME staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]"
+    echo "ip, mask, gateway, dns, and ESSID are required fields"
+    exit 1
+  fi
+
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/wlan0/static" /etc/network/interfaces.d/wlan0
 
@@ -47,7 +57,7 @@ function staticwifi {
     wpa_passphrase "$essid" "$password" >> /etc/wpa_supplicant/wpa_supplicant.conf
   fi
 
-  restart_wifi >/dev/null 2>/dev/null
+  restart_wifi >"$LOGFILE" 2>"$LOGFILE"
 
   echo "static wifi" > /etc/network/mode
 
@@ -56,16 +66,16 @@ function staticwifi {
 }
 
 function staticwifi_help {
-  echo ""
-  echo "Usage: $(basename "$0") staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]"
-  echo ""
+  echo
+  echo "Usage: $BASENAME staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]"
+  echo
   echo "Configures wifi interface (wlan0) to use a static ip address"
-  echo ""
+  echo
   echo "Examples:"
-  echo "  $(basename "$0") staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home homewifipassword"
+  echo "  $BASENAME staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home homewifipassword"
   echo "      Connects to wifi named 'home' with password 'homewifipassword' and sets the wifi interface IP address to 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
-  echo ""
-  echo "  $(basename "$0") staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home"
+  echo
+  echo "  $BASENAME staticwifi 192.168.1.101 255.255.255.0 192.168.1.1 9.9.9.9 home"
   echo "      Connects to an open wifi named 'home' and sets the wifi interface IP address to 192.160.1.1, mask 255.255.255.0, gateway 192.168.1.1, DNS 9.9.9.9"
-  echo ""
+  echo
 }

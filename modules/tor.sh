@@ -1,12 +1,17 @@
-#!/bin/bash
-
 function tor {
+  local port local_port existing_port option value status
+  checkroot
+  checkargn $# 3
   check_missing_packages "tor" "curl"
 
   if { [ ! -d "/var/lib/tor/treehouses" ] || [ ! -f "/var/lib/tor/treehouses/hostname" ]; } && [ "$1" != "start" ] && [ "$1" != "add" ]; then
-    echo "Error: the tor service has not been configured."
-    echo "Run '$(basename "$0") tor start' to configure it."
-    echo "Or '$(basename "$0") add [localPort]' to add a port and be able to use the service"
+    if [ -z "$(grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g')" ]; then
+      echo "Error: there are no tor ports added."
+      echo "'$BASENAME add [localPort]' to add a port and be able to use the service"
+    else
+      echo "Error: the tor service has not been configured."
+      echo "Run '$BASENAME tor start' to configure it."
+    fi
     exit 1
   fi
 
@@ -18,6 +23,10 @@ function tor {
   if [ "$1" = "list" ]; then
     echo "external <=> local"
     grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g'
+
+  elif [ "$1" = "ports" ]; then
+    grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g' | sed "s/  <=> /:/g" | tr "\n" " " | sed "s/ $/\n/"
+
   elif [ "$1" = "add" ]; then
     if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
@@ -54,6 +63,34 @@ function tor {
 
     restart_service tor
     echo "Success: the port has been added"
+  elif [ "$1" = "delete" ]; then
+    if [ -z "$2" ]; then
+      echo "Error: no port entered"
+      exit 1
+    fi
+
+    if  ! [[ "$2" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
+      echo "Error: $2 is not a port"
+      exit 1
+    fi
+
+    if ! grep -wq "HiddenServicePort $2" /etc/tor/torrc ; then
+      echo "Port $2 is not assigned"
+      exit 0
+    fi
+
+    sed -i "/^HiddenServicePort $2 /d" /etc/tor/torrc
+    restart_service tor
+    echo "Port $2 has been deleted"
+  elif [ "$1" = "deleteall" ]; then
+    if [ -n "$2" ]; then
+      echo "Error: wrong synthax"
+      exit 1
+    fi
+
+    sed -i "/^HiddenServicePort /d" /etc/tor/torrc
+    restart_service tor
+    echo "All ports have been deleted"
   elif [ "$1" = "stop" ]; then
     stop_service tor
     echo "Success: the tor service has been stopped"
@@ -116,7 +153,10 @@ function tor {
       rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
       echo "OK."
     elif [ "$option" = "now" ]; then
-       treehouses feedback "$(treehouses tor)\n$(treehouses tor list | sed '1d' | sed "s/  <=> /:/g" | tr "\n" " " | sed 's/.$//')\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+      line1=$(</var/lib/tor/treehouses/hostname)
+      line2=$(grep ^HiddenServicePort /etc/tor/torrc | cut -f 2- -d ' ' | sed -r 's/(.*?) 127.0.0.1:(.*?)/\1:\2/g' | tac | tr -d '\n')
+      line3="\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+      feedback "$line1\n$line2\n$line3"
     elif [ -z "$option" ]; then
       if [ -f "/etc/cron.d/tor_report" ]; then
         status="on"
@@ -125,27 +165,33 @@ function tor {
       fi
       echo "Status: $status"
     else
-      echo "Error: only 'on' and 'off' options are supported."
+      echo "Error: only 'on', 'off', 'now', 'add', 'delete', and 'list' options are supported."
     fi
   elif [ "$1" = "status" ]; then
     systemctl is-active tor
+  elif [ "$1" = "refresh" ]; then
+    cp /etc/tor/torrc /etc/tor/torrc_backup
+    treehouses tor destroy
+    treehouses tor start
+    mv /etc/tor/torrc_backup /etc/tor/torrc
+    echo "Success: the tor service has been refreshed"
   else
-    echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice' and 'destroy' options are supported."
+    echo "Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy', 'delete', 'deleteall', and 'refresh' options are supported."
   fi
 }
 
 function tor_help {
 
-  echo ""
-  echo "Usage: $(basename "$0") tor"
-  echo ""
+  echo
+  echo "Usage: $BASENAME tor"
+  echo
   echo "Setups the tor service on the rpi"
-  echo ""
+  echo
   echo "Examples:"
-  echo "  $(basename "$0") tor"
+  echo "  $BASENAME tor"
   echo "      Outputs the hostname of the tor service"
-  echo ""
-  echo "  $(basename "$0") tor list"
+  echo
+  echo "  $BASENAME tor list"
   echo "      Outputs the ports that are exposed on the tor network"
   echo "      Example:"
   echo "        external <=> local"
@@ -153,24 +199,38 @@ function tor_help {
   echo "        80       <=> 80"
   echo "      the port 22 is open and routing the traffic of the local port 22,"
   echo "      the port 80 is open and routing the traffic of the local port 80"
-  echo ""
-  echo "  $(basename "$0") tor add <port> [localport]"
+  echo
+  echo "  $BASENAME tor ports"
+  echo "      Outputs the ports that are exposed on the tor network"
+  echo "      Example:"
+  echo "        22:22 80:80 2200:2200"
+  echo
+  echo "  $BASENAME tor add <port> [localport]"
   echo "      Adds the desired port to be accessible from the tor network"
   echo "      Redirects localport to (tor) port"
-  echo ""
-  echo "  $(basename "$0") tor start"
+  echo
+  echo "  $BASENAME tor delete <port> [localport]"
+  echo "      Deletes the desired port from the tor network"
+  echo
+  echo "  $BASENAME tor deleteall"
+  echo "      Deletes all local ports from the tor network"
+  echo
+  echo "  $BASENAME tor start"
   echo "      Setups and starts the tor service"
-  echo ""
-  echo "  $(basename "$0") tor stop"
+  echo
+  echo "  $BASENAME tor stop"
   echo "      Stops the tor service"
-  echo ""
-  echo "  $(basename "$0") tor destroy"
+  echo
+  echo "  $BASENAME tor destroy"
   echo "      Stops and resets the tor configuration"
-  echo ""
-  echo "  $(basename "$0") tor notice <on|off|now|add|delete|list> [api_url]"
+  echo
+  echo "  $BASENAME tor notice <on|off|now|add|delete|list> [api_url]"
   echo "      Enables or disables the propagation of the tor address/ports to gitter"
-  echo ""
-  echo "  $(basename "$0") tor status"
+  echo
+  echo "  $BASENAME tor status"
   echo "      Outputs the status of the tor service"
-  echo ""
+  echo
+  echo "  $BASENAME tor refresh"
+  echo "      Creates a new tor address while keeping added ports"
+  echo
 }

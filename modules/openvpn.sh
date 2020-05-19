@@ -1,9 +1,10 @@
-#!/bin/bash
-
 function openvpn {
+  local command filename password url option value status
+  checkroot
+  checkargn $# 3
   command="$1"
 
-  if ! hash "openvpn" 2>/dev/null; then
+  if ! hash "openvpn" 2>"$LOGFILE"; then
     echo "Error: couldn't find openvpn installed."
     echo "On debian systems it can be installed by running 'apt-get install openvpn'"
     exit 1
@@ -120,20 +121,20 @@ function openvpn {
 
 
 function openvpn_help {
-  echo ""
-  echo "Usage: $(basename "$0") openvpn [use|show|delete|start|stop|load]"
-  echo ""
+  echo
+  echo "Usage: $BASENAME openvpn [use|show|delete|start|stop|load]"
+  echo
   echo "Helps setting up an openvpn client"
-  echo ""
+  echo
   echo "Example:"
-  echo "  $(basename "$0") openvpn                        => shows current status"
-  echo "  $(basename "$0") openvpn use <file> [password]  => copies the opvn file to the right place"
-  echo "  $(basename "$0") openvpn show                   => shows the cert "
-  echo "  $(basename "$0") openvpn delete                 => deletes the cert"
-  echo "  $(basename "$0") openvpn start                  => turns on the ovpn service"
-  echo "  $(basename "$0") openvpn stop                   => turns off the ovpn service"
-  echo "  $(basename "$0") openvpn load <url> [password]  => downloads the cert from a server and uses it"
-  echo "  $(basename "$0") openvpn notice <on|off|add|delete|list> [api_url]"
+  echo "  $BASENAME openvpn                        => shows current status"
+  echo "  $BASENAME openvpn use <file> [password]  => copies the opvn file to the right place"
+  echo "  $BASENAME openvpn show                   => shows the cert "
+  echo "  $BASENAME openvpn delete                 => deletes the cert"
+  echo "  $BASENAME openvpn start                  => turns on the ovpn service"
+  echo "  $BASENAME openvpn stop                   => turns off the ovpn service"
+  echo "  $BASENAME openvpn load <url> [password]  => downloads the cert from a server and uses it"
+  echo "  $BASENAME openvpn notice <on|off|add|delete|list> [api_url]"
   echo "    Enables or disables the propagation of the openvpn ip / status to gitter"
-  echo ""
+  echo
 }

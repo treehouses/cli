@@ -55,12 +55,11 @@ function uses_env {
 # add supported arm(s)
 function supported_arms {
   echo "v7l"
-  echo "v6l"
 }
 
 # add port(s)
 function get_ports {
-  echo "8443 use https"
+  echo "8443"
 }
 
 # add size (in MB)

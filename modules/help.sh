@@ -32,7 +32,7 @@ Usage: treehouses
    apchannel [channel]                       sets or prints the current ap channel
    timezone <timezone>                       sets the timezone of the system
    locale <locale>                           sets the system locale
-   ssh [on|off]                              enables or disables the ssh service
+   ssh [on|off|fingerprint]                  enables or disables the ssh service, also prints out fingerprint of the ssh daemon
    vnc [on|off|info]                         enables or disables the vnc server service
    default                                   sets a raspbian back to default configuration
    wificountry <country>                     sets the wifi country
@@ -42,7 +42,7 @@ Usage: treehouses
    led [green|red] [mode]                    sets the led mode
        [dance|thanksgiving|christmas]
        [newyear|lunarnewyear|valentine]
-       [carnival|stpatricks|onam]
+       [carnival|stpatricks|onam|diwali]
        [heavymetal|easter|random] 
    power [status|freq|<mode>]                sets the power scaling or check CPU frequency
    rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified

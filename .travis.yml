@@ -4,7 +4,7 @@ node_js:
 before_install:
 - npm install -g auto-changelog
 install:
-- auto-changelog --template .travis/changelog-template.hbs 
+- auto-changelog --template .travis/changelog-template.hbs --starting-version 1.0.0
 - ls -al
 - cat CHANGELOG.md
 script:

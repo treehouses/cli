@@ -9,11 +9,11 @@ function log2ram {
     fi
   elif [ "$1" = "on" ]; then
     if [[ $(log2ram) = *off* ]]; then
-      log2ram start
+      command log2ram start
     fi
     echo "Successfully started log2ram"
   elif [ "$1" = "off" ]; then
-    log2ram stop
+    command log2ram stop
     echo "Sucessfully stopped log2ram"
   else
     log_and_exit1 "Error: only '', 'on', and 'off' options supported"

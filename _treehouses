@@ -172,6 +172,7 @@ treehouses led green timer
 treehouses led lunarnewyear
 treehouses led newyear
 treehouses led onam
+treehouses led diwali
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -277,6 +278,8 @@ treehouses shutdown in
 treehouses shutdown force
 treehouses speedtest
 treehouses speedtest -h
+treehouses ssh
+treehouses ssh fingerprint
 treehouses ssh off
 treehouses ssh on
 treehouses sshkey add

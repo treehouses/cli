@@ -43,7 +43,8 @@ Usage: treehouses
        [dance|thanksgiving|christmas]
        [newyear|lunarnewyear|valentine]
        [carnival|stpatricks|onam]
-       [heavymetal|easter|random] 
+       [heavymetal|easter|random]
+       [eid]
    power [status|freq|<mode>]                sets the power scaling or check CPU frequency
    rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
    ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
@@ -99,7 +100,7 @@ Usage: treehouses
    blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
    sdbench                                   displays read and write speed of micro SD card
    inspire [joke|qotd|random]                displays quote based on user input
-   convert <input file> <output file>        converts video and audio files 
+   convert <input file> <output file>        converts video and audio files
    gpio                                      displays raspberry pi model and corresponding GPIO ports
    changelog                                 displays the most recent changes to treehouses
    shutdown [now|in|force]                   shutdown the system

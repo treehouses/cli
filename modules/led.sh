@@ -126,7 +126,15 @@ function led {
      ;;
     eid)
       checkroot
-
+     echo "leds are set to eid mode."
+     echo "Look at your RPi leds, both leds will be in this pattern..."
+     echo "Both LED: off 1 sec"
+     echo "Red  LED: blink 3 times; on 3 sec"
+     echo "Green LED: blink 3 times; on 2 sec"
+     echo "Both LED: blink 5 times; on 0.5 sec; off 0.5 sec; on 5 sec"
+     echo "Green LED: on 2 sec; off 0.5 sec"
+     echo "Red LED: on 2 sec; off 0.5 sec"
+     eid > "$LOGFILE"
       ;;
     random)
       checkroot
@@ -479,9 +487,51 @@ function easter {
   led green "$current_green"
 }
 
-function eid (
+function eid {
+  current_red=$(led "red")
+  current_green=$(led "green")
 
-)
+  set_brightness 1 0 && set_brightness 0 0 && sleep 1
+
+  for i in {0..2}
+  do
+    set_brightness 1 1 && sleep 0.075
+    set_brightness 1 0 && sleep 0.075
+  done
+
+  set_brightness 1 1 && sleep 3
+
+  for i in {0..2}
+  do
+    set_brightness 0 1 && sleep 0.075
+    set_brightness 0 0 && sleep 0.075
+  done
+
+  set_brightness 0 1 && sleep 2
+
+  for i in {0..4}
+  do
+    set_brightness 1 1 && set_brightness 0 1 && sleep 0.075
+    set_brightness 1 0 && set_brightness 0 0 && sleep 0.075
+  done
+
+  set_brightness 1 1 && set_brightness 0 1 && sleep 0.5
+
+  set_brightness 1 0 && set_brightness 0 0 && sleep 0.5
+
+  set_brightness 1 1 && set_brightness 0 1 && sleep 5
+
+  set_brightness 0 1 && sleep 2
+
+  set_brightness 0 0 && sleep 0.5
+
+  set_brightness 1 1 && sleep 2
+
+  set_brightness 1 0 && sleep 0.5
+
+  led red "$current_red"
+  led green "$current_green"
+}
 
 function random {
   rando="$(led_help | grep "led \[" \
@@ -498,7 +548,8 @@ function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
   echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear]"
-  echo "                     [valentine|carnival|stpatricks|onam|heavymetal|easter|random|eid]"
+  echo "                     [valentine|carnival|stpatricks|onam|heavymetal|easter|eid|random]"
+     echo "Both LED: off 1 sec"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -578,10 +629,10 @@ function led_help {
   echo "  $BASENAME led easter"
   echo "     This will set the mode of the led to easter"
   echo
-  echo " $BASENAME led eid"
+  echo "  $BASENAME led eid"
   echo "     This will set the mode of the led to eid"
   echo
   echo "  $BASENAME led random"
   echo "     This will set the mode of the led to one of the above festivities"
   echo
- }
+}

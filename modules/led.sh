@@ -126,15 +126,15 @@ function led {
      ;;
     eid)
       checkroot
-     echo "leds are set to eid mode."
-     echo "Look at your RPi leds, both leds will be in this pattern..."
-     echo "Both LED: off 1 sec"
-     echo "Red  LED: blink 3 times; on 3 sec"
-     echo "Green LED: blink 3 times; on 2 sec"
-     echo "Both LED: blink 5 times; on 0.5 sec; off 0.5 sec; on 5 sec"
-     echo "Green LED: on 2 sec; off 0.5 sec"
-     echo "Red LED: on 2 sec; off 0.5 sec"
-     eid > "$LOGFILE"
+      echo "leds are set to eid mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: off 1 sec"
+      echo "Red  LED: blink 3 times; on 3 sec"
+      echo "Green LED: blink 3 times; on 2 sec"
+      echo "Both LED: blink 5 times; on 0.5 sec; off 0.5 sec; on 5 sec"
+      echo "Green LED: on 2 sec; off 0.5 sec"
+      echo "Red LED: on 2 sec; off 0.5 sec"
+      eid > "$LOGFILE"
       ;;
     random)
       checkroot

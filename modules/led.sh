@@ -133,6 +133,19 @@ function led {
      echo "  Green LED: on 0.075 sec off 0.075 sec"
      easter > "$LOGFILE"
      ;;
+    lantern)
+        checkroot
+        echo "leds are set to lantern mode."
+        echo "Look at your RPi leds, both leds will be in this pattern..."
+        echo "Both LED: off 1 sec"
+        echo "Green LED: blink thrice"
+        echo "Red LED: off 0.5 sec, on 4 sec"
+        echo "Green LED: on 0.25 sec, off 0.25 sec"
+        echo "loop last step 3 times"
+        echo "Green LED: on 0.0125 sec, off 0.125 sec"
+        echo "loop last step 3 times"
+       lantern > "$LOGFILE"
+       ;;
     random)
       checkroot
       random
@@ -528,6 +541,43 @@ function easter {
   led green "$current_green"
 }
 
+function lantern{
+    currentGreen = $(led "green")
+    currentRed = $(led "red")
+
+    set_brightness 0 0; set_brightness 0 1
+    sleep 1
+    led green timer
+    sleep 3
+    led green none
+    sleep 0.5
+    set_brightness 1 1
+    sleep 4
+    set_brightness 1 0
+
+    x=1
+    while [ $x -l 5 ]
+    do
+        set_brightness 0 1
+        sleep 0.25
+        set_brightness 0 0
+        sleep 0.25
+        x=$(( x+1 ))
+    done
+
+    while [ $x -l 9 ]
+    do
+        set_brightness 0 1
+        sleep 0.125
+        set_brightness 0 0
+        sleep 0.125
+        x=$(( x+1 ))
+    done
+
+    led red "$current_red"
+    led green "$current_green"
+}
+
 function random {
   rando="$(led_help | grep "led \[" \
     | cut -d "[" -f2 \
@@ -543,7 +593,7 @@ function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
   echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear]"
-  echo "                     [valentine|carnival|stpatricks|onam|diwali|heavymetal|easter|random]"
+  echo "                     [valentine|carnival|stpatricks|onam|diwali|heavymetal|easter|lantern|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -625,6 +675,9 @@ function led_help {
   echo
   echo "  $BASENAME led easter"
   echo "     This will set the mode of the led to easter"
+  echo
+  echo "  $BASENAME led lantern"
+  echo "     This will set the mode of the led to lantern"
   echo
   echo "  $BASENAME led random"
   echo "     This will set the mode of the led to one of the above festivities"

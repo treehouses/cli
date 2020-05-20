@@ -1,3 +1,25 @@
+function log2ram {
+  checkrpi
+  checkargn $# 1
+  if [ "$1" = "" ]; then
+    if [[ $(df -h) != *"log2ram"* ]]; then
+      echo "log2ram is off"
+    else
+      echo "log2ram is on"
+    fi
+  elif [ "$1" = "on" ]; then
+    if [[ $(log2ram) = *off* ]]; then
+      command log2ram start
+    fi
+    echo "Successfully started log2ram"
+  elif [ "$1" = "off" ]; then
+    command log2ram stop
+    echo "Sucessfully stopped log2ram"
+  else
+    log_and_exit1 "Error: only '', 'on', and 'off' options supported"
+  fi
+}
+
 # uses logger command to log to /var/log/syslog
 # logit "text" "whether or not to write to screen" "logging level"
 # e.g. logit "i logged some text"
@@ -105,6 +127,9 @@ function log {
 	  LOG=max
 	  logit "log X: level set to max" "" "DEBUG"
 	  ;;
+  "ram")
+    log2ram "$2"
+    ;;
     *)
       log_and_exit1 "Error: only '0' '1' '2' '3' '4' 'show' 'max' options are supported"
       ;;
@@ -114,7 +139,7 @@ function log {
 
 function log_help {
   echo
-  echo "Usage: $BASENAME log <0|1|2|3|4|show|max>"
+  echo "Usage: $BASENAME log [0|1|2|3|4|show|max|ram [on|off]]"
   echo
   echo "Example:"
   echo "  $BASENAME log"
@@ -145,5 +170,17 @@ function log_help {
   echo
   echo "  $BASENAME log max"
   echo "      log X: level set to max"
+  echo
+  echo "  $BASENAME log ram"
+  echo "      log2ram is off"
+  echo "  force logs to be stored in ram and only writes to disk on shutdown"
+  echo "  https://github.com/azlux/log2ram"
+  echo "  Stores logs in 40M (Megabytes) in mount point in memory"
+  echo
+  echo "  $BASENAME log ram on"
+  echo "      Successfully started log2ram"
+  echo
+  echo "  $BASENAME log ram off"
+  echo "      Successfully stopped log2ram"
   echo
 }

@@ -60,7 +60,7 @@ aphidden <local|internet> <ESSID>         creates a hidden mobile ap with or wit
 apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system
 locale <locale>                           sets the system locale
-ssh [on|off]                              enables or disables the ssh service
+ssh [on|off|fingerprint]                  enables or disables the ssh service, also prints out fingerprint of the ssh daemon
 vnc [on|off|info]                         enables or disables the vnc server service
 default                                   sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
@@ -105,6 +105,7 @@ services                                  executes the given command on the spec
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
    [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
+   [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
    [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]

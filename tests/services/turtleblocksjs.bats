@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'turtleblocksjs built and started'
 }
 
+@test "$clinom services turtleblocksjs start" {
+  run "${clicmd}" services turtleblocksjs start
+  sleep 5
+  assert_success && assert_output -p 'turtleblocksjs started'
+}
+
 @test "$clinom services turtleblocksjs restart" {
   run "${clicmd}" services turtleblocksjs restart
   sleep 5
@@ -81,11 +87,6 @@ load ../test-helper
 @test "$clinom services turtleblocksjs stop" {
   run "${clicmd}" services turtleblocksjs stop
   assert_success && assert_output -p 'turtleblocksjs stopped'
-}
-
-@test "$clinom services turtleblocksjs start" {
-  run "${clicmd}" services turtleblocksjs start
-  assert_success && assert_output -p 'turtleblocksjs started'
 }
 
 @test "$clinom services turtleblocksjs down" {

@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'minetest built and started'
 }
 
+@test "$clinom services minetest start" {
+  run "${clicmd}" services minetest start
+  sleep 5
+  assert_success && assert_output -p 'minetest started'
+}
+
 @test "$clinom services minetest restart" {
   run "${clicmd}" services minetest restart
   sleep 5
@@ -81,11 +87,6 @@ load ../test-helper
 @test "$clinom services minetest stop" {
   run "${clicmd}" services minetest stop
   assert_success && assert_output -p 'minetest stopped'
-}
-
-@test "$clinom services minetest start" {
-  run "${clicmd}" services minetest start
-  assert_success && assert_output -p 'minetest started'
 }
 
 @test "$clinom services minetest down" {

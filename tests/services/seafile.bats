@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'seafile built and started'
 }
 
+@test "$clinom services seafile start" {
+  run "${clicmd}" services seafile start
+  sleep 5
+  assert_success && assert_output -p 'seafile started'
+}
+
 @test "$clinom services seafile restart" {
   run "${clicmd}" services seafile restart
   sleep 5
@@ -81,11 +87,6 @@ load ../test-helper
 @test "$clinom services seafile stop" {
   run "${clicmd}" services seafile stop
   assert_success && assert_output -p 'seafile stopped'
-}
-
-@test "$clinom services seafile start" {
-  run "${clicmd}" services seafile start
-  assert_success && assert_output -p 'seafile started'
 }
 
 @test "$clinom services seafile down" {

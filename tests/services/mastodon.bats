@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'mastodon built and started'
 }
 
+@test "$clinom services mastodon start" {
+  run "${clicmd}" services mastodon start
+  sleep 5
+  assert_success && assert_output -p 'mastodon started'
+}
+
 @test "$clinom services mastodon restart" {
   run "${clicmd}" services mastodon restart
   sleep 5
@@ -81,11 +87,6 @@ load ../test-helper
 @test "$clinom services mastodon stop" {
   run "${clicmd}" services mastodon stop
   assert_success && assert_output -p 'mastodon stopped'
-}
-
-@test "$clinom services mastodon start" {
-  run "${clicmd}" services mastodon start
-  assert_success && assert_output -p 'mastodon started'
 }
 
 @test "$clinom services mastodon down" {

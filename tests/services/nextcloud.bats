@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'nextcloud built and started'
 }
 
+@test "$clinom services nextcloud start" {
+  run "${clicmd}" services nextcloud start
+  sleep 5
+  assert_success && assert_output -p 'nextcloud started'
+}
+
 @test "$clinom services nextcloud restart" {
   run "${clicmd}" services nextcloud restart
   sleep 5
@@ -81,11 +87,6 @@ load ../test-helper
 @test "$clinom services nextcloud stop" {
   run "${clicmd}" services nextcloud stop
   assert_success && assert_output -p 'nextcloud stopped'
-}
-
-@test "$clinom services nextcloud start" {
-  run "${clicmd}" services nextcloud start
-  assert_success && assert_output -p 'nextcloud started'
 }
 
 @test "$clinom services nextcloud down" {

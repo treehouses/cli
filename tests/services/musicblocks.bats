@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'musicblocks built and started'
 }
 
+@test "$clinom services musicblocks start" {
+  run "${clicmd}" services musicblocks start
+  sleep 5
+  assert_success && assert_output -p 'musicblocks started'
+}
+
 @test "$clinom services musicblocks restart" {
   run "${clicmd}" services musicblocks restart
   sleep 5
@@ -81,11 +87,6 @@ load ../test-helper
 @test "$clinom services musicblocks stop" {
   run "${clicmd}" services musicblocks stop
   assert_success && assert_output -p 'musicblocks stopped'
-}
-
-@test "$clinom services musicblocks start" {
-  run "${clicmd}" services musicblocks start
-  assert_success && assert_output -p 'musicblocks started'
 }
 
 @test "$clinom services musicblocks down" {

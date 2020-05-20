@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'netdata built and started'
 }
 
+@test "$clinom services netdata start" {
+  run "${clicmd}" services netdata start
+  sleep 5
+  assert_success && assert_output -p 'netdata started'
+}
+
 @test "$clinom services netdata restart" {
   run "${clicmd}" services netdata restart
   sleep 5
@@ -81,11 +87,6 @@ load ../test-helper
 @test "$clinom services netdata stop" {
   run "${clicmd}" services netdata stop
   assert_success && assert_output -p 'netdata stopped'
-}
-
-@test "$clinom services netdata start" {
-  run "${clicmd}" services netdata start
-  assert_success && assert_output -p 'netdata started'
 }
 
 @test "$clinom services netdata down" {

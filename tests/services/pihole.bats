@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'pihole built and started'
 }
 
+@test "$clinom services pihole start" {
+  run "${clicmd}" services pihole start
+  sleep 5
+  assert_success && assert_output -p 'pihole started'
+}
+
 @test "$clinom services pihole restart" {
   run "${clicmd}" services pihole restart
   sleep 5
@@ -81,11 +87,6 @@ load ../test-helper
 @test "$clinom services pihole stop" {
   run "${clicmd}" services pihole stop
   assert_success && assert_output -p 'pihole stopped'
-}
-
-@test "$clinom services pihole start" {
-  run "${clicmd}" services pihole start
-  assert_success && assert_output -p 'pihole started'
 }
 
 @test "$clinom services pihole down" {

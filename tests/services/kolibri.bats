@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'kolibri built and started'
 }
 
+@test "$clinom services kolibri start" {
+  run "${clicmd}" services kolibri start
+  sleep 5
+  assert_success && assert_output -p 'kolibri started'
+}
+
 @test "$clinom services kolibri restart" {
   run "${clicmd}" services kolibri restart
   sleep 5
@@ -81,11 +87,6 @@ load ../test-helper
 @test "$clinom services kolibri stop" {
   run "${clicmd}" services kolibri stop
   assert_success && assert_output -p 'kolibri stopped'
-}
-
-@test "$clinom services kolibri start" {
-  run "${clicmd}" services kolibri start
-  assert_success && assert_output -p 'kolibri started'
 }
 
 @test "$clinom services kolibri down" {

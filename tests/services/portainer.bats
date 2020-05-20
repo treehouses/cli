@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'portainer built and started'
 }
 
+@test "$clinom services portainer start" {
+  run "${clicmd}" services portainer start
+  sleep 5
+  assert_success && assert_output -p 'portainer started'
+}
+
 @test "$clinom services portainer restart" {
   run "${clicmd}" services portainer restart
   sleep 5
@@ -80,11 +86,6 @@ load ../test-helper
 @test "$clinom services portainer stop" {
   run "${clicmd}" services portainer stop
   assert_success && assert_output -p 'portainer stopped'
-}
-
-@test "$clinom services portainer start" {
-  run "${clicmd}" services portainer start
-  assert_success && assert_output -p 'portainer started'
 }
 
 @test "$clinom services portainer down" {

@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'mongodb built and started'
 }
 
+@test "$clinom services mongodb start" {
+  run "${clicmd}" services mongodb start
+  sleep 5
+  assert_success && assert_output -p 'mongodb started'
+}
+
 @test "$clinom services mongodb restart" {
   run "${clicmd}" services mongodb restart
   sleep 5
@@ -76,11 +82,6 @@ load ../test-helper
 @test "$clinom services mongodb stop" {
   run "${clicmd}" services mongodb stop
   assert_success && assert_output -p 'mongodb stopped'
-}
-
-@test "$clinom services mongodb start" {
-  run "${clicmd}" services mongodb start
-  assert_success && assert_output -p 'mongodb started'
 }
 
 @test "$clinom services mongodb down" {

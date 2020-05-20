@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'ntopng built and started'
 }
 
+@test "$clinom services ntopng start" {
+  run "${clicmd}" services ntopng start
+  sleep 5
+  assert_success && assert_output -p 'ntopng started'
+}
+
 @test "$clinom services ntopng restart" {
   run "${clicmd}" services ntopng restart
   sleep 5
@@ -81,11 +87,6 @@ load ../test-helper
 @test "$clinom services ntopng stop" {
   run "${clicmd}" services ntopng stop
   assert_success && assert_output -p 'ntopng stopped'
-}
-
-@test "$clinom services ntopng start" {
-  run "${clicmd}" services ntopng start
-  assert_success && assert_output -p 'ntopng started'
 }
 
 @test "$clinom services ntopng down" {

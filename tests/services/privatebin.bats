@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'privatebin built and started'
 }
 
+@test "$clinom services privatebin start" {
+  run "${clicmd}" services privatebin start
+  sleep 5
+  assert_success && assert_output -p 'privatebin started'
+}
+
 @test "$clinom services privatebin restart" {
   run "${clicmd}" services privatebin restart
   sleep 5
@@ -81,11 +87,6 @@ load ../test-helper
 @test "$clinom services privatebin stop" {
   run "${clicmd}" services privatebin stop
   assert_success && assert_output -p 'privatebin stopped'
-}
-
-@test "$clinom services privatebin start" {
-  run "${clicmd}" services privatebin start
-  assert_success && assert_output -p 'privatebin started'
 }
 
 @test "$clinom services privatebin down" {

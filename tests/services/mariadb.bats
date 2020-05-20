@@ -17,6 +17,12 @@ load ../test-helper
   assert_success && assert_output -p 'mariadb built and started'
 }
 
+@test "$clinom services mariadb start" {
+  run "${clicmd}" services mariadb start
+  sleep 5
+  assert_success && assert_output -p 'mariadb started'
+}
+
 @test "$clinom services mariadb restart" {
   run "${clicmd}" services mariadb restart
   sleep 5
@@ -81,11 +87,6 @@ load ../test-helper
 @test "$clinom services mariadb stop" {
   run "${clicmd}" services mariadb stop
   assert_success && assert_output -p 'mariadb stopped'
-}
-
-@test "$clinom services mariadb start" {
-  run "${clicmd}" services mariadb start
-  assert_success && assert_output -p 'mariadb started'
 }
 
 @test "$clinom services mariadb down" {

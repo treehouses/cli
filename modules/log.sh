@@ -8,20 +8,13 @@ function log2ram {
       echo "log2ram is on"
     fi
   elif [ "$1" = "on" ]; then
-    checkinternet
-    curl -s -Lo log2ram.tar.gz https://github.com/azlux/log2ram/archive/master.tar.gz &>"$LOGFILE"
-    tar xf log2ram.tar.gz &>"$LOGFILE"
-    rm log2ram.tar.gz
-    cd log2ram-master || exit
-    chmod +x install.sh && ./install.sh &>"$LOGFILE"
-    cd ..
-    rm -r log2ram-master
-    echo "Successfully enabled log2ram, please reboot"
-  elif [ "$1" = "off" ]; then
-    if [ -f "/usr/local/bin/uninstall-log2ram.sh" ]; then
-      chmod +x /usr/local/bin/uninstall-log2ram.sh && /usr/local/bin/uninstall-log2ram.sh &>"$LOGFILE"
+    if [[ $(log2ram) = *off* ]]; then
+      log2ram start
     fi
-    echo "Sucessfully disabled log2ram"
+    echo "Successfully started log2ram"
+  elif [ "$1" = "off" ]; then
+    log2ram stop
+    echo "Sucessfully stopped log2ram"
   else
     log_and_exit1 "Error: only '', 'on', and 'off' options supported"
   fi
@@ -185,9 +178,9 @@ function log_help {
   echo "  Stores logs in 40M (Megabytes) in mount point in memory"
   echo
   echo "  $BASENAME log ram on"
-  echo "      Successfully enabled log2ram, please reboot"
+  echo "      Successfully started log2ram"
   echo
   echo "  $BASENAME log ram off"
-  echo "      Successfully disabled log2ram"
+  echo "      Successfully stopped log2ram"
   echo
 }

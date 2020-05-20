@@ -111,19 +111,19 @@ function led {
       echo "Green LED: flash 20 times; on 2 sec"
       stpatricks > "$LOGFILE"
       ;;
-   easter)
-     checkroot
-     echo "leds are set to easter mode."
-     echo "Look at your RPi leds, both leds will be in this pattern..."
-     echo "Both LED: off 0.5 sec"
-     echo "Red LED: blink 1 time; on 0.25 sec off 2 secs"
-     echo "Green LED: blink 3 times, off 1 sec on 1 sec"
-     echo "Green LED: on 3 secs"
-     echo "Loop next two steps 3 times:"
-     echo "  Red LED: on 0.075 sec off 0.075 sec"
-     echo "  Green LED: on 0.075 sec off 0.075 sec"
-     easter > "$LOGFILE"
-     ;;
+    easter)
+      checkroot
+      echo "leds are set to easter mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: off 0.5 sec"
+      echo "Red LED: blink 1 time; on 0.25 sec off 2 secs"
+      echo "Green LED: blink 3 times, off 1 sec on 1 sec"
+      echo "Green LED: on 3 secs"
+      echo "Loop next two steps 3 times:"
+      echo "  Red LED: on 0.075 sec off 0.075 sec"
+      echo "  Green LED: on 0.075 sec off 0.075 sec"
+      easter > "$LOGFILE"
+      ;;
     eid)
       checkroot
       echo "leds are set to eid mode."

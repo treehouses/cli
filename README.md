@@ -132,6 +132,7 @@ convert <input file> <output file>        converts audio and video files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses
 shutdown [now|in|force]                   shutdown the system
+magazine magpi [number]                   downloads specific magpi issue as a pdf
 ```
 
 ## Additional README's

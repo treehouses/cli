@@ -1,8 +1,9 @@
 function camera {
   local directory timestamp config configtemp savetype
   checkrpi
-  checkargn $# 1
+  #checkargn $# 2
   directory="/home/pi/Pictures/"
+  viddir="/home/pi/Videos/"
   timestamp=$(date +"%Y%m%d-%H%M%S")
   config="/boot/config.txt"
   configtemp="/boot/config.temp"
@@ -56,28 +57,38 @@ function camera {
     ;;
 
     "record")
-      case $2 in 
-      "")
-        mkdir -p ${directory}
-        if ! grep -q "start_x=1" ${config} ; then
-          echo "You need to enable AND reboot first in order to take pictures."
-          exit 1
-        else
-          length=$length*100
-          echo "Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${directory}."
-          raspivid -o "${directory}$BASENAME-${timestamp}.h264" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
-          $BASENAME convert ${directory}$BASENAME-${timestamp}.h264 ${directory}$BASENAME-${timestamp}.${vidtype}
-        fi
+      case "$2" in 
+        "")
+          mkdir -p ${viddir}
+          if ! grep -q "start_x=1" ${config} ; then
+            echo "You need to enable AND reboot first in order to take pictures."
+            exit 1
+          else
+            echo "Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
+            let length=$length*1000
+            raspivid -o "${viddir}$BASENAME-${timestamp}.h264" -t "${length}" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
+            ./$BASENAME convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
+          fi
+        ;;
+
+        *)
+          mkdir -p ${viddir}    
+          if ! grep -q "start_x=1" ${config} ; then
+            echo "You need to enable AND reboot first in order to take pictures."
+            exit 1
+          elif ! [[ "$2" =~ ^[0-9]+$ ]] ; then
+            echo "Positive integers only."
+            exit 1
+          else        
+            echo "Camera is recording ${2} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
+            let length=$2*1000
+            raspivid -o "${viddir}$BASENAME-${timestamp}.h264" -t "${length}" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
+            ./$BASENAME convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
+          fi
+        ;;
+      esac
       ;;
-      "*")
-        if ! [[ "$2" =~ ^[0-9]+$]]
-          then
-            camera_help
-        fi
-        length=$default length*100
-        echo "Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${directory}."
-        raspivid -o "${directory}$BASENAME-${timestamp}.h264" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
-        $BASENAME convert ${directory}$BASENAME-${timestamp}.h264 ${directory}$BASENAME-${timestamp}.${vidtype}
+
     "*")
       camera_help
     ;;
@@ -101,5 +112,11 @@ function camera_help {
   echo
   echo "    $BASENAME camera capture"
   echo "      Camera is capturing and storing a time-stamped photo in ${directory}."
+  echo
+  echo "    $BASENAME camera record"
+  echo "      Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
+  echo
+  echo "    $BASENAME camera record [seconds]"
+  echo "      Camera is recording [seconds] seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
   echo
 }

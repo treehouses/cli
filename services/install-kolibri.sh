@@ -24,6 +24,7 @@ if [ "$kolibri_autorun" = true ]; then
   treehouses services kolibri up
 fi
 
+
 EOF
 }
 

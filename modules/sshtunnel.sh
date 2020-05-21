@@ -106,16 +106,24 @@ function sshtunnel {
       esac
       ;;
     remove)
-      if [ -f "/etc/tunnel" ]; then
-        rm -rf /etc/tunnel
-      fi
+      case "$2" in
+        port)
+          name=$3
+          [ -f /etc/ports-list ] && sed -i "/$name/d" /etc/ports-list || { echo "Error: /etc/ports-list not found"; exit 1; }
+          ;;
+      esac
 
-      if [ -f "/etc/cron.d/autossh" ]; then
-        rm -rf /etc/cron.d/autossh
-      fi
 
-      pkill -3 autossh
-      echo -e "${GREEN}Removed${NC}"
+      # if [ -f "/etc/tunnel" ]; then
+      #   rm -rf /etc/tunnel
+      # fi
+
+      # if [ -f "/etc/cron.d/autossh" ]; then
+      #   rm -rf /etc/cron.d/autossh
+      # fi
+
+      # pkill -3 autossh
+      # echo -e "${GREEN}Removed${NC}"
       ;;
     list | "")
       if [ -f "/etc/tunnel" ]; then

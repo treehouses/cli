@@ -5,27 +5,27 @@ function install {
   mkdir -p /srv/kolibri
 
   # create yml(s)
-  {
-    echo "services:"
-    echo "  kolibri:"
-    echo "    image: treehouses/kolibri"
-    echo "    ports:"
-    echo "      - \"8080:8080\""
-    echo "    volumes:"
-    echo "      - \"/srv/kolibri:/root/.kolibri\""
-    echo "version: \"2\""
-  } > /srv/kolibri/kolibri.yml
+  cat << EOF > /srv/kolibri/kolibri.yml
+services:
+  kolibri:
+    image: treehouses/kolibri
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/srv/kolibri:/root/.kolibri"
+version: "2"
+EOF
 
   # add autorun
-  {
-    echo "kolibri_autorun=true"
-    echo
-    echo "if [ \"\$kolibri_autorun\" = true ]; then"
-    echo "  treehouses services kolibri up"
-    echo "fi"
-    echo
-    echo
-  } > /srv/kolibri/autorun
+  cat << EOF > /srv/kolibri/autorun
+kolibri_autorun=true
+
+if [ "$kolibri_autorun" = true ]; then
+  treehouses services kolibri up
+fi
+
+
+EOF
 }
 
 # environment var

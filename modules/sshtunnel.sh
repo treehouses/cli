@@ -46,7 +46,7 @@ function sshtunnel {
             name="${line%%=*}"
             combo="${line#*=}"
             ports[$name]=$combo
-          done 9< /root/ports-list
+          done 9< /etc/ports-list
 
           if [ ! -f "/root/.ssh/id_rsa" ]; then
             ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero

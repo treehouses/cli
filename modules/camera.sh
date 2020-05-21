@@ -1,7 +1,7 @@
 function camera {
   local directory timestamp config configtemp savetype
   checkrpi
-  #checkargn $# 2
+  checkargn $# 2
   directory="/home/pi/Pictures/"
   viddir="/home/pi/Videos/"
   timestamp=$(date +"%Y%m%d-%H%M%S")
@@ -67,7 +67,8 @@ function camera {
             echo "Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
             let length=$length*1000
             raspivid -o "${viddir}$BASENAME-${timestamp}.h264" -t "${length}" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
-            ./$BASENAME convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
+            $BASENAME convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
+            rm ${viddir}$BASENAME-${timestamp}.h264          
           fi
         ;;
 
@@ -76,14 +77,15 @@ function camera {
           if ! grep -q "start_x=1" ${config} ; then
             echo "You need to enable AND reboot first in order to take pictures."
             exit 1
-          elif ! [[ "$2" =~ ^[0-9]+$ ]] ; then
+          elif ! [[ "$2" =~ ^[1-9][0-9]*$ ]] ; then
             echo "Positive integers only."
             exit 1
           else        
             echo "Camera is recording ${2} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
             let length=$2*1000
             raspivid -o "${viddir}$BASENAME-${timestamp}.h264" -t "${length}" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
-            ./$BASENAME convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
+            $BASENAME convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
+            rm ${viddir}$BASENAME-${timestamp}.h264
           fi
         ;;
       esac

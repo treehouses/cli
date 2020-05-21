@@ -20,51 +20,6 @@ function led {
       led="$rLed"
       current="$currentRed"
       ;;
-    dance)
-      checkroot
-      echo "leds are set to dance mode."
-      echo "Look at your RPi leds, green led will be in this pattern: 1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
-      dance > "$LOGFILE"
-      ;;
-    thanksgiving)
-      checkroot
-      echo "leds are set to thanksgiving mode."
-      echo "Look at your RPi leds, both leds will be in this pattern..."
-      echo "Green LED: 0.5 sec off; 0.5 on"
-      echo "Red LED: 0.5 off; 0.5 on; 0.25 off; 0.25 on"
-      echo "Green LED: 0.5 on; 0.25 off; 0.25 on"
-      echo "Red LED: 0.5 on"
-      echo "Both LED: flash 2 times"
-      thanksgiving > "$LOGFILE"
-      ;;
-    christmas)
-      checkroot
-      echo "leds are set to christmas mode."
-      echo "Look at your RPi leds, both leds will be in this pattern..."
-      echo "Both LED: 1 sec on; 8 blink; 1 on"
-      christmas > "$LOGFILE"
-      ;;
-    onam)
-      checkroot
-      echo "leds are set to onam mode."
-      echo "Look at your Rpi leds, both leds will be in this pattern..."
-      echo "Green LED: 5 blink"
-      echo "Both LED: 1 sec off"
-      echo "Red LED: 5 blink"
-      echo "Green LED: 5 blink"
-      echo "Both LED: 1 sec"
-      echo "Red LED: 5 blink"
-      onam > "$LOGFILE"
-      ;;
-    diwali)
-      checkroot
-      echo "leds are set to diwali mode."
-      echo "Look at your RPi leds, both leds will be in this pattern..."
-      echo "Green LED: 0.025 on; 0.025 off; this will happen 5 times"
-      echo "Red LED: 0.025 on; 0.025 off; this will happen 5 times"
-      echo "Both LED: flash 10 times; this will happen 5 times"
-      diwali > "$LOGFILE"
-      ;;
     newyear)
       checkroot
       echo "leds are set to newyear mode."
@@ -83,18 +38,6 @@ function led {
       echo "Red LED: 5 off: 5 on"
       lunarnewyear > "$LOGFILE"
       ;;
-    heavymetal)
-      checkroot
-      echo "leds are set to heavymetal mode."
-      echo "Look at your RPi leds, both leds will be in this pattern..."
-      echo "Both LED: off; only at start"
-      echo "Red LED: on 0.025 sec"
-      echo "Red LED: off 0.025 sec"
-      echo "Green LED: on 0.025 sec"
-      echo "Green LED: off 0.025 sec"
-      echo "this will happen 20 times"
-      heavymetal > "$LOGFILE"
-      ;;
     valentine)
       checkroot
       echo "leds are set to valentine mode."
@@ -111,6 +54,19 @@ function led {
       echo "Look at your RPi leds, both leds will be in this pattern..."
       echo "Both LED: 2 sec on; 6 blink; 4 on"
       carnival > "$LOGFILE"
+      ;;
+    lantern)
+      checkroot
+      echo "leds are set to lantern mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: off 1 sec"
+      echo "Green LED: blink thrice"
+      echo "Red LED: off 0.5 sec, on 4 sec"
+      echo "Green LED: on 0.25 sec, off 0.25 sec"
+      echo "loop last step 3 times"
+      echo "Green LED: on 0.0125 sec, off 0.125 sec"
+      echo "loop last step 3 times"
+      lantern > "$LOGFILE"
       ;;
     stpatricks)
       checkroot
@@ -144,6 +100,63 @@ function led {
       echo "Green LED: on 2 sec; off 0.5 sec"
       echo "Red LED: on 2 sec; off 0.5 sec"
       eid > "$LOGFILE"
+      ;;
+    onam)
+      checkroot
+      echo "leds are set to onam mode."
+      echo "Look at your Rpi leds, both leds will be in this pattern..."
+      echo "Green LED: 5 blink"
+      echo "Both LED: 1 sec off"
+      echo "Red LED: 5 blink"
+      echo "Green LED: 5 blink"
+      echo "Both LED: 1 sec"
+      echo "Red LED: 5 blink"
+      onam > "$LOGFILE"
+      ;;
+    diwali)
+      checkroot
+      echo "leds are set to diwali mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Green LED: 0.025 on; 0.025 off; this will happen 5 times"
+      echo "Red LED: 0.025 on; 0.025 off; this will happen 5 times"
+      echo "Both LED: flash 10 times; this will happen 5 times"
+      diwali > "$LOGFILE"
+      ;;
+    thanksgiving)
+      checkroot
+      echo "leds are set to thanksgiving mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Green LED: 0.5 sec off; 0.5 on"
+      echo "Red LED: 0.5 off; 0.5 on; 0.25 off; 0.25 on"
+      echo "Green LED: 0.5 on; 0.25 off; 0.25 on"
+      echo "Red LED: 0.5 on"
+      echo "Both LED: flash 2 times"
+      thanksgiving > "$LOGFILE"
+      ;;
+    christmas)
+      checkroot
+      echo "leds are set to christmas mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: 1 sec on; 8 blink; 1 on"
+      christmas > "$LOGFILE"
+      ;;
+    dance)
+      checkroot
+      echo "leds are set to dance mode."
+      echo "Look at your RPi leds, green led will be in this pattern: 1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
+      dance > "$LOGFILE"
+      ;;
+    heavymetal)
+      checkroot
+      echo "leds are set to heavymetal mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: off; only at start"
+      echo "Red LED: on 0.025 sec"
+      echo "Red LED: off 0.025 sec"
+      echo "Green LED: on 0.025 sec"
+      echo "Green LED: off 0.025 sec"
+      echo "this will happen 20 times"
+      heavymetal > "$LOGFILE"
       ;;
     random)
       checkroot
@@ -586,6 +599,43 @@ function eid {
   led green "$current_green"
 }
 
+function lantern {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  set_brightness 0 0; set_brightness 0 1
+  sleep 1
+  led green timer
+  sleep 3
+  led green none
+  sleep 0.5
+  set_brightness 1 1
+  sleep 4
+  set_brightness 1 0
+
+  x=1
+  while [ $x -lt 5 ]
+  do
+    set_brightness 0 1
+    sleep 0.25
+    set_brightness 0 0
+    sleep 0.25
+    x=$(( x+1 ))
+    done
+
+  while [ $x -lt 9 ]
+  do
+    set_brightness 0 1
+    sleep 0.125
+    set_brightness 0 0
+    sleep 0.125
+    x=$(( x+1 ))
+  done
+
+  led red "$current_red"
+  led green "$current_green"
+}
+
 function random {
   rando="$(led_help | grep "led \[" \
     | cut -d "[" -f2 \
@@ -600,8 +650,8 @@ function random {
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear|valentine]"
-  echo "                     [carnival|stpatricks|onam|diwali|heavymetal|easter|eid|random]"
+  echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter]"
+  echo "                     [eid|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -647,36 +697,20 @@ function led_help {
   echo "  $BASENAME led red default-on"
   echo "      This will set the mode of the red led to default-on"
   echo
-  echo "  $BASENAME led dance"
-  echo "      This will do a sequence with the green led"
-  echo "      1 sec on; 1 off; 2 on; 1 off; 3 on; 1 off; 4 on; 1 off"
-  echo
-  echo "  $BASENAME led thanksgiving"
-  echo "      This will do a sequence with the green and red led"
-  echo
-  echo "  $BASENAME led christmas"
-  echo "      This will set the mode of the led to christmas"
-  echo
   echo "  $BASENAME led newyear"
   echo "      This will set the mode of the led to newyear"
-  echo
-  echo "  $BASENAME led valentine"
-  echo "      This will set the mode of the led to valentine"
   echo
   echo "  $BASENAME led lunarnewyear"
   echo "      This wil set the mode of the led to lunarnewyear"
   echo
+  echo "  $BASENAME led valentine"
+  echo "      This will set the mode of the led to valentine"
+  echo
   echo "  $BASENAME led carnival"
   echo "     This will set the mode of the led to carnival"
   echo
-  echo "  $BASENAME led onam"
-  echo "      This will set the mode of the led to onam"
-  echo
-  echo "  $BASENAME led diwali"
-  echo "      This will set the mode of the led to diwali"
-  echo
-  echo "  $BASENAME led heavymetal"
-  echo "      This will set the mode of the led to heavymetal"
+  echo "  $BASENAME led lantern"
+  echo "     This will set the mode of the led to lantern"
   echo
   echo "  $BASENAME led stpatricks"
   echo "     This will set the mode of the led to stpatricks"
@@ -686,6 +720,24 @@ function led_help {
   echo
   echo "  $BASENAME led eid"
   echo "     This will set the mode of the led to eid"
+  echo
+  echo "  $BASENAME led onam"
+  echo "      This will set the mode of the led to onam"
+  echo
+  echo "  $BASENAME led diwali"
+  echo "      This will set the mode of the led to diwali"
+  echo
+  echo "  $BASENAME led thanksgiving"
+  echo "      This will do a sequence with the green and red led"
+  echo
+  echo "  $BASENAME led christmas"
+  echo "      This will set the mode of the led to christmas"
+  echo
+  echo "  $BASENAME led dance"
+  echo "      This will do a sequence with the green led"
+  echo
+  echo "  $BASENAME led heavymetal"
+  echo "      This will set the mode of the led to heavymetal"
   echo
   echo "  $BASENAME led random"
   echo "     This will set the mode of the led to one of the above festivities"

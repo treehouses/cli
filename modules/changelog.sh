@@ -19,7 +19,7 @@ case "$displaymode" in
       ;;
   "")
       checkargn $# 0
-      sed '3d;4d;5d;' $LOGPATH | tac #filters out auto generate message and prints bottom to top
+      tac $LOGPATH
      ;;
   compare)
       case "$version1" in

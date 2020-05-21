@@ -556,7 +556,7 @@ function lantern {
   set_brightness 1 0
 
   x=1
-  while [ $x -l 5 ]
+  while [ $x -lt 5 ]
   do
     set_brightness 0 1
     sleep 0.25
@@ -565,7 +565,7 @@ function lantern {
     x=$(( x+1 ))
     done
 
-  while [ $x -l 9 ]
+  while [ $x -lt 9 ]
   do
     set_brightness 0 1
     sleep 0.125

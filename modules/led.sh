@@ -56,6 +56,15 @@ function led {
       echo "Red LED: 5 blink"
       onam > "$LOGFILE"
       ;;
+    diwali)
+      checkroot
+      echo "leds are set to diwali mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Green LED: 0.025 on; 0.025 off; this will happen 5 times"
+      echo "Red LED: 0.025 on; 0.025 off; this will happen 5 times"
+      echo "Both LED: flash 10 times; this will happen 5 times"
+      diwali > "$LOGFILE"
+      ;;
     newyear)
       checkroot
       echo "leds are set to newyear mode."
@@ -312,6 +321,50 @@ function onam {
   led green "$current_green"
 }
 
+
+function diwali {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  for i in {0..5}                            # Green LED
+  do
+    set_brightness 0 1 && sleep 0.025        # green on
+    set_brightness 0 0 && sleep 0.025        # green OFF
+  done
+
+  for i in {0..5}                            # Red LED
+  do
+    set_brightness 1 1 && sleep 0.025        # red on
+    set_brightness 1 0 && sleep 0.025        # red OFF
+  done
+
+  for i in {0..5}                            # Both LEDs
+  do
+    set_brightness 1 1 && set_brightness 0 1
+    sleep 0.025
+    set_brightness 1 0 && set_brightness 0 0
+    sleep 0.025
+    set_brightness 1 1 && set_brightness 0 1
+    sleep 0.025
+    set_brightness 1 0 && set_brightness 0 0
+    sleep 0.025
+    set_brightness 1 1 && set_brightness 0 1
+    sleep 0.025
+    set_brightness 1 0 && set_brightness 0 0
+    sleep 0.025
+    set_brightness 1 1 && set_brightness 0 1
+    sleep 0.025
+    set_brightness 1 0 && set_brightness 0 0
+    sleep 0.025
+    set_brightness 1 1 && set_brightness 0 1
+    sleep 0.025
+    set_brightness 1 0 && set_brightness 0 0
+  done
+
+  led red "$current_red"
+  led green "$current_green"
+}
+
 function newyear {
   current_green=$(led "green")
   current_red=$(led "red")
@@ -490,7 +543,7 @@ function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
   echo "       $BASENAME led [dance|thanksgiving|christmas|newyear|lunarnewyear]"
-  echo "                     [valentine|carnival|stpatricks|onam|heavymetal|easter|random]"
+  echo "                     [valentine|carnival|stpatricks|onam|diwali|heavymetal|easter|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -560,6 +613,9 @@ function led_help {
   echo
   echo "  $BASENAME led onam"
   echo "      This will set the mode of the led to onam"
+  echo
+  echo "  $BASENAME led diwali"
+  echo "      This will set the mode of the led to diwali"
   echo
   echo "  $BASENAME led heavymetal"
   echo "      This will set the mode of the led to heavymetal"

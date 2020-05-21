@@ -5,13 +5,13 @@ function locale {
   locale="$1"
   if [ -z "$locale" ];
   then
-    echo "Error: the locale is missing"
+    echo $"Error: the locale is missing"
     exit 1
   fi
 
   if ! locale_line="$(grep "^$locale " /usr/share/i18n/SUPPORTED)";
   then
-    echo "Error: the specified locale is not supported"
+    echo $"Error: the specified locale is not supported"
     exit 1
   fi
 

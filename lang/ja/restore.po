@@ -1,0 +1,3 @@
+#: ../modules/restore.sh:19
+msgid "Error: the device $device wasn't detected"
+msgstr ""

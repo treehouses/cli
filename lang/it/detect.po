@@ -1,0 +1,9 @@
+#: ../modules/detect.sh:77
+msgid ""
+"Error: only 'detectrpi', 'detectrpi model', and 'detectrpi full' commands "
+"supported"
+msgstr ""
+
+#: ../modules/detect.sh:150
+msgid "Error: only '', 'rpi', 'arm', 'bluetooth', 'wifi' options supported."
+msgstr ""

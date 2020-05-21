@@ -22,7 +22,7 @@ function verbose {
       logit "Successfully disabled verbosity"
       ;;
     *)
-      logit "Error: only 'on' and 'off' options are supported";
+      logit $"Error: only 'on' and 'off' options are supported";
       exit 1;
       ;;
   esac

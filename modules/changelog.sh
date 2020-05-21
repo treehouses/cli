@@ -24,7 +24,7 @@ case "$displaymode" in
   compare)
       case "$version1" in
       "")
-        echo "Error: only 'compare [previous version]' and 'compare [previous version] [later version] are supported."
+        echo $"Error: only 'compare [previous version]' and 'compare [previous version] [later version] are supported."
         exit 1
         ;;
       *)
@@ -42,7 +42,7 @@ case "$displaymode" in
       esac
       ;;
   *)
-      echo "Error: only 'view', 'compare' and blank options are supported. "
+      echo $"Error: only 'view', 'compare' and blank options are supported. "
       exit 1
       ;;
   esac

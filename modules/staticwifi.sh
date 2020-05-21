@@ -5,7 +5,7 @@ function staticwifi {
   checkargn $# 6
 
   if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
-    echo "Error: argument(s) missing"
+    echo $"Error: argument(s) missing"
     echo "Usage: $BASENAME staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]"
     echo "ip, mask, gateway, dns, and ESSID are required fields"
     exit 1
@@ -29,7 +29,7 @@ function staticwifi {
   then
     if [ ${#password} -lt 8 ];
     then
-      echo "Error: password must have at least 8 characters"
+      echo $"Error: password must have at least 8 characters"
       exit 1
     fi
   fi

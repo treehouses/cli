@@ -33,7 +33,7 @@ EOF
       reboot_needed
       echo "OK: A reboot is required to see the changes"
     else
-      echo "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
+      echo $"Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
       exit 1
     fi
   elif [ "$option" = "desktop autologin" ]; then
@@ -49,7 +49,7 @@ EOF
       reboot_needed
       echo "OK: A reboot is required to see the changes"
     else
-      echo "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
+      echo $"Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
       exit 1
     fi
   elif [ "$option" = "modules" ]; then
@@ -59,7 +59,7 @@ EOF
     checkargn $# 1
     echo "$(</proc/cmdline)" | tr ' ' '\n' | sed '/^$/d'
   else
-    echo "Error: only 'console', 'console autologin', 'desktop', 'desktop autologin', 'modules', 'params' options are supported."
+    echo $"Error: only 'console', 'console autologin', 'desktop', 'desktop autologin', 'modules', 'params' options are supported."
     exit 1
   fi
 }

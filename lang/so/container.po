@@ -1,0 +1,3 @@
+#: ../modules/container.sh:36
+msgid "Error: only 'docker' 'balena' 'none' options are supported"
+msgstr ""

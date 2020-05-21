@@ -1,0 +1,11 @@
+#: ../modules/ap.sh:17
+msgid "Error: essid must be no greater than 32 characters"
+msgstr ""
+
+#: ../modules/ap.sh:26
+msgid "Error: password must have at least 8 characters"
+msgstr ""
+
+#: ../modules/ap.sh:48
+msgid "Error: only 'local' and 'internet' modes are supported"
+msgstr ""

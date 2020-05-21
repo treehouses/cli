@@ -47,12 +47,12 @@ function power {
       echo "CPU frequency is now $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq)"
       ;;
     "")
-      echo "Error: please choose one of the 5 modes"
+      echo $"Error: please choose one of the 5 modes"
       power_help
       exit 1
       ;;
     *)
-      echo "Error: power '$mode' does not exist"
+      echo $"Error: power '$mode' does not exist"
       power_help
       exit 1
       ;;

@@ -1,0 +1,7 @@
+#: ../modules/clone.sh:18
+msgid "Error: the device $device wasn't detected"
+msgstr ""
+
+#: ../modules/clone.sh:23
+msgid "Error: the device $device is not big enough"
+msgstr ""

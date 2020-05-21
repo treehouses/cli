@@ -1,0 +1,8 @@
+#: ../modules/apchannel.sh:9
+msgid ""
+"Error: the current network mode ($(networkmode)) has no config for channel"
+msgstr ""
+
+#: ../modules/apchannel.sh:21
+msgid "Error: you must specify a channel between 1 and 11"
+msgstr ""

@@ -1,0 +1,3 @@
+#: ../modules/usb.sh:28 ../modules/usb.sh:63
+msgid "Error: unknown command"
+msgstr ""

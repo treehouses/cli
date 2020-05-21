@@ -1,0 +1,7 @@
+#: ../modules/wifi.sh:7
+msgid "Error: name of the network missing"
+msgstr ""
+
+#: ../modules/wifi.sh:18
+msgid "Error: password must have at least 8 characters"
+msgstr ""

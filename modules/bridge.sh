@@ -29,7 +29,7 @@ function bridge {
   then
     if [ ${#hotspotessid} -gt 32 ]
     then
-      echo "Error: hotspot essid must be no greater than 32 characters"
+      echo $"Error: hotspot essid must be no greater than 32 characters"
       exit 1
     fi
   fi
@@ -38,7 +38,7 @@ function bridge {
   then
     if [ ${#wifipassword} -lt 8 ];
     then
-      echo "Error: wifi password must have at least 8 characters"
+      echo $"Error: wifi password must have at least 8 characters"
       exit 1
     fi
   fi
@@ -47,7 +47,7 @@ function bridge {
   then
     if [ ${#hotspotpassword} -lt 8 ];
     then
-      echo "Error: hotspot password must have at least 8 characters"
+      echo $"Error: hotspot password must have at least 8 characters"
       exit 1
     fi
   fi

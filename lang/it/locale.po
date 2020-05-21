@@ -1,0 +1,7 @@
+#: ../modules/locale.sh:8
+msgid "Error: the locale is missing"
+msgstr ""
+
+#: ../modules/locale.sh:14
+msgid "Error: the specified locale is not supported"
+msgstr ""

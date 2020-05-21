@@ -34,7 +34,7 @@ function disable_service {
 function checkroot {
   if [ "$(id -u)" -ne 0 ];
   then
-      echo "Error: Must be run with root permissions"
+      echo $"Error: Must be run with root permissions"
       exit 1
   fi
 }
@@ -42,7 +42,7 @@ function checkroot {
 function checkrpi {
   if [ "$(detectrpi)" == "nonrpi" ];
   then
-    echo "Error: Must be run with rpi system"
+    echo $"Error: Must be run with rpi system"
     exit 1
   fi
 }
@@ -50,7 +50,7 @@ function checkrpi {
 function checkargn {
   local helpfunc
   if [[ $1 -gt $2 ]]; then
-    echo "Error: Too many arguments."
+    echo $"Error: Too many arguments."
     helpfunc="$(echo $SCRIPTARGS | cut -d' ' -f1)"
     if [[ $helpfunc = "help" ]]; then
       help
@@ -63,14 +63,14 @@ function checkargn {
 
 function checkwrpi {
   if [[ $(detect bluetooth) == "false" ]]; then
-    echo "Error: no Bluetooth device detected"
+    echo $"Error: no Bluetooth device detected"
     exit 1
   fi
 }
 
 function checkinternet {
   if [[ $(internet) == "false" ]]; then
-    echo "Error: no Internet found"
+    echo $"Error: no Internet found"
     exit 1
   fi
 }

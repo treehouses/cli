@@ -1,0 +1,3 @@
+#: ../modules/blocker.sh:89
+msgid "Error: only '0' '1' '2' '3' '4' 'max' options are supported"
+msgstr ""

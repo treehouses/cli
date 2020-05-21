@@ -26,12 +26,12 @@ function sshkey () {
     fi
   elif [ "$1" == "delete" ]; then
     if [ -z "$2" ]; then
-      echo "Error: missing argument"
+      echo $"Error: missing argument"
       echo "Usage: $BASENAME sshkey delete \"<key>\""
       exit 1
     fi
     if [ "$2" == "ssh-rsa" ]; then
-      echo "Error: missing qoutes"
+      echo $"Error: missing qoutes"
       echo "Usage: $BASENAME sshkey delete \"<key>\""
       exit 1
     fi
@@ -57,13 +57,13 @@ function sshkey () {
     echo "all sshkeys are deleted."
   elif [ "$1" == "github" ]; then
     if [ -z "$2" ]; then
-      echo "Error: missing arguments"
+      echo $"Error: missing arguments"
       echo "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
       exit 1
     fi
     if [ "$2" == "adduser" ]; then
       if [ -z "$3" ]; then
-        echo "Error: missing argument"
+        echo $"Error: missing argument"
         echo "Usage: $BASENAME sshkey adduser <username>"
         exit 1
       fi
@@ -74,7 +74,7 @@ function sshkey () {
       fi
     elif [ "$2" == "deleteuser" ]; then
       if [ -z "$3" ]; then
-        echo "Error: missing argument"
+        echo $"Error: missing argument"
         echo "Usage: $BASENAME sshkey deleteuser <username>"
         exit 1
       fi
@@ -94,7 +94,7 @@ function sshkey () {
       done
     elif [ "$2" == "addteam" ]; then
       if [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
-        echo "Error: missing arguments"
+        echo $"Error: missing arguments"
         echo "Usage: $BASENAME sshkey github addteam <organization> <team_name> <access_token>"
         exit 1
       fi
@@ -105,12 +105,12 @@ function sshkey () {
         sshkey github adduser "$member"
       done <<< "$members"
     else
-      echo "Error: unsupported command"
+      echo $"Error: unsupported command"
       echo "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
       exit 1
     fi
   else	
-    echo "Error: unsupported command"	
+    echo $"Error: unsupported command"	
     echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"	
     exit 1    
   fi

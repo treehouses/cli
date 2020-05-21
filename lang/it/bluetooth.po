@@ -1,0 +1,5 @@
+#: ../modules/bluetooth.sh:100
+msgid ""
+"Error: only 'on', 'off', 'pause', 'restart', 'mac', 'id', 'button', 'log', "
+"and 'status' options are supported"
+msgstr ""

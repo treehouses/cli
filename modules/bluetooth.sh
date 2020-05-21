@@ -97,7 +97,7 @@ function bluetooth {
      echo "Success: the bluetooth service has been restarted."
 
   else
-    echo "Error: only 'on', 'off', 'pause', 'restart', 'mac', 'id', 'button', 'log', and 'status' options are supported";
+    echo $"Error: only 'on', 'off', 'pause', 'restart', 'mac', 'id', 'button', 'log', and 'status' options are supported";
   fi
 }
 

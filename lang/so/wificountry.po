@@ -1,0 +1,3 @@
+#: ../modules/wificountry.sh:51
+msgid "Error: invalid country code"
+msgstr ""

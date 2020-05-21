@@ -1,0 +1,11 @@
+#: ../modules/rtc.sh:40
+msgid "Error: you need to specify a clock"
+msgstr ""
+
+#: ../modules/rtc.sh:43
+msgid "Error: the clock is not supported."
+msgstr ""
+
+#: ../modules/rtc.sh:78
+msgid "Error: only on, off options are supported"
+msgstr ""

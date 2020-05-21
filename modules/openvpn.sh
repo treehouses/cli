@@ -5,7 +5,7 @@ function openvpn {
   command="$1"
 
   if ! hash "openvpn" 2>"$LOGFILE"; then
-    echo "Error: couldn't find openvpn installed."
+    echo $"Error: couldn't find openvpn installed."
     echo "On debian systems it can be installed by running 'apt-get install openvpn'"
     exit 1
   fi
@@ -53,7 +53,7 @@ function openvpn {
     if [ -f "/tmp/vpn.ovpn" ]; then
       openvpn "use" "/tmp/vpn.ovpn" "$password"
     else
-      echo "Error when trying to download the vpn file"
+      echo $"Error when trying to download the vpn file"
     fi
 
     restart_service "openvpn"
@@ -72,7 +72,7 @@ function openvpn {
     elif [ "$option" = "add" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        echo "Error: You must specify a channel URL"
+        echo $"Error: You must specify a channel URL"
         exit 1
       fi
 
@@ -81,7 +81,7 @@ function openvpn {
     elif [ "$option" = "delete" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        echo "Error: You must specify a channel URL"
+        echo $"Error: You must specify a channel URL"
         exit 1
       fi
 
@@ -105,7 +105,7 @@ function openvpn {
       fi
       echo "Status: $status"
     else
-      echo "Error: only 'on' and 'off' options are supported."
+      echo $"Error: only 'on' and 'off' options are supported."
     fi
   elif [ -z "$command" ]; then
     echo "openvpn service"
@@ -115,7 +115,7 @@ function openvpn {
       echo "ip: $(get_ipv4_ip tun0)"
     fi
   else
-    echo "Error: only 'use', 'show', 'delete', 'notice', 'start', 'stop' and 'load' options are supported."
+    echo $"Error: only 'use', 'show', 'delete', 'notice', 'start', 'stop' and 'load' options are supported."
   fi
 }
 

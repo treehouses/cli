@@ -16,7 +16,7 @@ function ssh {
   elif [ "$status" = "" ]; then
     last | grep -E "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"
   else 
-    echo "Error: only '', 'on', 'off', or 'fingerprint' options are supported"
+    echo $"Error: only '', 'on', 'off', or 'fingerprint' options are supported"
   fi
 }
 

@@ -1,0 +1,11 @@
+#: ../modules/bootoption.sh:36 ../modules/bootoption.sh:52
+msgid ""
+"Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to "
+"desktop"
+msgstr ""
+
+#: ../modules/bootoption.sh:62
+msgid ""
+"Error: only 'console', 'console autologin', 'desktop', 'desktop autologin', "
+"'modules', 'params' options are supported."
+msgstr ""

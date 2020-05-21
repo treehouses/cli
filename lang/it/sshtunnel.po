@@ -1,0 +1,25 @@
+#: ../modules/sshtunnel.sh:7
+msgid "Error: no tunnel has been set up."
+msgstr ""
+
+#: ../modules/sshtunnel.sh:28
+msgid "Error: A port interval is required"
+msgstr ""
+
+#: ../modules/sshtunnel.sh:98
+msgid "Error: a tunnel has not been set up yet"
+msgstr ""
+
+#: ../modules/sshtunnel.sh:146 ../modules/sshtunnel.sh:155
+msgid "Error: You must specify a channel URL"
+msgstr ""
+
+#: ../modules/sshtunnel.sh:187
+msgid "Error: only 'on' and 'off' options are supported."
+msgstr ""
+
+#: ../modules/sshtunnel.sh:190
+msgid ""
+"Error: only 'add', 'remove', 'list', 'check', 'key', 'notice' options are "
+"supported"
+msgstr ""

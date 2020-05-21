@@ -1,0 +1,7 @@
+#: ../modules/power.sh:50
+msgid "Error: please choose one of the 5 modes"
+msgstr ""
+
+#: ../modules/power.sh:55
+msgid "Error: power '$mode' does not exist"
+msgstr ""

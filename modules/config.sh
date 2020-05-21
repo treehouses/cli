@@ -18,13 +18,13 @@ function config {
       if [[ -f "$CONFIGFILE" ]]; then
         echo "$(<$CONFIGFILE)"
       else
-        echo "Error: config file is empty; no variables to show"
+        echo $"Error: config file is empty; no variables to show"
         exit 1
       fi
     ;;
     update)
       if [ -z "$2" ] || [ -z "$3" ]; then
-        echo "Error: missing varname or varvalue"
+        echo $"Error: missing varname or varvalue"
         exit 1
       fi
       conf_var_update "$2" "$3"
@@ -32,7 +32,7 @@ function config {
     ;;
     add)
       if [ -z "$2" ] || [ -z "$3" ]; then
-        echo "Error: missing varname or varvalue"
+        echo $"Error: missing varname or varvalue"
         exit 1
       fi
       conf_var_update "$2" "$3"
@@ -42,7 +42,7 @@ function config {
       checkargn $# 2
       varname="$2"
       if [ -z "$2" ]; then
-        echo "Error: missing varname"
+        echo $"Error: missing varname"
         exit 1
       fi
       if [[ -f "$CONFIGFILE" && $(cat $CONFIGFILE) = *"$2"* ]]; then
@@ -50,7 +50,7 @@ function config {
         sync;
         echo "Successfully deleted variable"
       else
-        echo "Error: $2 doesn't exist; please run 'treehouses config' to show all variables"
+        echo $"Error: $2 doesn't exist; please run 'treehouses config' to show all variables"
         exit 1
       fi
     ;;
@@ -60,7 +60,7 @@ function config {
       echo "Successfully cleared config"
     ;;
     *)
-      echo "Error: only 'update' 'add' 'delete', and 'clear' options are supported"
+      echo $"Error: only 'update' 'add' 'delete', and 'clear' options are supported"
       exit 1
     ;;
   esac

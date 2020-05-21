@@ -1,0 +1,7 @@
+#: ../modules/upgrade.sh:42
+msgid "Error: branch specified not found on bluetooth server repository"
+msgstr ""
+
+#: ../modules/upgrade.sh:57
+msgid "Error: branch specified not found on cli repository"
+msgstr ""

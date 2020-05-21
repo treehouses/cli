@@ -7,6 +7,8 @@ function camera {
   config="/boot/config.txt"
   configtemp="/boot/config.temp"
   savetype="png"
+  vidtype="mp4"
+  length=10
 
   case "$1" in
     "")
@@ -53,6 +55,29 @@ function camera {
       fi
     ;;
 
+    "record")
+      case $2 in 
+      "")
+        mkdir -p ${directory}
+        if ! grep -q "start_x=1" ${config} ; then
+          echo "You need to enable AND reboot first in order to take pictures."
+          exit 1
+        else
+          length=$length*100
+          echo "Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${directory}."
+          raspivid -o "${directory}$BASENAME-${timestamp}.h264" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
+          $BASENAME convert ${directory}$BASENAME-${timestamp}.h264 ${directory}$BASENAME-${timestamp}.${vidtype}
+        fi
+      ;;
+      "*")
+        if ! [[ "$2" =~ ^[0-9]+$]]
+          then
+            camera_help
+        fi
+        length=$default length*100
+        echo "Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${directory}."
+        raspivid -o "${directory}$BASENAME-${timestamp}.h264" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
+        $BASENAME convert ${directory}$BASENAME-${timestamp}.h264 ${directory}$BASENAME-${timestamp}.${vidtype}
     "*")
       camera_help
     ;;

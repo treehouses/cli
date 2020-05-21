@@ -29,29 +29,24 @@ function sshtunnel {
           fi
 
           # use default ports-list if custom not found
+          # "name=actual,offset"
           if [ ! -f "/etc/ports-list" ]; then
             {
-              # echo "portssh=$((portinterval + 22))"
-              # echo "portweb=$((portinterval + 80))"
-              # echo "portcouchdb=$((portinterval + 84))"
-              # echo "portnewcouchdb=$((portinterval + 82))"
-              # echo "portmunin=$((portinterval + 49))"
-              echo "portssh=22"
-              echo "portweb=80"
-              echo "portcouchdb=84"
-              echo "portnewcouchdb=82"
-              echo "portmunin=49"
+              echo "portssh=22,22"
+              echo "portweb=80,80"
+              echo "portcouchdb=5984,84"
+              echo "portnewcouchdb=2200,82"
+              echo "portmunin=4949,49"
             } > /etc/ports-list
           fi      
 
-          # declare associative array + math
+          # declare associative array
           declare -A ports
           while read -r -u 9 line; do
-            port="${line%%=*}"
-            margin="${line#*=}"
-            ports+=([$port]=$((portinterval + margin)))
+            name="${line%%=*}"
+            combo="${line#*=}"
+            ports[$name]=$combo
           done 9< /root/ports-list
-
 
           if [ ! -f "/root/.ssh/id_rsa" ]; then
             ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
@@ -66,10 +61,19 @@ function sshtunnel {
             fi
           done <<< "$keys"
 
+          # write to /etc/tunnel
           {
             echo "#!/bin/bash"
             echo
-            echo "/usr/bin/autossh -f -T -N -q -4 -M $3 -R $portssh:127.0.1.1:22 -R $portcouchdb:127.0.1.1:5984 -R $portweb:127.0.1.1:80 -R $portnewcouchdb:127.0.1.1:2200 -R $portmunin:127.0.1.1:4949 $host"
+            echo "/usr/bin/autossh -f -T -N -q -4 -M $portinterval \\"
+            for i in "${!ports[@]}"
+            do
+              combo=${ports[$i]}
+              actual=$(echo $combo | cut -f1 -d,)
+              offset=$(echo $combo | cut -f2 -d,)
+              echo "-R $((portinterval + offset)):127.0.1.1:$actual \\"
+            done
+            echo "$host"
           } > /etc/tunnel
 
           chmod +x /etc/tunnel

@@ -25,6 +25,7 @@ if [ "$couchdb_autorun" = true ]; then
   treehouses services couchdb up
 fi
 
+
 EOF
 }
 

@@ -57,27 +57,22 @@ function camera {
     ;;
 
     "record")
+      mkdir -p ${viddir}
+      if ! grep -q "start_x=1" ${config} ; then
+        echo "You need to enable AND reboot first in order to take pictures."
+        exit 1
+      fi
       case "$2" in 
         "")
-          mkdir -p ${viddir}
-          if ! grep -q "start_x=1" ${config} ; then
-            echo "You need to enable AND reboot first in order to take pictures."
-            exit 1
-          else
-            echo "Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
-            let length=$length*1000
-            raspivid -o "${viddir}$BASENAME-${timestamp}.h264" -t "${length}" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
-            $BASENAME convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
-            rm ${viddir}$BASENAME-${timestamp}.h264          
-          fi
-        ;;
-
+          echo "Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
+          let length=$length*1000
+          raspivid -o "${viddir}$BASENAME-${timestamp}.h264" -t "${length}" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
+          $BASENAME convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
+          rm ${viddir}$BASENAME-${timestamp}.h264
+          ;;       
+        
         *)
-          mkdir -p ${viddir}    
-          if ! grep -q "start_x=1" ${config} ; then
-            echo "You need to enable AND reboot first in order to take pictures."
-            exit 1
-          elif ! [[ "$2" =~ ^[1-9][0-9]*$ ]] ; then
+          if ! [[ "$2" =~ ^[1-9][0-9]*$ ]] ; then #^[0-9]+$ to accept 0 for indefinite recording
             echo "Positive integers only."
             exit 1
           else        
@@ -87,7 +82,7 @@ function camera {
             $BASENAME convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
             rm ${viddir}$BASENAME-${timestamp}.h264
           fi
-        ;;
+          ;;
       esac
       ;;
 

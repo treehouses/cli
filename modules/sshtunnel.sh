@@ -3,7 +3,7 @@ function sshtunnel {
   local portnewcouchdb portmunin keys option value status
   checkroot
   # checkargn $# 3
-  portinterval="$3"
+  # portinterval="$3"
   host="$4"
 
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
@@ -23,6 +23,7 @@ function sshtunnel {
     add)
       case "$2" in
         tunnels)
+          portinterval="$3"
           if [ -z "$portinterval" ]; then
             echo "Error: A port interval is required"
             exit 1
@@ -88,7 +89,15 @@ function sshtunnel {
           } > /etc/cron.d/autossh
           ;;
         port)
-
+          name=$3
+          actual=$4
+          offset=$5
+          if [ -f /etc/ports-list ]; then
+            echo "$name=$actual,$offset" >> /etc/ports-list
+          else
+            echo "Error: /etc/ports-list not found"
+            exit 1
+          fi
           ;;
         *)
           echo "Error"

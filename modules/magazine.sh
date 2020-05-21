@@ -19,8 +19,8 @@ function magazine() {
         re='^[0-9]+$'
         if ! [[ $req =~ $re ]] || [[ $req -lt 1 ]] || [[ $req -gt 93 ]]; then
           echo "ERROR: Please enter a valid magazine number"
-	  echo "       This can be any issue ranging from 1 to 93" 
-	  exit 1
+          echo "       This can be any issue ranging from 1 to 93" 
+          exit 1
         fi
         magnum=$req
       fi

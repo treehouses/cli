@@ -59,6 +59,9 @@ treehouses coralenv demo-always-on
 treehouses coralenv demo-off
 treehouses coralenv demo-on
 treehouses coralenv install
+treehouses coraltpu install
+treehouses coraltpu install cplusplus
+treehouses coraltpu remove
 treehouses cron
 treehouses cron 0W
 treehouses cron add

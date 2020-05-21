@@ -115,6 +115,7 @@ openvpn [use|show|delete]                 helps setting up an openvpn client
         [notice|start|stop|load]
 coralenv [install|demo-on|demo-off]       plays with the coral environmental board
          [demo-always-on]
+coraltpu <install|remove> [cplusplus]     controls the coral usb accelerator
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory
 temperature [celsius|fahrenheit|kelvin]   displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed

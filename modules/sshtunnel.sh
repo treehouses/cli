@@ -93,7 +93,11 @@ function sshtunnel {
           actual=$4
           offset=$5
           if [ -f /etc/ports-list ]; then
-            echo "$name=$actual,$offset" >> /etc/ports-list
+            if ! grep -Fq "$name" /etc/ports-list; then
+              echo "$name=$actual,$offset" >> /etc/ports-list
+            else
+              echo "port already added"
+            fi
           else
             echo "Error: /etc/ports-list not found"
             exit 1
@@ -109,7 +113,12 @@ function sshtunnel {
       case "$2" in
         port)
           name=$3
-          [ -f /etc/ports-list ] && sed -i "/$name/d" /etc/ports-list || { echo "Error: /etc/ports-list not found"; exit 1; }
+          if [ -f /etc/ports-list ]; then
+            sed -i "/$name/d" /etc/ports-list
+          else
+            echo "Error: /etc/ports-list not found"
+            exit 1
+          fi
           ;;
       esac
 

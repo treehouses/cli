@@ -59,5 +59,4 @@ function magazine_help {
   echo "    $BASENAME magazine magpi number"
   echo "        This will download issue [number] of magpi."
   echo
-
 }

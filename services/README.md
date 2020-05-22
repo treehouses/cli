@@ -29,7 +29,7 @@ Using the [template](#Template), fill in the sections as required.
 
    Replace `<service>/<service>` with the name of your service.
    ```
-   } > /srv/<service>/<service>.yml
+   cat << EOF > /srv/<service>/<service>.yml
    ```
 
 1. create .env (if needed)
@@ -54,15 +54,15 @@ Using the [template](#Template), fill in the sections as required.
 
    Replace `<service>`s with the name of your service.
    ```
-   {
-     echo "<service>_autorun=true"
-     echo
-     echo "if [ \"\$<service>_autorun\" = true ]; then"
-     echo "  docker-compose -f /srv/<service>/<service>.yml -p <service> up -d"
-     echo "fi"
-     echo
-     echo
-   } > /srv/<service>/autorun
+     cat << EOF > /srv/<service>/autorun
+   <service>_autorun=true
+
+   if [ "$<service>_autorun" = true ]; then
+     treehouses services <service> up
+   fi
+
+
+   EOF
    ```
 
 1. environment variable check
@@ -123,9 +123,9 @@ function install {
   mkdir -p /srv/<service>
 
   # create yml(s)
-  {
-
-  } > /srv/<service>/<service>.yml
+  cat << EOF > /srv/<service>/<service>.yml
+  
+EOF
 
   # create .env with default values
   {
@@ -133,15 +133,15 @@ function install {
   } > /srv/<service>/.env
 
   # add autorun
-  {
-    echo "<service>_autorun=true"
-    echo
-    echo "if [ \"\$<service>_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/<service>/<service>.yml -p <service> up -d"
-    echo "fi"
-    echo
-    echo
-  } > /srv/<service>/autorun
+  cat << EOF > /srv/<service>/autorun
+<service>_autorun=true
+
+if [ "$<service>_autorun" = true ]; then
+  treehouses services <service> up
+fi
+
+
+EOF
 }
 
 # environment var

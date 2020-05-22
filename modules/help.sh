@@ -109,7 +109,6 @@ gpio                                      displays raspberry pi model and corres
 changelog                                 displays the most recent changes to treehouses
 shutdown [now|in|force]                   shutdown the system
 magazine magpi [all|latest|number]        downloads specific magpi issue as a pdf
-
 EOF
   echo "$helpdefault"
 }

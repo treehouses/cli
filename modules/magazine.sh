@@ -49,11 +49,10 @@ function magazine() {
       echo "Fetching all Magpi magazines..."
       for i in {1..93}
       do
-        magnum=$i
-        if [ -f "MagPi$magnum.pdf" ]; then
+        if [ -f "MagPi$i.pdf" ]; then
           continue
         fi
-        wget "https://magpi.raspberrypi.org/issues/$magnum/pdf"
+        wget "https://magpi.raspberrypi.org/issues/$i/pdf"
         mv ./pdf ./pdf.txt
         url="$(cat pdf.txt | sed -n '10p')"
         rm ./pdf.txt
@@ -61,7 +60,7 @@ function magazine() {
         quoteloc="${url%%\"*}"
         ind=${#quoteloc}
         url=${url:0:$ind}
-        wget -bqc -O "MagPi$magnum.pdf" $url
+        wget -bqc -O "MagPi$i.pdf" $url
       done
       echo "All current issues of magpi are saved in the $magtype directory"
       cd ..

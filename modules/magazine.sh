@@ -37,7 +37,7 @@ function magazine() {
       quoteloc="${url%%\"*}"
       ind=${#quoteloc}
       url=${url:0:$ind}
-      wget -bqc -O "MagPi0$magnum.pdf" $url
+      wget -bqc -O "MagPi$magnum.pdf" $url
       echo "Finished downloading MagPi$magnum.pdf"
       echo "Issue $magnum is saved in the $magtype directory"
       cd ..

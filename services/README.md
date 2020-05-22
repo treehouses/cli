@@ -25,7 +25,7 @@ Using the [template](#Template), fill in the sections as required.
 
 1. create yml(s)
 
-   Add your yml file(s).
+   Replace `<yml code>` with the svg icon code of your service.
 
    Replace `<service>/<service>` with the name of your service.
    ```
@@ -124,7 +124,7 @@ function install {
 
   # create yml(s)
   cat << EOF > /srv/<service>/<service>.yml
-  
+<yml code>
 EOF
 
   # create .env with default values

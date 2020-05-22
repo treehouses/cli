@@ -27,8 +27,10 @@ function magazine() {
       if [ ! -d "$magtype" ]; then
         mkdir $magtype
       fi
-      cd $magtype
-      wget "https://magpi.raspberrypi.org/issues/$magnum/pdf"
+      cd $magtype || return
+      echo "Fetching MagPi$magnum.pdf..."
+      wget -bqc "https://magpi.raspberrypi.org/issues/$magnum/pdf"
+      sleep 2
       mv ./pdf ./pdf.txt
       url="$(cat pdf.txt | sed -n '10p')"
       rm ./pdf.txt
@@ -36,9 +38,9 @@ function magazine() {
       quoteloc="${url%%\"*}"
       ind=${#quoteloc}
       url=${url:0:$ind}
-      wget -O "MagPi$magnum.pdf" $url
+      wget -bqc -O "MagPi$magnum.pdf" $url
       echo "Finished downloading MagPi$magnum.pdf"
-      echo "Issue is saved in the $magtype directory"
+      echo "Issue $magnum is saved in the $magtype directory"
       cd ..
     fi
   fi

@@ -157,6 +157,7 @@ treehouses led
 treehouses led carnival
 treehouses led christmas
 treehouses led dance
+treehouses led eid
 treehouses led green
 treehouses led green backlight
 treehouses led green cpu0
@@ -171,6 +172,7 @@ treehouses led green timer
 treehouses led lunarnewyear
 treehouses led newyear
 treehouses led onam
+treehouses led diwali
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -187,6 +189,7 @@ treehouses led valentine
 treehouses led heavymetal
 treehouses led stpatricks
 treehouses led easter
+treehouses led lantern
 treehouses led random
 treehouses locale
 treehouses log
@@ -276,6 +279,8 @@ treehouses shutdown in
 treehouses shutdown force
 treehouses speedtest
 treehouses speedtest -h
+treehouses ssh
+treehouses ssh fingerprint
 treehouses ssh off
 treehouses ssh on
 treehouses sshkey add
@@ -341,6 +346,7 @@ treehouses wifi
 treehouses wificountry
 treehouses wifihidden
 treehouses wifistatus
+treehouses convert
 EOF
 # COMP_LINE is the line you typed in terminal
 # COMP_WORDS is array form of COMP_LINE

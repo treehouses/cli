@@ -31,6 +31,11 @@ load test-helper
   assert_success && assert_output -p 'heartbeat'
 }
 
+@test "$clinom led eid" {
+  run "${clicmd}" led eid
+  assert_success && assert_output -p 'heartbeat' 
+}
+
 @test "$clinom led christmas" {
   run "${clicmd}" led christmas
   assert_success && assert_output -p 'heartbeat'
@@ -56,6 +61,11 @@ load test-helper
   assert_success && assert_output -p 'heartbeat'
 }
 
+@test "$clinom led diwali" {
+  run "${clicmd}" led diwali
+  assert_success && assert_output -p 'heartbeat'
+}
+
 @test "$clinom led heavymetal" {
   run "${clicmd}" led heavymetal
   assert_success && assert_output -p 'heartbeat'
@@ -68,6 +78,11 @@ load test-helper
 
 @test "$clinom led easter" {
   run "${clicmd}" led easter
+  assert_success && assert_output -p 'heartbeat'
+}
+
+@test "$clinom led lantern" {
+  run "${clicmd}" led lantern
   assert_success && assert_output -p 'heartbeat'
 }
 

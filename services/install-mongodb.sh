@@ -16,6 +16,7 @@ function install {
     echo "      -  \"27017:27017"\"
     echo "      -  \"27018:27018"\"
     echo "      -  \"27019:27019"\"
+    echo "      -  \"28017:28017"\"
     echo "    environment: "
     echo "      - MONGO_INITDB_ROOT_USERNAME=\${MONGO_INITDB_ROOT_USERNAME_VAR}"
     echo "      - MONGO_INITDB_ROOT_PASSWORD=\${MONGO_INITDB_ROOT_PASSWORD_VAR}"
@@ -55,6 +56,7 @@ function get_ports {
   echo "27017"
   echo "27018"
   echo "27019"
+  echo "28017"
 }
 
 # add size (in MB)

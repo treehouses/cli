@@ -50,6 +50,9 @@ function magazine() {
       for i in {1..93}
       do
         magnum=$i
+	if [ -f "MagPi$magnum.pdf" ]; then
+          continue
+	fi
         wget "https://magpi.raspberrypi.org/issues/$magnum/pdf"
         mv ./pdf ./pdf.txt
         url="$(cat pdf.txt | sed -n '10p')"

@@ -1,9 +1,11 @@
 #! /bin/bash 
 
-checkroot 
-checkrpi
+function tether {
+  checkroot 
+  checkrpi
 
-ip link set usb0 up 
-dhclient usb0 2>/dev/null
+  ip link set usb0 up 
+  dhclient usb0 2>/dev/null
 
-echo "tether" > /etc/network/mode
+  echo "tether" > /etc/network/mode
+}

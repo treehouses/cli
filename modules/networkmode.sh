@@ -21,8 +21,11 @@ function networkmode {
       fi
 
       if iface_exists "usb0"; then
-        network_mode="tether"
-        interfaces+=("usb0")
+        if [ ! -z "$(grep usb0 /var/lib/dhcp/*.leases)" ]; then
+          network_mode="tether"
+          interfaces+=("usb0")
+        else 
+          network_mode="external"
       fi
     ;;
     RPIZW|RPI3A+)
@@ -36,8 +39,11 @@ function networkmode {
         interfaces+=("wlan1")
       fi
       if iface_exists "usb0"; then
-        network_mode="tether"
-        interfaces+=("usb0")
+        if [ ! -z "$(grep usb0 /var/lib/dhcp/*.leases)" ]; then
+          network_mode="tether"
+          interfaces+=("usb0")
+        else 
+          network_mode="external"
       fi
     ;;
   esac

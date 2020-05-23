@@ -1,11 +1,27 @@
 #! /bin/bash 
 
-function tether {
+function tethermain {
   checkroot 
   checkrpi
 
-  ip link set usb0 up 
-  dhclient usb0 2>/dev/null
+  if [ -z "$(ip link | grep usb0)" ]; then 
+    echo 
+    echo "USB interface not found."
+    echo "Please check your connection and/or if usb tethering is enabled in your phone setting"
+    echo 
+  else
+    ip link set usb0 up 
+    dhclient usb0 2>/dev/null
+    systemctl is-active --quiet dhcpcd || systemctl enable --now --quiet dhcpcd
+    echo "tether" > /etc/network/mode
+  fi
+}
 
-  echo "tether" > /etc/network/mode
+function tether {
+  tethermain
+}
+
+function tether_help {
+  echo
+  echo
 }

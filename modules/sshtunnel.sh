@@ -149,49 +149,23 @@ function sshtunnel {
       esac
       ;;
     list | "")
-      case "$2" in
-        tunnels)
-          if [ -f /etc/tunnel ]; then
-            echo "Ports:"
-            echo "  local   -> external"
+      if [ -f /etc/tunnel ]; then
+        echo "Ports:"
+        echo "  local   -> external"
 
-            while read -r -u 9 line; do
-              if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
-                local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
-                external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
-                echo "    $local -> $external"
-              fi
-            done 9< /etc/tunnel
-
-            echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
-          else
-            echo "Error: a tunnel has not been set up yet"
-            exit 1
+        while read -r -u 9 line; do
+          if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
+            local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
+            external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
+            echo "    $local -> $external"
           fi
-          ;;
-        ports)
-          if [ -f /etc/ports-list ]; then
-            echo "Ports:"
-            echo "  name    -    port    -    offset"
+        done 9< /etc/tunnel
 
-            while read -r -u 9 line; do
-              name=$(echo $line | grep -oP '.*?(?==)')
-              port=$(echo $line | grep -oP '(?<==).*?(?=,)')
-              offset=$(echo $line | grep -oP '(?<=,).*')
-              echo "    $name    -    $port    -    $offset"
-            done 9< /etc/ports-list
-          else
-            echo "Error: /etc/ports-list not found"
-            echo "add a tunnel first"
-            exit 1
-          fi
-          ;;
-        *)
-          echo "Error: unknown command"
-          echo "Usage: $BASENAME sshtunnel list <tunnels | ports>"
-          exit 1
-          ;;
-      esac
+        echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
+      else
+        echo "Error: a tunnel has not been set up yet"
+        exit 1
+      fi
       ;;
     check)
       if [ -f "/etc/tunnel" ]; then

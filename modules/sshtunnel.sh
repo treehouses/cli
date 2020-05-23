@@ -164,29 +164,36 @@ function sshtunnel {
       esac
       ;;
     list | "")
-      if [ -f "/etc/tunnel" ]; then
-        declare -A ports
-        while read -r -u 9 line; do
-          name="${line%%=*}"
-          combo="${line#*=}"
-          ports[$name]=$combo
-        done 9< /etc/ports-list
+      case "$2" in
+        tunnels)
+          if [ -f "/etc/tunnel" ]; then
+            echo "Ports:"
+            echo " local   -> external"
 
-        portinterval=$(grep -oP "(?<=\-M )(.*?) " /etc/tunnel)
-        echo "Ports:"
-        echo " local   -> external"
-        for i in "${!ports[@]}"
-        do
-          combo=${ports[$i]}
-          actual=$(echo $combo | cut -f1 -d,)
-          offset=$(echo $combo | cut -f2 -d,)
-          echo "    $actual -> $((offset + portinterval))"
-        done
-        echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
-      else
-        echo "Error: a tunnel has not been set up yet"
-        exit 1
-      fi
+            while read -r -u 9 line; do
+              if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
+                external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
+                local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
+                echo "    $local -> $external"
+              fi
+            done 9< /etc/tunnel
+          else
+            echo "Error: a tunnel has not been set up yet"
+            exit 1
+          fi
+          ;;
+        ports)
+
+
+
+          cat /etc/ports-list
+          ;;
+        *)
+          echo "Error: unknown command"
+          echo "Usage: $BASENAME sshtunnel list <tunnels | ports>"
+          exit 1
+          ;;
+      esac
       ;;
     check)
       if [ -f "/etc/tunnel" ]; then

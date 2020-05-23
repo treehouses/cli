@@ -67,7 +67,7 @@ function camera {
           echo "Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
           let length=$length*1000
           raspivid -o "${viddir}$BASENAME-${timestamp}.h264" -t "${length}" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
-          $BASENAME convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
+          convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
           rm ${viddir}$BASENAME-${timestamp}.h264
           ;;       
         
@@ -79,7 +79,7 @@ function camera {
             echo "Camera is recording ${2} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
             let length=$2*1000
             raspivid -o "${viddir}$BASENAME-${timestamp}.h264" -t "${length}" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
-            $BASENAME convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
+            convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
             rm ${viddir}$BASENAME-${timestamp}.h264
           fi
           ;;

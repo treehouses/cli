@@ -21,7 +21,6 @@ function resolution() {
       set_config_var hdmi_group $group $config
       set_config_var hdmi_mode $mode $config
       echo "Screen resolution is set to"
-      test=$(tvservice -m CEA) | grep $mode
       echo "reboot needed to see the changes"
     else
       echo "mode is not available  Possible modes are:"

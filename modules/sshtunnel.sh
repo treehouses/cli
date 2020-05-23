@@ -171,12 +171,12 @@ function sshtunnel {
 
             while read -r -u 9 line; do
               if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
-                external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
                 local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
+                external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
                 echo "    $local -> $external"
               fi
             done 9< /etc/tunnel
-            
+
             echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
           else
             echo "Error: a tunnel has not been set up yet"
@@ -283,13 +283,16 @@ function sshtunnel {
           echo "OK."
           ;;
         now)
-          portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
-          portssh=$((portinterval + 22))
-          portweb=$((portinterval + 80))
-          portcouchdb=$((portinterval + 84))
-          portnewcouchdb=$((portinterval + 82))
-          portmunin=$((portinterval + 49))
-          treehouses feedback "$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$portinterval\n$portssh:22 $portweb:80 $portnewcouchdb:2200 $portmunin:4949 $portcouchdb:5984\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+          message="$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$(grep -oP "(?<=\-M )(.*?) " /etc/tunnel)\n"
+          while read -r -u 9 line; do
+            if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
+              local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
+              external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
+              message+="$external:$local "
+            fi
+          done 9< /etc/tunnel
+          message+="\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+          treehouses feedback $message
           ;;
         "")
           if [ -f "/etc/cron.d/tunnel_report" ]; then

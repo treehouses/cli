@@ -74,17 +74,18 @@ function sshtunnel {
           } > /etc/cron.d/autossh
           ;;
         port)
-          name=$3
-          actual=$4
-          offset=$5
-          if [ -f /etc/ports-list ]; then
-            if ! grep -Fq "$name" /etc/ports-list; then
-              echo "$name=$actual,$offset" >> /etc/ports-list
+          if [ -f /etc/tunnel ]; then
+            actual=$3
+            offset=$4
+            portinterval=$(grep -oP "(?<=\-M )(.*?) " /etc/tunnel)
+            if ! grep -Fq $((portinterval + offset)):127.0.1.1:$actual /etc/tunnel; then
+              sed -i "$ i\-R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
+              echo "added $actual -> $((portinterval + offset))"
             else
               echo "port already added"
             fi
           else
-            echo "Error: /etc/ports-list not found"
+            echo "Error: /etc/tunnel not found"
             exit 1
           fi
           ;;

@@ -36,7 +36,7 @@ function magazine() {
       echo "Fetching MagPi$magnum.pdf..."
       wget "https://magpi.raspberrypi.org/issues/$magnum/pdf"
       mv ./pdf ./pdf.txt
-      url="$(cat pdf.txt | sed -n '10p')"
+      url="$(sed -n '10p' pdf.txt)"
       rm ./pdf.txt
       url=${url:44}
       quoteloc="${url%%\"*}"
@@ -59,7 +59,7 @@ function magazine() {
         fi
         wget "https://magpi.raspberrypi.org/issues/$i/pdf"
         mv ./pdf ./pdf.txt
-        url="$(cat pdf.txt | sed -n '10p')"
+        url="$(sed -n '10p' pdf.txt)"
         rm ./pdf.txt
         url=${url:44}
         quoteloc="${url%%\"*}"

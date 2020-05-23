@@ -104,35 +104,63 @@ function sshtunnel {
           fi
           ;;
         *)
-          echo "Error"
+          echo "Error: unknown command"
+          echo "Usage: $BASENAME sshtunnel add <tunnels | port>"
           exit 1
           ;;
       esac
       ;;
     remove)
       case "$2" in
+        tunnels)
+          case "$3" in
+            all)
+              if [ -f /etc/tunnel ]; then
+                rm -rf /etc/tunnel
+              fi
+
+              if [ -f /etc/cron.d/autossh ]; then
+                rm -rf /etc/cron.d/autossh
+              fi
+
+              pkill -3 autossh
+              echo -e "${GREEN}Removed${NC}"
+              ;;
+            *)
+              # remove specific port (not port interval or offset)
+              port=$3
+              # host=$4
+              if [ -f /etc/tunnel ]; then
+                if grep -Fq "127.0.1.1:$port" /etc/tunnel; then
+                  sed -i "/$port/d" /etc/tunnel
+                else
+                  echo "Error: port not found in /etc/tunnel"
+                  exit 1
+                fi
+              else
+                echo "Error: /etc/tunnel not found"
+                exit 1
+              fi
+              ;;
+          esac
+          ;;
         port)
           name=$3
+          # host=$4
           if [ -f /etc/ports-list ]; then
             sed -i "/$name/d" /etc/ports-list
+            echo "Removed $name from /etc/ports-list"
           else
             echo "Error: /etc/ports-list not found"
             exit 1
           fi
           ;;
+        *)
+          echo "Error: unknown command"
+          echo "Usage: $BASENAME sshtunnel remove <tunnels | port>"
+          exit 1
+          ;;
       esac
-
-
-      # if [ -f "/etc/tunnel" ]; then
-      #   rm -rf /etc/tunnel
-      # fi
-
-      # if [ -f "/etc/cron.d/autossh" ]; then
-      #   rm -rf /etc/cron.d/autossh
-      # fi
-
-      # pkill -3 autossh
-      # echo -e "${GREEN}Removed${NC}"
       ;;
     list | "")
       if [ -f "/etc/tunnel" ]; then

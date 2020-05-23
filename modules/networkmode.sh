@@ -54,7 +54,8 @@ function networkmode {
     elif [ "$network_mode" == "tether" ]; then
       echo "network mode is tether."
       if [ ! -z "$(get_ipv4_ip "usb0")" ]; then
-        echo "ip: $(get_ipv4_ip "usb0")"
+        echo "ip: $(get_ipv4_ip "usb0")" 
+      fi
     elif [ "$network_mode" == "default" ]; then
       echo "network mode is default."
       ifaces=(eth0 wlan0)

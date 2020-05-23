@@ -15,6 +15,11 @@ function tethermain {
   ip link set usb0 up 
   dhclient usb0 2>/dev/null
   systemctl is-active --quiet dhcpcd || systemctl enable --now --quiet dhcpcd
+  if [ -f /etc/network/mode ]; then
+    mv /etc/network/mode /etc/network/last_mode
+  else 
+    echo "default" > /etc/network/mode
+  fi
   echo "tether" > /etc/network/mode
   echo "USB tethering successfully enabled."
 }

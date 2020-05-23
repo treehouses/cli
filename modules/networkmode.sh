@@ -26,6 +26,9 @@ function networkmode {
           interfaces+=("usb0")
         fi
       fi
+      if [ "$network_mode" == "tether" ] && [ -z "$(ip link | grep usb0)" ]; then 
+        mv /etc/network/last_mode /etc/network/mode
+      fi
     ;;
     RPIZW|RPI3A+)
       # this rpis only have wlan0 by default.

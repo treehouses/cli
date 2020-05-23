@@ -35,6 +35,10 @@ function networkmode {
         network_mode="external"
         interfaces+=("wlan1")
       fi
+      if iface_exists "usb0"; then
+        network_mode="tether"
+        interfaces+=("usb0")
+      fi
     ;;
   esac
 

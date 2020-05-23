@@ -103,6 +103,8 @@ Usage: treehouses
    gpio                                      displays raspberry pi model and corresponding GPIO ports
    changelog                                 displays the most recent changes to treehouses
    shutdown [now|in|force]                   shutdown the system
+   resolution [CEA|DMT]                      changes the resolution
+              [CEA modes|DMT modes]       
 EOF
   echo "$helpdefault"
 }

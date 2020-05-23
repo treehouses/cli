@@ -1,95 +1,57 @@
-
 function resolution() {
   group=$1
   mode=$2
+  available=0
   checkargn $# 2
   config=/boot/config.txt
   if [ $group == "CEA" ]; then
-    case $mode in
-      "1")
-        echo -e "Resolution set to 640x480 \n Aspect ratio 4:3 \n Refresh Rate 60Hz"
-        ;;
-      "2")
-        echo -e "Resolution set to 720x480  \n Aspect ratio 4:3 \n Refresh Rate 60Hz"
-        ;;
-      "3")
-        echo -e "Resolution set to 720x480  \n Aspect ratio 16:9  \n Refresh Rate 60Hz"
-        ;;
-      "4")
-        echo -e "Resolution set to 1280x720 \n Aspect ratio 16:9  \n Refresh Rate 60Hz"
-        ;;
-      "17")
-        echo -e "Resolution set to 720x576 \n Aspect ratio 4:3  \n Refresh Rate 60Hz"
-        ;;
-      "18")
-        echo -e "Resolution set to 720x576 \n Aspect ratio 16:9   \n Refresh Rate 60Hz"
-        ;;
-      "19")
-        echo -e "Resolution set to 1280x720 \n Aspect ratio 16:9   \n Refresh Rate 60Hz"
-        ;;
-      *)
-        echo "invalid mode input"
-        tvservice -m CEA
-        exit
-        ;;
-    esac
+    names=$(tvservice -m CEA)
+    saveifs=$IFS
+    IFS=$'\n'
+    names=($names)
+    IFS=$saveifs
+    for i in "${names[@]}"; do
+      mode_available=$(echo $i | cut -d':' -f 1 | awk '{print $NF}')
+      if [ "$mode" == "$mode_available" ]; then
+        echo "mode available"
+        available=1
+      fi
+    done
+    if [ $available == 1 ]; then
+      set_config_var hdmi_group $group $config
+      set_config_var hdmi_mode $mode $config
+      echo "Screen resolution is set to"
+      test=$(tvservice -m CEA) | grep $mode
+      echo "reboot needed to see the changes"
+    else
+      echo "mode is not available  Possible modes are:"
+      tvservice -m CEA
+    fi
   elif [ $group == "DMT" ]; then
-    case $mode in
-      "2")
-        echo -e "Resolution set to 640x480 \n Aspect ratio 4:3 \n Refresh Rate 60Hz"
-        ;;
-      "4")
-        echo -e "Resolution set to 640x480 \n Aspect ratio 4:3 \n Refresh Rate 60Hz"
-        ;;
-      "6")
-        echo -e "Resolution set to 640x480  \n Aspect ratio 4:3 \n Refresh Rate 60Hz"
-        ;;
-      "8")
-        echo -e "Resolution set to 800x600  \n Aspect ratio 16:9  \n Refresh Rate 60Hz"
-        ;;
-      "9")
-        echo -e "Resolution set to 800x600 \n Aspect ratio 16:9  \n Refresh Rate 60Hz"
-        ;;
-      "11")
-        echo -e "Resolution set to 800x600 \n Aspect ratio 4:3  \n Refresh Rate 60Hz"
-        ;;
-      "16")
-        echo -e "Resolution set to 1024x768  \n Aspect ratio 16:9   \n Refresh Rate 60Hz"
-        ;;
-      "18")
-       echo -e "Resolution set to 1024x768 \n Aspect ratio 16:9   \n Refresh Rate 60Hz"
-        ;;
-      "21")
-       echo -e "Resolution set to 1152x864 \n Aspect ratio 16:9   \n Refresh Rate 60Hz"
-       ;;
-      "28")
-       echo -e "Resolution set to 1280x800 \n Aspect ratio 16:9   \n Refresh Rate 60Hz"
-        ;;
-      "35")
-        echo -e "Resolution set to 1280x1024 \n Aspect ratio 4:3  \n Refresh Rate 60Hz"
-        ;;
-      "46")
-        echo -e "Resolution set to 1440x900 \n Aspect ratio 16:9   \n Refresh Rate 60Hz"
-        ;;
-      "47") 
-      echo -e "Resolution set to 1440x900 \n Aspect ratio 16:9   \n Refresh Rate 60Hz"
-        ;;
-      "85")
-        echo -e "Resolution set to 1280x720  \n Aspect ratio 16:9   \n Refresh Rate 60Hz"
-        ;;
-      *)
-        echo "invalid mode input"
-        tvservice -m DMT
-        exit
-        ;;
-    esac
+    names=$(tvservice -m DMT)
+    saveifs=$IFS
+    IFS=$'\n'
+    names=($names)
+    IFS=$saveifs  
+    for i in "${names[@]}"; do
+      mode_available=$(echo $i | cut -d':' -f 1 | awk '{print $NF}')
+      if [ "$mode" == "$mode_available" ]; then
+        echo "mode available"
+        available=1
+      fi
+    done
+     if [ $available == 1 ]; then
+      set_config_var hdmi_group $group $config
+      set_config_var hdmi_mode $mode $config
+      echo "Screen resolution is set to $group $mode"
+      echo "reboot needed to see the changes"
+     else
+      echo "mode is not available  Possible modes are:"
+      tvservice -m DMT
+     fi
   else
     echo "hdmi group should be eithr CEA or DMT"
-    exit 0
- fi
-  set_config_var hdmi_group $group $config
-  set_config_var hdmi_mode $mode $config
-  echo "reboot needed to see the changes"
+  fi
 }
 
 set_config_var() {

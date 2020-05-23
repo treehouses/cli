@@ -21,7 +21,7 @@ function networkmode {
       fi
 
       if iface_exists "usb0"; then
-        network_mode="external"
+        network_mode="tether"
         interfaces+=("usb0")
       fi
     ;;

@@ -21,6 +21,7 @@ function resolution() {
       set_config_var hdmi_group $group $config
       set_config_var hdmi_mode $mode $config
       echo "Screen resolution is set to"
+      reboot_needed
       echo "reboot needed to see the changes"
     else
       echo "mode is not available  Possible modes are:"
@@ -43,13 +44,14 @@ function resolution() {
       set_config_var hdmi_group $group $config
       set_config_var hdmi_mode $mode $config
       echo "Screen resolution is set to $group $mode"
+      reboot_needed
       echo "reboot needed to see the changes"
      else
       echo "mode is not available  Possible modes are:"
       tvservice -m DMT
      fi
   else
-    echo "hdmi group should be eithr CEA or DMT"
+    echo "hdmi group should be either CEA or DMT"
   fi
 }
 

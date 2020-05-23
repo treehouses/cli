@@ -133,6 +133,7 @@ function sshtunnel {
               if [ -f /etc/tunnel ]; then
                 if grep -Fq "127.0.1.1:$port" /etc/tunnel; then
                   sed -i "/$port/d" /etc/tunnel
+                  echo "Removed $port from /etc/tunnel"
                 else
                   echo "Error: port not found in /etc/tunnel"
                   exit 1
@@ -164,20 +165,23 @@ function sshtunnel {
       ;;
     list | "")
       if [ -f "/etc/tunnel" ]; then
-        portinterval=$(grep -oP "(?<=\-M)(.*?) " /etc/tunnel)
-        portssh=$((portinterval + 22))
-        portweb=$((portinterval + 80))
-        portcouchdb=$((portinterval + 84))
-        portnewcouchdb=$((portinterval + 82))
-        portmunin=$((portinterval + 49))
+        declare -A ports
+        while read -r -u 9 line; do
+          name="${line%%=*}"
+          combo="${line#*=}"
+          ports[$name]=$combo
+        done 9< /etc/ports-list
 
+        portinterval=$(grep -oP "(?<=\-M )(.*?) " /etc/tunnel)
         echo "Ports:"
         echo " local   -> external"
-        echo "    22   -> $portssh"
-        echo "    80   -> $portweb"
-        echo "    2200 -> $portnewcouchdb"
-        echo "    4949 -> $portmunin"
-        echo "    5984 -> $portcouchdb"
+        for i in "${!ports[@]}"
+        do
+          combo=${ports[$i]}
+          actual=$(echo $combo | cut -f1 -d,)
+          offset=$(echo $combo | cut -f2 -d,)
+          echo "    $actual -> $((offset + portinterval))"
+        done
         echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
       else
         echo "Error: a tunnel has not been set up yet"

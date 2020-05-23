@@ -1,13 +1,9 @@
 function networkmode {
-  local network_mode interfaces ifaces last_mode
-  last_mode=$network_mode
+  local network_mode interfaces ifaces 
   checkargn $# 1
   network_mode="default"
   if [ -f "/etc/network/mode" ]; then
     network_mode=$(</etc/network/mode)
-    if [ "$(</etc/network/mode)" == "tether" ] && [ -z "$(ip link | grep usb0)" ]; then 
-      network_mode="$(</etc/network/last_mode)"
-    fi
   fi
 
   interfaces=()
@@ -29,8 +25,6 @@ function networkmode {
           network_mode="tether"
           interfaces+=("usb0")
           echo $last_mode > /etc/network/last_mode
-        else 
-          network_mode=$last_mode
         fi
       fi
     ;;
@@ -48,8 +42,6 @@ function networkmode {
         if [ ! -z "$(grep usb0 /var/lib/dhcp/*.leases)" ]; then
           network_mode="tether"
           interfaces+=("usb0")
-        else 
-          network_mode="external"
         fi
       fi
     ;;

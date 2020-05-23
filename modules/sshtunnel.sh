@@ -29,24 +29,12 @@ function sshtunnel {
             exit 1
           fi
 
-          # use default ports-list if custom not found
-          # "name=actual,offset"
-          if [ ! -f /etc/ports-list ]; then
-            {
-              echo "portssh=22,22"
-              echo "portweb=80,80"
-              echo "portcouchdb=5984,84"
-              echo "portnewcouchdb=2200,82"
-              echo "portmunin=4949,49"
-            } > /etc/ports-list
-          fi      
-
-          declare -A ports
-          while read -r -u 9 line; do
-            name="${line%%=*}"
-            combo="${line#*=}"
-            ports[$name]=$combo
-          done 9< /etc/ports-list
+          # default list of ports
+          portssh=$((portinterval + 22))
+          portweb=$((portinterval + 80))
+          portcouchdb=$((portinterval + 84))
+          portnewcouchdb=$((portinterval + 82))
+          portmunin=$((portinterval + 49))
 
           if [ ! -f "/root/.ssh/id_rsa" ]; then
             ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
@@ -59,20 +47,18 @@ function sshtunnel {
             if ! grep -q "$key" /root/.ssh/known_hosts 2>"$LOGFILE"; then
                 echo "$key" >> /root/.ssh/known_hosts
             fi
-          done <<< "$keys"
+          done <<< "$keys"      
 
           # write to /etc/tunnel
           {
             echo "#!/bin/bash"
             echo
             echo "/usr/bin/autossh -f -T -N -q -4 -M $portinterval \\"
-            for i in "${!ports[@]}"
-            do
-              combo=${ports[$i]}
-              actual=$(echo $combo | cut -f1 -d,)
-              offset=$(echo $combo | cut -f2 -d,)
-              echo "-R $((portinterval + offset)):127.0.1.1:$actual \\"
-            done
+            echo "-R $portssh:127.0.1.1:22 \\"
+            echo "-R $portcouchdb:127.0.1.1:5984 \\"
+            echo "-R $portweb:127.0.1.1:80 \\"
+            echo "-R $portnewcouchdb:127.0.1.1:2200 \\"
+            echo "-R $portmunin:127.0.1.1:4949 \\"
             echo "$host"
           } > /etc/tunnel
 

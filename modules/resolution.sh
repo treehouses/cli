@@ -4,7 +4,7 @@ function resolution() {
   available=0
   checkargn $# 2
   config=/boot/config.txt
-  if [ $group == "CEA" ]; then
+  if [ $group == "cea" ]; then
     names=$(tvservice -m CEA)
     saveifs=$IFS
     IFS=$'\n'
@@ -27,7 +27,7 @@ function resolution() {
       echo "mode is not available  Possible modes are:"
       tvservice -m CEA
     fi
-  elif [ $group == "DMT" ]; then
+  elif [ $group == "dmt" ]; then
     names=$(tvservice -m DMT)
     saveifs=$IFS
     IFS=$'\n'
@@ -51,7 +51,7 @@ function resolution() {
       tvservice -m DMT
      fi
   else
-    echo "hdmi group should be either CEA or DMT"
+    echo "hdmi group should be either cea or dmt"
   fi
 }
 

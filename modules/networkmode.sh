@@ -19,6 +19,11 @@ function networkmode {
         network_mode="external"
         interfaces+=("wlan1")
       fi
+
+      if iface_exists "usb0"; then
+        network_mode="external"
+        interfaces+=("usb0")
+      fi
     ;;
     RPIZW|RPI3A+)
       # this rpis only have wlan0 by default.
@@ -46,6 +51,10 @@ function networkmode {
       get_staticnetwork_info "wlan0"
     elif [ "$network_mode" == "static ethernet" ]; then
       get_staticnetwork_info "eth0"
+    elif [ "$network_mode" == "tether" ]; then
+      echo "network mode is tether."
+      if [ ! -z "$(get_ipv4_ip "usb0")" ]; then
+        echo "ip: $(get_ipv4_ip "usb0")"
     elif [ "$network_mode" == "default" ]; then
       echo "network mode is default."
       ifaces=(eth0 wlan0)

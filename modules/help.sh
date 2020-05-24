@@ -107,6 +107,7 @@ inspire [joke|qotd|random]                displays quote based on user input
 convert <input file> <output file>        converts video and audio files 
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog                                 displays the most recent changes to treehouses
+magazine magpi [all|latest|number]        downloads specific magpi issue as a pdf
 shutdown [now|in|force]                   shutdown the system
 EOF
   echo "$helpdefault"

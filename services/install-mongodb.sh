@@ -67,15 +67,13 @@ function get_size {
 # add info
 function get_info {
   echo "\"https://github.com/treehouses/rpi-mongo"
-  echo ""
-  echo "You can connect mongodb container by"
-  echo -e "\e[3mmongo \"mongodb://treehouses.local:27017\"\e[0m"
+  echo
+  echo "You can connect mongodb container by mongo \"mongodb://treehouses.local:27017\""
   echo "Your machine must have mongodb server"
-  echo "You can check out if you have mongodb server by"
-  echo -e "\e[3mmongo --version\e[0m"
+  echo "You can check out if you have mongodb server by mongo --version"
   echo "If not, please install mongodb server"
   echo "https://docs.mongodb.com/manual/installation/"
-  echo ""
+  echo
   echo "MongoDB is a general purpose, document-based, " 
   echo "distributed database built for modern "
   echo "application developers and for the cloud era. " 

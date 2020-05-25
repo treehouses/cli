@@ -16,8 +16,8 @@ services:
       - TZ=${TZ}
       - DOCKER_MODS=linuxserver/calibre-web:calibre
     volumes:
-      - "/srv/calibre-web.sh:/root/.calibre-web.sh"
-      - path to calibre library:/books
+      - "/srv/calibre-web.sh:/root/.calibre-web"
+      - "/srv/calibre-web.sh:/books
     ports:
       - 8090:8090
     restart: unless-stopped

@@ -5,11 +5,9 @@ function tethermain {
   checkrpi
 
   if [ -z "$(ip link | grep usb0)" ]; then 
-    echo 
     echo "USB interface not found"
     echo "Please check your connection"
     echo "Please check if USB tethering is enabled in your phone setting"
-    echo 
     exit 1
   fi 
 

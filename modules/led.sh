@@ -174,13 +174,13 @@ function led {
       ;;
     *)
       echo -e "${RED}Error:${NC} led '$color' is not present"
-      exit 1
+      return 1
       ;;
   esac
 
   if [ ! -d "$led" ]; then
     echo -e "${RED}Error:${NC} led '$color' is not present"
-    exit 1
+    return 1
   fi
 
   if [ -z "$trigger" ]; then
@@ -190,7 +190,7 @@ function led {
 
     if ! grep -q "$trigger" "$led/trigger" 2>"$LOGFILE"; then
       echo -e "${RED}Error:${NC} unknown led mode '$trigger'"
-      exit 1
+      return 1
     fi
 
     echo "$trigger" > "$led/trigger"

@@ -5,7 +5,7 @@ function usb {
   # check if hub-ctrl binary exists
   if [ ! -e /usr/local/bin/hub-ctrl ]; then
     echo "required binary 'hub-ctrl' not found"
-    exit 1
+    return 1
   fi
 
   # check if libusb-dev pkg is installed
@@ -27,7 +27,7 @@ function usb {
     else
       echo "Error: unknown command"
       usb_help
-      exit 1
+      return 1
     fi
   elif [[ $(detectrpi) =~ 'RPI4' ]]; then
     if [ "$command" = "on" ]; then
@@ -62,7 +62,7 @@ function usb {
     else
       echo "Error: unknown command"
       usb_help
-      exit 1
+      return 1
     fi
   fi
 }

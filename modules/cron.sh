@@ -73,7 +73,7 @@ function cron {
       ;;
     *) #prompts help for bad inputs
       cron_help
-      exit 1
+      return 1
       ;;
   esac
 }

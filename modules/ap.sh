@@ -15,7 +15,7 @@ function apmain {
     if [ ${#essid} -gt 32 ]
     then
       echo "Error: essid must be no greater than 32 characters"
-      exit 1
+      return 1
     fi
   fi
 
@@ -24,7 +24,7 @@ function apmain {
     if [ ${#password} -lt 8 ];
     then
       echo "Error: password must have at least 8 characters"
-      exit 1
+      return 1
     fi
   fi
 
@@ -46,7 +46,7 @@ function apmain {
     echo "${hide}ap local" > /etc/network/mode
   else
     echo "Error: only 'local' and 'internet' modes are supported".
-    exit 1
+    return 1
   fi
 
   if [[ -v hide ]]; then

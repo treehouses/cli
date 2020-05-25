@@ -87,7 +87,7 @@ EOF
     node -p "require('$SCRIPTFOLDER/package.json').version"
   else
     echo "Error: only 'contributors' or '' options supported"
-    exit 1
+    return 1
   fi
 }
 

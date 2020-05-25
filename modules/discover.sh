@@ -8,7 +8,7 @@ function discover {
   if [ $option = "scan" ] || [ $option = "ping" ] || [ $option = "ports" ]; then
     if [ -z $2 ]; then
       echo "You need to provide an IP address or URL for this command".
-      exit 1
+      return 1
     fi
     ip=$2
   fi
@@ -40,7 +40,7 @@ function discover {
     mac)
       if ! [[ "$2" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]]; then
         echo "Invalid mac address"
-        exit 1
+        return 1
       fi
       mac=$2
       mac_ip=$(arp -n |grep -i "$mac" |awk '{print $1}')
@@ -54,7 +54,7 @@ function discover {
     *)
       echo "Unknown operation provided." 1>&2
       discover_help
-      exit 1
+      return 1
       ;;
   esac
 }

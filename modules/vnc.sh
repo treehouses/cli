@@ -19,7 +19,7 @@ function vnc {
   if [ ! -d /usr/share/doc/realvnc-vnc-server ] ; then
     echo "Error: the vnc server is not installed, to install it run:"
     echo "apt-get install realvnc-vnc-server"
-    exit 1;
+    return 1;
   fi
 
 case "$option" in
@@ -76,7 +76,7 @@ case "$option" in
     ;;
  *)
     echo "Error: only 'on', 'off', 'info' options are supported";
-    exit 1;
+    return 1;
     ;;
   esac
 }

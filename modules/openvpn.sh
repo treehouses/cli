@@ -7,7 +7,7 @@ function openvpn {
   if ! hash "openvpn" 2>"$LOGFILE"; then
     echo "Error: couldn't find openvpn installed."
     echo "On debian systems it can be installed by running 'apt-get install openvpn'"
-    exit 1
+    return 1
   fi
 
   if [ "$command" == "use" ]; then
@@ -73,7 +73,7 @@ function openvpn {
       value="$3"
       if [ -z "$value" ]; then
         echo "Error: You must specify a channel URL"
-        exit 1
+        return 1
       fi
 
       echo "$value" >> /etc/openvpn_report_channels.txt
@@ -82,7 +82,7 @@ function openvpn {
       value="$3"
       if [ -z "$value" ]; then
         echo "Error: You must specify a channel URL"
-        exit 1
+        return 1
       fi
 
       value=$(echo $value | sed 's/\//\\\//g')

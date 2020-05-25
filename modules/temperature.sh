@@ -28,7 +28,7 @@ function temperature () {
       echo "not a valid option"
       echo
       temperature_help
-      exit 1
+      return 1
       ;;
   esac
 }

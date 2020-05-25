@@ -27,18 +27,18 @@ function remote {
     else
       echo "Error: incorrect command"
       echo "Usage: $BASENAME remote services <available | installed | running>"
-      exit 1
+      return 1
     fi
   elif [ "$option" = "version" ]; then
     checkargn $# 2
     if [ -z "$2" ]; then
       echo "Error: version number required"
       echo "Usage: $BASENAME remote version <version_number>"
-      exit 1
+      return 1
     fi
     if ! [[ "$2" =~ ^[0-9]+$ ]]; then
       echo "Error: not a number"
-      exit 1
+      return 1
     fi
     if [ "$2" -ge "$(node -p "require('$SCRIPTFOLDER/package.json').remote")" ]; then
       echo "version: true"
@@ -59,7 +59,7 @@ function remote {
     else
       echo "Error: incorrect command"
       echo "Usage: $BASENAME remote commands [json]"
-      exit 1
+      return 1
     fi
   elif [ "$option" = "allservices" ]; then
     checkargn $# 1

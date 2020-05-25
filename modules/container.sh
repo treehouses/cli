@@ -7,7 +7,7 @@ function container {
    echo "Missing required programs: balena"
    echo "On Debian/Ubuntu try https://www.balena.io/engine/"
    echo " ln-sr /usr/bin/balena /usr/bin/balena"
-  exit 1
+  return 1
   fi
   case "$1" in
     docker)

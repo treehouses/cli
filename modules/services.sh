@@ -110,7 +110,7 @@ function services {
       check_available_services $service_name
       case "$command" in
         install)
-          checkargn $# 2
+          checkargn $# 3 
           check_space "$service_name"
           if [ "$service_name" = "planet" ]; then
             if source $SERVICES/install-planet.sh && install ; then

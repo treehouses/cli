@@ -19,13 +19,6 @@ function networkmode {
         network_mode="external"
         interfaces+=("wlan1")
       fi
-
-      if iface_exists "usb0"; then
-        if [ ! -z "$(grep usb0 /var/lib/dhcp/*.leases)" ]; then
-          network_mode="tether"
-          interfaces+=("usb0")
-        fi
-      fi
     ;;
     RPIZW|RPI3A+)
       # this rpis only have wlan0 by default.
@@ -37,14 +30,18 @@ function networkmode {
         network_mode="external"
         interfaces+=("wlan1")
       fi
-      if iface_exists "usb0"; then
-        if [ ! -z "$(grep usb0 /var/lib/dhcp/*.leases)" ]; then
-          network_mode="tether"
-          interfaces+=("usb0")
-        fi
-      fi
     ;;
   esac
+
+  if iface_exists "usb0"; then
+    if [ ! -z "$(grep usb0 /var/lib/dhcp/*.leases)" ]; then
+      if [ $network_mode == "default" ]; then
+        echo default > /etc/network/last_mode
+      fi
+      network_mode="tether"
+      interfaces+=("usb0")
+    fi
+  fi 
 
   if [ "$network_mode" == "tether" ] && [ -z "$(ip link | grep usb0)" ]; then 
     mv /etc/network/last_mode /etc/network/mode

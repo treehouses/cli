@@ -8,10 +8,10 @@ function magazine() {
   magnum="93"
   if [ -z "$magtype" ]; then
     echo "ERROR: no magazine type given"
-    exit 1
+    return 1
   elif [ "$magtype" != "magpi" ]; then
     echo "Please specify a valid magazine type, these include: magpi"
-    exit 1
+    return 1
   fi
   if [ "$magtype" = "magpi" ]; then
     if [ "$req" != "all" ]; then
@@ -20,7 +20,7 @@ function magazine() {
         if ! [[ $req =~ $re ]] || [[ $req -lt 1 ]] || [[ $req -gt 93 ]]; then
           echo "ERROR: Please enter a valid magazine number"
           echo "       This can be any issue ranging from 1 to 93" 
-          exit 1
+          return 1
         fi
         magnum=$req
       fi
@@ -31,7 +31,7 @@ function magazine() {
       if [ -f "MagPi$magnum.pdf" ]; then
         echo "MagPi$magnum.pdf already exists, exiting..."
         cd ..
-        exit 1
+        return 1
       fi
       echo "Fetching MagPi$magnum.pdf..."
       wget "https://magpi.raspberrypi.org/issues/$magnum/pdf"

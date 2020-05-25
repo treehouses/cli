@@ -71,7 +71,7 @@ function bluetooth {
         ;;
       *)
         echo "Argument not valid; leave blank or use \"number\""
-        exit 1
+        return 1
         ;;
     esac
 
@@ -88,7 +88,7 @@ function bluetooth {
        journalctl -u rpibluetooth -u bluetooth -f
      else
        echo "Argument not valid; leave blank or use \"follow\""
-       exit 1
+       return 1
      fi
 
    elif [ "$status" = "restart" ]; then

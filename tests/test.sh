@@ -40,7 +40,7 @@ case "$1" in
   ;;
   *)
     echo "Only 'all', 'services', 'wifi', 'ap', 'nonet', 'nonetblue' options are supported"
-    exit 1
+    return 1
   ;;
 esac
 echo

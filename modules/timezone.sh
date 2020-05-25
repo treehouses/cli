@@ -6,13 +6,13 @@ function timezone {
   if [ -z "$timezone" ];
   then
     echo "Error: the timezone is missing"
-    exit 1;
+    return 1;
   fi
 
   if [ ! -f "/usr/share/zoneinfo/$timezone" ];
   then
     echo "Error: the timezone is not supported"
-    exit 1;
+    return 1;
   fi
 
   rm /etc/localtime

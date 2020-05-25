@@ -8,7 +8,7 @@ function staticwifi {
     echo "Error: argument(s) missing"
     echo "Usage: $BASENAME staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]"
     echo "ip, mask, gateway, dns, and ESSID are required fields"
-    exit 1
+    return 1
   fi
 
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
@@ -30,7 +30,7 @@ function staticwifi {
     if [ ${#password} -lt 8 ];
     then
       echo "Error: password must have at least 8 characters"
-      exit 1
+      return 1
     fi
   fi
 

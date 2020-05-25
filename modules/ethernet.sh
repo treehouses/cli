@@ -4,7 +4,7 @@ function ethernet {
   checkargn $# 4
   if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
     echo "Error: argument(s) missing"
-    exit 1
+    return 1
   fi
 
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces

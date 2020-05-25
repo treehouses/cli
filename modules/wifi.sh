@@ -5,7 +5,7 @@ function wifimain {
   checkargn $# 2
   if [ -z "$1" ]; then
     echo "Error: name of the network missing"
-    exit 1
+    return 1
   fi
 
   wifinetwork=$1
@@ -16,7 +16,7 @@ function wifimain {
     if [ ${#wifipassword} -lt 8 ]
     then
       echo "Error: password must have at least 8 characters"
-      exit 1
+      return 1
     fi
   fi
 

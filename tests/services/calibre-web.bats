@@ -3,7 +3,7 @@ load ../test-helper
 
 @test "$clinom services calibre-web info" {
   run "${clicmd}" services calibre-web info
-  assert_success && assert_output -p 'https://github.com/librespeed/speedtest'
+  assert_success && assert_output -p 'https://github.com/linuxserver/docker-calibre-web'
 }
 
 @test "$clinom services calibre-web install" {

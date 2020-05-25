@@ -61,7 +61,7 @@ load ../test-helper
 
 @test "$clinom services grocy port" {
   run "${clicmd}" services grocy port
-  assert_success && assert_output -p '80'
+  assert_success && assert_output -p '9283'
 }
 
 @test "$clinom services grocy ps" {
@@ -71,7 +71,7 @@ load ../test-helper
 
 @test "$clinom services grocy url" {
   run "${clicmd}" services grocy url
-  assert_output -p '80'
+  assert_output -p '9283'
 }
 
 @test "$clinom services grocy autorun" {

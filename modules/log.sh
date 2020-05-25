@@ -39,7 +39,7 @@ function logit() {
 
 function log_and_exit1() {
   logit "$1" "$2" "$3"
-  exit 1
+  return 1
 }
 
 # Sets logging level to be used by the entire app

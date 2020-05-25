@@ -23,7 +23,7 @@ function verbose {
       ;;
     *)
       logit "Error: only 'on' and 'off' options are supported";
-      exit 1;
+      return 1;
       ;;
   esac
   conf_var_update "LOGFILE" "$LOGFILE"

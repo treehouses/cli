@@ -12,7 +12,7 @@ function tor {
       echo "Error: the tor service has not been configured."
       echo "Run '$BASENAME tor start' to configure it."
     fi
-    exit 1
+    return 1
   fi
 
   if [ -z "$1" ]; then
@@ -37,12 +37,12 @@ function tor {
 
     if [ -z "$port" ]; then
       echo "Error: you must specify a port"
-      exit 1
+      return 1
     fi
 
     if  ! [[ "$port" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
       echo "Error: is not a port"
-      exit 1
+      return 1
     fi
 
     if [ -z "$local_port" ]; then
@@ -51,7 +51,7 @@ function tor {
 
     if  ! [[ "$local_port" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
       echo "Error: is not a port"
-      exit 1
+      return 1
     fi
 
     existing_port=$(grep -Poi "^HiddenServicePort $port .*" /etc/tor/torrc)
@@ -66,12 +66,12 @@ function tor {
   elif [ "$1" = "delete" ]; then
     if [ -z "$2" ]; then
       echo "Error: no port entered"
-      exit 1
+      return 1
     fi
 
     if  ! [[ "$2" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
       echo "Error: $2 is not a port"
-      exit 1
+      return 1
     fi
 
     if ! grep -wq "HiddenServicePort $2" /etc/tor/torrc ; then
@@ -85,7 +85,7 @@ function tor {
   elif [ "$1" = "deleteall" ]; then
     if [ -n "$2" ]; then
       echo "Error: wrong synthax"
-      exit 1
+      return 1
     fi
 
     sed -i "/^HiddenServicePort /d" /etc/tor/torrc
@@ -128,7 +128,7 @@ function tor {
       value="$3"
       if [ -z "$value" ]; then
         echo "Error: You must specify a channel URL"
-        exit 1
+        return 1
       fi
 
       echo "$value" >> /etc/tor_report_channels.txt
@@ -137,7 +137,7 @@ function tor {
       value="$3"
       if [ -z "$value" ]; then
         echo "Error: You must specify a channel URL"
-        exit 1
+        return 1
       fi
 
       value=$(echo $value | sed 's/\//\\\//g')

@@ -48,7 +48,7 @@ function wificountry {
       done
 
       echo "error: invalid country code"
-      exit 1
+      return 1
       ;;
   esac
 

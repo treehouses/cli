@@ -49,12 +49,12 @@ function power {
     "")
       echo "Error: please choose one of the 5 modes"
       power_help
-      exit 1
+      return 1
       ;;
     *)
       echo "Error: power '$mode' does not exist"
       power_help
-      exit 1
+      return 1
       ;;
   esac     
 }

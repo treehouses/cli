@@ -28,12 +28,12 @@ function sshkey () {
     if [ -z "$2" ]; then
       echo "Error: missing argument"
       echo "Usage: $BASENAME sshkey delete \"<key>\""
-      exit 1
+      return 1
     fi
     if [ "$2" == "ssh-rsa" ]; then
       echo "Error: missing qoutes"
       echo "Usage: $BASENAME sshkey delete \"<key>\""
-      exit 1
+      return 1
     fi
     if grep -Fxq "$2" /root/.ssh/authorized_keys; then
       sed -i "\:$2:d" /root/.ssh/authorized_keys
@@ -59,13 +59,13 @@ function sshkey () {
     if [ -z "$2" ]; then
       echo "Error: missing arguments"
       echo "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
-      exit 1
+      return 1
     fi
     if [ "$2" == "adduser" ]; then
       if [ -z "$3" ]; then
         echo "Error: missing argument"
         echo "Usage: $BASENAME sshkey adduser <username>"
-        exit 1
+        return 1
       fi
       keys=$(curl -s "https://github.com/$3.keys")
       if [ ! -z "$keys" ]; then
@@ -76,7 +76,7 @@ function sshkey () {
       if [ -z "$3" ]; then
         echo "Error: missing argument"
         echo "Usage: $BASENAME sshkey deleteuser <username>"
-        exit 1
+        return 1
       fi
       githubusername="$3"
       auth_files="/root/.ssh/authorized_keys /home/pi/.ssh/authorized_keys"
@@ -96,7 +96,7 @@ function sshkey () {
       if [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
         echo "Error: missing arguments"
         echo "Usage: $BASENAME sshkey github addteam <organization> <team_name> <access_token>"
-        exit 1
+        return 1
       fi
       teams=$(curl -s -X GET "https://api.github.com/orgs/$3/teams" -H "Authorization: token $5")
       team_id=$(echo "$teams" | jq ".[] | select(.name==\"$4\").id")
@@ -107,12 +107,12 @@ function sshkey () {
     else
       echo "Error: unsupported command"
       echo "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
-      exit 1
+      return 1
     fi
   else	
     echo "Error: unsupported command"	
     echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"	
-    exit 1    
+    return 1    
   fi
 }
 

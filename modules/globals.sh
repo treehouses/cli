@@ -35,7 +35,7 @@ function checkroot {
   if [ "$(id -u)" -ne 0 ];
   then
       echo "Error: Must be run with root permissions"
-      exit 1
+      return 1
   fi
 }
 
@@ -43,7 +43,7 @@ function checkrpi {
   if [ "$(detectrpi)" == "nonrpi" ];
   then
     echo "Error: Must be run with rpi system"
-    exit 1
+    return 1
   fi
 }
 
@@ -57,21 +57,21 @@ function checkargn {
     else
       eval "${helpfunc}_help"
     fi
-    exit 1
+    return 1
   fi
 }
 
 function checkwrpi {
   if [[ $(detect bluetooth) == "false" ]]; then
     echo "Error: no Bluetooth device detected"
-    exit 1
+    return 1
   fi
 }
 
 function checkinternet {
   if [[ $(internet) == "false" ]]; then
     echo "Error: no Internet found"
-    exit 1
+    return 1
   fi
 }
 
@@ -79,7 +79,7 @@ function checkwifi {
   if iwconfig wlan0 | grep -q "ESSID:off/any"; then
     echo "wifi is not connected"
     echo "check SSID and password and try again"
-    exit 1
+    return 1
   fi
 }
 
@@ -172,7 +172,7 @@ function check_missing_packages {
   if (( ${#missing_deps[@]} > 0 )) ; then
       echo "Missing required programs: ${missing_deps[*]}"
       echo "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
-      exit 1
+      return 1
   fi
 }
 

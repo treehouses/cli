@@ -7,7 +7,7 @@ function services {
 
   if [ -z "$service_name" ]; then
     echo "ERROR: no command given"
-    exit 1
+    return 1
   # list all services available to be installed
   elif [ "$service_name" = "available" ]; then
     checkargn $# 1
@@ -23,7 +23,7 @@ function services {
       done
     else
       echo "ERROR: $SERVICES directory does not exist"
-      exit 1
+      return 1
     fi
   # list all installed services
   elif [ "$service_name" = "installed" ]; then
@@ -41,7 +41,7 @@ function services {
     else
       echo "ERROR: unknown command option"
       echo "USAGE: $BASENAME services installed <full>"
-      exit 1
+      return 1
     fi
   # list all running services
   elif [ "$service_name" = "running" ]; then
@@ -67,7 +67,7 @@ function services {
     else
       echo "ERROR: unknown command option"
       echo "USAGE: $BASENAME services running <full>"
-      exit 1
+      return 1
     fi
   # list all ports used by services
   elif [ "$service_name" = "ports" ]; then
@@ -117,7 +117,7 @@ function services {
               echo "planet installed"
             else
               echo "ERROR: cannot run install script"
-              exit 1
+              return 1
             fi
           elif source $SERVICES/install-${service_name}.sh && install ; then
             retries=0
@@ -138,10 +138,10 @@ function services {
               fi
             done
             echo "ERROR: cannot pull docker image"
-            exit 1
+            return 1
           else
             echo "ERROR: cannot run install script"
-            exit 1
+            return 1
           fi
           ;;
         up)
@@ -152,14 +152,14 @@ function services {
                 echo "planet built and started"
               else
                 echo "ERROR: cannot build planet"
-                exit 1
+                return 1
               fi
             else
               if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d ; then
                 echo "planet built and started"
               else
                 echo "ERROR: cannot build planet"
-                exit 1
+                return 1
               fi
             fi
           else
@@ -190,7 +190,7 @@ function services {
             if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
               echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
               echo "try running '$BASENAME services ${service_name} install' first"
-              exit 1
+              return 1
             else
               if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml start; then
                 echo "${service_name} started"
@@ -199,7 +199,7 @@ function services {
           else
             echo "ERROR: ${service_name} container not found"
             echo "try running '$BASENAME services $service_name up' first to create the container"
-            exit 1
+            return 1
           fi
           ;;
         stop)
@@ -208,7 +208,7 @@ function services {
             if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
               echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
               echo "try running '$BASENAME services ${service_name} install' first"
-              exit 1
+              return 1
             else
               if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml stop; then
                 echo "${service_name} stopped"
@@ -217,7 +217,7 @@ function services {
           else
             echo "ERROR: ${service_name} container not found"
             echo "try running '$BASENAME services $service_name up' first to create the container"
-            exit 1
+            return 1
           fi
           ;;
         restart)
@@ -268,7 +268,7 @@ function services {
               if [ ! -f /srv/${service_name}/autorun ]; then
                 echo "ERROR: ${service_name} autorun file not found"
                 echo "run \"$BASENAME services $service_name install\" first"
-                exit 1
+                return 1
               fi
               cat /srv/${service_name}/autorun >> /boot/autorun
             else
@@ -285,7 +285,7 @@ function services {
           else
             echo "ERROR: unknown command option"
             echo "USAGE: $BASENAME services $service_name autorun [true | false]"
-            exit 1
+            return 1
           fi
           ;;
         ps)
@@ -326,7 +326,7 @@ function services {
           else
             echo "ERROR: unknown command option"
             echo "USAGE: $BASENAME services $service_name url [local | tor]"
-            exit 1
+            return 1
           fi
           ;;
         port)
@@ -352,7 +352,7 @@ function services {
           if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
             echo "ERROR: ${service_name}.yml not found"
             echo "try running '$BASENAME services ${service_name} install' first"
-            exit 1
+            return 1
           else
             docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down -v --rmi all --remove-orphans
             echo "${service_name} stopped and removed"
@@ -380,7 +380,7 @@ function services {
                 kill_spinner
                 if [ -z "$4" ]; then
                   echo "ERROR: a name is required for the new env file"
-                  exit 1
+                  return 1
                 else
                   cp /srv/$service_name/.env /srv/$service_name/$4.env
                 fi
@@ -434,12 +434,12 @@ function services {
                   else
                     echo "ERROR: received $(($# - 4)) variable(s)"
                     echo "$service_name requires $var_count_env variable(s)"
-                    exit 1
+                    return 1
                   fi
                 else
                   echo "ERROR: unknown command option"
                   echo "USAGE: $BASENAME services $service_name config edit [vim|request|send]"
-                  exit 1
+                  return 1
                 fi
               elif [ "$command_option" = "available" ]; then
                 checkargn $# 3
@@ -463,17 +463,17 @@ function services {
                   echo "now using $4.env"
                 else
                   echo "ERROR: /srv/$service_name/$4.env not found"
-                  exit 1
+                  return 1
                 fi
               else
                 echo "ERROR: unknown command option"
                 echo "USAGE: $BASENAME services $service_name config [new | edit | available | select]"
-                exit 1
+                return 1
               fi
             else
               echo "ERROR: /srv/$service_name/.env not found"
               echo "try running '$BASENAME services $service_name install' first"
-              exit 1
+              return 1
             fi
           else
             echo "$service_name does not use environment variables"
@@ -496,7 +496,7 @@ function services {
           echo "                                ..... cleanup"
           echo "                                ..... icon"
           echo "                                ..... config [new|edit [vim|request|send]|available|select]"
-          exit 1
+          return 1
           ;;
       esac
     fi
@@ -524,7 +524,7 @@ function check_available_services {
   done
   echo "ERROR: unknown service"
   echo "try running '$BASENAME services available' to see the list of available services"
-  exit 1
+  return 1
   # return 1
 }
 
@@ -539,7 +539,7 @@ function check_space {
     echo "ERROR: not enough free space"
     echo "service size:" $service_size
     echo "free space:" $free_space
-    exit 1
+    return 1
   fi
 }
 
@@ -561,12 +561,12 @@ function docker_compose_up {
   if [ ! -f /srv/${1}/${1}.yml ]; then
     echo "ERROR: /srv/${1}/${1}.yml not found"
     echo "try running '$BASENAME services ${1} install' first"
-    exit 1
+    return 1
   elif docker-compose --project-directory /srv/${1} -f /srv/${1}/${1}.yml -p ${1} up -d ; then
     echo "${1} built and started"
   else
     echo "ERROR: cannot build ${1}"
-    exit 1
+    return 1
   fi
 }
 
@@ -587,14 +587,14 @@ function remove_tor_port {
 function validate_yml {
   if [ ! -f /srv/${1}/.env ]; then
     echo "ERROR: /srv/${1}/.env not found"
-    exit 1
+    return 1
   else
     while read -r line; do
       if [[ $line == *=[[:space:]]* ]] || [[ $line =~ "="$ ]]; then
         echo "ERROR: unset environment variable:"
         echo $line
         echo "try running '$BASENAME services $1 config edit' to edit environment variables"
-        exit 1
+        return 1
       fi
     done < /srv/${1}/.env
     echo "valid yml"

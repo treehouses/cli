@@ -10,7 +10,7 @@ function burn {
 
     if [ ! -b "$device" ]; then
         echo "Error: the device $device wasn't detected"
-        exit 1
+        return 1
     fi
 
     echo "downloading treehouses image."

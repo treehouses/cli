@@ -13,7 +13,7 @@ function memory_total() {
       ;;
     *)
       echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory')"
-      exit 1
+      return 1
       ;;
   esac
 }
@@ -41,7 +41,7 @@ function memory_used {
       ;;
      *)
       echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory')"
-      exit 1
+      return 1
       ;;
   esac
 }
@@ -61,7 +61,7 @@ function memory_free {
       ;;
     *)
       echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory')"
-      exit 1
+      return 1
       ;;
   esac
 }
@@ -110,7 +110,7 @@ function memory() {
       ;;
     *)
       echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory )"
-      exit 1
+      return 1
   esac
 }
 

@@ -6,8 +6,9 @@ function tethermain {
 
   if [ -z "$(ip link | grep usb0)" ]; then 
     echo 
-    echo "USB interface not found."
-    echo "Please check your connection and/or if usb tethering is enabled in your phone setting"
+    echo "USB interface not found"
+    echo "Please check your connection"
+    echo "Please check if USB tethering is enabled in your phone setting"
     echo 
     exit 1
   fi 
@@ -21,7 +22,7 @@ function tethermain {
     echo "default" > /etc/network/mode
   fi
   echo "tether" > /etc/network/mode
-  echo "USB tethering successfully enabled."
+  echo "USB tethering enabled successfully."
 }
 
 function tether {

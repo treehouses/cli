@@ -48,7 +48,7 @@ function default_network {
   rm -rf /etc/network/up-bridge.sh
   rm -rf /etc/network/eth0-shared.sh
   rm -rf /etc/network/mode
-  if [ ! -z "$(wificountry | grep not)" ]; then
+  if [ -z "$(wificountry | grep not)" ]; then
     config delete WIFICOUNTRY
   fi
 

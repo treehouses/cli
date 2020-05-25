@@ -17,6 +17,7 @@ services:
       - DOCKER_MODS=linuxserver/calibre-web:calibre
     volumes:
       - "/srv/calibre-web.sh:/root/.calibre-web"
+      - "/srv/calibre-web.sh:/books"
     ports:
       - 8090:80
     restart: unless-stopped

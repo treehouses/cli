@@ -41,7 +41,7 @@ EOF
 calibre-web_autorun=true
 
 if [ "$calibre-web_autorun" = true ]; then
-  treehouses services librespeed up
+  treehouses services calibre-web up
 fi
 
 

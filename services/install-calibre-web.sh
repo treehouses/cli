@@ -19,7 +19,7 @@ services:
       - "/srv/calibre-web.sh:/root/.calibre-web"
       - "/srv/calibre-web.sh:/books"
     ports:
-      - 8090:80
+      - 8090:8083
     restart: unless-stopped
 EOF
 

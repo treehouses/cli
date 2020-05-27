@@ -14,6 +14,12 @@ services:
       - PUID=${PUID}
       - PGID=${PUID}
       - TZ=${TZ}
+      - PASSWORD=${PASSWORD}
+      - DB_TYPE=${DB_TYPE}
+      - DB_NAME=${DB_NAME}
+      - DB_HOSTNAME=${DB_HOSTNAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
     volumes:
       - "/srv/grocy.sh:/root/.grocy"
     ports:

@@ -158,6 +158,17 @@ function led {
       echo "this will happen 20 times"
       heavymetal > "$LOGFILE"
       ;;
+    kecak)
+      checkroot
+      echo "leds are set to kecak mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: on 1 sec; off 1 sec; twice"
+      echo "Both LED: alternate every 0.1 sec; 20 times"
+      echo "Both LED: on 1 sec; off 1 sec; twice"
+      echo "Both LED: alternate every 0.1 sec; 20 times"
+      echo "Both LED: on 1 sec; off 1 sec; twice"
+      kecak > "$LOGFILE"
+      ;;    
     random)
       checkroot
       random
@@ -636,6 +647,48 @@ function lantern {
   led green "$current_green"
 }
 
+function kecak {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  for i in {0..1}
+  do
+  set_brightness 0 1 && set_brightness 1 1 && sleep 1
+  set_brightness 0 0 && set_brightness 1 0 && sleep 1
+  done
+
+  for i in {0..19}
+  do 
+  set_brightness 0 1 && sleep 0.1
+  set_brightness 0 0
+  set_brightness 1 1 && sleep 0.1
+  set_brightness 1 0 
+  done
+  
+  for i in {0..1}
+  do
+  set_brightness 0 1 && set_brightness 1 1 && sleep 1
+  set_brightness 0 0 && set_brightness 1 0 && sleep 1
+  done
+
+  for i in {0..19}
+  do
+  set_brightness 0 1 && sleep 0.1
+  set_brightness 0 0
+  set_brightness 1 1 && sleep 0.1
+  set_brightness 1 0 
+  done
+
+  for i in {0..1}
+  do
+  set_brightness 0 1 && set_brightness 1 1 && sleep 1
+  set_brightness 0 0 && set_brightness 1 0 && sleep 1
+  done
+
+  led red "$current_red"
+  led green "$current_green"
+}
+
 function random {
   rando="$(led_help | grep "led \[" \
     | cut -d "[" -f2 \
@@ -651,7 +704,7 @@ function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
   echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter]"
-  echo "                     [eid|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
+  echo "                     [eid|onam|diwali|thanksgiving|christmas|dance|heavymetal|kecak|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -738,6 +791,9 @@ function led_help {
   echo
   echo "  $BASENAME led heavymetal"
   echo "      This will set the mode of the led to heavymetal"
+  echo
+  echo "  $BASENAME led kecak"
+  echo "      This will set the mode of the led to kecak"
   echo
   echo "  $BASENAME led random"
   echo "     This will set the mode of the led to one of the above festivities"

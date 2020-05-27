@@ -2,29 +2,28 @@
 
 function install {
   # create service directory
-  mkdir -p /srv/calibre-web
+  mkdir -p /srv/calibre
 
   # create yml(s)
-  cat << EOF > /srv/calibre-web/calibre-web.yml
+  cat << EOF > /srv/calibre-web/calibre.yml
 version: "2.1"
 services:
-  calibre-web:
-    image: linuxserver/calibre-web
+  calibre:
+    image: linuxserver/calibre
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - DOCKER_MODS=linuxserver/calibre-web:calibre
     volumes:
-      - "/srv/calibre-web:/root/.calibre-web"
-      - "/srv/calibre-web:/books:/books"
+      - "/srv/calibre:/root/.calibre"
     ports:
-      - 8083:8083
+      - 8080:8080
+      - 8081:8081
     restart: unless-stopped
 EOF
 
   # create .env with default values
-  cat << EOF > /srv/calibre-web/.env
+  cat << EOF > /srv/calibre/.env
 PUID=1000
 PGID=1000
 TZ=Europe/London
@@ -37,11 +36,11 @@ DB_PASSWORD=DB_PASSWORD
 EOF
 
   # add autorun
-  cat << EOF > /srv/calibre-web/autorun
-calibre-web_autorun=true
+  cat << EOF > /srv/calibre/autorun
+calibre_autorun=true
 
-if [ "$calibre-web_autorun" = true ]; then
-  treehouses services calibre-web up
+if [ "$calibre_autorun" = true ]; then
+  treehouses services calibre up
 fi
 
 
@@ -60,7 +59,8 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "8083"
+  echo "8080"
+  echo "8081"
 }
 
 # add size (in MB)
@@ -70,12 +70,10 @@ function get_size {
 
 # add info
 function get_info {
-  echo "https://github.com/linuxserver/docker-calibre-web"
-  echo
-  echo "Calibre-web is a web app providing a clean interface for "
-  echo "browsing, reading and downloading eBooks using an existing Calibre database." 
-  echo "It is also possible to integrate google drive and edit metadata and"
-  echo "your calibre library through the app itself."
+  echo "https://github.com/linuxserver/docker-calibre"
+  echo "Calibre is a powerful and easy to use e-book manager."
+  echo "It’ll allow you to do nearly everything and it takes" 
+  echo "things a step beyond normal e-book software." 
 }
 
 # add svg icon

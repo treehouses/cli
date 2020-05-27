@@ -4,7 +4,7 @@ function sshtunnel {
   checkroot
   # checkargn $# 3
   # portinterval="$3"
-  host="$4"
+  # host="$4"
 
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
     echo "Error: no tunnel has been set up."
@@ -12,20 +12,28 @@ function sshtunnel {
     exit 1
   fi
 
-  # default host
-  if [ -z "$host" ]; then
-    host="ole@pirate.ole.org"
-  fi
-
-  hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
-
   case "$1" in
     add)
       case "$2" in
-        tunnels)
-          portinterval="$3"
+        tunnel)
+          portinterval=$3
+          host=$4
           if [ -z "$portinterval" ]; then
             echo "Error: A port interval is required"
+            exit 1
+          fi
+
+          # default host
+          if [ -z "$host" ]; then
+            host="ole@pirate.ole.org"
+          fi
+
+          hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
+
+          if [ -f "/etc/tunnel" ]; then
+          # if [ -f "/etc/tunnel-$host" ]; then
+            echo "Error: /etc/tunnel already exists"
+            echo "Error: /etc/tunnel-$host already exists"
             exit 1
           fi
 
@@ -91,7 +99,7 @@ function sshtunnel {
           ;;
         *)
           echo "Error: unknown command"
-          echo "Usage: $BASENAME sshtunnel add <tunnels | port>"
+          echo "Usage: $BASENAME sshtunnel add <tunnel | port>"
           exit 1
           ;;
       esac

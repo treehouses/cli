@@ -10,7 +10,6 @@ version: "2.1"
 services:
   grocy:
     image: linuxserver/grocy
-    container_name: grocy
     environment:
       - PUID=${PUID}
       - PGID=${PUID}

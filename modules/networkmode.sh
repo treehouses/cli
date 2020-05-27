@@ -34,7 +34,7 @@ function networkmode {
   esac
 
   if iface_exists "usb0"; then
-    if [ ! grep -q usb0 /var/lib/dhcp/*.leases ]; then
+    if ! grep -q usb0 /var/lib/dhcp/*.leases; then
       if [ $network_mode == "default" ]; then
         echo default > /etc/network/last_mode
       fi

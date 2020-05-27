@@ -16,7 +16,7 @@ services:
       - TZ=${TZ}
       - DOCKER_MODS=linuxserver/calibre-web:calibre
     volumes:
-      - "/srv/calibre-web.sh:/root/.calibre-web"
+      - path to data:/config
       - path to calibre library:/books
     ports:
       - 8083:8083

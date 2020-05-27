@@ -43,7 +43,7 @@ function networkmode {
     fi
   fi 
 
-  if [ "$network_mode" == "tether" ] && [ -z "$(ip link | grep usb0 >/dev/null)" ]; then 
+  if [ "$network_mode" == "tether" ] && ! ip link | grep -q usb0; then 
     mv /etc/network/last_mode /etc/network/mode
     network_mode=$(</etc/network/mode)
   fi 

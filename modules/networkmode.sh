@@ -34,7 +34,7 @@ function networkmode {
   esac
 
   if iface_exists "usb0"; then
-    if [ ! -z "$(grep usb0 /var/lib/dhcp/*.leases)" ]; then
+    if [ ! grep -q usb0 /var/lib/dhcp/*.leases ]; then
       if [ $network_mode == "default" ]; then
         echo default > /etc/network/last_mode
       fi
@@ -43,7 +43,7 @@ function networkmode {
     fi
   fi 
 
-  if [ "$network_mode" == "tether" ] && [ -z "$(ip link | grep usb0)" ]; then 
+  if [ "$network_mode" == "tether" ] && [ -z "$(ip link | grep usb0 >/dev/null)" ]; then 
     mv /etc/network/last_mode /etc/network/mode
     network_mode=$(</etc/network/mode)
   fi 

@@ -5,7 +5,7 @@ function install {
   mkdir -p /srv/calibre
 
   # create yml(s)
-  cat << EOF > /srv/calibre-web/calibre.yml
+  cat << EOF > /srv/calibre/calibre.yml
 version: "2.1"
 services:
   calibre:

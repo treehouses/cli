@@ -19,7 +19,7 @@ services:
       - "/srv/calibre-web.sh:/root/.calibre-web"
       - "/srv/calibre-web.sh:/books"
     ports:
-      - 8090:8083
+      - 8083:8083
     restart: unless-stopped
 EOF
 
@@ -60,7 +60,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "8090"
+  echo "8083"
 }
 
 # add size (in MB)

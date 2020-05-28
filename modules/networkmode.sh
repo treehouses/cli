@@ -63,9 +63,9 @@ function networkmode {
       get_staticnetwork_info "eth0"
     elif [ "$network_mode" == "tether" ]; then
       echo "network mode is tether."
-      if [ ! -z "$(get_ipv4_ip "usb0")" ]; then
-        echo "ip: /sbin/ip -o -4 addr list 'usb0' |
-          awk '{print $4}' | sed '2d' | cut -d/ -f1"
+      if iface_exists usb0; then
+        echo "ip: $(/sbin/ip -o -4 addr list 'usb0' |
+          awk '{print $4}' | sed '2d' | cut -d/ -f1)"
       fi
     elif [ "$network_mode" == "default" ]; then
       echo "network mode is default."

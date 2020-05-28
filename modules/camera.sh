@@ -103,4 +103,8 @@ function camera_help {
   echo "    $BASENAME camera capture"
   echo "      Camera is capturing and storing a time-stamped photo in ${directory}."
   echo
+  echo "    $BASENAME camera detect"
+  echo "      Camera is plugged in."
+  echo "      Camera Module v1 detected."
+  echo
 }

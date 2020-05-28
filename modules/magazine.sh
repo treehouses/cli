@@ -35,7 +35,7 @@ function magazine() {
       if [ -f "MagPi$magnum.pdf" ]; then
         echo "MagPi$magnum.pdf already exists, exiting..."
         cd ..
-        exit 0
+        exit 1
       fi
       echo "Fetching MagPi$magnum.pdf..."
       wget "https://magpi.raspberrypi.org/issues/$magnum/pdf"

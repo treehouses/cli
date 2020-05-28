@@ -8,7 +8,7 @@ load test-helper
 
 @test "$clinom magazine magpi latest" {
   run "${clicmd}" magazine magpi latest
-  assert_output -p 'MagPi93.pdf already exists, exiting...'
+  assert_success
 }
 
 @test "$clinom magazine magpi all" {

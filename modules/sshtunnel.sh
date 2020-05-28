@@ -46,7 +46,7 @@ function sshtunnel {
             if ! grep -q "$key" /root/.ssh/known_hosts 2>"$LOGFILE"; then
                 echo "$key" >> /root/.ssh/known_hosts
             fi
-          done <<< "$keys"      
+          done <<< "$keys"
 
           if [ ! -f /etc/tunnel ]; then
             {
@@ -113,10 +113,26 @@ function sshtunnel {
           pkill -3 autossh
           echo -e "${GREEN}Removed${NC}"
           ;;
-        *)
+        tunnel)
           # remove specific port (not port interval or offset)
-          port=$2
+          port=$3
+          host=$4
+
+          if [ -z $host ]; then
+            host="ole@pirate.ole.org"
+          fi
+
           if [ -f /etc/tunnel ]; then
+            # search file from bottom up
+            # if host found, then search for port
+            # if port found, then remove first match only
+
+
+
+
+
+
+
             if grep -Fq "127.0.1.1:$port" /etc/tunnel; then
               sed -i "/$port/d" /etc/tunnel
               echo "Removed $port from /etc/tunnel"
@@ -124,10 +140,35 @@ function sshtunnel {
               echo "Error: port not found in /etc/tunnel"
               exit 1
             fi
+
+
+
           else
             echo "Error: /etc/tunnel not found"
             exit 1
           fi
+          ;;
+        host)
+          host=$3
+          counter=1
+          while read -r line; do
+            if [[ $line =~ "/usr/bin/autossh" ]]; then
+              startline=$counter
+            fi
+            if [[ "$line" == "$host" ]]; then
+              endline=$counter
+              break
+            fi
+            ((counter++))
+          done < <(cat /etc/tunnel)
+
+          if [ -z $endline ]; then
+            echo "Host not found in /etc/tunnel"
+            exit 1
+          fi
+
+          sed -i "$startline, $endline d" /etc/tunnel
+          echo "Removed $host from /etc/tunnel"
           ;;
       esac
       ;;

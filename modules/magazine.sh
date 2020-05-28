@@ -16,9 +16,8 @@ function magazine() {
   if [ "$magtype" = "magpi" ]; then
     if [ "$req" != "all" ]; then
       if [ "$req" = "" ]; then
-        echo "The MagPi is The Official Raspberry Pi magazine. Written by and for the community, it is packed with Raspberry"
-	echo "Pi-themed projects, computing and electronics tutorials, how-to guides, and the latest news and reviews."
-        exit 1
+        echo "The MagPi is The Official Raspberry Pi magazine. Written by and for the community, it is packed with Raspberry Pi-themed projects, computing and electronics tutorials, how-to guides, and the latest news and reviews."
+        exit 0
       fi
       if [ "$req" != "latest" ] && [ "$req" != "" ]; then
         re='^[0-9]+$'
@@ -36,7 +35,7 @@ function magazine() {
       if [ -f "MagPi$magnum.pdf" ]; then
         echo "MagPi$magnum.pdf already exists, exiting..."
         cd ..
-        exit 1
+        exit 0
       fi
       echo "Fetching MagPi$magnum.pdf..."
       wget "https://magpi.raspberrypi.org/issues/$magnum/pdf"

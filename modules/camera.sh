@@ -64,7 +64,13 @@ function camera {
       else
         echo "Camera is plugged in."
         if file ${directory}$BASENAME-${timestamp}.png | grep -q "2592 x 1944" ; then
-          echo "Model 1 detected."
+          echo "Camera Module v1 detected."
+        elif file ${directory}$BASENAME-${timestamp}.png | grep -q "3280 × 2464" ; then
+          echo "Camera Module v2 detected."
+        elif file ${directory}$BASENAME-${timestamp}.png | grep -q "4056 x 3040" ; then
+          echo "HQ Camera detected."
+        else
+          echo "Unknown Camera detected. Something went wrong!"
         fi
       fi
     fi

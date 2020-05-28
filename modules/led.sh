@@ -639,12 +639,13 @@ function lantern {
 }
 
 function random {
-  rando="$(led_help | grep "led \[" \
+  rando="$(led_help | grep "\[" \
     | cut -d "[" -f2 \
     | cut -d "]" -f1 \
     | sed -n '1!p' \
-    | sed 's/|/\n/g' \
-    | sed -e '/^random$/d' \
+    | head -2 \
+    | sed 's/|/ /g'| \
+    | sed -e 's/ random//' \
     | shuf -n 1)"
   led "$rando"
 }

@@ -72,7 +72,7 @@ function magazine() {
     if [ "$req" != "all" ]; then
       if [ "$req" = "" ]; then
         echo "HackSpace magazine is packed with projects for fixers and tinkerers of all abilities. We'll teach you new techniques and give you refreshers on familiar ones, from 3D printing, laser cutting, and woodworking to electronics and Internet of Things."
-        exit 1
+        exit 0
       fi
       if [ "$req" != "latest" ] && [ "$req" != "" ]; then
         re='^[0-9]+$'

@@ -644,7 +644,7 @@ function random {
     | cut -d "]" -f1 \
     | sed -n '1!p' \
     | head -2 \
-    | sed 's/|/ /g'| \
+    | sed 's/|/\n/g' \
     | sed -e 's/ random//' \
     | shuf -n 1)"
   led "$rando"

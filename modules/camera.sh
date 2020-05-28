@@ -53,6 +53,23 @@ function camera {
       fi
     ;;
 
+    "detect")
+    mkdir -p ${directory}
+    if ! grep -q "start_x=1" ${config} ; then
+      echo "You need to enable AND reboot first in order to take pictures."
+      exit 1
+    else
+      if camera capture |& grep -q "mmal: main:" ; then
+        echo "Camera is not plugged in."
+      else
+        echo "Camera is plugged in."
+        if file ${directory}$BASENAME-${timestamp}.png | grep -q "2592 x 1944" ; then
+          echo "Model 1 detected."
+        fi
+      fi
+    fi
+    ;;
+
     "*")
       camera_help
     ;;

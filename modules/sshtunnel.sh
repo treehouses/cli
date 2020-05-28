@@ -3,8 +3,6 @@ function sshtunnel {
   local portnewcouchdb portmunin keys option value status
   checkroot
   # checkargn $# 3
-  # portinterval="$3"
-  # host="$4"
 
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
     echo "Error: no tunnel has been set up."
@@ -30,13 +28,6 @@ function sshtunnel {
 
           hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
 
-          if [ -f "/etc/tunnel" ]; then
-          # if [ -f "/etc/tunnel-$host" ]; then
-            echo "Error: /etc/tunnel already exists"
-            echo "Error: /etc/tunnel-$host already exists"
-            exit 1
-          fi
-
           # default list of ports
           portssh=$((portinterval + 22))
           portweb=$((portinterval + 80))
@@ -57,9 +48,13 @@ function sshtunnel {
             fi
           done <<< "$keys"      
 
-          # write to /etc/tunnel
+          if [ ! -f /etc/tunnel ]; then
+            {
+              echo "#!/bin/bash"
+            } > /etc/tunnel
+          fi
+
           {
-            echo "#!/bin/bash"
             echo
             echo "/usr/bin/autossh -f -T -N -q -4 -M $portinterval \\"
             echo "-R $portssh:127.0.1.1:22 \\"
@@ -68,7 +63,7 @@ function sshtunnel {
             echo "-R $portnewcouchdb:127.0.1.1:2200 \\"
             echo "-R $portmunin:127.0.1.1:4949 \\"
             echo "$host"
-          } > /etc/tunnel
+          } >> /etc/tunnel
 
           chmod +x /etc/tunnel
 

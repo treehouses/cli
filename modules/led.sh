@@ -160,7 +160,7 @@ function led {
       ;;
     random)
       checkroot
-      echo "select from: "
+      echo "selecting from: "
       led_help | grep "\[" | cut -d "[" -f2 | cut -d "]" -f1  | sed -n '1!p'| head -2 | sed 's/|/ /g'| sed -e 's/ random//'
       random
       return

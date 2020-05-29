@@ -171,8 +171,6 @@ function led {
       ;;    
     random)
       checkroot
-      echo "selecting from: "
-      led_help | grep "\[" | cut -d "[" -f2 | cut -d "]" -f1  | sed -n '1!p'| head -2 | sed 's/|/ /g'| sed -e 's/ random//'
       random
       return
       ;;
@@ -692,12 +690,15 @@ function kecak {
 }
 
 function random {
-  rando="$(led_help | grep "led \[" \
+  echo "selecting from: "
+  led_help | grep "\[" | cut -d "[" -f2 | cut -d "]" -f1  | sed -n '1!p'| head -2 | sed 's/|/ /g'| sed -e 's/ random//'
+  rando="$(led_help | grep "\[" \
     | cut -d "[" -f2 \
     | cut -d "]" -f1 \
     | sed -n '1!p' \
+    | head -2 \
     | sed 's/|/\n/g' \
-    | sed -e '/^random$/d' \
+    | sed -e 's/ random//' \
     | shuf -n 1)"
   led "$rando"
 }
@@ -706,7 +707,7 @@ function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
   echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter]"
-  echo "                     [eid|onam|diwali|thanksgiving|christmas|dance|heavymetal|kecak|random]"
+  echo "                      [eid|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
   echo
   echo "Sets or returns the led mode"
   echo

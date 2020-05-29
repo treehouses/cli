@@ -652,7 +652,7 @@ function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
   echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter]"
-  echo "                  [eid|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
+  echo "                      [eid|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
   echo
   echo "Sets or returns the led mode"
   echo

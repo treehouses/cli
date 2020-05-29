@@ -23,7 +23,7 @@ services:
     volumes:
       - "/srv/grocy.sh:/root/.grocy"
     ports:
-      - 9283:80
+      - 8091:80
     restart: unless-stopped
 EOF
 
@@ -61,7 +61,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "9283"
+  echo "8091"
 }
 
 # add size (in MB)

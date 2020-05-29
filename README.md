@@ -71,7 +71,7 @@ led [green|red] [mode]                    sets the led mode
     [dance|thanksgiving|christmas]
     [newyear|lunarnewyear|valentine]
     [carnival|stpatricks|onam]
-    [heavymetal|easter|eid|random]
+    [heavymetal|easter|eid|kecak|random]
 power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
@@ -132,7 +132,8 @@ inspire [joke|qotd|random]                displays quote based on user input
 convert <input file> <output file>        converts audio and video files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses
-magazine magpi [all|latest|number]        downloads specific magpi issue as a pdf
+magazine <hackspace|magpi> [all|latest]   downloads specific magazine issue as a pdf based on user input
+                           [number]
 shutdown [now|in|force]                   shutdown the system
 ```
 

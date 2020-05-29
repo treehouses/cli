@@ -74,6 +74,8 @@ function camera {
           rm ${directory}$BASENAME-${timestamp}.png
         else
           echo "Unknown Camera detected. Something went wrong!"
+	  file ${directory}$BASENAME-${timestamp}.png 
+	  rm ${directory}$BASENAME-${timestamp}.png
         fi
       fi
     fi

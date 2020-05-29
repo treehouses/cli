@@ -13,6 +13,10 @@ function magazine() {
   fi
   if [ "$magtype" = "magpi" ]; then
     if [ "$req" != "all" ]; then
+      if [ "$req" = "" ]; then
+        echo "The MagPi is The Official Raspberry Pi magazine. Written by and for the community, it is packed with Raspberry Pi-themed projects, computing and electronics tutorials, how-to guides, and the latest news and reviews."
+        exit 0
+      fi
       if [ "$req" != "latest" ] && [ "$req" != "" ]; then
         re='^[0-9]+$'
         if ! [[ $req =~ $re ]] || [[ $req -lt 1 ]] || [[ $req -gt 93 ]]; then
@@ -144,7 +148,7 @@ function magazine_help {
   echo "  Examples:"
   echo
   echo "    $BASENAME magazine magpi"
-  echo "        This will download the latest issue of magpi."
+  echo "        This will print out details about the magpi magazine."
   echo
   echo "    $BASENAME magazine magpi all"
   echo "        This will download all the currently present issues of magpi."

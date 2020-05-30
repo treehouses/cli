@@ -7,6 +7,7 @@ TEMPLATES="$SCRIPTFOLDER/templates"
 SERVICES="$SCRIPTFOLDER/services"
 CONFIGFILE=/etc/treehouses.conf
 BASENAME=$(basename "$0")
+WIFICOUNTRY="US"
 LOGFILE=/dev/null
 LOG=0
 BLOCKER=0

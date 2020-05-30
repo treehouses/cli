@@ -60,7 +60,7 @@ aphidden <local|internet> <ESSID>         creates a hidden mobile ap with or wit
 apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system
 locale <locale>                           sets the system locale
-ssh [on|off]                              enables or disables the ssh service
+ssh [on|off|fingerprint]                  enables or disables the ssh service, also prints out fingerprint of the ssh daemon
 vnc [on|off|info]                         enables or disables the vnc server service
 default                                   sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
@@ -71,7 +71,7 @@ led [green|red] [mode]                    sets the led mode
     [dance|thanksgiving|christmas]
     [newyear|lunarnewyear|valentine]
     [carnival|stpatricks|onam]
-    [heavymetal|easter|random]
+    [heavymetal|easter|eid|kecak|random]
 power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
@@ -105,7 +105,9 @@ services                                  executes the given command on the spec
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
    [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
+   [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
    [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
+   [grocy]                                grocy is a web-based, self-hosted groceries and household management utility for your home
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
@@ -117,7 +119,7 @@ coralenv [install|demo-on|demo-off]       plays with the coral environmental boa
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory
 temperature [celsius|fahrenheit|kelvin]   displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
-camera [on|off|capture]                   enables camera, disables camera, captures png photo
+camera [on|off|capture|detect]                   enables camera, disables camera, captures png photo, detects camera module version
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off
@@ -130,6 +132,8 @@ inspire [joke|qotd|random]                displays quote based on user input
 convert <input file> <output file>        converts audio and video files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses
+magazine <hackspace|magpi> [all|latest]   downloads specific magazine issue as a pdf based on user input
+                           [number]
 shutdown [now|in|force]                   shutdown the system
 resolution <cea|dmt [modes]>              sets the screen resolution 
 ```

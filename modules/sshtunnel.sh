@@ -249,17 +249,28 @@ function sshtunnel {
     list | "")
       if [ -f /etc/tunnel ]; then
         echo "Ports:"
-        echo "  local   -> external"
+        echo "     local    ->   external"
 
+        newgroup=true
         while read -r -u 9 line; do
           if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
             local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
             external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
-            echo "    $local -> $external"
+            if [ "$newgroup" = true ]; then
+              printf "%10s %-6s %-6s %-5s\n" "┌─" "$local" "->" "$external"
+              newgroup=false
+            else
+              printf "%10s %-6s %-6s %-5s\n" "├─" "$local" "->" "$external"
+            fi
+          fi
+          if echo $line | grep -q "[]@[]"; then
+            echo "    └─── Host: $line"
+            newgroup=true
           fi
         done 9< /etc/tunnel
 
-        echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
+
+        # echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
       else
         echo "Error: a tunnel has not been set up yet"
         exit 1

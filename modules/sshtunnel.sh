@@ -285,9 +285,6 @@ function sshtunnel {
             newgroup=true
           fi
         done 9< /etc/tunnel
-
-
-        # echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
       else
         echo "Error: a tunnel has not been set up yet"
         exit 1
@@ -442,10 +439,10 @@ function sshtunnel_help {
   echo
   echo "  notice                                   returns whether auto-reporting sshtunnel ports to gitter is on or off"
   echo "      on                                       turns on auto-reporting to gitter"
-  echo "      add <value>                              add a channel to report to"
-  echo "      delete <value>                           delete a channel to report to"
+  echo "      add <value>                              adds a channel to report to"
+  echo "      delete <value>                           deletes a channel to report to"
   echo "      list                                     lists all channels"
   echo "      off                                      turns off auto-reporting to gitter"
-  echo "      now                                      immediately report to gitter"
+  echo "      now                                      immediately reports to gitter"
   echo
 }

@@ -2,7 +2,6 @@ function sshtunnel {
   local portinterval host hostname portssh portweb portcouchdb
   local portnewcouchdb portmunin keys option value status
   checkroot
-  # checkargn $# 3
 
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
     echo "Error: no tunnel has been set up"
@@ -14,6 +13,7 @@ function sshtunnel {
     add)
       case "$2" in
         tunnel)
+          checkargn $# 4
           portinterval=$3
           host=$4
           if [ -z "$portinterval" ]; then
@@ -79,6 +79,7 @@ function sshtunnel {
           ;;
         port)
           if [ -f /etc/tunnel ]; then
+            checkargn $# 5
             actual=$3
             offset=$4
             host=$5
@@ -155,6 +156,7 @@ function sshtunnel {
     remove)
       case "$2" in
         all)
+          checkargn $# 2
           if [ -f /etc/tunnel ]; then
             rm -rf /etc/tunnel
           fi
@@ -167,7 +169,7 @@ function sshtunnel {
           echo -e "${GREEN}Removed${NC}"
           ;;
         port)
-          # remove specific port (not port interval or offset)
+          checkargn $# 4
           port=$3
           host=$4
 
@@ -211,6 +213,7 @@ function sshtunnel {
           fi
           ;;
         host)
+          checkargn $# 3
           host=$3
 
           if [ -z "$host" ]; then
@@ -247,6 +250,7 @@ function sshtunnel {
       esac
       ;;
     list | "")
+      checkargn $# 1
       if [ -f /etc/tunnel ]; then
         echo "Ports:"
         echo "     local    ->   external"
@@ -277,6 +281,7 @@ function sshtunnel {
       fi
       ;;
     check)
+      checkargn $# 1
       if [ -f "/etc/tunnel" ]; then
         echo -e "[${GREEN}OK${NC}] /etc/tunnel"
       else
@@ -302,6 +307,7 @@ function sshtunnel {
       fi
       ;;
     key)
+      checkargn $# 1
       if [ ! -f "/root/.ssh/id_rsa" ]; then
           ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
       fi
@@ -310,6 +316,7 @@ function sshtunnel {
     notice)
       case "$2" in
         on)
+          checkargn $# 2
           cp "$TEMPLATES/network/tunnel_report.sh" /etc/tunnel_report.sh
           if [ ! -f "/etc/cron.d/tunnel_report" ]; then
             echo "*/1 * * * * root if [ -f \"/etc/tunnel\" ]; then /etc/tunnel_report.sh; fi" > /etc/cron.d/tunnel_report
@@ -320,6 +327,7 @@ function sshtunnel {
           echo "OK."
           ;;
         add)
+          checkargn $# 3
           value="$3"
           if [ -z "$value" ]; then
             echo "Error: You must specify a channel URL"
@@ -330,6 +338,7 @@ function sshtunnel {
           echo "OK."
           ;;
         delete)
+          checkargn $# 3
           value="$3"
           if [ -z "$value" ]; then
             echo "Error: You must specify a channel URL"
@@ -341,6 +350,7 @@ function sshtunnel {
           echo "OK."
           ;;
         list)
+          checkargn $# 2
           if [ -f "/etc/tunnel_report_channels.txt" ]; then
             cat /etc/tunnel_report_channels.txt
           else
@@ -348,10 +358,12 @@ function sshtunnel {
           fi
           ;;
         off)
+          checkargn $# 2
           rm -rf /etc/tunnel_report.sh /etc/cron.d/tunnel_report /etc/tunnel_report_channels.txt || true
           echo "OK."
           ;;
         now)
+          checkargn $# 2
           message="$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$(grep -oP "(?<=\-M )(.*?) " /etc/tunnel)\n"
           while read -r -u 9 line; do
             if echo $line | grep -oPq "(?<=\-R )(.*?) "; then

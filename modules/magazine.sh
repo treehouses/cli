@@ -17,14 +17,6 @@ function magazine() {
         echo "The MagPi is The Official Raspberry Pi magazine. Written by and for the community, it is packed with Raspberry Pi-themed projects, computing and electronics tutorials, how-to guides, and the latest news and reviews."
         exit 0
       fi
-      wget "https://magpi.raspberrypi.org/issues"
-      mv ./issues ./issues.txt
-      magnum="$(sed -n '219p' issues.txt)"
-      rm ./issues.txt
-      magnum=${magnum:25}
-      quoteloc="${magnum%%\"*}"
-      ind=${#quoteloc}
-      magnum=${magnum:0:$ind}
       if [ "$req" != "latest" ] && [ "$req" != "" ]; then
         re='^[0-9]+$'
         if ! [[ $req =~ $re ]] || [[ $req -lt 1 ]] || [[ $req -gt 93 ]]; then

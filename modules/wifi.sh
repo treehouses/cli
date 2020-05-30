@@ -35,7 +35,7 @@ function wifimain {
   rm -rf /etc/udev/rules.d/90-wireless.rules
 
   if [[ -n "$3" ]]; then
-    "    wpa-driver wext" >> /etc/network/interfaces.d/wlan0
+    echo "    wpa-driver wext" >> /etc/network/interfaces.d/wlan0
   fi
 
   {
@@ -91,17 +91,11 @@ function wifimain {
       wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
     else
     {
-      #echo "eapol_version=2"
       echo "network={"
       echo "  ssid=\"${wifinetwork}\""
       echo "  identity=\"${3}\""
       echo "  password=\"${wifipassword}\""
       echo "  key_mgmt=WPA-EAP"
-      #echo "  eap=PEAP"
-      #echo "  proto=RSN"
-      #echo "  pairwise=CCMP"
-      #echo "  group=CCMP"
-      #echo "  phase2=\"auth=MSCHAPV2\""
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     fi

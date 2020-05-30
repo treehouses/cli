@@ -194,8 +194,16 @@ function magazine() {
         mkdir $magtype
       fi
       cd $magtype || return
+      wget "https://wireframe.raspberrypi.org/issues"
+      mv ./issues ./issues.txt
+      latest="$(sed -n '186p' issues.txt)"
+      rm ./issues.txt
+      latest=${latest:25}
+      quoteloc="${latest%%\"*}"
+      ind=${#quoteloc}
+      latest=${latest:0:$ind}
       echo "Fetching all Wireframe magazines..."
-      for i in {1..38}
+      for i in $(seq 1 $latest);
       do
         if [ -f "Wireframe$i.pdf" ]; then
           continue

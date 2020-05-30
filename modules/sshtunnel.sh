@@ -5,8 +5,8 @@ function sshtunnel {
   # checkargn $# 3
 
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
-    echo "Error: no tunnel has been set up."
-    echo "Run '$BASENAME sshtunnel add' to add a key for the tunnel."
+    echo "Error: no tunnel has been set up"
+    echo "Run '$BASENAME sshtunnel add' to add a key for the tunnel"
     exit 1
   fi
 
@@ -17,7 +17,8 @@ function sshtunnel {
           portinterval=$3
           host=$4
           if [ -z "$portinterval" ]; then
-            echo "Error: A port interval is required"
+            echo "Error: a port interval is required"
+            echo "Usage: $BASENAME sshtunnel add tunnel <port interval> [host]"
             exit 1
           fi
 
@@ -82,6 +83,16 @@ function sshtunnel {
             offset=$4
             host=$5
 
+            if [ -z "$actual" ]; then
+              echo "Error: a port is required"
+              echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
+              exit 1
+            elif [ -z "$offset" ]; then
+              echo "Error: an offset is required"
+              echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
+              exit 1
+            fi
+
             # default host
             if [ -z "$host" ]; then
               host="ole@pirate.ole.org"
@@ -121,13 +132,13 @@ function sshtunnel {
               done < <(cat /etc/tunnel)
 
               if [ "$found" = true ]; then
-                echo "port already exists"
+                echo "Port already exists"
               else
                 sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
-                echo "added $actual -> $((portinterval + offset)) for host $host"
+                echo "Added $actual -> $((portinterval + offset)) for host $host"
               fi
             else
-              echo "host not found"
+              echo "Host not found"
             fi
           else
             echo "Error: /etc/tunnel not found"
@@ -160,6 +171,12 @@ function sshtunnel {
           port=$3
           host=$4
 
+          if [ -z "$port" ]; then
+            echo "Error: a port is required"
+            echo "Usage: $BASENAME sshtunnel remove port <port> [host]"
+            exit 1
+          fi
+
           if [ -z $host ]; then
             host="ole@pirate.ole.org"
           fi
@@ -184,9 +201,9 @@ function sshtunnel {
 
             if [ "$found" = true ]; then
               sed -i "$final d" /etc/tunnel
-              echo "removed"
+              echo "Removed $port for host $host"
             else
-              echo "not found"
+              echo "Host / port not found"
             fi
           else
             echo "Error: /etc/tunnel not found"
@@ -195,6 +212,13 @@ function sshtunnel {
           ;;
         host)
           host=$3
+
+          if [ -z "$host" ]; then
+            echo "Error: a host is required"
+            echo "Usage: $BASENAME sshtunnel remove host <host>"
+            exit 1
+          fi
+
           counter=1
           while read -r line; do
             if [[ $line =~ "/usr/bin/autossh" ]]; then
@@ -214,6 +238,11 @@ function sshtunnel {
 
           sed -i "$startline, $endline d" /etc/tunnel
           echo "Removed $host from /etc/tunnel"
+          ;;
+        *)
+          echo "Error: unknown command"
+          echo "Usage: $BASENAME sshtunnel remove <all | port | host>"
+          exit 1
           ;;
       esac
       ;;
@@ -331,13 +360,15 @@ function sshtunnel {
           fi
           ;;
         *)
-          echo "Error: only 'on' and 'off' options are supported."
+          echo "Error: unknown command"
+          echo "Usage: $BASENAME sshtunnel notice [on | add | delete | list | off | now]"
           exit 1
           ;;
       esac
       ;;
     *)
-      echo "Error: only 'add', 'remove', 'list', 'check', 'key', 'notice' options are supported";
+      echo "Error: unknown command"
+      echo "Usage: $BASENAME sshtunnel [add | remove | list | check | key | notice]"
       exit 1
       ;;
   esac

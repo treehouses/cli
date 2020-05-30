@@ -376,32 +376,40 @@ function sshtunnel {
 
 function sshtunnel_help {
   echo
-  echo "Usage: $BASENAME sshtunnel <add|remove|list|key|notice> <portinterval> [user@host]"
+  echo "Usage: $BASENAME sshtunnel [add | remove | list | check | key | notice]"
   echo
-  echo "Helps setting up a sshtunnel"
+  echo "Helps setting up sshtunnels to multiple hosts"
   echo
-  echo "Example:"
-  echo "  $BASENAME sshtunnel add 65400 user@server.org"
-  echo "      This will set up autossh with the host 'user@server.org' and open the following tunnels"
-  echo "      127.0.1.1:22 -> host:65422"
-  echo "      127.0.1.1:80 -> host:65480"
-  echo "      127.0.1.1:2200 -> host:65482"
-  echo "      127.0.1.1:4949 -> host:65449"
-  echo "      127.0.1.1:5984 -> host:65484"
+  echo "Host defaults to \"ole@pirate.ole.org\" if not explicitly provided"
   echo
-  echo "  $BASENAME sshtunnel remove"
-  echo "      This will stop the ssh tunnels and remove the extra files added"
+  echo "Default list of ports when adding a host:"
+  echo "  127.0.1.1:22   -> host:(port interval + 22)"
+  echo "  127.0.1.1:5984 -> host:(port interval + 84)"
+  echo "  127.0.1.1:80   -> host:(port interval + 80)"
+  echo "  127.0.1.1:2200 -> host:(port interval + 82)"
+  echo "  127.0.1.1:4949 -> host:(port interval + 49)"
   echo
-  echo "  $BASENAME sshtunnel list"
-  echo "      This will output the tunneled ports and to which host"
+  echo "  add                                      adds tunnels / ports to the given host"
+  echo "      tunnel <port interval> [host]            adds a new set of default tunnels"
+  echo "      port <actual> <offset> [host]            adds a single port to an existing host"
   echo
-  echo "  $BASENAME sshtunnel check"
-  echo "      This will run a checklist and report back the results"
+  echo "  remove                                   removes tunnels / ports"
+  echo "      all                                      completely removes all tunnels to all hosts"
+  echo "      port <port> [host]                       removes a single port from an existing host"
+  echo "      host <host>                              removes all tunnels from an existing host"
   echo
-  echo "  $BASENAME sshtunnel key"
-  echo "      This will show the public key."
+  echo "  list | \" \"                             lists all existing tunnels to all hosts"
   echo
-  echo "  $BASENAME sshtunnel notice <on|off|add|delete|list|now> [api_url]"
-  echo "      Enables or disables the propagation of the sshtunnel ports to gitter"
+  echo "  check                                    runs a checklist of tests"
+  echo
+  echo "  key                                      shows the public key"
+  echo
+  echo "  notice                                   returns whether auto-reporting sshtunnel ports to gitter is on or off"
+  echo "      on                                       turns on auto-reporting to gitter"
+  echo "      add <value>                              add a channel to report to"
+  echo "      delete <value>                           delete a channel to report to"
+  echo "      list                                     lists all channels"
+  echo "      off                                      turns off auto-reporting to gitter"
+  echo "      now                                      immediately report to gitter"
   echo
 }

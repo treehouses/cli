@@ -113,7 +113,7 @@ function sshtunnel {
           pkill -3 autossh
           echo -e "${GREEN}Removed${NC}"
           ;;
-        tunnel)
+        port)
           # remove specific port (not port interval or offset)
           port=$3
           host=$4
@@ -123,26 +123,29 @@ function sshtunnel {
           fi
 
           if [ -f /etc/tunnel ]; then
-            # search file from bottom up
-            # if host found, then search for port
-            # if port found, then remove first match only
+            counter=1
+            found=false
+            while read -r line; do
+              if [[ $line =~ "127.0.1.1:$port" ]]; then
+                final=$counter
+              fi
+              if [ ! -z "$final" ] && [[ "$line" == "$host" ]]; then
+                found=true
+                break
+              fi
+              if [ ! -z "$final" ] && [ -z "$line" ]; then
+                found=false
+                final=""
+              fi
+              ((counter++))
+            done < <(cat /etc/tunnel)
 
-
-
-
-
-
-
-            if grep -Fq "127.0.1.1:$port" /etc/tunnel; then
-              sed -i "/$port/d" /etc/tunnel
-              echo "Removed $port from /etc/tunnel"
+            if [ "$found" = true ]; then
+              sed -i "$final d" /etc/tunnel
+              echo "removed"
             else
-              echo "Error: port not found in /etc/tunnel"
-              exit 1
+              echo "not found"
             fi
-
-
-
           else
             echo "Error: /etc/tunnel not found"
             exit 1

@@ -61,7 +61,6 @@ function magazine() {
       fi
       cd $magtype || return
       echo "Fetching all Magpi magazines..."
-      $magnum=expr'$magnum/1'
       for i in {1..94}
       do
         if [ -f "MagPi$i.pdf" ]; then

@@ -85,6 +85,32 @@ function camera {
           ;;
       esac
       ;;
+      
+    "detect")
+      mkdir -p ${directory}
+      if ! grep -q "start_x=1" ${config} ; then
+        echo "You need to enable AND reboot first in order to take pictures."
+        exit 1
+      else
+        if camera capture |& grep -q "mmal: main:" ; then
+          echo "Camera is not plugged in."
+        else
+          echo "Camera is plugged in."
+        if file ${directory}$BASENAME-${timestamp}.png | grep -q "2592 x 1944" ; then
+          echo "Camera Module v1 detected."
+          rm ${directory}$BASENAME-${timestamp}.png
+        elif file ${directory}$BASENAME-${timestamp}.png | grep -q "3280 × 2464" ; then
+          echo "Camera Module v2 detected."
+          rm ${directory}$BASENAME-${timestamp}.png
+        elif file ${directory}$BASENAME-${timestamp}.png | grep -q "4056 x 3040" ; then
+          echo "HQ Camera detected."
+          rm ${directory}$BASENAME-${timestamp}.png
+        else
+          echo "Unknown Camera detected. Something went wrong!"
+        fi
+      fi
+    fi
+    ;;
 
     "*")
       camera_help
@@ -94,7 +120,7 @@ function camera {
 
 function camera_help {
   echo
-  echo "  Usage: $BASENAME camera [on|off|capture]      enables camera, disables camera, captures png photo"
+  echo "  Usage: $BASENAME camera [on|off|detect|capture|record]"
   echo
   echo "  Example:"
   echo "    $BASENAME camera"
@@ -106,6 +132,10 @@ function camera_help {
   echo
   echo "    $BASENAME camera off"
   echo "      Camera has been disabled. Reboot needed for settings to take effect."
+  echo
+  echo "    $BASENAME camera detect"
+  echo "      Camera is plugged in."
+  echo "      Camera Module v1 detected."
   echo
   echo "    $BASENAME camera capture"
   echo "      Camera is capturing and storing a time-stamped photo in ${directory}."

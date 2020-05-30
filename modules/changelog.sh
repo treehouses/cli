@@ -19,7 +19,7 @@ case "$displaymode" in
       ;;
   "")
       checkargn $# 0
-      sed '3d;4d;5d;' $LOGPATH | tac #filters out auto generate message and prints bottom to top
+      cat $LOGPATH
      ;;
   compare)
       case "$version1" in
@@ -31,11 +31,11 @@ case "$displaymode" in
         case "$version2" in
          "")
           checkargn $# 2
-          sed "/\[$CURRENT\]/!d;s//&\n/;s/.*\n//;:a;/\[$version1\]/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH | tac #grabs text between version numbers, print bottom to top
+          sed "/^### $CURRENT/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH #grabs text between version numbers, print bottom to top
           ;;
         *)
           checkargn $# 3
-          sed "/\[$version2\]/!d;s//&\n/;s/.*\n//;:a;/\[$version1\]/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH | tac
+          sed "/^### $version2/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH
           ;;
         esac
         ;;

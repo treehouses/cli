@@ -4,7 +4,7 @@ function sshtunnel {
   checkroot
   checkargn $# 3
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
-    echo "Error: no tunnel has been set up."
+    echo $"Error: no tunnel has been set up."
     echo "Run '$BASENAME sshtunnel add' to add a key for the tunnel."
     exit 1
   fi
@@ -25,7 +25,7 @@ function sshtunnel {
   if [ "$1" = "add" ]; then
     if [ -z "$portinterval" ];
     then
-      echo "Error: A port interval is required"
+      echo $"Error: A port interval is required"
       exit 1
     fi
 
@@ -95,7 +95,7 @@ function sshtunnel {
       echo "    5984 -> $portcouchdb"
       echo "Host: $(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1)"
     else
-      echo "Error: a tunnel has not been set up yet"
+      echo $"Error: a tunnel has not been set up yet"
       exit 1
     fi
   elif [ "$1" = "check" ]; then
@@ -143,7 +143,7 @@ function sshtunnel {
     elif [ "$option" = "add" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        echo "Error: You must specify a channel URL"
+        echo $"Error: You must specify a channel URL"
         exit 1
       fi
 
@@ -152,7 +152,7 @@ function sshtunnel {
     elif [ "$option" = "delete" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        echo "Error: You must specify a channel URL"
+        echo $"Error: You must specify a channel URL"
         exit 1
       fi
 
@@ -184,10 +184,10 @@ function sshtunnel {
       fi
       echo "Status: $status"
     else
-      echo "Error: only 'on' and 'off' options are supported."
+      echo $"Error: only 'on' and 'off' options are supported."
     fi
   else
-    echo "Error: only 'add', 'remove', 'list', 'check', 'key', 'notice' options are supported";
+    echo $"Error: only 'add', 'remove', 'list', 'check', 'key', 'notice' options are supported";
     exit 1
   fi
 }

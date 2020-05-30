@@ -86,7 +86,7 @@ function blocker {
       apply_blocker "blocker X: level set to ads + fakenews + gambling + porn + social"
 	  ;;
     *)
-      log_and_exit1 "Error: only '0' '1' '2' '3' '4' 'max' options are supported"
+      log_and_exit1 $"Error: only '0' '1' '2' '3' '4' 'max' options are supported"
       ;;
   esac
   conf_var_update "BLOCKER" "$BLOCKER"

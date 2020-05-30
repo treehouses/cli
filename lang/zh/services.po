@@ -1,0 +1,85 @@
+#: ../modules/services.sh:9
+msgid "Error: no command given"
+msgstr ""
+
+#: ../modules/services.sh:25
+msgid "Error: $SERVICES directory does not exist"
+msgstr ""
+
+#: ../modules/services.sh:42 ../modules/services.sh:68
+#: ../modules/services.sh:286 ../modules/services.sh:327
+#: ../modules/services.sh:440 ../modules/services.sh:469
+msgid "Error: unknown command option"
+msgstr ""
+
+#: ../modules/services.sh:119 ../modules/services.sh:143
+msgid "Error: cannot run install script"
+msgstr ""
+
+#: ../modules/services.sh:140
+msgid "Error: cannot pull docker image"
+msgstr ""
+
+#: ../modules/services.sh:154 ../modules/services.sh:161
+msgid "Error: cannot build planet"
+msgstr ""
+
+#: ../modules/services.sh:191 ../modules/services.sh:209
+msgid "Error: /srv/${service_name}/${service_name}.yml not found"
+msgstr ""
+
+#: ../modules/services.sh:200 ../modules/services.sh:218
+msgid "Error: ${service_name} container not found"
+msgstr ""
+
+#: ../modules/services.sh:269
+msgid "Error: ${service_name} autorun file not found"
+msgstr ""
+
+#: ../modules/services.sh:353
+msgid "Error: ${service_name}.yml not found"
+msgstr ""
+
+#: ../modules/services.sh:382
+msgid "Error: a name is required for the new env file"
+msgstr ""
+
+#: ../modules/services.sh:435
+msgid "Error: received $(($# - 4)) variable(s)"
+msgstr ""
+
+#: ../modules/services.sh:465
+msgid "Error: /srv/$service_name/$4.env not found"
+msgstr ""
+
+#: ../modules/services.sh:474
+msgid "Error: /srv/$service_name/.env not found"
+msgstr ""
+
+#: ../modules/services.sh:483
+msgid "Error: unknown command"
+msgstr ""
+
+#: ../modules/services.sh:525
+msgid "Error: unknown service"
+msgstr ""
+
+#: ../modules/services.sh:539
+msgid "Error: not enough free space"
+msgstr ""
+
+#: ../modules/services.sh:562
+msgid "Error: /srv/${1}/${1}.yml not found"
+msgstr ""
+
+#: ../modules/services.sh:568
+msgid "Error: cannot build ${1}"
+msgstr ""
+
+#: ../modules/services.sh:589
+msgid "Error: /srv/${1}/.env not found"
+msgstr ""
+
+#: ../modules/services.sh:594
+msgid "Error: unset environment variable:"
+msgstr ""

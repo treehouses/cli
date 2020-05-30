@@ -1,0 +1,11 @@
+#: ../modules/bridge.sh:32
+msgid "Error: hotspot essid must be no greater than 32 characters"
+msgstr ""
+
+#: ../modules/bridge.sh:41
+msgid "Error: wifi password must have at least 8 characters"
+msgstr ""
+
+#: ../modules/bridge.sh:50
+msgid "Error: hotspot password must have at least 8 characters"
+msgstr ""

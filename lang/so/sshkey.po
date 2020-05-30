@@ -1,0 +1,15 @@
+#: ../modules/sshkey.sh:29 ../modules/sshkey.sh:66 ../modules/sshkey.sh:77
+msgid "Error: missing argument"
+msgstr ""
+
+#: ../modules/sshkey.sh:34
+msgid "Error: missing qoutes"
+msgstr ""
+
+#: ../modules/sshkey.sh:60 ../modules/sshkey.sh:97
+msgid "Error: missing arguments"
+msgstr ""
+
+#: ../modules/sshkey.sh:108 ../modules/sshkey.sh:113
+msgid "Error: unsupported command"
+msgstr ""

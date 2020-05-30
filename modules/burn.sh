@@ -9,7 +9,7 @@ function burn {
     fi
 
     if [ ! -b "$device" ]; then
-        echo "Error: the device $device wasn't detected"
+        echo $"Error: the device $device wasn't detected"
         exit 1
     fi
 

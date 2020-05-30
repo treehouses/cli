@@ -1,0 +1,9 @@
+#: ../modules/memory.sh:15 ../modules/memory.sh:43 ../modules/memory.sh:63
+msgid ""
+"Error: only '-g' and '-m' argument accepted (check 'treehouses help memory')"
+msgstr ""
+
+#: ../modules/memory.sh:112
+msgid ""
+"Error: only '-g' and '-m' argument accepted (check 'treehouses help memory )"
+msgstr ""

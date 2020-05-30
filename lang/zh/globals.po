@@ -1,0 +1,19 @@
+#: ../modules/globals.sh:37
+msgid "Error: Must be run with root permissions"
+msgstr ""
+
+#: ../modules/globals.sh:45
+msgid "Error: Must be run with rpi system"
+msgstr ""
+
+#: ../modules/globals.sh:53
+msgid "Error: Too many arguments."
+msgstr ""
+
+#: ../modules/globals.sh:66
+msgid "Error: no Bluetooth device detected"
+msgstr ""
+
+#: ../modules/globals.sh:73
+msgid "Error: no Internet found"
+msgstr ""

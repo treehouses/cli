@@ -6,7 +6,7 @@ function apchannel {
   if [ "$(networkmode)" == "bridge" ] || [[ "$(networkmode)" == *"ap local"* ]] || [[ "$(networkmode)" == *"ap internet"* ]]; then
     current_channel=$(sed -n 's/channel=\(.*\)/\1/p' /etc/hostapd/hostapd.conf )
   else
-    echo "Error: the current network mode ($(networkmode)) has no config for channel"
+    echo $"Error: the current network mode ($(networkmode)) has no config for channel"
     exit 1
   fi
 
@@ -18,7 +18,7 @@ function apchannel {
   checkroot
 
   if [ "$(echo "$new_channel" | grep -E '^([1-9]|11)$')" == "" ]; then
-    echo "Error: you must specify a channel between 1 and 11"
+    echo $"Error: you must specify a channel between 1 and 11"
     exit 1
   fi
 

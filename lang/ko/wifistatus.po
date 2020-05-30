@@ -1,0 +1,7 @@
+#: ../modules/wifistatus.sh:21
+msgid "Error: no wifi device is present"
+msgstr ""
+
+#: ../modules/wifistatus.sh:26
+msgid "Error: you are not on a wireless connection"
+msgstr ""

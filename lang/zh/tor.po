@@ -1,0 +1,43 @@
+#: ../modules/tor.sh:9
+msgid "Error: there are no tor ports added."
+msgstr ""
+
+#: ../modules/tor.sh:12
+msgid "Error: the tor service has not been configured."
+msgstr ""
+
+#: ../modules/tor.sh:39
+msgid "Error: you must specify a port"
+msgstr ""
+
+#: ../modules/tor.sh:44 ../modules/tor.sh:53
+msgid "Error: is not a port"
+msgstr ""
+
+#: ../modules/tor.sh:68
+msgid "Error: no port entered"
+msgstr ""
+
+#: ../modules/tor.sh:73
+msgid "Error: $2 is not a port"
+msgstr ""
+
+#: ../modules/tor.sh:87
+msgid "Error: wrong synthax"
+msgstr ""
+
+#: ../modules/tor.sh:130 ../modules/tor.sh:139
+msgid "Error: You must specify a channel URL"
+msgstr ""
+
+#: ../modules/tor.sh:168
+msgid ""
+"Error: only 'on', 'off', 'now', 'add', 'delete', and 'list' options are "
+"supported."
+msgstr ""
+
+#: ../modules/tor.sh:179
+msgid ""
+"Error: only 'list', 'add', 'start', 'stop', 'status', 'notice', 'destroy', "
+"'delete', 'deleteall', and 'refresh' options are supported."
+msgstr ""

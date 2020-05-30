@@ -12,7 +12,7 @@ function memory_total() {
       t=$(free | grep -i Mem | awk '{printf $2}')
       ;;
     *)
-      echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory')"
+      echo $"Error: only '-g' and '-m' argument accepted (check 'treehouses help memory')"
       exit 1
       ;;
   esac
@@ -40,7 +40,7 @@ function memory_used {
       ubc=$((u+bc))
       ;;
      *)
-      echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory')"
+      echo $"Error: only '-g' and '-m' argument accepted (check 'treehouses help memory')"
       exit 1
       ;;
   esac
@@ -60,7 +60,7 @@ function memory_free {
       f=$(free | grep -i Mem | awk '{printf $4}')
       ;;
     *)
-      echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory')"
+      echo $"Error: only '-g' and '-m' argument accepted (check 'treehouses help memory')"
       exit 1
       ;;
   esac
@@ -109,7 +109,7 @@ function memory() {
       echo "Your rpi has $t bytes of total memory with $ubc bytes used and $f bytes available"
       ;;
     *)
-      echo "error: only '-g' and '-m' argument accepted (check 'treehouses help memory )"
+      echo $"Error: only '-g' and '-m' argument accepted (check 'treehouses help memory )"
       exit 1
   esac
 }

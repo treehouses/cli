@@ -1,0 +1,9 @@
+#: ../modules/changelog.sh:27
+msgid ""
+"Error: only 'compare [previous version]' and 'compare [previous version] "
+"[later version] are supported."
+msgstr ""
+
+#: ../modules/changelog.sh:45
+msgid "Error: only 'view', 'compare' and blank options are supported. "
+msgstr ""

@@ -17,7 +17,7 @@ function vnc {
 
   # Checks whether we have the required package to run a VNC server
   if [ ! -d /usr/share/doc/realvnc-vnc-server ] ; then
-    echo "Error: the vnc server is not installed, to install it run:"
+    echo $"Error: the vnc server is not installed, to install it run:"
     echo "apt-get install realvnc-vnc-server"
     exit 1;
   fi
@@ -75,7 +75,7 @@ case "$option" in
     fi
     ;;
  *)
-    echo "Error: only 'on', 'off', 'info' options are supported";
+    echo $"Error: only 'on', 'off', 'info' options are supported";
     exit 1;
     ;;
   esac

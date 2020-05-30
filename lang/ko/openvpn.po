@@ -1,0 +1,21 @@
+#: ../modules/openvpn.sh:8
+msgid "Error: couldn't find openvpn installed."
+msgstr ""
+
+#: ../modules/openvpn.sh:56
+msgid "Error when trying to download the vpn file"
+msgstr ""
+
+#: ../modules/openvpn.sh:75 ../modules/openvpn.sh:84
+msgid "Error: You must specify a channel URL"
+msgstr ""
+
+#: ../modules/openvpn.sh:108
+msgid "Error: only 'on' and 'off' options are supported."
+msgstr ""
+
+#: ../modules/openvpn.sh:118
+msgid ""
+"Error: only 'use', 'show', 'delete', 'notice', 'start', 'stop' and 'load' "
+"options are supported."
+msgstr ""

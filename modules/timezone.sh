@@ -5,13 +5,13 @@ function timezone {
   timezone="$1"
   if [ -z "$timezone" ];
   then
-    echo "Error: the timezone is missing"
+    echo $"Error: the timezone is missing"
     exit 1;
   fi
 
   if [ ! -f "/usr/share/zoneinfo/$timezone" ];
   then
-    echo "Error: the timezone is not supported"
+    echo $"Error: the timezone is not supported"
     exit 1;
   fi
 

@@ -1,0 +1,3 @@
+#: ../modules/convert.sh:26
+msgid "Error: invalid arguments"
+msgstr ""

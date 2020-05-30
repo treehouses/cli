@@ -1,0 +1,9 @@
+#: ../modules/coralenv.sh:10
+msgid "Error: the Coral python environment is not installed"
+msgstr ""
+
+#: ../modules/coralenv.sh:49
+msgid ""
+"Error: only 'demo-on', 'demo-always-on', 'demo-off' and 'install' options "
+"are supported"
+msgstr ""

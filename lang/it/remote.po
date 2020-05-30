@@ -1,0 +1,11 @@
+#: ../modules/remote.sh:28 ../modules/remote.sh:60
+msgid "Error: incorrect command"
+msgstr ""
+
+#: ../modules/remote.sh:35
+msgid "Error: version number required"
+msgstr ""
+
+#: ../modules/remote.sh:40
+msgid "Error: not a number"
+msgstr ""

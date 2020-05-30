@@ -1,0 +1,3 @@
+#: ../modules/shutdown.sh:22
+msgid "Error: only now, in and force options are supported"
+msgstr ""

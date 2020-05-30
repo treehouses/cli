@@ -1,0 +1,3 @@
+#: ../modules/ssh.sh:19
+msgid "Error: only '', 'on', 'off', or 'fingerprint' options are supported"
+msgstr ""

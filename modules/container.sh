@@ -33,7 +33,7 @@ function container {
       fi
       ;;
     *)
-      echo "Error: only 'docker' 'balena' 'none' options are supported"
+      echo $"Error: only 'docker' 'balena' 'none' options are supported"
       ;;
   esac
 }

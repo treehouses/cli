@@ -1,0 +1,7 @@
+#: ../modules/staticwifi.sh:8
+msgid "Error: argument(s) missing"
+msgstr ""
+
+#: ../modules/staticwifi.sh:32
+msgid "Error: password must have at least 8 characters"
+msgstr ""

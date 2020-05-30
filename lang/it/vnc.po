@@ -1,0 +1,7 @@
+#: ../modules/vnc.sh:20
+msgid "Error: the vnc server is not installed, to install it run:"
+msgstr ""
+
+#: ../modules/vnc.sh:78
+msgid "Error: only 'on', 'off', 'info' options are supported"
+msgstr ""

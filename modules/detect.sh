@@ -74,7 +74,7 @@ function detectrpi {
       rpimodel=$(tr -d '\0' </sys/firmware/devicetree/base/model)
       echo "$rpimodel"
     else
-      log_and_exit1 "Error: only 'detectrpi', 'detectrpi model', and 'detectrpi full' commands supported"
+      log_and_exit1 $"Error: only 'detectrpi', 'detectrpi model', and 'detectrpi full' commands supported"
     fi
   else
     if grep -q -s "Raspberry Pi" "/sys/firmware/devicetree/base/model"; then
@@ -147,7 +147,7 @@ function detect {
       detectwifi
       ;;
     *)
-      echo "Error: only '', 'rpi', 'arm', 'bluetooth', 'wifi' options supported."
+      echo $"Error: only '', 'rpi', 'arm', 'bluetooth', 'wifi' options supported."
       ;;
   esac
 }

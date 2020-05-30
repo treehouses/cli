@@ -1,0 +1,3 @@
+#: ../modules/verbose.sh:25
+msgid "Error: only 'on' and 'off' options are supported"
+msgstr ""

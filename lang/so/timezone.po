@@ -1,0 +1,7 @@
+#: ../modules/timezone.sh:8
+msgid "Error: the timezone is missing"
+msgstr ""
+
+#: ../modules/timezone.sh:14
+msgid "Error: the timezone is not supported"
+msgstr ""

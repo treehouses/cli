@@ -18,12 +18,12 @@ function wifistatus {
     "")
       #check if device has wifi
       if iwconfig wlan0 2>&1 | grep -q "No such device"; then
-        echo "Error: no wifi device is present"
+        echo $"Error: no wifi device is present"
         exit 0
       fi
       #check if device is connected to wifi
       if iwconfig wlan0 | grep -q "ESSID:off/any"; then
-        echo "Error: you are not on a wireless connection"
+        echo $"Error: you are not on a wireless connection"
       else
         echo "Signal strength is $signalStrength"
         if [ "$signal" -gt -30 ] && [ "$signal" -lt -10 ] ; then

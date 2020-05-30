@@ -7,7 +7,7 @@ function coralenv {
   cronjob='@reboot nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>"$LOGFILE" &'
 
   if [ ! -d /usr/share/doc/python3-coral-enviro ] ; then
-    warn "Error: the Coral python environment is not installed"
+    warn $"Error: the Coral python environment is not installed"
     echo "You can install it using the command:"
     echo "$BASENAME coralenv install"
     echo
@@ -46,7 +46,7 @@ if [ -e /sys/bus/iio/devices/iio:device0 ]; then # Checks if board is attached
       echo "Please reboot your Raspberry Pi."
       ;;
     *)
-      echo "Error: only 'demo-on', 'demo-always-on', 'demo-off' and 'install' options are supported"
+      echo $"Error: only 'demo-on', 'demo-always-on', 'demo-off' and 'install' options are supported"
       ;;
     esac
   else

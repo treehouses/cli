@@ -1,0 +1,20 @@
+#: ../modules/config.sh:21
+msgid "Error: config file is empty; no variables to show"
+msgstr ""
+
+#: ../modules/config.sh:27 ../modules/config.sh:35
+msgid "Error: missing varname or varvalue"
+msgstr ""
+
+#: ../modules/config.sh:45
+msgid "Error: missing varname"
+msgstr ""
+
+#: ../modules/config.sh:53
+msgid ""
+"Error: $2 doesn't exist; please run 'treehouses config' to show all variables"
+msgstr ""
+
+#: ../modules/config.sh:63
+msgid "Error: only 'update' 'add' 'delete', and 'clear' options are supported"
+msgstr ""

@@ -42,6 +42,10 @@ treehouses camera
 treehouses camera capture
 treehouses camera off
 treehouses camera on
+treehouses camera detect
+treehouses changelog
+treehouses changelog view
+treehouses changelog compare
 treehouses clone
 treehouses container
 treehouses container balena
@@ -86,6 +90,7 @@ treehouses discover wifi
 treehouses ethernet
 treehouses expandfs
 treehouses feedback
+treehouses gpio
 treehouses help
 treehouses help ap
 treehouses help apchannel
@@ -97,6 +102,7 @@ treehouses help bridge
 treehouses help burn
 treehouses help button
 treehouses help camera
+treehouses help changelog
 treehouses help clone
 treehouses help container
 treehouses help coralenv
@@ -152,6 +158,7 @@ treehouses led
 treehouses led carnival
 treehouses led christmas
 treehouses led dance
+treehouses led eid
 treehouses led green
 treehouses led green backlight
 treehouses led green cpu0
@@ -163,9 +170,11 @@ treehouses led green kbd-
 treehouses led green none
 treehouses led green oneshot
 treehouses led green timer
+treehouses led kecak
 treehouses led lunarnewyear
 treehouses led newyear
 treehouses led onam
+treehouses led diwali
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -181,6 +190,8 @@ treehouses led thanksgiving
 treehouses led valentine
 treehouses led heavymetal
 treehouses led stpatricks
+treehouses led easter
+treehouses led lantern
 treehouses led random
 treehouses locale
 treehouses log
@@ -192,6 +203,12 @@ treehouses log 4
 treehouses log max
 treehouses log show
 treehouses log show 5
+treehouses magazine hackspace
+treehouses magazine hackspace all
+treehouses magazine hackspace latest
+treehouses magazine magpi
+treehouses magazine magpi all
+treehouses magazine magpi latest
 treehouses margaritas
 treehouses memory
 treehouses memory -g
@@ -271,6 +288,8 @@ treehouses shutdown in
 treehouses shutdown force
 treehouses speedtest
 treehouses speedtest -h
+treehouses ssh
+treehouses ssh fingerprint
 treehouses ssh off
 treehouses ssh on
 treehouses sshkey add
@@ -336,6 +355,7 @@ treehouses wifi
 treehouses wificountry
 treehouses wifihidden
 treehouses wifistatus
+treehouses convert
 EOF
 # COMP_LINE is the line you typed in terminal
 # COMP_WORDS is array form of COMP_LINE
@@ -357,16 +377,20 @@ EOF
 function services_cmds {
   while IFS= read -r line;
   do
-    printf "treehouses services $line autorun
+    printf "treehouses services $line
+treehouses services $line autorun
 treehouses services $line autorun false
 treehouses services $line autorun true
 treehouses services $line cleanup
 treehouses services $line down
-treehouses services $line environment
-treehouses services $line environment edit
-treehouses services $line environment edit vim
-treehouses services $line environment edit request
-treehouses services $line environment edit send
+treehouses services $line config
+treehouses services $line config available
+treehouses services $line config edit
+treehouses services $line config edit request
+treehouses services $line config edit send
+treehouses services $line config edit vim
+treehouses services $line config new
+treehouses services $line config select
 treehouses services $line icon
 treehouses services $line icon oneline
 treehouses services $line info

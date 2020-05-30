@@ -1,5 +1,5 @@
 function wifimain {
-  local wifinetwork wifipassword wificountry
+  local wifinetwork wifipassword wifiaddr
   checkrpi
   checkroot
   checkargn $# 2
@@ -37,12 +37,7 @@ function wifimain {
   {
     echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
     echo "update_config=1"
-    wificountry="US"
-    if [ -r /etc/rpi-wifi-country ];
-    then
-      wificountry=$(cat /etc/rpi-wifi-country)
-    fi
-    echo "country=$wificountry"
+    echo "country=$WIFICOUNTRY"
   } > /etc/wpa_supplicant/wpa_supplicant.conf
 
   if [ -z "$wifipassword" ];
@@ -58,10 +53,11 @@ function wifimain {
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     checkwifi
-    if  [ ! -v hide ]; then  
-      echo "connected to open network"
+    wifiaddr=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+    if  [ ! -v hide ]; then
+      echo "connected to open network; our wifi ip: $wifiaddr"
     else
-      echo "connected to hidden open network"  
+      echo "connected to hidden open network; our wifi ip: $wifiaddr"
     fi  
   elif [[ -n "$wifipassword" ]] && [[ -v hide ]];
   then
@@ -75,12 +71,14 @@ function wifimain {
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     checkwifi  
-    echo "connected to hidden password network"
+    wifiaddr=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+    echo "connected to hidden password network; our wifi ip: $wifiaddr"
   else
     wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     checkwifi
-    echo "connected to password network"
+    wifiaddr=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+    echo "connected to password network; our wifi ip: $wifiaddr"
   fi
 
   echo "wifi" > /etc/network/mode

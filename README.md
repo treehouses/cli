@@ -132,8 +132,8 @@ inspire [joke|qotd|random]                displays quote based on user input
 convert <input file> <output file>        converts audio and video files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses
-magazine <hackspace|magpi> [all|latest]   downloads specific magazine issue as a pdf based on user input
-                           [number]
+magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
+         [all|latest|number]   
 shutdown [now|in|force]                   shutdown the system
 ```
 

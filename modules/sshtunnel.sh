@@ -22,9 +22,12 @@ function sshtunnel {
             exit 1
           fi
 
-          # default host
+          # host validation
           if [ -z "$host" ]; then
             host="ole@pirate.ole.org"
+          elif ! echo $host | grep -q "[]@[]"; then
+            echo "Error: invalid host"
+            exit 1
           fi
 
           hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
@@ -94,9 +97,12 @@ function sshtunnel {
               exit 1
             fi
 
-            # default host
+            # host validation
             if [ -z "$host" ]; then
               host="ole@pirate.ole.org"
+            elif ! echo $host | grep -q "[]@[]"; then
+              echo "Error: invalid host"
+              exit 1
             fi
 
             # get port interval for given host
@@ -179,8 +185,12 @@ function sshtunnel {
             exit 1
           fi
 
-          if [ -z $host ]; then
+          # host validation
+          if [ -z "$host" ]; then
             host="ole@pirate.ole.org"
+          elif ! echo $host | grep -q "[]@[]"; then
+            echo "Error: invalid host"
+            exit 1
           fi
 
           if [ -f /etc/tunnel ]; then
@@ -219,6 +229,9 @@ function sshtunnel {
           if [ -z "$host" ]; then
             echo "Error: a host is required"
             echo "Usage: $BASENAME sshtunnel remove host <host>"
+            exit 1
+          elif ! echo $host | grep -q "[]@[]"; then
+            echo "Error: invalid host"
             exit 1
           fi
 

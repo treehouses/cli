@@ -80,12 +80,54 @@ function sshtunnel {
           if [ -f /etc/tunnel ]; then
             actual=$3
             offset=$4
-            portinterval=$(grep -oP "(?<=\-M )(.*?) " /etc/tunnel)
-            if ! grep -Fq $((portinterval + offset)):127.0.1.1:$actual /etc/tunnel; then
-              sed -i "$ i\-R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
-              echo "added $actual -> $((portinterval + offset))"
+            host=$5
+
+            # default host
+            if [ -z "$host" ]; then
+              host="ole@pirate.ole.org"
+            fi
+
+            # get port interval for given host
+            found=false
+            while read -r line; do
+              if [[ $line =~ "/usr/bin/autossh" ]]; then
+                portinterval=$(echo $line | grep -oP "(?<=\-M )(.*?) ")
+              fi
+              if [ ! -z "$portinterval" ] && [[ "$line" == "$host" ]]; then
+                found=true
+                break
+              fi
+              if [ ! -z "$portinterval" ] && [ -z "$line" ]; then
+                found=false
+                portinterval=""
+              fi
+            done < <(cat /etc/tunnel)
+
+            if [ "$found" = true ]; then
+              # check if port is already added
+              found=false
+              while read -r line; do
+                if [[ $line =~ "127.0.1.1:$actual" ]]; then
+                  exists=yes
+                fi
+                if [ ! -z "$exists" ] && [[ "$line" == "$host" ]]; then
+                  found=true
+                  break
+                fi
+                if [ ! -z "$exists" ] && [ -z "$line" ]; then
+                  found=false
+                  exists=""
+                fi
+              done < <(cat /etc/tunnel)
+
+              if [ "$found" = true ]; then
+                echo "port already exists"
+              else
+                sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
+                echo "added $actual -> $((portinterval + offset)) for host $host"
+              fi
             else
-              echo "port already added"
+              echo "host not found"
             fi
           else
             echo "Error: /etc/tunnel not found"

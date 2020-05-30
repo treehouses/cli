@@ -65,8 +65,8 @@ vnc [on|off|info]                         enables or disables the vnc server ser
 default                                   sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
 upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
-sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
-          <key|portinterval> [user@host]
+sshtunnel [add|remove|list|check|key]     helps adding sshtunnels
+          [notice]
 led [green|red] [mode]                    sets the led mode
     [dance|thanksgiving|christmas]
     [newyear|lunarnewyear|valentine]

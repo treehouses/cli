@@ -63,8 +63,16 @@ function magazine() {
         mkdir $magtype
       fi
       cd $magtype || return
+      wget "https://magpi.raspberrypi.org/issues"
+      mv ./issues ./issues.txt
+      latest="$(sed -n '219p' issues.txt)"
+      rm ./issues.txt
+      latest=${latest:25}
+      quoteloc="${latest%%\"*}"
+      ind=${#quoteloc}
+      latest=${latest:0:$ind}
       echo "Fetching all Magpi magazines..."
-      for i in {1..94}
+      for i in $(seq 1 $latest);
       do
         if [ -f "MagPi$i.pdf" ]; then
           continue
@@ -135,8 +143,16 @@ function magazine() {
         mkdir $magtype
       fi
       cd $magtype || return
+      wget "https://hackspace.raspberrypi.org/issues"
+      mv ./issues ./issues.txt
+      latest="$(sed -n '189p' issues.txt)"
+      rm ./issues.txt
+      latest=${latest:25}
+      quoteloc="${latest%%\"*}"
+      ind=${#quoteloc}
+      latest=${latest:0:$ind}
       echo "Fetching all HackSpace magazines..."
-      for i in {1..31}
+      for i in $(seq 1 $latest);
       do
         if [ -f "HackSpace$i.pdf" ]; then
           continue

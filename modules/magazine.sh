@@ -17,6 +17,14 @@ function magazine() {
         echo "The MagPi is The Official Raspberry Pi magazine. Written by and for the community, it is packed with Raspberry Pi-themed projects, computing and electronics tutorials, how-to guides, and the latest news and reviews."
         exit 0
       fi
+      wget "https://magpi.raspberrypi.org/issues"
+      mv ./issues ./issues.txt
+      magnum="$(sed -n '219p' issues.txt)"
+      rm ./issues.txt
+      magnum=${magnum:25}
+      quoteloc="${magnum%%\"*}"
+      ind=${#quoteloc}
+      magnum=${magnum:0:$ind}
       if [ "$req" != "latest" ] && [ "$req" != "" ]; then
         re='^[0-9]+$'
         if ! [[ $req =~ $re ]] || [[ $req -lt 1 ]] || [[ $req -gt 93 ]]; then
@@ -139,14 +147,25 @@ function magazine() {
         echo "Wireframe is a new fortnightly magazine that lifts the lid on video games. In every issue, we'll be looking at how games are made, who makes them, and even guide you through the process of making your own."
         exit 0
       fi
+      wget "https://wireframe.raspberrypi.org/issues"
+      mv ./issues ./issues.txt
+      latest="$(sed -n '186p' issues.txt)"
+      rm ./issues.txt
+      latest=${latest:25}
+      quoteloc="${latest%%\"*}"
+      ind=${#quoteloc}
+      latest=${latest:0:$ind}
       if [ "$req" != "latest" ] && [ "$req" != "" ]; then
         re='^[0-9]+$'
-        if ! [[ $req =~ $re ]] || [[ $req -lt 1 ]] || [[ $req -gt 38 ]]; then
+        if ! [[ $req =~ $re ]] || [[ $req -lt 1 ]] || [[ $req -gt $latest ]]; then
           echo "ERROR: Please enter a valid magazine number"
-          echo "       This can be any issue ranging from 1 to 38" 
+          echo "       This can be any issue ranging from 1 to $latest" 
           exit 1
         fi
         magnum=$req
+      fi
+      if [ "$req" = "latest" ]; then
+        magnum=$latest
       fi
       if [ ! -d "$magtype" ]; then
         mkdir $magtype

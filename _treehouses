@@ -42,6 +42,7 @@ treehouses camera
 treehouses camera capture
 treehouses camera off
 treehouses camera on
+treehouses camera detect
 treehouses changelog
 treehouses changelog view
 treehouses changelog compare
@@ -157,6 +158,7 @@ treehouses led
 treehouses led carnival
 treehouses led christmas
 treehouses led dance
+treehouses led eid
 treehouses led green
 treehouses led green backlight
 treehouses led green cpu0
@@ -168,9 +170,11 @@ treehouses led green kbd-
 treehouses led green none
 treehouses led green oneshot
 treehouses led green timer
+treehouses led kecak
 treehouses led lunarnewyear
 treehouses led newyear
 treehouses led onam
+treehouses led diwali
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -187,6 +191,7 @@ treehouses led valentine
 treehouses led heavymetal
 treehouses led stpatricks
 treehouses led easter
+treehouses led lantern
 treehouses led random
 treehouses locale
 treehouses log
@@ -198,6 +203,15 @@ treehouses log 4
 treehouses log max
 treehouses log show
 treehouses log show 5
+treehouses magazine hackspace
+treehouses magazine hackspace all
+treehouses magazine hackspace latest
+treehouses magazine magpi
+treehouses magazine magpi all
+treehouses magazine magpi latest
+treehouses magazine wireframe
+treehouses magazine wireframe all
+treehouses magazine wireframe latest
 treehouses memory
 treehouses memory -g
 treehouses memory -m
@@ -276,6 +290,8 @@ treehouses shutdown in
 treehouses shutdown force
 treehouses speedtest
 treehouses speedtest -h
+treehouses ssh
+treehouses ssh fingerprint
 treehouses ssh off
 treehouses ssh on
 treehouses sshkey add

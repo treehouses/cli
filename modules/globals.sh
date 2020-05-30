@@ -213,7 +213,7 @@ function start_spinner() {
     return
   fi
   set -m
-  trap kill_spinner {0..15}
+  trap kill_spinner {0..15} SIGTSTP
   spinner &
   SPINPID=$!
   disown

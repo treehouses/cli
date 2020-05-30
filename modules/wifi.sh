@@ -87,7 +87,7 @@ function wifimain {
     echo "  proto=RSN"
     echo "  pairwise=CCMP"
     echo "  group=CCMP"
-    echo "  client_cert=\"/etc/cert/ca.pem\""
+    #echo "  client_cert=\"/etc/cert/ca.pem\""
     echo "  phase2=\"auth=MSCHAPV2\""
     echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf

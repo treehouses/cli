@@ -74,7 +74,23 @@ function wifimain {
     wifiaddr=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
     echo "connected to hidden password network; our wifi ip: $wifiaddr"
   else
-    wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
+    #wifipassword=$(echo -n $wifipassword | iconv -t utf16le | openssl md4)
+    #wifipassword=${wifipassword:9}
+    {
+    echo "eapol_version=2"
+    echo "network={"
+    echo "  ssid=\"${wifinetwork}\""
+    echo "  identity=\"leroyjenkins\""
+    echo "  password=\"${wifipassword}\""
+    echo "  key_mgmt=WPA-EAP"
+    echo "  eap=PEAP"
+    echo "  proto=RSN"
+    echo "  pairwise=CCMP"
+    echo "  group=CCMP"
+    echo "  client_cert=\"/etc/cert/ca.pem\""
+    echo "  phase2=\"auth=MSCHAPV2\""
+    echo "}"
+    } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     checkwifi
     wifiaddr=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')

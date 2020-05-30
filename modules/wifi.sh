@@ -34,6 +34,10 @@ function wifimain {
   cp "$TEMPLATES/network/10-wpa_supplicant" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
   rm -rf /etc/udev/rules.d/90-wireless.rules
 
+  if [[ -n "$3" ]]; then
+    "    wpa-driver wext" >> /etc/network/interfaces.d/wlan0
+  fi
+
   {
     echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
     echo "update_config=1"
@@ -72,11 +76,9 @@ function wifimain {
         echo "  key_mgmt=WPA-PSK"
         echo "  psk=\"$wifipassword\""
       else
+        echo "  identity=\"${3}\""
+        echo "  password=\"${wifipassword}\""
         echo "  key_mgmt=WPA-EAP"
-        echo "  identity=\"$3\""
-        echo "  password=\"$wifipassword\""
-        echo "  phase1=\"peaplabel=0\""
-        echo "  phase2=\"auth=MSCHAPV2\""
       fi
     echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
@@ -89,13 +91,17 @@ function wifimain {
       wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
     else
     {
+      #echo "eapol_version=2"
       echo "network={"
-      echo "  ssid=\"$wifinetwork\""
+      echo "  ssid=\"${wifinetwork}\""
+      echo "  identity=\"${3}\""
+      echo "  password=\"${wifipassword}\""
       echo "  key_mgmt=WPA-EAP"
-      echo "  identity=\"$3\""
-      echo "  password=\"$wifipassword\""
-      echo "  phase1=\"peaplabel=0\""
-      echo "  phase2=\"auth=MSCHAPV2\""
+      #echo "  eap=PEAP"
+      #echo "  proto=RSN"
+      #echo "  pairwise=CCMP"
+      #echo "  group=CCMP"
+      #echo "  phase2=\"auth=MSCHAPV2\""
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     fi

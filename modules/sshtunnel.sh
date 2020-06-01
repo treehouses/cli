@@ -125,7 +125,7 @@ function sshtunnel {
               # check if port is already added
               found=false
               while read -r line; do
-                if [[ $line =~ "127.0.1.1:$actual" ]]; then
+                if [[ $line =~ 127.0.1.1:$actual ]]; then
                   exists=yes
                 fi
                 if [ ! -z "$exists" ] && [[ "$line" == "$host" ]]; then
@@ -197,7 +197,7 @@ function sshtunnel {
             counter=1
             found=false
             while read -r line; do
-              if [[ $line =~ "127.0.1.1:$port" ]]; then
+              if [[ $line =~ 127.0.1.1:$port ]]; then
                 final=$counter
               fi
               if [ ! -z "$final" ] && [[ "$line" == "$host" ]]; then

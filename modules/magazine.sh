@@ -37,7 +37,7 @@ function magazine() {
       if [ -f "MagPi$magnum.pdf" ]; then
         echo "MagPi$magnum.pdf already exists, exiting..."
         cd ..
-        exit 1
+        exit 0
       fi
       echo "Fetching MagPi$magnum.pdf..."
       wget -q "https://magpi.raspberrypi.org/issues/$magnum/pdf"
@@ -115,7 +115,7 @@ function magazine() {
       if [ -f "HackSpace$magnum.pdf" ]; then
         echo "HackSpace$magnum.pdf already exists, exiting..."
         cd ..
-        exit 1
+        exit 0
       fi
       echo "Fetching HackSpace$magnum.pdf..."
       wget -q "https://hackspace.raspberrypi.org/issues/$magnum/pdf"
@@ -193,7 +193,7 @@ function magazine() {
       if [ -f "Wireframe$magnum.pdf" ]; then
         echo "Wireframe$magnum.pdf already exists, exiting..."
         cd ..
-        exit 1
+        exit 0
       fi
       echo "Fetching Wireframe$magnum.pdf..."
       wget -q "https://wireframe.raspberrypi.org/issues/$magnum/pdf"

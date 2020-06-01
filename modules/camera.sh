@@ -1,12 +1,15 @@
 function camera {
   local directory timestamp config configtemp savetype
   checkrpi
-  checkargn $# 1
+  checkargn $# 2
   directory="/home/pi/Pictures/"
+  viddir="/home/pi/Videos/"
   timestamp=$(date +"%Y%m%d-%H%M%S")
   config="/boot/config.txt"
   configtemp="/boot/config.temp"
   savetype="png"
+  vidtype="mp4"
+  length=10
 
   case "$1" in
     "")
@@ -51,16 +54,46 @@ function camera {
       fi
     ;;
 
+    "record")
+      mkdir -p ${viddir}
+      if ! grep -q "start_x=1" ${config} ; then
+        echo "You need to enable AND reboot first in order to take pictures."
+        exit 1
+      fi
+      case "$2" in 
+        "")
+          echo "Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
+          let length=$length*1000
+          raspivid -o "${viddir}$BASENAME-${timestamp}.h264" -t "${length}" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
+          convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
+          rm ${viddir}$BASENAME-${timestamp}.h264
+          ;;       
+        
+        *)
+          if ! [[ "$2" =~ ^[1-9][0-9]*$ ]] ; then #^[0-9]+$ to accept 0 for indefinite recording
+            echo "Positive integers only."
+            exit 1
+          else        
+            echo "Camera is recording ${2} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
+            let length=$2*1000
+            raspivid -o "${viddir}$BASENAME-${timestamp}.h264" -t "${length}" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
+            convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
+            rm ${viddir}$BASENAME-${timestamp}.h264
+          fi
+          ;;
+      esac
+      ;;
+      
     "detect")
-    mkdir -p ${directory}
-    if ! grep -q "start_x=1" ${config} ; then
-      echo "You need to enable AND reboot first in order to take pictures."
-      exit 1
-    else
-      if camera capture |& grep -q "mmal: main:" ; then
-        echo "Camera is not plugged in."
+      mkdir -p ${directory}
+      if ! grep -q "start_x=1" ${config} ; then
+        echo "You need to enable AND reboot first in order to take pictures."
+        exit 1
       else
-        echo "Camera is plugged in."
+        if camera capture |& grep -q "mmal: main:" ; then
+          echo "Camera is not plugged in."
+        else
+          echo "Camera is plugged in."
         if file ${directory}$BASENAME-${timestamp}.png | grep -q "2592 x 1944" ; then
           echo "Camera Module v1 detected."
           rm ${directory}$BASENAME-${timestamp}.png
@@ -87,7 +120,7 @@ function camera {
 
 function camera_help {
   echo
-  echo "  Usage: $BASENAME camera [on|off|capture]      enables camera, disables camera, captures png photo"
+  echo "  Usage: $BASENAME camera [on|off|detect|capture|record]"
   echo
   echo "  Example:"
   echo "    $BASENAME camera"
@@ -100,11 +133,17 @@ function camera_help {
   echo "    $BASENAME camera off"
   echo "      Camera has been disabled. Reboot needed for settings to take effect."
   echo
-  echo "    $BASENAME camera capture"
-  echo "      Camera is capturing and storing a time-stamped photo in ${directory}."
-  echo
   echo "    $BASENAME camera detect"
   echo "      Camera is plugged in."
   echo "      Camera Module v1 detected."
+  echo
+  echo "    $BASENAME camera capture"
+  echo "      Camera is capturing and storing a time-stamped photo in ${directory}."
+  echo
+  echo "    $BASENAME camera record"
+  echo "      Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
+  echo
+  echo "    $BASENAME camera record [seconds]"
+  echo "      Camera is recording [seconds] seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
   echo
 }

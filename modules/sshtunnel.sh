@@ -280,19 +280,24 @@ function sshtunnel {
               local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
               external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
               ports[$local]=$external
-            elif echo $line | grep -q "[]@[]" && [[ "$line" == "$host" ]]; then
-              echo "Ports:"
-              echo "     local    ->   external"
-              for i in "${!ports[@]}"; do
-                if [ "$newgroup" = true ]; then
-                  printf "%10s %-6s %-6s %-5s\n" "┌─" "$i" "->" "${ports[$i]}"
-                  newgroup=false
-                else
-                  printf "%10s %-6s %-6s %-5s\n" "├─" "$i" "->" "${ports[$i]}"
-                fi
-              done
-              echo "    └─── Host: $line"
-              break
+            elif echo $line | grep -q "[]@[]"; then
+              if [[ "$line" == "$host" ]]; then
+                echo "Ports:"
+                echo "     local    ->   external"
+                for i in "${!ports[@]}"; do
+                  if [ "$newgroup" = true ]; then
+                    printf "%10s %-6s %-6s %-5s\n" "┌─" "$i" "->" "${ports[$i]}"
+                    newgroup=false
+                  else
+                    printf "%10s %-6s %-6s %-5s\n" "├─" "$i" "->" "${ports[$i]}"
+                  fi
+                done
+                echo "    └─── Host: $line"
+                break
+              else
+                unset ports
+                declare -A ports
+              fi
             fi
           done 9< /etc/tunnel
         else

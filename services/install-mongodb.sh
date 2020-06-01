@@ -16,6 +16,7 @@ function install {
     echo "      -  \"27017:27017"\"
     echo "      -  \"27018:27018"\"
     echo "      -  \"27019:27019"\"
+    echo "      -  \"28017:28017"\"
     echo "    environment: "
     echo "      - MONGO_INITDB_ROOT_USERNAME=\${MONGO_INITDB_ROOT_USERNAME_VAR}"
     echo "      - MONGO_INITDB_ROOT_PASSWORD=\${MONGO_INITDB_ROOT_PASSWORD_VAR}"
@@ -55,6 +56,7 @@ function get_ports {
   echo "27017"
   echo "27018"
   echo "27019"
+  echo "28017"
 }
 
 # add size (in MB)
@@ -65,7 +67,13 @@ function get_size {
 # add info
 function get_info {
   echo "\"https://github.com/treehouses/rpi-mongo"
-  echo ""
+  echo
+  echo "You can connect mongodb container by mongo \"mongodb://treehouses.local:27017\""
+  echo "Your machine must have mongodb server"
+  echo "You can check out if you have mongodb server by mongo --version"
+  echo "If not, please install mongodb server"
+  echo "https://docs.mongodb.com/manual/installation/"
+  echo
   echo "MongoDB is a general purpose, document-based, " 
   echo "distributed database built for modern "
   echo "application developers and for the cloud era. " 

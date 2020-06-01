@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function magazine() {
   checkargn $# 2
   checkinternet

@@ -50,8 +50,6 @@ function detectrpi {
   rpimodels["c03112"]="RPI4B" # 4gb
   rpimodels["d03114"]="RPI4B" # 8gb
 
-
-
   rpimodel=$(grep Revision /proc/cpuinfo | sed 's/.* //g' | tr -d '\n')
 
   found=0

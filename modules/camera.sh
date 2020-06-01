@@ -24,6 +24,7 @@ function camera {
       if ! grep -q "start_x=1" ${config} ; then
         raspi-config nonint do_camera 0
         echo "Camera settings have been enabled. A reboot is needed in order to use the camera."
+        command reboot_needed
       elif grep -q "start_x=1" ${config} ; then
         echo "Camera is already enabled. Use \"$BASENAME camera capture\" to take a photo."
         echo "If you are having issues using the camera, try rebooting."
@@ -36,6 +37,7 @@ function camera {
       if grep -q "start_x=1" ${config} ; then
         raspi-config nonint do_camera 1
         echo "Camera has been disabled. A reboot is needed in order to use the camera."
+        command reboot_needed
       elif ! grep -q "start_x=1" ${config} ; then
         echo "Camera is already disabled. If camera is still enabled, try rebooting."
       else

@@ -374,15 +374,34 @@ function sshtunnel {
           ;;
         now)
           checkargn $# 2
-          message="$(sed -r "s/.* (.*?)$/\1/g" /etc/tunnel | tail -n1):$(grep -oP "(?<=\-M )(.*?) " /etc/tunnel)\n"
+          ports=()
           while read -r -u 9 line; do
-            if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
+            if [[ $line =~ "/usr/bin/autossh" ]]; then
+              portinterval=$(echo $line | grep -oP "(?<=\-M )(.*?) ")
+            elif echo $line | grep -q "[]@[]"; then
+              host=$line
+            fi
+
+            if [ ! -z "$portinterval" ] && echo $line | grep -oPq "(?<=\-R )(.*?) "; then
               local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
               external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
-              message+="$external:$local "
+              ports+=("$external:$local ")
             fi
+
+            if [ ! -z "$portinterval" ] && [ ! -z "$host" ]; then
+              message+="$host:$portinterval \\n"
+              for i in "${ports[@]}"; do
+                message+=$i
+              done
+              message+=" \\n"
+              portinterval=""
+              host=""
+              ports=()
+            fi
+
           done 9< /etc/tunnel
-          message+="\n\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+          
+          message+="\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
           treehouses feedback $message
           ;;
         "")

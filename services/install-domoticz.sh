@@ -2,30 +2,30 @@
 
 function install {
   # create service directory
-  mkdir -p /srv/domiticz
+  mkdir -p /srv/domoticz
 
   # create yml(s)
   {
     echo "services:"
-    echo "  domiticz:"
+    echo "  domoticz:"
     echo "    image: linuxserver/domoticz"
     echo "    ports:"
     echo "      - \"6144:6144\""
     echo "    volumes:"
     echo "      - \"/srv/domoticz:/root/.domiticz\""
     echo "version: \"2\""
-  } > /srv/domiticz/domiticz.yml
+  } > /srv/domoticz/domoticz.yml
 
   # add autorun
   {
-    echo "domiticz_autorun=true"
+    echo "domoticz_autorun=true"
     echo
-    echo "if [ \"\$domiticz_autorun\" = true ]; then"
+    echo "if [ \"\$domoticz_autorun\" = true ]; then"
     echo "  treehouses services domiticz up"
     echo "fi"
     echo
     echo
-  } > /srv/domiticz/autorun
+  } > /srv/domoticz/autorun
 }
 
 # environment var

@@ -5,20 +5,20 @@ function sshtunnel {
 
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
     echo "Error: no tunnel has been set up"
-    echo "Run '$BASENAME sshtunnel add' to add a key for the tunnel"
+    echo "Run '$BASENAME sshtunnel add host' to add a key for the tunnel"
     exit 1
   fi
 
   case "$1" in
     add)
       case "$2" in
-        tunnel)
+        host)
           checkargn $# 4
           portinterval=$3
           host=$4
           if [ -z "$portinterval" ]; then
             echo "Error: a port interval is required"
-            echo "Usage: $BASENAME sshtunnel add tunnel <port interval> [host]"
+            echo "Usage: $BASENAME sshtunnel add host <port interval> [host]"
             exit 1
           fi
 
@@ -154,7 +154,7 @@ function sshtunnel {
           ;;
         *)
           echo "Error: unknown command"
-          echo "Usage: $BASENAME sshtunnel add <tunnel | port>"
+          echo "Usage: $BASENAME sshtunnel add <host | port>"
           exit 1
           ;;
       esac
@@ -442,7 +442,7 @@ function sshtunnel_help {
   echo "  127.0.1.1:4949 -> host:(port interval + 49)"
   echo
   echo "  add                                      adds tunnels / ports to the given host"
-  echo "      tunnel <port interval> [host]            adds a new set of default tunnels"
+  echo "      host <port interval> [host]              adds a new set of default tunnels"
   echo "      port <actual> <offset> [host]            adds a single port to an existing host"
   echo
   echo "  remove                                   removes tunnels / ports"

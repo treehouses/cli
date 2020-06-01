@@ -22,10 +22,8 @@ function camera {
 
     "on")
       if ! grep -q "start_x=1" ${config} ; then
-        cat ${config} > ${configtemp}
-        echo "start_x=1" >> ${configtemp}
-        cat ${configtemp} > ${config}
-        echo "Camera settings have been enabled. A reboot is needed in order to use the camera."
+        raspi-config nonint do_camera 0
+        echo "Camera settings have been enabled."
       elif grep -q "start_x=1" ${config} ; then
         echo "Camera is already enabled. Use \"$BASENAME camera capture\" to take a photo."
         echo "If you are having issues using the camera, try rebooting."
@@ -36,8 +34,8 @@ function camera {
 
     "off")
       if grep -q "start_x=1" ${config} ; then
-        sed -i '/start_x=1/d' ${config}
-        echo "Camera has been disabled. Reboot needed for settings to take effect."
+        raspi-config nonint do_camera 1
+        echo "Camera has been disabled."
       elif ! grep -q "start_x=1" ${config} ; then
         echo "Camera is already disabled. If camera is still enabled, try rebooting."
       else
@@ -99,7 +97,7 @@ function camera {
         if file ${directory}$BASENAME-${timestamp}.png | grep -q "2592 x 1944" ; then
           echo "Camera Module v1 detected."
           rm ${directory}$BASENAME-${timestamp}.png
-        elif file ${directory}$BASENAME-${timestamp}.png | grep -q "3280 × 2464" ; then
+        elif file ${directory}$BASENAME-${timestamp}.png | grep -q "3280 x 2464" ; then
           echo "Camera Module v2 detected."
           rm ${directory}$BASENAME-${timestamp}.png
         elif file ${directory}$BASENAME-${timestamp}.png | grep -q "4056 x 3040" ; then
@@ -107,6 +105,8 @@ function camera {
           rm ${directory}$BASENAME-${timestamp}.png
         else
           echo "Unknown Camera detected. Something went wrong!"
+          file ${directory}$BASENAME-${timestamp}.png 
+          rm ${directory}$BASENAME-${timestamp}.png
         fi
       fi
     fi

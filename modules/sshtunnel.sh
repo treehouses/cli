@@ -79,6 +79,8 @@ function sshtunnel {
             echo "MAILTO=root"
             echo "*/5 * * * * root if [ ! "$\(pidof autossh\)" ]; then /etc/tunnel; fi"
           } > /etc/cron.d/autossh
+
+          pkill -3 autossh
           ;;
         port)
           if [ -f /etc/tunnel ]; then
@@ -151,6 +153,8 @@ function sshtunnel {
             echo "Error: /etc/tunnel not found"
             exit 1
           fi
+
+          pkill -3 autossh
           ;;
         *)
           echo "Error: unknown command"
@@ -221,6 +225,8 @@ function sshtunnel {
             echo "Error: /etc/tunnel not found"
             exit 1
           fi
+
+          pkill -3 autossh
           ;;
         host)
           checkargn $# 3
@@ -254,6 +260,8 @@ function sshtunnel {
 
           sed -i "$startline, $endline d" /etc/tunnel
           echo "Removed $host from /etc/tunnel"
+
+          pkill -3 autossh
           ;;
         *)
           echo "Error: unknown command"

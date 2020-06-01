@@ -263,28 +263,60 @@ function sshtunnel {
       esac
       ;;
     list | "")
-      checkargn $# 1
-      if [ -f /etc/tunnel ]; then
-        echo "Ports:"
-        echo "     local    ->   external"
+      checkargn $# 2
+      host=$2
 
-        newgroup=true
-        while read -r -u 9 line; do
-          if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
-            local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
-            external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
-            if [ "$newgroup" = true ]; then
-              printf "%10s %-6s %-6s %-5s\n" "┌─" "$local" "->" "$external"
-              newgroup=false
-            else
-              printf "%10s %-6s %-6s %-5s\n" "├─" "$local" "->" "$external"
+      if [ -f /etc/tunnel ]; then
+        if [ ! -z "$host" ]; then
+          if ! echo $host | grep -q "[]@[]"; then
+            echo "Error: invalid host"
+            exit 1
+          fi
+
+          newgroup=true
+          declare -A ports
+          while read -r -u 9 line; do
+            if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
+              local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
+              external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
+              ports[$local]=$external
+            elif echo $line | grep -q "[]@[]" && [[ "$line" == "$host" ]]; then
+              echo "Ports:"
+              echo "     local    ->   external"
+              for i in "${!ports[@]}"; do
+                if [ "$newgroup" = true ]; then
+                  printf "%10s %-6s %-6s %-5s\n" "┌─" "$i" "->" "${ports[$i]}"
+                  newgroup=false
+                else
+                  printf "%10s %-6s %-6s %-5s\n" "├─" "$i" "->" "${ports[$i]}"
+                fi
+              done
+              echo "    └─── Host: $line"
+              break
             fi
-          fi
-          if echo $line | grep -q "[]@[]"; then
-            echo "    └─── Host: $line"
-            newgroup=true
-          fi
-        done 9< /etc/tunnel
+          done 9< /etc/tunnel
+        else
+          echo "Ports:"
+          echo "     local    ->   external"
+          newgroup=true
+          while read -r -u 9 line; do
+            if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
+              local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
+              external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
+              if [ "$newgroup" = true ]; then
+                printf "%10s %-6s %-6s %-5s\n" "┌─" "$local" "->" "$external"
+                newgroup=false
+              else
+                printf "%10s %-6s %-6s %-5s\n" "├─" "$local" "->" "$external"
+              fi
+            fi
+            if echo $line | grep -q "[]@[]"; then
+              echo "    └─── Host: $line"
+              echo
+              newgroup=true
+            fi
+          done 9< /etc/tunnel
+        fi
       else
         echo "Error: a tunnel has not been set up yet"
         exit 1
@@ -450,7 +482,7 @@ function sshtunnel_help {
   echo "      port <port> [host]                       removes a single port from an existing host"
   echo "      host <host>                              removes all tunnels from an existing host"
   echo
-  echo "  list | \" \"                             lists all existing tunnels to all hosts"
+  echo "  list | \" \" [host]                      lists all existing tunnels to all hosts or the given host"
   echo
   echo "  check                                    runs a checklist of tests"
   echo

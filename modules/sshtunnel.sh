@@ -145,6 +145,7 @@ function sshtunnel {
               else
                 sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
                 echo "Added $actual -> $((portinterval + offset)) for host $host"
+                pkill -3 autossh
               fi
             else
               echo "Host not found"
@@ -153,8 +154,6 @@ function sshtunnel {
             echo "Error: /etc/tunnel not found"
             exit 1
           fi
-
-          pkill -3 autossh
           ;;
         *)
           echo "Error: unknown command"
@@ -218,6 +217,7 @@ function sshtunnel {
             if [ "$found" = true ]; then
               sed -i "$final d" /etc/tunnel
               echo "Removed $port for host $host"
+              pkill -3 autossh
             else
               echo "Host / port not found"
             fi
@@ -225,8 +225,6 @@ function sshtunnel {
             echo "Error: /etc/tunnel not found"
             exit 1
           fi
-
-          pkill -3 autossh
           ;;
         host)
           checkargn $# 3
@@ -241,27 +239,31 @@ function sshtunnel {
             exit 1
           fi
 
-          counter=1
-          while read -r line; do
-            if [[ $line =~ "/usr/bin/autossh" ]]; then
-              startline=$counter
-            fi
-            if [[ "$line" == "$host" ]]; then
-              endline=$counter
-              break
-            fi
-            ((counter++))
-          done < <(cat /etc/tunnel)
+          if [ -f /etc/tunnel ]; then
+            counter=1
+            while read -r line; do
+              if [[ $line =~ "/usr/bin/autossh" ]]; then
+                startline=$counter
+              fi
+              if [[ "$line" == "$host" ]]; then
+                endline=$counter
+                break
+              fi
+              ((counter++))
+            done < <(cat /etc/tunnel)
 
-          if [ -z $endline ]; then
-            echo "Host not found in /etc/tunnel"
+            if [ -z $endline ]; then
+              echo "Host not found in /etc/tunnel"
+              exit 1
+            fi
+
+            sed -i "$startline, $endline d" /etc/tunnel
+            echo "Removed $host from /etc/tunnel"
+            pkill -3 autossh
+          else
+            echo "Error: /etc/tunnel not found"
             exit 1
           fi
-
-          sed -i "$startline, $endline d" /etc/tunnel
-          echo "Removed $host from /etc/tunnel"
-
-          pkill -3 autossh
           ;;
         *)
           echo "Error: unknown command"

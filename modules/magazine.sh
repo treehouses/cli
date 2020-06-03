@@ -258,23 +258,22 @@ function magazine() {
 
 function magazine_help {
   echo
-  echo "  Usage:"
+  echo "Usage: $BASENAME magazine <hackspace|magpi|wireframe> [all|latest|number]"
   echo
-  echo "    $BASENAME magazine <hackspace|magpi|wireframe> [all|latest|number]"
-  echo "        This downloads the specified issue of a magazine as a pdf with filename <mag_type>#.pdf based on user input"
+  echo "This downloads the specified issue of a magazine as a pdf with filename <mag_type>#.pdf based on user input"
   echo
-  echo "  Examples:"
+  echo "Example:"
   echo
-  echo "    $BASENAME magazine magpi"
-  echo "        This will print out details about the magpi magazine."
+  echo "  $BASENAME magazine magpi"
+  echo "      This will print out details about the magpi magazine."
   echo
-  echo "    $BASENAME magazine magpi all"
-  echo "        This will download all the currently present issues of magpi."
+  echo "  $BASENAME magazine magpi all"
+  echo "      This will download all the currently present issues of magpi."
   echo
-  echo "    $BASENAME magazine magpi latest"
-  echo "        This will download the latest issue of magpi."
+  echo "  $BASENAME magazine magpi latest"
+  echo "      This will download the latest issue of magpi."
   echo
-  echo "    $BASENAME magazine magpi number"
-  echo "        This will download issue [number] of magpi."
+  echo "  $BASENAME magazine magpi number"
+  echo "      This will download issue [number] of magpi."
   echo
 }

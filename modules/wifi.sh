@@ -74,6 +74,7 @@ function wifimain {
         echo "  identity=\"${3}\""
         echo "  password=\"${wifipassword}\""
         echo "  key_mgmt=WPA-EAP"
+        echo "  phase1=\"peaplabel=0\""
       fi
     echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
@@ -91,6 +92,7 @@ function wifimain {
       echo "  identity=\"${3}\""
       echo "  password=\"${wifipassword}\""
       echo "  key_mgmt=WPA-EAP"
+      echo "  phase1=\"peaplabel=0\""
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     fi

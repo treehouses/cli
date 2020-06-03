@@ -24,7 +24,7 @@
     "bluetooth", "ethernet", "wifi", "hotspot", "bridge", "vnc",
     "ntp", "timezone", "rtc", "cron", "backup", "clone",
     "ssh", "sshkey", "sshtunnel", "tor", "openvpn", "coral", "iot",
-    "services", "container", "docker", "balena", "pihole", "turtleblocks", "musicblocks", "grocy",
+    "services", "container", "docker", "balena", "pihole", "turtleblocks", "musicblocks", "grocy", "bookstack",
     "kolibri", "mongodb", "moodle", "netdata", "nextcloud", "ntopng", "planet", "invoiceninja", "librespeed",
     "portainer", "privatebin", "mastodon", "couchdb", "mariadb", "seafile", "minetest"
   ],

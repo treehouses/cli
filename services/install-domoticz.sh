@@ -14,11 +14,6 @@ function install {
     echo  "PGID=\${PUID}"
     echo  "TZ=\${TZ}"
     echo  "WEBROOT=\${WEBROOT}"
-    echo    "DB_TYPE=\${DB_TYPE}"
-    echo    "DB_NAME=\${DB_NAME}"
-    echo    "DB_HOSTNAME=\${DB_HOSTNAME}"
-    echo    "DB_USERNAME=\${DB_USERNAME}"
-    echo    "DB_PASSWORD=\${DB_PASSWORD \"1443:1443\""
     echo "    ports:"
     echo "      - \"8080:8080\""
     echo "      - \"6144:6144\""
@@ -34,11 +29,6 @@ PUID=1000
 PGID=1000
 TZ=Europe/London
 WEBROOT=domoticz
-DB_TYPE=sqlite
-DB_NAME=DB_NAME
-DB_HOSTNAME=DB_HOSTNAME
-DB_USERNAME=DB_USERNAME
-DB_PASSWORD=DB_PASSWORD
 EOF
 
   # add autorun

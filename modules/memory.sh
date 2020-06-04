@@ -73,7 +73,7 @@ function memory() {
   COMP="rpi"
   if [ "$(detectrpi)" = "nonrpi" ];
   then
-          COMP="system"
+    COMP="system"
   fi
 
   if [ "$1" == "total" ] ; then

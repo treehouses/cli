@@ -36,6 +36,7 @@ function tunnels {
       pagekite "$@"
       ;;
     info)
+      checkargn $# 1
       echo "https://github.com/pagekite/PyPagekite"
       echo
       echo "PageKite is a reverse proxy tool that connects local servers to the public Internet."

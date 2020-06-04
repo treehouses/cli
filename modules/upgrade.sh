@@ -40,6 +40,7 @@ function upgrade {
       existed_in_remote=$(git ls-remote -h https://github.com/treehouses/control.git ${branch})
       if [[ -z ${existed_in_remote} ]]; then
         log_and_exit1 "Error: branch specified not found on bluetooth server repository"
+        exit 1
       fi
     fi
     cp /usr/local/bin/bluetooth-server.py "/usr/local/bin/bluetooth-server.py.$(date +'%Y%m%d%H%m%S')"
@@ -55,6 +56,7 @@ function upgrade {
       existed_in_remote=$(git ls-remote -h https://github.com/treehouses/cli.git ${branch})
       if [[ -z ${existed_in_remote} ]]; then
         log_and_exit1 "Error: branch specified not found on cli repository"
+        exit 1
       fi
     fi
     npm install -g "https://github.com/treehouses/cli#${branch}"

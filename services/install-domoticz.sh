@@ -17,7 +17,7 @@ function install {
     echo "    ports:"
     echo "      - \"8080:8080\""
     echo "      - \"6144:6144\""
-    echo " 
+    echo "      - \"1443:1443\""
     echo "    volumes:"
     echo "      - \"/srv/domoticz:/root/.domiticz\""
     echo "version: \"2\""

@@ -8,7 +8,7 @@ function resolution() {
   elif [ "$1" == "dmt" ]; then
     group=2
   fi
-  if [ $group == 1 ]; then
+  if [ "$group" == 1 ]; then
     names=$(tvservice -m CEA)
     saveifs=$IFS
     IFS=$'\n'
@@ -32,7 +32,7 @@ function resolution() {
       echo "mode is not available  Possible modes are:"
       tvservice -m CEA
     fi
-  elif [ $group == 2 ]; then
+  elif [ "$group" == 2 ]; then
     names=$(tvservice -m DMT)
     saveifs=$IFS
     IFS=$'\n'

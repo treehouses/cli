@@ -1,4 +1,4 @@
- function sshkey () {
+function sshkey () {
   local keys githubusername auth_files teams team_id members
   checkroot
   checkargn $# 5

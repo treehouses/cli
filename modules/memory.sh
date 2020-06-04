@@ -70,12 +70,10 @@ function memory() {
   checkargn $# 2
   check_missing_packages "bc"
 
-  COMP=""
+  COMP="rpi"
   if [ "$(detectrpi)" = "nonrpi" ];
   then
-          COMP="vagrant"
-  else
-          COMP="rpi"
+          COMP="system"
   fi
 
   if [ "$1" == "total" ] ; then

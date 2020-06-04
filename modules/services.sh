@@ -4,6 +4,8 @@ function services {
   service_name="$1"
   command="$2"
   command_option="$3"
+  
+  checkrpi
 
   if [ -z "$service_name" ]; then
     echo "ERROR: no command given"

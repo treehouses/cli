@@ -1,5 +1,6 @@
 function default {
   checkroot
+  checkrpi
   checkargn $# 1
   if [ "$1" == "notice" ] ; then
     default_notice

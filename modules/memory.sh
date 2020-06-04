@@ -72,12 +72,12 @@ function memory() {
 
   COMP=""
   if [ "$(detectrpi)" = "nonrpi" ];
-  then 
-	  COMP="vagrant"
+  then
+          COMP="vagrant"
   else
-	  COMP="rpi"
-  fi 
-	
+          COMP="rpi"
+  fi
+
   if [ "$1" == "total" ] ; then
     memory_total $2
     echo "$t";

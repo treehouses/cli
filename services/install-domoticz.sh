@@ -9,6 +9,11 @@ function install {
     echo "services:"
     echo "  domoticz:"
     echo "    image: linuxserver/domoticz"
+    echo "environment:"
+    echo  "PUID=\${PUID}"
+    echo  "PGID=\${PUID}"
+    echo  "TZ=\${TZ}"
+    echo  "WEBROOT=\${WEBROOT}"
     echo "    ports:"
     echo "      - \"8080:8080\""
     echo "      - \"6144:6144\""
@@ -17,6 +22,19 @@ function install {
     echo "      - \"/srv/domoticz:/root/.domiticz\""
     echo "version: \"2\""
   } > /srv/domoticz/domoticz.yml
+  
+  # create .env with default values
+  cat << EOF > /srv/grocy/.env
+PUID=1000
+PGID=1000
+TZ=Europe/London
+WEBROOT=domoticz
+DB_TYPE=sqlite
+DB_NAME=DB_NAME
+DB_HOSTNAME=DB_HOSTNAME
+DB_USERNAME=DB_USERNAME
+DB_PASSWORD=DB_PASSWORD
+EOF
 
   # add autorun
   {

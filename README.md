@@ -128,7 +128,7 @@ remote [check|status|upgrade|services]    helps with treehouses remote android a
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
-inspire [joke|qotd|random]                displays quote based on user input
+inspire [fact|joke|qotd|random]           displays quote based on user input
 convert <input file> <output file>        converts audio and video files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses

@@ -41,8 +41,7 @@ function wificountry {
             rfkill unblock wifi
           fi
 
-          echo "$country" > /etc/rpi-wifi-country
-
+          conf_var_update "WIFICOUNTRY" "$country"
           echo "Success: the wifi country has been set to $country"
           exit 0
         fi

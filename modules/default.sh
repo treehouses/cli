@@ -39,7 +39,6 @@ function default_network {
 
   rm -rf /etc/hostapd.conf
   rm -rf /etc/network/interfaces.d/*
-  rm -rf /etc/rpi-wifi-country
 
   stop_service hostapd
   stop_service dnsmasq
@@ -49,6 +48,7 @@ function default_network {
   rm -rf /etc/network/up-bridge.sh
   rm -rf /etc/network/eth0-shared.sh
   rm -rf /etc/network/mode
+  (config delete WIFICOUNTRY &>/dev/null)
 
   case $(detectrpi) in
     RPIZ|RPIZW)

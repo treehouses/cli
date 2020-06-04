@@ -1,5 +1,3 @@
-#!/bin/bash
-  
 function inspire() {
   checkrpi
   checkargn $# 1

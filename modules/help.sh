@@ -1,6 +1,6 @@
 function help_default {
   helpdefault=""
-  read -r -d '' helpdefault <<'EOF'            
+  read -r -d '' helpdefault <<'EOF'
 Usage: treehouses [command] ...
 
 

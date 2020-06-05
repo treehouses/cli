@@ -110,8 +110,8 @@ gpio                                      displays raspberry pi model and corres
 changelog                                 displays the most recent changes to treehouses
 magazine <hackspace|magpi> [all|latest]   downloads specific magazine issue as a pdf based on user input
                            [number]       
-shutdown [now|in|force]                   shutdown the system
 resolution <cea|dmt [modes]>              sets the screen resolution 
+shutdown [now|in|force]                   shutdown the system
 EOF
   echo "$helpdefault"
 }

@@ -50,7 +50,7 @@ load ../test-helper
 
 @test "$clinom services domoticz port" {
   run "${clicmd}" services domoticz port
-  assert_success && assert_output -p '8089'
+  assert_success && assert_output -p ''
 }
 
 @test "$clinom services domoticz ps" {
@@ -60,7 +60,7 @@ load ../test-helper
 
 @test "$clinom services domoticz url" {
   run "${clicmd}" services domoticz url
-  assert_output -p '8089'
+  assert_output -p '6144'
 }
 
 @test "$clinom services domoticz autorun" {

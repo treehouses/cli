@@ -88,13 +88,14 @@ function sshtunnel {
             actual=$3
             offset=$4
             host=$5
+            re='^[0-9]+$'
 
-            if [ -z "$actual" ]; then
-              echo "Error: a port is required"
+            if [ -z "$actual" ] || ! [[ $actual =~ $re ]]; then
+              echo "Error: a numeric port is required"
               echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
               exit 1
-            elif [ -z "$offset" ]; then
-              echo "Error: an offset is required"
+            elif [ -z "$offset" ] || ! [[ $offset =~ $re ]]; then
+              echo "Error: a numeric offset is required"
               echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
               exit 1
             fi

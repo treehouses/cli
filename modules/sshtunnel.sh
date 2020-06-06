@@ -27,6 +27,7 @@ function sshtunnel {
             host="ole@pirate.ole.org"
           elif ! echo $host | grep -q "[]@[]"; then
             echo "Error: invalid host"
+            echo "user@host"
             exit 1
           fi
 
@@ -112,6 +113,7 @@ function sshtunnel {
               host="ole@pirate.ole.org"
             elif ! echo $host | grep -q "[]@[]"; then
               echo "Error: invalid host"
+              echo "user@host"
               exit 1
             fi
 
@@ -201,6 +203,7 @@ function sshtunnel {
             host="ole@pirate.ole.org"
           elif ! echo $host | grep -q "[]@[]"; then
             echo "Error: invalid host"
+            echo "user@host"
             exit 1
           fi
 
@@ -244,6 +247,7 @@ function sshtunnel {
             exit 1
           elif ! echo $host | grep -q "[]@[]"; then
             echo "Error: invalid host"
+            echo "user@host"
             exit 1
           fi
 
@@ -288,6 +292,7 @@ function sshtunnel {
         if [ ! -z "$host" ]; then
           if ! echo $host | grep -q "[]@[]"; then
             echo "Error: invalid host"
+            echo "user@host"
             exit 1
           fi
 

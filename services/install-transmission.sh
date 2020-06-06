@@ -15,8 +15,6 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/London
-      - USER=username 
-      - PASS=password
     volumes:
       - /srv/transmission:/root/.transmission
       - /srv/transmission/downloads:/downloads
@@ -58,11 +56,12 @@ function supported_arms {
 # add port(s)
 function get_ports {
   echo "9091"
+  echo "51413"
 }
 
 # add size (in MB)
 function get_size {
-  echo "100"
+  echo "76.9"
 }
 
 # add info

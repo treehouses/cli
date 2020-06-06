@@ -59,7 +59,7 @@ function uses_env {
 
 # add supported arm(s)
 function supported_arms {
-  echo "v7l"
+  echo "armv7l"
   echo "x86_64"
 }
 

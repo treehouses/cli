@@ -60,7 +60,7 @@ function get_ports {
 
 # add size (in MB)
 function get_size {
-  echo "76.9"
+  echo "77"
 }
 
 # add info

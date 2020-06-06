@@ -10,7 +10,6 @@ version: "2"
 services:
   bookstack:
     image: linuxserver/bookstack
-    container_name: bookstack
     environment:
       - PUID=\${PUID}
       - PGID=\${PGID}
@@ -27,7 +26,6 @@ services:
       - bookstack_db
   bookstack_db:
     image: linuxserver/mariadb
-    container_name: bookstack_db
     environment:
       - PUID=\${PUID}
       - PGID=\${PGID}
@@ -56,7 +54,8 @@ bookstack_autorun=true
 
 if [ "$bookstack_autorun" = true ]; then
   treehouses services bookstack up
-fi
+fi 
+
 
 EOF
 }

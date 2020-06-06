@@ -84,6 +84,7 @@ services                                  executes the given command on the spec
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
    [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
    [grocy]                                grocy is a web-based, self-hosted groceries and household management utility for your home
+   [transmission]                         Transmission is a BitTorrent client with many powerful features.
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

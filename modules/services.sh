@@ -507,7 +507,7 @@ function check_arm {
   arms=($(source $SERVICES/install-${1}.sh && supported_arms))
   for i in "${arms[@]}"
   do
-    if [ "$(detectarm)" = "$i" ]; then
+    if [ "$(detect arch)" = "$i" ]; then
       return 0
     fi
   done

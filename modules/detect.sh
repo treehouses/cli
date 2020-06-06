@@ -105,7 +105,6 @@ function detectarm {
 }
 
 function detectarch {
-  # armv6l, armv7l, i686, x86_64
   lscpu | grep -oP 'Architecture:\s*\K.+'
 }
 

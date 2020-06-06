@@ -1,6 +1,5 @@
 function magazine() {
   checkargn $# 2
-  checkinternet
   magtype="$1"
   req="$2"
   magnum="0"

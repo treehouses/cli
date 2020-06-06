@@ -26,10 +26,6 @@ services:
     restart: unless-stopped
 EOF
 
-  # create .env with default values
-  #{
-    #echo "EXAMPLE_VAR="
-  #} > /srv/transmission/.env
 
   # add autorun
   cat << EOF > /srv/transmission/autorun

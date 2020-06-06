@@ -625,6 +625,7 @@ function services_help {
   echo "  minetest        Minetest is an open source infinite-world block sandbox game engine with survival and crafting"
   echo "  invoiceninja    Invoiceninja is the leading self-host platform to create invoices."
   echo "  grocy           grocy is web-based, self-hosted groceries and household management utility for your home"
+  echo "  dokuwiki        Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database."
   echo
   echo
   echo "Top-Level Commands:"

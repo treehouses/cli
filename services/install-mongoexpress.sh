@@ -6,13 +6,14 @@ function install {
 
   # create yml(s)
   {
-    echo "version: '3'"
+    echo "version: '3.7'"
     echo ""
     echo "services:"
     echo ""
     echo "  mongo:"
     echo "    image: treehouses/rpi-mongo"
     echo "    restart: always"
+    echo "    init: true"
     echo "    ports:"
     echo "      - 27017:27017"
     echo "    environment:"

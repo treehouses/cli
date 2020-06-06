@@ -108,6 +108,7 @@ services                                  executes the given command on the spec
    [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
    [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
    [grocy]                                grocy is a web-based, self-hosted groceries and household management utility for your home
+   [mongoexpress]                         Mongo Express is Web-based MongoDB admin interface written with Node.js, Express and Bootstrap3
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

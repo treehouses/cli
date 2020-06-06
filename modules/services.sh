@@ -625,6 +625,7 @@ function services_help {
   echo "  minetest        Minetest is an open source infinite-world block sandbox game engine with survival and crafting"
   echo "  invoiceninja    Invoiceninja is the leading self-host platform to create invoices."
   echo "  grocy           grocy is web-based, self-hosted groceries and household management utility for your home"
+  echo "  mongoexpress    Mongo Express is Web-based MongoDB admin interface written with Node.js, Express and Bootstrap3"
   echo
   echo
   echo "Top-Level Commands:"

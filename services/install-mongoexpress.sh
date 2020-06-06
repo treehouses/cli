@@ -68,17 +68,15 @@ function get_ports {
 
 # add size (in MB)
 function get_size {
-  echo "258"
+  echo "738"
 }
 
 # add info
 function get_info {
   echo "\"https://github.com/treehouses/rpi-mongoe"
   echo
-  echo "MongoDB is a general purpose, document-based, " 
-  echo "distributed database built for modern "
-  echo "application developers and for the cloud era. " 
-  echo "No database makes you more productive. "\"
+  echo "Mongo Express is Web-based MongoDB admin interface" 
+  echo "written with Node.js, Express and Bootstrap3"
 }
 
 # add svg icon

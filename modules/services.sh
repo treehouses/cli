@@ -297,7 +297,7 @@ function services {
           if [ "$command_option" = "local" ]; then
             base_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*')
             if [[ "$base_url" =~ "," ]]; then
-              base_url=$(echo base_url | cut -f1 -d,)
+              base_url=$(echo $base_url | cut -f1 -d,)
             fi
 
             for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")

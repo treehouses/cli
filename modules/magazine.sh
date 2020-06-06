@@ -1,5 +1,6 @@
 function magazine() {
   checkargn $# 2
+  checkinternet
   magtype="$1"
   req="$2"
   magnum="0"
@@ -57,6 +58,7 @@ function magazine() {
         mkdir $magtype
       fi
       cd $magtype || return
+      checkinternet
       wget -q "https://magpi.raspberrypi.org/issues"
       mv ./issues ./issues.txt
       latest="$(sed -n '219p' issues.txt)"
@@ -136,6 +138,7 @@ function magazine() {
         mkdir $magtype
       fi
       cd $magtype || return
+      checkinternet
       wget -q "https://hackspace.raspberrypi.org/issues"
       mv ./issues ./issues.txt
       latest="$(sed -n '189p' issues.txt)"
@@ -215,6 +218,7 @@ function magazine() {
         mkdir $magtype
       fi
       cd $magtype || return
+      checkinternet
       wget -q "https://wireframe.raspberrypi.org/issues"
       mv ./issues ./issues.txt
       latest="$(sed -n '186p' issues.txt)"

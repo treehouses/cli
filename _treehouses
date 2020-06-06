@@ -74,6 +74,7 @@ treehouses default notice
 treehouses default tunnel
 treehouses detect
 treehouses detect arm
+treehouses detect arch
 treehouses detect bluetooth
 treehouses detect rpi
 treehouses detect rpi full

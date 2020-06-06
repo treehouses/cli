@@ -104,6 +104,11 @@ function detectarm {
   fi
 }
 
+function detectarch {
+  # armv6l, armv7l, i686, x86_64
+  lscpu | grep -oP 'Architecture:\s*\K.+'
+}
+
 function detectwifi {
   if iwconfig wlan0 2>&1 | grep -q "No such device"; then
     echo "false"
@@ -140,6 +145,10 @@ function detect {
       checkargn $# 1
       detectarm
       ;;
+    "arch")
+      checkargn $# 1
+      detectarch
+      ;;
     "bluetooth")
       checkargn $# 1
       detectbluetooth
@@ -149,7 +158,7 @@ function detect {
       detectwifi
       ;;
     *)
-      echo "Error: only '', 'rpi', 'arm', 'bluetooth', 'wifi' options supported."
+      echo "Error: only '', 'rpi', 'arm', 'arch', 'bluetooth', 'wifi' options supported."
       ;;
   esac
 }
@@ -175,6 +184,9 @@ function detect_help {
   echo
   echo "  $BASENAME detect arm"
   echo "      Prints arm version"
+  echo
+  echo "  $BASENAME detect arch"
+  echo "      Prints the architecture"
   echo
   echo "  $BASENAME detect bluetooth"
   echo "      true"

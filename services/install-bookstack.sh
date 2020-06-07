@@ -20,7 +20,7 @@ services:
     volumes:
       - /srv/bookstack:/root/.bookstack
     ports:
-      - 6875:80
+      - 8092:80
     restart: unless-stopped
     depends_on:
       - bookstack_db
@@ -72,7 +72,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "6875"
+  echo "8092"
 }
 
 # add size (in MB)

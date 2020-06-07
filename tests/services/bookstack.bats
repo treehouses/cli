@@ -61,7 +61,7 @@ load ../test-helper
 
 @test "$clinom services bookstack port" {
   run "${clicmd}" services bookstack port
-  assert_success && assert_output -p '6875'
+  assert_success && assert_output -p '8092'
 }
 
 @test "$clinom services bookstack ps" {
@@ -71,7 +71,7 @@ load ../test-helper
 
 @test "$clinom services bookstack url" {
   run "${clicmd}" services bookstack url
-  assert_output -p '6875'
+  assert_output -p '8092'
 }
 
 @test "$clinom services bookstack autorun" {

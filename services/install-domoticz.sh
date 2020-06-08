@@ -24,7 +24,7 @@ function install {
   } > /srv/domoticz/domoticz.yml
   
   # create .env with default values
-  cat << EOF > /srv/grocy/.env
+  cat << EOF > /srv/domoticz/.env
 PUID=1000
 PGID=1000
 TZ=Europe/London

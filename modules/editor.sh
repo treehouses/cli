@@ -3,20 +3,28 @@
 function editor {
   checkroot
 
-  if [ -z "$EDITOR" ]; then
-    if grep EDITOR /etc/bash.bashrc | grep -q export /etc/bash.bashrc; then
-      EDITOR="$(grep EDITOR /etc/bash.bashrc | grep export | sed 's/export EDITOR=//g')"
-    else
+  if grep EDITOR /etc/bash.bashrc | grep -q export /etc/bash.bashrc; then
+    EDITOR="$(grep EDITOR /etc/bash.bashrc | grep export | sed 's/export EDITOR=//g')"
+  else
+
+  if [ -z "$EDITOR" ] && [ "$1" =="config" ]; then
+    echo
+    echo "Default editor not set."
+    echo "Use \"treehouses editor default\""
+    echo "or \"treehouses editor set [vim|emacs|nano]\" to set your default editor."
+    echo
+    exit 1
+  fi 
+
+  if [ $# -eq 0 ]; then
+    if [ -z "$EDITOR" ]; then
       echo
       echo "Default editor not set."
       echo "Use \"treehouses editor default\""
       echo "or \"treehouses editor set [vim|emacs|nano]\" to set your default editor."
       echo
       exit 1
-    fi
-  fi 
-
-  if [ $# -eq 0 ]; then
+    fi 
     echo $EDITOR
     exit 0
   fi

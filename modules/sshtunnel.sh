@@ -167,7 +167,59 @@ function sshtunnel {
               fi
               ;;
             actual)
+              checkargn $# 6
+              actual=$4
+              port=$5
+              host=$6
+              re='^[0-9]+$'
 
+              if [ -z "$actual" ] || ! [[ $actual =~ $re ]]; then
+                echo "Error: a numeric port is required"
+                echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
+                exit 1
+              elif [ -z "$port" ] || ! [[ $port =~ $re ]]; then
+                echo "Error: a numeric port is required"
+                echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
+                exit 1
+              fi
+
+              # host validation
+              if [ -z "$host" ]; then
+                host="ole@pirate.ole.org"
+              elif ! echo $host | grep -q "[]@[]"; then
+                echo "Error: invalid host"
+                echo "user@host"
+                exit 1
+              fi
+
+              # if host exists
+              if grep -q "$host" /etc/tunnel; then
+                # check if port is already added
+                found=false
+                while read -r line; do
+                  if [[ $line =~ $port:127.0.1.1:$actual ]]; then
+                    exists=yes
+                  fi
+                  if [ ! -z "$exists" ] && [[ "$line" == "$host" ]]; then
+                    found=true
+                    break
+                  fi
+                  if [ ! -z "$exists" ] && [ -z "$line" ]; then
+                    found=false
+                    exists=""
+                  fi
+                done < <(cat /etc/tunnel)
+
+                if [ "$found" = true ]; then
+                  echo "Port already exists"
+                else
+                  sed -i "/^$host/i -R $port:127.0.1.1:$actual \\\\" /etc/tunnel
+                  echo "Added $actual -> $port for host $host"
+                  pkill -3 autossh
+                fi
+              else
+                echo "Host not found"
+              fi
               ;;
             *)
               echo "Error: unknown command"

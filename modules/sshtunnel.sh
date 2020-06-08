@@ -106,6 +106,10 @@ function sshtunnel {
               echo "Error: a numeric offset is required"
               echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
               exit 1
+            elif [ "$offset" -ge 100 ]; then
+              echo "Error: offset is greater than or equal to 100"
+              echo "Use an offset less than 100 (save some ports for others!)"
+              exit 1
             fi
 
             # host validation

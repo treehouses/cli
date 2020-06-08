@@ -86,6 +86,7 @@ function get_info {
   echo
   echo "Bookstack is a free and open source Wiki designed for creating beautiful documentation"
   echo "It featrues a simple, but powerful WYSIWYG editor that allows teams to create detailed and useful documentation with ease."
+  echo "The default username is admin@admin.com with the password of password."
 }
 
 # add svg icon

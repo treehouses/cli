@@ -19,12 +19,12 @@ function editor {
 
   case "$1" in 
     default)
-      export EDITOR=vim
       if ! grep EDITOR /etc/bash.bashrc | grep -q export /etc/bash.bashrc; then
         echo "export EDITOR=vim" >> /etc/bash.bashrc
       else
         sed -i -e "s/EDITOR=.*/EDITOR=vim/g" /etc/bash.bashrc
       fi
+      source /etc/bash.bashrc
       cp "$TEMPLATES/editor/vim/vimrc_default" /etc/vim/vimrc 
       cp "$TEMPLATES/editor/nano/nanorc_default" /etc/nanorc
       rm -rf /etc/vim/vimrc.local
@@ -40,20 +40,20 @@ function editor {
 
       case "$2" in 
         vim)
-          export EDITOR=vim 
           if ! grep EDITOR /etc/bash.bashrc | grep -q export /etc/bash.bashrc; then
             echo "export EDITOR=vim" >> /etc/bash.bashrc
           else
             sed -i -e "s/EDITOR=.*/EDITOR=vim/g" /etc/bash.bashrc
           fi
+          source /etc/bash.bashrc
           ;;
         nano)
-          export EDITOR=nano
           if ! grep EDITOR /etc/bash.bashrc | grep -q export /etc/bash.bashrc; then
             echo "export EDITOR=nano" >> /etc/bash.bashrc
           else
             sed -i -e "s/EDITOR=.*/EDITOR=nano/g" /etc/bash.bashrc
           fi
+          source /etc/bash.bashrc
           ;;
         emacs)
           ;;

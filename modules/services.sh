@@ -626,6 +626,7 @@ function services_help {
   echo "  invoiceninja    Invoiceninja is the leading self-host platform to create invoices."
   echo "  bookstack       Bookstack is a free and open source Wiki designed for creating beautiful documentation"
   echo "  grocy           grocy is web-based, self-hosted groceries and household management utility for your home"
+  echo "  transmission    Transmission is a BitTorrent client with many powerful features"
   echo
   echo
   echo "Top-Level Commands:"

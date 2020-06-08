@@ -107,6 +107,7 @@ services                                  executes the given command on the spec
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
    [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
    [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
+   [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
    [grocy]                                grocy is a web-based, self-hosted groceries and household management utility for your home
    [transmission]                         Transmission is a BitTorrent client with many powerful features.
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
@@ -134,7 +135,7 @@ convert <input file> <output file>        converts audio and video files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses
 magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
-         [all|latest|number]
+         <helloworld> [all|latest|number]
 resolution <cea|dmt [modes]>              sets the screen resolution
 shutdown [now|in|force]                   shutdown the system
 ```

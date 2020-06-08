@@ -624,6 +624,7 @@ function services_help {
   echo "  musicblocks     Music Blocks is a programming language and collection of manipulative tools for exploring musical and mathematical concepts in an integrative and fun way." 
   echo "  minetest        Minetest is an open source infinite-world block sandbox game engine with survival and crafting"
   echo "  invoiceninja    Invoiceninja is the leading self-host platform to create invoices."
+  echo "  bookstack       Bookstack is a free and open source Wiki designed for creating beautiful documentation"
   echo "  grocy           grocy is web-based, self-hosted groceries and household management utility for your home"
   echo "  transmission    Transmission is a BitTorrent client with many powerful features"
   echo

@@ -44,16 +44,16 @@ function sshtunnel {
           portint_offset=0
           while grep -q -e "M $portinterval" -e "M $((portinterval - 1))" /etc/tunnel; do
             portinterval=$((portinterval + 1))
-            portint_offset=$((portint_offset - 1))
+            portint_offset=$((portint_offset + 1))
           done
           echo $portint_offset
 
           # default list of ports
-          portssh=$((portinterval + 22 + portint_offset))
-          portweb=$((portinterval + 80 + portint_offset))
-          portcouchdb=$((portinterval + 84 + portint_offset))
-          portnewcouchdb=$((portinterval + 82 + portint_offset))
-          portmunin=$((portinterval + 49 + portint_offset))
+          portssh=$((portinterval + 22 - portint_offset))
+          portweb=$((portinterval + 80 - portint_offset))
+          portcouchdb=$((portinterval + 84 - portint_offset))
+          portnewcouchdb=$((portinterval + 82 - portint_offset))
+          portmunin=$((portinterval + 49 - portint_offset))
 
           if [ ! -f "/root/.ssh/id_rsa" ]; then
             ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
@@ -82,7 +82,7 @@ function sshtunnel {
             echo "-R $portweb:127.0.1.1:80 \\"
             echo "-R $portnewcouchdb:127.0.1.1:2200 \\"
             echo "-R $portmunin:127.0.1.1:4949 \\"
-            echo "$host"
+            echo "$host # $((portinterval - portint_offset))"
           } >> /etc/tunnel
 
           chmod +x /etc/tunnel
@@ -99,83 +99,82 @@ function sshtunnel {
           pkill -3 autossh
           ;;
         port)
-          if [ -f /etc/tunnel ]; then
-            checkargn $# 5
-            actual=$3
-            offset=$4
-            host=$5
-            re='^[0-9]+$'
+          case "$3" in
+            offset)
+              if [ -f /etc/tunnel ]; then
+                checkargn $# 6
+                actual=$4
+                offset=$5
+                host=$6
+                re='^[0-9]+$'
 
-            if [ -z "$actual" ] || ! [[ $actual =~ $re ]]; then
-              echo "Error: a numeric port is required"
-              echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
-              exit 1
-            elif [ -z "$offset" ] || ! [[ $offset =~ $re ]]; then
-              echo "Error: a numeric offset is required"
-              echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
-              exit 1
-            elif [ "$offset" -ge 100 ]; then
-              echo "Error: offset is greater than or equal to 100"
-              echo "Use an offset less than 100 (save some ports for others!)"
-              exit 1
-            fi
-
-            # host validation
-            if [ -z "$host" ]; then
-              host="ole@pirate.ole.org"
-            elif ! echo $host | grep -q "[]@[]"; then
-              echo "Error: invalid host"
-              echo "user@host"
-              exit 1
-            fi
-
-            # get port interval for given host
-            found=false
-            while read -r line; do
-              if [[ $line =~ "/usr/bin/autossh" ]]; then
-                portinterval=$(echo $line | grep -oP "(?<=\-M )(.*?) ")
-              fi
-              if [ ! -z "$portinterval" ] && [[ "$line" == "$host" ]]; then
-                found=true
-                break
-              fi
-              if [ ! -z "$portinterval" ] && [ -z "$line" ]; then
-                found=false
-                portinterval=""
-              fi
-            done < <(cat /etc/tunnel)
-
-            if [ "$found" = true ]; then
-              # check if port is already added
-              found=false
-              while read -r line; do
-                if [[ $line =~ 127.0.1.1:$actual ]]; then
-                  exists=yes
+                if [ -z "$actual" ] || ! [[ $actual =~ $re ]]; then
+                  echo "Error: a numeric port is required"
+                  echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
+                  exit 1
+                elif [ -z "$offset" ] || ! [[ $offset =~ $re ]]; then
+                  echo "Error: a numeric offset is required"
+                  echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
+                  exit 1
+                elif [ "$offset" -ge 100 ]; then
+                  echo "Error: offset is greater than or equal to 100"
+                  echo "Use an offset less than 100 (save some ports for others!)"
+                  exit 1
                 fi
-                if [ ! -z "$exists" ] && [[ "$line" == "$host" ]]; then
-                  found=true
-                  break
+
+                # host validation
+                if [ -z "$host" ]; then
+                  host="ole@pirate.ole.org"
+                elif ! echo $host | grep -q "[]@[]"; then
+                  echo "Error: invalid host"
+                  echo "user@host"
+                  exit 1
                 fi
-                if [ ! -z "$exists" ] && [ -z "$line" ]; then
+
+                # get port interval for given host
+                portinterval=$(grep $host /etc/tunnel | awk '{print $3}')
+
+                if [ ! -z "$portinterval" ]; then
+                  # check if port is already added
                   found=false
-                  exists=""
-                fi
-              done < <(cat /etc/tunnel)
+                  while read -r line; do
+                    if [[ $line =~ 127.0.1.1:$actual ]]; then
+                      exists=yes
+                    fi
+                    if [ ! -z "$exists" ] && [[ "$line" == "$host" ]]; then
+                      found=true
+                      break
+                    fi
+                    if [ ! -z "$exists" ] && [ -z "$line" ]; then
+                      found=false
+                      exists=""
+                    fi
+                  done < <(cat /etc/tunnel)
 
-              if [ "$found" = true ]; then
-                echo "Port already exists"
+                  if [ "$found" = true ]; then
+                    echo "Port already exists"
+                  else
+                    sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
+                    echo "Added $actual -> $((portinterval + offset)) for host $host"
+                    pkill -3 autossh
+                  fi
+                else
+                  echo "Host not found"
+                fi
               else
-                sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
-                echo "Added $actual -> $((portinterval + offset)) for host $host"
-                pkill -3 autossh
+                echo "Error: /etc/tunnel not found"
+                exit 1
               fi
-            else
-              echo "Host not found"
-            fi
-          else
-            echo "Error: /etc/tunnel not found"
-            exit 1
-          fi
+              ;;
+            actual)
+
+              ;;
+            *)
+              echo "Error: unknown command"
+              echo "Usage: $BASENAME sshtunnel add port <offset | actual>"
+              exit 1
+              ;;
+          esac
           ;;
         *)
           echo "Error: unknown command"

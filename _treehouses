@@ -206,9 +206,15 @@ treehouses log show 5
 treehouses magazine hackspace
 treehouses magazine hackspace all
 treehouses magazine hackspace latest
+treehouses magazine helloworld
+treehouses magazine helloworld all
+treehouses magazine helloworld latest
 treehouses magazine magpi
 treehouses magazine magpi all
 treehouses magazine magpi latest
+treehouses magazine wireframe
+treehouses magazine wireframe all
+treehouses magazine wireframe latest
 treehouses memory
 treehouses memory -g
 treehouses memory -m
@@ -355,6 +361,7 @@ treehouses wificountry
 treehouses wifihidden
 treehouses wifistatus
 treehouses convert
+treehouses resolution
 EOF
 # COMP_LINE is the line you typed in terminal
 # COMP_WORDS is array form of COMP_LINE

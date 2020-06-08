@@ -3,7 +3,7 @@
 function editor {
   checkroot
 
-  if [ -z "$EDITOR" ] && [ "$1" == "config" ]; then
+  if [ -z "$EDITOR" ]; then
     if grep EDITOR /etc/bash.bashrc | grep -q export /etc/bash.bashrc; then
       EDITOR="$(grep EDITOR /etc/bash.bashrc | grep export | sed 's/export EDITOR=//g')"
     else

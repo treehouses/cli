@@ -35,17 +35,26 @@ function sshtunnel {
 
           # check if host already exists
           if [ -f /etc/tunnel ] && grep -xq "$host" /etc/tunnel; then
-            echo "Erorr: host already exists"
+            echo "Error: host already exists"
             echo "Try adding individual ports to the host or adding a different host"
             exit 1
           fi
 
+          # check if monitoring port already in use
+          portint_offset=0
+          while grep -q "M $portinterval" /etc/tunnel; do
+            portinterval=$((portinterval + 1))
+            # portinterval=$((portinterval + 2))
+            portint_offset=$((portint_offset - 1))
+            # portint_offset=$((portint_offset - 2))
+          done
+
           # default list of ports
-          portssh=$((portinterval + 22))
-          portweb=$((portinterval + 80))
-          portcouchdb=$((portinterval + 84))
-          portnewcouchdb=$((portinterval + 82))
-          portmunin=$((portinterval + 49))
+          portssh=$((portinterval + 22 + portint_offset))
+          portweb=$((portinterval + 80 + portint_offset))
+          portcouchdb=$((portinterval + 84 + portint_offset))
+          portnewcouchdb=$((portinterval + 82 + portint_offset))
+          portmunin=$((portinterval + 49 + portint_offset))
 
           if [ ! -f "/root/.ssh/id_rsa" ]; then
             ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero

@@ -3,7 +3,7 @@
 function editor {
   checkroot
 
-  if [ -z "$EDITOR" ] && [ "$1" != "set" ]; then
+  if [ -z "$EDITOR" ] && [ "$1" == "config" ]; then
     echo
     echo "Default editor not set."
     echo "Use \"treehouses editor default\""

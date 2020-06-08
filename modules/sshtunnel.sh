@@ -42,12 +42,11 @@ function sshtunnel {
 
           # check if monitoring port already in use
           portint_offset=0
-          while grep -q "M $portinterval" /etc/tunnel; do
+          while grep -q -e "M $portinterval" -e "M $((portinterval - 1))" /etc/tunnel; do
             portinterval=$((portinterval + 1))
-            # portinterval=$((portinterval + 2))
             portint_offset=$((portint_offset - 1))
-            # portint_offset=$((portint_offset - 2))
           done
+          echo $portint_offset
 
           # default list of ports
           portssh=$((portinterval + 22 + portint_offset))
@@ -282,7 +281,7 @@ function sshtunnel {
               exit 1
             fi
 
-            sed -i "$startline, $endline d" /etc/tunnel
+            sed -i "$((startline - 1)), $endline d" /etc/tunnel
             echo "Removed $host from /etc/tunnel"
             pkill -3 autossh
           else

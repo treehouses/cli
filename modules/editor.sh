@@ -7,7 +7,7 @@ function editor {
     EDITOR="$(grep EDITOR /etc/bash.bashrc | grep export | sed 's/export EDITOR=//g')"
   fi
 
-  if [ -z "$EDITOR" ] && [ "$1" =="config" ]; then
+  if [ -z "$EDITOR" ] && [ "$1" == "config" ]; then
     echo
     echo "Default editor not set."
     echo "Use \"treehouses editor default\""

@@ -625,6 +625,7 @@ function services_help {
   echo "  minetest        Minetest is an open source infinite-world block sandbox game engine with survival and crafting"
   echo "  invoiceninja    Invoiceninja is the leading self-host platform to create invoices."
   echo "  grocy           grocy is web-based, self-hosted groceries and household management utility for your home"
+  echo "  cloud9          cloud9 is a complete web based IDE with terminal access"
   echo
   echo
   echo "Top-Level Commands:"

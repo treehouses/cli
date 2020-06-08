@@ -4,7 +4,7 @@ function uptime {
   checkargn $# 1
 
   if [[ $1 == "" ]]; then
-    command uptime 
+    command uptime
   elif [ $1 == "boot" ]; then
     echo "Raspberry Pi booted at:"
     command uptime -s
@@ -16,7 +16,7 @@ function uptime {
     echo "Error: unknown operation provided"
     uptime_help
     exit 1
-  fi  
+  fi
 }
 
 function uptime_help {

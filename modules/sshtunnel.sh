@@ -110,11 +110,11 @@ function sshtunnel {
 
                 if [ -z "$actual" ] || ! [[ $actual =~ $re ]]; then
                   echo "Error: a numeric port is required"
-                  echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
+                  echo "Usage: $BASENAME sshtunnel add port offset <actual> <offset> [host]"
                   exit 1
                 elif [ -z "$offset" ] || ! [[ $offset =~ $re ]]; then
                   echo "Error: a numeric offset is required"
-                  echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
+                  echo "Usage: $BASENAME sshtunnel add port offset <actual> <offset> [host]"
                   exit 1
                 elif [ "$offset" -ge 100 ]; then
                   echo "Error: offset is greater than or equal to 100"
@@ -175,11 +175,11 @@ function sshtunnel {
 
               if [ -z "$actual" ] || ! [[ $actual =~ $re ]]; then
                 echo "Error: a numeric port is required"
-                echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
+                echo "Usage: $BASENAME sshtunnel add port actual <actual> <port> [host]"
                 exit 1
               elif [ -z "$port" ] || ! [[ $port =~ $re ]]; then
                 echo "Error: a numeric port is required"
-                echo "Usage: $BASENAME sshtunnel add port <actual> <offset> [host]"
+                echo "Usage: $BASENAME sshtunnel add port actual <actual> <port> [host]"
                 exit 1
               fi
 
@@ -566,7 +566,9 @@ function sshtunnel_help {
   echo
   echo "  add                                      adds tunnels / ports to the given host"
   echo "      host <port interval> [host]              adds a new set of default tunnels"
-  echo "      port <actual> <offset> [host]            adds a single port to an existing host"
+  echo "      port                                     adds a single port to an existing host"
+  echo "          offset <actual> <offset> [host]          uses port interval + offset to calculate the new port"
+  echo "          actual <actual> <port> [host]            adds a port directly instead of using offsets"
   echo
   echo "  remove                                   removes tunnels / ports"
   echo "      all                                      completely removes all tunnels to all hosts"

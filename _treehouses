@@ -303,7 +303,8 @@ treehouses sshkey github deleteuser
 treehouses sshkey list
 treehouses sshtunnel
 treehouses sshtunnel add host
-treehouses sshtunnel add port
+treehouses sshtunnel add port actual
+treehouses sshtunnel add port offset
 treehouses sshtunnel check
 treehouses sshtunnel key
 treehouses sshtunnel list

@@ -49,35 +49,24 @@ function editor {
         exit 1
       fi
 
-      case "$2" in 
-        vim)
+      supported_editor="vim nano emacs"
+      
+      for i in $supported_editor; do 
+        if [ "$i" == "$2" ]; then
           if ! grep EDITOR /etc/bash.bashrc | grep -q export /etc/bash.bashrc; then
-            echo "export EDITOR=vim" >> /etc/bash.bashrc
+            echo "export EDITOR=$i" >> /etc/bash.bashrc
           else
-            sed -i -e "s/EDITOR=.*/EDITOR=vim/g" /etc/bash.bashrc
-          fi
-          ;;
-        nano)
-          if ! grep EDITOR /etc/bash.bashrc | grep -q export /etc/bash.bashrc; then
-            echo "export EDITOR=nano" >> /etc/bash.bashrc
-          else
-            sed -i -e "s/EDITOR=.*/EDITOR=nano/g" /etc/bash.bashrc
-          fi
-          ;;
-        emacs)
-          if ! grep EDITOR /etc/bash.bashrc | grep -q export /etc/bash.bashrc; then
-            echo "export EDITOR=emacs" >> /etc/bash.bashrc
-          else
-            sed -i -e "s/EDITOR=.*/EDITOR=emacs/g" /etc/bash.bashrc
-          fi
-          ;;
-        *)
+            sed -i -e "s/EDITOR=.*/EDITOR=$i/g" /etc/bash.bashrc
+          fi 
+          exit 0
+        fi 
+        if [ "$i" == "$(echo $supported_editor | egrep -o '\S+$')" ]; then
           echo
           echo "Error: $2 is not a supported text editor."
           echo
           exit 1
-          ;;
-      esac
+        fi
+      done
       ;;
 
     config)
@@ -114,11 +103,25 @@ function editor {
           emacs)
             ;;
         esac
+
+      elif [ "$2" == "default" ]; then
+        case "$EDITOR" in 
+          vim)
+            cp "$TEMPLATES/editor/vim/vimrc_default" /etc/vim/vimrc 
+            rm -rf /etc/vim/vimrc.local
+            ;;
+          nano)
+            cp "$TEMPLATES/editor/nano/nanorc_default" /etc/nanorc 
+            ;;
+          emacs)
+            ;;
+        esac
+
       else
         echo
         echo "Error: No such option as $2."
         echo "Use \"$BASENAME editor config [/path/to/file]\""
-        echo "or \"$BASENAME editor config alternate\""
+        echo "or \"$BASENAME editor config [default/alternate]\""
         echo
         exit 1
       fi
@@ -131,7 +134,6 @@ function editor {
       exit 1
       ;;
   esac
-
 }
 
 function editor_help {
@@ -145,5 +147,7 @@ function editor_help {
   echo "       $BASENAME editor set [vim|emacs|nano]    sets the default editor"
   echo 
   echo "       $BASENAME editor config [/path/to/file]  use a file as the config of the editor"
+  echo "       $BASENAME editor config default          use default config for current editor"
+  echo "       $BASENAME editor config alternate        use alternate config for current editor"
   echo 
 }

@@ -1,5 +1,6 @@
 function gpio {
   checkargn $# 0
+  checkrpi
   model="$(detectrpi)"
   prefix="${model:0:2}"
   oldrpi="True"

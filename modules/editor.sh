@@ -9,7 +9,7 @@ function editor {
 
   if [ -z "$EDITOR" ] && [ "$1" == "config" ]; then
     echo
-    echo "Default editor not set."
+    echo "Error: default editor not set."
     echo "Use \"treehouses editor default\""
     echo "or \"treehouses editor set [vim|emacs|nano]\" to set your default editor."
     echo
@@ -19,7 +19,7 @@ function editor {
   if [ $# -eq 0 ]; then
     if [ -z "$EDITOR" ]; then
       echo
-      echo "Default editor not set."
+      echo "Error: default editor not set."
       echo "Use \"treehouses editor default\""
       echo "or \"treehouses editor set [vim|emacs|nano]\" to set your default editor."
       echo
@@ -44,7 +44,7 @@ function editor {
     set)
       if [ $# -lt 2 ]; then 
         echo
-        echo "No editor specified."
+        echo "Error: No editor specified."
         echo
         exit 1
       fi
@@ -65,10 +65,15 @@ function editor {
           fi
           ;;
         emacs)
+          if ! grep EDITOR /etc/bash.bashrc | grep -q export /etc/bash.bashrc; then
+            echo "export EDITOR=emacs" >> /etc/bash.bashrc
+          else
+            sed -i -e "s/EDITOR=.*/EDITOR=emacs/g" /etc/bash.bashrc
+          fi
           ;;
         *)
           echo
-          echo "$2 is not a supported text editor."
+          echo "Error: $2 is not a supported text editor."
           echo
           exit 1
           ;;
@@ -78,7 +83,7 @@ function editor {
     config)
       if [ $# -lt 2 ]; then 
         echo
-        echo "No config file specified."
+        echo "Error: No config file specified."
         echo
         exit 1
       fi 
@@ -89,7 +94,8 @@ function editor {
             cp "$2" /etc/vim/vimrc.local 
             ;;
           nano)
-            cp "$2" /etc/nanorc
+            cp "$TEMPLATES/editor/nano/nanorc_default" /etc/nanorc 
+            cat "$2" >> /etc/nanorc
             ;;
           emacs)
             ;;
@@ -102,13 +108,17 @@ function editor {
             cp "$TEMPLATES/editor/vim/vimrc_default" /etc/vim/vimrc
             ;;
           nano)
+            cp "$TEMPLATES/editor/nano/nanorc_default" /etc/nanorc 
+            cat "$TEMPLATES/editor/nano/nanorc_alternate" >> /etc/nanorc
             ;;
           emacs)
             ;;
         esac
       else
         echo
-        echo "Arguments error."
+        echo "Error: No such option as $2."
+        echo "Use \"$BASENAME editor config [/path/to/file]\""
+        echo "or \"$BASENAME editor config alternate\""
         echo
         exit 1
       fi
@@ -116,7 +126,7 @@ function editor {
 
     *)
       echo 
-      echo "Arguments error."
+      echo "Error: Arguments error."
       echo
       exit 1
       ;;

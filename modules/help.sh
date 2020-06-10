@@ -107,6 +107,9 @@ log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
 inspire [joke|qotd|random]                displays quote based on user input
+tunnels [info|pagekite]                   provides access to pagekite info and runs pagekite commands
+        [pagekite-install] <email>        installs pagekite, signs up with email, and creates pagekite website with sitename prefix
+        <sitename>
 convert <input file> <output file>        converts video and audio files 
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog                                 displays the most recent changes to treehouses

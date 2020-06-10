@@ -339,6 +339,9 @@ treehouses tor refresh
 treehouses tor start
 treehouses tor status
 treehouses tor stop
+treehouses tunnels info
+treehouses tunnels pagekite
+treehouses tunnels pagekite-install
 treehouses upgrade
 treehouses upgrade cli
 treehouses upgrade force

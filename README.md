@@ -43,8 +43,8 @@ ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a 
 discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
          <rpi> [ipaddress|url|macaddress]
          <wifi>
-wifi <ESSID> [password]                   connects to a wifi network
-wifihidden <ESSID> [password]             connects to a hidden wifi network
+wifi <ESSID> [password] [identity]        connects to a wifi network
+wifihidden <ESSID> [password] [identity]  connects to a hidden wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]
 wifistatus                                displays signal strength in dBm and layman nomenclature
@@ -107,7 +107,9 @@ services                                  executes the given command on the spec
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
    [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
    [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
+   [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
    [grocy]                                grocy is a web-based, self-hosted groceries and household management utility for your home
+   [transmission]                         Transmission is a BitTorrent client with many powerful features.
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

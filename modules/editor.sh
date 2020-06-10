@@ -46,6 +46,7 @@ function editor {
         echo
         echo "Error: No editor specified."
         echo
+        editor_help
         exit 1
       fi
 
@@ -64,6 +65,7 @@ function editor {
           echo
           echo "Error: $2 is not a supported text editor."
           echo
+          editor_help
           exit 1
         fi
       done
@@ -74,6 +76,7 @@ function editor {
         echo
         echo "Error: No config file specified."
         echo
+        editor_help
         exit 1
       fi 
 
@@ -131,6 +134,7 @@ function editor {
       echo 
       echo "Error: Arguments error."
       echo
+      editor_help
       exit 1
       ;;
   esac
@@ -146,8 +150,8 @@ function editor_help {
   echo 
   echo "       $BASENAME editor set [vim|emacs|nano]    sets the default editor"
   echo 
-  echo "       $BASENAME editor config [/path/to/file]  use a file as the config of the editor"
-  echo "       $BASENAME editor config default          use default config for current editor"
-  echo "       $BASENAME editor config alternate        use alternate config for current editor"
+  echo "       $BASENAME editor config [/path/to/file]  sets a file as the config of current editor"
+  echo "       $BASENAME editor config default          uses default config for current editor"
+  echo "       $BASENAME editor config alternate        uses alternate config for current editor"
   echo 
 }

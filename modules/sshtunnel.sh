@@ -45,7 +45,7 @@ function sshtunnel {
 
           # check if monitoring port already in use
           portint_offset=0
-          while grep -q -e "M $portinterval" -e "M $((portinterval - 1))" /etc/tunnel; do
+          while grep -qs -e "M $portinterval" -e "M $((portinterval - 1))" /etc/tunnel; do
             portinterval=$((portinterval + 1))
             portint_offset=$((portint_offset + 1))
           done
@@ -152,11 +152,34 @@ function sshtunnel {
                 if [ "$found" = true ]; then
                   echo "Port already exists"
                 else
-                  sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
-                  echo "Added $actual -> $((portinterval + offset)) for host $host"
+                  # find monitoring port
+                  while read -r line; do
+                    if [[ $line =~ "/usr/bin/autossh" ]]; then
+                      monitoringport=$(echo $line | grep -oP "(?<=\-M )(.*?) ")
+                    fi
+                    if [ ! -z "$monitoringport" ] && [[ "$line" =~ "$host" ]]; then
+                      break
+                    fi
+                    if [ ! -z "$monitoringport" ] && [ -z "$line" ]; then
+                      monitoring=""
+                    fi
+                  done < <(cat /etc/tunnel)
 
-                  pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
-                  kill -- -$pid
+                  echo $monitoringport
+                  echo $((portinterval + offset ))
+
+                  if [ "$monitoringport" -eq "$((portinterval + offset))" ]; then
+                    echo "Error: port conflict with monitoring port"
+                    echo "Trying to add $((portinterval + offset)) which conflicts with monitoring port $monitoringport"
+                  else
+                    sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
+                    echo "Added $actual -> $((portinterval + offset)) for host $host"
+
+                    pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
+                    if [ ! -z "$pid" ]; then
+                      kill -- -$pid
+                    fi
+                  fi
                 fi
               else
                 echo "Host not found"
@@ -212,7 +235,9 @@ function sshtunnel {
                   echo "Added $actual -> $port for host $host"
                   
                   pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
-                  kill -- -$pid
+                  if [ ! -z "$pid" ]; then
+                    kill -- -$pid
+                  fi
                 fi
               else
                 echo "Host not found"
@@ -289,7 +314,9 @@ function sshtunnel {
             echo "Removed $port for host $host"
 
             pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
-            kill -- -$pid
+            if [ ! -z "$pid" ]; then
+              kill -- -$pid
+            fi
           else
             echo "Host / port not found"
           fi
@@ -329,7 +356,9 @@ function sshtunnel {
           echo "Removed $host from /etc/tunnel"
 
           pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
-          kill -- -$pid
+          if [ ! -z "$pid" ]; then
+            kill -- -$pid
+          fi
           ;;
         *)
           echo "Error: unknown command"

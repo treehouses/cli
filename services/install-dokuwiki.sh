@@ -17,7 +17,7 @@ services:
     volumes:
       - /srv/dokuwiki:/root/.dokuwiki
     ports:
-      - 443:80
+      - 8093:80
     restart: unless-stopped
 EOF
 
@@ -46,7 +46,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "443"
+  echo "8093"
 }
 
 # add size (in MB)

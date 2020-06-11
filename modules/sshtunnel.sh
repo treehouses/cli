@@ -139,7 +139,7 @@ function sshtunnel {
                   if [[ $line =~ 127.0.1.1:$actual ]]; then
                     exists=yes
                   fi
-                  if [ ! -z "$exists" ] && [[ "$line" == "$host" ]]; then
+                  if [ ! -z "$exists" ] && [[ "$line" =~ "$host" ]]; then
                     found=true
                     break
                   fi
@@ -194,7 +194,7 @@ function sshtunnel {
                   if [[ $line =~ $port:127.0.1.1:$actual ]]; then
                     exists=yes
                   fi
-                  if [ ! -z "$exists" ] && [[ "$line" == "$host" ]]; then
+                  if [ ! -z "$exists" ] && [[ "$line" =~ "$host" ]]; then
                     found=true
                     break
                   fi
@@ -350,7 +350,7 @@ function sshtunnel {
             external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
             ports[$local]=$external
           elif echo $line | grep -q "[]@[]"; then
-            if [[ "$line" == "$host" ]]; then
+            if [[ "$line" =~ "$host" ]]; then
               echo "Ports:"
               echo "     local    ->   external"
               for i in "${!ports[@]}"; do

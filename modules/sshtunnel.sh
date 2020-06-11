@@ -94,8 +94,6 @@ function sshtunnel {
             echo "MAILTO=root"
             echo "*/5 * * * * root if [ ! "$\(pidof autossh\)" ]; then /etc/tunnel; fi"
           } > /etc/cron.d/autossh
-
-          pkill -3 autossh
           ;;
         port)
           case "$3" in
@@ -154,7 +152,9 @@ function sshtunnel {
                 else
                   sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
                   echo "Added $actual -> $((portinterval + offset)) for host $host"
-                  pkill -3 autossh
+
+                  pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
+                  kill -- -$pid
                 fi
               else
                 echo "Host not found"
@@ -209,7 +209,9 @@ function sshtunnel {
                 else
                   sed -i "/^$host/i -R $port:127.0.1.1:$actual \\\\" /etc/tunnel
                   echo "Added $actual -> $port for host $host"
-                  pkill -3 autossh
+                  
+                  pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
+                  kill -- -$pid
                 fi
               else
                 echo "Host not found"
@@ -241,7 +243,7 @@ function sshtunnel {
             rm -rf /etc/cron.d/autossh
           fi
 
-          pkill -3 autossh
+          pkill autossh
           echo -e "${GREEN}Removed${NC}"
           ;;
         port)
@@ -284,7 +286,9 @@ function sshtunnel {
           if [ "$found" = true ]; then
             sed -i "$final d" /etc/tunnel
             echo "Removed $port for host $host"
-            pkill -3 autossh
+
+            pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
+            kill -- -$pid
           else
             echo "Host / port not found"
           fi
@@ -322,7 +326,9 @@ function sshtunnel {
 
           sed -i "$((startline - 1)), $endline d" /etc/tunnel
           echo "Removed $host from /etc/tunnel"
-          pkill -3 autossh
+
+          pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
+          kill -- -$pid
           ;;
         *)
           echo "Error: unknown command"

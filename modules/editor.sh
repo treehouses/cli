@@ -61,7 +61,7 @@ function editor {
           else
             sed -i -e "s/EDITOR=.*/EDITOR=$i/g" /etc/bash.bashrc
           fi 
-          "Text editor is now $i."
+          echo "Text editor is now $i."
           exit 0
         fi 
 

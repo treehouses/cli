@@ -3,9 +3,9 @@ function sshtunnel {
   local portnewcouchdb portmunin keys option value status
   checkroot
 
-  if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; }  && [ "$1" != "add" ]; then
+  if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; } && [[ ! "$@" =~ "add host" ]] && [[ ! "$@" =~ "remove all" ]] && [[ ! "$@" =~ "check" ]]; then
     echo "Error: no tunnel has been set up"
-    echo "Run '$BASENAME sshtunnel add host' to add a key for the tunnel"
+    echo "Run '$BASENAME sshtunnel add host <port interval> [host]' to add a key for the tunnel"
     exit 1
   fi
 
@@ -101,69 +101,64 @@ function sshtunnel {
         port)
           case "$3" in
             offset)
-              if [ -f /etc/tunnel ]; then
-                checkargn $# 6
-                actual=$4
-                offset=$5
-                host=$6
-                re='^[0-9]+$'
+              checkargn $# 6
+              actual=$4
+              offset=$5
+              host=$6
+              re='^[0-9]+$'
 
-                if [ -z "$actual" ] || ! [[ $actual =~ $re ]]; then
-                  echo "Error: a numeric port is required"
-                  echo "Usage: $BASENAME sshtunnel add port offset <actual> <offset> [host]"
-                  exit 1
-                elif [ -z "$offset" ] || ! [[ $offset =~ $re ]]; then
-                  echo "Error: a numeric offset is required"
-                  echo "Usage: $BASENAME sshtunnel add port offset <actual> <offset> [host]"
-                  exit 1
-                elif [ "$offset" -ge 100 ]; then
-                  echo "Error: offset is greater than or equal to 100"
-                  echo "Use an offset less than 100 (save some ports for others!)"
-                  exit 1
-                fi
+              if [ -z "$actual" ] || ! [[ $actual =~ $re ]]; then
+                echo "Error: a numeric port is required"
+                echo "Usage: $BASENAME sshtunnel add port offset <actual> <offset> [host]"
+                exit 1
+              elif [ -z "$offset" ] || ! [[ $offset =~ $re ]]; then
+                echo "Error: a numeric offset is required"
+                echo "Usage: $BASENAME sshtunnel add port offset <actual> <offset> [host]"
+                exit 1
+              elif [ "$offset" -ge 100 ]; then
+                echo "Error: offset is greater than or equal to 100"
+                echo "Use an offset less than 100 (save some ports for others!)"
+                exit 1
+              fi
 
-                # host validation
-                if [ -z "$host" ]; then
-                  host="ole@pirate.ole.org"
-                elif ! echo $host | grep -q "[]@[]"; then
-                  echo "Error: invalid host"
-                  echo "user@host"
-                  exit 1
-                fi
+              # host validation
+              if [ -z "$host" ]; then
+                host="ole@pirate.ole.org"
+              elif ! echo $host | grep -q "[]@[]"; then
+                echo "Error: invalid host"
+                echo "user@host"
+                exit 1
+              fi
 
-                # get port interval for given host
-                portinterval=$(grep $host /etc/tunnel | awk '{print $3}')
+              # get port interval for given host
+              portinterval=$(grep $host /etc/tunnel | awk '{print $3}')
 
-                if [ ! -z "$portinterval" ]; then
-                  # check if port is already added
-                  found=false
-                  while read -r line; do
-                    if [[ $line =~ 127.0.1.1:$actual ]]; then
-                      exists=yes
-                    fi
-                    if [ ! -z "$exists" ] && [[ "$line" == "$host" ]]; then
-                      found=true
-                      break
-                    fi
-                    if [ ! -z "$exists" ] && [ -z "$line" ]; then
-                      found=false
-                      exists=""
-                    fi
-                  done < <(cat /etc/tunnel)
-
-                  if [ "$found" = true ]; then
-                    echo "Port already exists"
-                  else
-                    sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
-                    echo "Added $actual -> $((portinterval + offset)) for host $host"
-                    pkill -3 autossh
+              if [ ! -z "$portinterval" ]; then
+                # check if port is already added
+                found=false
+                while read -r line; do
+                  if [[ $line =~ 127.0.1.1:$actual ]]; then
+                    exists=yes
                   fi
+                  if [ ! -z "$exists" ] && [[ "$line" == "$host" ]]; then
+                    found=true
+                    break
+                  fi
+                  if [ ! -z "$exists" ] && [ -z "$line" ]; then
+                    found=false
+                    exists=""
+                  fi
+                done < <(cat /etc/tunnel)
+
+                if [ "$found" = true ]; then
+                  echo "Port already exists"
                 else
-                  echo "Host not found"
+                  sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
+                  echo "Added $actual -> $((portinterval + offset)) for host $host"
+                  pkill -3 autossh
                 fi
               else
-                echo "Error: /etc/tunnel not found"
-                exit 1
+                echo "Host not found"
               fi
               ;;
             actual)
@@ -270,34 +265,29 @@ function sshtunnel {
             exit 1
           fi
 
-          if [ -f /etc/tunnel ]; then
-            counter=1
-            found=false
-            while read -r line; do
-              if [[ $line =~ 127.0.1.1:$port ]]; then
-                final=$counter
-              fi
-              if [ ! -z "$final" ] && [[ "$line" == "$host" ]]; then
-                found=true
-                break
-              fi
-              if [ ! -z "$final" ] && [ -z "$line" ]; then
-                found=false
-                final=""
-              fi
-              ((counter++))
-            done < <(cat /etc/tunnel)
-
-            if [ "$found" = true ]; then
-              sed -i "$final d" /etc/tunnel
-              echo "Removed $port for host $host"
-              pkill -3 autossh
-            else
-              echo "Host / port not found"
+          counter=1
+          found=false
+          while read -r line; do
+            if [[ $line =~ 127.0.1.1:$port ]]; then
+              final=$counter
             fi
+            if [ ! -z "$final" ] && [[ "$line" == "$host" ]]; then
+              found=true
+              break
+            fi
+            if [ ! -z "$final" ] && [ -z "$line" ]; then
+              found=false
+              final=""
+            fi
+            ((counter++))
+          done < <(cat /etc/tunnel)
+
+          if [ "$found" = true ]; then
+            sed -i "$final d" /etc/tunnel
+            echo "Removed $port for host $host"
+            pkill -3 autossh
           else
-            echo "Error: /etc/tunnel not found"
-            exit 1
+            echo "Host / port not found"
           fi
           ;;
         host)
@@ -314,31 +304,26 @@ function sshtunnel {
             exit 1
           fi
 
-          if [ -f /etc/tunnel ]; then
-            counter=1
-            while read -r line; do
-              if [[ $line =~ "/usr/bin/autossh" ]]; then
-                startline=$counter
-              fi
-              if [[ "$line" == "$host" ]]; then
-                endline=$counter
-                break
-              fi
-              ((counter++))
-            done < <(cat /etc/tunnel)
-
-            if [ -z $endline ]; then
-              echo "Host not found in /etc/tunnel"
-              exit 1
+          counter=1
+          while read -r line; do
+            if [[ $line =~ "/usr/bin/autossh" ]]; then
+              startline=$counter
             fi
+            if [[ "$line" == "$host" ]]; then
+              endline=$counter
+              break
+            fi
+            ((counter++))
+          done < <(cat /etc/tunnel)
 
-            sed -i "$((startline - 1)), $endline d" /etc/tunnel
-            echo "Removed $host from /etc/tunnel"
-            pkill -3 autossh
-          else
-            echo "Error: /etc/tunnel not found"
+          if [ -z $endline ]; then
+            echo "Host not found in /etc/tunnel"
             exit 1
           fi
+
+          sed -i "$((startline - 1)), $endline d" /etc/tunnel
+          echo "Removed $host from /etc/tunnel"
+          pkill -3 autossh
           ;;
         *)
           echo "Error: unknown command"
@@ -351,66 +336,61 @@ function sshtunnel {
       checkargn $# 2
       host=$2
 
-      if [ -f /etc/tunnel ]; then
-        if [ ! -z "$host" ]; then
-          if ! echo $host | grep -q "[]@[]"; then
-            echo "Error: invalid host"
-            echo "user@host"
-            exit 1
-          fi
-
-          newgroup=true
-          declare -A ports
-          while read -r -u 9 line; do
-            if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
-              local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
-              external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
-              ports[$local]=$external
-            elif echo $line | grep -q "[]@[]"; then
-              if [[ "$line" == "$host" ]]; then
-                echo "Ports:"
-                echo "     local    ->   external"
-                for i in "${!ports[@]}"; do
-                  if [ "$newgroup" = true ]; then
-                    printf "%10s %-6s %-6s %-5s\n" "┌─" "$i" "->" "${ports[$i]}"
-                    newgroup=false
-                  else
-                    printf "%10s %-6s %-6s %-5s\n" "├─" "$i" "->" "${ports[$i]}"
-                  fi
-                done
-                echo "    └─── Host: $line"
-                break
-              else
-                unset ports
-                declare -A ports
-              fi
-            fi
-          done 9< /etc/tunnel
-        else
-          echo "Ports:"
-          echo "     local    ->   external"
-          newgroup=true
-          while read -r -u 9 line; do
-            if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
-              local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
-              external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
-              if [ "$newgroup" = true ]; then
-                printf "%10s %-6s %-6s %-5s\n" "┌─" "$local" "->" "$external"
-                newgroup=false
-              else
-                printf "%10s %-6s %-6s %-5s\n" "├─" "$local" "->" "$external"
-              fi
-            fi
-            if echo $line | grep -q "[]@[]"; then
-              echo "    └─── Host: $line"
-              echo
-              newgroup=true
-            fi
-          done 9< /etc/tunnel
+      if [ ! -z "$host" ]; then
+        if ! echo $host | grep -q "[]@[]"; then
+          echo "Error: invalid host"
+          echo "user@host"
+          exit 1
         fi
+
+        newgroup=true
+        declare -A ports
+        while read -r -u 9 line; do
+          if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
+            local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
+            external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
+            ports[$local]=$external
+          elif echo $line | grep -q "[]@[]"; then
+            if [[ "$line" == "$host" ]]; then
+              echo "Ports:"
+              echo "     local    ->   external"
+              for i in "${!ports[@]}"; do
+                if [ "$newgroup" = true ]; then
+                  printf "%10s %-6s %-6s %-5s\n" "┌─" "$i" "->" "${ports[$i]}"
+                  newgroup=false
+                else
+                  printf "%10s %-6s %-6s %-5s\n" "├─" "$i" "->" "${ports[$i]}"
+                fi
+              done
+              echo "    └─── Host: $line"
+              break
+            else
+              unset ports
+              declare -A ports
+            fi
+          fi
+        done 9< /etc/tunnel
       else
-        echo "Error: a tunnel has not been set up yet"
-        exit 1
+        echo "Ports:"
+        echo "     local    ->   external"
+        newgroup=true
+        while read -r -u 9 line; do
+          if echo $line | grep -oPq "(?<=\-R )(.*?) "; then
+            local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
+            external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
+            if [ "$newgroup" = true ]; then
+              printf "%10s %-6s %-6s %-5s\n" "┌─" "$local" "->" "$external"
+              newgroup=false
+            else
+              printf "%10s %-6s %-6s %-5s\n" "├─" "$local" "->" "$external"
+            fi
+          fi
+          if echo $line | grep -q "[]@[]"; then
+            echo "    └─── Host: $line"
+            echo
+            newgroup=true
+          fi
+        done 9< /etc/tunnel
       fi
       ;;
     check)

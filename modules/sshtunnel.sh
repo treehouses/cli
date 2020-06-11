@@ -270,7 +270,7 @@ function sshtunnel {
             if [[ $line =~ 127.0.1.1:$port ]]; then
               final=$counter
             fi
-            if [ ! -z "$final" ] && [[ "$line" == "$host" ]]; then
+            if [ ! -z "$final" ] && [[ "$line" =~ "$host" ]]; then
               found=true
               break
             fi

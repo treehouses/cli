@@ -532,24 +532,23 @@ function sshtunnel {
           ports=()
           while read -r -u 9 line; do
             if [[ $line =~ "/usr/bin/autossh" ]]; then
-              portinterval=$(echo $line | grep -oP "(?<=\-M )(.*?) ")
+              monitoringport=$(echo $line | grep -oP "(?<=\-M )(.*?) ")
             elif echo $line | grep -q "[]@[]"; then
-              host=$line
+              host=$(echo $line | awk '{print $1}')
             fi
-
-            if [ ! -z "$portinterval" ] && echo $line | grep -oPq "(?<=\-R )(.*?) "; then
+            if [ ! -z "$monitoringport" ] && echo $line | grep -oPq "(?<=\-R )(.*?) "; then
               local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
               external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
               ports+=("$external:$local ")
             fi
 
-            if [ ! -z "$portinterval" ] && [ ! -z "$host" ]; then
-              message+="$host:$portinterval \\n"
+            if [ ! -z "$monitoringport" ] && [ ! -z "$host" ]; then
+              message+="$host:$monitoringport \\n"
               for i in "${ports[@]}"; do
                 message+=$i
               done
               message+=" \\n"
-              portinterval=""
+              monitoringport=""
               host=""
               ports=()
             fi

@@ -32,7 +32,7 @@ function upgrade {
     npm install -g -f "@treehouses/cli"
   elif [ "$tag" == "bluetooth" ]; then
     checkroot
-    checkwrpi
+    checkrpiwireless
     if [ "$2" = "" ]; then
       branch="master"
     else

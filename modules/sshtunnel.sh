@@ -34,7 +34,7 @@ function sshtunnel {
           hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
 
           # check if host already exists
-          if [ -f /etc/tunnel ] && grep -xq "$host" /etc/tunnel; then
+          if grep -qs "$host" /etc/tunnel; then
             echo "Error: host already exists"
             echo "Try adding individual ports to the host or adding a different host"
             exit 1
@@ -46,7 +46,6 @@ function sshtunnel {
             portinterval=$((portinterval + 1))
             portint_offset=$((portint_offset + 1))
           done
-          echo $portint_offset
 
           # default list of ports
           portssh=$((portinterval + 22 - portint_offset))

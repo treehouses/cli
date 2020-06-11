@@ -10,6 +10,15 @@ function magazine() {
   if [ "$magtype" = "magpi" ] || [ "$magtype" = "helloworld" ] || [ "$magtype" = "hackspace" ] || [ "$magtype" = "wireframe" ]; then
     if [ "$req" = "" ]; then
       /root/cli/magazine/$magtype.sh info
+    elif [ "$req" = "latest" ]; then
+      checkinternet
+      if [ ! -d "$magtype" ]; then
+        mkdir $magtype
+      fi
+      cd $magtype || return
+      /root/cli/magazine/$magtype.sh latest
+      cd ..
+      echo "Issue saved in the $magtype directory"
     else
       echo in progress
     fi
@@ -17,6 +26,8 @@ function magazine() {
     echo "Please specify a valid magazine type, these include: magpi, hackspace, wireframe, helloworld"
   fi
   exit 0
+
+
   if [ "$magtype" = "magpi" ]; then
     if [ "$req" = "" ]; then
       /root/cli/magazine/magpi.sh info

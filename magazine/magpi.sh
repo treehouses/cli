@@ -11,11 +11,18 @@ function latest {
   quoteloc="${latest%%\"*}"
   ind=${#quoteloc}
   latest=${latest:0:$ind}
-  if [[ $req -lt 1 ]] || [[ $req -gt $latest ]]; then
-    echo "ERROR: Please enter a valid magazine number"
-    echo "       This can be any issue ranging from 1 to $latest"
-    exit 1
-  fi
+  magnum=$latest
+  echo "Fetching MagPi$magnum.pdf..."
+  wget -q "https://magpi.raspberrypi.org/issues/$magnum/pdf"
+  mv ./pdf ./pdf.txt
+  url="$(sed -n '10p' pdf.txt)"
+  rm ./pdf.txt
+  url=${url:44}
+  quoteloc="${url%%\"*}"
+  ind=${#quoteloc}
+  url=${url:0:$ind}
+  wget -bqc -O "MagPi$magnum.pdf" $url
+  echo "Finished downloading MagPi$magnum.pdf"
 }
 
 function number {

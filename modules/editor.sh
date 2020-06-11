@@ -126,7 +126,6 @@ function editor {
           emacs)
             ;;
         esac
-        echo "$EDITOR is now using the alternate config."
         exit 0
 
       elif [ "$2" == "default" ]; then

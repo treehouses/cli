@@ -19,7 +19,7 @@ function sshtunnel {
           portinterval=$3
           host=$4
 
-          if [ -z "$portinterval" ] || [[ ! $actual =~ $re ]]; then
+          if [ -z "$portinterval" ] || [[ ! $portinterval =~ $re ]]; then
             echo "Error: a numeric port interval is required"
             echo "Usage: $BASENAME sshtunnel add host <port interval> [host]"
             exit 1

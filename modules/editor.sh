@@ -65,7 +65,7 @@ function editor {
           exit 0
         fi 
 
-        if [ "$i" == "$(echo $supported_editor | egrep -o '\S+$')" ]; then
+        if [ "$i" == "$(echo $supported_editor | grep -E -o '\S+$')" ]; then
           echo
           echo "Error: $2 is not a supported text editor."
           echo

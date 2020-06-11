@@ -1,6 +1,5 @@
 function magazine() {
   checkargn $# 2
-  checkinternet
   magtype="$1"
   req="$2"
   magnum="0"
@@ -13,6 +12,7 @@ function magazine() {
       echo "The MagPi is The Official Raspberry Pi magazine. Written by and for the community, it is packed with Raspberry Pi-themed projects, computing and electronics tutorials, how-to guides, and the latest news and reviews."
       exit 0
     elif [[ "$req" =~ ^[0-9]+$ ]] || [[ "$req" = "latest" ]]; then
+      checkinternet
       wget -q "https://magpi.raspberrypi.org/issues"
       mv ./issues ./issues.txt
       latest="$(sed -n '219p' issues.txt)"
@@ -23,7 +23,7 @@ function magazine() {
       latest=${latest:0:$ind}
       if [[ $req -lt 1 ]] || [[ $req -gt $latest ]]; then
         echo "ERROR: Please enter a valid magazine number"
-        echo "       This can be any issue ranging from 1 to $latest" 
+        echo "       This can be any issue ranging from 1 to $latest"
         exit 1
       fi
       magnum=$req
@@ -57,6 +57,7 @@ function magazine() {
         mkdir $magtype
       fi
       cd $magtype || return
+      checkinternet
       wget -q "https://magpi.raspberrypi.org/issues"
       mv ./issues ./issues.txt
       latest="$(sed -n '219p' issues.txt)"
@@ -91,6 +92,7 @@ function magazine() {
       echo "HackSpace magazine is packed with projects for fixers and tinkerers of all abilities. We'll teach you new techniques and give you refreshers on familiar ones, from 3D printing, laser cutting, and woodworking to electronics and Internet of Things."
       exit 0
     elif [[ "$req" =~ ^[0-9]+$ ]] || [[ "$req" = "latest" ]]; then
+      checkinternet
       wget -q "https://hackspace.raspberrypi.org/issues"
       mv ./issues ./issues.txt
       latest="$(sed -n '189p' issues.txt)"
@@ -101,7 +103,7 @@ function magazine() {
       latest=${latest:0:$ind}
       if [[ $req -lt 1 ]] || [[ $req -gt $latest ]]; then
         echo "ERROR: Please enter a valid magazine number"
-        echo "       This can be any issue ranging from 1 to $latest" 
+        echo "       This can be any issue ranging from 1 to $latest"
         exit 1
       fi
       magnum=$req
@@ -135,6 +137,7 @@ function magazine() {
         mkdir $magtype
       fi
       cd $magtype || return
+      checkinternet
       wget -q "https://hackspace.raspberrypi.org/issues"
       mv ./issues ./issues.txt
       latest="$(sed -n '189p' issues.txt)"
@@ -169,6 +172,7 @@ function magazine() {
       echo "Wireframe is a new fortnightly magazine that lifts the lid on video games. In every issue, we'll be looking at how games are made, who makes them, and even guide you through the process of making your own."
       exit 0
     elif [[ "$req" =~ ^[0-9]+$ ]] || [[ "$req" = "latest" ]]; then
+      checkinternet
       wget -q "https://wireframe.raspberrypi.org/issues"
       mv ./issues ./issues.txt
       latest="$(sed -n '186p' issues.txt)"
@@ -213,6 +217,7 @@ function magazine() {
         mkdir $magtype
       fi
       cd $magtype || return
+      checkinternet
       wget -q "https://wireframe.raspberrypi.org/issues"
       mv ./issues ./issues.txt
       latest="$(sed -n '186p' issues.txt)"
@@ -242,14 +247,94 @@ function magazine() {
     else
       magazine_help
     fi
+  elif [ "$magtype" = "helloworld" ]; then
+    if [ "$req" = "" ]; then
+      echo "HelloWorld is the computing and digital making magazine for educators."
+      exit 0
+    elif [[ "$req" =~ ^[0-9]+$ ]] || [[ "$req" = "latest" ]]; then
+      checkinternet
+      wget -q "https://helloworld.raspberrypi.org/issues"
+      mv ./issues ./issues.txt
+      latest="$(sed -n '146p' issues.txt)"
+      rm ./issues.txt
+      latest=${latest:25}
+      quoteloc="${latest%%\"*}"
+      ind=${#quoteloc}
+      latest=${latest:0:$ind}
+      if [[ $req -lt 1 ]] || [[ $req -gt $latest ]]; then
+        echo "ERROR: Please enter a valid magazine number"
+        echo "       This can be any issue ranging from 1 to $latest"
+        exit 1
+      fi
+      magnum=$req
+      if [ "$req" = "latest" ]; then
+        magnum=$latest
+      fi
+      if [ ! -d "$magtype" ]; then
+        mkdir $magtype
+      fi
+      cd $magtype || return
+      if [ -f "HelloWorld$magnum.pdf" ]; then
+        echo "HelloWorld$magnum.pdf already exists, exiting..."
+        cd ..
+        exit 0
+      fi
+      echo "Fetching HelloWorld$magnum.pdf..."
+      wget -q "https://helloworld.raspberrypi.org/issues/$magnum/pdf"
+      mv ./pdf ./pdf.txt
+      url="$(sed -n '10p' pdf.txt)"
+      rm ./pdf.txt
+      url=${url:44}
+      quoteloc="${url%%\"*}"
+      ind=${#quoteloc}
+      url=${url:0:$ind}
+      wget -bqc -O "HelloWorld$magnum.pdf" $url
+      echo "Finished downloading HelloWorld$magnum.pdf"
+      echo "Issue $magnum is saved in the $magtype directory"
+      cd ..
+    elif [[ "$req" = "all" ]]; then
+      checkinternet
+      if [ ! -d "$magtype" ]; then
+        mkdir $magtype
+      fi
+      cd $magtype || return
+      wget -q "https://helloworld.raspberrypi.org/issues"
+      mv ./issues ./issues.txt
+      latest="$(sed -n '146p' issues.txt)"
+      rm ./issues.txt
+      latest=${latest:25}
+      quoteloc="${latest%%\"*}"
+      ind=${#quoteloc}
+      latest=${latest:0:$ind}
+      echo "Fetching all HelloWorld magazines..."
+      for i in $(seq 1 $latest);
+      do
+        if [ -f "HelloWorld$i.pdf" ]; then
+          continue
+        fi
+        wget -q "https://helloworld.raspberrypi.org/issues/$i/pdf"
+        mv ./pdf ./pdf.txt
+        url="$(sed -n '10p' pdf.txt)"
+        rm ./pdf.txt
+        url=${url:44}
+        quoteloc="${url%%\"*}"
+        ind=${#quoteloc}
+        url=${url:0:$ind}
+        wget -bqc -O "HelloWorld$i.pdf" $url
+      done
+      echo "All current issues of helloworld are saved in the $magtype directory"
+      cd ..
+    else
+      magazine_help
+    fi
   else
-    echo "Please specify a valid magazine type, these include: magpi, hackspace, wireframe"
+    echo "Please specify a valid magazine type, these include: magpi, hackspace, wireframe, helloworld"
   fi
 }
 
 function magazine_help {
   echo
-  echo "Usage: $BASENAME magazine <hackspace|magpi|wireframe> [all|latest|number]"
+  echo "Usage: $BASENAME magazine <helloworld|hackspace|magpi|wireframe> [all|latest|number]"
   echo
   echo "This downloads the specified issue of a magazine as a pdf with filename <mag_type>#.pdf based on user input"
   echo

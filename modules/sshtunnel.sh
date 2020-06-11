@@ -9,6 +9,8 @@ function sshtunnel {
     exit 1
   fi
 
+  re='^[0-9]+$'
+
   case "$1" in
     add)
       case "$2" in
@@ -16,8 +18,9 @@ function sshtunnel {
           checkargn $# 4
           portinterval=$3
           host=$4
-          if [ -z "$portinterval" ]; then
-            echo "Error: a port interval is required"
+
+          if [ -z "$portinterval" ] || [[ ! $actual =~ $re ]]; then
+            echo "Error: a numeric port interval is required"
             echo "Usage: $BASENAME sshtunnel add host <port interval> [host]"
             exit 1
           fi
@@ -102,13 +105,12 @@ function sshtunnel {
               actual=$4
               offset=$5
               host=$6
-              re='^[0-9]+$'
 
-              if [ -z "$actual" ] || ! [[ $actual =~ $re ]]; then
+              if [ -z "$actual" ] || [[ ! $actual =~ $re ]]; then
                 echo "Error: a numeric port is required"
                 echo "Usage: $BASENAME sshtunnel add port offset <actual> <offset> [host]"
                 exit 1
-              elif [ -z "$offset" ] || ! [[ $offset =~ $re ]]; then
+              elif [ -z "$offset" ] || [[ ! $offset =~ $re ]]; then
                 echo "Error: a numeric offset is required"
                 echo "Usage: $BASENAME sshtunnel add port offset <actual> <offset> [host]"
                 exit 1
@@ -165,13 +167,12 @@ function sshtunnel {
               actual=$4
               port=$5
               host=$6
-              re='^[0-9]+$'
 
-              if [ -z "$actual" ] || ! [[ $actual =~ $re ]]; then
+              if [ -z "$actual" ] || [[ ! $actual =~ $re ]]; then
                 echo "Error: a numeric port is required"
                 echo "Usage: $BASENAME sshtunnel add port actual <actual> <port> [host]"
                 exit 1
-              elif [ -z "$port" ] || ! [[ $port =~ $re ]]; then
+              elif [ -z "$port" ] || [[ ! $port =~ $re ]]; then
                 echo "Error: a numeric port is required"
                 echo "Usage: $BASENAME sshtunnel add port actual <actual> <port> [host]"
                 exit 1

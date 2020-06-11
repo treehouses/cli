@@ -2,21 +2,21 @@
 load test-helper
 
 @test "$clinom uptime" {
-  run "${clicmd}" power conservative
+  run "${clicmd}" uptime
   assert_success
 }
 
 @test "$clinom uptime boot" {
-  run "${clicmd}" uptime current
+  run "${clicmd}" uptime boot
   assert_success
 }
 
 @test "$clinom uptime start" {
-  run "${clicmd}" uptime default
+  run "${clicmd}" uptime start
   assert_success
 }
 
 @test "$clinom uptime stop" {
-  run "${clicmd}" uptime freq
+  run "${clicmd}" uptime stop
   assert_success
 }

@@ -588,6 +588,10 @@ function sshtunnel_help {
   echo
   echo "Host defaults to \"ole@pirate.ole.org\" if not explicitly provided"
   echo
+  echo "Monitoring port and monitoring port + 1 must be kept clear"
+  echo "If there are monitoring port conflicts while adding new hosts,"
+  echo "monitoring port will be incremented by 2 and adding host will be reattempted."
+  echo
   echo "Default list of ports when adding a host:"
   echo "  127.0.1.1:22   -> host:(port interval + 22)"
   echo "  127.0.1.1:5984 -> host:(port interval + 84)"

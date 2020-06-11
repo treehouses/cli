@@ -61,7 +61,7 @@ load ../test-helper
 
 @test "$clinom services dokuwiki port" {
   run "${clicmd}" services dokuwiki port
-  assert_success && assert_output -p '443'
+  assert_success && assert_output -p '8093'
 }
 
 @test "$clinom services dokuwiki ps" {
@@ -71,7 +71,7 @@ load ../test-helper
 
 @test "$clinom services dokuwiki url" {
   run "${clicmd}" services dokuwiki url
-  assert_output -p '443'
+  assert_output -p '8093'
 }
 
 @test "$clinom services dokuwiki autorun" {

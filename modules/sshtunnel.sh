@@ -308,7 +308,7 @@ function sshtunnel {
             if [[ $line =~ "/usr/bin/autossh" ]]; then
               startline=$counter
             fi
-            if [[ "$line" == "$host" ]]; then
+            if [[ "$line" =~ "$host" ]]; then
               endline=$counter
               break
             fi

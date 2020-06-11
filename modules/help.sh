@@ -19,8 +19,8 @@ ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a 
 discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
          <rpi> [ipaddress|url|macaddress]
          <wifi>
-wifi <ESSID> [password]                   connects to a wifi network
-wifihidden <ESSID> [password]             connects to a hidden wifi network
+wifi <ESSID> [password] [identity]        connects to a wifi network
+wifihidden <ESSID> [password] [identity]  connects to a hidden wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]
 wifistatus                                displays signal strength in dBm and layman nomenclature
@@ -83,7 +83,11 @@ services                                  executes the given command on the spec
    [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
    [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
-   [grocy]                                grocy is a web-based, self-hosted groceries and household management utility for your home
+   [grocy]                                Grocy is a web-based, self-hosted groceries and household management utility for your home
+   [dokuwiki]                             Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database.
+   [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
+   [transmission]                         Transmission is a BitTorrent client with many powerful features.
+   [cloud9]                               Cloud9 is a complete web based ide with terminal access
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
@@ -95,7 +99,7 @@ coralenv [install|demo-on|demo-off]       plays with the coral environmental boa
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory
 temperature [celsius|fahrenheit|kelvin]   displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
-camera [on|off|capture|detect]                   enables camera, disables camera, captures png photo, detects camera module
+camera [on|off|detect|capture|record]     enables and disables camera, detects camera module version, captures photo, records video
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off
@@ -108,8 +112,9 @@ inspire [joke|qotd|random]                displays quote based on user input
 convert <input file> <output file>        converts video and audio files 
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog                                 displays the most recent changes to treehouses
-magazine <hackspace|magpi> [all|latest]   downloads specific magazine issue as a pdf based on user input
-                           [number]       
+magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
+         <helloworld> [all|latest|number]
+resolution <cea|dmt [modes]>              sets the screen resolution
 shutdown [now|in|force]                   shutdown the system
 EOF
   echo "$helpdefault"

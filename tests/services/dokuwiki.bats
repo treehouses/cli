@@ -56,7 +56,7 @@ load ../test-helper
 
 @test "$clinom services ports" {
   run "${clicmd}" services ports
-  assert_success && assert_output -p 'port 443'
+  assert_success && assert_output -p 'port 8093'
 }
 
 @test "$clinom services dokuwiki port" {

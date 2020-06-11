@@ -7,10 +7,13 @@ function magazine() {
     echo "ERROR: no magazine type given"
     exit 1
   fi
+  if [ "$magtype" = "magpi" ] || [ "$magtype" = "helloworld" ] || [ "$magtype" = "hackspace" ] || [ "$magtype" = "wireframe" ]; then
+    /root/cli/magazine/$magtype.sh info
+    exit 0
+  fi
   if [ "$magtype" = "magpi" ]; then
     if [ "$req" = "" ]; then
-      echo "The MagPi is The Official Raspberry Pi magazine. Written by and for the community, it is packed with Raspberry Pi-themed projects, computing and electronics tutorials, how-to guides, and the latest news and reviews."
-      exit 0
+      /root/cli/magazine/magpi.sh info
     elif [[ "$req" =~ ^[0-9]+$ ]] || [[ "$req" = "latest" ]]; then
       checkinternet
       wget -q "https://magpi.raspberrypi.org/issues"

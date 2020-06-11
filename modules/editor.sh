@@ -118,9 +118,6 @@ function editor {
       elif [ "$2" == "edit" ]; then
         case "$EDITOR" in
           vim)
-            if [ ! -f /etc/vimrc/vimrc.local ]; then
-              cp "$TEMPLATES/editor/vim/vimrc_default" /etc/vim/vimrc.local
-            fi
             vim /etc/vim/vimrc.local
             ;;
           nano)

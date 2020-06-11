@@ -55,7 +55,7 @@ load ../test-helper
 
 @test "$clinom services cloud9 port" {
   run "${clicmd}" services cloud9 port
-  assert_success && assert_output -p '8000'
+  assert_success && assert_output -p '9999'
 }
 
 @test "$clinom services cloud9 ps" {
@@ -65,7 +65,7 @@ load ../test-helper
 
 @test "$clinom services cloud9 url" {
   run "${clicmd}" services cloud9 url
-  assert_output -p '8000'
+  assert_output -p '9999'
 }
 
 @test "$clinom services cloud9 autorun" {

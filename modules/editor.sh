@@ -39,6 +39,8 @@ function editor {
       cp "$TEMPLATES/editor/vim/vimrc_default" /etc/vim/vimrc 
       cp "$TEMPLATES/editor/nano/nanorc_default" /etc/nanorc
       rm -rf /etc/vim/vimrc.local
+      echo "Text editor is now vim, using the default config."
+      exit 0
       ;;
 
     set)
@@ -59,8 +61,10 @@ function editor {
           else
             sed -i -e "s/EDITOR=.*/EDITOR=$i/g" /etc/bash.bashrc
           fi 
+          "Text editor is now $i."
           exit 0
         fi 
+
         if [ "$i" == "$(echo $supported_editor | egrep -o '\S+$')" ]; then
           echo
           echo "Error: $2 is not a supported text editor."
@@ -92,6 +96,8 @@ function editor {
           emacs)
             ;;
         esac
+        echo "$EDITOR is now using config from file \"$2\"."
+        exit 0
 
       elif [ "$2" == "alternate" ]; then
         case "$EDITOR" in 
@@ -106,6 +112,25 @@ function editor {
           emacs)
             ;;
         esac
+        echo "$EDITOR is now using the alternate config."
+        exit 0
+
+      elif [ "$2" == "edit" ]; then
+        case "$EDITOR" in
+          vim)
+            if [ ! -f /etc/vimrc/vimrc.local ]; then
+              cp "$TEMPLATES/editor/vim/vimrc_default" /etc/vim/vimrc.local
+            fi
+            vim /etc/vim/vimrc.local
+            ;;
+          nano)
+            nano /etc/nanorc
+            ;;
+          emacs)
+            ;;
+        esac
+        echo "$EDITOR is now using the alternate config."
+        exit 0
 
       elif [ "$2" == "default" ]; then
         case "$EDITOR" in 
@@ -119,12 +144,15 @@ function editor {
           emacs)
             ;;
         esac
+        echo "$EDITOR config reset to default."
+        exit 0
 
       else
         echo
-        echo "Error: No such option as $2."
-        echo "Use \"$BASENAME editor config [/path/to/file]\""
-        echo "or \"$BASENAME editor config [default/alternate]\""
+        echo "Error: No such option as \"$2\"."
+        echo "Usages: \"$BASENAME editor config [/path/to/file]\""
+        echo "        \"$BASENAME editor config [default/alternate]\""
+        echo "        \"$BASENAME editor config edit\""
         echo
         exit 1
       fi
@@ -132,7 +160,7 @@ function editor {
 
     *)
       echo 
-      echo "Error: Arguments error."
+      echo "Error: No such option as \"$1\"."
       echo
       editor_help
       exit 1
@@ -153,5 +181,6 @@ function editor_help {
   echo "       $BASENAME editor config [/path/to/file]  sets a file as the config of current editor"
   echo "       $BASENAME editor config default          uses default config for current editor"
   echo "       $BASENAME editor config alternate        uses alternate config for current editor"
+  echo "       $BASENAME editor config edit             edit config of the current editor"
   echo 
 }

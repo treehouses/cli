@@ -107,7 +107,7 @@ services                                  executes the given command on the spec
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
    [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
    [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
-   [grocy]                                grocy is a web-based, self-hosted groceries and household management utility for your home
+   [grocy]                                Grocy is a web-based, self-hosted groceries and household management utility for your home
    [dokuwiki]                             Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database.
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]

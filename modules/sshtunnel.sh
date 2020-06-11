@@ -165,9 +165,6 @@ function sshtunnel {
                     fi
                   done < <(cat /etc/tunnel)
 
-                  echo $monitoringport
-                  echo $((portinterval + offset ))
-
                   if [ "$monitoringport" -eq "$((portinterval + offset))" ]; then
                     echo "Error: port conflict with monitoring port"
                     echo "Trying to add $((portinterval + offset)) which conflicts with monitoring port $monitoringport"
@@ -231,12 +228,30 @@ function sshtunnel {
                 if [ "$found" = true ]; then
                   echo "Port already exists"
                 else
-                  sed -i "/^$host/i -R $port:127.0.1.1:$actual \\\\" /etc/tunnel
-                  echo "Added $actual -> $port for host $host"
-                  
-                  pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
-                  if [ ! -z "$pid" ]; then
-                    kill -- -$pid
+                  # find monitoring port 
+                  while read -r line; do
+                    if [[ $line =~ "/usr/bin/autossh" ]]; then
+                      monitoringport=$(echo $line | grep -oP "(?<=\-M )(.*?) ")
+                    fi
+                    if [ ! -z "$monitoringport" ] && [[ "$line" =~ "$host" ]]; then
+                      break
+                    fi
+                    if [ ! -z "$monitoringport" ] && [ -z "$line" ]; then
+                      monitoring=""
+                    fi
+                  done < <(cat /etc/tunnel)
+
+                  if [ "$monitoringport" -eq "$port" ]; then
+                    echo "Error: port conflict with monitoring port"
+                    echo "Trying to add $port which conflicts with monitoring port $monitoringport"
+                  else
+                    sed -i "/^$host/i -R $port:127.0.1.1:$actual \\\\" /etc/tunnel
+                    echo "Added $actual -> $port for host $host"
+                    
+                    pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
+                    if [ ! -z "$pid" ]; then
+                      kill -- -$pid
+                    fi
                   fi
                 fi
               else

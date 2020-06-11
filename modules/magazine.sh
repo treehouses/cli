@@ -8,9 +8,15 @@ function magazine() {
     exit 1
   fi
   if [ "$magtype" = "magpi" ] || [ "$magtype" = "helloworld" ] || [ "$magtype" = "hackspace" ] || [ "$magtype" = "wireframe" ]; then
-    /root/cli/magazine/$magtype.sh info
-    exit 0
+    if [ "$req" = "" ]; then
+      /root/cli/magazine/$magtype.sh info
+    else
+      echo in progress
+    fi
+  else
+    echo "Please specify a valid magazine type, these include: magpi, hackspace, wireframe, helloworld"
   fi
+  exit 0
   if [ "$magtype" = "magpi" ]; then
     if [ "$req" = "" ]; then
       /root/cli/magazine/magpi.sh info

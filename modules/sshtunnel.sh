@@ -165,9 +165,10 @@ function sshtunnel {
                     fi
                   done < <(cat /etc/tunnel)
 
-                  if [ "$monitoringport" -eq "$((portinterval + offset))" ]; then
+                  if [ "$monitoringport" -eq "$((portinterval + offset))" ] || [ "$((monitoringport + 1))" -eq "$((portinterval + offset))" ]; then
                     echo "Error: port conflict with monitoring port"
                     echo "Trying to add $((portinterval + offset)) which conflicts with monitoring port $monitoringport"
+                    echo "Monitoring ports ${monitoringport::-1} and $((monitoringport + 1)) must be clear"
                   else
                     sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
                     echo "Added $actual -> $((portinterval + offset)) for host $host"
@@ -241,9 +242,10 @@ function sshtunnel {
                     fi
                   done < <(cat /etc/tunnel)
 
-                  if [ "$monitoringport" -eq "$port" ]; then
+                  if [ "$monitoringport" -eq "$port" ] || [ "$((monitoringport + 1))" -eq "$port" ]; then
                     echo "Error: port conflict with monitoring port"
                     echo "Trying to add $port which conflicts with monitoring port $monitoringport"
+                    echo "Monitoring ports ${monitoringport::-1} and $((monitoringport + 1)) must be clear"
                   else
                     sed -i "/^$host/i -R $port:127.0.1.1:$actual \\\\" /etc/tunnel
                     echo "Added $actual -> $port for host $host"

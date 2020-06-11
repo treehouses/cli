@@ -606,7 +606,7 @@ function sshtunnel_help {
   echo "      port <port> [host]                       removes a single port from an existing host"
   echo "      host <host>                              removes all tunnels from an existing host"
   echo
-  echo "  list | \" \" [host]                      lists all existing tunnels to all hosts or the given host"
+  echo "  \" \" | list [host]                      lists all existing tunnels to all hosts or the given host"
   echo
   echo "  check                                    runs a checklist of tests"
   echo

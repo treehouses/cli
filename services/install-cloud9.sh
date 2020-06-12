@@ -14,7 +14,7 @@ echo "    volumes:"
 echo "      - \"/srv/cloud9:/root/.cloud9\""
 echo "      - /var/run/docker.sock:/var/run/docker.sock"
 echo "    ports:"
-echo "     - 8000:8000"
+echo "     - 9999:8000"
 echo "version: \"2.1\""
   } > /srv/cloud9/cloud9.yml
   
@@ -42,7 +42,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "8000"
+  echo "9999"
 }
 
  #add size (in MB)

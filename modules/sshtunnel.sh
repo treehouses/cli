@@ -530,7 +530,7 @@ function sshtunnel {
           ;;
         now)
           checkargn $# 2
-          ports=()
+          notice_ports=()
           while read -r -u 9 line; do
             if [[ $line =~ "/usr/bin/autossh" ]]; then
               monitoringport=$(echo $line | grep -oP "(?<=\-M )(.*?) ")
@@ -540,18 +540,18 @@ function sshtunnel {
             if [ ! -z "$monitoringport" ] && echo $line | grep -oPq "(?<=\-R )(.*?) "; then
               local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
               external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
-              ports+=("$external:$local ")
+              notice_ports+=("$external:$local ")
             fi
 
             if [ ! -z "$monitoringport" ] && [ ! -z "$host" ]; then
               message+="$host:$monitoringport \\n"
-              for i in "${ports[@]}"; do
+              for i in "${notice_ports[@]}"; do
                 message+=$i
               done
               message+=" \\n"
               monitoringport=""
               host=""
-              ports=()
+              notice_ports=()
             fi
 
           done 9< /etc/tunnel

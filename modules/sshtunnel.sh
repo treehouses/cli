@@ -33,7 +33,6 @@ function sshtunnel {
             echo "user@host"
             exit 1
           fi
-
           hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
 
           # check if host already exists
@@ -60,7 +59,6 @@ function sshtunnel {
           if [ ! -f "/root/.ssh/id_rsa" ]; then
             ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
           fi
-
           cat /root/.ssh/id_rsa.pub
 
           keys=$(ssh-keyscan -H "$hostname" 2>"$LOGFILE")
@@ -86,7 +84,6 @@ function sshtunnel {
             echo "-R $portmunin:127.0.1.1:4949 \\"
             echo "$host # $((portinterval - portint_offset))"
           } >> /etc/tunnel
-
           chmod +x /etc/tunnel
 
           if ! grep -q "\\-f \"/etc/tunnel\"" /etc/rc.local 2>"$LOGFILE"; then
@@ -537,6 +534,7 @@ function sshtunnel {
             elif echo $line | grep -q "[]@[]"; then
               host=$(echo $line | awk '{print $1}')
             fi
+
             if [ ! -z "$monitoringport" ] && echo $line | grep -oPq "(?<=\-R )(.*?) "; then
               local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
               external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
@@ -553,7 +551,6 @@ function sshtunnel {
               host=""
               notice_ports=()
             fi
-
           done 9< /etc/tunnel
           
           message+="\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"

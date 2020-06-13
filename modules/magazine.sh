@@ -1,33 +1,45 @@
+set -e
+
 function magazine() {
   checkargn $# 2
   magtype="$1"
   req="$2"
-  magnum="0"
   if [ -z "$magtype" ]; then
     echo "ERROR: no magazine type given"
     exit 1
   fi
   if [ "$magtype" = "magpi" ] || [ "$magtype" = "helloworld" ] || [ "$magtype" = "hackspace" ] || [ "$magtype" = "wireframe" ]; then
     if [ "$req" = "" ]; then
-      /root/cli/magazine/$magtype.sh info
+      /root/cli/magazine/download-$magtype.sh info
     elif [ "$req" = "latest" ]; then
       checkinternet
       if [ ! -d "$magtype" ]; then
         mkdir $magtype
       fi
       cd $magtype || return
-      /root/cli/magazine/$magtype.sh latest
+      /root/cli/magazine/download-$magtype.sh latest
       cd ..
-      echo "Issue saved in the $magtype directory"
+      echo "Latest issue saved in the $magtype directory"
     elif [ "$req" = "all" ]; then
       checkinternet
       if [ ! -d "$magtype" ]; then
         mkdir $magtype
       fi
       cd $magtype || return
-      /root/cli/magazine/$magtype.sh all
+      /root/cli/magazine/download-$magtype.sh all
       cd ..
       echo "All current issues of $magtype are saved in the $magtype directory"
+    elif [[ "$req" =~ ^[0-9]+$ ]]; then
+      checkinternet
+      if [ ! -d "$magtype" ]; then
+        mkdir $magtype
+      fi
+      cd $magtype || return
+      /root/cli/magazine/download-$magtype.sh number $req
+      cd ..
+      echo "Issue $req saved in the $magtype directory"
+    else
+      magazine_help
     fi
   else
     echo "Please specify a valid magazine type, these include: magpi, hackspace, wireframe, helloworld"

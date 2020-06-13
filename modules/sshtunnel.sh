@@ -139,7 +139,7 @@ function sshtunnel {
                   if [[ $line =~ 127.0.1.1:$actual ]]; then
                     exists=yes
                   fi
-                  if [ ! -z "$exists" ] && [[ "$line" =~ "$host" ]]; then
+                  if [ ! -z "$exists" ] && [[ $line = *$host* ]]; then
                     found=true
                     break
                   fi
@@ -157,7 +157,7 @@ function sshtunnel {
                     if [[ $line =~ "/usr/bin/autossh" ]]; then
                       monitoringport=$(echo $line | grep -oP "(?<=\-M )(.*?) ")
                     fi
-                    if [ ! -z "$monitoringport" ] && [[ "$line" =~ "$host" ]]; then
+                    if [ ! -z "$monitoringport" ] && [[ $line = *$host* ]]; then
                       break
                     fi
                     if [ ! -z "$monitoringport" ] && [ -z "$line" ]; then
@@ -216,7 +216,7 @@ function sshtunnel {
                   if [[ $line =~ $port:127.0.1.1:$actual ]]; then
                     exists=yes
                   fi
-                  if [ ! -z "$exists" ] && [[ "$line" =~ "$host" ]]; then
+                  if [ ! -z "$exists" ] && [[ $line = *$host* ]]; then
                     found=true
                     break
                   fi
@@ -234,7 +234,7 @@ function sshtunnel {
                     if [[ $line =~ "/usr/bin/autossh" ]]; then
                       monitoringport=$(echo $line | grep -oP "(?<=\-M )(.*?) ")
                     fi
-                    if [ ! -z "$monitoringport" ] && [[ "$line" =~ "$host" ]]; then
+                    if [ ! -z "$monitoringport" ] && [[ $line = *$host* ]]; then
                       break
                     fi
                     if [ ! -z "$monitoringport" ] && [ -z "$line" ]; then
@@ -315,7 +315,7 @@ function sshtunnel {
             if [[ $line =~ 127.0.1.1:$port ]]; then
               final=$counter
             fi
-            if [ ! -z "$final" ] && [[ "$line" =~ "$host" ]]; then
+            if [ ! -z "$final" ] && [[ $line = *$host* ]]; then
               found=true
               break
             fi
@@ -357,7 +357,7 @@ function sshtunnel {
             if [[ $line =~ "/usr/bin/autossh" ]]; then
               startline=$counter
             fi
-            if [[ "$line" =~ "$host" ]]; then
+            if [[ $line = *$host* ]]; then
               endline=$counter
               break
             fi
@@ -403,7 +403,7 @@ function sshtunnel {
             external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
             ports[$local]=$external
           elif echo $line | grep -q "[]@[]"; then
-            if [[ "$line" =~ "$host" ]]; then
+            if [[ $line = *$host* ]]; then
               echo "Ports:"
               echo "     local    ->   external"
               for i in "${!ports[@]}"; do
@@ -415,6 +415,7 @@ function sshtunnel {
                 fi
               done
               echo "    └─── Host: $line"
+              echo
               break
             else
               unset ports

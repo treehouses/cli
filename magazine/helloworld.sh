@@ -1,5 +1,29 @@
 function all {
-  exit 0
+  wget -q "https://helloworld.raspberrypi.org/issues"
+  mv ./issues ./issues.txt
+  latest="$(sed -n '146p' issues.txt)"
+  rm ./issues.txt
+  latest=${latest:25}
+  quoteloc="${latest%%\"*}"
+  ind=${#quoteloc}
+  latest=${latest:0:$ind}
+  magnum=$latest
+  echo "Fetching all HelloWorld magazines..."
+  for i in $(seq 1 $latest);
+  do
+    if [ -f "HelloWorld$i.pdf" ]; then
+      continue
+    fi
+    wget -q "https://helloworld.raspberrypi.org/issues/$i/pdf"
+    mv ./pdf ./pdf.txt
+    url="$(sed -n '10p' pdf.txt)"
+    rm ./pdf.txt
+    url=${url:44}
+    quoteloc="${url%%\"*}"
+    ind=${#quoteloc}
+    url=${url:0:$ind}
+    wget -bqc -O "HelloWorld$i.pdf" $url
+  done
 }
 
 function latest {

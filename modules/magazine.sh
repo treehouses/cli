@@ -19,8 +19,15 @@ function magazine() {
       /root/cli/magazine/$magtype.sh latest
       cd ..
       echo "Issue saved in the $magtype directory"
-    else
-      echo in progress
+    elif [ "$req" = "all" ]; then
+      checkinternet
+      if [ ! -d "$magtype" ]; then
+        mkdir $magtype
+      fi
+      cd $magtype || return
+      /root/cli/magazine/$magtype.sh all
+      cd ..
+      echo "All current issues of $magtype are saved in the $magtype directory"
     fi
   else
     echo "Please specify a valid magazine type, these include: magpi, hackspace, wireframe, helloworld"

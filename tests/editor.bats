@@ -6,7 +6,7 @@ load test-helper
   assert_success && assert_output -p 'default'
 }
 
-@test "$clinom editor" {
+@test "$clinom editor 1" {
   run "${clicmd}" editor
   assert_success && assert_output -p 'vim'
 }
@@ -16,7 +16,7 @@ load test-helper
   assert_success && assert_output -p 'nano'
 }
 
-@test "$clinom editor" {
+@test "$clinom editor 2" {
   run "${clicmd}" editor
   assert_success && assert_output -p 'nano'
 }
@@ -29,4 +29,9 @@ load test-helper
 @test "$clinom editor config default" {
   run "${clicmd}" editor config default
   assert_success && assert_output -p 'default'
+}
+
+@test "$clinom editor config edit" {
+  run "${clicmd}" editor config edit
+  assert_success
 }

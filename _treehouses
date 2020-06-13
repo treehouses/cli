@@ -362,6 +362,7 @@ treehouses wifihidden
 treehouses wifistatus
 treehouses convert
 treehouses resolution
+treehouses editor 
 treehouses editor default
 treehouses editor set vim
 treehouses editor set emacs

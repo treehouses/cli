@@ -1,5 +1,3 @@
-#! /bin/bash 
-
 function editor {
   checkroot
 
@@ -31,6 +29,7 @@ function editor {
 
   case "$1" in 
     default)
+      checkargn $# 1
       if ! grep EDITOR /etc/bash.bashrc | grep -q export /etc/bash.bashrc; then
         echo "export EDITOR=vim" >> /etc/bash.bashrc
       else
@@ -51,6 +50,8 @@ function editor {
         editor_help
         exit 1
       fi
+
+      checkargn $# 2
 
       supported_editor="vim nano emacs"
       
@@ -83,6 +84,8 @@ function editor {
         editor_help
         exit 1
       fi 
+
+      checkargn $# 2
 
       if [ -f "$2" ]; then
         case "$EDITOR" in 

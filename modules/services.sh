@@ -627,6 +627,7 @@ function services_help {
   echo "  bookstack       Bookstack is a free and open source Wiki designed for creating beautiful documentation"
   echo "  grocy           grocy is web-based, self-hosted groceries and household management utility for your home"
   echo "  transmission    Transmission is a BitTorrent client with many powerful features"
+  echo "  piwigo          Piwigo is a photo gallery software to publish and manage your collection of pictures"
   echo
   echo
   echo "Top-Level Commands:"

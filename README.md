@@ -110,6 +110,7 @@ services                                  executes the given command on the spec
    [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
    [grocy]                                grocy is a web-based, self-hosted groceries and household management utility for your home
    [transmission]                         Transmission is a BitTorrent client with many powerful features.
+   [piwigo]                               Piwigo is a photo gallery software to publish and manage your collection of pictures.
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

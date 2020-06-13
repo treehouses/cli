@@ -52,9 +52,7 @@ function sshtunnel {
           # default list of ports
           portssh=$((portinterval + 22 - portint_offset))
           portweb=$((portinterval + 80 - portint_offset))
-          portcouchdb=$((portinterval + 84 - portint_offset))
           portnewcouchdb=$((portinterval + 82 - portint_offset))
-          portmunin=$((portinterval + 49 - portint_offset))
 
           if [ ! -f "/root/.ssh/id_rsa" ]; then
             ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
@@ -78,10 +76,8 @@ function sshtunnel {
             echo
             echo "/usr/bin/autossh -f -T -N -q -4 -M $portinterval \\"
             echo "-R $portssh:127.0.1.1:22 \\"
-            echo "-R $portcouchdb:127.0.1.1:5984 \\"
             echo "-R $portweb:127.0.1.1:80 \\"
             echo "-R $portnewcouchdb:127.0.1.1:2200 \\"
-            echo "-R $portmunin:127.0.1.1:4949 \\"
             echo "$host # $((portinterval - portint_offset))"
           } >> /etc/tunnel
           chmod +x /etc/tunnel
@@ -592,10 +588,8 @@ function sshtunnel_help {
   echo
   echo "Default list of ports when adding a host:"
   echo "  127.0.1.1:22   -> host:(port interval + 22)"
-  echo "  127.0.1.1:5984 -> host:(port interval + 84)"
   echo "  127.0.1.1:80   -> host:(port interval + 80)"
   echo "  127.0.1.1:2200 -> host:(port interval + 82)"
-  echo "  127.0.1.1:4949 -> host:(port interval + 49)"
   echo
   echo "  add                                      adds tunnels / ports to the given host"
   echo "      host <port interval> [host]              adds a new set of default tunnels"

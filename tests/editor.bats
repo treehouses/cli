@@ -31,7 +31,3 @@ load test-helper
   assert_success && assert_output -p 'default'
 }
 
-@test "$clinom editor config edit" {
-  run "${clicmd}" editor config edit
-  assert_success
-}

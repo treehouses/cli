@@ -173,7 +173,7 @@ function sshtunnel {
                     sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
                     echo "Added $actual -> $((portinterval + offset)) for host $host"
 
-                    pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
+                    pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
                     if [ ! -z "$pid" ]; then
                       kill -- -$pid
                     fi
@@ -250,7 +250,7 @@ function sshtunnel {
                     sed -i "/^$host/i -R $port:127.0.1.1:$actual \\\\" /etc/tunnel
                     echo "Added $actual -> $port for host $host"
                     
-                    pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
+                    pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
                     if [ ! -z "$pid" ]; then
                       kill -- -$pid
                     fi
@@ -330,7 +330,7 @@ function sshtunnel {
             sed -i "$final d" /etc/tunnel
             echo "Removed $port for host $host"
 
-            pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
+            pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
             if [ ! -z "$pid" ]; then
               kill -- -$pid
             fi
@@ -372,7 +372,7 @@ function sshtunnel {
           sed -i "$((startline - 1)), $endline d" /etc/tunnel
           echo "Removed $host from /etc/tunnel"
 
-          pid=$(ps aux | grep "autossh" | grep "$host" | awk '{print $2}')
+          pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
           if [ ! -z "$pid" ]; then
             kill -- -$pid
           fi

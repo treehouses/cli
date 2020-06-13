@@ -1,6 +1,6 @@
 function bluetooth {
   local status macfile macadd btidfile bid nname
-  checkwrpi
+  checkrpiwireless
   checkroot
   checkargn $# 2
   status=$1

@@ -33,6 +33,14 @@ services:
       - /srv/piwigo/datadir:/var/lib/mysql
 EOF
 
+  # create .env with default values
+  {
+    echo "MYSQL_ROOT_PASSWORD_VAR=my-secret-pw"
+    echo "MYSQL_DATABASE_VAR=piwigo" 
+  } > /srv/piwigo/.env
+
+
+
   # add autorun
   cat << EOF > /srv/piwigo/autorun
 piwigo_autorun=true
@@ -45,9 +53,8 @@ EOF
 
 # environment var
 function uses_env {
-  echo "MYSQL_ROOT_PASSWORD_VAR=my-secret-pw"
-  echo "MYSQL_DATABASE_VAR=piwigo" 
-} > /srv/piwigo/.env
+  echo true
+}
 
 # add supported arm(s)
 function supported_arms {

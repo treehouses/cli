@@ -305,7 +305,7 @@ function sshtunnel {
           counter=1
           found=false
           while read -r line; do
-            if [[ $line =~ "-R $port:127.0.1.1" ]]; then
+            if [[ $line = *"-R $port:127.0.1.1"* ]]; then
               final=$counter
             fi
             if [ ! -z "$final" ] && [[ $line = *$host* ]]; then

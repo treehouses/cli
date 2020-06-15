@@ -616,4 +616,34 @@ function sshtunnel_help {
   echo "      off                                      turns off auto-reporting to gitter"
   echo "      now                                      immediately reports to gitter"
   echo
+  echo "Adding a port using offsets:"
+  echo "  If trying to add local port 100 with an offset of 200, run"
+  echo "      '$BASENAME sshtunnel add port offset 100 200 [\$host]'"
+  echo
+  echo "  The script will add an offset of 200 to the port interval for [\$host] and insert"
+  echo "  into /etc/tunnel"
+  echo "      '-R (port interval + 200):127.0.1.1:100 \\'"
+  echo
+  echo "  Resulting in"
+  echo "      Ports:"
+  echo "           local    ->   external"
+  echo "          ┌─ 100    ->     port interval + 200"
+  echo "          └─── Host: user@host # port interval"
+  echo
+  echo "Adding a port directly:"
+  echo "  If trying to add local port 100 with external port 20000, run"
+  echo "      '$BASENAME sshtunnel add port actual 100 20000 [\$host]'"
+  echo
+  echo "  The script will directly insert into /etc/tunnel"
+  echo "      '-R 20000:127.0.1.1:100 \\'"
+  echo
+  echo "  Resulting in"
+  echo "      Ports:"
+  echo "           local    ->   external"
+  echo "          ┌─ 100    ->     20000"
+  echo "          └─── Host: user@host # port interval"
+  echo
+  echo "Removing a port:"
+  echo "  A"
+  echo
 }

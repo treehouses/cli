@@ -100,7 +100,18 @@ function led {
       echo "Green LED: on 2 sec; off 0.5 sec"
       echo "Red LED: on 2 sec; off 0.5 sec"
       eid > "$LOGFILE"
-      ;;
+      ;;      
+    wazazi)
+      checkroot
+      echo "leds are set to wazazi mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: 1 sec off"
+      echo "Green LED: flash 6 times, on 2 sec"
+      echo "Red LED: 0.5 on, 0.25 off, 3 times"
+      echo "Green LED: 0.5 on, 0.25 off, 3 times"
+      echo "Both LED: 1 sec off"
+      newyear > "$LOGFILE"
+      ;;  
     onam)
       checkroot
       echo "leds are set to onam mode."
@@ -466,6 +477,35 @@ function eid {
   led green "$current_green"
 }
 
+function wazazi {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  set_brightness 0 0 && set_brightness 1 0
+  sleep 1
+
+  for i in 1 2 3 4 5 6
+  do
+    set_brightness 0 1 && sleep 0.5
+    set_brightness 0 0 && sleep 0.5
+    sleep 1
+  done
+
+  for i in 0 1 2
+  do
+    set_brightness 1 0 && set_brightness 0 1
+    sleep 0.25
+    set_brightness 1 1 && set_brightness 0 0
+    sleep 0.25
+  done
+
+  set_brightness 0 0 && set_brightness 1 0
+  sleep 1
+
+  led green "$current_green"
+  led red "$current_red"
+}
+
 function onam {
   current_red=$(led "red")
   current_green=$(led "green")
@@ -776,6 +816,9 @@ function led_help {
   echo "  $BASENAME led eid"
   echo "     This will set the mode of the led to eid"
   echo
+  echo "  $BASENAME led wazazi"
+  echo "      This will set the mode of the led to wazazi"
+  echo 
   echo "  $BASENAME led onam"
   echo "      This will set the mode of the led to onam"
   echo

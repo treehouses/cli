@@ -46,7 +46,7 @@ sshtunnel [add|remove|list|check|key]     helps adding sshtunnels
 led [green|red] [mode]                    sets the led mode
     [newyear|lunarnewyear|valentine]
     [carnival|lantern|stpatricks|easter]
-    [wazazi|eid|onam|diwali|thanksgiving]
+    [eid|wazazi|onam|diwali|thanksgiving]
     [christmas|heavymetal|dance|kecak|random]
 power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified

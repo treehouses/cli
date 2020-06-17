@@ -50,7 +50,7 @@ load ../test-helper
 
 @test "$clinom services invoiceninja port" {
   run "${clicmd}" services invoiceninja port
-  assert_success && assert_output -p '8089'
+  assert_success && assert_output -p '8090'
 }
 
 @test "$clinom services invoiceninja ps" {
@@ -60,7 +60,7 @@ load ../test-helper
 
 @test "$clinom services invoiceninja url" {
   run "${clicmd}" services invoiceninja url
-  assert_output -p '8089'
+  assert_output -p '8090'
 }
 
 @test "$clinom services invoiceninja autorun" {

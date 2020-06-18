@@ -379,9 +379,10 @@ function sshtunnel {
       ;;
     refresh)
       checkargn $# 1
-
+      count=$(pgrep -c autossh)
       pkill autossh
       bash /etc/tunnel
+      echo "Refreshed tunnels to $count host(s)"
       ;;
     list | "")
       checkargn $# 2

@@ -377,6 +377,12 @@ function sshtunnel {
           ;;
       esac
       ;;
+    refresh)
+      checkargn $# 1
+
+      pkill autossh
+      bash /etc/tunnel
+      ;;
     list | "")
       checkargn $# 2
       host=$2

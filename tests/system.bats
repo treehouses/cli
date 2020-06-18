@@ -18,7 +18,7 @@ load test-helper
 
 @test "$clinom system disk temperatrue" {
     run "${clicmd}" system disk temperature
-    assert_success && assert_output -p 'Disk' && ssert_output -p 'Temperature'
+    assert_success && assert_output -p 'Disk' && assert_output -p 'Temperature'
 }
 
 @test "$clinom system error" {

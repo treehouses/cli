@@ -10,7 +10,7 @@ function magazine() {
     exit 1
   fi
   for file in $MAGAZINE/*; do
-      if [ $magtype = $(echo "${file##*/}" | sed -e 's/^download-//' -e 's/.sh$//') ]; then
+      if [ "$magtype" = $(echo "${file##*/}" | sed -e 's/^download-//' -e 's/.sh$//') ]; then
         available_mag=1
       fi
   done

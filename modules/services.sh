@@ -629,6 +629,7 @@ function services_help {
   echo "  bookstack       Bookstack is a free and open source Wiki designed for creating beautiful documentation"
   echo "  transmission    Transmission is a BitTorrent client with many powerful features"
   echo "  cloud9          Cloud9 is a complete web based IDE with terminal access"
+  echo "  pylon           Pylon is a web based integrated development environment built with Node.js as a backend and with a supercharged JavaScript/HTML5 frontend"
   echo
   echo
   echo "Top-Level Commands:"

@@ -441,13 +441,12 @@ function sshtunnel {
       ;;
     active)
       checkargn $# 1
-      
-
-
-
-
-
-
+      echo "Active tunnels:"
+      pgrep -a "ssh" | grep "/usr/bin/ssh" | while read -r line; do
+        host=$(echo $line | awk '{print $NF}')
+        tunnels=$(echo $line | grep -o "\-R" | wc -l)
+        echo "  - $host, $((tunnels - 1)) active ports"
+      done
       ;;
     check)
       checkargn $# 1

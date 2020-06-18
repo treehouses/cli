@@ -8,7 +8,7 @@ Vagrant.configure(2) do |config|
   end
 
   BOX = "treehouses/buster64"
-  BOX_VERSION = "0.13.19"
+  BOX_VERSION = "0.13.25"
 
   config.vm.define "cli" do |cli|
     cli.vm.box = BOX

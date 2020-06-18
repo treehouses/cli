@@ -21,7 +21,7 @@ services:
       - DB_USERNAME=\${DB_USERNAME}
       - DB_PASSWORD=\${DB_PASSWORD}
     volumes:
-      - "/srv/grocy.sh:/root/.grocy"
+      - "/srv/grocy:/root/.grocy"
     ports:
       - 8091:80
     restart: unless-stopped

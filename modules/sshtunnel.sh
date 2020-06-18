@@ -378,11 +378,24 @@ function sshtunnel {
       esac
       ;;
     refresh)
-      checkargn $# 1
-      count=$(pgrep -c autossh)
-      pkill autossh
-      bash /etc/tunnel
-      echo "Refreshed tunnels to $count host(s)"
+      checkargn $# 2
+      host=$2
+
+      if [ -z "$host" ]; then
+        count=$(pgrep -c autossh)
+        pkill autossh
+        bash /etc/tunnel
+        echo "Refreshed tunnels to $count host(s)"
+      else
+        pid=$(pgrep -a "autossh" | grep "$host$" | awk '{print $1}')
+        if [ ! -z "$pid" ]; then
+          kill -- -$pid
+          bash /etc/tunnel
+          echo "Refreshed tunnels to $host"
+        else
+          echo "No tunnels to $host active"
+        fi
+      fi
       ;;
     list | "")
       checkargn $# 2

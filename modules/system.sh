@@ -24,13 +24,13 @@ function system {
     do 
       for var in "$@"
       do 
-        if [[ ! " ${options[@]} " =~ " ${var} " ]]; then
-          if [[ ! " ${errors[@]} " =~ " ${var} " ]]; then
+        if [[ ! " ${options[*]} " =~ " ${var} " ]]; then
+          if [[ ! " ${errors[*]} " =~ " ${var} " ]]; then
             errors+=("$var")
           fi
           continue
         fi
-        if [ "$var" == "${options[$i]}" ] && [[ ! " ${arguments[@]} " =~ " ${var} " ]]; then 
+        if [ "$var" == "${options[$i]}" ] && [[ ! " ${arguments[*]} " =~ " ${var} " ]]; then 
           ${functions[$i]}
           arguments+=("$var")
         fi 

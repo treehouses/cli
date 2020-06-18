@@ -439,6 +439,16 @@ function sshtunnel {
         done 9< /etc/tunnel
       fi
       ;;
+    active)
+      checkargn $# 1
+      
+
+
+
+
+
+
+      ;;
     check)
       checkargn $# 1
       if [ -f "/etc/tunnel" ]; then

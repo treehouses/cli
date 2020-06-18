@@ -34,11 +34,10 @@ services:
 EOF
 
   # create .env with default values
-  {
-    echo "MYSQL_ROOT_PASSWORD_VAR=my-secret-pw"
-    echo "MYSQL_DATABASE_VAR=piwigo" 
-  } > /srv/piwigo/.env
-
+  cat << EOF  > /srv/piwigo/.env
+    MYSQL_ROOT_PASSWORD_VAR=my-secret-pw
+    MYSQL_DATABASE_VAR=piwigo
+EOF
 
 
   # add autorun

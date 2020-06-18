@@ -10,14 +10,14 @@ function magazine() {
     exit 1
   fi
   for file in $MAGAZINE/*; do
-      if [ "$magtype" = $(echo "${file##*/}" | sed -e 's/^download-//' -e 's/.sh$//') ]; then
+      if [ $magtype = "$(echo "${file##*/}" | sed -e 's/^download-//' -e 's/.sh$//')" ]; then
         available_mag=1
       fi
   done
   if [ $available_mag = 0 ]; then
     echo "Please specify a valid magazine type, these include: magpi, hackspace, wireframe, helloworld"
   elif [ "$req" = "" ]; then
-    $MAGAZINE/download-$magtype.sh $req
+    $MAGAZINE/download-$magtype.sh info
   elif [ "$req" = "latest" ] || [ "$req" = "all" ] || [[ "$req" =~ ^[0-9]+$ ]]; then
     checkinternet
     if [ ! -d "$magtype" ]; then

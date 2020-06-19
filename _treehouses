@@ -296,6 +296,7 @@ treehouses sshkey github adduser
 treehouses sshkey github deleteuser
 treehouses sshkey list
 treehouses sshtunnel
+treehouses sshtunnel active
 treehouses sshtunnel add host
 treehouses sshtunnel add port actual
 treehouses sshtunnel add port offset

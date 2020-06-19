@@ -35,8 +35,8 @@ EOF
 
   # create .env with default values
   cat << EOF  > /srv/piwigo/.env
-    MYSQL_ROOT_PASSWORD_VAR=my-secret-pw
-    MYSQL_DATABASE_VAR=piwigo
+MYSQL_ROOT_PASSWORD_VAR=my-secret-pw
+MYSQL_DATABASE_VAR=piwigo
 EOF
 
 

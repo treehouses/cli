@@ -624,7 +624,7 @@ function sshtunnel_help {
   echo
   echo "  refresh [host]                           kills and restarts tunnels to all hosts or given host"
   echo
-  echo "  \" \" | list [host]                      lists all existing tunnels to all hosts or the given host"
+  echo "  \" \" | list [host]                        lists all existing tunnels to all hosts or the given host"
   echo
   echo "  check                                    runs a checklist of tests"
   echo

@@ -588,7 +588,7 @@ function sshtunnel {
       ;;
     *)
       echo "Error: unknown command"
-      echo "Usage: $BASENAME sshtunnel [add | remove | list | check | key | notice]"
+      echo "Usage: $BASENAME sshtunnel [add | remove | refresh | list | check | key | notice]"
       exit 1
       ;;
   esac
@@ -596,7 +596,7 @@ function sshtunnel {
 
 function sshtunnel_help {
   echo
-  echo "Usage: $BASENAME sshtunnel [add | remove | list | check | key | notice]"
+  echo "Usage: $BASENAME sshtunnel [add | remove | refresh | list | check | key | notice]"
   echo
   echo "Helps setting up sshtunnels to multiple hosts"
   echo
@@ -621,6 +621,8 @@ function sshtunnel_help {
   echo "      all                                      completely removes all tunnels to all hosts"
   echo "      port <port> [host]                       removes a single port from an existing host"
   echo "      host <host>                              removes all tunnels from an existing host"
+  echo
+  echo "  refresh [host]                           kills and restarts tunnels to all hosts or given host"
   echo
   echo "  \" \" | list [host]                      lists all existing tunnels to all hosts or the given host"
   echo

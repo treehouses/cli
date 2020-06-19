@@ -74,6 +74,7 @@ treehouses default notice
 treehouses default tunnel
 treehouses detect
 treehouses detect arm
+treehouses detect arch
 treehouses detect bluetooth
 treehouses detect rpi
 treehouses detect rpi full
@@ -150,6 +151,7 @@ treehouses help wifihidden
 treehouses help wifistatus
 treehouses image
 treehouses inspire
+treehouses inspire fact
 treehouses inspire joke
 treehouses inspire qotd
 treehouses inspire random
@@ -293,7 +295,10 @@ treehouses sshkey github addteam
 treehouses sshkey github adduser
 treehouses sshkey github deleteuser
 treehouses sshkey list
-treehouses sshtunnel add
+treehouses sshtunnel
+treehouses sshtunnel add host
+treehouses sshtunnel add port actual
+treehouses sshtunnel add port offset
 treehouses sshtunnel check
 treehouses sshtunnel key
 treehouses sshtunnel list
@@ -304,7 +309,9 @@ treehouses sshtunnel notice list
 treehouses sshtunnel notice now
 treehouses sshtunnel notice off
 treehouses sshtunnel notice on
-treehouses sshtunnel remove
+treehouses sshtunnel remove all
+treehouses sshtunnel remove host
+treehouses sshtunnel remove port
 treehouses staticwifi
 treehouses temperature
 treehouses temperature celsius

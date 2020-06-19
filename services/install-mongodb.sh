@@ -6,12 +6,13 @@ function install {
 
   # create yml(s)
   {
-    echo "version: '3'"
+    echo "version: '3.7'"
     echo
     echo "services:"
     echo "  mongodb:"
     echo "    image: treehouses/rpi-mongo"
     echo "    restart: always "
+    echo "    init: true"
     echo "    ports:"
     echo "      -  \"27017:27017"\"
     echo "      -  \"27018:27018"\"
@@ -47,8 +48,8 @@ function uses_env {
 
 # add supported arm(s)
 function supported_arms {
-  echo "v7l"
-  echo "v6l"
+  echo "armv7l"
+  echo "armv6l"
 }
 
 # add port(s)

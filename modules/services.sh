@@ -295,7 +295,11 @@ function services {
         url)
           checkargn $# 3
           if [ "$command_option" = "local" ]; then
-            base_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+            base_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*')
+            if [[ "$base_url" =~ "," ]]; then
+              base_url=$(echo $base_url | cut -f1 -d,)
+            fi
+
             for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
             do
               local_url="$base_url:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
@@ -507,7 +511,7 @@ function check_arm {
   arms=($(source $SERVICES/install-${1}.sh && supported_arms))
   for i in "${arms[@]}"
   do
-    if [ "$(detectarm)" = "$i" ]; then
+    if [ "$(detect arch)" = "$i" ]; then
       return 0
     fi
   done
@@ -624,9 +628,11 @@ function services_help {
   echo "  musicblocks     Music Blocks is a programming language and collection of manipulative tools for exploring musical and mathematical concepts in an integrative and fun way." 
   echo "  minetest        Minetest is an open source infinite-world block sandbox game engine with survival and crafting"
   echo "  invoiceninja    Invoiceninja is the leading self-host platform to create invoices."
+  echo "  grocy           Grocy is web-based, self-hosted groceries and household management utility for your home"
+  echo "  dokuwiki        Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database."
   echo "  bookstack       Bookstack is a free and open source Wiki designed for creating beautiful documentation"
-  echo "  grocy           grocy is web-based, self-hosted groceries and household management utility for your home"
   echo "  transmission    Transmission is a BitTorrent client with many powerful features"
+  echo "  cloud9          Cloud9 is a complete web based IDE with terminal access"
   echo
   echo
   echo "Top-Level Commands:"

@@ -1,56 +1,9 @@
 #!/bin/bash
 
-MODE=$3
-
-function install (){
+function install {
   # create service directory
   mkdir -p /srv/mongodb
-  
-  RPI_TYPE=$(treehouses detect rpi)
 
-  if [[ $RPI_TYPE == *"RPI4"* ]] || [[ $RPI_TYPE == *"RPI3"* ]]; then
-    if [[ -z $MODE ]]; then
-    {
-      echo "version: '3'"
-      echo
-      echo "services:"
-      echo "  mongodb:"
-      echo "    image: treehouses/rpi-mongo"
-      echo "    restart: always "
-      echo "    ports:"
-      echo "      -  \"27017:27017"\"
-      echo "      -  \"27018:27018"\"
-      echo "      -  \"27019:27019"\"
-      echo "      -  \"28017:28017"\"
-      echo "    environment: "
-      echo "      - MONGO_INITDB_ROOT_USERNAME=\${MONGO_INITDB_ROOT_USERNAME_VAR}"
-      echo "      - MONGO_INITDB_ROOT_PASSWORD=\${MONGO_INITDB_ROOT_PASSWORD_VAR}"
-    } > /srv/mongodb/mongodb.yml
-   else
-   {
-     echo "version: '3'"
-     echo   
-     echo "services:"
-     echo
-     echo "  mongo:"
-     echo "    image: treehouses/rpi-mongo"
-     echo "    restart: always"
-     echo "    environment:"
-     echo "      - MONGO_INITDB_ROOT_USERNAME=\${MONGO_INITDB_ROOT_USERNAME_VAR}"
-     echo "      - MONGO_INITDB_ROOT_PASSWORD=\${MONGO_INITDB_ROOT_PASSWORD_VAR}"
-     echo
-     echo "  mongo-express:"
-     echo "    image: treehouses/rpi-mongo-express"
-     echo "    restart: always"
-     echo "    ports:"
-     echo "      - \"8090:8081"\"
-     echo "    environment:"
-     echo "      - MONGO_INITDB_ROOT_USERNAME=\${MONGO_INITDB_ROOT_USERNAME_VAR}"
-     echo "      - MONGO_INITDB_ROOT_PASSWORD=\${MONGO_INITDB_ROOT_PASSWORD_VAR}"
-   } > /srv/mongodb/mongodb.yml
-   fi
-  else
-  
   # create yml(s)
   {
     echo "version: '3.7'"
@@ -69,14 +22,13 @@ function install (){
     echo "      - MONGO_INITDB_ROOT_USERNAME=\${MONGO_INITDB_ROOT_USERNAME_VAR}"
     echo "      - MONGO_INITDB_ROOT_PASSWORD=\${MONGO_INITDB_ROOT_PASSWORD_VAR}"
   } > /srv/mongodb/mongodb.yml
-  fi
 
   # create .env with default values
   {
     echo "MONGO_INITDB_ROOT_USERNAME_VAR=root"
     echo "MONGO_INITDB_ROOT_PASSWORD_VAR=example"
   } > /srv/mongodb/.env
-
+  
   # add autorun
   {
     echo "mongodb_autorun=true"

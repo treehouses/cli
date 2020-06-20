@@ -139,7 +139,7 @@ changelog [view|compare]                  displays the most recent changes to tr
 magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
          <helloworld> [all|latest|number]
 resolution <cea|dmt [modes]>              sets the screen resolution
-system [cpu|ram||disk|volt|temperature]   display real system informations
+system [cpu|ram|disk|volt|temperature]    display real system informations
 shutdown [now|in|force]                   shutdown the system
 ```
 

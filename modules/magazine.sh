@@ -1,5 +1,3 @@
-set -e
-
 function magazine() {
   checkargn $# 2
   magtype="$1"

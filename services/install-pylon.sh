@@ -10,21 +10,22 @@ echo "version: 2.1"
 echo "services:"
 echo "  pylon:"
 echo "    image: linuxserver/pylon"
-echo "    environment:"
-echo "      - PYUSER=\${PYUSER}"
-echo "      - PYPASS=\${PYUSER}"
+#echo "    environment:"
+#echo "      - PYUSER=\${PYUSER}"
+#echo "      - PYPASS=\${PYUSER}"
 echo "    volumes:"
 echo "      - \"/srv/pylon:/root/.pylon\""
 echo "      - /var/run/docker.sock:/var/run/docker.sock"
 echo "    ports:"
 echo "     - 3131:3131"
+echo "version: \"2.1\""
   } > /srv/pylon/pylon.yml
 
   # create .env with default values
-  {
-    echo "PYUSER=root"
-    echo "PYPASS=root"
-  } > /srv/pylon/.env
+#  {
+#    echo "PYUSER=root"
+#    echo "PYPASS=root"
+#  } > /srv/pylon/.env
   
   # add autorun
   {
@@ -40,7 +41,7 @@ echo "     - 3131:3131"
 
 # environment var
 function uses_env {
-  echo true
+  echo false
 }
 
 # add supported arm(s)

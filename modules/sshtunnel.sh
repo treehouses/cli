@@ -475,11 +475,32 @@ function sshtunnel {
       fi
       ;;
     key)
-      checkargn $# 1
-      if [ ! -f "/root/.ssh/id_rsa" ]; then
-          ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
-      fi
-      cat /root/.ssh/id_rsa.pub
+      checkargn $# 2
+      case "$2" in
+        "")
+          if [ ! -f "/root/.ssh/id_rsa" ]; then
+              ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
+          fi
+          cat /root/.ssh/id_rsa.pub
+          ;;
+        verify)
+          if [ -f "/root/.ssh/id_rsa" ] && [ -f "/root/.ssh/id_rsa.pub" ]; then
+            verify=$(diff <( ssh-keygen -y -e -f "/root/.ssh/id_rsa" ) <( ssh-keygen -y -e -f "/root/.ssh/id_rsa.pub" ))
+            if [ "$verify" != "" ]; then
+              echo -e "Public and private rsa keys ${RED}do not match${NC}"
+            else
+              echo -e "Public and private rsa keys ${GREEN}match${NC}"
+            fi
+          else
+            echo "Missing public / private rsa keys"
+          fi
+          ;;
+        *)
+          echo "Error: unknown command"
+          echo "Usage: $BASENAME sshtunnel key [verify]"
+          exit 1
+          ;;
+      esac
       ;;
     notice)
       case "$2" in

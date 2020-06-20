@@ -89,9 +89,12 @@ function system_help {
   echo
   echo "  Examples:"
   echo "    $BASENAME system"
+  echo "                            display all available system info"
   echo
-  echo "    $BASENAME volt"
+  echo "    $BASENAME system volt"
+  echo "                            display the voltage of raspberry pi"
   echo
-  echo "    $BASENAME disk temperature cpu"
+  echo "    $BASENAME system disk temperature cpu"
+  echo "                            display disk occupancy and temperature"
   echo
 }

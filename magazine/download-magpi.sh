@@ -66,6 +66,14 @@ function number {
   echo "Finished downloading MagPi$magnum.pdf"
 }
 
+function language {
+  echo "Fetching available $magnum MagPi issues..."
+  for i in {1..3}
+  do
+    wget -q https://www.raspberrypi.org/magpi-issues/MagPi_Mini_$magnum\_0$i.pdf -P $magnum\_issues/
+  done
+}
+
 function info {
   echo "The MagPi is The Official Raspberry Pi magazine. Written by and for the community, it is packed with Raspberry Pi-themed projects, computing and electronics tutorials, how-to guides, and the latest news and reviews."
 }

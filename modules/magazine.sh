@@ -5,6 +5,7 @@ function magazine() {
   magtype="$1"
   req="$2"
   available_mag=0
+  islang=0
   if [ -z "$magtype" ]; then
     echo "ERROR: no magazine type given"
     exit 1
@@ -14,11 +15,17 @@ function magazine() {
         available_mag=1
       fi
   done
+  if [ "$magtype" = "magpi" ] && ([ "$req" != "latest" ] || [ "$req" != "all" ] || ! [[ "$req" =~ ^[0-9]+$ ]]); then
+    if [ "$req" = "french" ] || [ "$req" = "hebrew" ] || [ "$req" = "italian" ] || [ "$req" = "spanish" ]; then
+      islang=1
+      req=${req^}
+    fi
+  fi
   if [ $available_mag = 0 ]; then
     echo "Please specify a valid magazine type, these include: magpi, hackspace, wireframe, helloworld"
   elif [ "$req" = "" ]; then
     $MAGAZINE/download-$magtype.sh info
-  elif [ "$req" = "latest" ] || [ "$req" = "all" ] || [[ "$req" =~ ^[0-9]+$ ]]; then
+  elif [ "$req" = "latest" ] || [ "$req" = "all" ] || [[ "$req" =~ ^[0-9]+$ ]] || [ $islang = 1 ]; then
     checkinternet
     if [ ! -d "$magtype" ]; then
       mkdir $magtype
@@ -26,6 +33,8 @@ function magazine() {
     cd $magtype || return
     if [[ "$req" =~ ^[0-9]+$ ]]; then
       $MAGAZINE/download-$magtype.sh number $req
+    elif [ $islang = 1 ]; then
+      $MAGAZINE/download-$magtype.sh language $req
     else
       $MAGAZINE/download-$magtype.sh $req
     fi
@@ -38,9 +47,10 @@ function magazine() {
 
 function magazine_help {
   echo
-  echo "Usage: $BASENAME magazine <helloworld|hackspace|magpi|wireframe> [all|latest|number]"
+  echo "Usage: $BASENAME magazine <helloworld|hackspace|magpi|wireframe> [all|latest|number] [french|hebrew|italian|spanish]"
   echo
   echo "This downloads the specified issue of a magazine as a pdf with filename <mag_type>#.pdf based on user input"
+  echo "The MagPi magazine also supports other languages listed above to a limited number of issues"
   echo
   echo "Example:"
   echo
@@ -55,5 +65,8 @@ function magazine_help {
   echo
   echo "  $BASENAME magazine magpi number"
   echo "      This will download issue [number] of magpi."
+  echo
+  echo "  $BASENAME magazine magpi language"
+  echo "      This will download all available [language] issues of magpi."
   echo
 }

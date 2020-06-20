@@ -40,8 +40,8 @@ function uses_env {
 
 # add supported arm(s)
 function supported_arms {
-  echo "v7l"
-  echo "v6l"
+  echo "armv7l"
+  echo "armv6l"
 }
 
 # add port(s)

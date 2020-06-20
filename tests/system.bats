@@ -16,7 +16,7 @@ load test-helper
     assert_success && assert_output -p 'Volt'
 }
 
-@test "$clinom system disk temperatrue" {
+@test "$clinom system disk temperature" {
     run "${clicmd}" system disk temperature
     assert_success && assert_output -p 'Disk' && assert_output -p 'Temperature'
 }

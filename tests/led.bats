@@ -56,6 +56,11 @@ load test-helper
   assert_success && assert_output -p 'heartbeat'
 }
 
+@test "$clinom led wazazi" {
+  run "${clicmd}" led wazazi
+  assert_success && assert_output -p 'heartbeat'
+}
+
 @test "$clinom led onam" {
   run "${clicmd}" led onam
   assert_success && assert_output -p 'heartbeat'

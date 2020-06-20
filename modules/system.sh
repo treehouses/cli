@@ -1,5 +1,3 @@
-#! /bin/bash 
-
 function system {
   checkroot
 
@@ -9,11 +7,10 @@ function system {
   arguments=()
   errors=()
 
-
   if [ $# -eq 0 ]; then
     echo
     for (( i=1; i<${#options[*]}; i++ ))
-    do 
+    do
       ${functions[$i]}
     done
     echo
@@ -21,37 +18,35 @@ function system {
   else
     echo
     for (( i=0; i<${#options[*]}; i++ ))
-    do 
+    do
       for var in "$@"
-      do 
+      do
         if [[ ! " ${options[*]} " =~ " ${var} " ]]; then
           if [[ ! " ${errors[*]} " =~ " ${var} " ]]; then
             errors+=("$var")
           fi
           continue
         fi
-        if [ "$var" == "${options[$i]}" ] && [[ ! " ${arguments[*]} " =~ " ${var} " ]]; then 
+        if [ "$var" == "${options[$i]}" ] && [[ ! " ${arguments[*]} " =~ " ${var} " ]]; then
           ${functions[$i]}
           arguments+=("$var")
-        fi 
+        fi
       done
     done
     echo
 
     if [ ${#errors[*]} -gt 0 ]; then
       for error in ${errors[*]}
-      do 
+      do
         echo "Error: $error is not an option"
       done
       system_help
     fi
-
-  fi 
+  fi
 }
 
 function system_cpu {
-  local percentage frequency 
-
+  local percentage frequency
   percentage=$(top -bn1 | grep "Cpu(s)" |\
     sed "s/.*, *\([0-9.]*\)%* id.*/\1/" |\
     awk '{print 100 - $1"%"}')
@@ -62,7 +57,7 @@ function system_cpu {
 
 function system_ram {
   local used total percentage
-  used=$(free -m | grep Mem | awk '{print $2 - $7}') 
+  used=$(free -m | grep Mem | awk '{print $2 - $7}')
   total=$(free -m | grep Mem | awk '{print $2}')
   percentage=$(bc -l <<< "scale=2; $used/$total" | cut -c 2-)
 
@@ -88,14 +83,14 @@ function system_temperature {
 
 function system_help {
   echo
-  echo "  Usage: $BASENAME system [all|cpu|ram|disk|volt|temperature] "
+  echo "  Usage: $BASENAME system [all|cpu|ram|disk|volt|temperature]"
   echo
   echo "  Listing real time system information corresponding to arguments"
   echo
   echo "  Examples:"
   echo "    $BASENAME system"
   echo
-  echo "    $BASENAME volt" 
+  echo "    $BASENAME volt"
   echo
   echo "    $BASENAME disk temperature cpu"
   echo

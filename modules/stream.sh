@@ -24,5 +24,18 @@ function stream {
 }
 
 function stream_help {
-   echo "this is the help function"
+  echo
+  echo "  Usage: $BASENAME stream [on|off]"
+  echo
+  echo "  Example:"
+  echo
+  echo "    $BASENAME stream on"
+  echo "      Starting treehouse stream..."
+  echo "      Treehouse stream has started at 127.0.0.1:8000/index.html"
+  echo "      It can be stopped with treehouses stream off."
+  echo
+  echo "    $BASENAME stream off"
+  echo "      Stopping treehouse stream..."
+  echo "      Treehouse stream has ended." 
+  echo
 }

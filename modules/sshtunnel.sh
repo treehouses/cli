@@ -632,13 +632,15 @@ function sshtunnel_help {
   echo "      port <port> [host]                       removes a single port from an existing host"
   echo "      host <host>                              removes all tunnels from an existing host"
   echo
-  echo "  \" \" | list [host]                      lists all existing tunnels to all hosts or the given host"
+  echo "  \" \" | list                           lists all existing tunnels to all hosts"
+  echo "      [host]                                 lists existing tunnels to given host"
   echo
   echo "  active                                   lists active ssh tunnels"
   echo
   echo "  check                                    runs a checklist of tests"
   echo
   echo "  key                                      shows the public key"
+  echo "      [verify]                                 verifies that the public and private rsa keys match"
   echo
   echo "  notice                                   returns whether auto-reporting sshtunnel ports to gitter is on or off"
   echo "      on                                       turns on auto-reporting to gitter"

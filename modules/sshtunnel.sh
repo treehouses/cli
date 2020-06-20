@@ -631,9 +631,11 @@ function sshtunnel_help {
   echo "      port <port> [host]                       removes a single port from an existing host"
   echo "      host <host>                              removes all tunnels from an existing host"
   echo
-  echo "  refresh [host]                           kills and restarts tunnels to all hosts or given host"
+  echo "  refresh                                  kills and restarts tunnels to all hosts"
+  echo "      [host]                                   kills and restarts tunnels to given host"
   echo
-  echo "  \" \" | list [host]                        lists all existing tunnels to all hosts or the given host"
+  echo "  \" \" | list                               lists all existing tunnels to all hosts"
+  echo "      [host]                                   lists existing tunnels to given host"
   echo
   echo "  active                                   lists active ssh tunnels"
   echo

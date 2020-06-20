@@ -28,7 +28,7 @@ function install {
     echo "MONGO_INITDB_ROOT_USERNAME_VAR=root"
     echo "MONGO_INITDB_ROOT_PASSWORD_VAR=example"
   } > /srv/mongodb/.env
- 
+
   # add autorun
   {
     echo "mongodb_autorun=true"

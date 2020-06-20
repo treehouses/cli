@@ -21,7 +21,7 @@ services:
       - DB_USERNAME=\${DB_USERNAME}
       - DB_PASSWORD=\${DB_PASSWORD}
     volumes:
-      - "/srv/grocy.sh:/root/.grocy"
+      - "/srv/grocy:/root/.grocy"
     ports:
       - 8091:80
     restart: unless-stopped
@@ -56,7 +56,9 @@ function uses_env {
 
 # add supported arm(s)
 function supported_arms {
-  echo "v7l"
+  echo "armv7l"
+  echo "x86_64"
+  echo "aarch64"
 }
 
 # add port(s)

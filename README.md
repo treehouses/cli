@@ -38,13 +38,13 @@ password <password|disable|enable>        changes the password for 'pi' user or 
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
 version [contributors]                    returns the version of cli.sh command
 image                                     returns version of the system image installed
-detect [bluetooth|rpi|arm|wifi]           detects the hardware version of any device
+detect [bluetooth|rpi|arm|arch|wifi]      detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
 discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
          <rpi> [ipaddress|url|macaddress]
          <wifi>
-wifi <ESSID> [password]                   connects to a wifi network
-wifihidden <ESSID> [password]             connects to a hidden wifi network
+wifi <ESSID> [password] [identity]        connects to a wifi network
+wifihidden <ESSID> [password] [identity]  connects to a hidden wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]
 wifistatus                                displays signal strength in dBm and layman nomenclature
@@ -65,8 +65,8 @@ vnc [on|off|info]                         enables or disables the vnc server ser
 default                                   sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
 upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
-sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
-          <key|portinterval> [user@host]
+sshtunnel [add|remove|list|active|check]  helps adding sshtunnels
+          [key|notice]
 led [green|red] [mode]                    sets the led mode
     [dance|thanksgiving|christmas]
     [newyear|lunarnewyear|valentine]
@@ -108,6 +108,10 @@ services                                  executes the given command on the spec
    [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
    [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
    [grocy]                                grocy is a web-based, self-hosted groceries and household management utility for your home
+   [dokuwiki]                             Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database.
+   [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
+   [transmission]                         Transmission is a BitTorrent client with many powerful features.
+   [cloud9]                               cloud9 is a complete web based ide with terminal access
    [mongoexpress]                         Mongo Express is Web-based MongoDB admin interface written with Node.js, Express and Bootstrap3
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
@@ -129,12 +133,13 @@ remote [check|status|upgrade|services]    helps with treehouses remote android a
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
-inspire [joke|qotd|random]                displays quote based on user input
+inspire [fact|joke|qotd|random]           displays quote based on user input
 convert <input file> <output file>        converts audio and video files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses
 magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
-         [all|latest|number]
+         <helloworld> [all|latest|number]
+resolution <cea|dmt [modes]>              sets the screen resolution
 shutdown [now|in|force]                   shutdown the system
 ```
 

@@ -23,7 +23,8 @@ function camera {
     "on")
       if ! grep -q "start_x=1" ${config} ; then
         raspi-config nonint do_camera 0
-        echo "Camera settings have been enabled."
+        echo "Camera settings have been enabled. A reboot is needed in order to use the camera."
+        reboot_needed
       elif grep -q "start_x=1" ${config} ; then
         echo "Camera is already enabled. Use \"$BASENAME camera capture\" to take a photo."
         echo "If you are having issues using the camera, try rebooting."
@@ -35,7 +36,8 @@ function camera {
     "off")
       if grep -q "start_x=1" ${config} ; then
         raspi-config nonint do_camera 1
-        echo "Camera has been disabled."
+        echo "Camera has been disabled. A reboot is needed in order to use the camera."
+        reboot_needed
       elif ! grep -q "start_x=1" ${config} ; then
         echo "Camera is already disabled. If camera is still enabled, try rebooting."
       else
@@ -96,6 +98,9 @@ function camera {
           echo "Camera is plugged in."
         if file ${directory}$BASENAME-${timestamp}.png | grep -q "2592 x 1944" ; then
           echo "Camera Module v1 detected."
+          rm ${directory}$BASENAME-${timestamp}.png
+        elif file ${directory}$BASENAME-${timestamp}.png | grep -q "2582 x 1933" ; then
+          echo "Coral Camera Module detected." 
           rm ${directory}$BASENAME-${timestamp}.png
         elif file ${directory}$BASENAME-${timestamp}.png | grep -q "3280 x 2464" ; then
           echo "Camera Module v2 detected."

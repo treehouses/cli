@@ -1,4 +1,5 @@
 function stream {
+  checkargn $# 1
   case "$1" in
     "")
       stream on

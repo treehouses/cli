@@ -18,7 +18,6 @@ echo "      - \"/srv/pylon:/root/.pylon\""
 echo "      - /var/run/docker.sock:/var/run/docker.sock"
 echo "    ports:"
 echo "     - 3131:3131"
-echo "version: \"2.1\""
   } > /srv/pylon/pylon.yml
 
   # create .env with default values

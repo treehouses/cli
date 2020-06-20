@@ -77,6 +77,8 @@ function get_info {
   echo
   echo "Mongo Express is Web-based MongoDB admin interface" 
   echo "written with Node.js, Express and Bootstrap3"
+  echo "This container starts a new MongoDB. Mongo Express"
+  echo "automatically configures the MongoDB."
 }
 
 # add svg icon

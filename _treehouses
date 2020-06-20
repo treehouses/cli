@@ -416,7 +416,7 @@ function magazine_cmds {
   do
     printf "treehouses magazine $line
 treehouses magazine $line latest
-treehouses magazine $line  all\n"
+treehouses magazine $line all\n"
   done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazine -type f -printf "%f\n" | grep .sh | sed 's/.sh//')"
 }
 

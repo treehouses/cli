@@ -44,7 +44,7 @@ function sshtunnel {
 
           # check if monitoring port already in use
           portint_offset=0
-          while grep -qs -e "M $portinterval" -e "M $((portinterval - 1))" /etc/tunnel; do
+          while grep -qs -e "M $((portinterval - 1))" -e "M $portinterval" -e "M $((portinterval + 1))" /etc/tunnel; do
             portinterval=$((portinterval + 1))
             portint_offset=$((portint_offset + 1))
           done

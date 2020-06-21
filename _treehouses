@@ -302,6 +302,7 @@ treehouses sshtunnel add port actual
 treehouses sshtunnel add port offset
 treehouses sshtunnel check
 treehouses sshtunnel key
+treehouses sshtunnel key verify
 treehouses sshtunnel list
 treehouses sshtunnel notice
 treehouses sshtunnel notice add

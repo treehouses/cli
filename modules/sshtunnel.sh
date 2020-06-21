@@ -475,11 +475,32 @@ function sshtunnel {
       fi
       ;;
     key)
-      checkargn $# 1
-      if [ ! -f "/root/.ssh/id_rsa" ]; then
-          ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
-      fi
-      cat /root/.ssh/id_rsa.pub
+      checkargn $# 2
+      case "$2" in
+        "")
+          if [ ! -f "/root/.ssh/id_rsa" ]; then
+              ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
+          fi
+          cat /root/.ssh/id_rsa.pub
+          ;;
+        verify)
+          if [ -f "/root/.ssh/id_rsa" ] && [ -f "/root/.ssh/id_rsa.pub" ]; then
+            verify=$(diff <( ssh-keygen -y -e -f "/root/.ssh/id_rsa" ) <( ssh-keygen -y -e -f "/root/.ssh/id_rsa.pub" ))
+            if [ "$verify" != "" ]; then
+              echo -e "Public and private rsa keys ${RED}do not match${NC}"
+            else
+              echo -e "Public and private rsa keys ${GREEN}match${NC}"
+            fi
+          else
+            echo "Missing public / private rsa keys"
+          fi
+          ;;
+        *)
+          echo "Error: unknown command"
+          echo "Usage: $BASENAME sshtunnel key [verify]"
+          exit 1
+          ;;
+      esac
       ;;
     notice)
       case "$2" in
@@ -611,13 +632,15 @@ function sshtunnel_help {
   echo "      port <port> [host]                       removes a single port from an existing host"
   echo "      host <host>                              removes all tunnels from an existing host"
   echo
-  echo "  \" \" | list [host]                      lists all existing tunnels to all hosts or the given host"
+  echo "  \" \" | list                               lists all existing tunnels to all hosts"
+  echo "      [host]                                   lists existing tunnels to given host"
   echo
   echo "  active                                   lists active ssh tunnels"
   echo
   echo "  check                                    runs a checklist of tests"
   echo
   echo "  key                                      shows the public key"
+  echo "      [verify]                                 verifies that the public and private rsa keys match"
   echo
   echo "  notice                                   returns whether auto-reporting sshtunnel ports to gitter is on or off"
   echo "      on                                       turns on auto-reporting to gitter"

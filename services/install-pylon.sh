@@ -5,21 +5,18 @@ function install {
   mkdir -p /srv/pylon
 
   # create yml(s)
-  {
-echo "version: 2.1"
-echo "services:"
-echo "  pylon:"
-echo "    image: linuxserver/pylon"
-echo "    environment:"
-echo "      - PYUSER=\${PYUSER}"
-echo "      - PYPASS=\${PYPASS}"
-echo "    volumes:"
-echo "      - \"/srv/pylon:/root/.pylon\""
-echo "      - /var/run/docker.sock:/var/run/docker.sock"
-echo "    ports:"
-echo "      - 3131:3131"
-echo "version: \"2.1\""
-  } > /srv/pylon/pylon.yml
+  cat << EOF > /srv/pylon/pylon.yml
+version: "2.1"
+services:
+  pylon:
+    image: linuxserver/pylon
+    environment:
+      - PYUSER=\${USER}
+      - PYPASS=\${PASS}
+    ports:
+      - 3131:3131
+    restart: unless-stopped
+EOF
 
   # create .env with default values
   {
@@ -28,15 +25,15 @@ echo "version: \"2.1\""
   } > /srv/pylon/.env
   
   # add autorun
-  {
-    echo "pylon_autorun=true"
-    echo
-    echo "if [ \"\$pylon_autorun\" = true ]; then"
-    echo "  treehouses services pylon up"
-    echo "fi"
-    echo
-    echo
-  } > /srv/pylon/autorun
+  cat << EOF > /srv/pylon/autorun
+pylon_autorun=true
+
+if [ \"\$pylon_autorun\" = true ]; then
+  treehouses services pylon up
+fi
+
+
+EOF
 }
 
 # environment var
@@ -58,7 +55,7 @@ function get_ports {
 
  #add size (in MB)
 function get_size {
- echo "255"
+  echo "255"
 }
 
 # add info

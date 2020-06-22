@@ -7,7 +7,7 @@ function stream {
 
     "on")
       echo "Starting treehouse stream..."
-      if ! pip3 list | grep -q "socketserver" ; then
+      if ! pip3 list | grep -qf "socketserver" ; then
         pip3 install socketserver
       fi 
       python3 modules/stream_treehouse.py > /dev/null 2>&1 &

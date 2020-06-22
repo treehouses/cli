@@ -138,7 +138,8 @@ gpio                                      displays raspberry pi model and corres
 changelog [view|compare]                  displays the most recent changes to treehouses
 magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
          <helloworld> [all|latest|number] magpi magazine also supports some other languages
-         [french|hebrew|italian|spanish]
+         [language] 
+         <french|hebrew|italian|spanish>
 resolution <cea|dmt [modes]>              sets the screen resolution
 shutdown [now|in|force]                   shutdown the system
 ```

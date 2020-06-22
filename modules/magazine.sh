@@ -41,7 +41,7 @@ function magazine() {
 
 function magazine_help {
   echo
-  echo "Usage: $BASENAME magazine <helloworld|hackspace|magpi|wireframe> [all|latest|number] [french|hebrew|italian|spanish]"
+  echo "Usage: $BASENAME magazine <helloworld|hackspace|magpi|wireframe> [all|latest|number] [language] <french|hebrew|italian|spanish>"
   echo
   echo "This downloads the specified issue of a magazine as a pdf with filename <mag_type>#.pdf based on user input"
   echo "The MagPi magazine also supports other languages listed above to a limited number of issues"
@@ -60,7 +60,7 @@ function magazine_help {
   echo "  $BASENAME magazine magpi number"
   echo "      This will download issue [number] of magpi."
   echo
-  echo "  $BASENAME magazine magpi language"
-  echo "      This will download all available [language] issues of magpi."
+  echo "  $BASENAME magazine magpi language <language_choice>"
+  echo "      This will download all available [language_choice] issues of magpi."
   echo
 }

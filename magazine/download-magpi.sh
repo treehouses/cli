@@ -67,11 +67,16 @@ function number {
 }
 
 function language {
-  echo "Fetching available $magnum MagPi issues..."
-  for i in {1..3}
-  do
-    wget -q https://www.raspberrypi.org/magpi-issues/MagPi_Mini_$magnum\_0$i.pdf -P $magnum\_issues/
-  done
+  if [ "$magnum" = "French" ] || [ "$magnum" = "Hebrew" ] || [ "$magnum" = "Italian" ] || [ "$magnum" = "Spanish" ]; then
+    echo "Fetching available $magnum MagPi issues..."
+    for i in {1..3}
+    do
+      wget -q https://www.raspberrypi.org/magpi-issues/MagPi_Mini_$magnum\_0$i.pdf -P $magnum\_issues/
+    done
+  else
+    echo "Valid languages: french, hebrew, italian, and spanish"
+    exit 1
+  fi
 }
 
 function info {

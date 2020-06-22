@@ -1,11 +1,11 @@
 set -e
 
 function magazine() {
-  checkargn $# 2
+  checkargn $# 3
   magtype="$1"
   req="$2"
+  lang="$3"
   available_mag=0
-  islang=0
   if [ -z "$magtype" ]; then
     echo "ERROR: no magazine type given"
     exit 1
@@ -15,17 +15,11 @@ function magazine() {
         available_mag=1
       fi
   done
-  if [ "$magtype" = "magpi" ] && ([ "$req" != "latest" ] || [ "$req" != "all" ] || ! [[ "$req" =~ ^[0-9]+$ ]]); then
-    if [ "$req" = "french" ] || [ "$req" = "hebrew" ] || [ "$req" = "italian" ] || [ "$req" = "spanish" ]; then
-      islang=1
-      req=${req^}
-    fi
-  fi
   if [ $available_mag = 0 ]; then
     echo "Please specify a valid magazine type, these include: magpi, hackspace, wireframe, helloworld"
   elif [ "$req" = "" ]; then
     $MAGAZINE/download-$magtype.sh info
-  elif [ "$req" = "latest" ] || [ "$req" = "all" ] || [[ "$req" =~ ^[0-9]+$ ]] || [ $islang = 1 ]; then
+  elif [ "$req" = "latest" ] || [ "$req" = "all" ] || [[ "$req" =~ ^[0-9]+$ ]] || [ "$req" = "language" ]; then
     checkinternet
     if [ ! -d "$magtype" ]; then
       mkdir $magtype
@@ -33,8 +27,8 @@ function magazine() {
     cd $magtype || return
     if [[ "$req" =~ ^[0-9]+$ ]]; then
       $MAGAZINE/download-$magtype.sh number $req
-    elif [ $islang = 1 ]; then
-      $MAGAZINE/download-$magtype.sh language $req
+    elif [ "$req" = "language" ]; then
+      $MAGAZINE/download-$magtype.sh language ${lang^}
     else
       $MAGAZINE/download-$magtype.sh $req
     fi

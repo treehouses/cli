@@ -19,11 +19,11 @@ services:
 EOF
 
   # create .env with default values
-  {
-    echo "PYUSER=root"
-    echo "PYPASS=root"
-  } > /srv/pylon/.env
-  
+  cat << EOF > /srv/pylon/.env
+PYUSER=root
+PYPASS=root
+EOF
+
   # add autorun
   cat << EOF > /srv/pylon/autorun
 pylon_autorun=true

@@ -17,13 +17,16 @@ case "$1" in
     time bats "$@"
   ;;
   all)
-    time bats ./*.bats ./services/*.bats ./magazine/*.bats
+    time bats ./*.bats ./services/*.bats ./magazine/*.bats ./led/*.bats
   ;;
   services)
     time bats ./services*
   ;;
   magazine)
     time bats ./magazine*
+  ;;
+  led)
+    time bats ./led*
   ;;
   wifi)
     time bats ./wifi*

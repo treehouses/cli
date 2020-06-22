@@ -83,6 +83,11 @@ load ../test-helper
   assert_success && assert_output -p 'mariadb stopped'
 }
 
+@test "$clinom services mariadb start" {
+  run "${clicmd}" services mariadb start
+  assert_success && assert_output -p 'mariadb started'
+}
+
 @test "$clinom services mariadb down" {
   run "${clicmd}" services mariadb down
   assert_success && assert_output -p 'mariadb stopped and removed'

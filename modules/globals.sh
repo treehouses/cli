@@ -61,8 +61,9 @@ function checkargn {
   fi
 }
 
-function checkwrpi {
-  if [[ $(detectbluetooth) == "false" ]]; then
+function checkrpiwireless {
+  checkrpi
+  if [[ "$(detect bluetooth)" == "false" ]]; then
     echo "Error: no Bluetooth device detected"
     exit 1
   fi
@@ -213,7 +214,7 @@ function start_spinner() {
     return
   fi
   set -m
-  trap kill_spinner {0..15}
+  trap kill_spinner {0..15} SIGTSTP
   spinner &
   SPINPID=$!
   disown

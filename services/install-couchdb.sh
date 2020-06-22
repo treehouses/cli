@@ -5,28 +5,28 @@ function install {
   mkdir -p /srv/couchdb
 
   # create yml(s)
-  {
-    echo "version: \"2\""
-    echo "services:"
-    echo "  couchdb:"
-    echo "    image: treehouses/couchdb:2.3.1"
-    echo "    ports:"
-    echo "      - \"5984:5984\""
-    echo "    volumes:"
-    echo "      - \"/srv/couchdb/data:/opt/couchdb/data\""
-    echo "      - \"/srv/couchdb/log:/opt/couchdb/var/log\""
-  } > /srv/couchdb/couchdb.yml
+  cat << EOF > /srv/couchdb/couchdb.yml
+version: "2"
+services:
+  couchdb:
+    image: treehouses/couchdb:2.3.1
+    ports:
+      - "5984:5984"
+    volumes:
+      - "/srv/couchdb/data:/opt/couchdb/data"
+      - "/srv/couchdb/log:/opt/couchdb/var/log"
+EOF
 
   # add autorun
-  {
-    echo "couchdb_autorun=true"
-    echo
-    echo "if [ \"\$couchdb_autorun\" = true ]; then"
-    echo "  treehouses services couchdb up"
-    echo "fi"
-    echo
-    echo
-  } > /srv/couchdb/autorun
+  cat << EOF > /srv/couchdb/autorun
+couchdb_autorun=true
+
+if [ "$couchdb_autorun" = true ]; then
+  treehouses services couchdb up
+fi
+
+
+EOF
 }
 
 # environment var
@@ -36,8 +36,9 @@ function uses_env {
 
 # add supported arm(s)
 function supported_arms {
-  echo "v7l"
-  echo "v6l"
+  echo "armv7l"
+  echo "armv6l"
+  echo "x86_64"
 }
 
 # add port(s)

@@ -83,6 +83,11 @@ load ../test-helper
   assert_success && assert_output -p 'pihole stopped'
 }
 
+@test "$clinom services pihole start" {
+  run "${clicmd}" services pihole start
+  assert_success && assert_output -p 'pihole started'
+}
+
 @test "$clinom services pihole down" {
   run "${clicmd}" services pihole down
   assert_success && assert_output -p 'pihole stopped and removed'

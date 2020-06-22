@@ -1,8 +1,8 @@
 function wifimain {
-  local wifinetwork wifipassword wificountry
+  local wifinetwork wifipassword wifiaddr
   checkrpi
   checkroot
-  checkargn $# 2
+  checkargn $# 3
   if [ -z "$1" ]; then
     echo "Error: name of the network missing"
     exit 1
@@ -34,53 +34,76 @@ function wifimain {
   cp "$TEMPLATES/network/10-wpa_supplicant" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
   rm -rf /etc/udev/rules.d/90-wireless.rules
 
+  if [[ -n "$3" ]]; then
+    echo "    wpa-driver wext" >> /etc/network/interfaces.d/wlan0
+  fi
+
   {
     echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
     echo "update_config=1"
-    wificountry="US"
-    if [ -r /etc/rpi-wifi-country ];
-    then
-      wificountry=$(cat /etc/rpi-wifi-country)
-    fi
-    echo "country=$wificountry"
+    echo "country=$WIFICOUNTRY"
   } > /etc/wpa_supplicant/wpa_supplicant.conf
 
-  if [ -z "$wifipassword" ];
-  then
+  if [ -z "$wifipassword" ]; then
     {
       echo "network={"
       echo "  ssid=\"$wifinetwork\""
       echo "  key_mgmt=NONE"
-      if [ -v hide ]; then      
+      if [ -v hide ]; then
         echo " scan_ssid=1"
-      fi	
+      fi
       echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     checkwifi
-    if  [ ! -v hide ]; then  
-      echo "connected to open network"
+    wifiaddr=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+    if  [ ! -v hide ]; then
+      echo "connected to open network; our wifi ip: $wifiaddr"
     else
-      echo "connected to hidden open network"  
+      echo "connected to hidden open network; our wifi ip: $wifiaddr"
     fi  
-  elif [[ -n "$wifipassword" ]] && [[ -v hide ]];
-  then
-    {	  
+  elif [[ -n "$wifipassword" ]] && [[ -v hide ]]; then
+    {
     echo "network={"
     echo "  ssid=\"$wifinetwork\""
     echo "  scan_ssid=1"
-    echo "  key_mgmt=WPA-PSK"
-    echo "  psk=\"$wifipassword\""
+      if [ -z "$3" ]; then
+        echo "  key_mgmt=WPA-PSK"
+        echo "  psk=\"$wifipassword\""
+      else
+        echo "  identity=\"${3}\""
+        echo "  password=\"${wifipassword}\""
+        echo "  key_mgmt=WPA-EAP"
+        echo "  eap=PEAP"
+        echo "  phase1=\"peaplabel=0\""
+        echo "  phase2=\"auth=MSCHAPV2\""
+      fi
     echo "}"
     } >> /etc/wpa_supplicant/wpa_supplicant.conf
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     checkwifi  
-    echo "connected to hidden password network"
+    wifiaddr=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+    echo "connected to hidden password network; our wifi ip: $wifiaddr"
   else
-    wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
+    if [ -z "$3" ]; then
+      wpa_passphrase "$wifinetwork" "$wifipassword" >> /etc/wpa_supplicant/wpa_supplicant.conf
+    else
+    {
+      echo "network={"
+      echo "  ssid=\"${wifinetwork}\""
+      echo "  identity=\"${3}\""
+      echo "  password=\"${wifipassword}\""
+      echo "  key_mgmt=WPA-EAP"
+      echo "  eap=PEAP"
+      echo "  phase1=\"peaplabel=0\""
+      echo "  phase2=\"auth=MSCHAPV2\""
+      echo "}"
+    } >> /etc/wpa_supplicant/wpa_supplicant.conf
+    fi
     restart_wifi >"$LOGFILE" 2>"$LOGFILE"
     checkwifi
-    echo "connected to password network"
+    wifiaddr=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+    echo "connected to password network; our wifi ip: $wifiaddr"
   fi
 
   echo "wifi" > /etc/network/mode
@@ -92,7 +115,7 @@ function wifi {
 
 function wifi_help {
   echo
-  echo "Usage: $BASENAME wifi <ESSID> [password]"
+  echo "Usage: $BASENAME wifi <ESSID> [password] [identity]"
   echo
   echo "Connects to a wifi network"
   echo
@@ -102,5 +125,8 @@ function wifi_help {
   echo
   echo "  $BASENAME wifi yourwifiname"
   echo "      Connects to an open wifi network named 'yourwifiname'."
+  echo
+  echo "  $BASENAME wifi home homewifipassword identity"
+  echo "      Connects to an Enterprise (WPA-EAP) wifi network named 'home' with user 'identity' and user password 'homewifipassword'."
   echo
 }

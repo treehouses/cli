@@ -5,8 +5,11 @@ function services {
   command="$2"
   command_option="$3"
 
+  if [ -z "$service_name" ]; then
+    echo "ERROR: no command given"
+    exit 1
   # list all services available to be installed
-  if [ "$service_name" = "available" ]; then
+  elif [ "$service_name" = "available" ]; then
     checkargn $# 1
     if [ -d "$SERVICES" ]; then
       for file in $SERVICES/*
@@ -83,8 +86,26 @@ function services {
     done
   else
     if [ -z "$command" ]; then
-      echo "ERROR: no command given"
-      exit 1
+      check_available_services $service_name
+      running_services=($(services running))
+      source $SERVICES/install-$service_name.sh && get_info
+      echo
+      if [ -d /srv/$service_name ]; then
+        echo "status: installed"
+      else
+        echo "status: not installed"
+      fi
+      for i in "${running_services[@]}"
+      do
+        if [ $i == $service_name ]; then
+          echo "        running"
+        fi
+      done
+      echo "autorun: $(services $service_name autorun)"
+      echo "url: $(services ${service_name} url local)" | sed ':a;N;$!ba;s/\n/\n     /g'
+      echo "tor: $(services ${service_name} url tor)" | sed ':a;N;$!ba;s/\n/\n     /g'
+      echo "port: $(source $SERVICES/install-$service_name.sh && get_ports)" | sed ':a;N;$!ba;s/\n/\n      /g'
+      echo "size: $(source $SERVICES/install-$service_name.sh && get_size)M"
     else
       check_available_services $service_name
       case "$command" in
@@ -110,7 +131,9 @@ function services {
                 ((retries+=1))
               else
                 echo "${service_name} installed"
-                echo "modify default environment variables by running '$BASENAME services ${service_name} environment edit'"
+                if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
+                  echo "modify default environment variables by running '$BASENAME services ${service_name} config edit'"
+                fi
                 exit 0
               fi
             done
@@ -272,7 +295,11 @@ function services {
         url)
           checkargn $# 3
           if [ "$command_option" = "local" ]; then
-            base_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+            base_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*')
+            if [[ "$base_url" =~ "," ]]; then
+              base_url=$(echo $base_url | cut -f1 -d,)
+            fi
+
             for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
             do
               local_url="$base_url:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
@@ -346,15 +373,35 @@ function services {
             source $SERVICES/install-${service_name}.sh && get_icon
           fi
           ;;
-        environment)
+        config)
           if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
             if [ -e /srv/$service_name/.env ]; then
+              seperator="--------------------"
               if [ -z "$command_option" ]; then
                 docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
+              elif [ "$command_option" = "new" ]; then
+                checkargn $# 4
+                kill_spinner
+                if [ -z "$4" ]; then
+                  echo "ERROR: a name is required for the new env file"
+                  exit 1
+                else
+                  cp /srv/$service_name/.env /srv/$service_name/$4.env
+                fi
+                while read -r -u 9 line; do
+                  echo $seperator
+                  newline="${line%%=*}="
+                  printf "%s" $newline
+                  read -r userinput
+                  sed -i "/$line/c\\$newline$userinput" /srv/$service_name/$4.env
+                done 9< /srv/$service_name/.env
+                echo $seperator
+                echo "Created $4.env:"
+                cat /srv/$service_name/$4.env
+                echo $seperator
               elif [ "$command_option" = "edit" ]; then
                 kill_spinner
                 if [ -z "$4" ]; then
-                  seperator="--------------------"
                   while read -r -u 9 line; do
                     echo $seperator
                     echo "Current:"
@@ -366,7 +413,7 @@ function services {
                     sed -i "/$line/c\\$newline$userinput" /srv/$service_name/.env
                   done 9< /srv/$service_name/.env
                   echo $seperator
-                  echo "New environment file:"
+                  echo "New config file:"
                   cat /srv/$service_name/.env
                   echo $seperator
                 elif [ "$4" = "vim" ]; then
@@ -374,7 +421,7 @@ function services {
                   vim /srv/$service_name/.env
                 elif [ "$4" = "request" ]; then
                   checkargn $# 4
-                  request="$BASENAME services $service_name environment edit send "
+                  request="$BASENAME services $service_name config edit send "
                   while read -r -u 9 line; do
                     request+="\"${line%%=*}\" "
                   done 9< /srv/$service_name/.env
@@ -395,12 +442,36 @@ function services {
                   fi
                 else
                   echo "ERROR: unknown command option"
-                  echo "USAGE: $BASENAME services $service_name environment edit [vim|request|send]"
+                  echo "USAGE: $BASENAME services $service_name config edit [vim|request|send]"
+                  exit 1
+                fi
+              elif [ "$command_option" = "available" ]; then
+                checkargn $# 3
+                echo $seperator
+                echo ">> currently selected .env"
+                cat /srv/$service_name/.env
+                echo $seperator
+                for file in /srv/$service_name/*
+                do
+                  if [[ $file = *".env" ]]; then
+                    echo $seperator
+                    echo ">> ${file##*/}" | sed 's/.env$//'
+                    cat $file
+                    echo $seperator
+                  fi
+                done
+              elif [ "$command_option" = "select" ]; then
+                checkargn $# 4
+                if [ -f /srv/$service_name/$4.env ]; then
+                  cp /srv/$service_name/$4.env /srv/$service_name/.env
+                  echo "now using $4.env"
+                else
+                  echo "ERROR: /srv/$service_name/$4.env not found"
                   exit 1
                 fi
               else
                 echo "ERROR: unknown command option"
-                echo "USAGE: $BASENAME services $service_name environment [edit]"
+                echo "USAGE: $BASENAME services $service_name config [new | edit | available | select]"
                 exit 1
               fi
             else
@@ -428,7 +499,7 @@ function services {
           echo "                                ..... size"
           echo "                                ..... cleanup"
           echo "                                ..... icon"
-          echo "                                ..... environment [edit [vim|request|send]]"
+          echo "                                ..... config [new|edit [vim|request|send]|available|select]"
           exit 1
           ;;
       esac
@@ -440,7 +511,7 @@ function check_arm {
   arms=($(source $SERVICES/install-${1}.sh && supported_arms))
   for i in "${arms[@]}"
   do
-    if [ "$(detectarm)" = "$i" ]; then
+    if [ "$(detect arch)" = "$i" ]; then
       return 0
     fi
   done
@@ -526,7 +597,7 @@ function validate_yml {
       if [[ $line == *=[[:space:]]* ]] || [[ $line =~ "="$ ]]; then
         echo "ERROR: unset environment variable:"
         echo $line
-        echo "try running '$BASENAME services $1 environment edit' to edit environment variables"
+        echo "try running '$BASENAME services $1 config edit' to edit environment variables"
         exit 1
       fi
     done < /srv/${1}/.env
@@ -552,9 +623,16 @@ function services_help {
   echo "  mariadb         MariaDB is a community-developed fork of the MySQL relational database management system"
   echo "  mongodb         MongoDB is a general purpose, distributed, document-based, NoSQL database."
   echo "  seafile         Seafile is an open-source, cross-platform file-hosting software system"
+  echo "  librespeed      Librespeed is a very lightweight Speedtest implemented in Javascript"
   echo "  turtleblocksjs  TurtleBlocks is an activity with a Logo-inspired graphical \"turtle\" "
   echo "  musicblocks     Music Blocks is a programming language and collection of manipulative tools for exploring musical and mathematical concepts in an integrative and fun way." 
   echo "  minetest        Minetest is an open source infinite-world block sandbox game engine with survival and crafting"
+  echo "  invoiceninja    Invoiceninja is the leading self-host platform to create invoices."
+  echo "  grocy           Grocy is web-based, self-hosted groceries and household management utility for your home"
+  echo "  dokuwiki        Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database."
+  echo "  bookstack       Bookstack is a free and open source Wiki designed for creating beautiful documentation"
+  echo "  transmission    Transmission is a BitTorrent client with many powerful features"
+  echo "  cloud9          Cloud9 is a complete web based IDE with terminal access"
   echo
   echo
   echo "Top-Level Commands:"
@@ -585,7 +663,8 @@ function services_help {
   echo "Service-Specific Commands:"
   echo
   echo "  Usage:"
-  echo "    $BASENAME services <service_name> install"
+  echo "    $BASENAME services <service_name>"
+  echo "                             ..... install"
   echo "                             ..... up"
   echo "                             ..... down"
   echo "                             ..... start"
@@ -599,7 +678,9 @@ function services_help {
   echo "                             ..... size"
   echo "                             ..... cleanup"
   echo "                             ..... icon"
-  echo "                             ..... environment [edit [vim|request|send]]"
+  echo "                             ..... config [new|edit [vim|request|send]|available|select]"
+  echo
+  echo "    <>                      shows overview of <service_name>"
   echo
   echo "    install                 installs and pulls <service_name>"
   echo
@@ -633,11 +714,14 @@ function services_help {
   echo
   echo "    icon                    outputs the svg code for the <service_name>'s icon"
   echo
-  echo "    environment             outputs the contents of the .yml for <service_name> with the currently configured environment variables"
+  echo "    config                  outputs the contents of the .yml for <service_name> with the currently configured environment variables"
+  echo "        [new]                   creates a new .env file with given name"
   echo "        [edit]                  edit the .env file for <service_name>"
   echo "            [vim]                   opens vim to edit the .env file for <service_name>"
   echo "            [request]               requests the command to edit the .env file for <service_name>"
   echo "            [send]                  sends the command to edit the .env file for <service_name>"
+  echo "        [available]             lists available .env files for <service_name>"
+  echo "        [select]                selects given .env file to be used with <service_name>"
   echo
   echo "  Examples:"
   echo

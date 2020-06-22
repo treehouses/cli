@@ -36,15 +36,15 @@ expandfs                                  expands the partition of the RPI image
 rename <hostname>                         changes hostname
 password <password|disable|enable>        changes the password for 'pi' user or disables/enables password authentication
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
-version [contributors]                    returns the version of cli.sh command
+version [contributors]                    returns the version of treehouses command
 image                                     returns version of the system image installed
-detect [bluetooth|rpi|arm|wifi]           detects the hardware version of any device
+detect [bluetooth|rpi|arm|arch|wifi]      detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
 discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
          <rpi> [ipaddress|url|macaddress]
          <wifi>
-wifi <ESSID> [password]                   connects to a wifi network
-wifihidden <ESSID> [password]             connects to a hidden wifi network
+wifi <ESSID> [password] [identity]        connects to a wifi network
+wifihidden <ESSID> [password] [identity]  connects to a hidden wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]
 wifistatus                                displays signal strength in dBm and layman nomenclature
@@ -55,23 +55,25 @@ container <none|docker|balena>            enables (and start) the desired contai
 bluetooth [on|off|pause|restart|button]   switches bluetooth from regular to hotspot mode and shows id or MAC address
           [mac|id|status|log]
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
-aphidden <local|internet> <ESSID>         creates a hidden mobile ap with or without internet access
+aphidden <local|internet> <ESSID>         creates a hidden mobile ap, with or without internet access
          [password]
 apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system
 locale <locale>                           sets the system locale
-ssh <on|off>                              enables or disables the ssh service
+ssh [on|off|fingerprint]                  enables or disables the ssh service, also prints out fingerprint of the ssh daemon
 vnc [on|off|info]                         enables or disables the vnc server service
 default                                   sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
 upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
-sshtunnel <add|remove|list|check|notice>  helps adding an sshtunnel
-          <key|portinterval> [user@host]
+sshtunnel [add|remove|list|active|check]  helps adding sshtunnels
+          [key|notice]
 led [green|red] [mode]                    sets the led mode
-    [dance|thanksgiving|christmas]
     [newyear|lunarnewyear|valentine]
-    [carnival|stpatricks|random]
+    [carnival|lantern|stpatricks|easter]
+    [eid|onam|diwali|thanksgiving]
+    [christmas|heavymetal|dance|kecak|random]
 power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
+uptime [boot|start|stop]                  displays uptime and boot time of the Raspberry Pi
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode
@@ -100,10 +102,17 @@ services                                  executes the given command on the spec
    [couchdb]      <size>                  CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang
    [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
    [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
-   [seafile]      <environment [edit]>    Seafile is an open-source, cross-platform file-hosting software system
+   [seafile]      <config>                Seafile is an open-source, cross-platform file-hosting software system
+   [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
    [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
+   [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
+   [grocy]                                Grocy is a web-based, self-hosted groceries and household management utility for your home
+   [dokuwiki]                             Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database.
+   [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
+   [transmission]                         Transmission is a BitTorrent client with many powerful features.
+   [cloud9]                               Cloud9 is a complete web based ide with terminal access
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
@@ -115,17 +124,22 @@ coralenv [install|demo-on|demo-off]       plays with the coral environmental boa
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory
 temperature [celsius|fahrenheit|kelvin]   displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
-camera [on|off|capture]                   enables camera, disables camera, captures png photo
+camera [on|off|detect|capture|record]     enables and disables camera, detects camera module version, captures photo, records video
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
-uptime [boot|start|stop]                  displays uptime and boot time of the Raspberry Pi
 usb [on|off]                              turns usb ports on or off
 remote [check|status|upgrade|services]    helps with treehouses remote android app
        [version|commands|allservices]
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
-inspire [joke|qotd|random]                displays quote based on user input
+inspire [fact|joke|qotd|random]           displays quote based on user input
+convert <input file> <output file>        converts video and audio files 
+gpio                                      displays raspberry pi model and corresponding GPIO ports
+changelog                                 displays the most recent changes to treehouses
+magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
+         <helloworld> [all|latest|number]
+resolution <cea|dmt [modes]>              sets the screen resolution
 shutdown [now|in|force]                   shutdown the system
 ```
 

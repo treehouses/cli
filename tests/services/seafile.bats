@@ -3,7 +3,7 @@ load ../test-helper
 
 @test "$clinom services seafile info" {
   run "${clicmd}" services seafile info
-  assert_success && assert_output -p 'https://github.com/treehouses/seafile'
+  assert_success && assert_output -p 'https://github.com/treehouses/rpi-seafile'
 }
 
 @test "$clinom services seafile install" {
@@ -81,6 +81,11 @@ load ../test-helper
 @test "$clinom services seafile stop" {
   run "${clicmd}" services seafile stop
   assert_success && assert_output -p 'seafile stopped'
+}
+
+@test "$clinom services seafile start" {
+  run "${clicmd}" services seafile start
+  assert_success && assert_output -p 'seafile started'
 }
 
 @test "$clinom services seafile down" {

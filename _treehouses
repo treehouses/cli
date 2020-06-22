@@ -4,7 +4,7 @@ _treehouses_complete()
 {
   local idx subcmds
   every_command=""
-  read -r -d '' every_command <<EOF
+  read -r -d '' every_command <<EOF || true
 treehouses ap internet
 treehouses ap local
 treehouses apchannel
@@ -42,6 +42,10 @@ treehouses camera
 treehouses camera capture
 treehouses camera off
 treehouses camera on
+treehouses camera detect
+treehouses changelog
+treehouses changelog view
+treehouses changelog compare
 treehouses clone
 treehouses container
 treehouses container balena
@@ -70,6 +74,7 @@ treehouses default notice
 treehouses default tunnel
 treehouses detect
 treehouses detect arm
+treehouses detect arch
 treehouses detect bluetooth
 treehouses detect rpi
 treehouses detect rpi full
@@ -86,6 +91,7 @@ treehouses discover wifi
 treehouses ethernet
 treehouses expandfs
 treehouses feedback
+treehouses gpio
 treehouses help
 treehouses help ap
 treehouses help apchannel
@@ -97,6 +103,7 @@ treehouses help bridge
 treehouses help burn
 treehouses help button
 treehouses help camera
+treehouses help changelog
 treehouses help clone
 treehouses help container
 treehouses help coralenv
@@ -144,6 +151,7 @@ treehouses help wifihidden
 treehouses help wifistatus
 treehouses image
 treehouses inspire
+treehouses inspire fact
 treehouses inspire joke
 treehouses inspire qotd
 treehouses inspire random
@@ -152,6 +160,7 @@ treehouses led
 treehouses led carnival
 treehouses led christmas
 treehouses led dance
+treehouses led eid
 treehouses led green
 treehouses led green backlight
 treehouses led green cpu0
@@ -163,9 +172,11 @@ treehouses led green kbd-
 treehouses led green none
 treehouses led green oneshot
 treehouses led green timer
+treehouses led kecak
 treehouses led lunarnewyear
 treehouses led newyear
 treehouses led onam
+treehouses led diwali
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -181,6 +192,8 @@ treehouses led thanksgiving
 treehouses led valentine
 treehouses led heavymetal
 treehouses led stpatricks
+treehouses led easter
+treehouses led lantern
 treehouses led random
 treehouses locale
 treehouses log
@@ -192,6 +205,7 @@ treehouses log 4
 treehouses log max
 treehouses log show
 treehouses log show 5
+$(magazine_cmds)
 treehouses memory
 treehouses memory -g
 treehouses memory -m
@@ -270,6 +284,8 @@ treehouses shutdown in
 treehouses shutdown force
 treehouses speedtest
 treehouses speedtest -h
+treehouses ssh
+treehouses ssh fingerprint
 treehouses ssh off
 treehouses ssh on
 treehouses sshkey add
@@ -279,9 +295,14 @@ treehouses sshkey github addteam
 treehouses sshkey github adduser
 treehouses sshkey github deleteuser
 treehouses sshkey list
-treehouses sshtunnel add
+treehouses sshtunnel
+treehouses sshtunnel active
+treehouses sshtunnel add host
+treehouses sshtunnel add port actual
+treehouses sshtunnel add port offset
 treehouses sshtunnel check
 treehouses sshtunnel key
+treehouses sshtunnel key verify
 treehouses sshtunnel list
 treehouses sshtunnel notice
 treehouses sshtunnel notice add
@@ -290,7 +311,9 @@ treehouses sshtunnel notice list
 treehouses sshtunnel notice now
 treehouses sshtunnel notice off
 treehouses sshtunnel notice on
-treehouses sshtunnel remove
+treehouses sshtunnel remove all
+treehouses sshtunnel remove host
+treehouses sshtunnel remove port
 treehouses staticwifi
 treehouses temperature
 treehouses temperature celsius
@@ -339,6 +362,8 @@ treehouses wifi
 treehouses wificountry
 treehouses wifihidden
 treehouses wifistatus
+treehouses convert
+treehouses resolution
 EOF
 # COMP_LINE is the line you typed in terminal
 # COMP_WORDS is array form of COMP_LINE
@@ -360,16 +385,20 @@ EOF
 function services_cmds {
   while IFS= read -r line;
   do
-    printf "treehouses services $line autorun
+    printf "treehouses services $line
+treehouses services $line autorun
 treehouses services $line autorun false
 treehouses services $line autorun true
 treehouses services $line cleanup
 treehouses services $line down
-treehouses services $line environment
-treehouses services $line environment edit
-treehouses services $line environment edit vim
-treehouses services $line environment edit request
-treehouses services $line environment edit send
+treehouses services $line config
+treehouses services $line config available
+treehouses services $line config edit
+treehouses services $line config edit request
+treehouses services $line config edit send
+treehouses services $line config edit vim
+treehouses services $line config new
+treehouses services $line config select
 treehouses services $line icon
 treehouses services $line icon oneline
 treehouses services $line info
@@ -385,6 +414,15 @@ treehouses services $line url
 treehouses services $line url local
 treehouses services $line url tor\n"
   done <<< "$(find /usr/lib/node_modules/@treehouses/cli/services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
+}
+
+function magazine_cmds {
+  while IFS= read -r line;
+  do
+    printf "treehouses magazine $line
+treehouses magazine $line latest
+treehouses magazine $line all\n"
+  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazine -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 
 complete -F _treehouses_complete treehouses ./cli.sh

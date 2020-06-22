@@ -64,7 +64,7 @@ function led {
       echo "Red LED: off 0.5 sec, on 4 sec"
       echo "Green LED: on 0.25 sec, off 0.25 sec"
       echo "loop last step 3 times"
-      echo "Green LED: on 0.0125 sec, off 0.125 sec"
+      echo "Green LED: on 0.125 sec, off 0.125 sec"
       echo "loop last step 3 times"
       lantern > "$LOGFILE"
       ;;

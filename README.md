@@ -38,7 +38,7 @@ password <password|disable|enable>        changes the password for 'pi' user or 
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
 version [contributors]                    returns the version of cli.sh command
 image                                     returns version of the system image installed
-detect [bluetooth|rpi|arm|wifi]           detects the hardware version of any device
+detect [bluetooth|rpi|arm|arch|wifi]      detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
 discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
          <rpi> [ipaddress|url|macaddress]
@@ -65,8 +65,8 @@ vnc [on|off|info]                         enables or disables the vnc server ser
 default                                   sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
 upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
-sshtunnel [add|remove|list|check|key]     helps adding sshtunnels
-          [notice]
+sshtunnel [add|remove|list|active|check]  helps adding sshtunnels
+          [key|notice]
 led [green|red] [mode]                    sets the led mode
     [dance|thanksgiving|christmas]
     [newyear|lunarnewyear|valentine]

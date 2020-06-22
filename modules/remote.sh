@@ -107,21 +107,27 @@ function remote {
       echo ${json_var}
       ;;
     key)
-      checkargn $# 3
       case "$2" in
         send)
+          checkargn $# 4
+          profile=$4
+
+          if [ ! -z $profile ]; then
+            profile="_${profile}"
+          fi
+
           case "$3" in
             public)
-              if [ -f /root/.ssh/id_rsa.pub ]; then
-                cat /root/.ssh/id_rsa.pub
+              if [ -f /root/.ssh/id_rsa${profile}.pub ]; then
+                cat /root/.ssh/id_rsa${profile}.pub
               else
                 echo "No public key found"
                 exit 1
               fi
               ;;
             private)
-              if [ -f /root/.ssh/id_rsa ]; then
-                cat /root/.ssh/id_rsa
+              if [ -f /root/.ssh/id_rsa${profile} ]; then
+                cat /root/.ssh/id_rsa${profile}
               else
                 echo "No private key found"
                 exit 1
@@ -135,6 +141,9 @@ function remote {
           esac
           ;;
         receive)
+          checkargn $# 5
+          key=$4
+          profile=$5
           case "$3" in
             public)
 

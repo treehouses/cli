@@ -7,6 +7,9 @@ function stream {
 
     "on")
       echo "Starting treehouse stream..."
+      if [ ! pip3 list | grep -q "socketserver" ]  ; then
+        pip3 install socketserver
+      fi 
       python3 modules/stream_treehouse.py > /dev/null 2>&1 &
       echo "Treehouse stream has started at 127.0.0.1:8000/index.html"
       echo "It can be stopped with treehouses stream off."

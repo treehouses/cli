@@ -111,7 +111,7 @@ services                                  executes the given command on the spec
    [dokuwiki]                             Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database.
    [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
    [transmission]                         Transmission is a BitTorrent client with many powerful features.
-   [cloud9]                               cloud9 is a complete web based ide with terminal access
+   [cloud9]                               Cloud9 is a complete web based ide with terminal access
    [pylon]                                Pylon is a web based integrated development environment built with Node.js as a backend and with a supercharged JavaScript/HTML5 frontend
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]

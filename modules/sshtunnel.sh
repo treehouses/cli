@@ -44,7 +44,7 @@ function sshtunnel {
 
           # check if monitoring port already in use
           portint_offset=0
-          while grep -qs -e "M $portinterval" -e "M $((portinterval - 1))" /etc/tunnel; do
+          while grep -qs -e "M $((portinterval - 1))" -e "M $portinterval" -e "M $((portinterval + 1))" /etc/tunnel; do
             portinterval=$((portinterval + 1))
             portint_offset=$((portint_offset + 1))
           done
@@ -481,11 +481,32 @@ function sshtunnel {
       fi
       ;;
     key)
-      checkargn $# 1
-      if [ ! -f "/root/.ssh/id_rsa" ]; then
-          ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
-      fi
-      cat /root/.ssh/id_rsa.pub
+      checkargn $# 2
+      case "$2" in
+        "")
+          if [ ! -f "/root/.ssh/id_rsa" ]; then
+              ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
+          fi
+          cat /root/.ssh/id_rsa.pub
+          ;;
+        verify)
+          if [ -f "/root/.ssh/id_rsa" ] && [ -f "/root/.ssh/id_rsa.pub" ]; then
+            verify=$(diff <( ssh-keygen -y -e -f "/root/.ssh/id_rsa" ) <( ssh-keygen -y -e -f "/root/.ssh/id_rsa.pub" ))
+            if [ "$verify" != "" ]; then
+              echo -e "Public and private rsa keys ${RED}do not match${NC}"
+            else
+              echo -e "Public and private rsa keys ${GREEN}match${NC}"
+            fi
+          else
+            echo "Missing public / private rsa keys"
+          fi
+          ;;
+        *)
+          echo "Error: unknown command"
+          echo "Usage: $BASENAME sshtunnel key [verify]"
+          exit 1
+          ;;
+      esac
       ;;
     notice)
       case "$2" in
@@ -637,6 +658,7 @@ function sshtunnel_help {
   echo "  check                                    runs a checklist of tests"
   echo
   echo "  key                                      shows the public key"
+  echo "      [verify]                                 verifies that the public and private rsa keys match"
   echo
   echo "  notice                                   returns whether auto-reporting sshtunnel ports to gitter is on or off"
   echo "      on                                       turns on auto-reporting to gitter"

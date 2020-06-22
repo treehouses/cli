@@ -69,5 +69,3 @@ function number {
 function info {
   echo "The MagPi is The Official Raspberry Pi magazine. Written by and for the community, it is packed with Raspberry Pi-themed projects, computing and electronics tutorials, how-to guides, and the latest news and reviews."
 }
-
-$1

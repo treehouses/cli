@@ -166,10 +166,7 @@ function sshtunnel {
                     sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
                     echo "Added $actual -> $((portinterval + offset)) for host $host"
 
-                    pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
-                    if [ ! -z "$pid" ]; then
-                      kill -- -$pid
-                    fi
+                    sshtunnel_kill $host
                   fi
                 fi
               else
@@ -243,10 +240,7 @@ function sshtunnel {
                     sed -i "/^$host/i -R $port:127.0.1.1:$actual \\\\" /etc/tunnel
                     echo "Added $actual -> $port for host $host"
                     
-                    pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
-                    if [ ! -z "$pid" ]; then
-                      kill -- -$pid
-                    fi
+                    sshtunnel_kill $host
                   fi
                 fi
               else
@@ -323,10 +317,7 @@ function sshtunnel {
             sed -i "$final d" /etc/tunnel
             echo "Removed $port for host $host"
 
-            pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
-            if [ ! -z "$pid" ]; then
-              kill -- -$pid
-            fi
+            sshtunnel_kill $host
           else
             echo "Host / port not found"
           fi
@@ -365,10 +356,7 @@ function sshtunnel {
           sed -i "$((startline - 1)), $endline d" /etc/tunnel
           echo "Removed $host from /etc/tunnel"
 
-          pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
-          if [ ! -z "$pid" ]; then
-            kill -- -$pid
-          fi
+          sshtunnel_kill $host
           ;;
         *)
           echo "Error: unknown command"
@@ -383,14 +371,12 @@ function sshtunnel {
 
       if [ -z "$host" ]; then
         count=$(pgrep -c autossh)
-        pkill autossh
-        bash /etc/tunnel
+        screen -dm bash -c "pkill autossh ; bash /etc/tunnel"
         echo "Refreshed tunnels to $count host(s)"
       else
         pid=$(pgrep -a "autossh" | grep "$host$" | awk '{print $1}')
         if [ ! -z "$pid" ]; then
-          kill -- -$pid
-          bash /etc/tunnel
+          screen -dm bash -c "kill -- -$pid ; bash /etc/tunnel"
           echo "Refreshed tunnels to $host"
         else
           echo "No tunnels to $host active"
@@ -601,6 +587,15 @@ function sshtunnel {
       exit 1
       ;;
   esac
+}
+
+function sshtunnel_kill {
+  host=$1
+
+  pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
+  if [ ! -z "$pid" ]; then
+    screen -dm bash -c "kill -- -$pid ; bash /etc/tunnel"
+  fi
 }
 
 function sshtunnel_help {

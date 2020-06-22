@@ -127,10 +127,27 @@ function remote {
                 exit 1
               fi
               ;;
+            *)
+              echo "Error: incorrect command"
+              echo "Usage: $BASENAME remote key send <public | private>"
+              exit 1
+              ;;
           esac
           ;;
         receive)
+          case "$3" in
+            public)
 
+              ;;
+            private)
+
+              ;;
+            *)
+              echo "Error: incorrect command"
+              echo "Usage: $BASENAME remote key receive <public | private>"
+              exit 1
+              ;;
+          esac
           ;;
         *)
           echo "Error: incorrect command"

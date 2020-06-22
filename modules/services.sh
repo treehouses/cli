@@ -633,6 +633,7 @@ function services_help {
   echo "  bookstack       Bookstack is a free and open source Wiki designed for creating beautiful documentation"
   echo "  transmission    Transmission is a BitTorrent client with many powerful features"
   echo "  cloud9          Cloud9 is a complete web based IDE with terminal access"
+  echo "  mongoexpress    Mongo Express is Web-based MongoDB admin interface written with Node.js, Express and Bootstrap3"
   echo
   echo
   echo "Top-Level Commands:"

@@ -112,6 +112,7 @@ services                                  executes the given command on the spec
    [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
    [transmission]                         Transmission is a BitTorrent client with many powerful features.
    [cloud9]                               cloud9 is a complete web based ide with terminal access
+   [mongoexpress]                         Mongo Express is Web-based MongoDB admin interface written with Node.js, Express and Bootstrap3
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

@@ -158,7 +158,7 @@ function remote {
       ;;      
     *)
       echo "Unknown command option"
-      echo "Usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"
+      echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices>"
       ;;
   esac
 }
@@ -184,7 +184,7 @@ function autorun_helper {
 
 function remote_help {
   echo
-  echo "Usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"
+  echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices>"
   echo
   echo "Returns a string representation of the current status of the Raspberry Pi"
   echo "Used for Treehouses Remote"
@@ -210,7 +210,7 @@ function remote_help {
   echo "true if an upgrade is available"
   echo "false otherwise"
   echo
-  echo "$BASENAME remote services [available | installed | running]"
+  echo "$BASENAME remote services <available | installed | running>"
   echo "Available: | Installed: | Running: <list of services>"
   echo
   echo "$BASENAME remote version <version_number>"

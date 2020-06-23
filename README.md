@@ -68,9 +68,9 @@ upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
 sshtunnel [add|remove|list|active|check]  helps adding sshtunnels
           [key|notice]
 led [green|red] [mode]                    sets the led mode
-    [dance|thanksgiving|christmas]
+    [dance|thanksgiving|christmas|diwali]
     [newyear|lunarnewyear|valentine]
-    [carnival|stpatricks|onam]
+    [carnival|stpatricks|onam|lantern]
     [heavymetal|easter|eid|kecak|random]
 power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified

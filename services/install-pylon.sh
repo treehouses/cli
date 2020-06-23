@@ -20,8 +20,8 @@ EOF
 
   # create .env with default values
   cat << EOF > /srv/pylon/.env
-USER=root
-PASS=root
+"USER="
+"PASS="
 EOF
 
   # add autorun

@@ -1,5 +1,5 @@
 function monitor {
-  noticeType=("all" "online" "error" "none")
+  noticeType=("all" "online" "error" "none" "now")
   noticeChannel="https://api.gitter.im/v1/rooms/59d259f6d73408ce4f784672/chatMessages"
   testUrl=""
   hostName=""
@@ -41,9 +41,9 @@ function monitor {
 
   lastLog="$(tail -1 /var/log/$fileName.status.log)"
 
-  if ( [ ! -f /var/log/$fileName.status.log ] || ! echo "${lastLog}" | grep "\[${STATUS}\]" ); then
+  if ( [ "$sendNotice" == "now" ] || [ ! -f /var/log/$fileName.status.log ] || ! echo "${lastLog}" | grep "\[${STATUS}\]" ); then
     echo "[${STATUS}] $(date) ${hostName} ${url}" >> /var/log/$fileName.status.log
-    if [ "$sendNotice" == "all" ] || ([ "$sendNotice" == "error" ] && [ ! $STATUS -eq 200 ]) || ([ "$sendNotice" == "online" ] && [ $STATUS -eq 200 ]); then
+    if [ "$sendNotice" == "now" ] || [ "$sendNotice" == "all" ] || ([ "$sendNotice" == "error" ] && [ ! $STATUS -eq 200 ]) || ([ "$sendNotice" == "online" ] && [ $STATUS -eq 200 ]); then
       export gitter_channel="$noticeChannel"
       feedback "ALERT: ${hostName} ${testUrl} \`statusCode: ${STATUS}\` \`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\`"
     fi

@@ -31,17 +31,18 @@ function monitor {
   if [ -z "$hostName" ]; then
     fileName=$(echo "$testUrl" | sed -e 's|^[^/]*//||' -e 's|/.*$||' -e 's|:.*$||')
   fi
-
+  
+  fileName=$(echo "$fileName" | tr -dc '[:alnum:]\n\r' | tr '[:upper:]' '[:lower:]')
   STATUS=$(curl -I -L -s -o /dev/null -w "%{http_code}" ${testUrl})
 
   if [ "$keepLog" == "true" ]; then
-    echo "[INFO] $(date) ${hostName} ${url} statusCode: ${STATUS}" >> $fileName.test.log
+    echo "[INFO] $(date) ${hostName} ${url} statusCode: ${STATUS}" >> /var/log/$fileName.test.log
   fi
 
-  lastLog="$(tail -1 $fileName.status.log)"
+  lastLog="$(tail -1 /var/log/$fileName.status.log)"
 
-  if ( [ ! -f $fileName.status.log ] || ! echo "${lastLog}" | grep "\[${STATUS}\]" ); then
-    echo "[${STATUS}] $(date) ${hostName} ${url}" >> $fileName.status.log
+  if ( [ ! -f /var/log/$fileName.status.log ] || ! echo "${lastLog}" | grep "\[${STATUS}\]" ); then
+    echo "[${STATUS}] $(date) ${hostName} ${url}" >> /var/log/$fileName.status.log
     if [ "$sendNotice" == "all" ] || ([ "$sendNotice" == "error" ] && [ ! $STATUS -eq 200 ]) || ([ "$sendNotice" == "online" ] && [ $STATUS -eq 200 ]); then
       export gitter_channel="$noticeChannel"
       feedback "ALERT: ${hostName} ${testUrl} \`statusCode: ${STATUS}\` \`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\`"

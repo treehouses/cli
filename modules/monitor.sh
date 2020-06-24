@@ -15,16 +15,16 @@ function monitor {
       "n") noticeArg=("$OPTARG")
         case " ${noticeType[@]} " in
           *" $noticeArg "*) sendNotice="$noticeArg" ;;
-          *) printf "Invalid option for -%s\n" "$option" >&2; echo "$usage" >&2; exit 1;;
+          *) printf "Invalid option for -%s\n" "$option" >&2; monitor_help; exit 1;;
         esac;;
-      :) printf "Missing argument for -%s\n" "$OPTARG" >&1; echo "$usage" >&2; exit 1;;
-      *) echo "$usage" >&2; exit 1;;
+      :) printf "Missing argument for -%s\n" "$OPTARG" >&1; monitor_help; exit 1;;
+      *) monitor_help; exit 1;;
     esac
   done
 
   if [ -z "$testUrl" ]; then
     echo "Argument '-u' must be provided"
-    echo "$usage" >&2
+    echo monitor_help
     exit 1
   fi
 

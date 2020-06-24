@@ -24,7 +24,7 @@ function monitor {
 
   if [ -z "$testUrl" ]; then
     echo "Argument '-u' must be provided"
-    echo monitor_help
+    monitor_help
     exit 1
   fi
 

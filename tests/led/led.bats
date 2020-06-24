@@ -41,6 +41,11 @@ load test-helper
   assert_success && assert_output -p 'heartbeat'
 }
 
+@test "$clinom led newyear" {
+  run "${clicmd}" led newyear
+  assert_success && assert_output -p 'default'
+}
+
 @test "$clinom led lunarnewyear" {
   run "${clicmd}" led lunarnewyear
   assert_success && assert_output -p 'default-on'
@@ -54,6 +59,11 @@ load test-helper
 @test "$clinom led carnival" {
   run "${clicmd}" led carnival
   assert_success && assert_output -p 'heartbeat'
+}
+
+@test "$clinom led wazazi" {
+  run "${clicmd}" led wazazi
+  assert_success && assert_output -p 'default-on'
 }
 
 @test "$clinom led onam" {

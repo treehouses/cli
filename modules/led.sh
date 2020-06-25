@@ -574,35 +574,23 @@ function thanksgiving {
   current_red=$(led "red")
   current_green=$(led "green")
 
-  for i in {0..1}
-  do
-    set_brightness 0 0 && sleep 0.5    # green off
-    set_brightness 0 1 && sleep 0.5    # green on
-  done
+  set_brightness 0 0 && sleep 0.5    # green off
+  set_brightness 0 1 && sleep 0.5    # green on
 
-  for i in {0..1}
-  do
-    set_brightness 1 0 && sleep 0.5    # red off
-    set_brightness 1 1 && sleep 0.5    # red on
-  done
+  set_brightness 1 0 && sleep 0.5    # red off
+  set_brightness 1 1 && sleep 0.5    # red on
 
   set_brightness 0 0
-  for i in {0..1}
-  do
-    set_brightness 1 0 && sleep 0.25
-    set_brightness 1 1 && sleep 0.25
-  done
+  set_brightness 1 0 && sleep 0.25
+  set_brightness 1 1 && sleep 0.25
   set_brightness 0 1 && sleep 0.5
 
   set_brightness 1 0
-  for i in {0..1}
-  do
-    set_brightness 0 0 && sleep 0.25
-    set_brightness 0 1 && sleep 0.25
-  done
+  set_brightness 0 0 && sleep 0.25
+  set_brightness 0 1 && sleep 0.25
   set_brightness 1 1 && sleep 0.5
 
-  for i in {0..3}
+  for i in {0..1}
   do
     set_brightness 1 0
     set_brightness 0 0 && sleep 0.25

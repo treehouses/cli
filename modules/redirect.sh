@@ -44,5 +44,10 @@ function redirect_help {
   echo
   echo "Usage:  $BASENAME redirect [list|add|remove] <url>"
   echo
+  echo "        $BASENAME redirect list           lists all that will be redirected"
   echo 
+  echo "        $BASENAME redirect add [url]      add an url for hostname redirection"
+  echo
+  echo "        $BASENAME redirect remove [url]   remove an url for hostname redirection"
+  echo
 }

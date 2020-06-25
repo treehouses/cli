@@ -255,9 +255,12 @@ treehouses reboots in
 treehouses reboots monthly
 treehouses reboots now
 treehouses reboots weekly
+treehouses remote allservices
 treehouses remote check
 treehouses remote commands
-treehouses remote allservices
+treehouses remote help
+treehouses remote key receive
+treehouses remote key send
 treehouses remote services available
 treehouses remote services installed
 treehouses remote services running
@@ -302,6 +305,10 @@ treehouses sshtunnel add port actual
 treehouses sshtunnel add port offset
 treehouses sshtunnel check
 treehouses sshtunnel key
+treehouses sshtunnel key receive private
+treehouses sshtunnel key receive public
+treehouses sshtunnel key send private
+treehouses sshtunnel key send public
 treehouses sshtunnel key verify
 treehouses sshtunnel list
 treehouses sshtunnel notice

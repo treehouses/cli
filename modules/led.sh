@@ -128,6 +128,7 @@ function led {
       echo "Look at your RPi leds, both leds will be in this pattern..."
       echo "Both LED: flashing 10 times with a decreasing frequency"
       echo "this will happen 3 times"
+      dragonboat > "$LOGFILE"
       ;;
     thanksgiving)
       checkroot
@@ -551,19 +552,18 @@ function dragonboat {
   current_green=$(led "green")
   current_red=$(led "red")
 
-  frequency=100
-
+  time=0.01
   for i in {0..2}
   do
-    for j in {0..9}
+    for j in {1..10}
     do
       set_brightness 0 0 && set_brightness 1 0
-      sleep $(( 1/frequency ))
+      sleep `echo "$j*$time" | bc`
       set_brightness 0 1 && set_brightness 1 1
-      sleep $(( 1/frequency ))
-      frequency-=10
+      sleep `echo "$j*$time" | bc`
     done
-    frequency=100
+    set_brightness 0 0 && set_brightness 1 0
+    sleep 1
   done
 
   led green "$current_green"

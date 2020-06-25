@@ -532,12 +532,22 @@ function sshtunnel {
           checkargn $# 5
           key=$4
           profile=$5
+
+          if [ ! -z $profile ]; then
+            profile="_${profile}"
+          fi
+
           case "$3" in
             public)
-
+              if [ -f /root/.ssh/id_rsa${profile}.pub ]; then
+                mv /root/.ssh/id_rsa${profile}.pub /root/.ssh/id_rsa${profile}.$(date +%Y%m%d%H%M).pub
+              fi
+              echo "$key" > "/root/.ssh/id_rsa${profile}.pub"
               ;;
             private)
+              # if [ -f /root/.ssh/id_rsa${profile} ]; then
 
+              # fi
               ;;
             *)
               echo "Error: incorrect command"

@@ -44,7 +44,7 @@ treehouses camera off
 treehouses camera on
 treehouses camera detect
 treehouses changelog
-treehouses changelog picture
+treehouses changelog view
 treehouses changelog compare
 treehouses clone
 treehouses container
@@ -239,6 +239,7 @@ treehouses openvpn use
 treehouses password
 treehouses password disable
 treehouses password enable
+treehouses picture
 treehouses power conservative
 treehouses power current
 treehouses power default
@@ -275,7 +276,6 @@ treehouses sdbench
 treehouses services available
 treehouses services installed
 treehouses services installed full
-treehouses picture
 $(services_cmds)
 treehouses services ports
 treehouses services running

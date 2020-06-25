@@ -122,6 +122,13 @@ function led {
       echo "Both LED: flash 10 times; this will happen 5 times"
       diwali > "$LOGFILE"
       ;;
+    dragonboat)
+      checkroot
+      echo "leds are set to dragonboat mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: flashing 10 times with a decreasing frequency"
+      echo "this will happen 3 times"
+      ;;
     thanksgiving)
       checkroot
       echo "leds are set to thanksgiving mode."
@@ -540,6 +547,29 @@ function diwali {
   led green "$current_green"
 }
 
+function dragonboat {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  frequency=100
+
+  for i in {0..2}
+  do
+    for j in {0..9}
+    do
+      set_brightness 0 0 && set_brightness 1 0
+      sleep $(( 1/frequency ))
+      set_brightness 0 1 && set_brightness 1 1
+      sleep $(( 1/frequency ))
+      frequency-=10
+    done
+    frequency=100
+  done
+
+  led green "$current_green"
+  led red "$current_red"
+}
+
 function thanksgiving {
   current_red=$(led "red")
   current_green=$(led "green")
@@ -706,7 +736,7 @@ function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
   echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter]"
-  echo "                      [eid|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
+  echo "                      [eid|onam|diwali|dragonboat|thanksgiving|christmas|dance|heavymetal|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -781,6 +811,9 @@ function led_help {
   echo
   echo "  $BASENAME led diwali"
   echo "      This will set the mode of the led to diwali"
+  echo
+  echo "  $BASENAME led dragonboat"
+  echo "      This will set the mode of the led to dragonboat"
   echo
   echo "  $BASENAME led thanksgiving"
   echo "      This will do a sequence with the green and red led"

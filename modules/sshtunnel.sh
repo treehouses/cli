@@ -596,9 +596,39 @@ function sshtunnel {
           ;;
       esac
       ;;
+    ports)
+      checkargn $# 1
+      message_ports=()
+      while read -r line; do
+        if [[ $line =~ "/usr/bin/autossh" ]]; then
+          monitoringport=$(echo $line | grep -oP "(?<=\-M )(.*?) ")
+        elif echo $line | grep -q "[]@[]"; then
+          host=$(echo $line | awk '{print $1}')
+        fi
+
+        if [ ! -z "$monitoringport" ] && echo $line | grep -oPq "(?<=\-R )(.*?) "; then
+          local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
+          external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
+          notice_ports+=("$external:$local ")
+        fi
+
+        if [ ! -z "$monitoringport" ] && [ ! -z "$host" ]; then
+          message+="$host:$monitoringport"
+          for i in "${notice_ports[@]}"; do
+            message+=$i
+          done
+          message+=" "
+          monitoringport=""
+          host=""
+          notice_ports=()
+        fi
+      done < /etc/tunnel
+
+      echo -e $message
+      ;;
     *)
       echo "Error: unknown command"
-      echo "Usage: $BASENAME sshtunnel [add | remove | list | active | check | key | notice]"
+      echo "Usage: $BASENAME sshtunnel [add | remove | list | active | check | key | notice | ports]"
       exit 1
       ;;
   esac
@@ -606,7 +636,7 @@ function sshtunnel {
 
 function sshtunnel_help {
   echo
-  echo "Usage: $BASENAME sshtunnel [add | remove | list | active | check | key | notice]"
+  echo "Usage: $BASENAME sshtunnel [add | remove | list | active | check | key | notice | ports]"
   echo
   echo "Helps setting up sshtunnels to multiple hosts"
   echo
@@ -649,6 +679,8 @@ function sshtunnel_help {
   echo "      list                                     lists all channels"
   echo "      off                                      turns off auto-reporting to gitter"
   echo "      now                                      immediately reports to gitter"
+  echo
+  echo "  ports                                    lists all existing tunnels to all hosts in a single string"
   echo
   echo "Adding a port using offsets:"
   echo "  To add local port 100 with an offset of 200, run"

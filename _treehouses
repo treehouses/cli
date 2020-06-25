@@ -366,8 +366,10 @@ treehouses resolution
 treehouses system
 treehouses system all
 treehouses system cpu
+treehouses system cputask
 treehouses system disk
 treehouses system ram
+treehouses system ramtask
 treehouses system temperature
 treehouses system volt
 EOF

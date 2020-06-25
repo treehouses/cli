@@ -21,6 +21,11 @@ load test-helper
     assert_success && assert_output -p 'Disk' && assert_output -p 'Temperature'
 }
 
+@test "$clinom system cputask" {
+    run "${clicmd}" system cputask
+    assert_success && assert_output -p 'CPU HEAVY TASKS'
+}
+
 @test "$clinom system error" {
     run "${clicmd}" system bruh lol
     assert_output -p 'Error'

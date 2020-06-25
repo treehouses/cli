@@ -2,8 +2,8 @@ function system {
   checkroot
 
   local options functions arguments errors
-  options=("all" "cpu" "ram" "disk" "volt" "temperature")
-  functions=(system system_cpu system_ram system_disk system_volt system_temperature)
+  options=("all" "cpu" "ram" "disk" "volt" "temperature" "cputask" "ramtask")
+  functions=(system system_cpu system_ram system_disk system_volt system_temperature system_cputask system_ramtask)
   arguments=()
   errors=()
 
@@ -52,7 +52,7 @@ function system_cpu {
     awk '{print 100 - $1"%"}')
   frequency=$(</sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq)
 
-  echo "CPU:            $percentage @ $((frequency/1000))MHz"
+  echo "CPU:              $percentage @ $((frequency/1000))MHz"
 }
 
 function system_ram {
@@ -61,7 +61,7 @@ function system_ram {
   total=$(free -m | grep Mem | awk '{print $2}')
   percentage=$(bc -l <<< "scale=2; $used/$total" | cut -c 2-)
 
-  echo "Memory:         $used""M/$total""M, $percentage% used"
+  echo "Memory:           $used""M/$total""M, $percentage% used"
 }
 
 function system_disk {
@@ -70,15 +70,37 @@ function system_disk {
   total=$(df -h | grep /root | awk '{print $2}'| sed 's/G//g')
   percentage=$(bc -l <<< "scale=2; $used/$total" | cut -c 2-)
   
-  echo "Disk storage:   $used""G/$total""G, $percentage% used"
+  echo "Disk storage:     $used""G/$total""G, $percentage% used"
 }
 
 function system_volt {
-  echo "Volt:           $(vcgencmd measure_volts | cut -c 6-)"
+  echo "Volt:             $(vcgencmd measure_volts | cut -c 6-)"
 }
 
 function system_temperature {
-  echo "Temperature:    $(temperature celsius) ($(temperature fahrenheit))"
+  echo "Temperature:      $(temperature celsius) ($(temperature fahrenheit))"
+}
+
+function system_cputask {
+  printf "\n\tCPU HEAVY TASKS\n"
+  printf "PID\t\t\tPROCESS\n"
+  cpu=$(ps -eo pid --sort=-%cpu | head -11 | sed '1d')
+  for pid in $cpu
+  do
+    printf "$pid\t\t\t$(ps -p $pid -o comm=)\n"
+  done
+  echo
+}
+
+function system_ramtask {
+  printf "\n\tRAM HEAVY TASKS\n"
+  printf "PID\t\t\tPROCESS\n"
+  ram=$(ps -eo pid --sort=-%mem | head -11 | sed '1d')
+  for pid in $ram
+  do
+    printf "$pid\t\t\t$(ps -p $pid -o comm=)\n"
+  done
+  echo
 }
 
 function system_help {

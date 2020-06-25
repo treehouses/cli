@@ -475,7 +475,7 @@ function sshtunnel {
       fi
       ;;
     key)
-      checkargn $# 2
+      # checkargn $# 2
       case "$2" in
         "")
           if [ ! -f "/root/.ssh/id_rsa" ]; then
@@ -484,6 +484,7 @@ function sshtunnel {
           cat /root/.ssh/id_rsa.pub
           ;;
         verify)
+          checkargn $# 2
           if [ -f "/root/.ssh/id_rsa" ] && [ -f "/root/.ssh/id_rsa.pub" ]; then
             verify=$(diff <( ssh-keygen -y -e -f "/root/.ssh/id_rsa" ) <( ssh-keygen -y -e -f "/root/.ssh/id_rsa.pub" ))
             if [ "$verify" != "" ]; then
@@ -495,9 +496,59 @@ function sshtunnel {
             echo "Missing public / private rsa keys"
           fi
           ;;
+        send)
+          checkargn $# 4
+          profile=$4
+
+          if [ ! -z $profile ]; then
+            profile="_${profile}"
+          fi
+
+          case "$3" in
+            public)
+              if [ -f /root/.ssh/id_rsa${profile}.pub ]; then
+                cat /root/.ssh/id_rsa${profile}.pub
+              else
+                echo "No public key found"
+                exit 1
+              fi
+              ;;
+            private)
+              if [ -f /root/.ssh/id_rsa${profile} ]; then
+                cat /root/.ssh/id_rsa${profile}
+              else
+                echo "No private key found"
+                exit 1
+              fi
+              ;;
+            *)
+              echo "Error: incorrect command"
+              echo "Usage: $BASENAME sshtunnel key send <public | private> [profile]"
+              exit 1
+              ;;
+          esac
+          ;;
+        receive)
+          checkargn $# 5
+          key=$4
+          profile=$5
+          case "$3" in
+            public)
+
+              ;;
+            private)
+
+              ;;
+            *)
+              echo "Error: incorrect command"
+              echo "Usage: $BASENAME sshtunnel key receive <public | private> [profile]"
+              exit 1
+              ;;
+          esac
+          ;;
         *)
           echo "Error: unknown command"
-          echo "Usage: $BASENAME sshtunnel key [verify]"
+          echo "Usage: $BASENAME sshtunnel key [verify | send | receive]"
           exit 1
           ;;
       esac

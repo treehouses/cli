@@ -107,64 +107,9 @@ function remote {
       echo ${json_var}
       ;;
     key)
-      case "$2" in
-        send)
-          checkargn $# 4
-          profile=$4
-
-          if [ ! -z $profile ]; then
-            profile="_${profile}"
-          fi
-
-          case "$3" in
-            public)
-              if [ -f /root/.ssh/id_rsa${profile}.pub ]; then
-                cat /root/.ssh/id_rsa${profile}.pub
-              else
-                echo "No public key found"
-                exit 1
-              fi
-              ;;
-            private)
-              if [ -f /root/.ssh/id_rsa${profile} ]; then
-                cat /root/.ssh/id_rsa${profile}
-              else
-                echo "No private key found"
-                exit 1
-              fi
-              ;;
-            *)
-              echo "Error: incorrect command"
-              echo "Usage: $BASENAME remote key send <public | private>"
-              exit 1
-              ;;
-          esac
-          ;;
-        receive)
-          checkargn $# 5
-          key=$4
-          profile=$5
-          case "$3" in
-            public)
-
-              ;;
-            private)
-
-              ;;
-            *)
-              echo "Error: incorrect command"
-              echo "Usage: $BASENAME remote key receive <public | private>"
-              exit 1
-              ;;
-          esac
-          ;;
-        *)
-          echo "Error: incorrect command"
-          echo "Usage: $BASENAME remote key <send | receive>"
-          exit 1
-          ;;
-      esac
-      ;;      
+      
+      
+      ;;
     *)
       echo "Unknown command option"
       echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices>"

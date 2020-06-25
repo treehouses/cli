@@ -122,6 +122,14 @@ function led {
       echo "Both LED: flash 10 times; this will happen 5 times"
       diwali > "$LOGFILE"
       ;;
+    dragonboat)
+      checkroot
+      echo "leds are set to dragonboat mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: flashing 10 times with a decreasing frequency"
+      echo "this will happen 3 times"
+      dragonboat > "$LOGFILE"
+      ;;
     thanksgiving)
       checkroot
       echo "leds are set to thanksgiving mode."
@@ -540,6 +548,28 @@ function diwali {
   led green "$current_green"
 }
 
+function dragonboat {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  time=0.01
+  for i in {0..2}
+  do
+    for j in {1..10}
+    do
+      set_brightness 0 0 && set_brightness 1 0
+      sleep "$(echo "$j*$time" | bc)"
+      set_brightness 0 1 && set_brightness 1 1
+      sleep "$(echo "$j*$time" | bc)"
+    done
+    set_brightness 0 0 && set_brightness 1 0
+    sleep 1
+  done
+
+  led green "$current_green"
+  led red "$current_red"
+}
+
 function thanksgiving {
   current_red=$(led "red")
   current_green=$(led "green")
@@ -705,8 +735,8 @@ function random {
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter]"
-  echo "                      [eid|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
+  echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter|eid]"
+  echo "                      [dragonboat|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -775,6 +805,9 @@ function led_help {
   echo
   echo "  $BASENAME led eid"
   echo "     This will set the mode of the led to eid"
+  echo
+  echo "  $BASENAME led dragonboat"
+  echo "      This will set the mode of the led to dragonboat"
   echo
   echo "  $BASENAME led onam"
   echo "      This will set the mode of the led to onam"

@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load test-helper
+load ../test-helper
 
 @test "$clinom led thanksgiving" {
   run "${clicmd}" led thanksgiving

@@ -558,9 +558,9 @@ function dragonboat {
     for j in {1..10}
     do
       set_brightness 0 0 && set_brightness 1 0
-      sleep $(echo "$j*$time" | bc)
+      sleep "$(echo "$j*$time" | bc)"
       set_brightness 0 1 && set_brightness 1 1
-      sleep $(echo "$j*$time" | bc)
+      sleep "$(echo "$j*$time" | bc)"
     done
     set_brightness 0 0 && set_brightness 1 0
     sleep 1

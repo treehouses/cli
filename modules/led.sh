@@ -735,8 +735,8 @@ function random {
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter]"
-  echo "                      [eid|onam|diwali|dragonboat|thanksgiving|christmas|dance|heavymetal|random]"
+  echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter|eid]"
+  echo "                      [dragonboat|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -806,14 +806,14 @@ function led_help {
   echo "  $BASENAME led eid"
   echo "     This will set the mode of the led to eid"
   echo
+  echo "  $BASENAME led dragonboat"
+  echo "      This will set the mode of the led to dragonboat"
+  echo
   echo "  $BASENAME led onam"
   echo "      This will set the mode of the led to onam"
   echo
   echo "  $BASENAME led diwali"
   echo "      This will set the mode of the led to diwali"
-  echo
-  echo "  $BASENAME led dragonboat"
-  echo "      This will set the mode of the led to dragonboat"
   echo
   echo "  $BASENAME led thanksgiving"
   echo "      This will do a sequence with the green and red led"

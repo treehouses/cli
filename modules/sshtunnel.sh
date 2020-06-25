@@ -617,14 +617,14 @@ function sshtunnel {
           for i in "${notice_ports[@]}"; do
             message+=$i
           done
-          message+=" "
+          message+="\n"
           monitoringport=""
           host=""
           notice_ports=()
         fi
       done < /etc/tunnel
 
-      echo -e $message
+      echo -e ${message::-3}
       ;;
     *)
       echo "Error: unknown command"

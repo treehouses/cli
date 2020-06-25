@@ -1,7 +1,7 @@
-function view {
+function picture {
     case "$1" in
       "")
-        view_help
+        picture_help
       ;;
     
       *)
@@ -10,14 +10,14 @@ function view {
     esac
 }
 
-function view_help {
+function picture_help {
   echo
-  echo "Usage: $BASENAME view [file|url]"
+  echo "Usage: $BASENAME picture [file|url]"
   echo
   echo "Views a picture in the terminal."
   echo
   echo "Example:"
-  echo "  $BASENAME view image.png"
+  echo "  $BASENAME picture image.png"
   echo "  <image will be displayed in terminal>"
   echo
 }

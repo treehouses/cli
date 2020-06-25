@@ -549,7 +549,7 @@ function sshtunnel {
               ;;
             *)
               echo "Error: unknown command"
-              echo "Usage: $BASENAME sshtunnel key receive <public | private>"
+              echo "Usage: $BASENAME sshtunnel key receive <public | private> <\$key> [profile]"
               exit 1
               ;;
           esac
@@ -699,7 +699,9 @@ function sshtunnel_help {
   echo "  check                                    runs a checklist of tests"
   echo
   echo "  key                                      shows the public key"
-  echo "      [verify]                                 verifies that the public and private rsa keys match"
+  echo "      [verify]                                         verifies that the public and private rsa keys match"
+  echo "      [send] <public | private> [profile]              sends public / private key"
+  echo "      [receive] <public | private> <\$key> [profile]    saves \$key as public / private key"
   echo
   echo "  notice                                   returns whether auto-reporting sshtunnel ports to gitter is on or off"
   echo "      on                                       turns on auto-reporting to gitter"

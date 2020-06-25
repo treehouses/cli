@@ -31,7 +31,7 @@ container <none|docker|balena>            enables (and start) the desired contai
 bluetooth [on|off|pause|restart|button]   switches bluetooth from regular to hotspot mode and shows id or MAC address
           [mac|id|status|log]
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
-aphidden <local|internet> <ESSID>         creates a hidden mobile ap, with or without internet access
+aphidden <local|internet> <ESSID>         creates a hidden mobile ap with or without internet access
          [password]
 apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system
@@ -110,9 +110,9 @@ log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
 inspire [fact|joke|qotd|random]           displays quote based on user input
-convert <input file> <output file>        converts video and audio files 
+convert <input file> <output file>        converts video and audio files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
-changelog                                 displays the most recent changes to treehouses
+changelog [view|compare]                  displays the most recent changes to treehouses
 magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
          <helloworld> [all|latest|number]
 resolution <cea|dmt [modes]>              sets the screen resolution

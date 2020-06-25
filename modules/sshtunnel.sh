@@ -540,14 +540,21 @@ function sshtunnel {
           case "$3" in
             public)
               if [ -f /root/.ssh/id_rsa${profile}.pub ]; then
-                mv /root/.ssh/id_rsa${profile}.pub /root/.ssh/id_rsa${profile}.$(date +%Y%m%d%H%M).pub
+                timestamp=$(date +%Y%m%d%H%M)
+                mv "/root/.ssh/id_rsa${profile}.pub" "/root/.ssh/id_rsa${profile}.${timestamp}.pub"
+                echo "Created backup of 'id_rsa${profile}.pub' as 'id_rsa${profile}.${timestamp}.pub'"
               fi
               echo "$key" > "/root/.ssh/id_rsa${profile}.pub"
+              echo "Saved public key to 'id_rsa${profile}.pub'"
               ;;
             private)
-              # if [ -f /root/.ssh/id_rsa${profile} ]; then
-
-              # fi
+              if [ -f /root/.ssh/id_rsa${profile} ]; then
+                timestamp=$(date +%Y%m%d%H%M)
+                mv "/root/.ssh/id_rsa${profile}" "/root/.ssh/id_rsa${profile}.${timestamp}"
+                echo "Created backup of 'id_rsa${profile}' as 'id_rsa${profile}.${timestamp}'"
+              fi
+              echo "$key" > "/root/.ssh/id_rsa${profile}"
+              echo "Saved private key to 'id_rsa${profile}'"
               ;;
             *)
               echo "Error: incorrect command"

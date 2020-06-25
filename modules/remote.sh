@@ -110,17 +110,15 @@ function remote {
         send)
           checkargn $# 3
           profile=$3
-
-          json_fmt="{\"profile\":["%s"],\"public\":["%s"],\"private\":["%s"]}\n"
-
-          public=$(sshtunnel key send public $profile)
-          private=$(sshtunnel key send private $profile)
+          
+          public_key=$(sshtunnel key send public $profile)
+          private_key=$(sshtunnel key send private $profile | tr '\n' ' ') 
 
           if [ -z $profile ]; then
             profile="default"
           fi
 
-          printf "$json_fmt" "$profile" "$public" "$private"
+          jq -n "{profile:\"$profile\", public_key:\"$public_key\", private_key:\"$private_key\"}"
           ;;
         receive)
           checkargn $# 4

@@ -177,7 +177,6 @@ treehouses led lunarnewyear
 treehouses led newyear
 treehouses led onam
 treehouses led diwali
-treehouses led dragonboat
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -275,6 +274,7 @@ treehouses sdbench
 treehouses services available
 treehouses services installed
 treehouses services installed full
+treehouses view
 $(services_cmds)
 treehouses services ports
 treehouses services running

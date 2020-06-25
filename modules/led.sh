@@ -272,7 +272,7 @@ function lunarnewyear {
     set_brightness 1 1 && sleep 0.1
   done
 
-  set_brightness 1 0 && sleep 1
+  set_brightness 1 0 && sleep 5
   set_brightness 1 1 && sleep 5
 
   led green "$current_green"

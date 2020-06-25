@@ -119,6 +119,7 @@ treehouses help internet
 treehouses help led
 treehouses help locale
 treehouses help log
+treehouses help magazine
 treehouses help memory
 treehouses help networkmode
 treehouses help ntp
@@ -205,6 +206,7 @@ treehouses log 4
 treehouses log max
 treehouses log show
 treehouses log show 5
+treehouses magazine magpi language
 $(magazine_cmds)
 treehouses memory
 treehouses memory -g

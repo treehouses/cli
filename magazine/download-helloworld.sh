@@ -69,3 +69,6 @@ function number {
 function info {
   echo "HelloWorld is the computing and digital making magazine for educators."
 }
+
+call_func=$1
+$call_func

@@ -87,7 +87,7 @@ function system_cputask {
   cpu=$(ps -eo pid --sort=-%cpu | head -11 | sed '1d')
   for pid in $cpu
   do
-    printf "$pid\t\t\t$(ps -p $pid -o comm=)\n"
+    printf "%s\t\t\t%s\n" "$pid" "$(ps -p $pid -o comm=)"
   done
   echo
 }
@@ -98,7 +98,7 @@ function system_ramtask {
   ram=$(ps -eo pid --sort=-%mem | head -11 | sed '1d')
   for pid in $ram
   do
-    printf "$pid\t\t\t$(ps -p $pid -o comm=)\n"
+    printf "%s\t\t\t%s\n" "$pid" "$(ps -p $pid -o comm=)"
   done
   echo
 }

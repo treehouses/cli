@@ -59,7 +59,7 @@ function editor {
          echo "Emacs is not installed on this system."
          read -r -p "Do you want to have it installed? [y/N] " response
          if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-           apt install -y emacs
+           apt install -y emacs-nox
          else
            echo "Emacs not installed."
            exit 0

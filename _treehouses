@@ -126,6 +126,7 @@ treehouses help openvpn
 treehouses help password
 treehouses help rebootneeded
 treehouses help reboots
+treehouses help redirect
 treehouses help remote
 treehouses help rename
 treehouses help restore
@@ -256,6 +257,9 @@ treehouses reboots in
 treehouses reboots monthly
 treehouses reboots now
 treehouses reboots weekly
+treehouses redirect add
+treehouses redirect list
+treehouses redirect remove
 treehouses remote check
 treehouses remote commands
 treehouses remote allservices

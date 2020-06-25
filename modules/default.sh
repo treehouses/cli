@@ -39,6 +39,7 @@ function default_network {
 
   rm -rf /etc/hostapd.conf
   rm -rf /etc/network/interfaces.d/*
+  rm -rf $(ls -d /etc/dnsmasq.d/* | grep -v README)
 
   stop_service hostapd
   stop_service dnsmasq

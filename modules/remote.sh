@@ -114,16 +114,28 @@ function remote {
           public_key=$(sshtunnel key send public $profile)
           private_key=$(sshtunnel key send private $profile | tr '\n' ' ') 
 
-          if [ -z $profile ]; then
+          if [ -z "$profile" ]; then
             profile="default"
           fi
 
           jq -n "{profile:\"$profile\", public_key:\"$public_key\", private_key:\"$private_key\"}"
           ;;
         receive)
-          checkargn $# 4
-          
+          checkargn $# 5
+          public_key=$3
+          private_key=$4
+          profile=$5
 
+          if [ -z "$public_key" ]; then
+            echo "Error: public key required"
+            exit 1
+          elif [ -z "$private_key" ]; then
+            echo "Error: private key required"
+            exit 1
+          else
+            sshtunnel key receive public "$public_key" "$profile"
+            sshtunnel key receive private "$private_key" "$profile"
+          fi
           ;;
         *)
           echo "Error: incorrect command"

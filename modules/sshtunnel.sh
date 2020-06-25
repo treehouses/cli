@@ -1,6 +1,6 @@
 function sshtunnel {
   local portinterval host hostname portssh portweb portcouchdb
-  local portnewcouchdb portmunin keys option value status
+  local portnewcouchdb portmunin keys option value status tag profile
   checkroot
 
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; } && [[ ! "$*" =~ "add host" ]] && [[ ! "$*" =~ "remove all" ]] && [[ ! "$*" =~ "check" ]]; then
@@ -499,7 +499,7 @@ function sshtunnel {
           checkargn $# 4
           profile=$4
 
-          if [ ! -z $profile ]; then
+          if [ ! -z "$profile" ]; then
             profile="_${profile}"
           fi
 
@@ -528,7 +528,7 @@ function sshtunnel {
           key=$4
           profile=$5
 
-          if [ ! -z $profile ]; then
+          if [ ! -z "$profile" ]; then
             profile="_${profile}"
           fi
 
@@ -549,7 +549,7 @@ function sshtunnel {
               ;;
             *)
               echo "Error: unknown command"
-              echo "Usage: $BASENAME sshtunnel key receive <public | private> [profile]"
+              echo "Usage: $BASENAME sshtunnel key receive <public | private>"
               exit 1
               ;;
           esac

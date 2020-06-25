@@ -1,10 +1,9 @@
 function remote {
-  local option results
+  local results
   checkroot
   checkrpi
-  option="$1"
 
-  case "$option" in
+  case "$1" in
     check)
       checkargn $# 1
       echo "$(bluetooth mac) $(image) $(version) $(detectrpi)"
@@ -107,8 +106,33 @@ function remote {
       echo ${json_var}
       ;;
     key)
-      
-      
+      case "$2" in
+        send)
+          checkargn $# 3
+          profile=$3
+
+          json_fmt="{\"profile\":["%s"],\"public\":["%s"],\"private\":["%s"]}\n"
+
+          public=$(sshtunnel key send public $profile)
+          private=$(sshtunnel key send private $profile)
+
+          if [ -z $profile ]; then
+            profile="default"
+          fi
+
+          printf "$json_fmt" "$profile" "$public" "$private"
+          ;;
+        receive)
+          checkargn $# 4
+          
+
+          ;;
+        *)
+          echo "Error: incorrect command"
+          echo "Usage: $BASENAME remote key <send | receive>"
+          exit 1
+          ;;
+      esac
       ;;
     *)
       echo "Unknown command option"

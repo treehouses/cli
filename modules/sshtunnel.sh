@@ -475,7 +475,6 @@ function sshtunnel {
       fi
       ;;
     key)
-      # checkargn $# 2
       case "$2" in
         "")
           if [ ! -f "/root/.ssh/id_rsa" ]; then
@@ -505,24 +504,20 @@ function sshtunnel {
           fi
 
           case "$3" in
-            public)
-              if [ -f /root/.ssh/id_rsa${profile}.pub ]; then
-                cat /root/.ssh/id_rsa${profile}.pub
-              else
-                echo "No public key found"
-                exit 1
+            public | private)
+              if [ "$3" = "public" ]; then
+                tag=".pub"
               fi
-              ;;
-            private)
-              if [ -f /root/.ssh/id_rsa${profile} ]; then
-                cat /root/.ssh/id_rsa${profile}
+
+              if [ -f /root/.ssh/id_rsa${profile}${tag} ]; then
+                cat /root/.ssh/id_rsa${profile}${tag}
               else
-                echo "No private key found"
+                echo "No $3 key found"
                 exit 1
               fi
               ;;
             *)
-              echo "Error: incorrect command"
+              echo "Error: unknown command"
               echo "Usage: $BASENAME sshtunnel key send <public | private> [profile]"
               exit 1
               ;;
@@ -538,26 +533,22 @@ function sshtunnel {
           fi
 
           case "$3" in
-            public)
-              if [ -f /root/.ssh/id_rsa${profile}.pub ]; then
-                timestamp=$(date +%Y%m%d%H%M)
-                mv "/root/.ssh/id_rsa${profile}.pub" "/root/.ssh/id_rsa${profile}.${timestamp}.pub"
-                echo "Created backup of 'id_rsa${profile}.pub' as 'id_rsa${profile}.${timestamp}.pub'"
+            public | private)
+              if [ "$3" = "public" ]; then
+                tag=".pub"
               fi
-              echo "$key" > "/root/.ssh/id_rsa${profile}.pub"
-              echo "Saved public key to 'id_rsa${profile}.pub'"
-              ;;
-            private)
-              if [ -f /root/.ssh/id_rsa${profile} ]; then
+
+              if [ -f /root/.ssh/id_rsa${profile}${tag} ]; then
                 timestamp=$(date +%Y%m%d%H%M)
-                mv "/root/.ssh/id_rsa${profile}" "/root/.ssh/id_rsa${profile}.${timestamp}"
-                echo "Created backup of 'id_rsa${profile}' as 'id_rsa${profile}.${timestamp}'"
+                mv "/root/.ssh/id_rsa${profile}${tag}" "/root/.ssh/id_rsa${profile}.${timestamp}${tag}"
+                echo "Created backup of 'id_rsa${profile}${tag}' as 'id_rsa${profile}.${timestamp}${tag}'"
               fi
-              echo "$key" > "/root/.ssh/id_rsa${profile}"
-              echo "Saved private key to 'id_rsa${profile}'"
+
+              echo -e "$key" > "/root/.ssh/id_rsa${profile}${tag}"
+              echo "Saved $3 key to 'id_rsa${profile}${tag}'"
               ;;
             *)
-              echo "Error: incorrect command"
+              echo "Error: unknown command"
               echo "Usage: $BASENAME sshtunnel key receive <public | private> [profile]"
               exit 1
               ;;

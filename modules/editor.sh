@@ -54,6 +54,17 @@ function editor {
       checkargn $# 2
 
       supported_editor="vim nano emacs"
+
+      if [ "$2" == "emacs" ] && ! command -v emacs > /dev/null; then
+         echo "Emacs is not installed on this system."
+         read -r -p "Do you want to have it installed? [y/N] " response
+         if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+           apt install -y emacs
+         else
+           echo "Emacs not installed."
+           exit 0
+         fi
+      fi
       
       for i in $supported_editor; do 
         if [ "$i" == "$2" ]; then

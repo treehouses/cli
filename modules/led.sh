@@ -337,7 +337,7 @@ function lantern {
   current_green=$(led "green")
   current_red=$(led "red")
 
-  set_brightness 0 0; set_brightness 0 1
+  set_brightness 0 0; set_brightness 1 0
   sleep 1
   led green timer
   sleep 3

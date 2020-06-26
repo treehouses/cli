@@ -312,6 +312,7 @@ treehouses sshtunnel notice list
 treehouses sshtunnel notice now
 treehouses sshtunnel notice off
 treehouses sshtunnel notice on
+treehouses sshtunnel ports
 treehouses sshtunnel remove all
 treehouses sshtunnel remove host
 treehouses sshtunnel remove port

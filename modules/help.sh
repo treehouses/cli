@@ -46,8 +46,9 @@ sshtunnel [add|remove|list|active|check]  helps adding sshtunnels
 led [green|red] [mode]                    sets the led mode
     [newyear|lunarnewyear|valentine]
     [carnival|lantern|stpatricks|easter]
-    [eid|onam|diwali|thanksgiving]
-    [christmas|heavymetal|dance|kecak|random]
+    [eid|dragonboat|onam|diwali]
+    [thanksgiving|christmas]
+    [heavymetal|dance|kecak|random]
 power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server

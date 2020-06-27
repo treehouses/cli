@@ -6,20 +6,30 @@ function bluetooth {
   status=$1
 
   if [ -z "$status" ]; then
-    if [[ "$(service rpibluetooth status | grep "Active:")" =~ "running" ]]; then
+    if [ "$(systemctl is-active rpibluetooth.service)" = "active" ]; then
       echo "on"
+    elif [ "$(systemctl is-active rpibluetooth.service)" = "failed" ]; then
+      echo "crashed"
+    elif [ "$(systemctl is-active rpibluetooth.service)" = "activating" ]; then
+      echo "restarting"
     else
       echo "off"
     fi
 
   elif [ "$status" = "status" ]; then
-    if [[ "$(service bluetooth status | grep "Active:")" =~ "running" ]]; then
+    if [ "$(systemctl is-active bluetooth.service)" = "active" ]; then
       echo "bluetooth service status: on"
+    elif [ "$(systemctl is-active bluetooth.service)" = "failed" ]; then
+      echo "bluetooth service status: failed"
     else
       echo "bluetooth service status: off"
     fi
-    if [[ "$(service rpibluetooth status | grep "Active:")" =~ "running" ]]; then
+    if [ "$(systemctl is-active rpibluetooth.service)" = "active" ]; then
       echo "rpibluetooth service status: on"
+    elif [ "$(systemctl is-active rpibluetooth.service)" = "failed" ]; then
+      echo "rpibluetooth service status: crashed"
+    elif [ "$(systemctl is-active rpibluetooth.service)" = "activating" ]; then
+      echo "rpibluetooth service status: restarting"
     else
       echo "rpibluetooth service status: off"
     fi

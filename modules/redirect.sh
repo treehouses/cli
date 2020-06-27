@@ -14,7 +14,7 @@ function redirect {
     add)
         checkargn $# 2
         echo "address=/$2/127.0.1.1" > /etc/dnsmasq.d/$2
-        systemctl restart dnsmasq.service
+        systemctl try-restart dnsmasq.service || systemctl start dnsmasq.service
         echo "$2 added."
         ;;
     remove)
@@ -23,7 +23,7 @@ function redirect {
         do
           if [ "$i" == "$2" ] && [ "$2" != "README" ]; then
             rm -rf /etc/dnsmasq.d/$2
-            systemctl restart dnsmasq.service
+            systemctl try-restart dnsmasq.service || systemctl start dnsmasq.service
             echo "$2 removed."
             exit 0
           fi

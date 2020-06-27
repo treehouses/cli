@@ -137,9 +137,7 @@ convert <input file> <output file>        converts audio and video files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses
 magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
-         <helloworld> [all|latest|number] 
-         [language]
-         [french|hebrew|italian|spanish]
+         <helloworld> [all|latest|number] magpi magazine also supports some other languages
 resolution <cea|dmt [modes]>              sets the screen resolution
 shutdown [now|in|force]                   shutdown the system
 ```

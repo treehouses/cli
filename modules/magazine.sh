@@ -48,7 +48,7 @@ function magazine_help {
   echo "  $BASENAME magazine magpi number"
   echo "      This will download issue [number] of magpi."
   echo
-  echo "  $BASENAME magazine magpi language [language_choice]"
+  echo "  $BASENAME magazine magpi language [language_choice] ((coming soon))"
   echo "      This will download all available [language_choice] issues of magpi."
   echo
 }

@@ -139,7 +139,7 @@ changelog [view|compare]                  displays the most recent changes to tr
 magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
          <helloworld> [all|latest|number] magpi magazine also supports some other languages
          [language] 
-         <french|hebrew|italian|spanish>
+         [french|hebrew|italian|spanish]
 resolution <cea|dmt [modes]>              sets the screen resolution
 shutdown [now|in|force]                   shutdown the system
 ```

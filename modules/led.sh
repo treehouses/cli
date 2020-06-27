@@ -522,6 +522,7 @@ function diwali {
       set_brightness 1 0 && set_brightness 0 0
       sleep 0.025
     done
+    sleep 0.5
   done
 
   led red "$current_red"

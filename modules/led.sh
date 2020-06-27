@@ -515,45 +515,13 @@ function diwali {
 
   for i in {0..4}                            # Both LEDs
   do
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
+    for j in {0..9}
+    do
+      set_brightness 1 1 && set_brightness 0 1
+      sleep 0.025
+      set_brightness 1 0 && set_brightness 0 0
+      sleep 0.025
+    done
   done
 
   led red "$current_red"

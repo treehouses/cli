@@ -47,6 +47,8 @@ piwigo_autorun=true
 if [ "$piwigo_autorun" = true ]; then
   treehouses services piwigo up
 fi
+
+
 EOF
 }
 

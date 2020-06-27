@@ -70,10 +70,14 @@ function number {
 }
 
 function language {
-  echo "The default language for MagPi is English"
-  echo "Currently, MagPi also offers some magazines in French, Hebrew, Italian, and Spanish"
-  echo "You can access these by running: treehouses magazine magpi language [french|hebrew|italian|spanish]"
-  exit 0
+  if [ -z "$lang" ]; then
+    echo "The default language for MagPi is English"
+    echo "Currently, MagPi also offers some magazines in French, Hebrew, Italian, and Spanish"
+    echo "You can access these by running: treehouses magazine magpi language [french|hebrew|italian|spanish]"
+    exit 0
+  else
+    source $MAGAZINE/download-language.sh
+  fi
 }
 
 function info {

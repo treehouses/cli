@@ -206,7 +206,6 @@ treehouses log 4
 treehouses log max
 treehouses log show
 treehouses log show 5
-treehouses magazine magpi language
 $(magazine_cmds)
 treehouses memory
 treehouses memory -g
@@ -419,6 +418,7 @@ function magazine_cmds {
   do
     printf "treehouses magazine $line
 treehouses magazine $line latest
+treehouses magazine $line language
 treehouses magazine $line all\n"
   done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazine -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }

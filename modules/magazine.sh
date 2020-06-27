@@ -8,21 +8,18 @@ function magazine() {
     echo "ERROR: no magazine type given"
     exit 1
   fi
-  if [ "$req" = "language" ]; then magtype="$magtype-$lang"; fi
   for file in $MAGAZINE/*; do
       if [ "$magtype" = "$(echo "${file##*/}" | sed -e 's/^download-//' -e 's/.sh$//')" ]; then available_mag=1; fi
   done
   if [ $available_mag = 0 ]; then
     echo "Please specify a valid magazine type, these include: magpi, hackspace, wireframe, helloworld"
-    echo "Currently, only magpi offers issues in these other languages: french, hebrew, italian, spanish"
-  elif [ "$req" = "" ]; then $MAGAZINE/download-$magtype.sh info
+  elif [ "$req" = "" ]; then source $MAGAZINE/download-$magtype.sh && info
   elif [ "$req" = "latest" ] || [ "$req" = "all" ] || [[ "$req" =~ ^[0-9]+$ ]] || [[ "$req" = "language" ]]; then
     checkinternet
     if [ ! -d "$magtype" ]; then mkdir $magtype; fi
     cd $magtype || return
-    if [[ "$req" =~ ^[0-9]+$ ]]; then $MAGAZINE/download-$magtype.sh number $req
-    elif [[ "$req" = "language" ]]; then $MAGAZINE/download-$magtype.sh
-    else $MAGAZINE/download-$magtype.sh $req; fi
+    if [[ "$req" =~ ^[0-9]+$ ]]; then source $MAGAZINE/download-$magtype.sh && number
+    else source $MAGAZINE/download-$magtype.sh && $req; fi
     cd ..
     echo "Requested issue(s) saved in the $magtype directory if there are no errors"
   else
@@ -51,7 +48,7 @@ function magazine_help {
   echo "  $BASENAME magazine magpi number"
   echo "      This will download issue [number] of magpi."
   echo
-  echo "  $BASENAME magazine magpi language <language_choice>"
+  echo "  $BASENAME magazine magpi language [language_choice]"
   echo "      This will download all available [language_choice] issues of magpi."
   echo
 }

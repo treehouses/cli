@@ -8,7 +8,7 @@ Commands:
 
 help [command]                            gives you a more detailed info about the command or will output this
 verbose <on|off>                          makes each command print more output (might not work with treehouses remote)
-expandfs                                  expands the partition of the RPI image to the maximum of the SD  card
+expandfs                                  expands the partition of the RPI image to the maximum of the SD card
 rename <hostname>                         changes hostname
 password <password|disable|enable>        changes the password for 'pi' user or disables/enables password authentication
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication

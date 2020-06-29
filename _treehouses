@@ -177,6 +177,7 @@ treehouses led lunarnewyear
 treehouses led newyear
 treehouses led onam
 treehouses led diwali
+treehouses led dragonboat
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -312,6 +313,7 @@ treehouses sshtunnel notice now
 treehouses sshtunnel notice off
 treehouses sshtunnel notice on
 treehouses sshtunnel refresh
+treehouses sshtunnel ports
 treehouses sshtunnel remove all
 treehouses sshtunnel remove host
 treehouses sshtunnel remove port

@@ -8,7 +8,7 @@ Commands:
 
 help [command]                            gives you a more detailed info about the command or will output this
 verbose <on|off>                          makes each command print more output (might not work with treehouses remote)
-expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
+expandfs                                  expands the partition of the RPI image to the maximum of the SD  card
 rename <hostname>                         changes hostname
 password <password|disable|enable>        changes the password for 'pi' user or disables/enables password authentication
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
@@ -55,9 +55,9 @@ ntp <local|internet>                      sets rpi to host timing locally or to 
 networkmode                               outputs the current network mode
 button <off|bluetooth>                    gives the gpio pin 18 an action
 feedback <message>                        sends feedback
-clone [device path]                       clones the current SDCard onto a secondary SDCard or specified device
-restore [device path]                     restores a treehouses image to an SDCard or specified device
-burn [device path]                        download and burns the latest treehouses image to the SDcard or specified device
+clone [device path]                       clones the current SD card onto a secondary SD card or specified device
+restore [device path]                     restores a treehouses image to an SD card or specified device
+burn [device path]                        download and burns the latest treehouses image to the SD card or specified device
 rebootneeded                              shows if reboot is required to apply changes
 reboots <now|in|cron>                     reboots at given frequency | removes it if reboot task active
         <daily|weekly|monthly>
@@ -83,11 +83,11 @@ services                                  executes the given command on the spec
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
    [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
-   [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
+   [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices
    [grocy]                                Grocy is a web-based, self-hosted groceries and household management utility for your home
-   [dokuwiki]                             Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database.
+   [dokuwiki]                             Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database
    [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
-   [transmission]                         Transmission is a BitTorrent client with many powerful features.
+   [transmission]                         Transmission is a BitTorrent client with many powerful features
    [cloud9]                               Cloud9 is a complete web based ide with terminal access
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]

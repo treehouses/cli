@@ -50,6 +50,8 @@ led [green|red] [mode]                    sets the led mode
     [thanksgiving|christmas]
     [heavymetal|dance|kecak|random]
 power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
+      [status|default|ondemand|conservative]
+      [userspace|powersave|performace]
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode

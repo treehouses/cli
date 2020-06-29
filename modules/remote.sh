@@ -4,32 +4,42 @@ function remote {
   checkrpi
   option="$1"
 
-  if [ "$option" = "check" ]; then
+case $option in
+  "check")
     checkargn $# 1
     echo "$(bluetooth mac) $(image) $(version) $(detectrpi)"
-  elif [ "$option" = "status" ]; then
+    ;;
+  "status")
     checkargn $# 1
     echo "$(internet) $(bluetooth mac) $(image) $(version) $(detectrpi)"
-  elif [ "$option" = "upgrade" ]; then
+    ;;
+  "upgrade")
     checkargn $# 1
     upgrade --check
-  elif [ "$option" = "services" ]; then
+    ;;
+  "services")
     checkargn $# 2
-    if [ "$2" = "available" ]; then
-      results="Available: $(services available)"
-      echo $results
-    elif [ "$2" = "installed" ]; then
-      results="Installed: $(services installed)"
-      echo $results
-    elif [ "$2" = "running" ]; then
-      results="Running: $(services running)"
-      echo $results
-    else
-      echo "Error: incorrect command"
-      echo "Usage: $BASENAME remote services <available | installed | running>"
-      exit 1
-    fi
-  elif [ "$option" = "version" ]; then
+    case "$2" in
+      "available")
+        results="Available: $(services available)"
+        echo $results
+        ;;
+      "installed")
+        results="Installed: $(services installed)"
+        echo $results
+        ;;
+      "running")
+        results="Running: $(services running)"
+        echo $results
+        ;;
+      *)
+        echo "Error: incorrect command"
+        echo "Usage: $BASENAME remote services <available | installed | running>"
+        exit 1
+        ;;
+    esac
+    ;;
+  "version")
     checkargn $# 2
     if [ -z "$2" ]; then
       echo "Error: version number required"
@@ -45,7 +55,8 @@ function remote {
     else
       echo "version: false"
     fi
-  elif [ "$option" = "commands" ]; then
+    ;;
+  "commands")
     checkargn $# 2
     source $SCRIPTFOLDER/_treehouses && _treehouses_complete 2>/dev/null
     if [ -z "$2" ]; then
@@ -61,7 +72,8 @@ function remote {
       echo "Usage: $BASENAME remote commands [json]"
       exit 1
     fi
-  elif [ "$option" = "allservices" ]; then
+    ;;
+  "allservices")
     checkargn $# 1
     json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"}}\n"
 
@@ -79,7 +91,8 @@ function remote {
     done
 
     printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}"
-  elif [ "$option" = "help" ]; then
+    ;;
+  "help")
     json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')
     for file in $SCRIPTFOLDER/modules/*.sh
     do
@@ -92,10 +105,12 @@ function remote {
       fi
     done
     echo ${json_var}
-  else
+    ;;
+  *)
     echo "Unknown command option"
     echo "Usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"
-  fi
+    ;;
+esac
 }
 
 function autorun_helper {

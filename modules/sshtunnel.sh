@@ -169,15 +169,10 @@ function sshtunnel {
                   else
                     sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
                     echo "Added $actual -> $((portinterval + offset)) for host $host"
-
                     if [ -f "/etc/cron.d/tunnel_report" ]; then
                       sshtunnel notice now
                     fi
-
-                    pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
-                    if [ ! -z "$pid" ]; then
-                      kill -- -$pid
-                    fi
+                    sshtunnel_kill $host
                   fi
                 fi
               else
@@ -255,10 +250,7 @@ function sshtunnel {
                       sshtunnel notice now
                     fi
                     
-                    pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
-                    if [ ! -z "$pid" ]; then
-                      kill -- -$pid
-                    fi
+                    sshtunnel_kill $host
                   fi
                 fi
               else
@@ -334,15 +326,10 @@ function sshtunnel {
           if [ "$found" = true ]; then
             sed -i "$final d" /etc/tunnel
             echo "Removed $port for host $host"
-
             if [ -f "/etc/cron.d/tunnel_report" ]; then
               sshtunnel notice now
             fi
-
-            pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
-            if [ ! -z "$pid" ]; then
-              kill -- -$pid
-            fi
+            sshtunnel_kill $host
           else
             echo "Host / port not found"
           fi
@@ -380,15 +367,10 @@ function sshtunnel {
 
           sed -i "$((startline - 1)), $endline d" /etc/tunnel
           echo "Removed $host from /etc/tunnel"
-
           if [ -f "/etc/cron.d/tunnel_report" ]; then
             sshtunnel notice now
           fi
-
-          pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
-          if [ ! -z "$pid" ]; then
-            kill -- -$pid
-          fi
+          sshtunnel_kill $host
           ;;
         *)
           echo "Error: unknown command"
@@ -396,6 +378,24 @@ function sshtunnel {
           exit 1
           ;;
       esac
+      ;;
+    refresh)
+      checkargn $# 2
+      host=$2
+
+      if [ -z "$host" ]; then
+        count=$(pgrep -c autossh)
+        screen -dm bash -c "pkill autossh ; bash /etc/tunnel"
+        echo "Refreshed tunnels to $count host(s)"
+      else
+        pid=$(pgrep -a "autossh" | grep "$host$" | awk '{print $1}')
+        if [ ! -z "$pid" ]; then
+          screen -dm bash -c "kill -- -$pid ; bash /etc/tunnel"
+          echo "Refreshed tunnels to $host"
+        else
+          echo "No tunnels to $host active"
+        fi
+      fi
       ;;
     list | "")
       checkargn $# 2
@@ -648,15 +648,24 @@ function sshtunnel {
       ;;
     *)
       echo "Error: unknown command"
-      echo "Usage: $BASENAME sshtunnel [add | remove | list | active | check | key | notice | ports]"
+      echo "Usage: $BASENAME sshtunnel [add|remove|refresh|list|active|check|key|notice|ports]"
       exit 1
       ;;
   esac
 }
 
+function sshtunnel_kill {
+  host=$1
+
+  pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
+  if [ ! -z "$pid" ]; then
+    screen -dm bash -c "kill -- -$pid ; bash /etc/tunnel"
+  fi
+}
+
 function sshtunnel_help {
   echo
-  echo "Usage: $BASENAME sshtunnel [add | remove | list | active | check | key | notice | ports]"
+  echo "Usage: $BASENAME sshtunnel [add|remove|refresh|list|active|check|key|notice|ports]"
   echo
   echo "Helps setting up sshtunnels to multiple hosts"
   echo
@@ -681,6 +690,9 @@ function sshtunnel_help {
   echo "      all                                      completely removes all tunnels to all hosts"
   echo "      port <port> [host]                       removes a single port from an existing host"
   echo "      host <host>                              removes all tunnels from an existing host"
+  echo
+  echo "  refresh                                  kills and restarts tunnels to all hosts"
+  echo "      [host]                                   kills and restarts tunnels to given host"
   echo
   echo "  \" \" | list                               lists all existing tunnels to all hosts"
   echo "      [host]                                   lists existing tunnels to given host"

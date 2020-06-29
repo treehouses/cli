@@ -11,7 +11,7 @@ services:
   pylon:
     image: linuxserver/pylon
     environment:
-      - PYUSER=\${USER:-}
+      - PYLOGIN=\${LOGIN:-}
       - PYPASS=\${PASS:-}
     ports:
       - 3131:3131
@@ -20,7 +20,7 @@ EOF
 
   # create .env with default values
   cat << EOF > /srv/pylon/.env
-'USER='
+'LOGIN='
 'PASS='
 EOF
 

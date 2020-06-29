@@ -11,8 +11,8 @@ services:
   pylon:
     image: linuxserver/pylon
     environment:
-      - PYUSER=\${USER}
-      - PYPASS=\${PASS}
+      - PYUSER=\${USER:-}
+      - PYPASS=\${PASS:-}
     ports:
       - 3131:3131
     restart: unless-stopped

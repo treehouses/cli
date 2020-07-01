@@ -56,12 +56,12 @@ load ../test-helper
 
 @test "$clinom services ports" {
   run "${clicmd}" services ports
-  assert_success && assert_output -p 'port 9093'
+  assert_success && assert_output -p 'port 8094'
 }
 
 @test "$clinom services piwigo port" {
   run "${clicmd}" services piwigo port
-  assert_success && assert_output -p '9093'
+  assert_success && assert_output -p '8094'
 }
 
 @test "$clinom services piwigo ps" {
@@ -71,7 +71,7 @@ load ../test-helper
 
 @test "$clinom services piwigo url" {
   run "${clicmd}" services piwigo url
-  assert_output -p '9093'
+  assert_output -p '8094'
 }
 
 @test "$clinom services piwigo autorun" {

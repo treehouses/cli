@@ -295,7 +295,11 @@ function services {
         url)
           checkargn $# 3
           if [ "$command_option" = "local" ]; then
-            base_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
+            base_url=$(networkmode info | grep -oP -m1 '(?<=ip: ).*')
+            if [[ "$base_url" =~ "," ]]; then
+              base_url=$(echo $base_url | cut -f1 -d,)
+            fi
+
             for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
             do
               local_url="$base_url:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
@@ -507,7 +511,7 @@ function check_arm {
   arms=($(source $SERVICES/install-${1}.sh && supported_arms))
   for i in "${arms[@]}"
   do
-    if [ "$(detectarm)" = "$i" ]; then
+    if [ "$(detect arch)" = "$i" ]; then
       return 0
     fi
   done

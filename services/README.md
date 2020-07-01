@@ -68,10 +68,18 @@ Using the [template](#Template), fill in the sections as required.
 1. environment variable check
 
    `echo true` or `echo false` depending on whether or not your service uses environment variables.
+   
+1. supported arch check
 
-1. supported arm check
-
-   `echo "v7l"` and/or `echo "v6l"` depending on supported arm(s).
+   `echo <arch>` depending on supported architecture(s):
+     ```
+     armv6l
+     armv7l
+     i686
+     x86_64
+     aarch32
+     aarch64
+     ```
 
 1. add port(s)
 
@@ -149,9 +157,9 @@ function uses_env {
   echo true/false
 }
 
-# add supported arm(s)
-function supported_arms {
-  echo "<arm>"
+# add supported arch(es)
+function supported_arches {
+  echo "<arch>"
 }
 
 # add port(s)

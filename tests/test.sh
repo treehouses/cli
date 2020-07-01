@@ -24,6 +24,7 @@ case "$1" in
   ;;
   magazine)
     time bats ./magazine*
+  ;;
   wifi)
     time bats ./wifi*
   ;;

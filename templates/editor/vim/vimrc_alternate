@@ -1,0 +1,22 @@
+syntax enable
+syntax on 
+
+set number 
+
+nnoremap j gj
+nnoremap k gk
+imap jj <Esc> 
+command Q q
+
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+autocmd FileType sh setlocal shiftwidth=2 tabstop=2 softtabstop=2
+set expandtab
+
+set ls=2
+
+set incsearch
+set hlsearch
+
+set scrolloff=4

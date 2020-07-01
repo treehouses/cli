@@ -363,6 +363,15 @@ treehouses wifihidden
 treehouses wifistatus
 treehouses convert
 treehouses resolution
+treehouses editor 
+treehouses editor config
+treehouses editor config alternate
+treehouses editor config default
+treehouses editor config edit
+treehouses editor default
+treehouses editor set emacs
+treehouses editor set nano
+treehouses editor set vim
 EOF
 # COMP_LINE is the line you typed in terminal
 # COMP_WORDS is array form of COMP_LINE

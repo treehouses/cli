@@ -141,6 +141,7 @@ changelog [view|compare]                  displays the most recent changes to tr
 magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
          <helloworld> [all|latest|number]
 resolution <cea|dmt [modes]>              sets the screen resolution
+editor [default|set|config]               sets file default editor and editor configuration file
 shutdown [now|in|force]                   shutdown the system
 ```
 

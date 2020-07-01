@@ -1,6 +1,6 @@
 {
   "name": "@treehouses/cli",
-  "version": "1.22.38",
+  "version": "1.22.39",
   "remote": "2346",
   "description": "Thin command-line interface for Raspberry Pi low level configuration.",
   "main": "cli.sh",
@@ -27,7 +27,8 @@
     "services", "container", "docker", "balena", "pihole", "turtleblocks", "musicblocks",
     "grocy", "kolibri", "mongodb", "moodle", "netdata", "nextcloud", "ntopng", "planet",
     "invoiceninja", "librespeed", "portainer", "privatebin", "mastodon", "couchdb",
-    "mariadb", "seafile", "minetest", "dokuwiki", "transmission", "cloud9", "bookstack"
+    "mariadb", "seafile", "minetest", "dokuwiki", "transmission", "cloud9", "bookstack",
+    "piwigo"
   ],
   "author": {
     "name": "OLE treehouses team",

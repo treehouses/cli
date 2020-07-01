@@ -108,10 +108,10 @@ services                                  executes the given command on the spec
    [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
    [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
    [grocy]                                Grocy is a web-based, self-hosted groceries and household management utility for your home
-   [dokuwiki]                             Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database.
+   [dokuwiki]                             Dokuwiki is a simple to use and highly versatile Open Source wiki software
    [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
    [transmission]                         Transmission is a BitTorrent client with many powerful features.
-   [piwigo]                               Piwigo is a photo gallery software to publish and manage your collection of pictures.
+   [piwigo]                               Piwigo is a photo gallery software to publish and manage your collection of pictures
    [cloud9]                               cloud9 is a complete web based ide with terminal access
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]

@@ -632,6 +632,7 @@ function services_help {
   echo "  dokuwiki        Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database."
   echo "  bookstack       Bookstack is a free and open source Wiki designed for creating beautiful documentation"
   echo "  transmission    Transmission is a BitTorrent client with many powerful features"
+  echo "  piwigo          Piwigo is a photo gallery software to publish and manage your collection of pictures"
   echo "  cloud9          Cloud9 is a complete web based IDE with terminal access"
   echo
   echo

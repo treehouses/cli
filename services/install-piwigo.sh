@@ -13,7 +13,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=US/Eastern
     volumes:
       - /srv/piwigo/config:/config
     ports:
@@ -79,6 +79,7 @@ function get_info {
   echo "https://github.com/linuxserver/docker-piwigo"
   echo
   echo "Piwigo is a photo gallery software for the web that comes with powerful features to publish and manage your collection of pictures."
+  echo "please use database name \"piwigo\" and password \"my-secret-pw\""
 }
 
 # add svg icon

@@ -15,6 +15,10 @@ function magazine() {
     echo "Please specify a valid magazine type, these include: magpi, hackspace, wireframe, helloworld"
   elif [ "$req" = "" ]; then source $MAGAZINE/download-$magtype.sh && info
   elif [ "$req" = "latest" ] || [ "$req" = "all" ] || [[ "$req" =~ ^[0-9]+$ ]] || [[ "$req" = "language" ]]; then
+    if [[ "$req" = "language" ]]; then
+      echo "coming soon!"
+      exit 1
+    fi
     checkinternet
     if [ ! -d "$magtype" ]; then mkdir $magtype; fi
     cd $magtype || return

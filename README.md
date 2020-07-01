@@ -62,7 +62,7 @@ timezone <timezone>                       sets the timezone of the system
 locale <locale>                           sets the system locale
 ssh [on|off|fingerprint]                  enables or disables the ssh service, also prints out fingerprint of the ssh daemon
 vnc [on|off|info]                         enables or disables the vnc server service
-default                                   sets a raspbian back to default configuration
+default [network|notice|tunnel]           sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
 upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
 sshtunnel [add|remove|list|active|check]  helps adding sshtunnels

@@ -86,6 +86,12 @@ function bluetooth {
      elif [ "$2" = "follow" ]; then
        echo "press (ctrl + c) to exit"
        journalctl -u rpibluetooth -u bluetooth -f
+     elif [ "$2" = "on" ]; then
+       sed -i 's/logging.ERROR/logging.DEBUG/g' /usr/local/bin/bluetooth-server.py
+       bluetooth restart &>"$LOGFILE"
+     elif [ "$2" = "off" ]; then
+       sed -i 's/logging.DEBUG/logging.ERROR/g' /usr/local/bin/bluetooth-server.py
+       bluetooth restart &>"$LOGFILE"
      else
        echo "Argument not valid; leave blank or use \"follow\""
        exit 1
@@ -148,5 +154,11 @@ function bluetooth_help {
   echo "  $BASENAME bluetooth log follow"
   echo "      This will display the logs as they come in live of the bluetooth services"
   echo "      press (ctrl + c) to exit"
+  echo
+  echo "  $BASENAME bluetooth log off"
+  echo "      This will turn off the log for the bluetooth and restart the services"
+  echo
+  echo "  $BASENAME bluetooth log on"
+  echo "      This will turn on the log for the bluetooth and restart the services"
   echo
 }

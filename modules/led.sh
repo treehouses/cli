@@ -411,7 +411,7 @@ function easter {
   for i in {0..2}
   do
     set_brightness 0 0 && sleep 1.0
-    set_brightness 0 1 && sleep 0.5
+    set_brightness 0 1 && sleep 1.0
   done
 
   set_brightness 0 1 && sleep 3.0

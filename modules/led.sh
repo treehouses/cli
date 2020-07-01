@@ -122,6 +122,14 @@ function led {
       echo "Both LED: flash 10 times; this will happen 5 times"
       diwali > "$LOGFILE"
       ;;
+    dragonboat)
+      checkroot
+      echo "leds are set to dragonboat mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: flashing 10 times with a decreasing frequency"
+      echo "this will happen 3 times"
+      dragonboat > "$LOGFILE"
+      ;;
     thanksgiving)
       checkroot
       echo "leds are set to thanksgiving mode."
@@ -329,7 +337,7 @@ function lantern {
   current_green=$(led "green")
   current_red=$(led "red")
 
-  set_brightness 0 0; set_brightness 0 1
+  set_brightness 0 0; set_brightness 1 0
   sleep 1
   led green timer
   sleep 3
@@ -501,78 +509,77 @@ function diwali {
   current_green=$(led "green")
   current_red=$(led "red")
 
-  for i in {0..5}                            # Green LED
+  for i in {0..4}                            # Green LED
   do
     set_brightness 0 1 && sleep 0.025        # green on
     set_brightness 0 0 && sleep 0.025        # green OFF
   done
 
-  for i in {0..5}                            # Red LED
+  for i in {0..4}                            # Red LED
   do
     set_brightness 1 1 && sleep 0.025        # red on
     set_brightness 1 0 && sleep 0.025        # red OFF
   done
 
-  for i in {0..5}                            # Both LEDs
+  for i in {0..4}                            # Both LEDs
   do
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
+    for j in {0..9}
+    do
+      set_brightness 1 1 && set_brightness 0 1
+      sleep 0.025
+      set_brightness 1 0 && set_brightness 0 0
+      sleep 0.025
+    done
+    sleep 0.5
   done
 
   led red "$current_red"
   led green "$current_green"
 }
 
+function dragonboat {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  time=0.01
+  for i in {0..2}
+  do
+    for j in {1..10}
+    do
+      set_brightness 0 0 && set_brightness 1 0
+      sleep "$(echo "$j*$time" | bc)"
+      set_brightness 0 1 && set_brightness 1 1
+      sleep "$(echo "$j*$time" | bc)"
+    done
+    set_brightness 0 0 && set_brightness 1 0
+    sleep 1
+  done
+
+  led green "$current_green"
+  led red "$current_red"
+}
+
 function thanksgiving {
   current_red=$(led "red")
   current_green=$(led "green")
 
-  for i in {0..1}
-  do
-    set_brightness 0 0 && sleep 0.5    # green off
-    set_brightness 0 1 && sleep 0.5    # green on
-  done
+  set_brightness 0 0 && sleep 0.5    # green off
+  set_brightness 0 1 && sleep 0.5    # green on
 
-  for i in {0..1}
-  do
-    set_brightness 1 0 && sleep 0.5    # red off
-    set_brightness 1 1 && sleep 0.5    # red on
-  done
+  set_brightness 1 0 && sleep 0.5    # red off
+  set_brightness 1 1 && sleep 0.5    # red on
 
   set_brightness 0 0
-  for i in {0..1}
-  do
-    set_brightness 1 0 && sleep 0.25
-    set_brightness 1 1 && sleep 0.25
-  done
+  set_brightness 1 0 && sleep 0.25
+  set_brightness 1 1 && sleep 0.25
   set_brightness 0 1 && sleep 0.5
 
   set_brightness 1 0
-  for i in {0..1}
-  do
-    set_brightness 0 0 && sleep 0.25
-    set_brightness 0 1 && sleep 0.25
-  done
+  set_brightness 0 0 && sleep 0.25
+  set_brightness 0 1 && sleep 0.25
   set_brightness 1 1 && sleep 0.5
 
-  for i in {0..3}
+  for i in {0..1}
   do
     set_brightness 1 0
     set_brightness 0 0 && sleep 0.25
@@ -705,8 +712,8 @@ function random {
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter]"
-  echo "                      [eid|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
+  echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter|eid]"
+  echo "                      [dragonboat|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -775,6 +782,9 @@ function led_help {
   echo
   echo "  $BASENAME led eid"
   echo "     This will set the mode of the led to eid"
+  echo
+  echo "  $BASENAME led dragonboat"
+  echo "      This will set the mode of the led to dragonboat"
   echo
   echo "  $BASENAME led onam"
   echo "      This will set the mode of the led to onam"

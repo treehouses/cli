@@ -14,7 +14,7 @@ services:
       - PYLOGIN=\${LOGIN:-}
       - PYPASS=\${PASS:-}
     ports:
-      - 3131:3131
+      - 8094:3131
     restart: unless-stopped
 EOF
 
@@ -50,7 +50,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "3131"
+  echo "8094"
 }
 
  #add size (in MB)

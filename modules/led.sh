@@ -341,14 +341,14 @@ function lantern {
   sleep 1
   led green timer
   sleep 3
-  led green none
+  set_brightness 1 0
   sleep 0.5
   set_brightness 1 1
   sleep 4
   set_brightness 1 0
 
   x=1
-  while [ $x -lt 5 ]
+  while [ $x -lt 4 ]
   do
     set_brightness 0 1
     sleep 0.25
@@ -357,7 +357,7 @@ function lantern {
     x=$(( x+1 ))
     done
 
-  while [ $x -lt 9 ]
+  while [ $x -lt 7 ]
   do
     set_brightness 0 1
     sleep 0.125

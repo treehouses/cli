@@ -89,8 +89,9 @@ services                                  executes the given command on the spec
    [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
    [transmission]                         Transmission is a BitTorrent client with many powerful features.
    [cloud9]                               Cloud9 is a complete web based ide with terminal access
-tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
-    [stop|destroy|notice|status|refresh]
+tor [list|ports|add|delete|deleteall]     deals with services on tor hidden network
+    [start|stop|destroy|notice]
+    [status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
            <modules|params>
 openvpn [use|show|delete]                 helps setting up an openvpn client

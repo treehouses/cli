@@ -90,7 +90,7 @@ services                                  executes the given command on the spec
    [transmission]                         Transmission is a BitTorrent client with many powerful features
    [piwigo]                               Piwigo is a photo gallery software to publish and manage your collection of pictures
    [cloud9]                               Cloud9 is a complete web based ide with terminal access
-   [pylon]                                Pylon is a web based integrated development environment built with Node.js as a backend and with a supercharged JavaScript/HTML5 frontend
+   [pylon]                                Pylon is a web based integrated development environment built with Node.js as a backend
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

@@ -27,7 +27,7 @@ function redirect {
         checkargn $# 2
         for i in /etc/dnsmasq.d/* 
         do
-          if [ "$i" == "$2" ] && [ "$2" != "README" ]; then
+          if [ "$i" == "/etc/dnsmasq.d/$2" ] && [ "$2" != "README" ]; then
             rm -rf /etc/dnsmasq.d/$2
             systemctl restart dnsmasq.service
             echo "$2 removed."

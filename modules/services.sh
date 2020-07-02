@@ -367,7 +367,7 @@ function services {
           ;;
         icon)
           checkargn $# 3
-          if [ "$command_option" = "online" ]; then
+          if [ "$command_option" = "oneline" ]; then
             echo "$(source $SERVICES/install-${service_name}.sh && get_icon | sed 's/^[ \t]*//;s/[ \t]*$//' | tr '\n' ' ')"
           else
             source $SERVICES/install-${service_name}.sh && get_icon

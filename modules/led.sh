@@ -136,7 +136,7 @@ function led {
       echo "Look at your RPi leds, both leds will be in this pattern..."
       echo "Both LED: alternate 2 times"
       echo "Both LED: 1 off"
-      echo "Both LED: alternate 5 times"
+      echo "Both LED: alternate 7 times"
       echo "Both LED: 3 off"
       independenceday > "$LOGFILE"
       ;;
@@ -585,7 +585,7 @@ function independenceday {
   set_brightness 0 0 && set_brightness 1 0
   sleep 1.0
 
-  for i in {0..4}
+  for i in {0..6}
   do
     set_brightness 0 0 && set_brightness 1 1
     sleep 0.1

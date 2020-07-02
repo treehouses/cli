@@ -367,7 +367,7 @@ function services {
           ;;
         icon)
           checkargn $# 3
-          if [ "$command_option" = "oneline" ]; then
+          if [ "$command_option" = "online" ]; then
             echo "$(source $SERVICES/install-${service_name}.sh && get_icon | sed 's/^[ \t]*//;s/[ \t]*$//' | tr '\n' ' ')"
           else
             source $SERVICES/install-${service_name}.sh && get_icon
@@ -407,8 +407,10 @@ function services {
                     echo "Current:"
                     echo $line
                     echo "New:"
-                    newline="${line%%=*}="
-                    printf "%s" $newline
+                    if [[ $line =~ ^[[:alnum:]]+$ ]]; then
+                      newline="${line%%=*}="
+                      printf "%s" $newline
+                    fi
                     read -r userinput
                     sed -i "/$line/c\\$newline$userinput" /srv/$service_name/.env
                   done 9< /srv/$service_name/.env

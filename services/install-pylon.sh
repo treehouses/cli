@@ -11,17 +11,20 @@ services:
   pylon:
     image: linuxserver/pylon
     environment:
-      - PYLOGIN=\${LOGIN:-}
-      - PYPASS=\${PASS:-}
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - PYUSER=\${PYUSER}
+      - PYPASS=\${PYPASS}
     ports:
-      - 8094:3131
+      - 8095:3131
     restart: unless-stopped
 EOF
 
   # create .env with default values
   cat << EOF > /srv/pylon/.env
-'LOGIN='
-'PASS='
+"PYUSER=<username>"
+"PYPASS=<password>"
 EOF
 
   # add autorun
@@ -50,7 +53,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "8094"
+  echo "8095"
 }
 
  #add size (in MB)

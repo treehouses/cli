@@ -71,6 +71,11 @@ load test-helper
   assert_success && assert_output -p 'heartbeat'
 }
 
+@test "$clinom led independenceday" {
+  run "${clicmd}" led independenceday
+  assert_success && assert_output -p 'heartbeat'
+}
+
 @test "$clinom led heavymetal" {
   run "${clicmd}" led heavymetal
   assert_success && assert_output -p 'heartbeat'

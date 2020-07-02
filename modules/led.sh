@@ -130,6 +130,16 @@ function led {
       echo "this will happen 3 times"
       dragonboat > "$LOGFILE"
       ;;
+    independenceday)
+      checkroot
+      echo "leds are set to independenceday mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: alternate 2 times"
+      echo "Both LED: 1 off"
+      echo "Both LED: alternate 5 times"
+      echo "Both LED: 3 off"
+      independenceday > "$LOGFILE"
+      ;;
     thanksgiving)
       checkroot
       echo "leds are set to thanksgiving mode."
@@ -559,6 +569,36 @@ function dragonboat {
   led red "$current_red"
 }
 
+function independenceday {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  set_brightness 0 0 && set_brightness 1 0
+  for i in {0..1}
+  do
+    set_brightness 0 0 && set_brightness 1 1
+    sleep 2.0
+    set_brightness 0 1 && set_brightness 1 0
+    sleep 2.0
+  done
+
+  sleep 1.0
+
+  for i in {0..4}
+  do
+    set_brightness 0 0 && set_brightness 1 1
+    sleep 0.5
+    set_brightness 0 1 && set_brightness 1 0
+    sleep 0.5
+  done
+
+  set_brightness 0 0 && set_brightness 1 0
+  sleep 3.0
+
+  led green "$current_green"
+  led red "$current_red"
+}
+
 function thanksgiving {
   current_red=$(led "red")
   current_green=$(led "green")
@@ -713,7 +753,7 @@ function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
   echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter|eid]"
-  echo "                      [dragonboat|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
+  echo "                      [dragonboat|independenceday|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -785,6 +825,9 @@ function led_help {
   echo
   echo "  $BASENAME led dragonboat"
   echo "      This will set the mode of the led to dragonboat"
+  echo
+  echo "  $BASENAME led independenceday"
+  echo "      This will set the mode of the led to independenceday"
   echo
   echo "  $BASENAME led onam"
   echo "      This will set the mode of the led to onam"

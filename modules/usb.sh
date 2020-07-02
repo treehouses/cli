@@ -33,8 +33,7 @@ function usb {
         usb_help
         exit 1
         ;;
-    esac
-  fi
+    esac 
   elif [[ $(detectrpi) =~ 'RPI4' ]]; then
     case $command in
       "on")

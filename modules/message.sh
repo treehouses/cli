@@ -18,7 +18,7 @@ function message {
            if ! [[ -z "$message" ]]; then
              body="{\"text\":\"\n$message\"}"
              channel=https://api.gitter.im/v1/rooms/$channelid/chatMessages
-	     curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $api_token"   "$channel" -d  "$body"> "$LOGFILE"
+             curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $api_token" "$channel" -d "$body"> "$LOGFILE"
              echo "Thanks for the message!"
            else
              echo "No message was submitted."
@@ -44,6 +44,10 @@ function message_help {
   echo "Sends message to a chat service"
   echo
   echo "Example:"
+  echo
+  echo "  $BASENAME message gitter apikey \"1234567890\""
+  echo "     Sets and saves API token" 
+  echo
   echo "  $BASENAME message gitter sendto treehouses/Lobby \"Hi, you are very awesome\""
   echo "     Sends a message to a gitter channel" 
   echo

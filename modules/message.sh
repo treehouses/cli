@@ -13,19 +13,17 @@ function message {
 	   channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
 	   #finds channel id and removes double quotes
 	   channelid=$(echo $channelinfo | python -m json.tool | jq '.id' | tr -d '"')
-           shift
-           shift
-           shift
+           shift; shift; shift;
            message="$*" 
            if ! [[ -z "$message" ]]; then
-           body="{\"text\":\"\n$message\"}"
-           channel=https://api.gitter.im/v1/rooms/$channelid/chatMessages
-	   curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $api_token"   "$channel" -d  "$body"> "$LOGFILE"
-           echo "Thanks for the message!"
+             body="{\"text\":\"\n$message\"}"
+             channel=https://api.gitter.im/v1/rooms/$channelid/chatMessages
+	     curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $api_token"   "$channel" -d  "$body"> "$LOGFILE"
+             echo "Thanks for the message!"
            else
-           echo "No message was submitted."
+             echo "No message was submitted."
            fi
-	   ;;
+	     ;;
          *)
            echo "This command doesn't exist, please look at the following"
            message_help
@@ -40,6 +38,8 @@ function message_help {
   echo "Usage: $BASENAME message <chats> <apikey <key> | sendto <group> <message>>"
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps" 
+  echo
+  echo "You must set your api key before sending a message"
   echo
   echo "Sends message to a chat service"
   echo

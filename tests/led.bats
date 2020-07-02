@@ -21,26 +21,6 @@ load test-helper
   assert_success && assert_output -p 'default-on'
 }
 
-@test "$clinom led dance" {
-  run "${clicmd}" led dance
-  assert_success && assert_output -p 'heartbeat'
-}
-
-@test "$clinom led thanksgiving" {
-  run "${clicmd}" led thanksgiving
-  assert_success && assert_output -p 'heartbeat'
-}
-
-@test "$clinom led eid" {
-  run "${clicmd}" led eid
-  assert_success && assert_output -p 'heartbeat' 
-}
-
-@test "$clinom led christmas" {
-  run "${clicmd}" led christmas
-  assert_success && assert_output -p 'heartbeat'
-}
-
 @test "$clinom led lunarnewyear" {
   run "${clicmd}" led lunarnewyear
   assert_success && assert_output -p 'default-on'
@@ -56,28 +36,8 @@ load test-helper
   assert_success && assert_output -p 'heartbeat'
 }
 
-@test "$clinom led onam" {
-  run "${clicmd}" led onam
-  assert_success && assert_output -p 'heartbeat'
-}
-
-@test "$clinom led diwali" {
-  run "${clicmd}" led diwali
-  assert_success && assert_output -p 'heartbeat'
-}
-
-@test "$clinom led dragonboat" {
-  run "${clicmd}" led dragonboat
-  assert_success && assert_output -p 'heartbeat'
-}
-
-@test "$clinom led independenceday" {
-  run "${clicmd}" led independenceday
-  assert_success && assert_output -p 'heartbeat'
-}
-
-@test "$clinom led heavymetal" {
-  run "${clicmd}" led heavymetal
+@test "$clinom led lantern" {
+  run "${clicmd}" led lantern
   assert_success && assert_output -p 'heartbeat'
 }
 
@@ -91,8 +51,48 @@ load test-helper
   assert_success && assert_output -p 'heartbeat'
 }
 
-@test "$clinom led lantern" {
-  run "${clicmd}" led lantern
+@test "$clinom led eid" {
+  run "${clicmd}" led eid
+  assert_success && assert_output -p 'heartbeat' 
+}
+
+@test "$clinom led dragonboat" {
+  run "${clicmd}" led dragonboat
+  assert_success && assert_output -p 'heartbeat'
+}
+
+@test "$clinom led independenceday" {
+  run "${clicmd}" led independenceday
+  assert_success && assert_output -p 'heartbeat'
+}
+
+@test "$clinom led onam" {
+  run "${clicmd}" led onam
+  assert_success && assert_output -p 'heartbeat'
+}
+
+@test "$clinom led diwali" {
+  run "${clicmd}" led diwali
+  assert_success && assert_output -p 'heartbeat'
+}
+
+@test "$clinom led thanksgiving" {
+  run "${clicmd}" led thanksgiving
+  assert_success && assert_output -p 'heartbeat'
+}
+
+@test "$clinom led christmas" {
+  run "${clicmd}" led christmas
+  assert_success && assert_output -p 'heartbeat'
+}
+
+@test "$clinom led dance" {
+  run "${clicmd}" led dance
+  assert_success && assert_output -p 'heartbeat'
+}
+
+@test "$clinom led heavymetal" {
+  run "${clicmd}" led heavymetal
   assert_success && assert_output -p 'heartbeat'
 }
 

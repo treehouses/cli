@@ -101,6 +101,24 @@ function led {
       echo "Red LED: on 2 sec; off 0.5 sec"
       eid > "$LOGFILE"
       ;;
+    dragonboat)
+      checkroot
+      echo "leds are set to dragonboat mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: flashing 10 times with a decreasing frequency"
+      echo "this will happen 3 times"
+      dragonboat > "$LOGFILE"
+      ;;
+    independenceday)
+      checkroot
+      echo "leds are set to independenceday mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: alternate 2 times"
+      echo "Both LED: 1 off"
+      echo "Both LED: alternate 7 times"
+      echo "Both LED: 3 off"
+      independenceday > "$LOGFILE"
+      ;;
     onam)
       checkroot
       echo "leds are set to onam mode."
@@ -121,24 +139,6 @@ function led {
       echo "Red LED: 0.025 on; 0.025 off; this will happen 5 times"
       echo "Both LED: flash 10 times; this will happen 5 times"
       diwali > "$LOGFILE"
-      ;;
-    dragonboat)
-      checkroot
-      echo "leds are set to dragonboat mode."
-      echo "Look at your RPi leds, both leds will be in this pattern..."
-      echo "Both LED: flashing 10 times with a decreasing frequency"
-      echo "this will happen 3 times"
-      dragonboat > "$LOGFILE"
-      ;;
-    independenceday)
-      checkroot
-      echo "leds are set to independenceday mode."
-      echo "Look at your RPi leds, both leds will be in this pattern..."
-      echo "Both LED: alternate 2 times"
-      echo "Both LED: 1 off"
-      echo "Both LED: alternate 7 times"
-      echo "Both LED: 3 off"
-      independenceday > "$LOGFILE"
       ;;
     thanksgiving)
       checkroot

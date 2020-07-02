@@ -6,7 +6,7 @@ function bluetooth {
   status=$1
 
   case $status in
-    -z)
+    "")
       if [[ "$(service rpibluetooth status | grep "Active:")" =~ "running" ]]; then
         echo "on"
       else

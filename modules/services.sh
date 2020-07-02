@@ -638,6 +638,7 @@ function services_help {
   echo "  cloud9          Cloud9 is a complete web based IDE with terminal access"
   echo "  pylon           Pylon is a web based integrated development environment built with Node.js as a backend"
   echo
+  echo
   echo "Top-Level Commands:"
   echo
   echo "  Usage:"

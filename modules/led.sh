@@ -577,19 +577,20 @@ function independenceday {
   for i in {0..1}
   do
     set_brightness 0 0 && set_brightness 1 1
-    sleep 2.0
+    sleep 1.0
     set_brightness 0 1 && set_brightness 1 0
-    sleep 2.0
+    sleep 1.0
   done
 
+  set_brightness 0 0 && set_brightness 1 0
   sleep 1.0
 
   for i in {0..4}
   do
     set_brightness 0 0 && set_brightness 1 1
-    sleep 0.5
+    sleep 0.25
     set_brightness 0 1 && set_brightness 1 0
-    sleep 0.5
+    sleep 0.25
   done
 
   set_brightness 0 0 && set_brightness 1 0

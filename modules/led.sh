@@ -570,8 +570,8 @@ function dragonboat {
 }
 
 function independenceday {
-  current_green=$(led "green")
   current_red=$(led "red")
+  current_green=$(led "green")
 
   set_brightness 0 0 && set_brightness 1 0
   for i in {0..1}
@@ -596,8 +596,8 @@ function independenceday {
   set_brightness 0 0 && set_brightness 1 0
   sleep 3.0
 
-  led green "$current_green"
   led red "$current_red"
+  led green "$current_green"
 }
 
 function thanksgiving {

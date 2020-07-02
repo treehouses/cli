@@ -228,7 +228,8 @@ treehouses memory total -m
 treehouses memory used
 treehouses memory used -g
 treehouses memory used -m
-treehouses message
+treehouses message gitter apikey 
+treehouses message gitter sendto 
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet

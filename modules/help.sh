@@ -115,7 +115,11 @@ changelog                                 displays the most recent changes to tr
 magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
          <helloworld> [all|latest|number]
 resolution <cea|dmt [modes]>              sets the screen resolution
-message <token> <channel> <message>
+message <chats> [apikey <key>]            sends message to service or sets api/channel info in config file
+                [sendto <channel> <message>]
+                [sendto <person> <message>]
+
+         
 shutdown [now|in|force]                   shutdown the system
 EOF
   echo "$helpdefault"

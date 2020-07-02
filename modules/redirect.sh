@@ -18,7 +18,7 @@ function redirect {
         ;;
     add)
         checkargn $# 2
-        ap internet $(get_ap_name) --ip=$(get_ipv4_ip ap0)
+        ap internet "$(get_ap_name)" --ip="$(get_ipv4_ip ap0)"
         echo "address=/$2/$(get_ipv4_ip ap0)" > /etc/dnsmasq.d/$2
         systemctl restart dnsmasq.service
         echo "$2 added."

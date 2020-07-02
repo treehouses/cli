@@ -65,7 +65,7 @@ load ../test-helper
 
 @test "$clinom services pylon url" {
   run "${clicmd}" services pylon url
-  assert_output -p '8094'
+  assert_output -p '8095'
 }
 
 @test "$clinom services pylon autorun" {

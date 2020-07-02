@@ -114,6 +114,7 @@ services                                  executes the given command on the spec
    [transmission]                         Transmission is a BitTorrent client with many powerful features
    [piwigo]                               Piwigo is a photo gallery software to publish and manage your collection of pictures
    [cloud9]                               cloud9 is a complete web based ide with terminal access
+   [rutorrent]                            Rutorrent is a popular rtorrent client with a webui for ease of use
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode

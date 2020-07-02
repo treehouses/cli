@@ -634,6 +634,7 @@ function services_help {
   echo "  transmission    Transmission is a BitTorrent client with many powerful features"
   echo "  piwigo          Piwigo is a photo gallery software to publish and manage your collection of pictures"
   echo "  cloud9          Cloud9 is a complete web based IDE with terminal access"
+  echo "  rutorrent       Rutorrent is a popular rtorrent client with a webui for ease of use"
   echo
   echo
   echo "Top-Level Commands:"

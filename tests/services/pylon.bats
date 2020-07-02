@@ -50,12 +50,12 @@ load ../test-helper
 
 @test "$clinom services ports" {
   run "${clicmd}" services ports
-  assert_success && assert_output -p 'port 8094'
+  assert_success && assert_output -p 'port 8095'
 }
 
 @test "$clinom services pylon port" {
   run "${clicmd}" services pylon port
-  assert_success && assert_output -p '8094'
+  assert_success && assert_output -p '8095'
 }
 
 @test "$clinom services pylon ps" {

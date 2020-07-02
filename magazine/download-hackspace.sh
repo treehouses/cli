@@ -71,9 +71,7 @@ function number {
 }
 
 function language {
-  echo "The default language for HackSpace is English"
-  echo "Currently, HackSpace does not offer issues in any other languages"
-  exit 0
+  echo "English (default)"
 }
 
 function info {

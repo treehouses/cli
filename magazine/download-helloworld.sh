@@ -71,9 +71,7 @@ function number {
 }
 
 function language {
-  echo "The default language for HelloWorld is English"
-  echo "Currently, HelloWorld does not offer issues in any other languages"
-  exit 0
+  echo "English (default)"
 }
 
 function info {

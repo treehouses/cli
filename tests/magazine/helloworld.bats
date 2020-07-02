@@ -6,6 +6,11 @@ load ../test-helper
   assert_output -p "HelloWorld is the computing and digital making magazine for educators."
 }
 
+@test "$clinom magazine helloworld language" {
+  run "${clicmd}" magazine helloworld language
+  assert_success
+}
+
 @test "$clinom magazine helloworld latest" {
   run "${clicmd}" magazine helloworld latest
   assert_success

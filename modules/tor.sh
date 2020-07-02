@@ -130,58 +130,67 @@ function tor {
 
     notice)
       option="$2"
-      if [ "$option" = "on" ]; then
-        cp "$TEMPLATES/network/tor_report.sh" /etc/tor_report.sh
-        if [ ! -f "/etc/cron.d/tor_report" ]; then
-          echo "*/1 * * * * root if [ -d \"/var/lib/tor/treehouses\" ]; then /etc/tor_report.sh; fi" > /etc/cron.d/tor_report
-        fi
-        if [ ! -f "/etc/tor_report_channels.txt" ]; then
-          echo "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" >> /etc/tor_report_channels.txt
-        fi
-        echo "OK."
-      elif [ "$option" = "add" ]; then
-        value="$3"
-        if [ -z "$value" ]; then
-          echo "Error: You must specify a channel URL"
-          exit 1
-        fi
+      case "$option" in
+        on)
+          cp "$TEMPLATES/network/tor_report.sh" /etc/tor_report.sh
+          if [ ! -f "/etc/cron.d/tor_report" ]; then
+            echo "*/1 * * * * root if [ -d \"/var/lib/tor/treehouses\" ]; then /etc/tor_report.sh; fi" > /etc/cron.d/tor_report
+          fi
+          if [ ! -f "/etc/tor_report_channels.txt" ]; then
+            echo "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" >> /etc/tor_report_channels.txt
+          fi
+          echo "OK."
+          ;;
+        add)
+          value="$3"
+          if [ -z "$value" ]; then
+            echo "Error: You must specify a channel URL"
+            exit 1
+          fi
 
-        echo "$value" >> /etc/tor_report_channels.txt
-        echo "OK."
-      elif [ "$option" = "delete" ]; then
-        value="$3"
-        if [ -z "$value" ]; then
-          echo "Error: You must specify a channel URL"
-          exit 1
-        fi
+          echo "$value" >> /etc/tor_report_channels.txt
+          echo "OK."
+          ;;
+        delete)
+          value="$3"
+          if [ -z "$value" ]; then
+            echo "Error: You must specify a channel URL"
+            exit 1
+          fi
 
-        value=$(echo $value | sed 's/\//\\\//g')
-        sed -i "/^$value/d" /etc/tor_report_channels.txt
-        echo "OK."
-      elif [ "$option" = "list" ]; then
-        if [ -f "/etc/tor_report_channels.txt" ]; then
-          cat /etc/tor_report_channels.txt
-        else
-          echo "No channels found. No message send"
-        fi
-      elif [ "$option" = "off" ]; then
-        rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
-        echo "OK."
-      elif [ "$option" = "now" ]; then
-        line1=$(</var/lib/tor/treehouses/hostname)
-        line2=$(grep ^HiddenServicePort /etc/tor/torrc | cut -f 2- -d ' ' | sed -r 's/(.*?) 127.0.0.1:(.*?)/\1:\2/g' | tac | tr -d '\n')
-        line3="\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
-        feedback "$line1\n$line2\n$line3"
-      elif [ -z "$option" ]; then
-        if [ -f "/etc/cron.d/tor_report" ]; then
-          status="on"
-        else
-          status="off"
-        fi
-        echo "Status: $status"
-      else
-        echo "Error: only 'on', 'off', 'now', 'add', 'delete', and 'list' options are supported."
-      fi
+          value=$(echo $value | sed 's/\//\\\//g')
+          sed -i "/^$value/d" /etc/tor_report_channels.txt
+          echo "OK."
+          ;;
+        list)
+          if [ -f "/etc/tor_report_channels.txt" ]; then
+            cat /etc/tor_report_channels.txt
+          else
+            echo "No channels found. No message send"
+          fi
+          ;;
+        off)
+          rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
+          echo "OK."
+          ;;
+        now)
+          line1=$(</var/lib/tor/treehouses/hostname)
+          line2=$(grep ^HiddenServicePort /etc/tor/torrc | cut -f 2- -d ' ' | sed -r 's/(.*?) 127.0.0.1:(.*?)/\1:\2/g' | tac | tr -d '\n')
+          line3="\`$(date -u +"%Y-%m-%d %H:%M:%S %Z")\` $(treehouses networkmode)"
+          feedback "$line1\n$line2\n$line3"
+          ;;
+        "")
+          if [ -f "/etc/cron.d/tor_report" ]; then
+            status="on"
+          else
+            status="off"
+          fi
+          echo "Status: $status"
+          ;;
+        *)
+          echo "Error: only 'on', 'off', 'now', 'add', 'delete', and 'list' options are supported."
+          ;;
+      esac
       ;;
 
     status)

@@ -6,6 +6,11 @@ function redirect {
     exit 1
   fi
 
+  if ! [[ $(networkmode) =~ "ap" ]]; then
+    echo "Only ap mode is supported."
+    exit 1
+  fi
+
   case "$1" in
     list)
         checkargn $# 1 
@@ -13,8 +18,9 @@ function redirect {
         ;;
     add)
         checkargn $# 2
-        echo "address=/$2/127.0.1.1" > /etc/dnsmasq.d/$2
-        systemctl try-restart dnsmasq.service || systemctl start dnsmasq.service
+        ap internet $(get_ap_name) --ip=$(get_ipv4_ip ap0)
+        echo "address=/$2/$(get_ipv4_ip ap0)" > /etc/dnsmasq.d/$2
+        systemctl restart dnsmasq.service
         echo "$2 added."
         ;;
     remove)
@@ -23,7 +29,7 @@ function redirect {
         do
           if [ "$i" == "$2" ] && [ "$2" != "README" ]; then
             rm -rf /etc/dnsmasq.d/$2
-            systemctl try-restart dnsmasq.service || systemctl start dnsmasq.service
+            systemctl restart dnsmasq.service
             echo "$2 removed."
             exit 0
           fi

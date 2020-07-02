@@ -4,7 +4,7 @@ _treehouses_complete()
 {
   local idx subcmds
   every_command=""
-  read -r -d '' every_command <<EOF
+  read -r -d '' every_command <<EOF || true
 treehouses ap internet
 treehouses ap local
 treehouses apchannel
@@ -74,6 +74,7 @@ treehouses default notice
 treehouses default tunnel
 treehouses detect
 treehouses detect arm
+treehouses detect arch
 treehouses detect bluetooth
 treehouses detect rpi
 treehouses detect rpi full
@@ -118,6 +119,7 @@ treehouses help internet
 treehouses help led
 treehouses help locale
 treehouses help log
+treehouses help magazine
 treehouses help memory
 treehouses help networkmode
 treehouses help ntp
@@ -176,6 +178,7 @@ treehouses led lunarnewyear
 treehouses led newyear
 treehouses led onam
 treehouses led diwali
+treehouses led dragonboat
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -204,18 +207,7 @@ treehouses log 4
 treehouses log max
 treehouses log show
 treehouses log show 5
-treehouses magazine hackspace
-treehouses magazine hackspace all
-treehouses magazine hackspace latest
-treehouses magazine helloworld
-treehouses magazine helloworld all
-treehouses magazine helloworld latest
-treehouses magazine magpi
-treehouses magazine magpi all
-treehouses magazine magpi latest
-treehouses magazine wireframe
-treehouses magazine wireframe all
-treehouses magazine wireframe latest
+$(magazine_cmds)
 treehouses memory
 treehouses memory -g
 treehouses memory -m
@@ -308,11 +300,13 @@ treehouses sshkey github adduser
 treehouses sshkey github deleteuser
 treehouses sshkey list
 treehouses sshtunnel
+treehouses sshtunnel active
 treehouses sshtunnel add host
 treehouses sshtunnel add port actual
 treehouses sshtunnel add port offset
 treehouses sshtunnel check
 treehouses sshtunnel key
+treehouses sshtunnel key verify
 treehouses sshtunnel list
 treehouses sshtunnel notice
 treehouses sshtunnel notice add
@@ -321,6 +315,8 @@ treehouses sshtunnel notice list
 treehouses sshtunnel notice now
 treehouses sshtunnel notice off
 treehouses sshtunnel notice on
+treehouses sshtunnel refresh
+treehouses sshtunnel ports
 treehouses sshtunnel remove all
 treehouses sshtunnel remove host
 treehouses sshtunnel remove port
@@ -420,6 +416,16 @@ treehouses services $line url
 treehouses services $line url local
 treehouses services $line url tor\n"
   done <<< "$(find /usr/lib/node_modules/@treehouses/cli/services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
+}
+
+function magazine_cmds {
+  while IFS= read -r line;
+  do
+    printf "treehouses magazine $line
+treehouses magazine $line latest
+treehouses magazine $line language
+treehouses magazine $line all\n"
+  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazine -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 
 complete -F _treehouses_complete treehouses ./cli.sh

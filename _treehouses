@@ -121,6 +121,7 @@ treehouses help locale
 treehouses help log
 treehouses help magazine
 treehouses help memory
+treehouses help monitor
 treehouses help networkmode
 treehouses help ntp
 treehouses help openvpn
@@ -220,6 +221,8 @@ treehouses memory total -m
 treehouses memory used
 treehouses memory used -g
 treehouses memory used -m
+treehouses monitor
+treehouses monitor -u
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet

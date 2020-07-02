@@ -46,8 +46,8 @@ sshtunnel [add|remove|list|active|check]  helps adding sshtunnels
 led [green|red] [mode]                    sets the led mode
     [newyear|lunarnewyear|valentine]
     [carnival|lantern|stpatricks|easter]
-    [eid|dragonboat|onam|diwali]
-    [thanksgiving|christmas]
+    [eid|dragonboat|independenceday|onam]
+    [diwali|thanksgiving|christmas]
     [heavymetal|dance|kecak|random]
 power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
@@ -118,6 +118,7 @@ changelog [view|compare]                  displays the most recent changes to tr
 magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
          <helloworld> [all|latest|number]
 resolution <cea|dmt [modes]>              sets the screen resolution
+message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
 shutdown [now|in|force]                   shutdown the system
 EOF
   echo "$helpdefault"

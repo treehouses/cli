@@ -32,7 +32,6 @@ function all {
 function latest {
   check_latest
   magnum=$latest
-  echo $magnum
   echo "Fetching MagPi$magnum.pdf..."
   wget -q "https://magpi.raspberrypi.org/issues/$magnum/pdf"
   mv ./pdf ./pdf.txt

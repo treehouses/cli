@@ -426,7 +426,7 @@ function magazine_cmds {
 treehouses magazines $line latest
 treehouses magazines $line language
 treehouses magazines $line all\n"
-  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazine -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
+  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 
 complete -F _treehouses_complete treehouses ./cli.sh

@@ -3,6 +3,10 @@
 function install {
   # create service directory
   mkdir -p /srv/jellyfin
+  mkdir -p /srv/jellyfin/movies
+  mkdir -p /srv/jellyfin/tvshows
+  mkdir -p /srv/jellyfin/library/movies
+  mkdir -p /srv/jellyfin/library/tvshows
 
   # create yml(s)
   cat << EOF > /srv/jellyfin/jellyfin.yml
@@ -11,23 +15,25 @@ services:
   jellyfin:
     image: linuxserver/jellyfin
     environment:
-      - PUID=\${PUID}
-      - PGID=\${PGID}
-      - TZ=\${TZ}
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - UMASK_SET=022 #optional
     volumes:
-      - /path/to/library:/config
-      - /path/to/tvseries:/data/tvshows
-      - /path/to/movies:/data/movies
+      - /srv/jellyfin/library:/root/.jellyfin
+      - /srv/jellyfin/tvshows:/srv/jellyfin/library/tvshows
+      - /srv/jellyfin/movies:/srv/jellyfin/library/movies
     ports:
       - 8096:8096
+      - 8920:8920
+    devices:
+      - /dev/dri:/dev/dri #optional
+      - /dev/vcsm:/dev/vcsm #optional
+      - /dev/vchiq:/dev/vchiq #optional
+      - /dev/video10:/dev/video10 #optional
+      - /dev/video11:/dev/video11 #optional
+      - /dev/video12:/dev/video12 #optional  
     restart: unless-stopped
-EOF
-
-  # create .env with default values
-  cat << EOF > /srv/jellyfin/.env
-  PUID=1000
-  PGID=1000
-  TZ=Europe/London
 EOF
 
   # add autorun
@@ -44,7 +50,7 @@ EOF
 
 # environment var
 function uses_env {
-  echo true
+  echo false
 }
 
 # add supported arch(es)
@@ -74,19 +80,19 @@ function get_info {
 # add svg icon
 function get_icon {
   cat <<EOF
-<svg id="banner-logo-solid" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2560 512" version="1.1">
-   <defs>
-      <linearGradient id="linear-gradient" x1="110.25" y1="213.3" x2="496.14" y2="436.09" gradientUnits="userSpaceOnUse">
-         <stop offset="0" stop-color="#aa5cc3"/>
-         <stop offset="1" stop-color="#00a4dc"/>
-      </linearGradient>
-   </defs>
-   <title>banner-logo-solid</title>
-   <rect id="solid-background" width="2560" height="512" fill="#000b25" />
-   <g id="icon-solid" transform="matrix(0.9776332,0,0,0.97766859,1029.7258,5.7203212)">
-      <path id="inner-shape" d="m 256,201.62 c -20.44,0 -86.23,119.29 -76.2,139.43 10.03,20.14 142.48,19.92 152.4,0 9.92,-19.92 -55.73,-139.42 -76.2,-139.43 z" fill="url(#linear-gradient)"/>
-      <path id="outer-shape" d="m 256,23.3 c -61.56,0 -259.82,359.43 -229.59,420.13 30.23,60.7 429.34,60 459.24,0 C 515.55,383.43 317.62,23.3 256,23.3 Z m 150.51,367.46 c -19.59,39.33 -281.08,39.77 -300.89,0 -19.81,-39.77 110.09,-275.28 150.44,-275.28 40.35,0 170.04,235.94 150.45,275.28 z" fill="url(#linear-gradient)"/>
-   </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 512">
+  <defs/>
+  <defs>
+    <linearGradient id="a" x1="110.25" x2="496.14" y1="213.3" y2="436.09" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#aa5cc3"/>
+      <stop offset="1" stop-color="#00a4dc"/>
+    </linearGradient>
+  </defs>
+  <path fill="#000b25" d="M0 0h2560v512H0z"/>
+  <g fill="url(#a)" transform="matrix(.97763 0 0 .97767 1029.7258 5.7203212)">
+    <path d="M256 201.62c-20.44 0-86.23 119.29-76.2 139.43 10.03 20.14 142.48 19.92 152.4 0 9.92-19.92-55.73-139.42-76.2-139.43z"/>
+    <path d="M256 23.3c-61.56 0-259.82 359.43-229.59 420.13 30.23 60.7 429.34 60 459.24 0C515.55 383.43 317.62 23.3 256 23.3zm150.51 367.46c-19.59 39.33-281.08 39.77-300.89 0-19.81-39.77 110.09-275.28 150.44-275.28 40.35 0 170.04 235.94 150.45 275.28z"/>
+  </g>
 </svg>
 EOF
 }

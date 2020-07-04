@@ -127,7 +127,7 @@ function led {
       echo "Both LED: 1 sec off"
       echo "Red LED: 5 blink"
       echo "Green LED: 5 blink"
-      echo "Both LED: 1 sec"
+      echo "Both LED: 1 sec off"
       echo "Red LED: 5 blink"
       onam > "$LOGFILE"
       ;;
@@ -351,14 +351,14 @@ function lantern {
   sleep 1
   led green timer
   sleep 3
-  led green none
+  set_brightness 1 0
   sleep 0.5
   set_brightness 1 1
   sleep 4
   set_brightness 1 0
 
   x=1
-  while [ $x -lt 5 ]
+  while [ $x -lt 4 ]
   do
     set_brightness 0 1
     sleep 0.25
@@ -367,7 +367,7 @@ function lantern {
     x=$(( x+1 ))
     done
 
-  while [ $x -lt 9 ]
+  while [ $x -lt 7 ]
   do
     set_brightness 0 1
     sleep 0.125
@@ -421,7 +421,7 @@ function easter {
   for i in {0..2}
   do
     set_brightness 0 0 && sleep 1.0
-    set_brightness 0 1 && sleep 0.5
+    set_brightness 0 1 && sleep 1.0
   done
 
   set_brightness 0 1 && sleep 3.0
@@ -492,8 +492,6 @@ function onam {
   counter=1
   while [ $counter -le 2 ]
   do
-    set_brightness 0 0 && set_brightness 1 0
-    sleep 1
     for i in {1..5}
     do
       set_brightness 0 1 && set_brightness 1 0
@@ -501,6 +499,8 @@ function onam {
       set_brightness 0 0 && set_brightness 1 0
       sleep 0.5
     done
+    set_brightness 0 0 && set_brightness 1 0
+    sleep 1
     for i in {1..5}
     do
       set_brightness 0 0 && set_brightness 1 1

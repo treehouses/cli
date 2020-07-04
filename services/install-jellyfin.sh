@@ -63,6 +63,7 @@ function supported_arms {
 # add port(s)
 function get_ports {
   echo "8096"
+  echo "8920"
 }
 
 # add size (in MB)

@@ -114,8 +114,12 @@ inspire [fact|joke|qotd|random]           displays quote based on user input
 convert <input file> <output file>        converts video and audio files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses
-magazines <hackspace|magpi|wireframe>     downloads specific magazine issue as a pdf based on user input
-         <helloworld> [all|latest|number]
+magazines                                 downloads specific magazine issue as a pdf based on user input
+   <available>                            lists the available magazine types
+   <helloworld>       [all]               downloads all issues of magazine
+   <hackspace>        [latest]            downloads latest issue of magazine
+   <magpi>            [number]            downloads issue [number] of magazine
+   <wireframe> 
 resolution <cea|dmt [modes]>              sets the screen resolution
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
 shutdown [now|in|force]                   shutdown the system

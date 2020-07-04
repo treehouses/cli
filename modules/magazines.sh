@@ -7,6 +7,18 @@ function magazines() {
   if [ -z "$magtype" ]; then
     echo "ERROR: no magazine type given"
     exit 1
+  elif [ "$magtype" = "available" ]; then
+    checkargn $# 1
+    if [ -d "$MAGAZINES" ]; then
+      for file in $MAGAZINES/*
+      do
+        echo "${file##*/}" | sed -e 's/^download-//' -e 's/.sh$//'
+      done
+      exit 0
+    else
+      echo "ERROR: $MAGAZINES directory does not exist"
+      exit 1
+    fi
   fi
   for file in $MAGAZINES/*; do
       if [ "$magtype" = "$(echo "${file##*/}" | sed -e 's/^download-//' -e 's/.sh$//')" ]; then available_mag=1; fi
@@ -27,17 +39,23 @@ function magazines() {
     cd ..
     echo "Requested issue(s) saved in the $magtype directory"
   else
-    magazine_help
+    magazines_help
   fi
 }
 
-function magazine_help {
+function magazines_help {
   echo
-  echo "Usage: $BASENAME magazines <helloworld|hackspace|magpi|wireframe> [all|latest|number]"
+  echo "Usage: $BASENAME magazines <available> <helloworld|hackspace|magpi|wireframe> [all|latest|number]"
   echo
   echo "This downloads the specified issue of a magazine as a pdf with filename <mag_type>#.pdf based on user input"
   echo
   echo "Example:"
+  echo
+  echo "  $BASENAME magazines available"
+  echo "      hackspace"
+  echo "      helloworld"
+  echo "      magpi"
+  echo "      wireframe"
   echo
   echo "  $BASENAME magazines magpi"
   echo "      This will print out details about the magpi magazine."

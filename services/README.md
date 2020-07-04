@@ -157,7 +157,7 @@ function uses_env {
   echo true/false
 }
 
-# add supported arch(es)
+# add supported arm(s)
 function supported_arms {
   echo "<arch>"
 }

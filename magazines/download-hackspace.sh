@@ -1,5 +1,4 @@
 function check_latest {
-  magnum="$2"
   wget -q "https://hackspace.raspberrypi.org/issues"
   mv ./issues ./issues.txt
   latest="$(sed -n '189p' issues.txt)"

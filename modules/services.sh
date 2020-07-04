@@ -634,6 +634,7 @@ function services_help {
   echo "  transmission    Transmission is a BitTorrent client with many powerful features"
   echo "  piwigo          Piwigo is a photo gallery software to publish and manage your collection of pictures"
   echo "  cloud9          Cloud9 is a complete web based IDE with terminal access"
+  echo "  jellyfin        Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media"
   echo
   echo
   echo "Top-Level Commands:"

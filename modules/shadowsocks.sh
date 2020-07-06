@@ -1,7 +1,7 @@
 function shadowsocks {
   checkroot
 
-  local name port name_conf
+  local name port name_conf running location
 
   if [ ! -d /etc/shadowsocks-libev ]; then
     mkdir /etc/shadowsocks-libev
@@ -123,15 +123,12 @@ function shadowsocks {
         echo
         exit 1
       fi
-      if [ -z $EDITOR ]; then
+      
+      cp "$TEMPLATES/network/shadowsocks.json" /etc/shadowsocks-libev/$name_conf.json
+      if [ -z "$EDITOR" ]; then
         vim /etc/shadowsocks-libev/$name_conf.json
       else
         $EDITOR /etc/shadowsocks-libev/$name_conf.json
-      fi
-      if [ ! -f /etc/shadowsocks-libev/$name_conf.json ]; then
-        echo "Config not saved."
-        echo
-        exit 1
       fi
       echo
 
@@ -144,7 +141,8 @@ function shadowsocks {
         echo
         exit 0
       else
-        echo "The Config is not valid."
+        rm -rf /etc/shadowsocks-libev/$name_conf.json
+        echo "The config is not valid."
         echo "Abort."
         echo
         exit 1

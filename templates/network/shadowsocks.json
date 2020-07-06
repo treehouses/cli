@@ -1,0 +1,9 @@
+{
+	"server": "",
+	"local_address": "127.0.0.1",
+	"local_port": ,
+	"timeout": 300,
+	"server_port": ,
+	"password": "",
+	"method": ""
+}

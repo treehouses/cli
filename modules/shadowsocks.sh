@@ -37,11 +37,11 @@ function shadowsocks {
           if [ -f /etc/shadowsocks-libev/$name.conf ]; then
             location="$(proxychains4 -f /etc/shadowsocks-libev/$name.conf -q curl -s ipinfo.io |\
               grep \"region\" | awk '{print $2}' |\
-              | sed -e 's/"//g' -e 's/,//g')"
+              sed -e 's/"//g' -e 's/,//g')"
           else
             location="$(proxychains4 -q curl -s ipinfo.io |\
               grep \"region\" | awk '{print $2}' |\
-              | sed -e 's/"//g' -e 's/,//g')"
+              sed -e 's/"//g' -e 's/,//g')"
           fi
           printf "%s\t\t%s\n\t\t%s" "$name" "$port" "$location"
         done

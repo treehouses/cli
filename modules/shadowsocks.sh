@@ -26,6 +26,7 @@ function shadowsocks {
       else
         echo "Running:"
         echo
+        printf "CONFIG\t\tPORT\t\t\tLOCATION\n"
         for pid in $(pidof ss-local)
         do
           name="$(ps ax | grep -E "^ *$pid" |\
@@ -36,14 +37,20 @@ function shadowsocks {
             awk '{print $9}' | cut -d ":" -f 2)"
           if [ -f /etc/shadowsocks-libev/$name.conf ]; then
             location="$(proxychains4 -f /etc/shadowsocks-libev/$name.conf -q curl -s ipinfo.io |\
-              grep \"region\" | awk '{print $2}' |\
+              grep \"country\" | cut -d ":" -f 2 |\
+              sed -e 's/"//g' -e 's/,//g')"
+            location="$location - $(proxychains4 -f /etc/shadowsocks-libev/$name.conf -q curl -s ipinfo.io |\
+              grep \"region\" | cut -d ":" -f 2 |\
               sed -e 's/"//g' -e 's/,//g')"
           else
             location="$(proxychains4 -q curl -s ipinfo.io |\
-              grep \"region\" | awk '{print $2}' |\
+              grep \"country\" | cut -d ":" -f 2 |\
+              sed -e 's/"//g' -e 's/,//g')"
+            location="$location - $(proxychains4 -q curl -s ipinfo.io |\
+              grep \"region\" | cut -d ":" -f 2 |\
               sed -e 's/"//g' -e 's/,//g')"
           fi
-          printf "%s\t\t%s\n\t\t%s" "$name" "$port" "$location"
+          printf "%s\t\t%s\t\t%s\n" "$name" "$port" "$location"
         done
       fi
       echo
@@ -115,37 +122,57 @@ function shadowsocks {
       systemctl disable shadowsocks-libev-local@$2.service ;;
 
     add)
-      echo
-      echo "Existing config:"
-      name="$(ls /etc/shadowsocks-libev/*.json |\
-        sed -e 's/\/etc\/shadowsocks-libev\///g' -e 's/.json//g' -e 's/config//g')"
-      echo $name
-      echo
-      read -p "Enter the name for your config:  " name_conf
-      if echo $name_conf | grep -q ".json"; then
-        name_conf="$(echo $name_conf | sed 's/.json//g')"
-      fi
+      if [ $# -eq 2 ] && [ -f "$2" ]; then
+        name_conf="$(echo $2 | sed -e 's/json//g' -e 's/\.//g' -e 's/\///g' )"
 
-      if [ -f /etc/shadowsocks-libev/$name_conf.json ]; then
-        echo "$name_conf.json already exists."
-        echo "Abort."
-        echo
-        exit 1
-      fi
-      
-      cp "$TEMPLATES/network/shadowsocks.json" /etc/shadowsocks-libev/$name_conf.json
-      if [ -z "$EDITOR" ]; then
-        vim /etc/shadowsocks-libev/$name_conf.json
+        if [ -f /etc/shadowsocks-libev/$name_conf.json ]; then
+          echo "$name_conf.json already exists."
+          echo "Abort."
+          echo
+          exit 1
+        fi
+        cp "$2" /etc/shadowsocks-libev/$name_conf.json
       else
-        $EDITOR /etc/shadowsocks-libev/$name_conf.json
+        checkargn $# 1
+        echo
+        echo "Existing config:"
+        name="$(ls /etc/shadowsocks-libev/*.json |\
+          sed -e 's/\/etc\/shadowsocks-libev\///g' -e 's/.json//g' -e 's/config//g')"
+        echo $name
+        echo
+        read -p "Enter the name for your config:  " name_conf
+        if echo $name_conf | grep -q ".json"; then
+          name_conf="$(echo $name_conf | sed 's/.json//g')"
+        fi
+
+        if [ -f /etc/shadowsocks-libev/$name_conf.json ]; then
+          echo "$name_conf.json already exists."
+          echo "Abort."
+          echo
+          exit 1
+        fi
+      
+        cp "$TEMPLATES/network/shadowsocks.json" /etc/shadowsocks-libev/$name_conf.json
+        if [ -z "$EDITOR" ]; then
+          vim /etc/shadowsocks-libev/$name_conf.json
+        else
+          $EDITOR /etc/shadowsocks-libev/$name_conf.json
+        fi
+        echo
+
+        if [ -z "$(diff $TEMPLATES/network/shadowsocks.json /etc/shadowsocks-libev/$name_conf.json)" ]; then
+          echo "Config not saved."
+          rm -rf /etc/shadowsocks-libev/$name_conf.json
+          echo "Abort."
+          exit 1
+        fi
       fi
-      echo
 
       if grep -q local_port /etc/shadowsocks-libev/$name_conf.json; then
         cp "$TEMPLATES/network/proxychains4.conf" /etc/shadowsocks-libev/$name_conf.conf
         echo "socks5 127.0.0.1 $(grep local_port /etc/shadowsocks-libev/$name_conf.json |\
           awk '{print $2}' | sed 's/,//g')" >> /etc/shadowsocks-libev/$name_conf.conf
-        echo "Config saved."
+        echo "Config named \"$name_conf\" saved."
         echo "Use \`$BASENAME shadowsocks start $name_conf\` to start client."
         echo
         exit 0
@@ -155,8 +182,7 @@ function shadowsocks {
         echo "Abort."
         echo
         exit 1
-      fi
-      ;;
+      fi ;;
 
     remove)
       checkargn $# 2
@@ -213,4 +239,20 @@ function shadowsocks {
 
 function shadowsocks_help {
   echo 
+  echo "Usage:  $BASENAME shadowsocks [add|disable|enable|enter]"
+  echo "                        [list|restart|remove|start|stop]"
+  echo
+  echo "        $BASENAME shadowsocks list"
+  echo "                          list all information regarding shadowsocks clients"
+  echo "        $BASENAME shadowsocks add <json file>"
+  echo "                          add configuration file for shadowsocks clients"
+  echo "        $BASENAME shadowsocks enter"
+  echo "                          enter a proxied shell session by shadowsocks client"
+  echo "        $BASENAME shadowsocks enable/disable"
+  echo "                          enable/disable shadowsocks clients"
+  echo "        $BASENAME shadowsocks start/stop/restart"
+  echo "                          start/stop/restart shadowsocks clients"
+  echo "        $BASENAME shadowsocks remove"
+  echo "                          remove shadowsocks clients config json"
+  echo
 }

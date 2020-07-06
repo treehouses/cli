@@ -17,7 +17,7 @@ function shadowsocks {
 
       echo
       echo "Config:"
-      ls /etc/shadowsocks-libev/*.json |\
+      find /etc/shadowsocks-libev/*.json |\
         sed -e 's/\/etc\/shadowsocks-libev\///g' -e 's/.json//g' -e 's/config//g'
       echo
 
@@ -136,7 +136,7 @@ function shadowsocks {
         checkargn $# 1
         echo
         echo "Existing config:"
-        name="$(ls /etc/shadowsocks-libev/*.json |\
+        name="$(find /etc/shadowsocks-libev/*.json |\
           sed -e 's/\/etc\/shadowsocks-libev\///g' -e 's/.json//g' -e 's/config//g')"
         echo $name
         echo

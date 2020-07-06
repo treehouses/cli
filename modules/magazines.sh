@@ -24,7 +24,7 @@ function magazines() {
     cd /mag/$magtype || return
     if [[ "$req" =~ ^[0-9]+$ ]]; then source $MAGAZINES/download-$magtype.sh && number
     else source $MAGAZINES/download-$magtype.sh && $req; fi
-    cd - &>/dev/null
+    cd - &>/dev/null || return
     echo "Requested issue(s) saved in the /mag/$magtype directory"
   else
     magazine_help

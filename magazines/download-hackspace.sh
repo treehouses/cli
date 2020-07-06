@@ -53,12 +53,12 @@ function number {
   if [[ $magnum -lt 1 ]] || [[ $magnum -gt $latest ]]; then
     echo "ERROR: Please enter a valid magazine number"
     echo "       This can be any issue ranging from 1 to $latest"
-    cd - &>/dev/null
+    cd - &>/dev/null || return
     exit 1
   fi
   if [ -f "HackSpace$magnum.pdf" ]; then
     echo "HackSpace$magnum.pdf already exists, exiting..."
-    cd - &>/dev/null
+    cd - &>/dev/null || return
     exit 0
   fi
   echo "Fetching HackSpace$magnum.pdf..."

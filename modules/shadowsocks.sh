@@ -156,7 +156,7 @@ function shadowsocks {
       else
         name="$2"
       fi
-      rm -rf /etc/shadowsocks-libev/$name.json
+      rm -rf /etc/shadowsocks-libev/$name.*
       ;;
 
     enter)
@@ -175,6 +175,15 @@ function shadowsocks {
             awk '{print $7}' |\
             sed -e 's/\/etc\/shadowsocks-libev\///g' -e 's/.json//g')"
           if [ "$name" == "$running" ]; then
+            if -f /etc/shadowsocks-libev/$name.conf; then
+              proxychains4 -q -f /etc/shadowsocks-libev/$name.conf $SHELL
+              echo "Session terminated."
+              exit 0
+            else
+              echo "Proxychains4 configuration file not found."
+              echo "Abort."
+              exit 1
+            fi
             break
           fi
         done
@@ -184,17 +193,7 @@ function shadowsocks {
       else
         echo "No instance of Shadowsocks client running!"
         echo "Abort." && exit 1
-      fi
-      
-      if -f /etc/shadowsocks-libev/$name.conf; then
-        proxychains4 -q -f /etc/shadowsocks-libev/$name.conf $SHELL
-        echo "Session terminated."
-      else
-        echo "Proxychains4 configuration file not found."
-        echo "Abort."
-        exit 1
-      fi
-      exit 0 ;;
+      fi ;;
 
     *)
       echo "Error: No option as $1."

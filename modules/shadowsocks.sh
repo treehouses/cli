@@ -39,7 +39,7 @@ function shadowsocks {
             location="$(proxychains4 -f /etc/shadowsocks-libev/$name.conf -q curl -s ipinfo.io |\
               grep \"country\" | cut -d ":" -f 2 |\
               sed -e 's/"//g' -e 's/,//g')"
-            location="$location - $(proxychains4 -f /etc/shadowsocks-libev/$name.conf -q curl -s ipinfo.io |\
+            location="$location -$(proxychains4 -f /etc/shadowsocks-libev/$name.conf -q curl -s ipinfo.io |\
               grep \"region\" | cut -d ":" -f 2 |\
               sed -e 's/"//g' -e 's/,//g')"
           else
@@ -75,7 +75,7 @@ function shadowsocks {
       checkargn $# 2
 
       echo
-      for i in $(ls /etc/shadowsocks-libev/*.json)
+      for i in /etc/shadowsocks-libev/*.json
       do
         if [ "$2" = "$(echo $i | cut -d "/" -f 4 | cut -d "." -f 1)" ]; then
           if [ "$1" = "start" ]; then
@@ -140,9 +140,9 @@ function shadowsocks {
           sed -e 's/\/etc\/shadowsocks-libev\///g' -e 's/.json//g' -e 's/config//g')"
         echo $name
         echo
-        read -p "Enter the name for your config:  " name_conf
+        read -r -p "Enter the name for your config:  " name_conf
         if echo $name_conf | grep -q ".json"; then
-          name_conf="$(echo $name_conf | sed 's/.json//g')"
+          name_conf="${name_cof//.json/}"
         fi
 
         if [ -f /etc/shadowsocks-libev/$name_conf.json ]; then
@@ -187,7 +187,7 @@ function shadowsocks {
     remove)
       checkargn $# 2
       if echo $2 | grep -q ".json"; then
-        name="$(echo $2 | sed 's/.json//g')"
+        name="${2//.json/}"
       else
         name="$2"
       fi
@@ -196,9 +196,8 @@ function shadowsocks {
 
     enter)
       checkargn $# 2
-
       if echo $2 | grep -q ".json"; then
-        name="$(echo $2 | sed 's/.json//g')"
+        name="${$2//.json/}"
       else
         name="$2"
       fi
@@ -249,7 +248,7 @@ function shadowsocks_help {
   echo "        $BASENAME shadowsocks enter"
   echo "                          enter a proxied shell session by shadowsocks client"
   echo "        $BASENAME shadowsocks enable/disable"
-  echo "                          enable/disable shadowsocks clients"
+  echo "                          enable/disable autorun for shadowsocks clients"
   echo "        $BASENAME shadowsocks start/stop/restart"
   echo "                          start/stop/restart shadowsocks clients"
   echo "        $BASENAME shadowsocks remove"

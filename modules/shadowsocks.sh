@@ -34,7 +34,16 @@ function shadowsocks {
           port="$(lsof -i -P -n |\
             grep LISTEN | grep $pid |\
             awk '{print $9}' | cut -d ":" -f 2)"
-          printf "%s\t\t%s\n" "$name" "$port"
+          if [ -f /etc/shadowsocks-libev/$name.conf ]; then
+            location="$(proxychains4 -f /etc/shadowsocks-libev/$name.conf -q curl -s ipinfo.io |\
+              grep \"region\" | awk '{print $2}' |\
+              | sed -e 's/"//g' -e 's/,//g')"
+          else
+            location="$(proxychains4 -q curl -s ipinfo.io |\
+              grep \"region\" | awk '{print $2}' |\
+              | sed -e 's/"//g' -e 's/,//g')"
+          fi
+          printf "%s\t\t%s\n\t\t%s" "$name" "$port" "$location"
         done
       fi
       echo
@@ -67,7 +76,7 @@ function shadowsocks {
             echo "$2 started."
             echo "Use \`$BASENAME shadowsocks enter $2\` to enter shell session proxied by shadowsocks client."
           else
-            systemctl enable shadowsocks-libev-local@$2.service
+            systemctl enable shadowsocks-libev-local@$2.service --quiet
             echo "$2 enabled."
           fi
           echo
@@ -175,7 +184,7 @@ function shadowsocks {
             awk '{print $7}' |\
             sed -e 's/\/etc\/shadowsocks-libev\///g' -e 's/.json//g')"
           if [ "$name" == "$running" ]; then
-            if -f /etc/shadowsocks-libev/$name.conf; then
+            if [ -f /etc/shadowsocks-libev/$name.conf ]; then
               proxychains4 -q -f /etc/shadowsocks-libev/$name.conf $SHELL
               echo "Session terminated."
               exit 0

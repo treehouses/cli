@@ -29,7 +29,7 @@ function tor {
     if [[ $ports ]]; then
       echo $ports
     else
-      echo "No ports found"
+      echo "Error: no ports found"
     fi
   elif [ "$1" = "add" ]; then
     if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
@@ -88,7 +88,7 @@ function tor {
     echo "Port $2 has been deleted"
   elif [ "$1" = "deleteall" ]; then
     if [ -n "$2" ]; then
-      echo "Error: wrong synthax"
+      echo "Error: wrong syntax"
       exit 1
     fi
 

@@ -30,7 +30,7 @@ function tor {
       echo $ports
     else
       echo "No ports found"
-    
+    fi
   elif [ "$1" = "add" ]; then
     if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
       echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc

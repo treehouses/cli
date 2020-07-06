@@ -192,12 +192,14 @@ function shadowsocks {
         name="$2"
       fi
       rm -rf /etc/shadowsocks-libev/$name.*
+      shadowsocks stop $name
+      shadowsocks disable $name
       ;;
 
     enter)
       checkargn $# 2
       if echo $2 | grep -q ".json"; then
-        name="${$2//.json/}"
+        name="${2//.json/}"
       else
         name="$2"
       fi

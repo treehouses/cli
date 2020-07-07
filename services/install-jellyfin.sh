@@ -18,21 +18,21 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/London
-      - UMASK_SET=022 #optional
+      - UMASK_SET=022
     volumes:
-      - /srv/jellyfin/library:/root/.jellyfin
-      - /srv/jellyfin/tvshows:/srv/jellyfin/library/tvshows
-      - /srv/jellyfin/movies:/srv/jellyfin/library/movies
+      - /srv/jellyfin/library/jellyfin:/root/.jellyfin
+      - /srv/jellyfin/library/tvshows:/srv/jellyfin/library/tvshows
+      - /srv/jellyfin/library/movies:/srv/jellyfin/library/movies
     ports:
       - 8096:8096
       - 8920:8920
     devices:
-      - /dev/dri:/dev/dri #optional
-      - /dev/vcsm:/dev/vcsm #optional
-      - /dev/vchiq:/dev/vchiq #optional
-      - /dev/video10:/dev/video10 #optional
-      - /dev/video11:/dev/video11 #optional
-      - /dev/video12:/dev/video12 #optional  
+      - /dev/dri:/dev/dri
+      - /dev/vcsm:/dev/vcsm
+      - /dev/vchiq:/dev/vchiq
+      - /dev/video10:/dev/video10
+      - /dev/video11:/dev/video11
+      - /dev/video12:/dev/video12  
     restart: unless-stopped
 EOF
 

@@ -138,6 +138,7 @@ treehouses help ssh
 treehouses help sshkey
 treehouses help sshtunnel
 treehouses help staticwifi
+treehouses help stream
 treehouses help temperature
 treehouses help timezone
 treehouses help tor
@@ -208,6 +209,9 @@ treehouses log 4
 treehouses log max
 treehouses log show
 treehouses log show 5
+treehouses stream
+treehouses stream on
+treehouses stream off
 $(magazine_cmds)
 treehouses memory
 treehouses memory -g

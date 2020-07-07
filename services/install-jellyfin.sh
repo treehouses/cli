@@ -73,7 +73,7 @@ function get_size {
 
 # add info
 function get_info {
-  echo "https://github.com/jellyfin/jellyfin"
+  echo "https://github.com/linuxserver/docker-jellyfin"
   echo
   echo "\"Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media.\""
 }

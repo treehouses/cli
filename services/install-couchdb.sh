@@ -34,8 +34,8 @@ function uses_env {
   echo false
 }
 
-# add supported arm(s)
-function supported_arms {
+# add supported arch(es)
+function supported_arches {
   echo "armv7l"
   echo "armv6l"
   echo "x86_64"

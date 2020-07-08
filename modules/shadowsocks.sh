@@ -111,15 +111,18 @@ function shadowsocks {
 
     restart)
       checkargn $# 2
-      systemctl restart shadowsocks-libev-local@$2.service ;;
+      systemctl restart shadowsocks-libev-local@$2.service --quiet
+      echo "$2 restarted." ;;
 
     stop)
       checkargn $# 2
-      systemctl stop shadowsocks-libev-local@$2.service ;;
+      systemctl stop shadowsocks-libev-local@$2.service --quiet
+      echo "$2 stopped." ;;
 
     disable)
       checkargn $# 2
-      systemctl disable shadowsocks-libev-local@$2.service ;;
+      systemctl disable shadowsocks-libev-local@$2.service --quiet
+      echo "$2 disabled" ;;
 
     add)
       if [ $# -eq 2 ] && [ -f "$2" ]; then
@@ -194,6 +197,7 @@ function shadowsocks {
       rm -rf /etc/shadowsocks-libev/$name.*
       shadowsocks stop $name
       shadowsocks disable $name
+      echo "$name removed."
       ;;
 
     enter)
@@ -213,7 +217,7 @@ function shadowsocks {
           if [ "$name" == "$running" ]; then
             if [ -f /etc/shadowsocks-libev/$name.conf ]; then
               proxychains4 -q -f /etc/shadowsocks-libev/$name.conf $SHELL
-              echo "Session terminated."
+              echo "$name Session terminated."
               exit 0
             else
               echo "Proxychains4 configuration file not found."

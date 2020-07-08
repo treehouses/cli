@@ -243,6 +243,7 @@ treehouses openvpn use
 treehouses password
 treehouses password disable
 treehouses password enable
+treehouses picture
 treehouses power conservative
 treehouses power current
 treehouses power default

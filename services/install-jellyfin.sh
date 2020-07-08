@@ -21,8 +21,8 @@ services:
       - UMASK_SET=022
     volumes:
       - /srv/jellyfin/library/jellyfin:/root/.jellyfin
-      - /srv/jellyfin/library/tvshows:/srv/jellyfin/library/tvshows
-      - /srv/jellyfin/library/movies:/srv/jellyfin/library/movies
+      - /srv/jellyfin/tvshows:/srv/jellyfin/library/tvshows
+      - /srv/jellyfin/movies:/srv/jellyfin/library/movies
     ports:
       - 8096:8096
       - 8920:8920

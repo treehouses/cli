@@ -82,8 +82,13 @@ function shadowsocks {
         if [ "$2" = "$(echo $i | cut -d "/" -f 4 | cut -d "." -f 1)" ]; then
           if [ "$1" = "start" ]; then
             systemctl start shadowsocks-libev-local@$2.service
-            echo "$2 started."
-            echo "Use \`$BASENAME shadowsocks enter $2\` to enter shell session proxied by shadowsocks client."
+            if systemctl --quiet is-active shadowsocks-libev-local@$2.service; then
+              echo "$2 started."
+              echo "Use \`$BASENAME shadowsocks enter $2\` to enter shell session proxied by shadowsocks client."
+            else
+              echo "$2 fails to start."
+              echo "Please check your config." && exit 1
+            fi
           else
             systemctl enable shadowsocks-libev-local@$2.service --quiet
             echo "$2 enabled."
@@ -136,7 +141,14 @@ function shadowsocks {
           echo
           exit 1
         fi
+        if ! jq -e . >/dev/null 2>&1 <<< "$(<$2)"; then
+          echo "Invalid json format"
+          echo "Abort." && exit 1
+        fi
         cp "$2" /etc/shadowsocks-libev/$name_conf.json
+      elif [ ! -f "$2" ]; then
+        echo "Invalid file location"
+        echo "Abort." && exit 1
       else
         checkargn $# 1
         echo
@@ -147,7 +159,7 @@ function shadowsocks {
         echo
         read -r -p "Enter the name for your config:  " name_conf
         if echo $name_conf | grep -q ".json"; then
-          name_conf="${name_cof//.json/}"
+          name_conf="${name_conf//.json/}"
         fi
 
         if [ -f /etc/shadowsocks-libev/$name_conf.json ]; then

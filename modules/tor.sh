@@ -29,7 +29,7 @@ function tor {
     if [[ $ports ]]; then
       echo $ports
     else
-      echo "Error: no ports found"
+      echo "No ports found"
     fi
   elif [ "$1" = "add" ]; then
     if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then

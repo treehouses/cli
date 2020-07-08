@@ -115,13 +115,12 @@ function checkstatus {
 }
 function power_help {
   echo "Usage: $BASENAME power [mode]"
-  echo "       $BASENAME power [current|freq]"
+  echo "       $BASENAME power [current|freq|status]"
   echo "Options of modes:"
-  echo "  status                      returns status of power"
   echo "  default                     ondemand mode; moves speed from min to max at about 90% load"
   echo "  ondemand                    moves speed from min to max at about 90% load"
   echo "  conservative                gradually switch frequencies at about 90% load"
-  echo "  usespace                    allows any program to set CPU's frequency"
+  echo "  userspace                    allows any program to set CPU's frequency"
   echo "  powersave                   all cores set at minimum frequency"
   echo "  performance                 all cores set at maximum frequency"
   echo
@@ -138,7 +137,7 @@ function power_help {
   echo "  $BASENAME power conservative" 
   echo "      This will set the power mode to conservative" 
   echo
-  echo "  $BASENAME power usespace" 
+  echo "  $BASENAME power userspace" 
   echo "      This will set the power mode to userspace" 
   echo
   echo "  $BASENAME power powersave" 

@@ -2,8 +2,7 @@
 
 function install {
   # create service directory
-  mkdir -p /srv/jellyfin/library/movies
-  mkdir -p /srv/jellyfin/library/tvshows
+  mkdir -p /srv/jellyfin/library
 
   # create yml(s)
   cat << EOF > /srv/jellyfin/jellyfin.yml

@@ -1,5 +1,4 @@
 function check_latest {
-  magnum=$2
   wget -q "https://wireframe.raspberrypi.org/issues"
   mv ./issues ./issues.txt
   latest="$(sed -n '186p' issues.txt)"

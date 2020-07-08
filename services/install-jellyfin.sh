@@ -2,9 +2,6 @@
 
 function install {
   # create service directory
-  mkdir -p /srv/jellyfin
-  mkdir -p /srv/jellyfin/movies
-  mkdir -p /srv/jellyfin/tvshows
   mkdir -p /srv/jellyfin/library/movies
   mkdir -p /srv/jellyfin/library/tvshows
 
@@ -21,8 +18,8 @@ services:
       - UMASK_SET=022
     volumes:
       - /srv/jellyfin/library/jellyfin:/root/.jellyfin
-      - /srv/jellyfin/tvshows:/srv/jellyfin/library/tvshows
-      - /srv/jellyfin/movies:/srv/jellyfin/library/movies
+      - /srv/jellyfin/library/tvshows:/srv/jellyfin/library/tvshows
+      - /srv/jellyfin/library/movies:/srv/jellyfin/library/movies
     ports:
       - 8096:8096
       - 8920:8920

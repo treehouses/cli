@@ -8,7 +8,7 @@ Commands:
 
 help [command]                            gives you a more detailed info about the command or will output this
 verbose <on|off>                          makes each command print more output (might not work with treehouses remote)
-expandfs                                  expands the partition of the RPI image to the maximum of the SDcard
+expandfs                                  expands the partition of the RPI image to the maximum of the SD card
 rename <hostname>                         changes hostname
 password <password|disable|enable>        changes the password for 'pi' user or disables/enables password authentication
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
@@ -38,26 +38,26 @@ timezone <timezone>                       sets the timezone of the system
 locale <locale>                           sets the system locale
 ssh [on|off|fingerprint]                  enables or disables the ssh service, also prints out fingerprint of the ssh daemon
 vnc [on|off|info]                         enables or disables the vnc server service
-default                                   sets a raspbian back to default configuration
+default [network|notice|tunnel]           sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
 upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
 sshtunnel [add|remove|list|active|check]  helps adding sshtunnels
-          [key|notice]
+          [key|refresh|notice|ports]
 led [green|red] [mode]                    sets the led mode
     [newyear|lunarnewyear|valentine]
     [carnival|lantern|stpatricks|easter]
-    [eid|dragonboat|onam|diwali]
-    [thanksgiving|christmas]
+    [eid|dragonboat|independenceday|onam]
+    [diwali|thanksgiving|christmas]
     [heavymetal|dance|kecak|random]
-power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
+power [mode|current|freq|status]          sets the power mode or check power mode/CPU frequency
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode
 button <off|bluetooth>                    gives the gpio pin 18 an action
 feedback <message>                        sends feedback
-clone [device path]                       clones the current SDCard onto a secondary SDCard or specified device
-restore [device path]                     restores a treehouses image to an SDCard or specified device
-burn [device path]                        download and burns the latest treehouses image to the SDcard or specified device
+clone [device path]                       clones the current SD card onto a secondary SD card or specified device
+restore [device path]                     restores a treehouses image to an SD card or specified device
+burn [device path]                        download and burns the latest treehouses image to the SD card or specified device
 rebootneeded                              shows if reboot is required to apply changes
 reboots <now|in|cron>                     reboots at given frequency | removes it if reboot task active
         <daily|weekly|monthly>
@@ -83,11 +83,12 @@ services                                  executes the given command on the spec
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
    [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
-   [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices.
+   [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices
    [grocy]                                Grocy is a web-based, self-hosted groceries and household management utility for your home
-   [dokuwiki]                             Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database.
+   [dokuwiki]                             Dokuwiki is a simple to use and highly versatile Open Source wiki software
    [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
-   [transmission]                         Transmission is a BitTorrent client with many powerful features.
+   [transmission]                         Transmission is a BitTorrent client with many powerful features
+   [piwigo]                               Piwigo is a photo gallery software to publish and manage your collection of pictures
    [cloud9]                               Cloud9 is a complete web based ide with terminal access
 tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
     [stop|destroy|notice|status|refresh]
@@ -114,9 +115,10 @@ inspire [fact|joke|qotd|random]           displays quote based on user input
 convert <input file> <output file>        converts video and audio files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses
-magazine <hackspace|magpi|wireframe>      downloads specific magazine issue as a pdf based on user input
+magazines <hackspace|magpi|wireframe>     downloads specific magazine issue as a pdf based on user input
          <helloworld> [all|latest|number]
 resolution <cea|dmt [modes]>              sets the screen resolution
+message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
 shutdown [now|in|force]                   shutdown the system
 EOF
   echo "$helpdefault"

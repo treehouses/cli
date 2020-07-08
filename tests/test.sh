@@ -17,10 +17,13 @@ case "$1" in
     time bats "$@"
   ;;
   all)
-    time bats ./*.bats ./services/*.bats ./magazine/*.bats
+    time bats ./*.bats ./services/*.bats ./led/*.bats ./magazines/*.bats
   ;;
   services)
     time bats ./services*
+  ;;
+  led)
+    time bats ./led*
   ;;
   magazine)
     time bats ./magazine*
@@ -42,7 +45,7 @@ case "$1" in
          ./p* ./r* ./temperature* ./timezone* ./usb.bats ./verbose* ./version*
   ;;
   *)
-    echo "Only 'all', 'services', 'magazine', 'wifi', 'ap', 'nonet', 'nonetblue' options are supported"
+    echo "Only 'all', 'services', 'led', 'magazine', 'wifi', 'ap', 'nonet', 'nonetblue' options are supported"
     exit 1
   ;;
 esac

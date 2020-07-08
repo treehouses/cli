@@ -90,6 +90,10 @@ function sshtunnel {
             echo "MAILTO=root"
             echo "*/5 * * * * root if [ ! "$\(pidof autossh\)" ]; then /etc/tunnel; fi"
           } > /etc/cron.d/autossh
+
+          if [ -f "/etc/cron.d/tunnel_report" ]; then
+            sshtunnel notice now
+          fi
           ;;
         port)
           case "$3" in
@@ -165,11 +169,10 @@ function sshtunnel {
                   else
                     sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
                     echo "Added $actual -> $((portinterval + offset)) for host $host"
-
-                    pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
-                    if [ ! -z "$pid" ]; then
-                      kill -- -$pid
+                    if [ -f "/etc/cron.d/tunnel_report" ]; then
+                      sshtunnel notice now
                     fi
+                    sshtunnel_kill $host
                   fi
                 fi
               else
@@ -242,11 +245,12 @@ function sshtunnel {
                   else
                     sed -i "/^$host/i -R $port:127.0.1.1:$actual \\\\" /etc/tunnel
                     echo "Added $actual -> $port for host $host"
-                    
-                    pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
-                    if [ ! -z "$pid" ]; then
-                      kill -- -$pid
+
+                    if [ -f "/etc/cron.d/tunnel_report" ]; then
+                      sshtunnel notice now
                     fi
+                    
+                    sshtunnel_kill $host
                   fi
                 fi
               else
@@ -322,11 +326,10 @@ function sshtunnel {
           if [ "$found" = true ]; then
             sed -i "$final d" /etc/tunnel
             echo "Removed $port for host $host"
-
-            pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
-            if [ ! -z "$pid" ]; then
-              kill -- -$pid
+            if [ -f "/etc/cron.d/tunnel_report" ]; then
+              sshtunnel notice now
             fi
+            sshtunnel_kill $host
           else
             echo "Host / port not found"
           fi
@@ -364,11 +367,10 @@ function sshtunnel {
 
           sed -i "$((startline - 1)), $endline d" /etc/tunnel
           echo "Removed $host from /etc/tunnel"
-
-          pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
-          if [ ! -z "$pid" ]; then
-            kill -- -$pid
+          if [ -f "/etc/cron.d/tunnel_report" ]; then
+            sshtunnel notice now
           fi
+          sshtunnel_kill $host
           ;;
         *)
           echo "Error: unknown command"
@@ -376,6 +378,24 @@ function sshtunnel {
           exit 1
           ;;
       esac
+      ;;
+    refresh)
+      checkargn $# 2
+      host=$2
+
+      if [ -z "$host" ]; then
+        count=$(pgrep -c autossh)
+        screen -dm bash -c "pkill autossh ; bash /etc/tunnel"
+        echo "Refreshed tunnels to $count host(s)"
+      else
+        pid=$(pgrep -a "autossh" | grep "$host$" | awk '{print $1}')
+        if [ ! -z "$pid" ]; then
+          screen -dm bash -c "kill -- -$pid ; bash /etc/tunnel"
+          echo "Refreshed tunnels to $host"
+        else
+          echo "No tunnels to $host active"
+        fi
+      fi
       ;;
     list | "")
       checkargn $# 2
@@ -596,17 +616,56 @@ function sshtunnel {
           ;;
       esac
       ;;
+    ports)
+      checkargn $# 1
+      message_ports=()
+      while read -r line; do
+        if [[ $line =~ "/usr/bin/autossh" ]]; then
+          monitoringport=$(echo $line | grep -oP "(?<=\-M )(.*?) ")
+        elif echo $line | grep -q "[]@[]"; then
+          host=$(echo $line | awk '{print $1}')
+        fi
+
+        if [ ! -z "$monitoringport" ] && echo $line | grep -oPq "(?<=\-R )(.*?) "; then
+          local=$(echo $line | grep -oP '(?<=127.0.1.1:).*?(?= )')
+          external=$(echo $line | grep -oP '(?<=-R ).*?(?=:127)')
+          notice_ports+=("$external:$local ")
+        fi
+
+        if [ ! -z "$monitoringport" ] && [ ! -z "$host" ]; then
+          message+="$host:$monitoringport"
+          for i in "${notice_ports[@]}"; do
+            message+=$i
+          done
+          message+="\n"
+          monitoringport=""
+          host=""
+          notice_ports=()
+        fi
+      done < /etc/tunnel
+
+      echo -e ${message::-3}
+      ;;
     *)
       echo "Error: unknown command"
-      echo "Usage: $BASENAME sshtunnel [add | remove | list | active | check | key | notice]"
+      echo "Usage: $BASENAME sshtunnel [add|remove|refresh|list|active|check|key|notice|ports]"
       exit 1
       ;;
   esac
 }
 
+function sshtunnel_kill {
+  host=$1
+
+  pid=$(pgrep -a "autossh" | grep "$host" | awk '{print $1}')
+  if [ ! -z "$pid" ]; then
+    screen -dm bash -c "kill -- -$pid ; bash /etc/tunnel"
+  fi
+}
+
 function sshtunnel_help {
   echo
-  echo "Usage: $BASENAME sshtunnel [add | remove | list | active | check | key | notice]"
+  echo "Usage: $BASENAME sshtunnel [add|remove|refresh|list|active|check|key|notice|ports]"
   echo
   echo "Helps setting up sshtunnels to multiple hosts"
   echo
@@ -632,6 +691,9 @@ function sshtunnel_help {
   echo "      port <port> [host]                       removes a single port from an existing host"
   echo "      host <host>                              removes all tunnels from an existing host"
   echo
+  echo "  refresh                                  kills and restarts tunnels to all hosts"
+  echo "      [host]                                   kills and restarts tunnels to given host"
+  echo
   echo "  \" \" | list                               lists all existing tunnels to all hosts"
   echo "      [host]                                   lists existing tunnels to given host"
   echo
@@ -649,6 +711,8 @@ function sshtunnel_help {
   echo "      list                                     lists all channels"
   echo "      off                                      turns off auto-reporting to gitter"
   echo "      now                                      immediately reports to gitter"
+  echo
+  echo "  ports                                    lists all existing tunnels to all hosts in a single string"
   echo
   echo "Adding a port using offsets:"
   echo "  To add local port 100 with an offset of 200, run"

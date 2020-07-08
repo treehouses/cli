@@ -73,7 +73,7 @@ led [green|red] [mode]                    sets the led mode
     [eid|dragonboat|independenceday|onam]
     [diwali|thanksgiving|christmas]
     [heavymetal|dance|kecak|random]
-power [mode|current|freq]                 sets the power mode or check power mode/CPU frequency
+power [mode|current|freq|status]          sets the power mode or check power mode/CPU frequency
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode
@@ -126,6 +126,7 @@ memory [total|used|free]                  displays the total memory of the devic
 temperature [celsius|fahrenheit|kelvin]   displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
 camera [on|off|detect|capture|record]     enables and disables camera, detects camera module version, captures photo, records video
+picture [file|url]                        displays a picture in the terminal
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off

@@ -119,6 +119,7 @@ treehouses help internet
 treehouses help led
 treehouses help locale
 treehouses help log
+treehouses help magazine
 treehouses help memory
 treehouses help networkmode
 treehouses help ntp
@@ -178,6 +179,7 @@ treehouses led newyear
 treehouses led onam
 treehouses led diwali
 treehouses led dragonboat
+treehouses led independenceday
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -219,6 +221,8 @@ treehouses memory total -m
 treehouses memory used
 treehouses memory used -g
 treehouses memory used -m
+treehouses message gitter apikey 
+treehouses message gitter sendto 
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet
@@ -418,10 +422,11 @@ treehouses services $line url tor\n"
 function magazine_cmds {
   while IFS= read -r line;
   do
-    printf "treehouses magazine $line
-treehouses magazine $line latest
-treehouses magazine $line all\n"
-  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazine -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
+    printf "treehouses magazines $line
+treehouses magazines $line latest
+treehouses magazines $line language
+treehouses magazines $line all\n"
+  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 
 complete -F _treehouses_complete treehouses ./cli.sh

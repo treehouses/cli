@@ -1,5 +1,7 @@
 function shadowsocks {
   checkroot
+  check_missing_packages "shadowsocks"
+  check_missing_packages "proxychains4"
 
   local name port name_conf running location
 

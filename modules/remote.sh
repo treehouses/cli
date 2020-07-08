@@ -3,31 +3,31 @@ function remote {
   checkroot
   checkrpi
 
-  case "$1" in
-    check)
+  case $option in
+    "check")
       checkargn $# 1
       echo "$(bluetooth mac) $(image) $(version) $(detectrpi)"
       ;;
-    status)
+    "status")
       checkargn $# 1
       echo "$(internet) $(bluetooth mac) $(image) $(version) $(detectrpi)"
       ;;
-    upgrade)
+    "upgrade")
       checkargn $# 1
       upgrade --check
       ;;
-    services)
+    "services")
       checkargn $# 2
       case "$2" in
-        available)
+        "available")
           results="Available: $(services available)"
           echo $results
           ;;
-        installed)
+        "installed")
           results="Installed: $(services installed)"
           echo $results
           ;;
-        running)
+        "running")
           results="Running: $(services running)"
           echo $results
           ;;
@@ -38,7 +38,7 @@ function remote {
           ;;
       esac
       ;;
-    version)
+    "version")
       checkargn $# 2
       if [ -z "$2" ]; then
         echo "Error: version number required"
@@ -55,7 +55,7 @@ function remote {
         echo "version: false"
       fi
       ;;
-    commands)
+    "commands")
       checkargn $# 2
       source $SCRIPTFOLDER/_treehouses && _treehouses_complete 2>/dev/null
       if [ -z "$2" ]; then
@@ -72,7 +72,7 @@ function remote {
         exit 1
       fi
       ;;
-    allservices)
+    "allservices")
       checkargn $# 1
       json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"}}\n"
 
@@ -91,7 +91,7 @@ function remote {
 
       printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}"
       ;;
-    help)
+    "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')
       for file in $SCRIPTFOLDER/modules/*.sh
       do
@@ -105,7 +105,7 @@ function remote {
       done
       echo ${json_var}
       ;;
-    key)
+    "key")
       case "$2" in
         send)
           checkargn $# 3

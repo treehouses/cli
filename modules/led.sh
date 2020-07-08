@@ -101,6 +101,24 @@ function led {
       echo "Red LED: on 2 sec; off 0.5 sec"
       eid > "$LOGFILE"
       ;;
+    dragonboat)
+      checkroot
+      echo "leds are set to dragonboat mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: flashing 10 times with a decreasing frequency"
+      echo "this will happen 3 times"
+      dragonboat > "$LOGFILE"
+      ;;
+    independenceday)
+      checkroot
+      echo "leds are set to independenceday mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Both LED: alternate 2 times"
+      echo "Both LED: 1 off"
+      echo "Both LED: alternate 7 times"
+      echo "Both LED: 3 off"
+      independenceday > "$LOGFILE"
+      ;;
     onam)
       checkroot
       echo "leds are set to onam mode."
@@ -109,7 +127,7 @@ function led {
       echo "Both LED: 1 sec off"
       echo "Red LED: 5 blink"
       echo "Green LED: 5 blink"
-      echo "Both LED: 1 sec"
+      echo "Both LED: 1 sec off"
       echo "Red LED: 5 blink"
       onam > "$LOGFILE"
       ;;
@@ -264,7 +282,7 @@ function lunarnewyear {
     set_brightness 1 1 && sleep 0.1
   done
 
-  set_brightness 1 0 && sleep 1
+  set_brightness 1 0 && sleep 5
   set_brightness 1 1 && sleep 5
 
   led green "$current_green"
@@ -329,18 +347,18 @@ function lantern {
   current_green=$(led "green")
   current_red=$(led "red")
 
-  set_brightness 0 0; set_brightness 0 1
+  set_brightness 0 0; set_brightness 1 0
   sleep 1
   led green timer
   sleep 3
-  led green none
+  set_brightness 1 0
   sleep 0.5
   set_brightness 1 1
   sleep 4
   set_brightness 1 0
 
   x=1
-  while [ $x -lt 5 ]
+  while [ $x -lt 4 ]
   do
     set_brightness 0 1
     sleep 0.25
@@ -349,7 +367,7 @@ function lantern {
     x=$(( x+1 ))
     done
 
-  while [ $x -lt 9 ]
+  while [ $x -lt 7 ]
   do
     set_brightness 0 1
     sleep 0.125
@@ -403,7 +421,7 @@ function easter {
   for i in {0..2}
   do
     set_brightness 0 0 && sleep 1.0
-    set_brightness 0 1 && sleep 0.5
+    set_brightness 0 1 && sleep 1.0
   done
 
   set_brightness 0 1 && sleep 3.0
@@ -474,8 +492,6 @@ function onam {
   counter=1
   while [ $counter -le 2 ]
   do
-    set_brightness 0 0 && set_brightness 1 0
-    sleep 1
     for i in {1..5}
     do
       set_brightness 0 1 && set_brightness 1 0
@@ -483,6 +499,8 @@ function onam {
       set_brightness 0 0 && set_brightness 1 0
       sleep 0.5
     done
+    set_brightness 0 0 && set_brightness 1 0
+    sleep 1
     for i in {1..5}
     do
       set_brightness 0 0 && set_brightness 1 1
@@ -501,40 +519,82 @@ function diwali {
   current_green=$(led "green")
   current_red=$(led "red")
 
-  for i in {0..5}                            # Green LED
+  for i in {0..4}                            # Green LED
   do
     set_brightness 0 1 && sleep 0.025        # green on
     set_brightness 0 0 && sleep 0.025        # green OFF
   done
 
-  for i in {0..5}                            # Red LED
+  for i in {0..4}                            # Red LED
   do
     set_brightness 1 1 && sleep 0.025        # red on
     set_brightness 1 0 && sleep 0.025        # red OFF
   done
 
-  for i in {0..5}                            # Both LEDs
+  for i in {0..4}                            # Both LEDs
   do
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
-    sleep 0.025
-    set_brightness 1 1 && set_brightness 0 1
-    sleep 0.025
-    set_brightness 1 0 && set_brightness 0 0
+    for j in {0..9}
+    do
+      set_brightness 1 1 && set_brightness 0 1
+      sleep 0.025
+      set_brightness 1 0 && set_brightness 0 0
+      sleep 0.025
+    done
+    sleep 0.5
   done
+
+  led red "$current_red"
+  led green "$current_green"
+}
+
+function dragonboat {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  time=0.01
+  for i in {0..2}
+  do
+    for j in {1..10}
+    do
+      set_brightness 0 0 && set_brightness 1 0
+      sleep "$(echo "$j*$time" | bc)"
+      set_brightness 0 1 && set_brightness 1 1
+      sleep "$(echo "$j*$time" | bc)"
+    done
+    set_brightness 0 0 && set_brightness 1 0
+    sleep 1
+  done
+
+  led green "$current_green"
+  led red "$current_red"
+}
+
+function independenceday {
+  current_red=$(led "red")
+  current_green=$(led "green")
+
+  set_brightness 0 0 && set_brightness 1 0
+  for i in {0..1}
+  do
+    set_brightness 0 0 && set_brightness 1 1
+    sleep 1.5
+    set_brightness 0 1 && set_brightness 1 0
+    sleep 1.5
+  done
+
+  set_brightness 0 0 && set_brightness 1 0
+  sleep 1.0
+
+  for i in {0..6}
+  do
+    set_brightness 0 0 && set_brightness 1 1
+    sleep 0.1
+    set_brightness 0 1 && set_brightness 1 0
+    sleep 0.1
+  done
+
+  set_brightness 0 0 && set_brightness 1 0
+  sleep 3.0
 
   led red "$current_red"
   led green "$current_green"
@@ -544,35 +604,23 @@ function thanksgiving {
   current_red=$(led "red")
   current_green=$(led "green")
 
-  for i in {0..1}
-  do
-    set_brightness 0 0 && sleep 0.5    # green off
-    set_brightness 0 1 && sleep 0.5    # green on
-  done
+  set_brightness 0 0 && sleep 0.5    # green off
+  set_brightness 0 1 && sleep 0.5    # green on
 
-  for i in {0..1}
-  do
-    set_brightness 1 0 && sleep 0.5    # red off
-    set_brightness 1 1 && sleep 0.5    # red on
-  done
+  set_brightness 1 0 && sleep 0.5    # red off
+  set_brightness 1 1 && sleep 0.5    # red on
 
   set_brightness 0 0
-  for i in {0..1}
-  do
-    set_brightness 1 0 && sleep 0.25
-    set_brightness 1 1 && sleep 0.25
-  done
+  set_brightness 1 0 && sleep 0.25
+  set_brightness 1 1 && sleep 0.25
   set_brightness 0 1 && sleep 0.5
 
   set_brightness 1 0
-  for i in {0..1}
-  do
-    set_brightness 0 0 && sleep 0.25
-    set_brightness 0 1 && sleep 0.25
-  done
+  set_brightness 0 0 && sleep 0.25
+  set_brightness 0 1 && sleep 0.25
   set_brightness 1 1 && sleep 0.5
 
-  for i in {0..3}
+  for i in {0..1}
   do
     set_brightness 1 0
     set_brightness 0 0 && sleep 0.25
@@ -705,8 +753,8 @@ function random {
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter]"
-  echo "                      [eid|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
+  echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter|eid]"
+  echo "                      [dragonboat|independenceday|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -775,6 +823,12 @@ function led_help {
   echo
   echo "  $BASENAME led eid"
   echo "     This will set the mode of the led to eid"
+  echo
+  echo "  $BASENAME led dragonboat"
+  echo "      This will set the mode of the led to dragonboat"
+  echo
+  echo "  $BASENAME led independenceday"
+  echo "      This will set the mode of the led to independenceday"
   echo
   echo "  $BASENAME led onam"
   echo "      This will set the mode of the led to onam"

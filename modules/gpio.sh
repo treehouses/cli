@@ -6,7 +6,7 @@ function gpio {
   oldrpi="True"
   if [ ${#model} -gt 3 ]; then
     modelnum="${model:3:1}"
-    if [ $modelnum -gt 2 ] || [ "${model:3:2}" = "ZW" ]; then
+    if [ "${model:3:2}" = "ZW" ] || [ $modelnum -gt 2 ]; then
       oldrpi="False"
     fi
   fi

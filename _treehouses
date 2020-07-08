@@ -422,11 +422,11 @@ treehouses services $line url tor\n"
 function magazine_cmds {
   while IFS= read -r line;
   do
-    printf "treehouses magazine $line
-treehouses magazine $line latest
-treehouses magazine $line language
-treehouses magazine $line all\n"
-  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazine -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
+    printf "treehouses magazines $line
+treehouses magazines $line latest
+treehouses magazines $line language
+treehouses magazines $line all\n"
+  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 
 complete -F _treehouses_complete treehouses ./cli.sh

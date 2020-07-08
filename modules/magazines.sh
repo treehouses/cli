@@ -20,12 +20,12 @@ function magazines() {
       exit 1
     fi
     checkinternet
-    if [ ! -d "$magtype" ]; then mkdir $magtype; fi
-    cd $magtype || return
+    mkdir -p ~/Documents/$magtype
+    cd ~/Documents/$magtype || return
     if [[ "$req" =~ ^[0-9]+$ ]]; then source $MAGAZINES/download-$magtype.sh && number
     else source $MAGAZINES/download-$magtype.sh && $req; fi
-    cd ..
-    echo "Requested issue(s) saved in the $magtype directory"
+    cd - &>/dev/null || return
+    echo "Requested issue(s) saved in the ~/Documents/$magtype directory"
   else
     magazine_help
   fi

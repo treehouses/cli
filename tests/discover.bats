@@ -34,3 +34,8 @@ load test-helper
   run "${clicmd}" discover wifi
   assert_success
 }
+
+@test "$clinom discover gateway" {
+  run "${clicmd}" discover gateway
+  assert_success
+}

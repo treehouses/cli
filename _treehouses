@@ -80,6 +80,8 @@ treehouses detect rpi
 treehouses detect rpi full
 treehouses detect rpi model
 treehouses detect wifi
+treehouses discover gateway
+treehouses discover gateway list
 treehouses discover interface
 treehouses discover mac b8:29:eb:9f:42:8b
 treehouses discover ping google.com

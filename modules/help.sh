@@ -100,7 +100,7 @@ shadowsocks [list|add|enable|start]       manage shadowsocks, a socks5 proxy des
             [enter|disable|stop|remove]   to "protect" your Internet traffic
 coralenv [install|demo-on|demo-off]       plays with the coral environmental board
          [demo-always-on]
-memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory
+memory [total|used|free] [gb|mb]          displays the total memory of the device, the memory used as well as the available free memory
 temperature [celsius|fahrenheit|kelvin]   displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
 camera [on|off|detect|capture|record]     enables and disables camera, detects camera module version, captures photo, records video

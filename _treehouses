@@ -208,7 +208,8 @@ treehouses log 4
 treehouses log max
 treehouses log show
 treehouses log show 5
-$(magazine_cmds)
+treehouses magazines available
+$(magazines_cmds)
 treehouses memory
 treehouses memory -g
 treehouses memory -m
@@ -253,6 +254,7 @@ treehouses shadowsocks stop
 treehouses password
 treehouses password disable
 treehouses password enable
+treehouses picture
 treehouses power conservative
 treehouses power current
 treehouses power default
@@ -429,7 +431,7 @@ treehouses services $line url tor\n"
   done <<< "$(find /usr/lib/node_modules/@treehouses/cli/services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
 }
 
-function magazine_cmds {
+function magazines_cmds {
   while IFS= read -r line;
   do
     printf "treehouses magazines $line

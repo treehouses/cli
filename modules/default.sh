@@ -40,6 +40,18 @@ function default_network {
   rm -rf /etc/hostapd.conf
   rm -rf /etc/network/interfaces.d/*
 
+  for i in /etc/shadowsocks-libev/*
+  do
+    if [ "$i" != "/etc/shadowsocks-libev/config.json" ]; then
+      rm -rf $i
+      if echo $i | grep -q json; then
+        i="$(echo $i | cut -d "/" -f 4 | sed 's/.json//g')"
+        stop_service shadowsocks-libev-local@$i.service
+        disable_service shadowsocks-libev-local@$i.service
+      fi
+    fi
+  done
+
   stop_service hostapd
   stop_service dnsmasq
   disable_service hostapd

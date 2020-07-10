@@ -243,6 +243,16 @@ treehouses openvpn show
 treehouses openvpn start
 treehouses openvpn stop
 treehouses openvpn use
+treehouses shadowsocks
+treehouses shadowsocks add
+treehouses shadowsocks disable
+treehouses shadowsocks enable
+treehouses shadowsocks enter
+treehouses shadowsocks list
+treehouses shadowsocks restart
+treehouses shadowsocks remove
+treehouses shadowsocks start
+treehouses shadowsocks stop
 treehouses password
 treehouses password disable
 treehouses password enable

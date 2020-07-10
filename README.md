@@ -120,6 +120,8 @@ bootoption <console|desktop> [autologin]  sets the boot mode
            <modules|params>
 openvpn [use|show|delete]                 helps setting up an openvpn client
         [notice|start|stop|load]
+shadowsocks [list|add|enable|start]       manage shadowsocks, a socks5 proxy designed
+            [enter|disable|stop|remove]   to "protect" your Internet traffic
 coralenv [install|demo-on|demo-off]       plays with the coral environmental board
          [demo-always-on]
 memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory

@@ -51,6 +51,28 @@ function discover {
         echo " $mac_ip"
       fi
       ;;
+    gateway)
+      gateway_ip="$(ip route show |\
+        grep -o -E "via [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" | awk '{print $2}')"
+      if [ $# -eq 1 ]; then
+        if [ ! -z "$gateway_ip" ]; then
+          echo "ip address: $gateway_ip"
+          echo
+          nmap --open $gateway_ip | sed '1,4d' | head -n -2
+        else
+          echo "Not found"
+        fi
+      else
+        case "$2" in
+          list)
+            arp -a | grep -v 8.8.8.8 | grep -v $gateway_ip |\
+              awk '{print $2, "\t", $4}' | sed -e 's/(//g' -e 's/)//g' | sort
+            ;;
+          *)
+            echo "No option as $2"
+            discover_help && exit 1 ;;
+        esac
+      fi ;;
     *)
       echo "Unknown operation provided." 1>&2
       discover_help
@@ -83,5 +105,9 @@ function discover_help {
   echo "    Displays open ports."
   echo " $BASENAME discover mac b8:29:eb:9f:42:8b "
   echo "    find the ip address of mac address."
+  echo " $BASENAME discover gateway"
+  echo "    find ip address and opened ports of the gateway"
+  echo " $BASENAME discover gateway list"
+  echo "    find the ip and mac address of devices in the network"
   echo
 }

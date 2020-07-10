@@ -148,6 +148,7 @@ magazines                                 downloads specific magazine issue as a
    <magpi>            [number]            downloads issue [number] of magazine
    <wireframe> 
 resolution <cea|dmt [modes]>              sets the screen resolution
+system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
 shutdown [now|in|force]                   shutdown the system
 ```

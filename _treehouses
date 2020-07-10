@@ -381,6 +381,15 @@ treehouses wifihidden
 treehouses wifistatus
 treehouses convert
 treehouses resolution
+treehouses system
+treehouses system all
+treehouses system cpu
+treehouses system cputask
+treehouses system disk
+treehouses system ram
+treehouses system ramtask
+treehouses system temperature
+treehouses system volt
 EOF
 # COMP_LINE is the line you typed in terminal
 # COMP_WORDS is array form of COMP_LINE

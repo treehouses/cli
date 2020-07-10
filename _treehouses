@@ -4,7 +4,7 @@ _treehouses_complete()
 {
   local idx subcmds
   every_command=""
-  read -r -d '' every_command <<EOF
+  read -r -d '' every_command <<EOF || true
 treehouses ap internet
 treehouses ap local
 treehouses apchannel
@@ -74,11 +74,14 @@ treehouses default notice
 treehouses default tunnel
 treehouses detect
 treehouses detect arm
+treehouses detect arch
 treehouses detect bluetooth
 treehouses detect rpi
 treehouses detect rpi full
 treehouses detect rpi model
 treehouses detect wifi
+treehouses discover gateway
+treehouses discover gateway list
 treehouses discover interface
 treehouses discover mac b8:29:eb:9f:42:8b
 treehouses discover ping google.com
@@ -118,6 +121,7 @@ treehouses help internet
 treehouses help led
 treehouses help locale
 treehouses help log
+treehouses help magazine
 treehouses help memory
 treehouses help networkmode
 treehouses help ntp
@@ -176,6 +180,8 @@ treehouses led lunarnewyear
 treehouses led newyear
 treehouses led onam
 treehouses led diwali
+treehouses led dragonboat
+treehouses led independenceday
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -204,18 +210,8 @@ treehouses log 4
 treehouses log max
 treehouses log show
 treehouses log show 5
-treehouses magazine hackspace
-treehouses magazine hackspace all
-treehouses magazine hackspace latest
-treehouses magazine helloworld
-treehouses magazine helloworld all
-treehouses magazine helloworld latest
-treehouses magazine magpi
-treehouses magazine magpi all
-treehouses magazine magpi latest
-treehouses magazine wireframe
-treehouses magazine wireframe all
-treehouses magazine wireframe latest
+treehouses magazines available
+$(magazines_cmds)
 treehouses memory
 treehouses memory -g
 treehouses memory -m
@@ -228,6 +224,8 @@ treehouses memory total -m
 treehouses memory used
 treehouses memory used -g
 treehouses memory used -m
+treehouses message gitter apikey 
+treehouses message gitter sendto 
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet
@@ -245,9 +243,20 @@ treehouses openvpn show
 treehouses openvpn start
 treehouses openvpn stop
 treehouses openvpn use
+treehouses shadowsocks
+treehouses shadowsocks add
+treehouses shadowsocks disable
+treehouses shadowsocks enable
+treehouses shadowsocks enter
+treehouses shadowsocks list
+treehouses shadowsocks restart
+treehouses shadowsocks remove
+treehouses shadowsocks start
+treehouses shadowsocks stop
 treehouses password
 treehouses password disable
 treehouses password enable
+treehouses picture
 treehouses power conservative
 treehouses power current
 treehouses power default
@@ -305,9 +314,14 @@ treehouses sshkey github addteam
 treehouses sshkey github adduser
 treehouses sshkey github deleteuser
 treehouses sshkey list
-treehouses sshtunnel add
+treehouses sshtunnel
+treehouses sshtunnel active
+treehouses sshtunnel add host
+treehouses sshtunnel add port actual
+treehouses sshtunnel add port offset
 treehouses sshtunnel check
 treehouses sshtunnel key
+treehouses sshtunnel key verify
 treehouses sshtunnel list
 treehouses sshtunnel notice
 treehouses sshtunnel notice add
@@ -316,7 +330,11 @@ treehouses sshtunnel notice list
 treehouses sshtunnel notice now
 treehouses sshtunnel notice off
 treehouses sshtunnel notice on
-treehouses sshtunnel remove
+treehouses sshtunnel refresh
+treehouses sshtunnel ports
+treehouses sshtunnel remove all
+treehouses sshtunnel remove host
+treehouses sshtunnel remove port
 treehouses staticwifi
 treehouses temperature
 treehouses temperature celsius
@@ -422,6 +440,16 @@ treehouses services $line url
 treehouses services $line url local
 treehouses services $line url tor\n"
   done <<< "$(find /usr/lib/node_modules/@treehouses/cli/services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
+}
+
+function magazines_cmds {
+  while IFS= read -r line;
+  do
+    printf "treehouses magazines $line
+treehouses magazines $line latest
+treehouses magazines $line language
+treehouses magazines $line all\n"
+  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 
 complete -F _treehouses_complete treehouses ./cli.sh

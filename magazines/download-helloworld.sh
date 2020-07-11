@@ -75,5 +75,7 @@ function number {
 }
 
 function info {
+  echo "https://helloworld.raspberrypi.org/issues"
+  echo
   echo "HelloWorld is the computing and digital making magazine for educators."
 }

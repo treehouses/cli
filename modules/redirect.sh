@@ -11,7 +11,7 @@ function redirect {
   case "$1" in
     list)
       checkargn $# 1 
-      if [ $(ls /etc/dnsmasq.d | wc -w) -eq 1 ]; then
+      if [ "$(find /etc/dnsmasq.d | wc -w)" -eq 1 ]; then
         echo "No url to be redirected"
       else
         ls /etc/dnsmasq.d/ --ignore="README"
@@ -55,7 +55,8 @@ function redirect {
 }
 
 function check_ip {
-  ip="$(nmap -sn $(ip route show | grep 'via' | awk '{print $3}')/24 2>/dev/null | grep -i "$(</etc/hostname)" | awk '{print $6}' | sed -e 's/(//g' -e 's/)//g')"
+  ip="$(nmap -sn "$(ip route show | grep 'via' | awk '{print $3}')/24" 2>/dev/null |\
+    grep -i "$(</etc/hostname)" | awk '{print $6}' | sed -e 's/(//g' -e 's/)//g')"
   if [ -z "$ip" ]; then
     case "$(networkmode)" in
       *wifi*)

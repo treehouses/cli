@@ -11,7 +11,11 @@ function redirect {
   case "$1" in
     list)
       checkargn $# 1 
-      ls /etc/dnsmasq.d/ --ignore="README"
+      if [ $(ls /etc/dnsmasq.d | wc -w) -eq 1 ]; then
+        echo "No url to be redirected"
+      else
+        ls /etc/dnsmasq.d/ --ignore="README"
+      fi
       ;;
     start)
       ip="$(check_ip)" || exit 1
@@ -51,9 +55,7 @@ function redirect {
 }
 
 function check_ip {
-  ip="$(nmap -sn $(ip route show | grep 'via' |\
-    awk '{print $3}')/24 2>/dev/null | grep -i "$(</etc/hostname)" |\
-    awk '{print $6}' | sed -e 's/(//g' -e 's/)//g')" 
+  ip="$(nmap -sn $(ip route show | grep 'via' | awk '{print $3}')/24 2>/dev/null | grep -i "$(</etc/hostname)" | awk '{print $6}' | sed -e 's/(//g' -e 's/)//g')"
   if [ -z "$ip" ]; then
     case "$(networkmode)" in
       *wifi*)
@@ -74,6 +76,8 @@ function redirect_help {
   echo "Usage:  $BASENAME redirect [list|add|remove] <url>"
   echo
   echo "        $BASENAME redirect list           lists all that will be redirected"
+  echo
+  echo "        $BASENAME redirect start          start dnsmasq for redirection"
   echo 
   echo "        $BASENAME redirect add [url]      add an url for hostname redirection"
   echo

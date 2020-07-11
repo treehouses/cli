@@ -260,6 +260,7 @@ treehouses reboots weekly
 treehouses redirect add
 treehouses redirect list
 treehouses redirect remove
+treehouses redirect start
 treehouses remote check
 treehouses remote commands
 treehouses remote allservices

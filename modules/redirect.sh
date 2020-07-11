@@ -1,42 +1,63 @@
 function redirect {
   checkroot
+
+  local ip
  
   if [ $# -eq 0 ]; then
     redirect_help
     exit 1
   fi
 
-  if ! [[ $(networkmode) =~ "ap" ]]; then
-    echo "Only ap mode is supported."
-    exit 1
+  ip="$(nmap -sn $(ip route show | grep via |\
+    awk '{print $3}')/24 | grep -i $(</etc/hostname) |\
+    awk '{print $6}' | sed -e 's/(//g' -e 's/)//g')"
+  if [ -z "$ip" ]; then
+    case "$(networkmode)" in
+      *wlan*)
+        ip="$(get_ipv4_ip wlan0)" ;;
+      *eth*)
+        ip="$(get_ipv4_ip eth0)" ;;
+      *ap* | *bridge*)
+        ip="$(get_ipv4_ip ap0)" ;;
+      *)
+        echo "No IP address obtained."
+        echo "Abort." && exit 1 ;;
+    esac
   fi
 
   case "$1" in
     list)
-        checkargn $# 1 
-        ls /etc/dnsmasq.d/ --ignore="README"
-        ;;
+      checkargn $# 1 
+      ls /etc/dnsmasq.d/ --ignore="README"
+      ;;
+    start)
+      for i in /etc/dnsmasq.d/*
+      do
+        echo "$(cut -d "/" -f -2 $i)/$ip" > $i
+      done
+      systemctl restart dnsmasq.service
+      echo "redirect started."
+      ;;
     add)
-        checkargn $# 2
-        ap internet "$(get_ap_name)" --ip="$(get_ipv4_ip ap0)"
-        echo "address=/$2/$(get_ipv4_ip ap0)" > /etc/dnsmasq.d/$2
-        systemctl restart dnsmasq.service
-        echo "$2 added."
-        ;;
+      checkargn $# 2
+      echo "address=/$2/$ip" > /etc/dnsmasq.d/$2
+      systemctl restart dnsmasq.service
+      echo "$2 added."
+      ;;
     remove)
-        checkargn $# 2
-        for i in /etc/dnsmasq.d/* 
-        do
-          if [ "$i" == "/etc/dnsmasq.d/$2" ] && [ "$2" != "README" ]; then
-            rm -rf /etc/dnsmasq.d/$2
-            systemctl restart dnsmasq.service
-            echo "$2 removed."
-            exit 0
-          fi
-        done
-        echo "$2 not found!"
-        redirect_help
-        exit 1
+      checkargn $# 2
+      for i in /etc/dnsmasq.d/*
+      do
+        if [ "$i" == "/etc/dnsmasq.d/$2" ] && [ "$2" != "README" ]; then
+          rm -rf $i
+          systemctl restart dnsmasq.service
+          echo "$2 removed."
+          exit 0
+        fi
+      done
+      echo "$2 not found!"
+      redirect_help
+      exit 1
       ;;
     *)
       echo "No such option as $1!"

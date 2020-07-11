@@ -3,21 +3,27 @@ function ssh {
   checkroot
   checkargn $# 1
   status=$1
-  if [ "$status" = "on" ]; then
-    enable_service ssh
-    start_service ssh
-    echo "Success: the ssh service has been started and enabled when the system boots"
-  elif [ "$status" = "off" ]; then
-    disable_service ssh
-    stop_service ssh
-    echo "Success: the ssh service has been stopped and disabled when the system boots."
-  elif [ "$status" = "fingerprint" ]; then
-    ssh-keygen -l -E sha256 -f /etc/ssh/ssh_host_ecdsa_key.pub | cut -c5-54
-  elif [ "$status" = "" ]; then
-    last | grep -E "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"
-  else 
-    echo "Error: only '', 'on', 'off', or 'fingerprint' options are supported"
-  fi
+  case $status in
+    "on")
+      enable_service ssh
+      start_service ssh
+      echo "Success: the ssh service has been started and enabled when the system boots"
+      ;;
+    "off")
+      disable_service ssh
+      stop_service ssh
+      echo "Success: the ssh service has been stopped and disabled when the system boots."
+      ;;
+    "fingerprint")
+      ssh-keygen -l -E sha256 -f /etc/ssh/ssh_host_ecdsa_key.pub | cut -c5-54
+      ;;
+    "")
+      last | grep -E "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"
+      ;;
+    *)
+      echo "Error: only '', 'on', 'off', or 'fingerprint' options are supported"
+      ;;
+  esac
 }
 
 function ssh_help {

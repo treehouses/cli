@@ -40,9 +40,10 @@ version [contributors]                    returns the version of treehouses comm
 image                                     returns version of the system image installed
 detect [bluetooth|rpi|arm|arch|wifi]      detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
-discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
-         <rpi> [ipaddress|url|macaddress]
-         <wifi> <gateway> [list]
+discover <rpi|wifi|interface>             performs network scan and discovers all raspberry pis on the network
+         <scan|ping|ports>[ipaddress|url]
+         <gateway>[list]
+         <mac>[macaddress]
 wifi <ESSID> [password] [identity]        connects to a wifi network
 wifihidden <ESSID> [password] [identity]  connects to a hidden wifi network
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address

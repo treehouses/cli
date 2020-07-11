@@ -8,22 +8,6 @@ function redirect {
     exit 1
   fi
 
-  ip="$(nmap -sn $(ip route show | grep via |\
-    awk '{print $3}')/24 | grep -i $(</etc/hostname) |\
-    awk '{print $6}' | sed -e 's/(//g' -e 's/)//g')"
-  if [ -z "$ip" ]; then
-    case "$(networkmode)" in
-      *wlan*)
-        ip="$(get_ipv4_ip wlan0)" ;;
-      *eth*)
-        ip="$(get_ipv4_ip eth0)" ;;
-      *ap* | *bridge*)
-        ip="$(get_ipv4_ip ap0)" ;;
-      *)
-        echo "No IP address obtained."
-        echo "Abort." && exit 1 ;;
-    esac
-  fi
 
   case "$1" in
     list)
@@ -31,6 +15,7 @@ function redirect {
       ls /etc/dnsmasq.d/ --ignore="README"
       ;;
     start)
+      ip="$(check_ip)" || exit 1
       for i in /etc/dnsmasq.d/*
       do
         echo "$(cut -d "/" -f -2 $i)/$ip" > $i
@@ -40,6 +25,7 @@ function redirect {
       ;;
     add)
       checkargn $# 2
+      ip="$(check_ip)" || exit 1
       echo "address=/$2/$ip" > /etc/dnsmasq.d/$2
       systemctl restart dnsmasq.service
       echo "$2 added."
@@ -65,6 +51,25 @@ function redirect {
       exit 1
       ;;  
   esac
+}
+
+function check_ip {
+  ip="$(nmap -sn $(ip route show | grep "via" |\
+    awk '{print $3}')/24 2>/dev/null | grep -i "$(</etc/hostname)" |\
+    awk '{print $6}' | sed -e 's/(//g' -e 's/)//g')" 
+  if [ -z "$ip" ]; then
+    case "$(networkmode)" in
+      *wifi*)
+        ip="$(get_ipv4_ip wlan0)" ;;
+      *eth*)
+        ip="$(get_ipv4_ip eth0)" ;;
+      *ap* | *bridge*)
+        ip="$(get_ipv4_ip ap0)" ;;
+      *)
+        exit 1 ;;
+    esac
+  fi
+  echo "$ip"
 }
 
 function redirect_help {

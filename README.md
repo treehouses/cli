@@ -143,11 +143,11 @@ convert <input file> <output file>        converts video and audio files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses
 magazines                                 downloads specific magazine issue as a pdf based on user input
-   <available>                            lists the available magazine types
+   <available|downloaded>                 lists the available magazine types, lists downloaded magazines in a tree format
    <helloworld>       [all]               downloads all issues of magazine
    <hackspace>        [latest]            downloads latest issue of magazine
    <magpi>            [number]            downloads issue [number] of magazine
-   <wireframe> 
+   <wireframe>
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file

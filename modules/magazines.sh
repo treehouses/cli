@@ -19,6 +19,21 @@ function magazines() {
       echo "ERROR: $MAGAZINES directory does not exist"
       exit 1
     fi
+  elif [ "$magtype" = "downloaded" ]; then
+    checkargn $# 1
+    if [ -d ~/Documents ]; then
+      available=($(magazines available))
+      for magazine in "${available[@]}"
+      do 
+        if [ -d ~/Documents/$magazine ]; then
+          echo $magazine
+          tree ~/Documents/$magazine/ | sed "1 d" | sed -n -e :a -e '1,2!{P;N;D;};N;ba'
+        fi
+      done
+    else
+      echo "No magazines have been downloaded yet"
+    fi
+    exit 0
   fi
   for file in $MAGAZINES/*; do
       if [ "$magtype" = "$(echo "${file##*/}" | sed -e 's/^download-//' -e 's/.sh$//')" ]; then available_mag=1; fi
@@ -26,11 +41,7 @@ function magazines() {
   if [ $available_mag = 0 ]; then
     echo "Please specify a valid magazine type, these include: magpi, hackspace, wireframe, helloworld"
   elif [ "$req" = "" ]; then source $MAGAZINES/download-$magtype.sh && info
-  elif [ "$req" = "latest" ] || [ "$req" = "all" ] || [[ "$req" =~ ^[0-9]+$ ]] || [[ "$req" = "language" ]]; then
-    if [[ "$req" = "language" ]]; then
-      echo "coming soon!"
-      exit 1
-    fi
+  elif [ "$req" = "latest" ] || [ "$req" = "all" ] || [[ "$req" =~ ^[0-9]+$ ]]; then
     checkinternet
     mkdir -p ~/Documents/$magtype
     cd ~/Documents/$magtype || return
@@ -45,7 +56,7 @@ function magazines() {
 
 function magazines_help {
   echo
-  echo "Usage: $BASENAME magazines <available> <helloworld|hackspace|magpi|wireframe> [all|latest|number]"
+  echo "Usage: $BASENAME magazines <available|downloaded> <helloworld|hackspace|magpi|wireframe> [all|latest|number]"
   echo
   echo "This downloads the specified issue of a magazine as a pdf with filename <mag_type>#.pdf based on user input"
   echo
@@ -56,6 +67,13 @@ function magazines_help {
   echo "      helloworld"
   echo "      magpi"
   echo "      wireframe"
+  echo
+  echo "  $BASENAME magazines downloaded"
+  echo "      helloworld"
+  echo "      ├── HelloWorld10.pdf"
+  echo "      └── HelloWorld13.pdf"
+  echo "      magpi"
+  echo "      └── MagPi7.pdf"
   echo
   echo "  $BASENAME magazines magpi"
   echo "      This will print out details about the magpi magazine."
@@ -68,9 +86,6 @@ function magazines_help {
   echo
   echo "  $BASENAME magazines magpi number"
   echo "      This will download issue [number] of magpi."
-  echo
-  echo "  $BASENAME magazines magpi language [language_choice] ((coming soon))"
-  echo "      This will download all available [language_choice] issues of magpi."
   echo
   echo "  $BASENAME magazines helloworld"
   echo "      This will print out details about the helloworld magazine."

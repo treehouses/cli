@@ -211,6 +211,7 @@ treehouses log max
 treehouses log show
 treehouses log show 5
 treehouses magazines available
+treehouses magazines downloaded
 $(magazines_cmds)
 treehouses memory
 treehouses memory -g
@@ -446,9 +447,8 @@ function magazines_cmds {
   while IFS= read -r line;
   do
     printf "treehouses magazines $line
-treehouses magazines $line latest
-treehouses magazines $line language
-treehouses magazines $line all\n"
+treehouses magazines $line all
+treehouses magazines $line latest\n"
   done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 

@@ -84,7 +84,7 @@ function discover {
 
 function discover_help {
   echo
-  echo "Usage: $BASENAME discover <rpi|wifi|interface> <scan|ping|ports>[ipaddress|url] <gateway>[list] <mac>[macaddress]"
+  echo "Usage: $BASENAME discover <rpi|wifi|interface|scan|ping|ports|gateway|mac>"
   echo
   echo "Scans the network provdied and shows the open ports. Can scan for all raspberry pis on the network as well."
   echo

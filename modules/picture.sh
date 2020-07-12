@@ -1,13 +1,14 @@
 function picture {
-    case "$1" in
-      "")
-        picture_help
-      ;;
+  check_missing_packages "imagemagick"
+  case "$1" in
+    "")
+      picture_help
+    ;;
     
-      *)
-        tiv "$1"
-      ;;
-    esac
+    *)
+      tiv "$1"
+    ;;
+  esac
 }
 
 function picture_help {

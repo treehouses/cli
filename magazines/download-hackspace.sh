@@ -1,5 +1,4 @@
 function check_latest {
-  magnum="$2"
   wget -q "https://hackspace.raspberrypi.org/issues"
   mv ./issues ./issues.txt
   latest="$(sed -n '189p' issues.txt)"
@@ -16,6 +15,7 @@ function all {
   for i in $(seq 1 $latest);
   do
     if [ -f "HackSpace$i.pdf" ]; then
+      echo "HackSpace$i.pdf ✓"
       continue
     fi
     wget -q "https://hackspace.raspberrypi.org/issues/$i/pdf"
@@ -27,6 +27,7 @@ function all {
     ind=${#quoteloc}
     url=${url:0:$ind}
     wget -q -O "HackSpace$i.pdf" $url
+    echo "HackSpace$i.pdf ✓"
   done
 }
 
@@ -51,12 +52,13 @@ function number {
   if [[ $magnum -lt 1 ]] || [[ $magnum -gt $latest ]]; then
     echo "ERROR: Please enter a valid magazine number"
     echo "       This can be any issue ranging from 1 to $latest"
+    cd - &>/dev/null || return
     exit 1
   fi
   if [ -f "HackSpace$magnum.pdf" ]; then
     echo "HackSpace$magnum.pdf already exists, exiting..."
-    cd ..
-    exit 1
+    cd - &>/dev/null || return
+    exit 0
   fi
   echo "Fetching HackSpace$magnum.pdf..."
   wget -q "https://hackspace.raspberrypi.org/issues/$magnum/pdf"

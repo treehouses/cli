@@ -147,7 +147,7 @@ magazines                                 downloads specific magazine issue as a
    <helloworld>       [all]               downloads all issues of magazine
    <hackspace>        [latest]            downloads latest issue of magazine
    <magpi>            [number]            downloads issue [number] of magazine
-   <wireframe>               
+   <wireframe>
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file

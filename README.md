@@ -55,7 +55,7 @@ container <none|docker|balena>            enables (and start) the desired contai
 bluetooth [on|off|pause|restart|button]   switches bluetooth from regular to hotspot mode and shows id or MAC address
           [mac|id|status|log]
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
-aphidden <local|internet> <ESSID>         creates a hidden mobile ap, with or without internet access
+aphidden <local|internet> <ESSID>         creates a hidden mobile ap with or without internet access
          [password]
 apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system
@@ -104,11 +104,11 @@ services                                  executes the given command on the spec
    [mariadb]      <icon>                  MariaDB is a community-developed fork of the MySQL relational database management system
    [mongodb]      <port|ps>               MongoDB is a general purpose, distributed, document-based, NoSQL database
    [seafile]      <config>                Seafile is an open-source, cross-platform file-hosting software system
-   [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
    [turtleblocksjs]                       TurtleBlocks is an activity with a Logo-inspired graphical "turtle" that draws colorful art
    [musicblocks]                          MusicBlocks is a programming language for exploring musical concepts in an fun way
    [minetest]                             Minetest is an open source infinite-world block sandbox game engine with survival and crafting
    [invoiceninja]                         Invoiceninja is the leading self-host platform to create invoices
+   [librespeed]                           Librespeed is a very lightweight Speedtest implemented in Javascript
    [grocy]                                Grocy is a web-based, self-hosted groceries and household management utility for your home
    [dokuwiki]                             Dokuwiki is a simple to use and highly versatile Open Source wiki software
    [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation

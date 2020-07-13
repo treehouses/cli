@@ -5,12 +5,17 @@ function message {
        echo "navigate to https://gitter.im/login/oauth/authorize?client_id=6c3ac0766e94e8b760e372e0da66e3ac4470ff3f&response_type=code&redirect_uri=http://localhost:7000/login/callback"
        echo "Click 'Allow' and enter the code at the end of the redirect link: "
        read code
-       case "$2" in
+       #if ![-z $api_token]; then
+         #delete the variable
+
         # apikey)
         #   conf_var_update "api_token" "$3"
         #   ;;
-        api_info=curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" "https://gitter.im/login/oauth/token" -d '{"client_id": "6c3ac0766e94e8b760e372e0da66e3ac4470ff3f", "client_secret": "4649fa1132fae15cff89737268046bc9e65536bc", "code": "'$code'", "redirect_uri": "http://localhost:7000/login/callback", "grant_type": "authorization_code"}'
-         conf_var_update "api_token" "$(echo $api_info | python -m json.tool | jq 'access_token' | tr -d '"')"
+	api_info=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" "https://gitter.im/login/oauth/token" -d '{"client_id": "6c3ac0766e94e8b760e372e0da66e3ac4470ff3f", "client_secret": "4649fa1132fae15cff89737268046bc9e65536bc", "code": "'$code'", "redirect_uri": "http://localhost:7000/login/callback", "grant_type": "authorization_code"}')
+	token_info=$(echo $api_info | python -m json.tool | jq '.access_token' | tr -d '"')
+        conf_var_update "api_token" "$token_info"
+	#echo "$api_token"
+       case "$2" in
          sendto)
            #joins room
 	   group="$3"
@@ -18,6 +23,7 @@ function message {
 	   channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
 	   #finds channel id and removes double quotes
 	   channelid=$(echo $channelinfo | python -m json.tool | jq '.id' | tr -d '"')
+	  # echo "channelid: $channelid"
            shift; shift; shift;
            message="$*"
            if ! [[ -z "$message" ]]; then

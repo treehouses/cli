@@ -348,6 +348,7 @@ treehouses tor delete
 treehouses tor deleteall
 treehouses tor destroy
 treehouses tor list
+treehouses tor ports
 treehouses tor notice
 treehouses tor notice add
 treehouses tor notice delete

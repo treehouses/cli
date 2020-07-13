@@ -42,13 +42,13 @@ function upgrade {
         log_and_exit1 "Error: branch specified not found on bluetooth server repository"
       fi
     fi
-    bluetooth off
+    #bluetooth off
     cp /usr/local/bin/bluetooth-server.py "/usr/local/bin/bluetooth-server.py.$(date +'%Y%m%d%H%m%S')"
     #screen -dm bash -c 'sleep 5; treehouses bluetooth off $> logfile'
     #bluetooth off
     curl -s "https://raw.githubusercontent.com/treehouses/control/${branch}/server.py" -o /usr/local/bin/bluetooth-server.py
     sleep 5
-    bluetooth on
+    bluetooth restart
     #screen -dm bash -c 'sleep 5; treehouses bluetooth on $> logfile'
     #kill $(pgrep -f 'python' | pgrep -f 'server.py')
     echo "Successfully updated and restarted bluetooth server"

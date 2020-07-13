@@ -40,6 +40,18 @@ function default_network {
   rm -rf /etc/hostapd.conf
   rm -rf /etc/network/interfaces.d/*
 
+  for i in /etc/shadowsocks-libev/*
+  do
+    if [ "$i" != "/etc/shadowsocks-libev/config.json" ]; then
+      rm -rf $i
+      if echo $i | grep -q json; then
+        i="$(echo $i | cut -d "/" -f 4 | sed 's/.json//g')"
+        stop_service shadowsocks-libev-local@$i.service
+        disable_service shadowsocks-libev-local@$i.service
+      fi
+    fi
+  done
+
   stop_service hostapd
   stop_service dnsmasq
   disable_service hostapd
@@ -49,7 +61,7 @@ function default_network {
   rm -rf /etc/network/eth0-shared.sh
   rm -rf /etc/network/mode
   rm -rf /etc/network/last_mode
-  config delete WIFICOUNTRY
+  (config delete WIFICOUNTRY &>/dev/null)
 
   case $(detectrpi) in
     RPIZ|RPIZW)
@@ -67,7 +79,7 @@ function default_network {
 function default_tunnel {
   treehouses tor destroy > "$LOGFILE"
   treehouses openvpn off > "$LOGFILE"
-  treehouses sshtunnel remove > "$LOGFILE"
+  treehouses sshtunnel remove all > "$LOGFILE"
 }
 
 function default_notice {

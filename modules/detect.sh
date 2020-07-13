@@ -48,6 +48,8 @@ function detectrpi {
   rpimodels["b03112"]="RPI4B" # 2gb
   rpimodels["c03111"]="RPI4B" # 4gb
   rpimodels["c03112"]="RPI4B" # 4gb
+  rpimodels["d03114"]="RPI4B" # 8gb
+  # more at: https://www.raspberrypi.org/documentation/hardware/raspberrypi/revision-codes/README.md
 
   rpimodel=$(grep Revision /proc/cpuinfo | sed 's/.* //g' | tr -d '\n')
 
@@ -102,6 +104,10 @@ function detectarm {
   fi
 }
 
+function detectarch {
+  lscpu | grep -oP 'Architecture:\s*\K.+'
+}
+
 function detectwifi {
   if iwconfig wlan0 2>&1 | grep -q "No such device"; then
     echo "false"
@@ -138,6 +144,10 @@ function detect {
       checkargn $# 1
       detectarm
       ;;
+    "arch")
+      checkargn $# 1
+      detectarch
+      ;;
     "bluetooth")
       checkargn $# 1
       detectbluetooth
@@ -147,7 +157,7 @@ function detect {
       detectwifi
       ;;
     *)
-      echo "Error: only '', 'rpi', 'arm', 'bluetooth', 'wifi' options supported."
+      echo "Error: only '', 'rpi', 'arm', 'arch', 'bluetooth', 'wifi' options supported."
       ;;
   esac
 }
@@ -173,6 +183,9 @@ function detect_help {
   echo
   echo "  $BASENAME detect arm"
   echo "      Prints arm version"
+  echo
+  echo "  $BASENAME detect arch"
+  echo "      Prints the architecture"
   echo
   echo "  $BASENAME detect bluetooth"
   echo "      true"

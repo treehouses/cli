@@ -32,7 +32,7 @@ function upgrade {
     npm install -g -f "@treehouses/cli"
   elif [ "$tag" == "bluetooth" ]; then
     checkroot
-    checkwrpi
+    checkrpiwireless
     if [ "$2" = "" ]; then
       branch="master"
     else
@@ -57,10 +57,9 @@ function upgrade {
         log_and_exit1 "Error: branch specified not found on cli repository"
       fi
     fi
-    npm install -g "https://github.com/treehouses/cli#${branch}"
-    echo "Successfully updated cli to $branch branch"
+    sudo npm install -g "https://github.com/treehouses/cli#${branch}" && echo "Successfully updated cli to $branch branch"
   else
-    npm install -g "@treehouses/cli@${tag}"
+    sudo npm install -g "@treehouses/cli@${tag}"
   fi
 }
 

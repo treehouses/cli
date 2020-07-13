@@ -14,56 +14,66 @@ function usb {
   command="$1"
 
   if [[ $(detectrpi) =~ 'RPI3' ]]; then
-    if [ "$command" = "on" ]; then
-      /usr/local/bin/hub-ctrl -h 1 -P 2 -p 1
+    case $command in
+      "on")
+        /usr/local/bin/hub-ctrl -h 1 -P 2 -p 1
 
-      echo "usb ports turned on"
-    elif [ "$command" = "off" ]; then
-      /usr/local/bin/hub-ctrl -h 1 -P 2 -p
+        echo "usb ports turned on"
+        ;;
+      "off")
+        /usr/local/bin/hub-ctrl -h 1 -P 2 -p
 
-      echo "usb ports turned off"
-    elif [ "$command" = "" ]; then
-      lsusb -t
-    else
-      echo "Error: unknown command"
-      usb_help
-      exit 1
-    fi
+        echo "usb ports turned off"
+        ;;
+      "")
+        lsusb -t
+        ;;
+      *)
+        echo "Error: unknown command"
+        usb_help
+        exit 1
+        ;;
+    esac 
   elif [[ $(detectrpi) =~ 'RPI4' ]]; then
-    if [ "$command" = "on" ]; then
-      /usr/local/bin/hub-ctrl -h 2 -P 1 -p 1
-      /usr/local/bin/hub-ctrl -h 2 -P 2 -p 1
-      /usr/local/bin/hub-ctrl -h 2 -P 3 -p 1
-      /usr/local/bin/hub-ctrl -h 2 -P 4 -p 1
-      /usr/local/bin/hub-ctrl -h 1 -P 1 -p 1
+    case $command in
+      "on")
+        /usr/local/bin/hub-ctrl -h 2 -P 1 -p 1
+        /usr/local/bin/hub-ctrl -h 2 -P 2 -p 1
+        /usr/local/bin/hub-ctrl -h 2 -P 3 -p 1
+        /usr/local/bin/hub-ctrl -h 2 -P 4 -p 1
+        /usr/local/bin/hub-ctrl -h 1 -P 1 -p 1
 
-      echo "usb ports turned on"
-    elif [ "$command" = "off" ]; then
-      # check for connected ethernet
-      if [ "$(</sys/class/net/eth0/carrier)" = "1" ]; then
-        read -r -p "The ethernet port on your Raspberry Pi 4 is connected. Turning off usb power will interfere with your ethernet connection. Do you wish to continue? Y or N" yn
-        case $yn in
-          [Yy]*)
-            ;;
-          [Nn]*)
-            exit
-            ;;
-        esac
-      fi
-      /usr/local/bin/hub-ctrl -h 2 -P 1 -p
-      /usr/local/bin/hub-ctrl -h 2 -P 2 -p
-      /usr/local/bin/hub-ctrl -h 2 -P 3 -p
-      /usr/local/bin/hub-ctrl -h 2 -P 4 -p
-      /usr/local/bin/hub-ctrl -h 1 -P 1 -p
+        echo "usb ports turned on"
+        ;;
+      "off")
+        # check for connected ethernet
+        if [ "$(</sys/class/net/eth0/carrier)" = "1" ]; then
+          read -r -p "The ethernet port on your Raspberry Pi 4 is connected. Turning off usb power will interfere with your ethernet connection. Do you wish to continue? Y or N" yn
+          case $yn in
+            [Yy]*)
+              ;;
+            [Nn]*)
+              exit
+              ;;
+          esac
+        fi
+        /usr/local/bin/hub-ctrl -h 2 -P 1 -p
+        /usr/local/bin/hub-ctrl -h 2 -P 2 -p
+        /usr/local/bin/hub-ctrl -h 2 -P 3 -p
+        /usr/local/bin/hub-ctrl -h 2 -P 4 -p
+        /usr/local/bin/hub-ctrl -h 1 -P 1 -p
 
-      echo "usb ports turned off"
-    elif [ "$command" = "" ]; then
-      lsusb -t
-    else
-      echo "Error: unknown command"
-      usb_help
-      exit 1
-    fi
+        echo "usb ports turned off"
+        ;;
+      "")
+        lsusb -t
+        ;;
+      *)
+        echo "Error: unknown command"
+        usb_help
+        exit 1
+        ;;
+    esac
   fi
 }
 

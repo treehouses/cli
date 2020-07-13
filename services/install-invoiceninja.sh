@@ -54,7 +54,7 @@ function install {
     echo "    depends_on:"
     echo "      - app"
     echo "    ports: # Delete if you want to use reverse proxy"
-    echo "      - 8089:80"
+    echo "      - 8090:80"
     echo "    networks:"
     echo "#      - web        # uncomment if you want to use  external network (reverse proxy for example)"
     echo "      - default"
@@ -173,12 +173,12 @@ function uses_env {
 
 # add supported arm(s)
 function supported_arms {
-  echo "v7l"
+  echo "armv7l"
 }
 
 # add port(s)
 function get_ports {
-  echo "8089"
+  echo "8090"
 }
 
 # add size (in MB)

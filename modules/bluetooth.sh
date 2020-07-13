@@ -1,104 +1,125 @@
 function bluetooth {
   local status macfile macadd btidfile bid nname
-  checkwrpi
+  checkrpiwireless
   checkroot
   checkargn $# 2
   status=$1
 
-  if [ -z "$status" ]; then
-    if [[ "$(service rpibluetooth status | grep "Active:")" =~ "running" ]]; then
-      echo "on"
-    else
-      echo "off"
-    fi
+  case $status in
+    "")
+      if [ "$(systemctl is-active rpibluetooth.service)" = "active" ]; then
+        echo "on"
+      elif [ "$(systemctl is-active rpibluetooth.service)" = "failed" ]; then
+        echo "crashed"
+      elif [ "$(systemctl is-active rpibluetooth.service)" = "activating" ]; then
+        echo "restarting"
+      else
+        echo "off"
+      fi
+      ;;
 
-  elif [ "$status" = "status" ]; then
-    if [[ "$(service bluetooth status | grep "Active:")" =~ "running" ]]; then
-      echo "bluetooth service status: on"
-    else
-      echo "bluetooth service status: off"
-    fi
-    if [[ "$(service rpibluetooth status | grep "Active:")" =~ "running" ]]; then
-      echo "rpibluetooth service status: on"
-    else
-      echo "rpibluetooth service status: off"
-    fi
+    "status")
+      if [ "$(systemctl is-active bluetooth.service)" = "active" ]; then
+        echo "bluetooth service status: on"
+      elif [ "$(systemctl is-active bluetooth.service)" = "failed" ]; then
+        echo "bluetooth service status: failed"
+      else
+        echo "bluetooth service status: off"
+      fi
+      if [ "$(systemctl is-active rpibluetooth.service)" = "active" ]; then
+        echo "rpibluetooth service status: on"
+      elif [ "$(systemctl is-active rpibluetooth.service)" = "failed" ]; then
+        echo "rpibluetooth service status: crashed"
+      elif [ "$(systemctl is-active rpibluetooth.service)" = "activating" ]; then
+        echo "rpibluetooth service status: restarting"
+      else
+        echo "rpibluetooth service status: off"
+      fi
+      ;;
 
-  elif [ "$status" = "on" ]; then
-    checkargn $# 1
-    cp "$TEMPLATES/bluetooth/hotspot" /etc/systemd/system/dbus-org.bluez.service
-    enable_service rpibluetooth
-    restart_service bluetooth
-    restart_service rpibluetooth
-    sleep 5 # wait 5 seconds for bluetooth to be completely up
-    echo "Success: the bluetooth service has been started."
+    "on")
+      checkargn $# 1
+      cp "$TEMPLATES/bluetooth/hotspot" /etc/systemd/system/dbus-org.bluez.service
+      enable_service rpibluetooth
+      restart_service bluetooth
+      restart_service rpibluetooth
+      sleep 5 # wait 5 seconds for bluetooth to be completely up
+      echo "Success: the bluetooth service has been started."
+      ;;
 
-  elif [ "$status" = "off" ] || [ "$status" = "pause" ]; then
-    checkargn $# 1
-    cp "$TEMPLATES/bluetooth/default" /etc/systemd/system/dbus-org.bluez.service
-    disable_service rpibluetooth
-    stop_service rpibluetooth
-    restart_service bluetooth
-    if [ "$status" = "off" ]; then
-      rm -rf /etc/bluetooth-id
-    fi
-    sleep 3 # Wait few seconds for bluetooth to start
-    restart_service bluealsa # restart the bluetooth audio service
-    echo "Success: the bluetooth service has been switched to default, and the service has been stopped."
+    "off")
+      checkargn $# 1
+      cp "$TEMPLATES/bluetooth/default" /etc/systemd/system/dbus-org.bluez.service
+      disable_service rpibluetooth
+      stop_service rpibluetooth
+      restart_service bluetooth
+      if [ "$status" = "off" ]; then
+        rm -rf /etc/bluetooth-id
+      fi
+      sleep 3 # Wait few seconds for bluetooth to start
+      restart_service bluealsa # restart the bluetooth audio service
+      echo "Success: the bluetooth service has been switched to default, and the service has been stopped."
+      ;;
 
-  elif [ "$status" = "mac" ]; then
-    checkargn $# 1
-    macfile=/sys/kernel/debug/bluetooth/hci0/identity
-    macadd=$(cat ${macfile})
-    echo "${macadd:0:17}"
+    "mac")
+      checkargn $# 1
+      macfile=/sys/kernel/debug/bluetooth/hci0/identity
+      macadd=$(cat ${macfile})
+      echo "${macadd:0:17}"
+      ;;
 
-  elif [ "$status" = "id" ]; then
-    btidfile=/etc/bluetooth-id
-    if [ ! -f "${btidfile}" ]; then
-      echo "No ID. Bluetooth service is not on."
-      exit 0
-    fi
+    "id")
+      btidfile=/etc/bluetooth-id
+      if [ ! -f "${btidfile}" ]; then
+        echo "No ID. Bluetooth service is not on."
+        exit 0
+      fi
 
-    bid=$(cat ${btidfile})
-    nname=$(uname -n)
+      bid=$(cat ${btidfile})
+      nname=$(uname -n)
 
-    case "$2" in
-      "")
-        echo "${nname}-${bid}"
-        ;;
-      "number")
-        echo "${bid}"
-        ;;
-      *)
-        echo "Argument not valid; leave blank or use \"number\""
+      case "$2" in
+        "")
+          echo "${nname}-${bid}"
+          ;;
+        "number")
+          echo "${bid}"
+          ;;
+        *)
+          echo "Argument not valid; leave blank or use \"number\""
+          exit 1
+          ;;
+      esac
+      ;;
+      
+    "button")
+      checkargn $# 1
+      button bluetooth
+      ;;
+
+    "log")
+      if [ "$2" = "" ]; then
+        checkargn $# 1
+        journalctl -u rpibluetooth -u bluetooth --no-pager
+      elif [ "$2" = "follow" ]; then
+        echo "press (ctrl + c) to exit"
+        journalctl -u rpibluetooth -u bluetooth -f
+      else
+        echo "Argument not valid; leave blank or use \"follow\""
         exit 1
-        ;;
-    esac
+      fi
+      ;;
 
-   elif [ "$status" = "button" ]; then
-     checkargn $# 1
-     button bluetooth
+    "restart")
+      bluetooth off &>"$LOGFILE"
+      bluetooth on &>"$LOGFILE"
+      echo "Success: the bluetooth service has been restarted."
+      ;;
 
-   elif [ "$status" = "log" ]; then
-     if [ "$2" = "" ]; then
-       checkargn $# 1
-       journalctl -u rpibluetooth -u bluetooth --no-pager
-     elif [ "$2" = "follow" ]; then
-       echo "press (ctrl + c) to exit"
-       journalctl -u rpibluetooth -u bluetooth -f
-     else
-       echo "Argument not valid; leave blank or use \"follow\""
-       exit 1
-     fi
-
-   elif [ "$status" = "restart" ]; then
-     bluetooth off &>"$LOGFILE"
-     bluetooth on &>"$LOGFILE"
-     echo "Success: the bluetooth service has been restarted."
-
-  else
-    echo "Error: only 'on', 'off', 'pause', 'restart', 'mac', 'id', 'button', 'log', and 'status' options are supported";
-  fi
+    *)
+      echo "Error: only 'on', 'off', 'pause', 'restart', 'mac', 'id', 'button', 'log', and 'status' options are supported";
+      ;;
+  esac
 }
 
 function bluetooth_help {

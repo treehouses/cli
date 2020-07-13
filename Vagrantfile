@@ -1,10 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# The most common configuration options are documented and commented below.
-# For a complete reference, please see the online documentation at
-# https://docs.vagrantup.com.
-
 Vagrant.configure(2) do |config|
 
   if Vagrant.has_plugin?("vagrant-vbguest")
@@ -12,7 +8,7 @@ Vagrant.configure(2) do |config|
   end
 
   BOX = "treehouses/buster64"
-  BOX_VERSION = "0.13.3"
+  BOX_VERSION = "0.13.25"
 
   config.vm.define "cli" do |cli|
     cli.vm.box = BOX
@@ -22,9 +18,6 @@ Vagrant.configure(2) do |config|
 
     cli.vm.provider "virtualbox" do |vb|
       vb.name = "cli"
-    end
-
-    cli.vm.provider "virtualbox" do |vb|
       vb.memory = "666"
     end
 

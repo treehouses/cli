@@ -1,7 +1,7 @@
 {
   "name": "@treehouses/cli",
   "version": "1.23.25",
-  "remote": "2346",
+  "remote": "2500",
   "description": "Thin command-line interface for Raspberry Pi low level configuration.",
   "main": "cli.sh",
   "bin": {
@@ -15,7 +15,7 @@
     "url": "https://github.com/treehouses/cli.git"
   },
   "scripts": {
-    "postinstall": "if [ $(id -u) = 0 ]; then ln -sr _treehouses /etc/bash_completion.d/_treehouses; fi && exit 0",
+    "postinstall": "if [ $(id -u) = 0 ]; then ln -srf _treehouses /etc/bash_completion.d/_treehouses; fi && exit 0",
     "postuninstall": "if [ $(id -u) = 0 ]; then rm /etc/bash_completion.d/_treehouses; if [ -f /etc/treehouses.conf ]; then rm /etc/treehouses.conf; fi fi && exit 0",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
@@ -25,8 +25,10 @@
     "ntp", "timezone", "rtc", "cron", "backup", "clone",
     "ssh", "sshkey", "sshtunnel", "tor", "openvpn", "coral", "iot",
     "services", "container", "docker", "balena", "pihole", "turtleblocks", "musicblocks",
-    "kolibri", "mongodb", "moodle", "netdata", "nextcloud", "ntopng", "planet", "invoiceninja", "librespeed",
-    "portainer", "privatebin", "mastodon", "couchdb", "mariadb", "seafile", "minetest"
+    "grocy", "kolibri", "mongodb", "moodle", "netdata", "nextcloud", "ntopng", "planet",
+    "invoiceninja", "librespeed", "portainer", "privatebin", "mastodon", "couchdb",
+    "mariadb", "seafile", "minetest", "dokuwiki", "transmission", "cloud9", "bookstack",
+    "piwigo","pylon"
   ],
   "author": {
     "name": "OLE treehouses team",

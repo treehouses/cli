@@ -4,19 +4,28 @@ function sshkey () {
   checkargn $# 5
   if [ "$1" == "add" ]; then
     shift
-    echo "$@" >> /root/.ssh/authorized_keys
-    chmod 600 /root/.ssh/authorized_keys
-    if [ "$(detectrpi)" != "nonrpi" ]; then
-      mkdir -p /root/.ssh /home/pi/.ssh
-      chmod 700 /root/.ssh /home/pi/.ssh
-      echo "$@" >> /home/pi/.ssh/authorized_keys
-      chmod 600 /home/pi/.ssh/authorized_keys
-      chown -R pi:pi /home/pi/.ssh
-      echo "====== Added to 'pi' and 'root' user's authorized_keys ======"
+    temp_file=$(mktemp)
+    echo "$@" >> $temp_file
+    if ssh-keygen -l -f $temp_file 2>/dev/null <<< y >/dev/null; then
+      rm $temp_file
+      echo "$@" >> /root/.ssh/authorized_keys
+      chmod 600 /root/.ssh/authorized_keys
+      if [ "$(detectrpi)" != "nonrpi" ]; then
+        mkdir -p /root/.ssh /home/pi/.ssh
+        chmod 700 /root/.ssh /home/pi/.ssh
+        echo "$@" >> /home/pi/.ssh/authorized_keys
+        chmod 600 /home/pi/.ssh/authorized_keys
+        chown -R pi:pi /home/pi/.ssh
+        echo "====== Added to 'pi' and 'root' user's authorized_keys ======"
+      else
+        echo "====== Added to 'root' user's authorized_keys ======"
+      fi
+      echo "$@"
     else
-      echo "====== Added to 'root' user's authorized_keys ======"
+      rm $temp_file
+      echo "ERROR: invalid public key"
+      exit 1
     fi
-    echo "$@"
   elif [ "$1" == "list" ]; then
     echo "==== root keys ===="
     cat /root/.ssh/authorized_keys
@@ -109,10 +118,10 @@ function sshkey () {
       echo "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
       exit 1
     fi
-  else	
-    echo "Error: unsupported command"	
-    echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"	
-    exit 1    
+  else
+    echo "Error: unsupported command"
+    echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
+    exit 1
   fi
 }
 

@@ -25,11 +25,11 @@ Using the [template](#Template), fill in the sections as required.
 
 1. create yml(s)
 
-   Add your yml file(s).
+   Replace `<yml code>` with the svg icon code of your service.
 
    Replace `<service>/<service>` with the name of your service.
    ```
-   } > /srv/<service>/<service>.yml
+   cat << EOF > /srv/<service>/<service>.yml
    ```
 
 1. create .env (if needed)
@@ -54,24 +54,32 @@ Using the [template](#Template), fill in the sections as required.
 
    Replace `<service>`s with the name of your service.
    ```
-   {
-     echo "<service>_autorun=true"
-     echo
-     echo "if [ \"\$<service>_autorun\" = true ]; then"
-     echo "  docker-compose -f /srv/<service>/<service>.yml -p <service> up -d"
-     echo "fi"
-     echo
-     echo
-   } > /srv/<service>/autorun
+     cat << EOF > /srv/<service>/autorun
+   <service>_autorun=true
+
+   if [ "$<service>_autorun" = true ]; then
+     treehouses services <service> up
+   fi
+
+
+   EOF
    ```
 
 1. environment variable check
 
    `echo true` or `echo false` depending on whether or not your service uses environment variables.
+   
+1. supported arch check
 
-1. supported arm check
-
-   `echo "v7l"` and/or `echo "v6l"` depending on supported arm(s).
+   `echo <arch>` depending on supported architecture(s):
+     ```
+     armv6l
+     armv7l
+     i686
+     x86_64
+     aarch32
+     aarch64
+     ```
 
 1. add port(s)
 
@@ -123,9 +131,9 @@ function install {
   mkdir -p /srv/<service>
 
   # create yml(s)
-  {
-
-  } > /srv/<service>/<service>.yml
+  cat << EOF > /srv/<service>/<service>.yml
+<yml code>
+EOF
 
   # create .env with default values
   {
@@ -133,15 +141,15 @@ function install {
   } > /srv/<service>/.env
 
   # add autorun
-  {
-    echo "<service>_autorun=true"
-    echo
-    echo "if [ \"\$<service>_autorun\" = true ]; then"
-    echo "  docker-compose -f /srv/<service>/<service>.yml -p <service> up -d"
-    echo "fi"
-    echo
-    echo
-  } > /srv/<service>/autorun
+  cat << EOF > /srv/<service>/autorun
+<service>_autorun=true
+
+if [ "$<service>_autorun" = true ]; then
+  treehouses services <service> up
+fi
+
+
+EOF
 }
 
 # environment var
@@ -149,9 +157,9 @@ function uses_env {
   echo true/false
 }
 
-# add supported arm(s)
-function supported_arms {
-  echo "<arm>"
+# add supported arch(es)
+function supported_arches {
+  echo "<arch>"
 }
 
 # add port(s)

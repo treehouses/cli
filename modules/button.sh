@@ -2,7 +2,7 @@
 # treehouses button bluetooth                  => bluetooth will be ON when cable is off and OFF when cable is on
 function button {
   local mode
-  checkwrpi
+  checkrpiwireless
   checkroot
   checkargn $# 1
   mode=$1

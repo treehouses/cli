@@ -58,6 +58,7 @@ function sshtunnel {
             ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
           fi
           cat /root/.ssh/id_rsa.pub
+          echo "Port successfully added"
 
           keys=$(ssh-keyscan -H "$hostname" 2>"$LOGFILE")
           while read -r key; do

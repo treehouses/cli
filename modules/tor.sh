@@ -27,7 +27,12 @@ function tor {
       ;;
 
     ports)
-      grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g' | sed "s/  <=> /:/g" | tr "\n" " " | sed "s/ $/\n/"
+      ports=$(grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g' | sed "s/  <=> /:/g" | tr "\n" " " | sed "s/ $/\n/")
+      if [[ $ports ]]; then
+        echo $ports
+      else
+        echo "No ports found"
+      fi
       ;;
 
     add)
@@ -91,7 +96,7 @@ function tor {
 
     deleteall)
       if [ -n "$2" ]; then
-        echo "Error: wrong synthax"
+        echo "Error: wrong syntax"
         exit 1
       fi
 

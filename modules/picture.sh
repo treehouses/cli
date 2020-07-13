@@ -1,5 +1,5 @@
 function picture {
-  check_missing_packages "imagemagick"
+  check_missing_packages "imagemagick" "tiv"
   case "$1" in
     "")
       picture_help

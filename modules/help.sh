@@ -21,6 +21,7 @@ discover <scan|interface|ping|ports|mac>  performs network scan and discovers al
          <wifi> <gateway> [list]
 wifi <ESSID> [password] [identity]        connects to a wifi network
 wifihidden <ESSID> [password] [identity]  connects to a hidden wifi network
+tether                                    enable usb0 interface tethering
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]
 wifistatus                                displays signal strength in dBm and layman nomenclature

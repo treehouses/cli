@@ -88,7 +88,7 @@ function remote {
         icon_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_icon | sed 's/^[ \t]*//;s/[ \t]*$//' | tr '\n' ' ' | sed 's/"/\\"/g')\","
         info_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_info | tr '\n' ' ' | sed 's/"/\\"/g')\","
         autorun_str+="\"$i\":\"$(autorun_helper $i)\","
-        if [[$(source $SERVICES/install-$i.sh && uses_env) == "true"]]; then
+        if [[ $(source $SERVICES/install-$i.sh && uses_env) == "true" ]]; then
           env_str+="\"$i\":\"true\","
         else
           env_str+="\"$i\":\"false\","

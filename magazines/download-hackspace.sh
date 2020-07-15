@@ -72,12 +72,8 @@ function number {
   wget -q -O "HackSpace$magnum.pdf" $url
 }
 
-function language {
-  echo "The default language for HackSpace is English"
-  echo "Currently, HackSpace does not offer issues in any other languages"
-  exit 0
-}
-
 function info {
+  echo "https://hackspace.raspberrypi.org/issues"
+  echo
   echo "HackSpace magazine is packed with projects for fixers and tinkerers of all abilities. We'll teach you new techniques and give you refreshers on familiar ones, from 3D printing, laser cutting, and woodworking to electronics and Internet of Things."
 }

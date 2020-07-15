@@ -18,9 +18,10 @@ detect [bluetooth|rpi|arm|arch|wifi]      detects the hardware version of any de
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
 discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
          <rpi> [ipaddress|url|macaddress]
-         <wifi>
+         <wifi> <gateway> [list]
 wifi <ESSID> [password] [identity]        connects to a wifi network
 wifihidden <ESSID> [password] [identity]  connects to a hidden wifi network
+tether                                    enable usb0 interface tethering
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]
 wifistatus                                displays signal strength in dBm and layman nomenclature
@@ -50,6 +51,7 @@ led [green|red] [mode]                    sets the led mode
     [diwali|thanksgiving|christmas]
     [heavymetal|dance|kecak|random]
 power [mode|current|freq|status]          sets the power mode or check power mode/CPU frequency
+uptime [boot|start|stop]                  displays uptime and boot time of the Raspberry Pi
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode
@@ -91,15 +93,19 @@ services                                  executes the given command on the spec
    [piwigo]                               Piwigo is a photo gallery software to publish and manage your collection of pictures
    [cloud9]                               Cloud9 is a complete web based ide with terminal access
    [jellyfin]                             Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media
-tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
-    [stop|destroy|notice|status|refresh]
+   [pylon]                                Pylon is a web based integrated development environment built with Node.js as a backend
+tor [list|ports|add|delete|deleteall]     deals with services on tor hidden network
+    [start|stop|destroy|notice]
+    [status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
            <modules|params>
 openvpn [use|show|delete]                 helps setting up an openvpn client
         [notice|start|stop|load]
+shadowsocks [list|add|enable|start]       manage shadowsocks, a socks5 proxy designed
+            [enter|disable|stop|remove]   to "protect" your Internet traffic
 coralenv [install|demo-on|demo-off]       plays with the coral environmental board
          [demo-always-on]
-memory [total|used|free]                  displays the total memory of the device, the memory used as well as the available free memory
+memory [total|used|free] [gb|mb]          displays the total memory of the device, the memory used as well as the available free memory
 temperature [celsius|fahrenheit|kelvin]   displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
 camera [on|off|detect|capture|record]     enables and disables camera, detects camera module version, captures photo, records video
@@ -117,12 +123,13 @@ convert <input file> <output file>        converts video and audio files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses
 magazines                                 downloads specific magazine issue as a pdf based on user input
-   <available>                            lists the available magazine types
+   <available|downloaded>                 lists the available magazine types, lists downloaded magazines in a tree format
    <helloworld>       [all]               downloads all issues of magazine
    <hackspace>        [latest]            downloads latest issue of magazine
    <magpi>            [number]            downloads issue [number] of magazine
-   <wireframe> 
+   <wireframe>        [list]              lists downloaded magazines in tree format of specific magazine
 resolution <cea|dmt [modes]>              sets the screen resolution
+system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
 shutdown [now|in|force]                   shutdown the system
 EOF

@@ -88,11 +88,7 @@ function remote {
         icon_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_icon | sed 's/^[ \t]*//;s/[ \t]*$//' | tr '\n' ' ' | sed 's/"/\\"/g')\","
         info_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_info | tr '\n' ' ' | sed 's/"/\\"/g')\","
         autorun_str+="\"$i\":\"$(autorun_helper $i)\","
-        if [[ $(source $SERVICES/install-$i.sh && uses_env) == "true" ]]; then
-          env_str+="\"$i\":\"true\","
-        else
-          env_str+="\"$i\":\"false\","
-        fi  
+        env_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && uses_env)\","
       done
 
       printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}" "${env_str::-1}"

@@ -3,7 +3,7 @@ function sshtunnel {
   local portnewcouchdb portmunin keys option value status tag profile
   checkroot
 
-  if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; } && [[ ! "$*" =~ "add host" ]] && [[ ! "$*" =~ "remove all" ]] && [[ ! "$*" =~ "check" ]]; then
+  if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; } && [[ ! "$*" =~ "add host" ]] && [[ ! "$*" =~ "remove all" ]] && [[ ! "$*" =~ "check" ]] && [[ ! "$*" =~ "key receive"]]; then
     echo "Error: no tunnel has been set up"
     echo "Run '$BASENAME sshtunnel add host <port interval> [host]' to add a key for the tunnel"
     exit 1

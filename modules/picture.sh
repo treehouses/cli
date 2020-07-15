@@ -4,7 +4,7 @@ function picture {
     echo "required binary 'tiv' not found"
     exit 1
   fi
-  check_missing_packages "imagemagick" "tiv"
+  check_missing_packages "imagemagick"
   case "$1" in
     "")
       picture_help

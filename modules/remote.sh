@@ -75,7 +75,7 @@ function remote {
       ;;
     "allservices")
       checkargn $# 1
-      json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"}}\n"
+      json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"},\"uses_env\":{"%s"}}\n"
 
       available_str=$(services available | sed 's/^\|$/"/g' | paste -d, -s)
       installed_str=$(services installed | sed 's/^\|$/"/g' | paste -d, -s)
@@ -88,9 +88,14 @@ function remote {
         icon_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_icon | sed 's/^[ \t]*//;s/[ \t]*$//' | tr '\n' ' ' | sed 's/"/\\"/g')\","
         info_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_info | tr '\n' ' ' | sed 's/"/\\"/g')\","
         autorun_str+="\"$i\":\"$(autorun_helper $i)\","
+        if [[$(source $SERVICES/install-$i.sh && uses_env) == "true"]]; then
+          env_str+="\"$i\":\"true\","
+        else
+          env_str+="\"$i\":\"false\","
+        fi  
       done
 
-      printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}"
+      printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}" "${env_str::-1}"
       ;;
     "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')

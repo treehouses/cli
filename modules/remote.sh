@@ -75,7 +75,7 @@ function remote {
       ;;
     "allservices")
       checkargn $# 1
-      json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"},\"uses_env\":{"%s"}}\n"
+      json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"},\"usesEnv\":{"%s"}}\n"
 
       available_str=$(services available | sed 's/^\|$/"/g' | paste -d, -s)
       installed_str=$(services installed | sed 's/^\|$/"/g' | paste -d, -s)

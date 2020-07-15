@@ -153,6 +153,7 @@ magazines                                 downloads specific magazine issue as a
    <wireframe>        [list]              lists downloaded magazines in tree format of specific magazine
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
+monitor [start|log|notice]                monitor status of given url
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
 shutdown [now|in|force]                   shutdown the system
 ```

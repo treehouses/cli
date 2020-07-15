@@ -61,9 +61,9 @@ function check_ip {
     case "$(networkmode)" in
       *wifi*)
         ip="$(get_ipv4_ip wlan0)" ;;
-      *eth*)
+      *eth* | *ap*)
         ip="$(get_ipv4_ip eth0)" ;;
-      *ap* | *bridge*)
+      *bridge*)
         ip="$(get_ipv4_ip ap0)" ;;
       *)
         exit 1 ;;

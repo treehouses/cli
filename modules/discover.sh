@@ -37,6 +37,9 @@ function discover {
     ports)
       nmap --open $ip
       ;;
+    myself)
+      hostname -I | awk '{print $1}'
+      ;;
     mac)
       if ! [[ "$2" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]]; then
         echo "Invalid mac address"
@@ -84,7 +87,7 @@ function discover {
 
 function discover_help {
   echo
-  echo "Usage: $BASENAME discover <rpi|wifi|interface|scan|ping|ports|gateway|mac>"
+  echo "Usage: $BASENAME discover <rpi|wifi|interface|scan|ping|ports|myself|gateway|mac>"
   echo
   echo "Scans the network provdied and shows the open ports. Can scan for all raspberry pis on the network as well."
   echo
@@ -112,6 +115,9 @@ function discover_help {
   echo "                    .... 192.168.7.149"
   echo "                    .... scanme.nmap.org"
   echo "    Displays open ports."
+  echo
+  echo " $BASENAME discover myself "
+  echo "    find the primary ip address of the local device."
   echo
   echo " $BASENAME discover mac b8:29:eb:9f:42:8b "
   echo "    find the ip address of mac address."

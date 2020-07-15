@@ -90,6 +90,7 @@ treehouses discover rpi
 treehouses discover scan google.com
 treehouses discover scan scanme.nmap.org
 treehouses discover wifi
+treehouses discover myself
 treehouses ethernet
 treehouses expandfs
 treehouses feedback

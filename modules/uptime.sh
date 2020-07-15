@@ -19,7 +19,7 @@ function uptime {
       ;;
     "log")
       command uprecords
-      record = "Uptime records:"
+      record="Uptime records:"
       echo "$record" > uprecords
       ;;
     *)

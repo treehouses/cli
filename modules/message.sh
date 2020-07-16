@@ -6,7 +6,7 @@ function message {
          apikey)
            echo "navigate to https://gitter.im/login/oauth/authorize?client_id=6c3ac0766e94e8b760e372e0da66e3ac4470ff3f&response_type=code&redirect_uri=http://localhost:7000/login/callback"
            echo "Click 'Allow' and enter the code at the end of the redirect link: "
-           read code
+           read -r code
        #if ![-z $api_token]; then
          #delete the variable
 

@@ -51,7 +51,7 @@ function message_help {
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo
-  echo "You must set your api key before sending a message"
+  echo "You must set your api key at least once every session before sending a message"
   echo
   echo "Sends message to a chat service"
   echo

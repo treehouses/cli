@@ -116,10 +116,10 @@ function discover_help {
   echo "                    .... scanme.nmap.org"
   echo "    Displays open ports."
   echo
-  echo " $BASENAME discover myself "
+  echo " $BASENAME discover myself"
   echo "    find the primary ip address of the local device."
   echo
-  echo " $BASENAME discover mac b8:29:eb:9f:42:8b "
+  echo " $BASENAME discover mac b8:29:eb:9f:42:8b"
   echo "    find the ip address of mac address."
   echo
   echo " $BASENAME discover gateway"

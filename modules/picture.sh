@@ -1,10 +1,10 @@
 function picture {
   # check if tiv binary exists
-  if [ ! -e /usr/local/bin/tiv ]; then
-    echo "required binary 'tiv' not found"
-    exit 1
-  fi
+  check_missing_binary "tiv"
+
+  # check if imagemagick pkg is installed
   check_missing_packages "imagemagick"
+
   case "$1" in
     "")
       picture_help

@@ -80,6 +80,8 @@ treehouses detect rpi
 treehouses detect rpi full
 treehouses detect rpi model
 treehouses detect wifi
+treehouses discover gateway
+treehouses discover gateway list
 treehouses discover interface
 treehouses discover mac b8:29:eb:9f:42:8b
 treehouses discover ping google.com
@@ -119,6 +121,7 @@ treehouses help internet
 treehouses help led
 treehouses help locale
 treehouses help log
+treehouses help magazine
 treehouses help memory
 treehouses help networkmode
 treehouses help ntp
@@ -179,6 +182,7 @@ treehouses led newyear
 treehouses led onam
 treehouses led diwali
 treehouses led dragonboat
+treehouses led independenceday
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -207,7 +211,9 @@ treehouses log 4
 treehouses log max
 treehouses log show
 treehouses log show 5
-$(magazine_cmds)
+treehouses magazines available
+treehouses magazines downloaded
+$(magazines_cmds)
 treehouses memory
 treehouses memory -g
 treehouses memory -m
@@ -220,6 +226,8 @@ treehouses memory total -m
 treehouses memory used
 treehouses memory used -g
 treehouses memory used -m
+treehouses message gitter apikey 
+treehouses message gitter sendto 
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet
@@ -237,9 +245,20 @@ treehouses openvpn show
 treehouses openvpn start
 treehouses openvpn stop
 treehouses openvpn use
+treehouses shadowsocks
+treehouses shadowsocks add
+treehouses shadowsocks disable
+treehouses shadowsocks enable
+treehouses shadowsocks enter
+treehouses shadowsocks list
+treehouses shadowsocks restart
+treehouses shadowsocks remove
+treehouses shadowsocks start
+treehouses shadowsocks stop
 treehouses password
 treehouses password disable
 treehouses password enable
+treehouses picture
 treehouses power conservative
 treehouses power current
 treehouses power default
@@ -317,6 +336,8 @@ treehouses sshtunnel notice list
 treehouses sshtunnel notice now
 treehouses sshtunnel notice off
 treehouses sshtunnel notice on
+treehouses sshtunnel refresh
+treehouses sshtunnel ports
 treehouses sshtunnel remove all
 treehouses sshtunnel remove host
 treehouses sshtunnel remove port
@@ -325,6 +346,7 @@ treehouses temperature
 treehouses temperature celsius
 treehouses temperature fahrenheit
 treehouses temperature kelvin
+treehouses tether
 treehouses timezone
 treehouses tor
 treehouses tor add
@@ -332,6 +354,7 @@ treehouses tor delete
 treehouses tor deleteall
 treehouses tor destroy
 treehouses tor list
+treehouses tor ports
 treehouses tor notice
 treehouses tor notice add
 treehouses tor notice delete
@@ -348,6 +371,10 @@ treehouses upgrade cli
 treehouses upgrade force
 treehouses upgrade bluetooth
 treehouses upgrade check
+treehouses uptime
+treehouses uptime boot
+treehouses uptime start
+treehouses uptime stop
 treehouses usb
 treehouses usb off
 treehouses usb on
@@ -366,6 +393,15 @@ treehouses wifihidden
 treehouses wifistatus
 treehouses convert
 treehouses resolution
+treehouses system
+treehouses system all
+treehouses system cpu
+treehouses system cputask
+treehouses system disk
+treehouses system ram
+treehouses system ramtask
+treehouses system temperature
+treehouses system volt
 EOF
 # COMP_LINE is the line you typed in terminal
 # COMP_WORDS is array form of COMP_LINE
@@ -418,13 +454,14 @@ treehouses services $line url tor\n"
   done <<< "$(find /usr/lib/node_modules/@treehouses/cli/services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
 }
 
-function magazine_cmds {
+function magazines_cmds {
   while IFS= read -r line;
   do
-    printf "treehouses magazine $line
-treehouses magazine $line latest
-treehouses magazine $line all\n"
-  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazine -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
+    printf "treehouses magazines $line
+treehouses magazines $line all
+treehouses magazines $line latest
+treehouses magazines $line list\n"
+  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 
 complete -F _treehouses_complete treehouses ./cli.sh

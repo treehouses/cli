@@ -44,6 +44,18 @@ function default_network {
   do
     if [ "$i" != "/etc/dnsmasq.d/README" ]; then
       rm -rf $i
+     fi
+  done
+  
+  for i in /etc/shadowsocks-libev/*
+  do
+    if [ "$i" != "/etc/shadowsocks-libev/config.json" ]; then
+      rm -rf $i
+      if echo $i | grep -q json; then
+        i="$(echo $i | cut -d "/" -f 4 | sed 's/.json//g')"
+        stop_service shadowsocks-libev-local@$i.service
+        disable_service shadowsocks-libev-local@$i.service
+      fi
     fi
   done
 
@@ -55,6 +67,7 @@ function default_network {
   rm -rf /etc/network/up-bridge.sh
   rm -rf /etc/network/eth0-shared.sh
   rm -rf /etc/network/mode
+  rm -rf /etc/network/last_mode
   (config delete WIFICOUNTRY &>/dev/null)
 
   case $(detectrpi) in

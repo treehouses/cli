@@ -111,8 +111,8 @@ function bluetooth {
       ;;
 
     "restart")
-      bluetooth off &>"$LOGFILE"
-      bluetooth on &>"$LOGFILE"
+      (bluetooth off &>$LOGFILE && bluetooth on &>$LOGFILE) &>/dev/null &
+      #bluetooth on &>"$LOGFILE"
       echo "Success: the bluetooth service has been restarted."
       ;;
 

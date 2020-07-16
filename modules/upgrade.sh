@@ -43,9 +43,9 @@ function upgrade {
       fi
     fi
     cp /usr/local/bin/bluetooth-server.py "/usr/local/bin/bluetooth-server.py.$(date +'%Y%m%d%H%m%S')"
-    curl -s "https://raw.githubusercontent.com/treehouses/control/${branch}/server.py" -o /usr/local/bin/bluetooth-server.py #&>/dev/null &
-    #sleep 5 #&>/dev/null &
-    pkill -f server.py #&>/dev/null &
+    curl -s "https://raw.githubusercontent.com/treehouses/control/${branch}/server.py" -o /usr/local/bin/bluetooth-server.py
+    pkill -f server.py
+    bluetooth restart &>"$LOGFILE"
     echo "Successfully updated and restarted bluetooth server"
   elif [ "$tag" == "cli" ]; then
     checkroot

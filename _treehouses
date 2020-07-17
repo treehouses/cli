@@ -370,6 +370,7 @@ treehouses uptime
 treehouses uptime boot
 treehouses uptime start
 treehouses uptime stop
+treehouses uptime log
 treehouses usb
 treehouses usb off
 treehouses usb on

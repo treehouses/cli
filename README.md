@@ -75,7 +75,7 @@ led [green|red] [mode]                    sets the led mode
     [diwali|thanksgiving|christmas]
     [heavymetal|dance|kecak|random]
 power [mode|current|freq|status]          sets the power mode or check power mode/CPU frequency
-uptime [boot|start|stop]                  displays uptime and boot time of the Raspberry Pi
+uptime [boot|start|stop|log]              displays uptime and boot time of the Raspberry Pi
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode

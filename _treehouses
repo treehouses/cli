@@ -214,17 +214,17 @@ treehouses magazines available
 treehouses magazines downloaded
 $(magazines_cmds)
 treehouses memory
-treehouses memory -g
-treehouses memory -m
+treehouses memory gb
+treehouses memory mb
 treehouses memory free
-treehouses memory free -g
-treehouses memory free -m
+treehouses memory free gb
+treehouses memory free mb
 treehouses memory total
-treehouses memory total -g
-treehouses memory total -m
+treehouses memory total gb
+treehouses memory total mb
 treehouses memory used
-treehouses memory used -g
-treehouses memory used -m
+treehouses memory used gb
+treehouses memory used mb
 treehouses message gitter apikey 
 treehouses message gitter sendto 
 treehouses networkmode
@@ -341,6 +341,7 @@ treehouses temperature
 treehouses temperature celsius
 treehouses temperature fahrenheit
 treehouses temperature kelvin
+treehouses tether
 treehouses timezone
 treehouses tor
 treehouses tor add
@@ -348,6 +349,7 @@ treehouses tor delete
 treehouses tor deleteall
 treehouses tor destroy
 treehouses tor list
+treehouses tor ports
 treehouses tor notice
 treehouses tor notice add
 treehouses tor notice delete
@@ -364,6 +366,10 @@ treehouses upgrade cli
 treehouses upgrade force
 treehouses upgrade bluetooth
 treehouses upgrade check
+treehouses uptime
+treehouses uptime boot
+treehouses uptime start
+treehouses uptime stop
 treehouses usb
 treehouses usb off
 treehouses usb on

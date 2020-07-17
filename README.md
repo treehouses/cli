@@ -45,6 +45,7 @@ discover <scan|interface|ping|ports|mac>  performs network scan and discovers al
          <wifi> <gateway> [list]
 wifi <ESSID> [password] [identity]        connects to a wifi network
 wifihidden <ESSID> [password] [identity]  connects to a hidden wifi network
+tether                                    enable usb0 interface tethering
 staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a static ip address
            <ESSID> [password]
 wifistatus                                displays signal strength in dBm and layman nomenclature
@@ -74,6 +75,7 @@ led [green|red] [mode]                    sets the led mode
     [diwali|thanksgiving|christmas]
     [heavymetal|dance|kecak|random]
 power [mode|current|freq|status]          sets the power mode or check power mode/CPU frequency
+uptime [boot|start|stop]                  displays uptime and boot time of the Raspberry Pi
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode
@@ -113,10 +115,12 @@ services                                  executes the given command on the spec
    [bookstack]                            Bookstack is a free and open source Wiki designed for creating beautiful documentation
    [transmission]                         Transmission is a BitTorrent client with many powerful features
    [piwigo]                               Piwigo is a photo gallery software to publish and manage your collection of pictures
-   [cloud9]                               Cloud9 is a complete web based ide with terminal access
+   [cloud9]                               cloud9 is a complete web based ide with terminal access
+   [jellyfin]                             Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media
    [pylon]                                Pylon is a web based integrated development environment built with Node.js as a backend
-tor [list|add|delete|deleteall|start]     deals with services on tor hidden network
-    [stop|destroy|notice|status|refresh]
+tor [list|ports|add|delete|deleteall]     deals with services on tor hidden network
+    [start|stop|destroy|notice]
+    [status|refresh]
 bootoption <console|desktop> [autologin]  sets the boot mode
            <modules|params>
 openvpn [use|show|delete]                 helps setting up an openvpn client

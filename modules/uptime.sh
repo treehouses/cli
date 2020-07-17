@@ -18,9 +18,8 @@ function uptime {
       systemctl start uptimed
       ;;
     "log")
-      command uprecords
-      record="Uptime records:"
-      echo "$record" > uprecords
+      echo "Uptime records:"
+      uprecords
       ;;
     *)
       echo "Error: unknown operation provided"

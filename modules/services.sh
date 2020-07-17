@@ -638,6 +638,7 @@ function services_help {
   echo "  cloud9          Cloud9 is a complete web based IDE with terminal access"
   echo "  jellyfin        Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media"
   echo "  pylon           Pylon is a web based integrated development environment built with Node.js as a backend"
+  echo "  webssh          Webssh is a simple web application to be used as an ssh client to connect to your ssh servers"
   echo
   echo
   echo "Top-Level Commands:"

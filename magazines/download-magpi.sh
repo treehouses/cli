@@ -15,6 +15,7 @@ function all {
   for i in $(seq 1 $latest);
   do
     if [ -f "MagPi$i.pdf" ]; then
+      echo "MagPi$i.pdf ✓"
       continue
     fi
     wget -q "https://magpi.raspberrypi.org/issues/$i/pdf"
@@ -26,6 +27,7 @@ function all {
     ind=${#quoteloc}
     url=${url:0:$ind}
     wget -q -O "MagPi$i.pdf" $url
+    echo "MagPi$i.pdf ✓"
   done
 }
 
@@ -42,6 +44,7 @@ function latest {
   ind=${#quoteloc}
   url=${url:0:$ind}
   wget -q -O "MagPi$magnum.pdf" $url
+  echo "MagPi$magnum.pdf ✓"
 }
 
 function number {
@@ -50,12 +53,13 @@ function number {
   if [[ $magnum -lt 1 ]] || [[ $magnum -gt $latest ]]; then
     echo "ERROR: Please enter a valid magazine number"
     echo "       This can be any issue ranging from 1 to $latest"
+    cd - &>/dev/null || return
     exit 1
   fi
   if [ -f "MagPi$magnum.pdf" ]; then
     echo "MagPi$magnum.pdf already exists, exiting..."
-    cd ..
-    exit 1
+    cd - &>/dev/null || return
+    exit 0
   fi
   echo "Fetching MagPi$magnum.pdf..."
   wget -q "https://magpi.raspberrypi.org/issues/$magnum/pdf"
@@ -67,14 +71,11 @@ function number {
   ind=${#quoteloc}
   url=${url:0:$ind}
   wget -q -O "MagPi$magnum.pdf" $url
-}
-
-function language {
-  echo "The default language for MagPi is English"
-  echo "Currently, MagPi also offers some magazines in French, Hebrew, Italian, and Spanish"
-  exit 0
+  echo "MagPi$magnum.pdf ✓"
 }
 
 function info {
+  echo "https://magpi.raspberrypi.org/issues"
+  echo
   echo "The MagPi is The Official Raspberry Pi magazine. Written by and for the community, it is packed with Raspberry Pi-themed projects, computing and electronics tutorials, how-to guides, and the latest news and reviews."
 }

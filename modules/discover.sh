@@ -51,6 +51,34 @@ function discover {
         echo " $mac_ip"
       fi
       ;;
+    gateway)
+      gateway_ip="$(ip route show |\
+        grep -o -E "via [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" | awk '{print $2}')"
+      if [ $# -eq 1 ]; then
+        if [ ! -z "$gateway_ip" ]; then
+          echo "ip address: $gateway_ip"
+          if networkmode | grep -q wifi; then
+            iwgetid | cut -d " " -f 2-
+          fi
+          echo
+          nmap --open $gateway_ip | sed '1,4d' | head -n -2
+        else
+          echo "Not found"
+        fi
+      else
+        case "$2" in
+          list)
+            ip="$(nmap -sn "$gateway_ip/24" |\
+              grep -o -E '(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])')"
+            for i in $ip; do
+              printf "%s\t\t%s\n" "$i" "$(nmap -sn $i |\
+                grep -o -E "([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})")"
+            done ;;
+          *)
+            echo "No option as $2"
+            discover_help && exit 1 ;;
+        esac
+      fi ;;
     *)
       echo "Unknown operation provided." 1>&2
       discover_help
@@ -62,26 +90,42 @@ function discover {
 
 function discover_help {
   echo
-  echo "Usage: $BASENAME discover <rpi|wifi|scan|hostinterface|ping|ports ip|ping|ports[ipaddress|url]>"
+  echo "Usage: $BASENAME discover <rpi|wifi|interface|scan|ping|ports|gateway|mac>"
   echo
   echo "Scans the network provdied and shows the open ports. Can scan for all raspberry pis on the network as well."
   echo
   echo "Example:"
   echo " $BASENAME discover rpi"
   echo "    Detects raspberry pis on the network."
+  echo
   echo " $BASENAME discover wifi"
   echo "    Detects devices hosting wifi."
+  echo
+  echo " $BASENAME discover interface"
+  echo "    Displays the host interfaces and routes on the network."
+  echo
   echo " $BASENAME discover scan 192.168.7.149"
   echo "    Performs a network scan of the provided ip address."
   echo " $BASENAME discover scan scanme.nmap.org"
   echo "    Performs a network scan of the provided url."
-  echo " $BASENAME discover interface"
-  echo "    Displays the host interfaces and routes on the network."
-  echo " $BASENAME discover ping 192.168.7.149"
+  echo
+  echo " $BASENAME discover ping [ipaddress|url]"
+  echo "                    .... 192.168.7.149"
+  echo "                    ....  google.com"
   echo "    Displays servers and devices running on network provided."
-  echo " $BASENAME discover ports 192.168.7.149"
+  echo
+  echo " $BASENAME discover ports [ipaddress|url]"
+  echo "                    .... 192.168.7.149"
+  echo "                    .... scanme.nmap.org"
   echo "    Displays open ports."
+  echo
   echo " $BASENAME discover mac b8:29:eb:9f:42:8b "
   echo "    find the ip address of mac address."
+  echo
+  echo " $BASENAME discover gateway"
+  echo "    find ip address and opened ports of the gateway"
+  echo
+  echo " $BASENAME discover gateway list"
+  echo "    find the ip and mac address of devices in the network"
   echo
 }

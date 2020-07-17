@@ -57,6 +57,9 @@ function discover {
       if [ $# -eq 1 ]; then
         if [ ! -z "$gateway_ip" ]; then
           echo "ip address: $gateway_ip"
+          if networkmode | grep -q wifi; then
+            iwgetid | cut -d " " -f 2-
+          fi
           echo
           nmap --open $gateway_ip | sed '1,4d' | head -n -2
         else
@@ -65,9 +68,12 @@ function discover {
       else
         case "$2" in
           list)
-            arp -a | grep -v 8.8.8.8 | grep -v $gateway_ip |\
-              awk '{print $2, "\t", $4}' | sed -e 's/(//g' -e 's/)//g' | sort
-            ;;
+            ip="$(nmap -sn "$gateway_ip/24" |\
+              grep -o -E '(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])')"
+            for i in $ip; do
+              printf "%s\t\t%s\n" "$i" "$(nmap -sn $i |\
+                grep -o -E "([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})")"
+            done ;;
           *)
             echo "No option as $2"
             discover_help && exit 1 ;;

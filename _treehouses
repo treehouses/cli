@@ -214,17 +214,17 @@ treehouses magazines available
 treehouses magazines downloaded
 $(magazines_cmds)
 treehouses memory
-treehouses memory -g
-treehouses memory -m
+treehouses memory gb
+treehouses memory mb
 treehouses memory free
-treehouses memory free -g
-treehouses memory free -m
+treehouses memory free gb
+treehouses memory free mb
 treehouses memory total
-treehouses memory total -g
-treehouses memory total -m
+treehouses memory total gb
+treehouses memory total mb
 treehouses memory used
-treehouses memory used -g
-treehouses memory used -m
+treehouses memory used gb
+treehouses memory used mb
 treehouses message gitter apikey 
 treehouses message gitter sendto 
 treehouses networkmode

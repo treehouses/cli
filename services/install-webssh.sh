@@ -6,6 +6,7 @@ function install {
 
   # create yml(s)
   cat << EOF > /srv/webssh/webssh.yml
+version: '3'
 services:
   webssh:
     image: treehouses/webssh

@@ -456,7 +456,8 @@ function magazines_cmds {
     printf "treehouses magazines $line
 treehouses magazines $line all
 treehouses magazines $line latest
-treehouses magazines $line list\n"
+treehouses magazines $line list
+treehouses magazines $line url\n"
   done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 

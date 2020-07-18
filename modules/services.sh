@@ -7,7 +7,7 @@ function services {
 
   case $service_name in
     "")
-      echo "ERROR: no command given"
+      echo "ERROR: service name required"
       exit 1
       ;;
     # list all services available to be installed

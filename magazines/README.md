@@ -7,7 +7,7 @@ These download scripts utilize `wget` to fetch the specified magazine in the for
 
 These donwload scripts are named `download-<magtype>.sh` and are located in the `/magazines/` directory.
 
-Look at the pre-existing download scripts in `/magazines` for examples.
+Look at the pre-existing download scripts in `/magazines/` for examples.
 
 Once magazines are downloaded, they are saved in the `~/Documents/` directory.
 
@@ -27,9 +27,9 @@ Using the [template](#Template), fill in the sections as required.
 
    Iterate through each available issue of the magazine.
 
-   Note: `<magtype-lowercase>` should be the same string as `<magtype>`  (e.g. magpi)
- 
-   Note: `<magtype-uppercase>` refers to the formal name of `<magtype>`  (e.g. MagPi)
+   `<magtype-lowercase>` should be the same string as `<magtype>` (e.g. magpi).
+
+   `<magtype-uppercase>` refers to the formal name of `<magtype>`  (e.g. MagPi).
 
    Replace `<magtype-uppercase>` with the name of the magazine and how it will be saved as a PDF file.
 

@@ -54,7 +54,7 @@ load ../test-helper
 }
 
 @test "$clinom services webssh port" {
-  run "${clicmd}" services pylon port
+  run "${clicmd}" services webssh port
   assert_success && assert_output -p '8888'
 }
 

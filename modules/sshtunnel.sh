@@ -520,9 +520,13 @@ function sshtunnel {
           checkargn $# 4
           profile=$4
 
-          if [ ! -z "$profile" ]; then
+          if [ $profile == "default" ]; then
+            profile=""
+          elif [ ! -z "$profile" ]; then
             profile="_${profile}"
           fi
+
+         
 
           case "$3" in
             public | private)

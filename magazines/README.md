@@ -5,7 +5,7 @@ The `treehouses magazines` module relies on download scripts for each individual
 
 These download scripts utilize `wget` to fetch the specified magazine in the form of a PDF file for viewing purposes.
 
-These donwload scripts are named `download-<magtype>.sh` and are located in the `/magazines/` directory.
+These download scripts are named `download-<magtype>.sh` and are located in the `/magazines/` directory.
 
 Look at the pre-existing download scripts in `/magazines/` for examples.
 

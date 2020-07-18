@@ -14,8 +14,7 @@ function all {
   echo "Fetching all Wireframe magazines..."
   for i in $(seq 1 $latest);
   do
-    if [ -f "Wireframe$i.pdf" ]; then
-      echo "Wireframe$i.pdf ✓"
+    if [ -f "Wireframe$i.pdf" ] || [ -f "Wireframe0$i.pdf" ]; then
       continue
     fi
     wget -q "https://wireframe.raspberrypi.org/issues/$i/pdf"
@@ -27,7 +26,12 @@ function all {
     ind=${#quoteloc}
     url=${url:0:$ind}
     wget -q -O "Wireframe$i.pdf" $url
-    echo "Wireframe$i.pdf ✓"
+    if [[ $i -lt 10 ]]; then
+      mv "Wireframe$i.pdf" "Wireframe0$i.pdf" 
+      echo "Wireframe0$i.pdf ✓"
+    else
+      echo "Wireframe$i.pdf ✓"
+    fi 
   done
 }
 
@@ -56,8 +60,8 @@ function number {
     cd - &>/dev/null || return
     exit 1
   fi
-  if [ -f "Wireframe$magnum.pdf" ]; then
-    echo "Wireframe$magnum.pdf already exists, exiting..."
+  if [ -f "Wireframe$magnum.pdf" ] || [ -f "Wireframe0$magnum.pdf" ]; then
+    echo "File already exists, exiting..."
     cd - &>/dev/null || return
     exit 0
   fi
@@ -72,6 +76,12 @@ function number {
   url=${url:0:$ind}
   wget -q -O "Wireframe$magnum.pdf" $url
   echo "Wireframe$magnum.pdf ✓"
+  if [[ $magnum -lt 10 ]]; then
+    mv "Wireframe$magnum.pdf" "Wireframe0$magnum.pdf" 
+    echo "Wireframe0$magnum.pdf ✓"
+  else
+    echo "Wireframe$magnum.pdf ✓"
+  fi 
 }
 
 function info {

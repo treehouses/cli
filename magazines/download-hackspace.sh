@@ -14,8 +14,7 @@ function all {
   echo "Fetching all HackSpace magazines..."
   for i in $(seq 1 $latest);
   do
-    if [ -f "HackSpace$i.pdf" ]; then
-      echo "HackSpace$i.pdf ✓"
+    if [ -f "HackSpace$i.pdf" ] || [ -f "HackSpace0$i.pdf" ]; then
       continue
     fi
     wget -q "https://hackspace.raspberrypi.org/issues/$i/pdf"
@@ -27,7 +26,12 @@ function all {
     ind=${#quoteloc}
     url=${url:0:$ind}
     wget -q -O "HackSpace$i.pdf" $url
-    echo "HackSpace$i.pdf ✓"
+    if [[ $i -lt 10 ]]; then 
+      mv HackSpace$i.pdf HackSpace0$i.pdf
+      echo "HackSpace0$i.pdf ✓"
+    else
+      echo "HackSpace$i.pdf ✓"
+    fi 
   done
 }
 
@@ -44,6 +48,7 @@ function latest {
   ind=${#quoteloc}
   url=${url:0:$ind}
   wget -q -O "HackSpace$magnum.pdf" $url
+  echo "HackSpace$magnum.pdf ✓"
 }
 
 function number {
@@ -55,8 +60,8 @@ function number {
     cd - &>/dev/null || return
     exit 1
   fi
-  if [ -f "HackSpace$magnum.pdf" ]; then
-    echo "HackSpace$magnum.pdf already exists, exiting..."
+  if [ -f "HackSpace$magnum.pdf" ] || [ -f "HackSpace0$magnum.pdf" ];  then
+    echo "File already exists, exiting..."
     cd - &>/dev/null || return
     exit 0
   fi
@@ -70,6 +75,12 @@ function number {
   ind=${#quoteloc}
   url=${url:0:$ind}
   wget -q -O "HackSpace$magnum.pdf" $url
+  if [[ $magnum -lt 10 ]]; then 
+    mv HackSpace$magnum.pdf HackSpace0$magnum.pdf
+    echo "HackSpace0$magnum.pdf ✓"
+  else
+    echo "HackSpace$magnum.pdf ✓"
+  fi 
 }
 
 function info {

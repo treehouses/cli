@@ -14,8 +14,7 @@ function all {
   echo "Fetching all Magpi magazines..."
   for i in $(seq 1 $latest);
   do
-    if [ -f "MagPi$i.pdf" ]; then
-      echo "MagPi$i.pdf ✓"
+    if [ -f "MagPi$i.pdf" ] || [ -f "MagPi0$i.pdf" ]; then
       continue
     fi
     wget -q "https://magpi.raspberrypi.org/issues/$i/pdf"
@@ -27,7 +26,12 @@ function all {
     ind=${#quoteloc}
     url=${url:0:$ind}
     wget -q -O "MagPi$i.pdf" $url
-    echo "MagPi$i.pdf ✓"
+    if [[ $i -lt 10 ]]; then 
+      mv "MagPi$i.pdf" "MagPi0$i.pdf" 
+      echo "MagPi0$i.pdf ✓"
+    else
+      echo "MagPi$i.pdf ✓"
+    fi 
   done
 }
 
@@ -56,8 +60,8 @@ function number {
     cd - &>/dev/null || return
     exit 1
   fi
-  if [ -f "MagPi$magnum.pdf" ]; then
-    echo "MagPi$magnum.pdf already exists, exiting..."
+  if [ -f "MagPi$magnum.pdf" ] || [ -f "MagPi0$magnum.pdf" ]; then
+    echo "File already exists, exiting..."
     cd - &>/dev/null || return
     exit 0
   fi
@@ -71,7 +75,12 @@ function number {
   ind=${#quoteloc}
   url=${url:0:$ind}
   wget -q -O "MagPi$magnum.pdf" $url
-  echo "MagPi$magnum.pdf ✓"
+  if [[ $magnum -lt 10 ]]; then
+    mv "MagPi$magnum.pdf" "MagPi0$magnum.pdf" 
+    echo "MagPi0$magnum.pdf ✓"
+  else
+    echo "MagPi$magnum.pdf ✓"
+  fi 
 }
 
 function info {

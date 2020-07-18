@@ -26,8 +26,8 @@ function all {
     ind=${#quoteloc}
     url=${url:0:$ind}
     wget -q -O "HelloWorld$i.pdf" $url
-    if [[ $magnum -lt 10 ]]; then 
-      mv HelloWorld$i.pdf HackSpace0$i.pdf
+    if [[ $i -lt 10 ]]; then 
+      mv HelloWorld$i.pdf HelloWorld0$i.pdf
       echo "HelloWorld0$i.pdf ✓"
     else
       echo "HelloWorld$i.pdf ✓"
@@ -77,7 +77,7 @@ function number {
   wget -q -O "HelloWorld$magnum.pdf" $url
   echo "HelloWorld$magnum.pdf ✓"
   if [[ $magnum -lt 10 ]]; then 
-    mv HelloWorld$magnum.pdf HackSpace0$magnum.pdf
+    mv HelloWorld$magnum.pdf HelloWorld0$magnum.pdf
     echo "HelloWorld0$magnum.pdf ✓"
   else
     echo "HelloWorld$magnum.pdf ✓"

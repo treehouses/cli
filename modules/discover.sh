@@ -82,7 +82,7 @@ function discover {
     self)
       local i port program
       echo "IP address:"
-      for i in `hostname -I`; do
+      for i in $(hostname -I); do
         if echo $i | grep -q -E "^169.254" || echo $i | grep -q -E "^172"; then
           continue
         fi
@@ -100,7 +100,7 @@ function discover {
       echo
       echo "Ports:"
       local IFS=$'\n'
-      for i in `lsof -nP -i | grep LISTEN`; do
+      for i in $(lsof -nP -i | grep LISTEN); do
         if echo $i | grep -q IPv6 && lsof -nP -i |\
           grep LISTEN | grep IPv4 |\
           grep -q "$(echo $i | awk '{print $1}')"; then

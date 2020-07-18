@@ -553,7 +553,9 @@ function sshtunnel {
           key=$4
           profile=$5
 
-          if [ ! -z "$profile" ]; then
+          if [[ $profile == "default" ]]; then
+            profile=""
+          elif [ ! -z "$profile" ]; then
             profile="_${profile}"
           fi
 

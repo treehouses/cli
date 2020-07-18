@@ -89,6 +89,7 @@ treehouses discover ports localhost
 treehouses discover rpi
 treehouses discover scan google.com
 treehouses discover scan scanme.nmap.org
+treehouses discover self
 treehouses discover wifi
 treehouses ethernet
 treehouses expandfs

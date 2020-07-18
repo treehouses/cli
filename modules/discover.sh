@@ -79,6 +79,37 @@ function discover {
             discover_help && exit 1 ;;
         esac
       fi ;;
+    self)
+      local i port program
+      echo "IP address:"
+      for i in `hostname -I`; do
+        if echo $i | grep -q -E "^169.254" || echo $i | grep -q -E "^172"; then
+          continue
+        fi
+        echo $i
+      done
+      echo
+      echo "MAC address:"
+      echo
+      local interfaces="eth0 wlan0 ap0 usb0"
+      for i in $interfaces; do
+        if ip link show $i 2>/dev/null 1>&2; then
+          printf "%s:\t%s\n" "$i" "$(ip link show $i | grep link | awk '{print $2}')"
+        fi
+      done
+      echo
+      echo "Ports:"
+      local IFS=$'\n'
+      for i in `lsof -nP -i | grep LISTEN`; do
+        if echo $i | grep -q IPv6 && lsof -nP -i |\
+          grep LISTEN | grep IPv4 |\
+          grep -q "$(echo $i | awk '{print $1}')"; then
+          continue
+        fi
+        port="$(echo $i | awk '{print $9}' | grep -o -E "[0-9]+$")"
+        program="$(echo $i | awk '{print $1}')"
+        printf "%15s%15s\n" "$program" "$port"
+      done ;;
     *)
       echo "Unknown operation provided." 1>&2
       discover_help
@@ -120,12 +151,15 @@ function discover_help {
   echo "    Displays open ports."
   echo
   echo " $BASENAME discover mac b8:29:eb:9f:42:8b "
-  echo "    find the ip address of mac address."
+  echo "    Find the ip address of mac address."
   echo
   echo " $BASENAME discover gateway"
-  echo "    find ip address and opened ports of the gateway"
+  echo "    Find ip address and opened ports of the gateway"
   echo
   echo " $BASENAME discover gateway list"
-  echo "    find the ip and mac address of devices in the network"
+  echo "    Find the ip and mac address of devices in the network"
+  echo
+  echo " $BASENAME discover self"
+  echo "    Display ip, mac address and ports in use of rpi"
   echo
 }

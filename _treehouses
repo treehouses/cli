@@ -224,6 +224,7 @@ treehouses memory used -g
 treehouses memory used -m
 treehouses message gitter apikey 
 treehouses message gitter sendto 
+treehouses message gitter receive_from
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet

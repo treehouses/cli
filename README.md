@@ -147,6 +147,7 @@ magazines                                 downloads specific magazine issue as a
    <wireframe> 
 resolution <cea|dmt [modes]>              sets the screen resolution
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
+               <receive_from>
 shutdown [now|in|force]                   shutdown the system
 ```
 

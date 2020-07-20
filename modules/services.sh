@@ -1,6 +1,7 @@
 function services {
   if [[ $(which docker-compose) == "" ]]; then
-    echo "Exit command test $?"
+    echo "no \"docker-compose\" found, please install it first"
+    echo $?
     exit 1
   fi
 

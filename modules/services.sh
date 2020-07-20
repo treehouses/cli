@@ -1,4 +1,9 @@
 function services {
+  if [[ $(which docker-compose) == "" ]]; then
+    echo "Exit command test $?"
+    exit 1
+  fi
+
   local service_name command command_option service results installed
   local array running port_string found local_url tor_url
   service_name="$1"

@@ -36,7 +36,8 @@ function message {
            #finds channel id and removes double quotes
            channelid=$(echo $channelinfo | python -m json.tool | jq '.id' | tr -d '"')
            user_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/user")
-           user_id=$(echo $(curl -s -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/user") | python -m json.tool | jq '.[].id' | tr -d '"')
+           user_id=$(echo $user_info | python -m json.tool | jq '.[].id' | tr -d '"')
+#           user_id=$(echo $(curl -s -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/user") | python -m json.tool | jq '.[].id' | tr -d '"')
            i=0
            length=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems" | python -m json.tool | jq '.chat | length')
            if [ $length == 0 ];then
@@ -51,11 +52,11 @@ function message {
              from_user=$(echo $message_info | python -m json.tool | jq '.fromUser.username' | tr -d '"') 
              sent_time=$(echo $message_info | python -m json.tool | jq '.sent' | tr -d '"')  
              #displays message
-             echo "From: $(echo $from_name)@$(echo $from_user)"
-             echo "Message: $(echo $message)"
-             echo "Sent: $(echo $sent_time)"
+             echo "From: $from_name@$from_user"
+             echo "Message: $message"
+             echo "Sent: $sent_time"
              curl -X POST -s -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems" -d '{"chat":["'$message_id'"]}' > "$LOGFILE"
-             i=$(($i+1))
+             i=$((i+1))
            done
              ;;
          *)

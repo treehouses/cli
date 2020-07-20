@@ -45,6 +45,7 @@ function upgrade {
     cp /usr/local/bin/bluetooth-server.py "/usr/local/bin/bluetooth-server.py.$(date +'%Y%m%d%H%m%S')"
     curl -s "https://raw.githubusercontent.com/treehouses/control/${branch}/server.py" -o /usr/local/bin/bluetooth-server.py
     if grep -q "Restart=always" /etc/systemd/system/rpibluetooth.service; then
+      echo "Killing Bluetooth Server"
       pkill -f bluetooth-server.py
     fi
     bluetooth restart &>"$LOGFILE"

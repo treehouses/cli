@@ -89,6 +89,7 @@ treehouses discover ports localhost
 treehouses discover rpi
 treehouses discover scan google.com
 treehouses discover scan scanme.nmap.org
+treehouses discover self
 treehouses discover wifi
 treehouses ethernet
 treehouses expandfs
@@ -211,19 +212,20 @@ treehouses log max
 treehouses log show
 treehouses log show 5
 treehouses magazines available
+treehouses magazines downloaded
 $(magazines_cmds)
 treehouses memory
-treehouses memory -g
-treehouses memory -m
+treehouses memory gb
+treehouses memory mb
 treehouses memory free
-treehouses memory free -g
-treehouses memory free -m
+treehouses memory free gb
+treehouses memory free mb
 treehouses memory total
-treehouses memory total -g
-treehouses memory total -m
+treehouses memory total gb
+treehouses memory total mb
 treehouses memory used
-treehouses memory used -g
-treehouses memory used -m
+treehouses memory used gb
+treehouses memory used mb
 treehouses message gitter apikey 
 treehouses message gitter sendto 
 treehouses networkmode
@@ -340,6 +342,7 @@ treehouses temperature
 treehouses temperature celsius
 treehouses temperature fahrenheit
 treehouses temperature kelvin
+treehouses tether
 treehouses timezone
 treehouses tor
 treehouses tor add
@@ -347,6 +350,7 @@ treehouses tor delete
 treehouses tor deleteall
 treehouses tor destroy
 treehouses tor list
+treehouses tor ports
 treehouses tor notice
 treehouses tor notice add
 treehouses tor notice delete
@@ -363,6 +367,11 @@ treehouses upgrade cli
 treehouses upgrade force
 treehouses upgrade bluetooth
 treehouses upgrade check
+treehouses uptime
+treehouses uptime boot
+treehouses uptime start
+treehouses uptime stop
+treehouses uptime log
 treehouses usb
 treehouses usb off
 treehouses usb on
@@ -446,9 +455,10 @@ function magazines_cmds {
   while IFS= read -r line;
   do
     printf "treehouses magazines $line
+treehouses magazines $line all
 treehouses magazines $line latest
-treehouses magazines $line language
-treehouses magazines $line all\n"
+treehouses magazines $line list
+treehouses magazines $line url\n"
   done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 

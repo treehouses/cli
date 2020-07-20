@@ -39,3 +39,8 @@ load test-helper
   run "${clicmd}" discover gateway
   assert_success
 }
+
+@test "$clinom discover self" {
+  run "${clicmd}" discover self
+  assert_success
+}

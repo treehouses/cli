@@ -11,7 +11,9 @@ function magazines() {
     if [ -d "$MAGAZINES" ]; then
       for file in $MAGAZINES/*
       do
-        echo "${file##*/}" | sed -e 's/^download-//' -e 's/.sh$//'
+        if [[ ! $file = *"README.md"* ]]; then
+          echo "${file##*/}" | sed -e 's/^download-//' -e 's/.sh$//'
+        fi
       done
       exit 0
     else

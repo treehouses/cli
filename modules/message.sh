@@ -37,7 +37,6 @@ function message {
            channelid=$(echo $channelinfo | python -m json.tool | jq '.id' | tr -d '"')
            user_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/user")
            user_id=$(echo $user_info | python -m json.tool | jq '.[].id' | tr -d '"')
-#           user_id=$(echo $(curl -s -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/user") | python -m json.tool | jq '.[].id' | tr -d '"')
            i=0
            length=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems" | python -m json.tool | jq '.chat | length')
            if [ $length == 0 ];then

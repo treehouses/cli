@@ -29,7 +29,7 @@ function message {
             echo "No message was submitted."
           fi
           ;;
-        receive_from)
+        receivefrom)
           group="$3"
           curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
           channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
@@ -73,7 +73,7 @@ function message {
 
 function message_help {
   echo
-  echo "Usage: $BASENAME message <chats> <apikey <key> | sendto <group> <message> | receive_from <group>>"
+  echo "Usage: $BASENAME message <chats> <apikey <key> | sendto <group> <message> | receivefrom <group>>"
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo
@@ -89,7 +89,7 @@ function message_help {
   echo "  $BASENAME message gitter sendto treehouses/Lobby \"Hi, you are very awesome\""
   echo "     Sends a message to a gitter channel"
   echo
-  echo "  $BASENAME message gitter receive_from treehouses/Lobby" 
+  echo "  $BASENAME message gitter receivefrom treehouses/Lobby" 
   echo "     Receives unread messages from a gitter channel"
   echo
 }

@@ -128,6 +128,7 @@ magazines                                 downloads specific magazine issue as a
    <hackspace>        [latest]            downloads latest issue of magazine
    <magpi>            [number]            downloads issue [number] of magazine
    <wireframe>        [list]              lists downloaded magazines in tree format of specific magazine
+                      [url]               shows the homepage URL of magazine
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file

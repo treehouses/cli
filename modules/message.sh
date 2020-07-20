@@ -1,6 +1,6 @@
 function message {
   chats="$1"
-  case "$chats" in
+  case "$chats" in 
     gitter)
       case "$2" in
         apikey)
@@ -30,10 +30,14 @@ function message {
           fi
           ;;
         *)
-          echo "This command doesn't exist, please look at the following"
+          echo "This command does not exist, please look at the following:"
           message_help
           ;;
       esac
+      ;;
+    *)
+      echo "This command does not exist, please look at the following:"
+      message_help
       ;;
   esac
 }

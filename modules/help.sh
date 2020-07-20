@@ -133,6 +133,7 @@ resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
 shutdown [now|in|force]                   shutdown the system
+torproxy [on|off]                         set raspberry pi as a torproxy
 EOF
   echo "$helpdefault"
 }

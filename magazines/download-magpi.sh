@@ -74,12 +74,10 @@ function number {
   echo "MagPi$magnum.pdf ✓"
 }
 
-function language {
-  echo "The default language for MagPi is English"
-  echo "Currently, MagPi also offers some magazines in French, Hebrew, Italian, and Spanish"
-  exit 0
-}
-
 function info {
   echo "The MagPi is The Official Raspberry Pi magazine. Written by and for the community, it is packed with Raspberry Pi-themed projects, computing and electronics tutorials, how-to guides, and the latest news and reviews."
+}
+
+function url {
+  echo "https://magpi.raspberrypi.org/issues"
 }

@@ -74,12 +74,10 @@ function number {
   echo "HelloWorld$magnum.pdf ✓"
 }
 
-function language {
-  echo "The default language for HelloWorld is English"
-  echo "Currently, HelloWorld does not offer issues in any other languages"
-  exit 0
-}
-
 function info {
   echo "HelloWorld is the computing and digital making magazine for educators."
+}
+
+function url {
+  echo "https://helloworld.raspberrypi.org/issues"
 }

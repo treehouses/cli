@@ -33,6 +33,21 @@ function networkmode {
     ;;
   esac
 
+  if iface_exists "usb0"; then
+    if grep -q usb0 /var/lib/dhcp/*.leases && ip route get 8.8.8.8 | grep -q usb0; then
+      if [ $network_mode == "default" ]; then
+        echo default > /etc/network/last_mode
+      fi
+      network_mode="tether"
+      interfaces+=("usb0")
+    fi
+  fi 
+
+  if [ "$network_mode" == "tether" ] && ! ip link | grep -q usb0; then 
+    mv /etc/network/last_mode /etc/network/mode
+    network_mode=$(</etc/network/mode)
+  fi 
+
   if [ "$1" == "info" ]; then
     checkroot
     if [ "$network_mode" == "wifi" ]; then
@@ -46,6 +61,12 @@ function networkmode {
       get_staticnetwork_info "wlan0"
     elif [ "$network_mode" == "static ethernet" ]; then
       get_staticnetwork_info "eth0"
+    elif [ "$network_mode" == "tether" ]; then
+      echo "network mode is tether."
+      if iface_exists usb0; then
+        echo "ip: $(/sbin/ip -o -4 addr list 'usb0' |
+          awk '{print $4}' | sed '2d' | cut -d/ -f1)"
+      fi
     elif [ "$network_mode" == "default" ]; then
       echo "network mode is default."
       ifaces=(eth0 wlan0)

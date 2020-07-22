@@ -42,7 +42,7 @@ detect [bluetooth|rpi|arm|arch|wifi]      detects the hardware version of any de
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
 discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
          <rpi> [ipaddress|url|macaddress]
-         <wifi> <gateway> [list]
+         <wifi|self> <gateway> [list]
 wifi <ESSID> [password] [identity]        connects to a wifi network
 wifihidden <ESSID> [password] [identity]  connects to a hidden wifi network
 tether                                    enable usb0 interface tethering
@@ -152,6 +152,7 @@ magazines                                 downloads specific magazine issue as a
    <hackspace>        [latest]            downloads latest issue of magazine
    <magpi>            [number]            downloads issue [number] of magazine
    <wireframe>        [list]              lists downloaded magazines in tree format of specific magazine
+                      [url]               shows the homepage URL of magazine
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file

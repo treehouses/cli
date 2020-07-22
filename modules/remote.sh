@@ -3,7 +3,7 @@ function remote {
   checkroot
   checkrpi
   option="$1"
-  
+
   case $option in
     "check")
       checkargn $# 1

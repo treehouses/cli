@@ -1,4 +1,9 @@
 function services {
+  if [[ $(which docker-compose) == "" ]]; then
+    echo "\"docker-compose\" not found, please install first"
+    exit 1
+  fi
+
   local service_name command command_option service results installed
   local array running port_string found local_url tor_url
   service_name="$1"
@@ -8,6 +13,7 @@ function services {
   case $service_name in
     "")
       echo "ERROR: no command given"
+      services_help
       exit 1
       ;;
     # list all services available to be installed

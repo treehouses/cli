@@ -23,8 +23,8 @@ EOF
 
   # create .env with default values
   cat << EOF > /srv/pylon/.env
-"PYUSER=<username>"
-"PYPASS=<password>"
+PYUSER=<username>
+PYPASS=<password>
 EOF
 
   # add autorun

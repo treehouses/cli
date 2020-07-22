@@ -95,6 +95,7 @@ services                                  executes the given command on the spec
    [jellyfin]                             Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media
    [pylon]                                Pylon is a web based integrated development environment built with Node.js as a backend
    [rutorrent]                            Rutorrent is a popular rtorrent client with a webui for ease of use
+   [webssh]                               Webssh is a simple web application to be used as an ssh client to connect to your ssh servers
 tor [list|ports|add|delete|deleteall]     deals with services on tor hidden network
     [start|stop|destroy|notice]
     [status|refresh]
@@ -114,8 +115,9 @@ picture [file|url]                           displays a picture in the terminal
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off
-remote [check|status|upgrade|services]    helps with treehouses remote android app
-       [version|commands|allservices]
+remote <check|status|upgrade|services>    helps with treehouses remote android app
+       <version|commands|allservices>
+       <help|key>
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
@@ -133,6 +135,7 @@ magazines                                 downloads specific magazine issue as a
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
+               <receivefrom>
 shutdown [now|in|force]                   shutdown the system
 EOF
   echo "$helpdefault"

@@ -1,4 +1,9 @@
 function services {
+  if [[ $(which docker-compose) == "" ]]; then
+    echo "\"docker-compose\" not found, please install first"
+    exit 1
+  fi
+
   local service_name command command_option service results installed
   local array running port_string found local_url tor_url
   service_name="$1"
@@ -8,6 +13,7 @@ function services {
   case $service_name in
     "")
       echo "ERROR: no command given"
+      services_help
       exit 1
       ;;
     # list all services available to be installed
@@ -657,6 +663,7 @@ function services_help {
   echo "  jellyfin        Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media"
   echo "  pylon           Pylon is a web based integrated development environment built with Node.js as a backend"
   echo "  rutorrent       Rutorrent is a popular rtorrent client with a webui for ease of use"
+  echo "  webssh          Webssh is a simple web application to be used as an ssh client to connect to your ssh servers"
   echo
   echo
   echo "Top-Level Commands:"

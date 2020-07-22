@@ -28,7 +28,7 @@
     "grocy", "kolibri", "mongodb", "moodle", "netdata", "nextcloud", "ntopng", "planet",
     "invoiceninja", "librespeed", "portainer", "privatebin", "mastodon", "couchdb",
     "mariadb", "seafile", "minetest", "dokuwiki", "transmission", "cloud9", "bookstack",
-    "piwigo", "jellyfin", "pylon", "rutorrent"
+    "piwigo", "jellyfin", "pylon", "rutorrent", "webssh"
   ],
   "author": {
     "name": "OLE treehouses team",

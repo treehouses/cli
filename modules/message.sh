@@ -1,6 +1,6 @@
 function message {
   chats="$1"
-  case "$chats" in 
+  case "$chats" in
     gitter)
       case "$2" in
         apikey)

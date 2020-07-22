@@ -16,7 +16,7 @@ services:
     volumes:
       - /srv/rutorrent:/root/.rutorrent
     ports:
-      - 8096:80
+      - 8097:80
       - 5000:5000
       - 51413:51413
       - 6881:6881/udp
@@ -50,7 +50,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "8096"
+  echo "8097"
   echo "5000"
   echo "51413"
   echo "6881"
@@ -71,9 +71,19 @@ function get_info {
 # add svg icon
 function get_icon {
   cat <<EOF
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1238" height="621">
-<g transform="scale(1,1)">
-<path d="M 533,434.5 533,344.5 " style="stroke-linecap:round;fill:none;stroke:rgb(176,109,0);stroke-opacity:1;stroke-width:5pt;" /><path d="M 533,344.5 623,344.5 " style="stroke-linecap:round;fill:none;stroke:rgb(128,0,254);stroke-opacity:1;stroke-width:100pt;" /><path d="M 623,344.5 623,434.5 " style="stroke-linecap:round;fill:none;stroke:rgb(128,0,254);stroke-opacity:1;stroke-width:100pt;" /><path d="M 623,434.5 533,434.5 " style="stroke-linecap:round;fill:none;stroke:rgb(128,0,254);stroke-opacity:1;stroke-width:100pt;" /><path d="M 533,434.5 533,344.5 " style="stroke-linecap:round;fill:none;stroke:rgb(128,0,254);stroke-opacity:1;stroke-width:100pt;" /><path d="M 533,344.5 623,344.5 " style="stroke-linecap:round;fill:none;stroke:rgb(128,0,254);stroke-opacity:1;stroke-width:100pt;" /><path d="M 623,344.5 623,434.5 " style="stroke-linecap:round;fill:none;stroke:rgb(128,0,254);stroke-opacity:1;stroke-width:100pt;" /><path d="M 623,434.5 533,434.5 " style="stroke-linecap:round;fill:none;stroke:rgb(128,0,254);stroke-opacity:1;stroke-width:100pt;" /><text x="490" y = "397.5" fill="rgba(128,0,254,1)" font-family = "sans-serif" font-size = "100">r</text><text x="490" y = "397.5" fill="rgba(255,255,255,1)" font-family = "sans-serif" font-size = "100">r</text><text x="513" y = "396.5" fill="rgba(255,255,255,1)" font-family = "sans-serif" font-size = "40">utorrent</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1238 621">
+  <defs/>
+  <path fill="none" stroke="#b06d00" stroke-linecap="round" stroke-width="5pt" d="M533 434.5v-90"/>
+  <path fill="none" stroke="#8000fe" stroke-linecap="round" stroke-width="100pt" d="M533 344.5h90M623 344.5v90M623 434.5h-90M533 434.5v-90M533 344.5h90M623 344.5v90M623 434.5h-90"/>
+  <text x="490" y="397.5" fill="rgba(128,0,254,1)" font-family="sans-serif" font-size="100">
+    r
+  </text>
+  <text x="490" y="397.5" fill="rgba(255,255,255,1)" font-family="sans-serif" font-size="100">
+    r
+  </text>
+  <text x="513" y="396.5" fill="rgba(255,255,255,1)" font-family="sans-serif" font-size="40">
+    utorrent
+  </text>
+</svg>
 EOF
 }

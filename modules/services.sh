@@ -13,6 +13,7 @@ function services {
   case $service_name in
     "")
       echo "ERROR: no command given"
+      services_help
       exit 1
       ;;
     # list all services available to be installed

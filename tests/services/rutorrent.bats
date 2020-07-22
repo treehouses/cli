@@ -56,12 +56,12 @@ load ../test-helper
 
 @test "$clinom services ports" {
   run "${clicmd}" services ports
-  assert_success && assert_output -p 'port 8096'
+  assert_success && assert_output -p 'port 8097'
 }
 
 @test "$clinom services rutorrent port" {
   run "${clicmd}" services rutorrent port
-  assert_success && assert_output -p '8096'
+  assert_success && assert_output -p '8097'
 }
 
 @test "$clinom services rutorrent ps" {
@@ -71,7 +71,7 @@ load ../test-helper
 
 @test "$clinom services rutorrent url" {
   run "${clicmd}" services rutorrent url
-  assert_output -p '8096'
+  assert_output -p '8097'
 }
 
 @test "$clinom services rutorrent autorun" {

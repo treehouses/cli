@@ -15,6 +15,7 @@ services:
       - PGID=1000
     volumes:
       - /srv/rutorrent:/root/.rutorrent
+      - /srv/rutorrent/downloads:/downloads
     ports:
       - 8097:80
       - 5000:5000

@@ -75,7 +75,7 @@ function remote {
       ;;
     "allservices")
       checkargn $# 1
-      json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"},\"usesEnv\":{"%s"}}\n"
+      json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"},\"usesEnv\":{"%s"},\"size\":{"%s"}}\n"
 
       available_str=$(services available | sed 's/^\|$/"/g' | paste -d, -s)
       installed_str=$(services installed | sed 's/^\|$/"/g' | paste -d, -s)
@@ -89,9 +89,10 @@ function remote {
         info_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_info | tr '\n' ' ' | sed 's/"/\\"/g')\","
         autorun_str+="\"$i\":\"$(autorun_helper $i)\","
         env_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && uses_env)\","
+        size_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_size)\","
       done
 
-      printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}" "${env_str::-1}"
+      printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}" "${env_str::-1}" "${size_str::-1}"
       ;;
     "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')

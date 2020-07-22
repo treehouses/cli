@@ -11,9 +11,9 @@ services:
   grocy:
     image: linuxserver/grocy
     environment:
-      - PUID=\${PUID}
-      - PGID=\${PUID}
-      - TZ=\${TZ}
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
       - PASSWORD=\${PASSWORD}
       - DB_TYPE=\${DB_TYPE}
       - DB_NAME=\${DB_NAME}
@@ -29,9 +29,6 @@ EOF
 
   # create .env with default values
   cat << EOF > /srv/grocy/.env
-PUID=1000
-PGID=1000
-TZ=Europe/London
 PASSWORD=PASSWORD
 DB_TYPE=sqlite
 DB_NAME=DB_NAME

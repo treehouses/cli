@@ -42,7 +42,7 @@ detect [bluetooth|rpi|arm|arch|wifi]      detects the hardware version of any de
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
 discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
          <rpi> [ipaddress|url|macaddress]
-         <wifi> <gateway> [list]
+         <wifi|self> <gateway> [list]
 wifi <ESSID> [password] [identity]        connects to a wifi network
 wifihidden <ESSID> [password] [identity]  connects to a hidden wifi network
 tether                                    enable usb0 interface tethering
@@ -75,7 +75,7 @@ led [green|red] [mode]                    sets the led mode
     [diwali|thanksgiving|christmas]
     [heavymetal|dance|kecak|random]
 power [mode|current|freq|status]          sets the power mode or check power mode/CPU frequency
-uptime [boot|start|stop]                  displays uptime and boot time of the Raspberry Pi
+uptime [boot|start|stop|log]              displays uptime and boot time of the Raspberry Pi
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode
@@ -153,6 +153,7 @@ magazines                                 downloads specific magazine issue as a
    <hackspace>        [latest]            downloads latest issue of magazine
    <magpi>            [number]            downloads issue [number] of magazine
    <wireframe>        [list]              lists downloaded magazines in tree format of specific magazine
+                      [url]               shows the homepage URL of magazine
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file

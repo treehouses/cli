@@ -3,24 +3,34 @@ function uptime {
   check_missing_packages uptimed
   checkargn $# 1
 
-  if [[ $1 == "" ]]; then
-    command uptime
-  elif [ $1 == "boot" ]; then
-    echo "Raspberry Pi booted at:"
-    command uptime -s
-  elif [ $1 == "stop" ]; then
-    systemctl stop uptimed
-  elif [ $1 == "start" ]; then
-    systemctl start uptimed
-  else
-    echo "Error: unknown operation provided"
-    uptime_help
-    exit 1
-  fi
+  case $1 in
+    "")
+      command uptime
+      ;;
+    "boot")
+      echo "Raspberry Pi booted at:"
+      command uptime -s
+      ;;
+    "stop")
+      systemctl stop uptimed
+      ;;
+    "start")
+      systemctl start uptimed
+      ;;
+    "log")
+      echo "Uptime records:"
+      uprecords
+      ;;
+    *)
+      echo "Error: unknown operation provided"
+      uptime_help
+      exit 1
+      ;;
+  esac
 }
 
 function uptime_help {
-  echo "Usage: $BASENAME uptime [boot|start|stop]"
+  echo "Usage: $BASENAME uptime [boot|start|stop|log]"
   echo
   echo "Example:"
   echo "  $BASENAME uptime"
@@ -34,5 +44,8 @@ function uptime_help {
   echo
   echo "  $BASENAME uptime stop"
   echo "      This stops Uptimed from running in the background"
+  echo
+  echo "  $BASENAME uptime log"
+  echo "      This returns the uptime records"
   echo
 }

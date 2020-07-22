@@ -526,8 +526,6 @@ function sshtunnel {
             profile="_${profile}"
           fi
 
-         
-
           case "$3" in
             public | private)
               if [ "$3" = "public" ]; then

@@ -1,7 +1,6 @@
 function services {
   if [[ $(which docker-compose) == "" ]]; then
-    echo "no \"docker-compose\" found, please install it first"
-    echo $?
+    echo "\"docker-compose\" not found, please install first"
     exit 1
   fi
 

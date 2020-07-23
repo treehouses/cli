@@ -96,7 +96,7 @@ function remote {
       ;;
     "statuspage")
       checkargn $# 1
-      json_statusfmt="{\"status\":\"$(remote status)\",\"hostname\":\"$(hostname)\",\"arm\":\"$(detect arm)\",\"internet\":\"$(internet)\",\"memory_total\":\"$(memory total gb)\",\"memory_used\":\"$(memory used gb)\",\"celsius\":\"$(temperature celsius)\",\"networkmode\":\"$(networkmode)\",\"info\":\"$(networkmode info | tr '\n' ' ')\"}"
+      json_statusfmt="{\"status\":\"$(remote status)\",\"hostname\":\"$(hostname)\",\"arm\":\"$(detect arm)\",\"internet\":\"$(internet)\",\"memory_total\":\"$(memory total gb)\",\"memory_used\":\"$(memory used gb)\",\"temperature\":\"$(temperature)\",\"networkmode\":\"$(networkmode)\",\"info\":\"$(networkmode info | tr '\n' ' ')\"}"
 
       printf "${json_statusfmt}\n"
       ;;

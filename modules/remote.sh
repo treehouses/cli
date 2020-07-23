@@ -98,7 +98,7 @@ function remote {
       checkargn $# 1
       json_statusfmt="{\"status\":\"$(remote status)\",\"hostname\":\"$(hostname)\",\"arm\":\"$(detect arm)\",\"internet\":\"$(internet)\",\"memory_total\":\"$(memory total gb)\",\"memory_used\":\"$(memory used gb)\",\"celsius\":\"$(temperature celsius)\",\"networkmode\":\"$(networkmode)\",\"info\":\"$(networkmode info | tr '\n' ' ')\"}"
 
-      printf "$json_statusfmt\n"
+      printf "${json_statusfmt}\n"
       ;;
     "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')

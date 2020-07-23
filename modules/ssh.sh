@@ -49,8 +49,8 @@ function ssh {
           fi
           exit 1 ;;
         "enable")
-          if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd; then
-            echo "auth required pam_google_authenticator.so" >> /etc/pam.d/sshd
+          if ! grep -q "auth required pam_google_authenticator.so nullok" /etc/pam.d/sshd; then
+            echo "auth required pam_google_authenticator.so nullok" >> /etc/pam.d/sshd
           fi
           sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
           restart_service sshd
@@ -58,7 +58,7 @@ function ssh {
           echo "ssh Two Factor Authentication enabled."
           ;;
         "disable")
-          sed -i 's/auth required pam_google_authenticator.so//g' /etc/pam.d/sshd
+          sed -i 's/auth required pam_google_authenticator.so nullok//g' /etc/pam.d/sshd
           sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
           restart_service sshd
           echo "ssh Two Factor Authentication disabled."

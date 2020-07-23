@@ -89,6 +89,7 @@ treehouses discover ports localhost
 treehouses discover rpi
 treehouses discover scan google.com
 treehouses discover scan scanme.nmap.org
+treehouses discover self
 treehouses discover wifi
 treehouses ethernet
 treehouses expandfs
@@ -129,6 +130,7 @@ treehouses help openvpn
 treehouses help password
 treehouses help rebootneeded
 treehouses help reboots
+treehouses help redirect
 treehouses help remote
 treehouses help rename
 treehouses help restore
@@ -214,19 +216,20 @@ treehouses magazines available
 treehouses magazines downloaded
 $(magazines_cmds)
 treehouses memory
-treehouses memory -g
-treehouses memory -m
+treehouses memory gb
+treehouses memory mb
 treehouses memory free
-treehouses memory free -g
-treehouses memory free -m
+treehouses memory free gb
+treehouses memory free mb
 treehouses memory total
-treehouses memory total -g
-treehouses memory total -m
+treehouses memory total gb
+treehouses memory total mb
 treehouses memory used
-treehouses memory used -g
-treehouses memory used -m
-treehouses message gitter apikey 
-treehouses message gitter sendto 
+treehouses memory used gb
+treehouses memory used mb
+treehouses message gitter apikey
+treehouses message gitter sendto
+treehouses message gitter receivefrom
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet
@@ -275,9 +278,16 @@ treehouses reboots in
 treehouses reboots monthly
 treehouses reboots now
 treehouses reboots weekly
+treehouses redirect add
+treehouses redirect list
+treehouses redirect remove
+treehouses redirect start
+treehouses remote allservices
 treehouses remote check
 treehouses remote commands
-treehouses remote allservices
+treehouses remote help
+treehouses remote key receive
+treehouses remote key send
 treehouses remote services available
 treehouses remote services installed
 treehouses remote services running
@@ -322,6 +332,10 @@ treehouses sshtunnel add port actual
 treehouses sshtunnel add port offset
 treehouses sshtunnel check
 treehouses sshtunnel key
+treehouses sshtunnel key receive private
+treehouses sshtunnel key receive public
+treehouses sshtunnel key send private
+treehouses sshtunnel key send public
 treehouses sshtunnel key verify
 treehouses sshtunnel list
 treehouses sshtunnel notice
@@ -370,6 +384,7 @@ treehouses uptime
 treehouses uptime boot
 treehouses uptime start
 treehouses uptime stop
+treehouses uptime log
 treehouses usb
 treehouses usb off
 treehouses usb on
@@ -455,7 +470,8 @@ function magazines_cmds {
     printf "treehouses magazines $line
 treehouses magazines $line all
 treehouses magazines $line latest
-treehouses magazines $line list\n"
+treehouses magazines $line list
+treehouses magazines $line url\n"
   done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 

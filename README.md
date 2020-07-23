@@ -42,7 +42,7 @@ detect [bluetooth|rpi|arm|arch|wifi]      detects the hardware version of any de
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address
 discover <scan|interface|ping|ports|mac>  performs network scan and discovers all raspberry pis on the network
          <rpi> [ipaddress|url|macaddress]
-         <wifi> <gateway> [list]
+         <wifi|self> <gateway> [list]
 wifi <ESSID> [password] [identity]        connects to a wifi network
 wifihidden <ESSID> [password] [identity]  connects to a hidden wifi network
 tether                                    enable usb0 interface tethering
@@ -75,7 +75,7 @@ led [green|red] [mode]                    sets the led mode
     [diwali|thanksgiving|christmas]
     [heavymetal|dance|kecak|random]
 power [mode|current|freq|status]          sets the power mode or check power mode/CPU frequency
-uptime [boot|start|stop]                  displays uptime and boot time of the Raspberry Pi
+uptime [boot|start|stop|log]              displays uptime and boot time of the Raspberry Pi
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
 ntp <local|internet>                      sets rpi to host timing locally or to get timing from a remote server
 networkmode                               outputs the current network mode
@@ -118,6 +118,8 @@ services                                  executes the given command on the spec
    [cloud9]                               cloud9 is a complete web based ide with terminal access
    [jellyfin]                             Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media
    [pylon]                                Pylon is a web based integrated development environment built with Node.js as a backend
+   [rutorrent]                            Rutorrent is a popular rtorrent client with a webui for ease of use
+   [webssh]                               Webssh is a simple web application to be used as an ssh client to connect to your ssh servers
 tor [list|ports|add|delete|deleteall]     deals with services on tor hidden network
     [start|stop|destroy|notice]
     [status|refresh]
@@ -137,8 +139,10 @@ picture [file|url]                        displays a picture in the terminal
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off
-remote [check|status|upgrade|services]    helps with treehouses remote android app
-       [version|commands|allservices]
+redirect [add|list|remove|start]                redirects internet hostnames to rpi
+remote <check|status|upgrade|services>    helps with treehouses remote android app
+       <version|commands|allservices>
+       <help|key>
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
@@ -152,9 +156,11 @@ magazines                                 downloads specific magazine issue as a
    <hackspace>        [latest]            downloads latest issue of magazine
    <magpi>            [number]            downloads issue [number] of magazine
    <wireframe>        [list]              lists downloaded magazines in tree format of specific magazine
+                      [url]               shows the homepage URL of magazine
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
+               <receivefrom>
 shutdown [now|in|force]                   shutdown the system
 ```
 

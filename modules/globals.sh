@@ -179,9 +179,9 @@ function check_missing_packages {
 
 function check_missing_binary {
   missing_binary=$1
-  if [ ! -e "/usr/local/bin/$missing_binary" ]; then
-    echo "required binary $missing_binary not found"
-    exit 1
+  if [[ $(which $missing_binary) == "" ]]; then
+    echo "\"$missing_binary\" not found, please install first"
+    exit 1 
   fi
 }
 

@@ -2,14 +2,14 @@ function storage_total() {
   option=$1
   case $option in
     'gb')
-      t_M=$(df -BG | grep '/dev/root' | awk '{print $2}')
+      t_M=$(df -h | grep '/dev/root' | awk '{print $2}')
       t=$(echo "scale=2;$t_M/1024" | bc)
       ;;
     'mb')
-      t=$(df -BM | grep '/dev/root' | awk '{print $2}')
+      t=$(df -m | grep '/dev/root' | awk '{print $2}')
       ;;
     'kb')
-      t=$(df -BK | grep '/dev/root' | awk '{print $2}')
+      t=$(df -k | grep '/dev/root' | awk '{print $2}')
       ;;
     '')
       t=$(df | grep '/dev/root' | awk '{print $2}')
@@ -25,14 +25,14 @@ function storage_used {
   option=$1
   case $option in
     'gb')
-      u_M=$(df -BG | grep '/dev/root' | awk '{print $3}')
+      u_M=$(df -h | grep '/dev/root' | awk '{print $3}')
       u=$(echo "scale=2;$u_M/1024" | bc)
       ;;
     'mb')
-      u=$(df -BM | grep '/dev/root' | awk '{print $3}')
+      u=$(df -m | grep '/dev/root' | awk '{print $3}')
       ;;
     'kb')
-      u=$(df -BK | grep '/dev/root' | awk '{print $3}')
+      u=$(df -k | grep '/dev/root' | awk '{print $3}')
       ;;
     '')
       u=$(df | grep '/dev/root' | awk '{print $3}')
@@ -48,14 +48,14 @@ function storage_free {
   option=$1
   case $option in
     'gb')
-      f_G=$(df -BG | grep '/dev/root' | awk '{print $4}')
+      f_G=$(df -h | grep '/dev/root' | awk '{print $4}')
       f=$(echo "scale=2;$f_G/1024" | bc)
       ;;
     'mb')
-      f=$(df -BM | grep '/dev/root' | awk '{print $4}')
+      f=$(df -m | grep '/dev/root' | awk '{print $4}')
       ;;
     'kb')
-      f=$(df -BK | grep '/dev/root' | awk '{print $4}')
+      f=$(df -k | grep '/dev/root' | awk '{print $4}')
       ;;
     '')
       f=$(df | grep '/dev/root' | awk '{print $4}')

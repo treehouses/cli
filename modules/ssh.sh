@@ -25,20 +25,24 @@ function ssh {
     "2fa" | "2FA")
       check_missing_packages "libpam-google-authenticator"
       case "$2" in
-        "add")
+        "add" | "remove")
           if [ -z "$3" ]; then
-            echo "Please specify the user to enable 2FA."
+            echo "Please specify the user."
           elif [ "$3" == "root" ]; then
-            echo "You can't enable 2FA for root user."
+            echo "You can't add or remove 2FA for root user."
             echo "You should only login as root user via a ssh key."
           elif cut -d: -f1 /etc/passwd | grep -q "$3"; then
-            echo "Adding 2FA for user $3..."
-            runuser -l "$3" -c "google-authenticator"
-            if [ ! -f "/home/$3/.google_authenticator" ]; then
-              echo "Addtion for $3 user failed"
-              exit 1
+            if [ "$2" == "add" ]; then
+              echo "Adding 2FA for user $3..."
+              runuser -l "$3" -c "google-authenticator"
+              if [ ! -f "/home/$3/.google_authenticator" ]; then
+                echo "Addtion for $3 user failed"
+                exit 1
+              fi
+              ssh 2fa enable
+            else
+              rm -rf "/home/$3/.google_authenticator"
             fi
-            ssh 2fa enable
             exit 0
           else
             echo "No user as $3 found."
@@ -89,13 +93,10 @@ function ssh_help {
   echo "  $BASENAME ssh fingerprint"
   echo "      The SSH fingerprint will be printed from when the session was first established."
   echo
-  echo "  $BASENAME ssh 2FA add <user>"
-  echo "      Add a user for SSH with two factor authentication."
+  echo "  $BASENAME ssh 2FA add/remove <user>"
+  echo "      Add/Remove a user for SSH with two factor authentication."
   echo
-  echo "  $BASENAME ssh 2FA enable"
-  echo "      Enable two factor authentication for SSH service."
-  echo
-  echo "  $BASENAME ssh 2FA disable"
-  echo "      Disable two factor authentication for SSH service."
+  echo "  $BASENAME ssh 2FA enable/disable"
+  echo "      Enable/Disable two factor authentication for SSH service."
   echo
 }

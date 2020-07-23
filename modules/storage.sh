@@ -2,8 +2,8 @@ function storage_total() {
   option=$1
   case $option in
     'gb')
-      t_M=$(df -BK | grep '/dev/root' | awk '{print $2}')
-      t=$(echo "scale=2;$t_M/1024^2" | bc)
+      t_M=$(df -BG | grep '/dev/root' | awk '{print $2}')
+      t=$(echo "scale=2;$t_M/1" | bc)
       # t=$(echo "scale=2;$t_M/1024" | bc)
       ;;
     'mb')
@@ -26,8 +26,8 @@ function storage_used {
   option=$1
   case $option in
     'gb')
-      u_M=$(df -BK | grep '/dev/root' | awk '{print $3}')
-      u=$(echo "scale=2;$u_M/1024^2" | bc)
+      u_M=$(df -BG | grep '/dev/root' | awk '{print $3}')
+      u=$(echo "scale=2;$u_M/1" | bc)
       #u=$(echo "scale=2;$u_M/1024" | bc)
       ;;
     'mb')
@@ -50,8 +50,8 @@ function storage_free {
   option=$1
   case $option in
     'gb')
-      f_G=$(df -BK | grep '/dev/root' | awk '{print $4}')
-      f=$(echo "scale=2;$f_G/1024^2" | bc)
+      f_G=$(df -BG | grep '/dev/root' | awk '{print $4}')
+      f=$(echo "scale=2;$f_G/1" | bc)
      # f=$(echo "scale=2;$f_G/1024" | bc)
       ;;
     'mb')

@@ -1,5 +1,5 @@
 function remote {
-  local option results
+  local results
   checkroot
   checkrpi
   option="$1"
@@ -75,7 +75,7 @@ function remote {
       ;;
     "allservices")
       checkargn $# 1
-      json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"}}\n"
+      json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"},\"usesEnv\":{"%s"},\"size\":{"%s"}}\n"
 
       available_str=$(services available | sed 's/^\|$/"/g' | paste -d, -s)
       installed_str=$(services installed | sed 's/^\|$/"/g' | paste -d, -s)
@@ -88,9 +88,11 @@ function remote {
         icon_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_icon | sed 's/^[ \t]*//;s/[ \t]*$//' | tr '\n' ' ' | sed 's/"/\\"/g')\","
         info_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_info | tr '\n' ' ' | sed 's/"/\\"/g')\","
         autorun_str+="\"$i\":\"$(autorun_helper $i)\","
+        env_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && uses_env)\","
+        size_str+="\"$i\":\"$(source $SERVICES/install-$i.sh && get_size)\","
       done
 
-      printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}"
+      printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}" "${env_str::-1}" "${size_str::-1}"
       ;;
     "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')
@@ -106,9 +108,50 @@ function remote {
       done
       echo ${json_var}
       ;;
+    "key")
+      case "$2" in
+        send)
+          checkargn $# 3
+          profile=$3
+          
+          public_key=$(sshtunnel key send public $profile)
+          private_key=$(sshtunnel key send private $profile | tr '\n' ' ') 
+
+          if [ -z "$profile" ]; then
+            profile="default"
+          fi
+
+          jq -n "{profile:\"$profile\", public_key:\"$public_key\", private_key:\"$private_key\"}"
+          ;;
+        receive)
+          checkargn $# 5
+          public_key=$3
+          private_key=$4
+          profile=$5
+
+          if [ -z "$public_key" ]; then
+            echo "Error: public key required"
+            echo "Usage: $BASENAME remote key receive \"\$public_key\" \"\$private_key\" [profile]"
+            exit 1
+          elif [ -z "$private_key" ]; then
+            echo "Error: private key required"
+            echo "Usage: $BASENAME remote key receive \"\$public_key\" \"\$private_key\" [profile]"
+            exit 1
+          else
+            sshtunnel key receive public "$public_key" "$profile"
+            sshtunnel key receive private "$private_key" "$profile"
+          fi
+          ;;
+        *)
+          echo "Error: incorrect command"
+          echo "Usage: $BASENAME remote key <send | receive>"
+          exit 1
+          ;;
+      esac
+      ;;
     *)
       echo "Unknown command option"
-      echo "Usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"
+      echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | help | key>"
       ;;
   esac
 }
@@ -134,7 +177,7 @@ function autorun_helper {
 
 function remote_help {
   echo
-  echo "Usage: $BASENAME remote [check | status | upgrade | services | version | commands | allservices]"
+  echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | help | key>"
   echo
   echo "Returns a string representation of the current status of the Raspberry Pi"
   echo "Used for Treehouses Remote"
@@ -160,7 +203,7 @@ function remote_help {
   echo "true if an upgrade is available"
   echo "false otherwise"
   echo
-  echo "$BASENAME remote services [available | installed | running]"
+  echo "$BASENAME remote services <available | installed | running>"
   echo "Available: | Installed: | Running: <list of services>"
   echo
   echo "$BASENAME remote version <version_number>"
@@ -172,5 +215,14 @@ function remote_help {
   echo
   echo "$BASENAME remote allservices"
   echo "returns json string of services"
+  echo
+  echo "$BASENAME remote help"
+  echo "returns json string of help for all modules"
+  echo
+  echo "$BASENAME remote key send [profile]"
+  echo "returns json of public and private key for [profile]"
+  echo
+  echo "$BASENAME remote key receive \"\$public_key\" \"\$private_key\" [profile]"
+  echo "saves \"\$public_key\" and \"\$private_key\" for [profile]"
   echo
 }

@@ -3,7 +3,7 @@ function storage_total() {
   case $option in
     'gb')
       t_M=$(df -h | grep '/dev/root' | awk '{print $2}')
-      t=$(echo "scale=2;$t_M/1024" | bc)
+     # t=$(echo "scale=2;$t_M/1024" | bc)
       ;;
     'mb')
       t=$(df -m | grep '/dev/root' | awk '{print $2}')
@@ -26,7 +26,7 @@ function storage_used {
   case $option in
     'gb')
       u_M=$(df -h | grep '/dev/root' | awk '{print $3}')
-      u=$(echo "scale=2;$u_M/1024" | bc)
+      #u=$(echo "scale=2;$u_M/1024" | bc)
       ;;
     'mb')
       u=$(df -m | grep '/dev/root' | awk '{print $3}')
@@ -49,7 +49,7 @@ function storage_free {
   case $option in
     'gb')
       f_G=$(df -h | grep '/dev/root' | awk '{print $4}')
-      f=$(echo "scale=2;$f_G/1024" | bc)
+     # f=$(echo "scale=2;$f_G/1024" | bc)
       ;;
     'mb')
       f=$(df -m | grep '/dev/root' | awk '{print $4}')
@@ -69,7 +69,7 @@ function storage_free {
 
 function storage() {
   checkargn $# 2
-  check_missing_packages "bc"
+ # check_missing_packages "bc"
 
   COMP="rpi"
   if [ "$(detectrpi)" = "nonrpi" ];

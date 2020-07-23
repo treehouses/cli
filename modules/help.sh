@@ -134,7 +134,8 @@ magazines                                 downloads specific magazine issue as a
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
-               <receivefrom>
+               receivefrom read 
+                           meark-read
 shutdown [now|in|force]                   shutdown the system
 EOF
   echo "$helpdefault"

@@ -3,10 +3,7 @@ function usb {
   checkroot
   checkargn $# 1
   # check if hub-ctrl binary exists
-  if [ ! -e /usr/local/bin/hub-ctrl ]; then
-    echo "required binary 'hub-ctrl' not found"
-    exit 1
-  fi
+  check_missing_binary hub-ctrl
 
   # check if libusb-dev pkg is installed
   check_missing_packages libusb-dev

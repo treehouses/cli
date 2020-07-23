@@ -3,7 +3,7 @@ function usb {
   checkroot
   checkargn $# 1
   # check if hub-ctrl binary exists
-  check_missing_binary 'hub-ctrl'
+  check_missing_binary hub-ctrl
 
   # check if libusb-dev pkg is installed
   check_missing_packages libusb-dev

@@ -115,6 +115,7 @@ picture [file|url]                           displays a picture in the terminal
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off
+redirect [add|list|remove|start]                redirects internet hostnames to rpi
 remote <check|status|upgrade|services>    helps with treehouses remote android app
        <version|commands|allservices>
        <help|key>

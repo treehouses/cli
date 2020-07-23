@@ -116,10 +116,10 @@ function message_help {
   echo "  $BASENAME message gitter sendto treehouses/Lobby \"Hi, you are very awesome\""
   echo "     Sends a message to a gitter channel"
   echo
-  echo "  $BASENAME message gitter receivefrom read treehouses/Lobby" 
+  echo "  $BASENAME message gitter receivefrom read treehouses/Lobby"
   echo "     Receives and displays unread messages from a gitter channel"
   echo
-  echo "  $BASENAME message gitter receivefrom mark-read treehouses/Lobby" 
+  echo "  $BASENAME message gitter receivefrom mark-read treehouses/Lobby"
   echo "     Marks unread messages from a gitter channel to read"
   echo
 }

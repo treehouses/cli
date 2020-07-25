@@ -36,6 +36,7 @@ function supported_arms {
   echo "armv7l"
   echo "armv6l"
   echo "x86_64"
+  echo "arm64"
 }
 
 # add port(s)

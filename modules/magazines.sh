@@ -28,7 +28,7 @@ function magazines() {
       do 
         if [ -d ~/Documents/$magazine ]; then
           echo $magazine
-	  ls -v1 ~/Documents/$magazine | sed -e 'y/ /\n/;P;D' | sed -e 's/^/└──/'
+          echo "$(ls -v1 ~/Documents/$magazine | sed -e 'y/ /\n/;P;D' | sed -e 's/^/└──/')"
         fi
       done
     else
@@ -54,7 +54,7 @@ function magazines() {
   elif [ "$req" = "list" ]; then 
     if [ -d ~/Documents/$magtype ]; then
       echo $magtype
-      ls -v1 ~/Documents/$magtype | sed -e 'y/ /\n/;P;D' | sed -e 's/^/└──/'
+      echo "$(ls -v1 ~/Documents/$magtype | sed -e 'y/ /\n/;P;D' | sed -e 's/^/└──/')"
     else
       echo "No $magtype magazines have been downloaded yet"
     fi

@@ -33,18 +33,20 @@ function ssh {
             echo "You should only login as root user via a ssh key."
           elif cut -d: -f1 /etc/passwd | grep -q "$3"; then
             if [ "$2" == "add" ]; then
-              echo "Adding 2FA for user $3..."
-              if [ "$4" == "default" ]; then
+              if [ "$4" == "url" ]; then
                 printf "y\ny\nn\ny\ny\n" | runuser -l "$3" -c "google-authenticator" |\
                   grep -o -E "https://.*$"
-              else
+              elif [ "$4" == "interactive" ]; then
                 runuser -l "$3" -c "google-authenticator"
+              else
+                echo "Adding 2FA for user $3..."
+                printf "y\ny\nn\ny\ny\n" | runuser -l "$3" -c "google-authenticator"
               fi
               if [ ! -f "/home/$3/.google_authenticator" ]; then
                 echo "Addtion for $3 user failed"
                 exit 1
               fi
-              ssh 2fa enable
+              ssh 2fa enable > /dev/null
             else
               rm -rf "/home/$3/.google_authenticator"
             fi
@@ -98,11 +100,8 @@ function ssh_help {
   echo "  $BASENAME ssh fingerprint"
   echo "      The SSH fingerprint will be printed from when the session was first established."
   echo
-  echo "  $BASENAME ssh 2FA add/remove <user>"
+  echo "  $BASENAME ssh 2FA add/remove <user> [url|interactive]"
   echo "      Add/Remove a user for SSH with two factor authentication."
-  echo
-  echo "  $BASENAME ssh 2FA add <user> default"
-  echo "      Add a user but with non-interactive mode and preset config."
   echo
   echo "  $BASENAME ssh 2FA enable/disable"
   echo "      Enable/Disable two factor authentication for SSH service."

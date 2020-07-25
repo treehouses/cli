@@ -34,7 +34,12 @@ function ssh {
           elif cut -d: -f1 /etc/passwd | grep -q "$3"; then
             if [ "$2" == "add" ]; then
               echo "Adding 2FA for user $3..."
-              runuser -l "$3" -c "google-authenticator"
+              if [ "$4" == "default" ]; then
+                printf "y\ny\nn\ny\ny\n" | runuser -l "$3" -c "google-authenticator" |\
+                  grep -o -E "https://.*$"
+              else
+                runuser -l "$3" -c "google-authenticator"
+              fi
               if [ ! -f "/home/$3/.google_authenticator" ]; then
                 echo "Addtion for $3 user failed"
                 exit 1
@@ -95,6 +100,9 @@ function ssh_help {
   echo
   echo "  $BASENAME ssh 2FA add/remove <user>"
   echo "      Add/Remove a user for SSH with two factor authentication."
+  echo
+  echo "  $BASENAME ssh 2FA add <user> default"
+  echo "      Add a user but with non-interactive mode and preset config."
   echo
   echo "  $BASENAME ssh 2FA enable/disable"
   echo "      Enable/Disable two factor authentication for SSH service."

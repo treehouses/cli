@@ -144,7 +144,7 @@ function tor {
           if [ ! -f "/etc/tor_report_channels.txt" ]; then
             echo "https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages" >> /etc/tor_report_channels.txt
           fi
-          echo "OK."
+          echo "OK." > /dev/null
           ;;
         add)
           value="$3"
@@ -154,7 +154,7 @@ function tor {
           fi
 
           echo "$value" >> /etc/tor_report_channels.txt
-          echo "OK."
+          echo "OK." > /dev/null
           ;;
         delete)
           value="$3"
@@ -165,7 +165,7 @@ function tor {
 
           value=$(echo $value | sed 's/\//\\\//g')
           sed -i "/^$value/d" /etc/tor_report_channels.txt
-          echo "OK."
+          echo "OK." > /dev/null
           ;;
         list)
           if [ -f "/etc/tor_report_channels.txt" ]; then
@@ -176,7 +176,7 @@ function tor {
           ;;
         off)
           rm -rf /etc/tor_report.sh /etc/cron.d/tor_report /etc/tor_report_channels.txt || true
-          echo "OK."
+          echo "OK." > /dev/null
           ;;
         now)
           line1=$(</var/lib/tor/treehouses/hostname)

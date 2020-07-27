@@ -27,7 +27,7 @@ function clone {
   if [ $a -eq $b ] || [ $a -lt $b ]; then
     echo "copying...."
     echo u > /proc/sysrq-trigger
-    dd if=/dev/mmcblk0 bs=1M of="$device"
+    dd if=/dev/mmcblk0 bs=1M of="$device" status=progress
   fi
 
   echo ; echo "A reboot is needed to re-enable write permissions to OS."

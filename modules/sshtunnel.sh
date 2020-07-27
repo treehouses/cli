@@ -93,7 +93,7 @@ function sshtunnel {
           } > /etc/cron.d/autossh
 
           if [ -f "/etc/cron.d/tunnel_report" ]; then
-            sshtunnel notice now
+            sshtunnel notice now > /dev/null
           fi
           ;;
         port)
@@ -171,7 +171,7 @@ function sshtunnel {
                     sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
                     echo "Added $actual -> $((portinterval + offset)) for host $host"
                     if [ -f "/etc/cron.d/tunnel_report" ]; then
-                      sshtunnel notice now
+                      sshtunnel notice now > /dev/null 
                     fi
                     sshtunnel_kill $host
                   fi
@@ -248,7 +248,7 @@ function sshtunnel {
                     echo "Added $actual -> $port for host $host"
 
                     if [ -f "/etc/cron.d/tunnel_report" ]; then
-                      sshtunnel notice now
+                      sshtunnel notice now > /dev/null 
                     fi
                     
                     sshtunnel_kill $host
@@ -328,7 +328,7 @@ function sshtunnel {
             sed -i "$final d" /etc/tunnel
             echo "Removed $port for host $host"
             if [ -f "/etc/cron.d/tunnel_report" ]; then
-              sshtunnel notice now
+              sshtunnel notice now > /dev/null
             fi
             sshtunnel_kill $host
           else
@@ -369,7 +369,7 @@ function sshtunnel {
           sed -i "$((startline - 1)), $endline d" /etc/tunnel
           echo "Removed $host from /etc/tunnel"
           if [ -f "/etc/cron.d/tunnel_report" ]; then
-            sshtunnel notice now
+            sshtunnel notice now > /dev/null
           fi
           sshtunnel_kill $host
           ;;

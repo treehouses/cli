@@ -148,7 +148,7 @@ function shadowsocks {
         cp "$2" /etc/shadowsocks-libev/$name_conf.json
       elif [ $# -gt 2 ]; then
         file=$(mktemp)
-        echo $@ > $file
+        echo "$@" > $file
         sed -i 's/add//' $file
         shadowsocks add $file
       elif [ ! -f "$2" ]; then

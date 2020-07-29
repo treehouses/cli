@@ -63,7 +63,7 @@ burn [device path]                        download and burns the latest treehous
 rebootneeded                              shows if reboot is required to apply changes
 reboots <now|in|cron>                     reboots at given frequency | removes it if reboot task active
         <daily|weekly|monthly>
-internet                                  checks if the rpi has access to internet
+internet [reverse]                        checks if the rpi has access to internet
 services                                  executes the given command on the specified service
    <available|installed [full]>           list available, and installed services
    <ports|running [full]>                 list ports used by services and services running

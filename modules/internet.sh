@@ -35,6 +35,6 @@ function internet_help {
   echo "      the rpi doesn't have access to internet -> output: false"
   echo
   echo "  $BASENAME internet reverse"
-  echo "      this output the device's internet location information"
+  echo "      this outputs the device's internet location information"
   echo
 }

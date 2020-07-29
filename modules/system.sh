@@ -70,7 +70,7 @@ function system_disk {
   total=$(df -h | grep /root | awk '{print $2}'| sed 's/G//g')
   percentage=$(bc -l <<< "scale=2; $used/$total" | cut -c 2-)
   
-  echo "Disk storage:     $used""G/$total""G, $percentage% used"
+  echo "Disk storage: $used""G/$total""G, $percentage% used"
 }
 
 function system_volt {

@@ -11,7 +11,7 @@ function remote {
       ;;
     "status")
       checkargn $# 1
-      echo "$(internet) $(bluetooth mac) $(image) $(version) $(detectrpi)"
+      echo "$(internet) $(bluetooth mac) $(image) $(version) $(detectrpi) $(system disk)"
       ;;
     "upgrade")
       checkargn $# 1

@@ -65,7 +65,7 @@ function ssh {
           echo "ssh Two Factor Authentication enabled."
           ;;
         "disable")
-          sed -i 's/auth required pam_google_authenticator.so nullok//g' /etc/pam.d/sshd
+          sed -i '\:auth required pam_google_authenticator.so nullok:d' /etc/pam.d/sshd
           sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
           restart_service sshd
           echo "ssh Two Factor Authentication disabled."

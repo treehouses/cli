@@ -39,7 +39,7 @@ function sshkey () {
       echo "Usage: $BASENAME sshkey delete \"<key>\""
       exit 1
     fi
-    keys="$(echo $@ | sed 's/delete //')"
+    keys="$(echo "$@" | sed 's/delete //')"
     if grep -Fxq "$keys" /root/.ssh/authorized_keys; then
       sed -i "\:$keys:d" /root/.ssh/authorized_keys
       echo "Key deleted from root keys."

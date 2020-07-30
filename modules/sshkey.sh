@@ -47,8 +47,8 @@ function sshkey () {
       echo "Key not found in root keys."
     fi
     if [ "$(detectrpi)" != "nonrpi" ]; then
-      if grep -Fxq "$2" /home/pi/.ssh/authorized_keys; then
-        sed -i "\:$2:d" /home/pi/.ssh/authorized_keys
+      if grep -Fxq "$keys" /home/pi/.ssh/authorized_keys; then
+        sed -i "\:$keys:d" /home/pi/.ssh/authorized_keys
         echo "Key deleted from pi keys."
       else
         echo "Key not found in pi keys."

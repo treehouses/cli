@@ -39,13 +39,9 @@ function sshkey () {
       echo "Usage: $BASENAME sshkey delete \"<key>\""
       exit 1
     fi
-    if [ "$2" == "ssh-rsa" ]; then
-      echo "Error: missing qoutes"
-      echo "Usage: $BASENAME sshkey delete \"<key>\""
-      exit 1
-    fi
-    if grep -Fxq "$2" /root/.ssh/authorized_keys; then
-      sed -i "\:$2:d" /root/.ssh/authorized_keys
+    keys="$(echo $@ | sed 's/delete //')"
+    if grep -Fxq "$keys" /root/.ssh/authorized_keys; then
+      sed -i "\:$keys:d" /root/.ssh/authorized_keys
       echo "Key deleted from root keys."
     else
       echo "Key not found in root keys."

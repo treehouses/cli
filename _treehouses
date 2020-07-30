@@ -84,10 +84,10 @@ treehouses discover gateway
 treehouses discover gateway list
 treehouses discover interface
 treehouses discover mac
-treehouses discover ping google.com
-treehouses discover ports localhost
+treehouses discover ping
+treehouses discover ports
 treehouses discover rpi
-treehouses discover scan google.com
+treehouses discover scan
 treehouses discover self
 treehouses discover wifi
 treehouses ethernet

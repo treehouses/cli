@@ -83,12 +83,11 @@ treehouses detect wifi
 treehouses discover gateway
 treehouses discover gateway list
 treehouses discover interface
-treehouses discover mac b8:29:eb:9f:42:8b
-treehouses discover ping google.com
-treehouses discover ports localhost
+treehouses discover mac
+treehouses discover ping
+treehouses discover ports
 treehouses discover rpi
-treehouses discover scan google.com
-treehouses discover scan scanme.nmap.org
+treehouses discover scan
 treehouses discover self
 treehouses discover wifi
 treehouses ethernet

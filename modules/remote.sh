@@ -96,9 +96,9 @@ function remote {
       ;;
     "statuspage")
       checkargn $# 1
-      json_statusfmt="{\"status\":\"$(remote status)\",\"hostname\":\"$(hostname)\",\"arm\":\"$(detect arm)\",\"internet\":\"$(internet)\",\"memory_total\":\"$(memory total gb)\",\"memory_used\":\"$(memory used gb)\",\"temperature\":\"$(temperature)\",\"networkmode\":\"$(networkmode)\",\"info\":\"$(networkmode info | tr '\n' ' ')\"}"
+      json_statusfmt="{\"status\":\"$(remote status)\",\"hostname\":\"$(hostname)\",\"arm\":\"$(detect arm)\",\"internet\":\"$(internet)\",\"memory_total\":\"$(memory total gb)\",\"memory_used\":\"$(memory used gb)\",\"temperature\":\"$(temperature)\",\"networkmode\":\"$(networkmode)\",\"info\":\"$(networkmode info)\",\"storage\":\"$(system disk | tr '\n' ' ' | sed 's/^[[:space:]]*//;s/ \{1,\}/ /g;s/[[:space:]]*$//')\"}"
 
-      printf "${json_statusfmt}\n"
+      printf '%s\n' "${json_statusfmt}"
       ;;
     "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')

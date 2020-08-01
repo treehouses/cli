@@ -9,23 +9,41 @@ These download scripts are named `download-<magtype>.sh` and are located in the 
 
 Look at the pre-existing download scripts in `/magazines/` for examples.
 
-Once magazines are downloaded, they are saved in the `~/Documents/` directory.
+Once magazines are downloaded, they are saved in the `~/Documents/` directory inside the respective `~/Documents/<magtype>/` location.
 
-An empty download script is shown [below](#Template).
+An empty download script is shown [below](#Template) for magazines that have the prefix URL `https://<magtype>.raspberrypi.org/`
 
 ## Adding a new magazine
 Using the [template](#Template), fill in the sections as required.
 
-1. check for the latest issue number of your magazine
+### 1. Check for the latest issue number of your magazine
+
+   > ***GOAL:*** *Retrieve the issue number of the most current version of the magazine*
+
+   One way to do this is to webscrape the homepage URL of your magazine and store this in a variable called `latest`. This will
+
+   be used in the other functions to make downloading magazines easier.
+
+   ------------------------------------------------------------------------
+
+   For magazines that have the prefix URL `https://<magtype>.raspberrypi.org/`
   
    Replace `<line-num>` with the line number in the `issues.txt` file where the latest magazine issue number is found.
    ```
    latest="$(sed -n '<line-num>p' issues.txt)"
    ```
 
-1. create function for fetching all issues of your magazine
+### 2. Create function for fetching all issues of your magazine
 
-   Iterate through each available issue of the magazine.
+   > ***GOAL:*** *Iterate through each available issue of the magazine*
+
+   One way to do this is to take advantage of any patterns in the URL and iterate through the different version numbers available of
+
+   your specific magazine. Don't forget to add confirmation messages to let the user know each magazine was successfully downloaded.
+
+   ------------------------------------------------------------------------
+
+   For magazines that have the prefix URL `https://<magtype>.raspberrypi.org/`
 
    `<magtype-lowercase>` should be the same string as `<magtype>` (e.g. magpi).
 
@@ -43,29 +61,49 @@ Using the [template](#Template), fill in the sections as required.
    ...
    ```
 
-1. create function for fetching the latest issue of your magazine
+### 3. Create function for fetching the latest issue of your magazine
 
-   Download only the latest issue of the magazine.
+   > ***GOAL:*** *Download only the latest issue of the magazine*
+
+   The easiest way to do this is to call the `check_latest` function and pass the stored string-value directly into the URL via wget.
+
+   Don't forget to add a confirmation message to let the user know the magazine was sucessfully downloaded.
+
+   ------------------------------------------------------------------------
+
+   For magazines that have the prefix URL `https://<magtype>.raspberrypi.org/`
 
    See the steps above for replacing `<magtype-uppercase>` and `<magtype-lowercase>` where needed.
 
-1. create function for fetching a specific issue of the magazine
+### 4. Create function for fetching a specific issue of the magazine
 
-   Download only the requested issue number of the magazine.
+   > ***GOAL:*** *Download only the requested issue number of the magazine*
+
+   The easiest way to do this is to pass the issue number directly into the URL via wget. Don't forget to add a confirmation message to 
+
+   let the user know the magazine was sucessfully downloaded.
+
+   ------------------------------------------------------------------------
+
+   For magazines that have the prefix URL `https://<magtype>.raspberrypi.org/`
 
    See the steps above for replacing `<magtype-uppercase>` and `<magtype-lowercase>` where needed.
 
-1. add info
+### 5. Add info
 
-   Replace `<description>` with a short description of your magazine.
+   > ***GOAL:*** *Provide a brief description about the magazine*
+
+   Simply replace `<description>` with a short description of your magazine, this is probably located somewhere on the homepage.
 
    ```
    echo "<description>"
    ```
 
-1. add URL
+### 6. Add URL
 
-   Replace `<url>` with the homepage URL of your magazine.
+   > ***GOAL:*** *Provide the homepage URL of the magazine*
+
+   Simply replace `<url>` with the homepage URL of your magazine.
 
    ```
    echo "<url>"

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-local directory_services directory_magazines
-
 if which treehouses | grep -q local; then
   directory_services="/usr/local/lib/node_modules/@treehouses/cli/services"
   directory_magazines="/usr/local/lib/node_modules/@treehouses/cli/magazines"

@@ -7,7 +7,7 @@ load test-helper
 }
 
 @test "$clinom storage kb" {
-  run "${clicmd}" storage
+  run "${clicmd}" storage kb
   assert_success && assert_output -p 'Your rpi'
 }
 

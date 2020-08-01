@@ -39,7 +39,7 @@ Using the [template](#Template), fill in the sections as required.
 
    One way to do this is to take advantage of any patterns in the URL and iterate through the different version numbers available of
 
-   your specific magazine. Don't forget to add a confirmation message to let the user know the magazine was successfully downloaded.
+   your specific magazine. Don't forget to add confirmation messages to let the user know each magazine was successfully downloaded.
 
    ------------------------------------------------------------------------
 
@@ -67,6 +67,8 @@ Using the [template](#Template), fill in the sections as required.
 
    The easiest way to do this is to call the `check_latest` function and pass the stored string-value directly into the URL via wget.
 
+   Don't forget to add a confirmation message to let the user know the magazine was sucessfully downloaded.
+
    ------------------------------------------------------------------------
 
    For magazines that have the prefix URL `https://<magtype>.raspberrypi.org/`
@@ -77,7 +79,9 @@ Using the [template](#Template), fill in the sections as required.
 
    > ***GOAL:*** *Download only the requested issue number of the magazine*
 
-   The easiest way to do this is to pass the issue number directly into the URL via wget.
+   The easiest way to do this is to pass the issue number directly into the URL via wget. Don't forget to add a confirmation message to 
+
+   let the user know the magazine was sucessfully downloaded.
 
    ------------------------------------------------------------------------
 

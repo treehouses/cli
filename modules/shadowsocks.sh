@@ -28,7 +28,7 @@ function shadowsocks {
       else
         echo "Running:"
         echo
-        printf "CONFIG\t\tPORT\t\t\tLOCATION\n"
+        printf "%20s%15s%25s\n" "CONFIG" "PORT" "LOCATION"
         for pid in $(pidof ss-local)
         do
           name="$(ps ax | grep -E "^ *$pid" |\
@@ -52,7 +52,7 @@ function shadowsocks {
               grep \"region\" | cut -d ":" -f 2 |\
               sed -e 's/"//g' -e 's/,//g')"
           fi
-          printf "%s\t\t%s\t\t%s\n" "$name" "$port" "$location"
+          printf "%20s%15s%25s\n" "$name" "$port" "$location"
         done
       fi
       echo
@@ -146,6 +146,11 @@ function shadowsocks {
           echo "Abort." && exit 1
         fi
         cp "$2" /etc/shadowsocks-libev/$name_conf.json
+      elif [ $# -gt 2 ]; then
+        file=$(mktemp)
+        echo "$@" > $file
+        sed -i 's/add//' $file
+        shadowsocks add $file
       elif [ ! -f "$2" ]; then
         echo "Invalid file location"
         echo "Abort." && exit 1
@@ -187,8 +192,8 @@ function shadowsocks {
 
       if grep -q local_port /etc/shadowsocks-libev/$name_conf.json; then
         cp "$TEMPLATES/network/proxychains4.conf" /etc/shadowsocks-libev/$name_conf.conf
-        echo "socks5 127.0.0.1 $(grep local_port /etc/shadowsocks-libev/$name_conf.json |\
-          awk '{print $2}' | sed 's/,//g')" >> /etc/shadowsocks-libev/$name_conf.conf
+        echo "socks5 127.0.0.1 $(grep -o -E "\"local_port\": *[0-9]+" /etc/shadowsocks-libev/$name_conf.json |\
+          grep -o -E "[0-9]+")" >> /etc/shadowsocks-libev/$name_conf.conf
         echo "Config named \"$name_conf\" saved."
         echo "Use \`$BASENAME shadowsocks start $name_conf\` to start client."
         echo
@@ -248,11 +253,35 @@ function shadowsocks {
         echo "No instance of Shadowsocks client running!"
         echo "Abort." && exit 1
       fi ;;
+      
+    profile)
+      find /etc/shadowsocks-libev/*.json |\
+        sed -e 's/\/etc\/shadowsocks-libev\///g' -e 's/.json//g' -e 's/config//g'
+      exit 0 ;;
+      
+    running)
+      local name port
+      if [ -z "$(pidof ss-local)" ]; then
+        echo "No instance of shadowsocks client running."
+      else
+        printf "%20s%10s\n" "CONFIG" "PORT"
+        for pid in $(pidof ss-local)
+        do
+          name="$(ps ax | grep -E "^ *$pid" |\
+            awk '{print $7}' |\
+            sed -e 's/\/etc\/shadowsocks-libev\///g' -e 's/.json//g')"
+          port="$(lsof -i -P -n |\
+            grep LISTEN | grep $pid |\
+            awk '{print $9}' | cut -d ":" -f 2)"
+          printf "%20s%10s\n" "$name" "$port"
+        done
+      fi
+      exit 0 ;;
 
     *)
       echo "Error: No option as $1."
       shadowsocks_help 
-      exit 1;;
+      exit 1 ;;
   esac
 }
 

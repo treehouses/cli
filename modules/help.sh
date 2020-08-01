@@ -63,7 +63,7 @@ burn [device path]                        download and burns the latest treehous
 rebootneeded                              shows if reboot is required to apply changes
 reboots <now|in|cron>                     reboots at given frequency | removes it if reboot task active
         <daily|weekly|monthly>
-internet                                  checks if the rpi has access to internet
+internet [reverse]                        checks if the rpi has access to internet
 services                                  executes the given command on the specified service
    <available|installed [full]>           list available, and installed services
    <ports|running [full]>                 list ports used by services and services running
@@ -111,11 +111,11 @@ memory [total|used|free] [gb|mb]          displays the total memory of the devic
 temperature [celsius|fahrenheit|kelvin]   displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
 camera [on|off|detect|capture|record]     enables and disables camera, detects camera module version, captures photo, records video
-picture [file|url]                           displays a picture in the terminal
+picture [file|url]                        displays a picture in the terminal
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
 usb [on|off]                              turns usb ports on or off
-redirect [add|list|remove|start]                redirects internet hostnames to rpi
+redirect [add|list|remove|start]          redirects internet hostnames to rpi
 remote <check|status|upgrade|services>    helps with treehouses remote android app
        <version|commands|allservices>
        <help|key>

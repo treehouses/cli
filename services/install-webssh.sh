@@ -39,6 +39,9 @@ function uses_env {
 # add supported arch(es)
 function supported_arms {
   echo "armv7l"
+  echo "armv6l"
+  echo "aarch64"
+  echo "x86_64"
 }
 
 # add port(s)

@@ -18,7 +18,7 @@ Using the [template](#Template), fill in the sections as required.
 
 ### 1. check for the latest issue number of your magazine
 
-   GOAL: Retrieve the issue number of the most current version of the magazine
+   ***GOAL:*** *Retrieve the issue number of the most current version of the magazine*
 
    One way to do this is to webscrape the homepage URL of your magazine and store this in a variable called `latest`. This will
 
@@ -35,7 +35,7 @@ Using the [template](#Template), fill in the sections as required.
 
 ### 2. create function for fetching all issues of your magazine
 
-   GOAL: Iterate through each available issue of the magazine
+   ***GOAL:*** *Iterate through each available issue of the magazine*
 
    One way to do this is to take advantage of any patterns in the URL and iterate through the different version numbers available
 
@@ -63,7 +63,7 @@ Using the [template](#Template), fill in the sections as required.
 
 ### 3. create function for fetching the latest issue of your magazine
 
-   GOAL: Download only the latest issue of the magazine
+   ***GOAL:*** *Download only the latest issue of the magazine*
 
    The easiest way to do this is to call the `check_latest` function and pass the stored string-value directly into the URL via wget.
 
@@ -75,7 +75,7 @@ Using the [template](#Template), fill in the sections as required.
 
 ### 4. create function for fetching a specific issue of the magazine
 
-   GOAL: Download only the requested issue number of the magazine
+   ***GOAL:*** *Download only the requested issue number of the magazine*
 
    The easiest way to do this is to pass the issue number directly into the URL via wget.
 
@@ -87,7 +87,7 @@ Using the [template](#Template), fill in the sections as required.
 
 ### 5. add info
 
-   GOAL: Provide a brief description about the magazine
+   ***GOAL:*** *Provide a brief description about the magazine*
 
    Simply replace `<description>` with a short description of your magazine, this is probably located somewhere on the homepage.
 
@@ -97,7 +97,7 @@ Using the [template](#Template), fill in the sections as required.
 
 ### 6. add URL
 
-   GOAL: Provide the homepage URL of the magazine
+   ***GOAL:*** *Provide the homepage URL of the magazine*
 
    Simply replace `<url>` with the homepage URL of your magazine.
 

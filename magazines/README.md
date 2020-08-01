@@ -37,9 +37,9 @@ Using the [template](#Template), fill in the sections as required.
 
    > ***GOAL:*** *Iterate through each available issue of the magazine*
 
-   One way to do this is to take advantage of any patterns in the URL and iterate through the different version numbers available
+   One way to do this is to take advantage of any patterns in the URL and iterate through the different version numbers available of
 
-   of your specific magazine. 
+   your specific magazine. Don't forget to add a confirmation message to let the user know the magazine was successfully downloaded.
 
    ------------------------------------------------------------------------
 

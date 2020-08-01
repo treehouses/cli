@@ -10,10 +10,13 @@ function internet {
     echo "false"
     ;;  
   "reverse")
-    info="$(curl -s ipinfo.io)"
-    echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(ip)"'
-    echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(city|country|postal)"'| tr '\n' ',' | sed 's/,$/\n/'
-    echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(org|timezone)"'
+    info=$(curl -s ipinfo.io)
+    if ip route get 8.8.8.8 2>/dev/null 1>&2; then
+      echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(ip)"'
+      echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(city|country|postal)"'| tr '\n' ',' | sed 's/,$/\n/'
+      echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(org|timezone)"'
+      exit 0
+    fi
     ;;
   *)
     echo "ERROR: incorrect command"

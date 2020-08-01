@@ -1,5 +1,15 @@
 #!/bin/bash
 
+local directory_services directory_magazines
+
+if which treehouses | grep -q local; then
+  directory_services="/usr/local/lib/node_modules/@treehouses/cli/services"
+  directory_magazines="/usr/local/lib/node_modules/@treehouses/cli/magazines"
+else
+  directory_services="/usr/lib/node_modules/@treehouses/cli/services"
+  directory_magazines="/usr/lib/node_modules/@treehouses/cli/magazines"
+fi
+
 _treehouses_complete()
 {
   local idx subcmds
@@ -461,7 +471,7 @@ treehouses services $line up
 treehouses services $line url
 treehouses services $line url local
 treehouses services $line url tor\n"
-  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
+  done <<< "$(find $directory_services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
 }
 
 function magazines_cmds {
@@ -472,7 +482,7 @@ treehouses magazines $line all
 treehouses magazines $line latest
 treehouses magazines $line list
 treehouses magazines $line url\n"
-  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
+  done <<< "$(find $directory_magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 
 complete -F _treehouses_complete treehouses ./cli.sh

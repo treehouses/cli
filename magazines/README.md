@@ -16,7 +16,7 @@ An empty download script is shown [below](#Template) for magazines that have the
 ## Adding a new magazine
 Using the [template](#Template), fill in the sections as required.
 
-### 1. check for the latest issue number of your magazine
+### 1. Check for the latest issue number of your magazine
 
    ***GOAL:*** *Retrieve the issue number of the most current version of the magazine*
 
@@ -33,7 +33,7 @@ Using the [template](#Template), fill in the sections as required.
    latest="$(sed -n '<line-num>p' issues.txt)"
    ```
 
-### 2. create function for fetching all issues of your magazine
+### 2. Create function for fetching all issues of your magazine
 
    ***GOAL:*** *Iterate through each available issue of the magazine*
 
@@ -61,7 +61,7 @@ Using the [template](#Template), fill in the sections as required.
    ...
    ```
 
-### 3. create function for fetching the latest issue of your magazine
+### 3. Create function for fetching the latest issue of your magazine
 
    ***GOAL:*** *Download only the latest issue of the magazine*
 
@@ -73,7 +73,7 @@ Using the [template](#Template), fill in the sections as required.
 
    See the steps above for replacing `<magtype-uppercase>` and `<magtype-lowercase>` where needed.
 
-### 4. create function for fetching a specific issue of the magazine
+### 4. Create function for fetching a specific issue of the magazine
 
    ***GOAL:*** *Download only the requested issue number of the magazine*
 
@@ -85,7 +85,7 @@ Using the [template](#Template), fill in the sections as required.
 
    See the steps above for replacing `<magtype-uppercase>` and `<magtype-lowercase>` where needed.
 
-### 5. add info
+### 5. Add info
 
    ***GOAL:*** *Provide a brief description about the magazine*
 
@@ -95,7 +95,7 @@ Using the [template](#Template), fill in the sections as required.
    echo "<description>"
    ```
 
-### 6. add URL
+### 6. Add URL
 
    ***GOAL:*** *Provide the homepage URL of the magazine*
 

@@ -118,7 +118,7 @@ usb [on|off]                              turns usb ports on or off
 redirect [add|list|remove|start]          redirects internet hostnames to rpi
 remote <check|status|upgrade|services>    helps with treehouses remote android app
        <version|commands|allservices>
-       <help|key>
+       <statuspage|help|key>
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card

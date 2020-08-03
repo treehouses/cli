@@ -14,13 +14,12 @@ function internet {
   "reverse")
     # if ip route get 8.8.8.8 2>/dev/null 1>&2; then
     if [ $? -eq 0 ]; then
-      echo "true"
+      echo "true"    
+      info="$(curl -s ipinfo.io)"
+      echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(ip)"'
+      echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(city|country|postal)"'| tr '\n' ',' | sed 's/,$/\n/'
+      echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(org|timezone)"'
       exit 0
-    
-    info="$(curl -s ipinfo.io)"
-    echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(ip)"'
-    echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(city|country|postal)"'| tr '\n' ',' | sed 's/,$/\n/'
-    echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(org|timezone)"'
     fi
     ;;
   *)

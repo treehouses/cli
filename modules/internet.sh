@@ -1,25 +1,26 @@
 function internet {
   checkargn $# 1
 
-  ip route get 8.8.8.8 2>/dev/null 1>&2
   case "$1" in
   "")
     # test=$(ip route get 8.8.8.8 2>/dev/null 1>&2)
-    if [ $? -ne 0 ]; then
-      echo "Error: No internet"
+    # if [ $? -ne 0 ]; then
+    if  ! ip route get 8.8.8.8 2>/dev/null 1>&2; then
+      echo "Error: no internet"
       exit 1
-    else echo "yes"
     fi
     ;;
   "reverse")
     # if ip route get 8.8.8.8 2>/dev/null 1>&2; then
-    if [ $? -eq 0 ]; then
-      echo "true"    
+    # if [ $? -eq 0 ]; then
+    if  ! ip route get 8.8.8.8 2>/dev/null 1>&2; then
+      echo "Error: no internet"
+    else  
       info="$(curl -s ipinfo.io)"
       echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(ip)"'
       echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(city|country|postal)"'| tr '\n' ',' | sed 's/,$/\n/'
       echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(org|timezone)"'
-      exit 0
+      exit 1
     fi
     ;;
   *)

@@ -1,22 +1,26 @@
 function internet {
   checkargn $# 1
 
+  ip route get 8.8.8.8 2>/dev/null 1>&2
   case "$1" in
   "")
-    if ip route get 8.8.8.8 2>/dev/null 1>&2; then
+    # test=$(ip route get 8.8.8.8 2>/dev/null 1>&2)
+    if [ $? -ne 0 ]; then
+      echo "Error: No internet"
+      exit 1
+    else echo "yes"
+    fi
+    ;;
+  "reverse")
+    # if ip route get 8.8.8.8 2>/dev/null 1>&2; then
+    if [ $? -eq 0]; then
       echo "true"
       exit 0
     fi
-    echo "false"
-    ;;  
-  "reverse")
-    ip route get 8.8.8.8 2>/dev/null 1>&2
-    if [ $? -eq 0 ]; then
-      info="$(curl -s ipinfo.io)"
-      echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(ip)"'
-      echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(city|country|postal)"'| tr '\n' ',' | sed 's/,$/\n/'
-      echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(org|timezone)"'
-    fi
+    info="$(curl -s ipinfo.io)"
+    echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(ip)"'
+    echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(city|country|postal)"'| tr '\n' ',' | sed 's/,$/\n/'
+    echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(org|timezone)"'
     ;;
   *)
     echo "ERROR: incorrect command"

@@ -16,11 +16,12 @@ function internet {
     if [ $? -eq 0 ]; then
       echo "true"
       exit 0
-    fi
+    
     info="$(curl -s ipinfo.io)"
     echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(ip)"'
     echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(city|country|postal)"'| tr '\n' ',' | sed 's/,$/\n/'
     echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(org|timezone)"'
+    fi
     ;;
   *)
     echo "ERROR: incorrect command"

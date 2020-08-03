@@ -5,15 +5,17 @@ function internet {
   "")
     # test=$(ip route get 8.8.8.8 2>/dev/null 1>&2)
     # if [ $? -ne 0 ]; then
-    if  ! ip route get 8.8.8.8 2>/dev/null 1>&2; then
+    if [[ ! ip route get 8.8.8.8 2>/dev/null 1>&2 ]]; then
       echo "Error: no internet"
+    else
+      echo "true"
       exit 1
     fi
     ;;
   "reverse")
     # if ip route get 8.8.8.8 2>/dev/null 1>&2; then
     # if [ $? -eq 0 ]; then
-    if  ! ip route get 8.8.8.8 2>/dev/null 1>&2; then
+    if [[ ! ip route get 8.8.8.8 2>/dev/null 1>&2 ]]; then
       echo "Error: no internet"
     else  
       info="$(curl -s ipinfo.io)"

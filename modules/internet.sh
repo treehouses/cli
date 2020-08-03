@@ -13,7 +13,7 @@ function internet {
     ;;
   "reverse")
     # if ip route get 8.8.8.8 2>/dev/null 1>&2; then
-    if [ $? -eq 0]; then
+    if [ $? -eq 0 ]; then
       echo "true"
       exit 0
     fi

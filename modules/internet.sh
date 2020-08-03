@@ -11,9 +11,11 @@ function internet {
     ;;  
   "reverse")
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
-    echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(ip)"'
-    echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(city|country|postal)"'| tr '\n' ',' | sed 's/,$/\n/'
-    echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(org|timezone)"'
+    #echo $info | grep -o '"[^"]*"\s*:\s*"[^"]*"' | grep -E '"(ip)"'
+    
+    echo "($info | grep -E '(ip)')"
+    echo "($info | grep -E '(city|country|postal)'| tr '\n' ',' | sed 's/,$/\n/')"
+    echo "($info | grep -E '(org|timezone)')"
     ;;
   *)
     echo "ERROR: incorrect command"

@@ -11,7 +11,7 @@ function internet {
     ;;  
   "reverse")
      if ! ip route get 8.8.8.8 2>/dev/null 1>&2; then
-      echo "Error: no internet"
+      echo "Error: no internet found"
       exit 1
     fi
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"

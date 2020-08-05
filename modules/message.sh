@@ -64,6 +64,31 @@ function message {
           ;;
       esac
       ;;
+    hangouts)
+      case "$2" in
+        login)
+          $(pip3 install hangups)
+          $(hangups --manual-login)
+          $(git clone https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
+          ;;
+        sendto)
+          $(source message.sh)
+          #$(pip3 install hangups)
+          #$(git clone https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
+          convid="$3"
+          shift; shift; shift;
+          message="$*"
+          $(cd /root/cli/templates/hangups/examples)
+          echo "pwd: " $(pwd)
+          $(python3 /root/cli/templates/hangups/examples/send_message.py --conversation-id $convid --message-text "$message")
+          #$(python3 send_message.py --conversation-id $convid --message-text "$message")
+          ;;
+        *)
+          echo "This command does not exist, please look at the following:"
+          message_help
+          ;;
+      esac
+      ;;
     *)
       echo "This command does not exist, please look at the following:"
       message_help
@@ -77,7 +102,9 @@ function message_help {
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo
-  echo "You must set your api key at least once every session before sending a message"
+  echo "You must set your api key for gitter at least once every session before sending a message"
+  echo
+  echo "For Hangouts, you must first use the login command and follow the instructions to login, then find the conversation id through the logs of hangups, find the location of your log files and search for conversation-id, you will have to run hangups in your terminal first"
   echo
   echo "Sends message to a chat service"
   echo
@@ -91,5 +118,11 @@ function message_help {
   echo
   echo "  $BASENAME message gitter receivefrom treehouses/Lobby" 
   echo "     Receives unread messages from a gitter channel"
+  echo
+  echo "  $BASENAME message hangouts login " 
+  echo "     Follow the instructions to log into your Google Hangouts account"
+  echo
+  echo "  $BASENAME message hangouts sendto \"Uthskjhjkhkjahkhk\" \"Hi\"" 
+  echo "     Follow the instructions to log into your Google Hangouts account"
   echo
 }

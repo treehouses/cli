@@ -5,7 +5,6 @@ function internet {
   "")
     if ip route get 8.8.8.8 2>/dev/null 1>&2; then
       echo "true"
-      exit 0
     else
       echo "false"
       exit 1

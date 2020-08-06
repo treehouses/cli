@@ -67,19 +67,28 @@ function message {
     hangouts)
       case "$2" in
         login)
-          $(pip3 install hangups)
-          $(hangups --manual-login)
-          $(git clone https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
+          #$(pip3 install hangups)
+          #$(hangups --manual-login)
+          if ! [ -e /root/cli/templates/hangups ]; then
+            $(git clone https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
+          else
+            echo "already exists"
+          fi
           ;;
         sendto)
-          $(source message.sh)
+          #$(source message.sh)
           #$(pip3 install hangups)
           #$(git clone https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
+          if ! [ -e /root/cli/templates/hangups ]; then
+            $(git clone https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
+          #else
+           # echo "already exists"
+          fi
           convid="$3"
           shift; shift; shift;
           message="$*"
-          $(cd /root/cli/templates/hangups/examples)
-          echo "pwd: " $(pwd)
+          #$(cd /root/cli/templates/hangups/examples)
+          #echo "pwd: " $(pwd)
           $(python3 /root/cli/templates/hangups/examples/send_message.py --conversation-id $convid --message-text "$message")
           #$(python3 send_message.py --conversation-id $convid --message-text "$message")
           ;;

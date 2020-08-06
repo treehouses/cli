@@ -151,7 +151,7 @@ function shadowsocks {
         echo "$@" > $file
         sed -i 's/add//' $file
         shadowsocks add $file
-      elif [ ! -f "$2" ]; then
+      elif [ ! -z "$2" ] && [ ! -f "$2" ]; then
         echo "Invalid file location"
         echo "Abort." && exit 1
       else

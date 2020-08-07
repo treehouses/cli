@@ -69,9 +69,9 @@ function message {
         login)
           #if ! [ -e  ]
           pip3 install hangups > "$LOGFILE"
-          hangups --manual-login
+          hangups --manual-login --debug
           if ! [ -e /root/cli/templates/hangups ]; then
-            $(git clone https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
+            $(git clone --quiet https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
           fi
           ;;
         sendto)
@@ -79,7 +79,7 @@ function message {
           #$(pip3 install hangups)
           #$(git clone https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
           if ! [ -e /root/cli/templates/hangups ]; then
-            $(git clone https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
+            $(git clone --quiet https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
           #else
            # echo "already exists"
           fi

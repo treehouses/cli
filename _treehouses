@@ -332,6 +332,11 @@ treehouses shutdown force
 treehouses speedtest
 treehouses speedtest -h
 treehouses ssh
+treehouses ssh 2fa
+treehouses ssh 2fa add
+treehouses ssh 2fa disable
+treehouses ssh 2fa enable
+treehouses ssh 2fa remove
 treehouses ssh fingerprint
 treehouses ssh off
 treehouses ssh on

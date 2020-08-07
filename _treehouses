@@ -83,12 +83,11 @@ treehouses detect wifi
 treehouses discover gateway
 treehouses discover gateway list
 treehouses discover interface
-treehouses discover mac b8:29:eb:9f:42:8b
-treehouses discover ping google.com
-treehouses discover ports localhost
+treehouses discover mac
+treehouses discover ping
+treehouses discover ports
 treehouses discover rpi
-treehouses discover scan google.com
-treehouses discover scan scanme.nmap.org
+treehouses discover scan
 treehouses discover self
 treehouses discover wifi
 treehouses ethernet
@@ -130,6 +129,7 @@ treehouses help openvpn
 treehouses help password
 treehouses help rebootneeded
 treehouses help reboots
+treehouses help redirect
 treehouses help remote
 treehouses help rename
 treehouses help restore
@@ -141,6 +141,7 @@ treehouses help ssh
 treehouses help sshkey
 treehouses help sshtunnel
 treehouses help staticwifi
+treehouses help storage
 treehouses help temperature
 treehouses help timezone
 treehouses help tor
@@ -160,6 +161,7 @@ treehouses inspire joke
 treehouses inspire qotd
 treehouses inspire random
 treehouses internet
+treehouses internet reverse
 treehouses led
 treehouses led carnival
 treehouses led christmas
@@ -226,8 +228,9 @@ treehouses memory total mb
 treehouses memory used
 treehouses memory used gb
 treehouses memory used mb
-treehouses message gitter apikey 
-treehouses message gitter sendto 
+treehouses message gitter apikey
+treehouses message gitter sendto
+treehouses message gitter receivefrom
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet
@@ -255,6 +258,21 @@ treehouses shadowsocks restart
 treehouses shadowsocks remove
 treehouses shadowsocks start
 treehouses shadowsocks stop
+treehouses storage gb
+treehouses storage mb
+treehouses storage kb
+treehouses storage free
+treehouses storage free gb
+treehouses storage free mb
+treehouses storage free kb
+treehouses storage total
+treehouses storage total gb
+treehouses storage total mb
+treehouses storage total kb
+treehouses storage used
+treehouses storage used gb
+treehouses storage used mb
+treehouses storage used kb
 treehouses password
 treehouses password disable
 treehouses password enable
@@ -276,13 +294,21 @@ treehouses reboots in
 treehouses reboots monthly
 treehouses reboots now
 treehouses reboots weekly
+treehouses redirect add
+treehouses redirect list
+treehouses redirect remove
+treehouses redirect start
+treehouses remote allservices
 treehouses remote check
 treehouses remote commands
-treehouses remote allservices
+treehouses remote help
+treehouses remote key receive
+treehouses remote key send
 treehouses remote services available
 treehouses remote services installed
 treehouses remote services running
 treehouses remote status
+treehouses remote statuspage
 treehouses remote upgrade
 treehouses remote version
 treehouses rename
@@ -328,6 +354,10 @@ treehouses sshtunnel add port actual
 treehouses sshtunnel add port offset
 treehouses sshtunnel check
 treehouses sshtunnel key
+treehouses sshtunnel key receive private
+treehouses sshtunnel key receive public
+treehouses sshtunnel key send private
+treehouses sshtunnel key send public
 treehouses sshtunnel key verify
 treehouses sshtunnel list
 treehouses sshtunnel notice
@@ -453,7 +483,7 @@ treehouses services $line up
 treehouses services $line url
 treehouses services $line url local
 treehouses services $line url tor\n"
-  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
+  done <<< "$(find "$(which treehouses | sed 's/bin\/treehouses//')"lib/node_modules/@treehouses/cli/services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
 }
 
 function magazines_cmds {
@@ -464,7 +494,7 @@ treehouses magazines $line all
 treehouses magazines $line latest
 treehouses magazines $line list
 treehouses magazines $line url\n"
-  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
+  done <<< "$(find "$(which treehouses | sed 's/bin\/treehouses//')"lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 
 complete -F _treehouses_complete treehouses ./cli.sh

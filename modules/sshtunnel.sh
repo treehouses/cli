@@ -1,9 +1,9 @@
 function sshtunnel {
   local portinterval host hostname portssh portweb portcouchdb
-  local portnewcouchdb portmunin keys option value status
+  local portnewcouchdb portmunin keys option value status tag profile
   checkroot
 
-  if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; } && [[ ! "$*" =~ "add host" ]] && [[ ! "$*" =~ "remove all" ]] && [[ ! "$*" =~ "check" ]]; then
+  if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; } && [[ ! "$*" =~ "add host" ]] && [[ ! "$*" =~ "remove all" ]] && [[ ! "$*" =~ "check" ]] && [[ ! "$*" =~ "key" ]]; then
     echo "Error: no tunnel has been set up"
     echo "Run '$BASENAME sshtunnel add host <port interval> [host]' to add a key for the tunnel"
     exit 1
@@ -58,6 +58,7 @@ function sshtunnel {
             ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
           fi
           cat /root/.ssh/id_rsa.pub
+          echo "Port successfully added"
 
           keys=$(ssh-keyscan -H "$hostname" 2>"$LOGFILE")
           while read -r key; do
@@ -92,7 +93,7 @@ function sshtunnel {
           } > /etc/cron.d/autossh
 
           if [ -f "/etc/cron.d/tunnel_report" ]; then
-            sshtunnel notice now
+            sshtunnel notice now > /dev/null
           fi
           ;;
         port)
@@ -170,7 +171,7 @@ function sshtunnel {
                     sed -i "/^$host/i -R $((portinterval + offset)):127.0.1.1:$actual \\\\" /etc/tunnel
                     echo "Added $actual -> $((portinterval + offset)) for host $host"
                     if [ -f "/etc/cron.d/tunnel_report" ]; then
-                      sshtunnel notice now
+                      sshtunnel notice now > /dev/null 
                     fi
                     sshtunnel_kill $host
                   fi
@@ -247,7 +248,7 @@ function sshtunnel {
                     echo "Added $actual -> $port for host $host"
 
                     if [ -f "/etc/cron.d/tunnel_report" ]; then
-                      sshtunnel notice now
+                      sshtunnel notice now > /dev/null 
                     fi
                     
                     sshtunnel_kill $host
@@ -327,7 +328,7 @@ function sshtunnel {
             sed -i "$final d" /etc/tunnel
             echo "Removed $port for host $host"
             if [ -f "/etc/cron.d/tunnel_report" ]; then
-              sshtunnel notice now
+              sshtunnel notice now > /dev/null
             fi
             sshtunnel_kill $host
           else
@@ -368,7 +369,7 @@ function sshtunnel {
           sed -i "$((startline - 1)), $endline d" /etc/tunnel
           echo "Removed $host from /etc/tunnel"
           if [ -f "/etc/cron.d/tunnel_report" ]; then
-            sshtunnel notice now
+            sshtunnel notice now > /dev/null
           fi
           sshtunnel_kill $host
           ;;
@@ -495,7 +496,6 @@ function sshtunnel {
       fi
       ;;
     key)
-      checkargn $# 2
       case "$2" in
         "")
           if [ ! -f "/root/.ssh/id_rsa" ]; then
@@ -504,6 +504,7 @@ function sshtunnel {
           cat /root/.ssh/id_rsa.pub
           ;;
         verify)
+          checkargn $# 2
           if [ -f "/root/.ssh/id_rsa" ] && [ -f "/root/.ssh/id_rsa.pub" ]; then
             verify=$(diff <( ssh-keygen -y -e -f "/root/.ssh/id_rsa" ) <( ssh-keygen -y -e -f "/root/.ssh/id_rsa.pub" ))
             if [ "$verify" != "" ]; then
@@ -515,9 +516,72 @@ function sshtunnel {
             echo "Missing public / private rsa keys"
           fi
           ;;
+        send)
+          checkargn $# 4
+          profile=$4
+
+          if [[ $profile == "default" ]]; then
+            profile=""
+          elif [ ! -z "$profile" ]; then
+            profile="_${profile}"
+          fi
+
+          case "$3" in
+            public | private)
+              if [ "$3" = "public" ]; then
+                tag=".pub"
+              fi
+
+              if [ -f /root/.ssh/id_rsa${profile}${tag} ]; then
+                cat /root/.ssh/id_rsa${profile}${tag}
+              else
+                echo "No $3 key found"
+                exit 1
+              fi
+              ;;
+            *)
+              echo "Error: unknown command"
+              echo "Usage: $BASENAME sshtunnel key send <public | private> [profile]"
+              exit 1
+              ;;
+          esac
+          ;;
+        receive)
+          checkargn $# 5
+          key=$4
+          profile=$5
+
+          if [[ $profile == "default" ]]; then
+            profile=""
+          elif [ ! -z "$profile" ]; then
+            profile="_${profile}"
+          fi
+
+          case "$3" in
+            public | private)
+              if [ "$3" = "public" ]; then
+                tag=".pub"
+              fi
+
+              if [ -f /root/.ssh/id_rsa${profile}${tag} ]; then
+                timestamp=$(date +%Y%m%d%H%M)
+                mv "/root/.ssh/id_rsa${profile}${tag}" "/root/.ssh/id_rsa${profile}.${timestamp}${tag}"
+                echo "Created backup of 'id_rsa${profile}${tag}' as 'id_rsa${profile}.${timestamp}${tag}'"
+              fi
+
+              echo -e "$key" > "/root/.ssh/id_rsa${profile}${tag}"
+              echo "Saved $3 key to 'id_rsa${profile}${tag}'"
+              ;;
+            *)
+              echo "Error: unknown command"
+              echo "Usage: $BASENAME sshtunnel key receive <public | private> <\$key> [profile]"
+              exit 1
+              ;;
+          esac
+          ;;
         *)
           echo "Error: unknown command"
-          echo "Usage: $BASENAME sshtunnel key [verify]"
+          echo "Usage: $BASENAME sshtunnel key [verify | send | receive]"
           exit 1
           ;;
       esac
@@ -702,7 +766,9 @@ function sshtunnel_help {
   echo "  check                                    runs a checklist of tests"
   echo
   echo "  key                                      shows the public key"
-  echo "      [verify]                                 verifies that the public and private rsa keys match"
+  echo "      [verify]                                         verifies that the public and private rsa keys match"
+  echo "      [send] <public | private> [profile]              sends public / private key"
+  echo "      [receive] <public | private> <\$key> [profile]    saves \$key as public / private key"
   echo
   echo "  notice                                   returns whether auto-reporting sshtunnel ports to gitter is on or off"
   echo "      on                                       turns on auto-reporting to gitter"

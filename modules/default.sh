@@ -40,6 +40,13 @@ function default_network {
   rm -rf /etc/hostapd.conf
   rm -rf /etc/network/interfaces.d/*
 
+  for i in /etc/dnsmasq.d/*
+  do
+    if [ "$i" != "/etc/dnsmasq.d/README" ]; then
+      rm -rf $i
+     fi
+  done
+  
   for i in /etc/shadowsocks-libev/*
   do
     if [ "$i" != "/etc/shadowsocks-libev/config.json" ]; then

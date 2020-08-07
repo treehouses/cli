@@ -6,6 +6,11 @@ load test-helper
   assert_success
 }
 
+@test "$clinom remote statuspage" {
+  run "${clicmd}" remote statuspage
+  assert_success
+}
+
 @test "$clinom remote upgrade" {
   run "${clicmd}" remote upgrade
   assert_success

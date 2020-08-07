@@ -171,9 +171,17 @@ function check_missing_packages {
   done
 
   if (( ${#missing_deps[@]} > 0 )) ; then
-      echo "Missing required programs: ${missing_deps[*]}"
-      echo "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
-      exit 1
+    echo "Missing required programs: ${missing_deps[*]}"
+    echo "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
+    exit 1
+  fi
+}
+
+function check_missing_binary {
+  missing_binary=$1
+  if [[ $(which $missing_binary) == "" ]]; then
+    echo "\"$missing_binary\" not found, please install first"
+    exit 1
   fi
 }
 

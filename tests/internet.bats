@@ -5,3 +5,8 @@ load test-helper
   run "${clicmd}" internet
   assert_success && assert_output -p 'true'
 }
+
+@test "$clinom internet reverse" {
+  run "${clicmd}" internet reverse
+  assert_success
+}

@@ -6,8 +6,8 @@ load test-helper
   assert_success && assert_output -p 'Your rpi'
 }
 
-@test "$clinom memory -g" {
-  run "${clicmd}" memory -g
+@test "$clinom memory gb" {
+  run "${clicmd}" memory gb
   assert_success && assert_output -p 'Your rpi'
 }
 
@@ -21,7 +21,7 @@ load test-helper
   assert_success
 }
 
-@test "$clinom memory free -m" {
-  run "${clicmd}" memory free -m
+@test "$clinom memory free mb" {
+  run "${clicmd}" memory free mb
   assert_success
 }

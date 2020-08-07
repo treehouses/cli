@@ -141,6 +141,7 @@ treehouses help ssh
 treehouses help sshkey
 treehouses help sshtunnel
 treehouses help staticwifi
+treehouses help storage
 treehouses help temperature
 treehouses help timezone
 treehouses help tor
@@ -257,6 +258,21 @@ treehouses shadowsocks restart
 treehouses shadowsocks remove
 treehouses shadowsocks start
 treehouses shadowsocks stop
+treehouses storage gb
+treehouses storage mb
+treehouses storage kb
+treehouses storage free
+treehouses storage free gb
+treehouses storage free mb
+treehouses storage free kb
+treehouses storage total
+treehouses storage total gb
+treehouses storage total mb
+treehouses storage total kb
+treehouses storage used
+treehouses storage used gb
+treehouses storage used mb
+treehouses storage used kb
 treehouses password
 treehouses password disable
 treehouses password enable

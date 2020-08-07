@@ -67,12 +67,11 @@ function message {
     hangouts)
       case "$2" in
         login)
-          #$(pip3 install hangups)
-          #$(hangups --manual-login)
+          #if ! [ -e  ]
+          pip3 install hangups > "$LOGFILE"
+          hangups --manual-login
           if ! [ -e /root/cli/templates/hangups ]; then
             $(git clone https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
-          else
-            echo "already exists"
           fi
           ;;
         sendto)

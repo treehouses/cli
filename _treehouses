@@ -83,12 +83,11 @@ treehouses detect wifi
 treehouses discover gateway
 treehouses discover gateway list
 treehouses discover interface
-treehouses discover mac b8:29:eb:9f:42:8b
-treehouses discover ping google.com
-treehouses discover ports localhost
+treehouses discover mac
+treehouses discover ping
+treehouses discover ports
 treehouses discover rpi
-treehouses discover scan google.com
-treehouses discover scan scanme.nmap.org
+treehouses discover scan
 treehouses discover self
 treehouses discover wifi
 treehouses ethernet
@@ -162,6 +161,7 @@ treehouses inspire joke
 treehouses inspire qotd
 treehouses inspire random
 treehouses internet
+treehouses internet reverse
 treehouses led
 treehouses led carnival
 treehouses led christmas
@@ -308,6 +308,7 @@ treehouses remote services available
 treehouses remote services installed
 treehouses remote services running
 treehouses remote status
+treehouses remote statuspage
 treehouses remote upgrade
 treehouses remote version
 treehouses rename
@@ -477,7 +478,7 @@ treehouses services $line up
 treehouses services $line url
 treehouses services $line url local
 treehouses services $line url tor\n"
-  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
+  done <<< "$(find "$(which treehouses | sed 's/bin\/treehouses//')"lib/node_modules/@treehouses/cli/services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
 }
 
 function magazines_cmds {
@@ -488,7 +489,7 @@ treehouses magazines $line all
 treehouses magazines $line latest
 treehouses magazines $line list
 treehouses magazines $line url\n"
-  done <<< "$(find /usr/lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
+  done <<< "$(find "$(which treehouses | sed 's/bin\/treehouses//')"lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
 }
 
 complete -F _treehouses_complete treehouses ./cli.sh

@@ -10,6 +10,10 @@ function internet {
     echo "false"
     ;;  
   "reverse")
+     if ! ip route get 8.8.8.8 2>/dev/null 1>&2; then
+      echo "Error: no internet found"
+      exit 1
+    fi
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
     echo "$info" | grep -E '"(ip)"'
     echo "$info" | grep -E '"(city|country|postal)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'

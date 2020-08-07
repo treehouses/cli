@@ -100,10 +100,10 @@ function ssh_help {
   echo "  $BASENAME ssh fingerprint"
   echo "      The SSH fingerprint will be printed from when the session was first established."
   echo
-  echo "  $BASENAME ssh 2FA add/remove <user> [url|interactive]"
+  echo "  $BASENAME ssh 2fa add/remove <user> [url|interactive]"
   echo "      Add/Remove a user for SSH with two factor authentication."
   echo
-  echo "  $BASENAME ssh 2FA enable/disable"
+  echo "  $BASENAME ssh 2fa enable/disable"
   echo "      Enable/Disable two factor authentication for SSH service."
   echo
 }

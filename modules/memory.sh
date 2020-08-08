@@ -68,7 +68,8 @@ function memory_free {
 
 function memory() {
   checkargn $# 2
-  check_missing_packages "bc"
+  # check if bc binary exists
+  check_missing_binary bc
 
   COMP="rpi"
   if [ "$(detectrpi)" = "nonrpi" ];

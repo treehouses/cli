@@ -3,14 +3,13 @@ function internet {
 
   case "$1" in
   "")
-    if ip route get 8.8.8.8 2>/dev/null 1>&2; then
-      echo "true"
-      exit 0
+    if ! ip route get 8.8.8.8 2>/dev/null 1>&2; then
+      echo "false"
+      exit 1
     fi
-    echo "false"
-    ;;  
+    ;;
   "reverse")
-     if ! ip route get 8.8.8.8 2>/dev/null 1>&2; then
+    if ! ip route get 8.8.8.8 2>/dev/null 1>&2; then
       echo "Error: no internet found"
       exit 1
     fi

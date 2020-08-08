@@ -93,10 +93,10 @@ EOF
     line=${line:44}
     echo "Github: v${line%%\"*}"
     wget -q https://play.google.com/store/apps/details?id=io.treehouses.remote
-    line=$(grep -n Current details\?id\=io.treehouses.remote)
+    line=$(grep -n Current details\?id=io.treehouses.remote)
     line=${line%%:*}
-    line=$(sed -n $(( line ))p details\?id\=io.treehouses.remote)
-    rm details\?id\=io.treehouses.remote
+    line=$(sed -n $(( line ))p details\?id=io.treehouses.remote)
+    rm details\?id=io.treehouses.remote
     line=${line#*Current}
     line=${line:74}
     echo "GooglePlay: v${line%%<*}"

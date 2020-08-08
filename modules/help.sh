@@ -12,7 +12,7 @@ expandfs                                  expands the partition of the RPI image
 rename <hostname>                         changes hostname
 password <password|disable|enable>        changes the password for 'pi' user or disables/enables password authentication
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
-version [contributors]                    returns the version of treehouses command
+version [contributors|remote]             returns the version of treehouses CLI, remote, or list of contributors
 image                                     returns version of the system image installed
 detect [bluetooth|rpi|arm|arch|wifi]      detects the hardware version of any device
 ethernet <ip> <mask> <gateway> <dns>      configures rpi network interface to a static ip address

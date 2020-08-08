@@ -25,6 +25,14 @@ function ssh {
     "2fa" | "2FA")
       check_missing_packages "libpam-google-authenticator"
       case "$2" in
+        "")
+          if grep -q "auth required pam_google_authenticator.so nullok" /etc/pam.d/sshd; then
+            echo "enabled"
+          else
+            echo "disabled"
+          fi
+          exit 0
+          ;;
         "add" | "remove")
           if [ -z "$3" ]; then
             echo "Please specify the user."
@@ -33,6 +41,19 @@ function ssh {
             echo "You should only login as root user via a ssh key."
           elif cut -d: -f1 /etc/passwd | grep -q "$3"; then
             if [ "$2" == "add" ]; then
+              if [ -f /home/$3/.google_authenticator ]; then
+                echo "2FA for $3 already exists."
+                read -p "Do you want to continue to overwrite it? [y/N] " input
+                case $input in
+                  [yY][eE][sS]|[yY])
+                    echo "Proceeding.."
+                    ;;
+                  *)
+                    echo "exit"
+                    exit 1
+                    ;;
+                esac
+              fi
               if [ "$4" == "url" ]; then
                 printf "y\ny\nn\ny\ny\n" | runuser -l "$3" -c "google-authenticator" |\
                   grep -o -E "https://.*$"
@@ -43,7 +64,7 @@ function ssh {
                 printf "y\ny\nn\ny\ny\n" | runuser -l "$3" -c "google-authenticator"
               fi
               if [ ! -f "/home/$3/.google_authenticator" ]; then
-                echo "Addtion for $3 user failed"
+                echo "Addition for user $3 failed."
                 exit 1
               fi
               ssh 2fa enable > /dev/null
@@ -55,6 +76,20 @@ function ssh {
             echo "No user as $3 found."
           fi
           exit 1 ;;
+        "list")
+          printf "%10s%10s\n" "USER" "STATUS"
+          l=$(grep "^UID_MIN" /etc/login.defs)
+          l1=$(grep "^UID_MAX" /etc/login.defs)
+          for user in $(awk -F':' -v "min=${l##UID_MIN}" -v "max=${l1##UID_MAX}" '{ if ( $3 >= min && $3 <= max ) print $0}' /etc/passwd | cut -d: -f 1)
+          do
+            if [ -f "/home/$user/.google_authenticator" ]; then
+              status="enabled"
+            else
+              status="disabled"
+            fi
+            printf "%10s%10s\n" "$user" "$status"
+          done
+          ;;
         "enable")
           if ! grep -q "auth required pam_google_authenticator.so nullok" /etc/pam.d/sshd; then
             echo "auth required pam_google_authenticator.so nullok" >> /etc/pam.d/sshd
@@ -105,5 +140,8 @@ function ssh_help {
   echo
   echo "  $BASENAME ssh 2fa enable/disable"
   echo "      Enable/Disable two factor authentication for SSH service."
+  echo
+  echo "  $BASENAME ssh 2fa list"
+  echo "      List ssh 2fa status of every user."
   echo
 }

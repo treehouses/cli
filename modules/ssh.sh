@@ -43,7 +43,7 @@ function ssh {
             if [ "$2" == "add" ]; then
               if [ -f /home/$3/.google_authenticator ]; then
                 echo "2FA for $3 already exists."
-                read -p "Do you want to continue to overwrite it? [y/N] " input
+                read -rp "Do you want to continue to overwrite it? [y/N] " input
                 case $input in
                   [yY][eE][sS]|[yY])
                     echo "Proceeding.."

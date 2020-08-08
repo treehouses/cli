@@ -6,6 +6,9 @@ function internet {
     if ! ip route get 8.8.8.8 2>/dev/null 1>&2; then
       echo "false"
       exit 1
+    else
+      echo "true"
+      exit 0
     fi
     ;;
   "reverse")

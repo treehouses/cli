@@ -11,7 +11,7 @@ function report {
 
 
 prevStatus=$(cat /tmp/prev_openvpn_status 2>/dev/null || echo "offline")
-if ping -I tun0 -q -c 3 -W 1 1.1.1.1 >/dev/null; then
+if ping -I tun0 -q -c 3 -W 200 1.1.1.1 >/dev/null; then
   echo "vpn is online, was $prevStatus"
   if [ "$prevStatus" = "offline" ]; then
     echo "online" > /tmp/prev_openvpn_status

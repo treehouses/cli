@@ -70,25 +70,33 @@ function message {
           #if ! [ -e  ]
           pip3 install hangups > "$LOGFILE"
           hangups --manual-login --debug
+          path="echo "$(which treehouses | sed 's/bin\/treehouses//')lib/node_modules/@treehouses/cli/templates""
           if ! [ -e /root/cli/templates/hangups ]; then
-            $(git clone --quiet https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
+            $(git clone --quiet https://github.com/tdryer/hangups.git $path)
           fi
           ;;
         sendto)
           #$(source message.sh)
           #$(pip3 install hangups)
           #$(git clone https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
+          path="echo "$(which treehouses | sed 's/bin\/treehouses//')lib/node_modules/@treehouses/cli/templates""
           if ! [ -e /root/cli/templates/hangups ]; then
-            $(git clone --quiet https://github.com/tdryer/hangups.git /root/cli/templates/hangups)
+            $(git clone --quiet https://github.com/tdryer/hangups.git $path)
           #else
            # echo "already exists"
           fi
           convid="$3"
           shift; shift; shift;
           message="$*"
+          if ! [[ -z "$message" ]]; then
+            $(python3 /root/cli/templates/hangups/examples/send_message.py --conversation-id $convid --message-text "$message")
+            echo "Thanks for the message!"
+          else
+            echo "No message was submitted."
+          fi
           #$(cd /root/cli/templates/hangups/examples)
           #echo "pwd: " $(pwd)
-          $(python3 /root/cli/templates/hangups/examples/send_message.py --conversation-id $convid --message-text "$message")
+          #$(python3 /root/cli/templates/hangups/examples/send_message.py --conversation-id $convid --message-text "$message")
           #$(python3 send_message.py --conversation-id $convid --message-text "$message")
           ;;
         *)

@@ -2,13 +2,12 @@
 
 function burn {
   option="$1"
-  if [ $option = "list" ]
-  then
+  if [ $option = "list" ]; then
     lsblk
   else
-    if [ -z "$option" ]
-    then
-        device="/dev/sdb"
+    if [ -z "$option" ]; then
+        # device="/dev/sdb"
+        device="/dev/mmcblk0"
     fi
 
     if [ ! -b "$option" ]; then

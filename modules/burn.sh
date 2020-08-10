@@ -2,7 +2,7 @@
 
 function burn {
   option="$1"
-  if [ $option = "list" ]; then
+  if [ $option == "list" ]; then
     lsblk
   else
     if [ -z "$option" ]; then

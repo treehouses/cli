@@ -96,6 +96,7 @@ services                                  executes the given command on the spec
    [pylon]                                Pylon is a web based integrated development environment built with Node.js as a backend
    [rutorrent]                            Rutorrent is a popular rtorrent client with a webui for ease of use
    [webssh]                               Webssh is a simple web application to be used as an ssh client to connect to your ssh servers
+   [novnc]                                noVNC is an open source VNC client and runs well in any modern browsers
 tor [list|ports|add|delete|deleteall]     deals with services on tor hidden network
     [start|stop|destroy|notice]
     [status|refresh]

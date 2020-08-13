@@ -17,10 +17,12 @@ function burn {
     # fi
 
 
-    if [ -d "/dev/sda/" ]; then
+    if [ -b "/dev/sda/" ]; then
       echo "$device exists."
+      exit 1
     else
       echo "does not exist."
+      exit 1
     fi
 
     echo "downloading treehouses image."

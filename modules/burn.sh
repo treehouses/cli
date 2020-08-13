@@ -11,8 +11,7 @@ function burn {
       echo "Error: the device \"$device\" was not detected"
       exit 1
     fi
-  else
-
+  elif [ "$option" == "write" ]; then
     echo "downloading treehouses image."
     rm -f new.sha1
     if wget "http://dev.ole.org/latest.img.gz.sha1" -O new.sha1; then
@@ -31,6 +30,8 @@ function burn {
       zcat "latest.img.gz" | sudo dd of=$device bs=1M conv=fsync
       echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
     fi
+  else
+    echo "Error: no command found"
   fi
 }
 

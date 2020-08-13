@@ -1,20 +1,9 @@
-#!/bin/bash
-
 function burn {
   option="$1"
   device="/dev/sda"
   if [ "$option" == "list" ]; then
     lsblk
-  # else
-    # if [ -z "$option" ]; then
-    #     device="/dev/sda"
-    #     # device="/dev/mmcblk0"
-    # fi
 
-    # if [ ! -b "$option" ]; then
-    #     echo "Error: the device $option wasn't detected"
-    #     exit 1
-    # fi
   elif [ "$option" == "detect" ]; then
     if lsblk /dev/sd* > /dev/null 2>&1; then 
       echo "The device \"$device\" exists"
@@ -23,15 +12,6 @@ function burn {
       exit 1
     fi
   else
-
-    # if [ -b "/dev/sda/" ]; then
-    #   echo "$device exists."
-    #   exit 1
-    # else
-    #   echo "does not exist."
-    #   exit 1
-    # fi
-
 
     echo "downloading treehouses image."
     rm -f new.sha1
@@ -46,17 +26,10 @@ function burn {
       fi
     fi
 
-    # zcat "latest.img.gz"
     if [ -f "latest.img.gz" ]; then
       echo "writing..."
-      # zcat "latest.img.gz" > "$option"
-      # zcat "latest.img.gz" > $device 
       zcat "latest.img.gz" | sudo dd of=$device bs=1M conv=fsync
       echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
-      echo "End of file ..."
-      echo "End of file ..."
-      echo "End of file ..."
-      echo ""
     fi
   fi
 }

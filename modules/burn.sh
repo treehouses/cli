@@ -2,16 +2,18 @@
 
 function burn {
   option="$1"
+  device="/dev/sda"
   if [ "$option" == "list" ]; then
     lsblk
   else
-    if [ -z "$option" ]; then
-        device="/dev/sda"
-        # device="/dev/mmcblk0"
-    fi
+    # if [ -z "$option" ]; then
+    #     device="/dev/sda"
+    #     # device="/dev/mmcblk0"
+    # fi
 
     if [ ! -b "$option" ]; then
-        echo "Error: the device $option wasn't detected"
+        # echo "Error: the device $option wasn't detected"
+        echo "Error: the $device wasn't detected"
         exit 1
     fi
 

@@ -19,7 +19,7 @@ function burn {
     if lsblk /dev/sd* > /dev/null 2>&1; then 
       echo "The device \"$device\" exists"
     else
-      echo "Error: the device \"$device\" $option was not detected"
+      echo "Error: the device \"$device\" was not detected"
       exit 1
     fi
   else

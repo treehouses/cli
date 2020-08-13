@@ -6,8 +6,8 @@ function burn {
     lsblk
   else
     if [ -z "$option" ]; then
-        # device="/dev/sdb"
-        device="/dev/mmcblk0"
+        device="/dev/sda"
+        # device="/dev/mmcblk0"
     fi
 
     if [ ! -b "$option" ]; then
@@ -47,4 +47,3 @@ function burn_help {
   echo ""
   echo "  $(basename "$0") burn /dev/sda"
   echo "      Will download or update the treehouses image and write it to /dev/sda"
-}

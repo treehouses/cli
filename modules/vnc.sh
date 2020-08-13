@@ -74,7 +74,6 @@ case "$option" in
       echo "Please reboot your system."
     fi
     ;;
-  # NEED TO ADD
  *)
     echo "Error: only 'on', 'off', 'info' options are supported";
     exit 1;

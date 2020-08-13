@@ -2,7 +2,7 @@
 
 function burn {
   option="$1"
-  device="/dev/sda"
+  device="/dev/sd*"
   if [ "$option" == "list" ]; then
     lsblk
   # else

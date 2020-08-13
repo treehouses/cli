@@ -49,7 +49,7 @@ function burn {
     echo "writing..."
     # zcat "latest.img.gz" > "$option"
     # zcat "latest.img.gz" > $device
-    dd if=zcat "latest.img.gz" of=/dev/sda bs=1M conv=fsync
+    dd if="latest.img.gz" of=$device bs=1M conv=fsync
     echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
   fi
 }

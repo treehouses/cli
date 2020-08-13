@@ -75,7 +75,7 @@ function message {
 	  path="$(which treehouses | sed 's/bin\/treehouses//')lib/node_modules/@treehouses/cli/templates"
 	  #echo "$path"
           if ! [ -e $path/hangups ]; then
-            git clone https://github.com/tdryer/hangups.git $path/hangups
+            git clone --quiet https://github.com/tdryer/hangups.git $path/hangups
           fi
           ;;
         sendto)
@@ -91,7 +91,7 @@ function message {
 	  path="$(which treehouses | sed 's/bin\/treehouses//')lib/node_modules/@treehouses/cli/templates"
 	  #echo "$path"
           if ! [ -e $path/hangups ]; then
-            git clone https://github.com/tdryer/hangups.git $path/hangups
+            git clone --quiet https://github.com/tdryer/hangups.git $path/hangups
           fi
           convid="$3"
           shift; shift; shift;

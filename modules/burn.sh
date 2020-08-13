@@ -54,6 +54,9 @@ function burn {
       zcat "latest.img.gz" | sudo dd of=$device bs=1M conv=fsync
       echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
       echo "End of file ..."
+      echo "End of file ..."
+      echo "End of file ..."
+      echo ""
     fi
   fi
 }

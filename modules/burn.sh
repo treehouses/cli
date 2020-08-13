@@ -47,3 +47,4 @@ function burn_help {
   echo ""
   echo "  $(basename "$0") burn /dev/sda"
   echo "      Will download or update the treehouses image and write it to /dev/sda"
+}

@@ -68,6 +68,7 @@ function message {
       case "$2" in
         login)
           #if ! [ -e  ]
+	  sudo apt-get install python3-pip > "LOGFILE"
           pip3 install hangups > "$LOGFILE"
           hangups --manual-login --debug
           #path="echo "$(which treehouses | sed 's/bin\/treehouses//')lib/node_modules/@treehouses/cli/templates""

@@ -16,15 +16,23 @@ function burn {
     #     exit 1
     # fi
 
-
-    if [ -b "/dev/sda/" ]; then
-      echo "$device exists."
+    if lsblk /dev/sd* > /dev/null 2>&1; then 
+      echo "$device exists"
       exit 1
     else
-      echo "does not exist."
+      echo "$device does not exist"
       exit 1
     fi
 
+    # if [ -b "/dev/sda/" ]; then
+    #   echo "$device exists."
+    #   exit 1
+    # else
+    #   echo "does not exist."
+    #   exit 1
+    # fi
+
+    
     echo "downloading treehouses image."
     rm -f new.sha1
     if wget "http://dev.ole.org/latest.img.gz.sha1" -O new.sha1; then

@@ -27,13 +27,14 @@ function ssh {
       case "$2" in
         "")
           if grep -q "auth required pam_google_authenticator.so nullok" /etc/pam.d/sshd; then
-            echo "enabled"
+            echo "on"
           else
-            echo "disabled"
+            echo "off"
           fi
           exit 0
           ;;
         "add" | "remove")
+          checkargn $# 3
           if [ -z "$3" ]; then
             echo "Please specify the user."
           elif [ "$3" == "root" ]; then
@@ -69,6 +70,7 @@ function ssh {
           fi
           exit 1 ;;
         "list")
+          checkargn $# 2
           printf "%10s%10s\n" "USER" "STATUS"
           l=$(grep "^UID_MIN" /etc/login.defs)
           l1=$(grep "^UID_MAX" /etc/login.defs)
@@ -83,6 +85,7 @@ function ssh {
           done
           ;;
         "enable")
+          checkargn $# 2
           if ! grep -q "auth required pam_google_authenticator.so nullok" /etc/pam.d/sshd; then
             echo "auth required pam_google_authenticator.so nullok" >> /etc/pam.d/sshd
           fi
@@ -92,6 +95,7 @@ function ssh {
           echo "ssh Two Factor Authentication enabled."
           ;;
         "disable")
+          checkargn $# 2
           sed -i '\:auth required pam_google_authenticator.so nullok:d' /etc/pam.d/sshd
           sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
           restart_service sshd

@@ -46,7 +46,7 @@ function burn {
       fi
     fi
 
-    zcat "latest.img.gz"
+    # zcat "latest.img.gz"
     if [ -f "latest.img.gz" ]; then
       echo "writing..."
       # zcat "latest.img.gz" > "$option"

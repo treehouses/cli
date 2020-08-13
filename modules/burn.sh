@@ -22,6 +22,7 @@ function burn {
       echo "Error: the device \"$device\" $option was not detected"
       exit 1
     fi
+  else
 
     # if [ -b "/dev/sda/" ]; then
     #   echo "$device exists."
@@ -46,8 +47,8 @@ function burn {
     fi
 
     echo "writing..."
-    # zcat "latest.img.gz" > "$option"
-    zcat "latest.img.gz" > "$device"
+    zcat "latest.img.gz" > "$option"
+    # zcat "latest.img.gz" > "$device"
     echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
   fi
 }

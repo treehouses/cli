@@ -5,7 +5,7 @@ function burn {
   device="/dev/sda"
   if [ "$option" == "list" ]; then
     lsblk
-  else
+  # else
     # if [ -z "$option" ]; then
     #     device="/dev/sda"
     #     # device="/dev/mmcblk0"
@@ -15,12 +15,11 @@ function burn {
     #     echo "Error: the device $option wasn't detected"
     #     exit 1
     # fi
-
+  elif [ "$option" == "detect"]; then
     if lsblk /dev/sd* > /dev/null 2>&1; then 
-      echo "$device exists"
-      exit 1
+      echo "The device \"$device\" exists"
     else
-      echo "$device does not exist"
+      echo "Error: the device \"$device\" $option was not detected"
       exit 1
     fi
 
@@ -32,7 +31,7 @@ function burn {
     #   exit 1
     # fi
 
-    
+
     echo "downloading treehouses image."
     rm -f new.sha1
     if wget "http://dev.ole.org/latest.img.gz.sha1" -O new.sha1; then

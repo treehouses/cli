@@ -10,10 +10,6 @@ version: '3'
 services:
   novnc:
     image: treehouses/novnc
-    environment:
-      - NOVNC_PORT=6080
-      - NOVNC_HOME=/srv/novnc
-      - GET_HOST="ip route | awk '/default/ { print \$3 }'"
     ports:
     - "6080:6080"
 EOF

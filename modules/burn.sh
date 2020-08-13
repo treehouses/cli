@@ -37,7 +37,7 @@ function burn {
     rm -f new.sha1
     if wget "http://dev.ole.org/latest.img.gz.sha1" -O new.sha1; then
       if [[ ! -e "latest.img.gz" ]] || [[ ! -e "latest.img.gz.sha1" ]] || [[ $(cat new.sha1) != $(cat latest.img.gz.sha1) ]]; then
-        tar zxvf "latest.img.gz.sha1" && rm -f "latest.img.gz.sha1"
+        rm -f "latest.img.gz.sha1"
         wget "http://dev.ole.org/latest.img.gz.sha1"
         rm -f "latest.img.gz"
         wget "http://dev.ole.org/latest.img.gz"
@@ -53,6 +53,7 @@ function burn {
       # zcat "latest.img.gz" > $device 
       zcat "latest.img.gz" | sudo dd of=$device bs=1M conv=fsync
       echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
+      echo "End of file ..."
     fi
   fi
 }

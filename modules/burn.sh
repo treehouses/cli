@@ -11,10 +11,16 @@ function burn {
     #     # device="/dev/mmcblk0"
     # fi
 
-    if [ ! -b "$option" ]; then
-        # echo "Error: the device $option wasn't detected"
-        echo "Error: the $device wasn't detected"
-        exit 1
+    # if [ ! -b "$option" ]; then
+    #     echo "Error: the device $option wasn't detected"
+    #     exit 1
+    # fi
+
+
+    if [ -d "/dev/sda/" ]; then
+      echo "$device exists."
+    else
+      echo "does not exist."
     fi
 
     echo "downloading treehouses image."

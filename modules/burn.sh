@@ -15,7 +15,7 @@ function burn {
     #     echo "Error: the device $option wasn't detected"
     #     exit 1
     # fi
-  elif [ "$option" == "detect"]; then
+  elif [ "$option" == "detect" ]; then
     if lsblk /dev/sd* > /dev/null 2>&1; then 
       echo "The device \"$device\" exists"
     else

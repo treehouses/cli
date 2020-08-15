@@ -19,8 +19,9 @@ function burnimage {
     # if [ "$2" == "/dev/sda" || "$2" == "/dev/sdb" ]; then
       echo "downloading treehouses image."
       rm -f new.sha1
-      if wget "http://dev.ole.org/latest.img.gz.sha1" -O new.sha1; then
-        if [[ ! -e "latest.img.gz" ]] || [[ ! -e "latest.img.gz.sha1" ]] || [[ $(cat new.sha1) != $(cat latest.img.gz.sha1) ]]; then
+    #   if wget "http://dev.ole.org/latest.img.gz.sha1" -O new.sha1; then
+    if wget "http://dev.ole.org/latest.img.gz" -O new.gz; then
+        if [[ ! -e "latest.img.gz" ]] || [[ ! -e "latest.img.gz.sha1" ]] || [[ $(cat new.gz) != $(cat latest.img.gz.sha1) ]]; then
           rm -f "latest.img.gz.sha1"
           wget "http://dev.ole.org/latest.img.gz.sha1"
           rm -f "latest.img.gz"

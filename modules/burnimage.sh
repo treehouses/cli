@@ -19,7 +19,9 @@ function burnimage {
 
       if [ -f "latest.img.gz" ]; then
         echo "writing..."
-        zcat "latest.img.gz" | sudo dd of=$option bs=1M conv=fsync
+        "latest.img.gz" zcat | dd of="$option" bs=4096 conv=noerror
+        # sudo dd if="latest.img.gz" of="$option" seek=2038399 bs=4096
+        # zcat "latest.img.gz" | sudo dd of=$option bs=1M conv=fsync
         echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
       fi
     fi

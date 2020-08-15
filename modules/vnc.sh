@@ -97,10 +97,10 @@ case "$option" in
             echo "Please reboot the system for changes to take effect."
         ;;
         "vncpasswd")
-            echo "Changing VNC server authentication to VNC password authentication way..."
-            echo "Writing 'Authentication=VncAuth' to config file"
             if [[ -f /root/.vnc/config.d/vncserver-x11 ]]
             then
+                echo "Changing VNC server authentication to VNC password authentication way..."
+                echo "Writing 'Authentication=VncAuth' to config file"
                 if grep -Fxq "Authentication" /root/.vnc/config.d/vncserver-x11
                 then
                     sed -i 's/SystemAuth/VncAuth/' /root/.vnc/config.d/vncserver-x11
@@ -110,6 +110,8 @@ case "$option" in
                 fi
                 treehouses vnc off > /dev/null 2>&1
                 treehouses vnc on  > /dev/null 2>&1
+                echo "Create your password, run 'treehouses vnc passwd'."
+                echo "Please reboot the system for changes to take effect."
             else
                 echo "Please create a password first, run 'treehouses vnc passwd'."
             fi

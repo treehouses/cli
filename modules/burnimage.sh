@@ -1,12 +1,13 @@
 function burnimage {
   option="$1"
-  device="$(/dev/sd*)"
+#   device="$(/dev/sd*)"
+  device="$2"
+  existed_device=$(lsblk /dev/sd* ${device})
   if [ "$option" == "list" ]; then
     lsblk
-
   elif [ "$option" == "detect" ]; then
     if lsblk /dev/sd* > /dev/null 2>&1; then 
-      echo "The device \"$device\" exists"
+      echo "The device \"$existed_device\" exists"
     else
       echo "Error: the device \"$device\" was not detected"
       exit 1

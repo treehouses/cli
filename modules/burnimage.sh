@@ -1,27 +1,13 @@
 function burnimage {
   option="$1"
-#   device="$(/dev/sd*)"
-#   device="$2"
-#   existed_device=$(lsblk /dev/sd* ${device})
   if [ "$option" == "list" ]; then
     lsblk
-#   elif [ "$option" == "detect" ]; then
-#     if lsblk /dev/sd* > /dev/null 2>&1; then 
-#       echo "The device \"$device\" exists"
-#     else
-#       echo "Error: the device \"$device\" was not detected"
-#       exit 1
-#     fi
-    elif [[ ( "$option" == "/dev/sda" || "$option" == "/dev/sdb" ) ]]; then # && [ lsblk /dev/sd* > /dev/null 2>&1 ]]; then
+  elif [[ ( "$option" == "/dev/sda" || "$option" == "/dev/sdb" ) ]]; then
     if lsblk "$option" > /dev/null 2>&1; then
-#   elif [[ "$option" == "$device" && $(lsblk /dev/sd*) == "$device" ]]; then
-    # existed_device=$(lsblk /dev/sd* ${device})
-    # if [ "$2" == "/dev/sda" || "$2" == "/dev/sdb" ]; then
       echo "downloading treehouses image."
       rm -f new.sha1
-    #   if wget "http://dev.ole.org/latest.img.gz.sha1" -O new.sha1; then
-    if wget "http://dev.ole.org/latest.img.gz" -O new.gz; then
-        if [[ ! -e "latest.img.gz" ]] || [[ ! -e "latest.img.gz.sha1" ]] || [[ $(cat new.gz) != $(cat latest.img.gz) ]]; then
+      if wget "http://dev.ole.org/latest.img.gz.sha1" -O new.sha1; then
+        if [[ ! -e "latest.img.gz" ]] || [[ ! -e "latest.img.gz.sha1" ]] || [[ $(cat new.sha1) != $(cat latest.img.gz.sha1) ]]; then
           rm -f "latest.img.gz.sha1"
           wget "http://dev.ole.org/latest.img.gz.sha1"
           rm -f "latest.img.gz"
@@ -41,7 +27,6 @@ function burnimage {
     echo "Error: no command found"
   fi
 }
-
 
 function burnimage_help {
   echo ""

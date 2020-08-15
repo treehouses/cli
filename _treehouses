@@ -420,6 +420,9 @@ treehouses vnc
 treehouses vnc info
 treehouses vnc off
 treehouses vnc on
+treehouses vnc auth system
+treehouses vnc auth vncpasswd
+treehouses vnc passwd
 treehouses wifi
 treehouses wificountry
 treehouses wifihidden

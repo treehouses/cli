@@ -1,8 +1,9 @@
 function vnc {
   local option bootoptionstatus vncservicestatus xservicestatus ipaddress isgraphical
   checkroot
-  checkargn $# 1
+  checkargn $# 2
   option=$1
+  auth=$2
   bootoptionstatus=$(systemctl is-enabled graphical.target)
   vncservicestatus=$(systemctl is-active vncserver-x11-serviced)
   xservicestatus=$(systemctl is-active lightdm)
@@ -74,8 +75,55 @@ case "$option" in
       echo "Please reboot your system."
     fi
     ;;
+  "auth")
+    case $auth in
+        "system")
+            echo "Changing VNC server authentication to system authentication way..."
+            echo "Writing 'Authentication=SystemAuth' to config file"
+            if [[ -f /root/.vnc/config.d/vncserver-x11 ]]
+            then
+                if grep -Fxq "Authentication" /root/.vnc/config.d/vncserver-x11
+                then
+                    sed -i 's/VncAuth/SystemAuth/' /root/.vnc/config.d/vncserver-x11
+                else
+                    echo "Authentication=SystemAuth" >> /root/.vnc/config.d/vncserver-x11
+                fi
+            else
+                mkdir -p /root/.vnc/config.d
+                echo "Authentication=SystemAuth" >> /root/.vnc/config.d/vncserver-x11
+            fi
+            treehouses vnc off > /dev/null 2>&1
+            treehouses vnc on  > /dev/null 2>&1
+            echo "Please reboot the system for changes to take effect."
+        ;;
+        "vncpasswd")
+            echo "Changing VNC server authentication to VNC password authentication way..."
+            echo "Writing 'Authentication=VncAuth' to config file"
+            if [[ -f /root/.vnc/config.d/vncserver-x11 ]]
+            then
+                if grep -Fxq "Authentication" /root/.vnc/config.d/vncserver-x11
+                then
+                    sed -i 's/SystemAuth/VncAuth/' /root/.vnc/config.d/vncserver-x11
+                    echo "Please reboot the system for changes to take effect."
+                else
+                    echo "Authentication=VncAuth" >> /root/.vnc/config.d/vncserver-x11
+                fi
+                treehouses vnc off > /dev/null 2>&1
+                treehouses vnc on  > /dev/null 2>&1
+            else
+                echo "Please create a password first, run 'treehouses vnc passwd'."
+            fi
+        ;;
+        *)
+        echo "Error: only 'system', 'vncpasswd' options are supported"
+        ;;
+    esac
+  "passwd")
+    echo "Creating password of VNC service mode for VNC password authentication..."
+    vncpasswd -service
+    ;;
  *)
-    echo "Error: only 'on', 'off', 'info' options are supported";
+    echo "Error: only 'on', 'off', 'info', 'auth', 'passwd' options are supported";
     exit 1;
     ;;
   esac
@@ -95,11 +143,15 @@ function vnc_help {
   echo "      This will disable html, if it is active."
   echo
   echo "  $BASENAME vnc off"
-  echo "      VNC services will be disabled."  echo
-  echo "Enables or disables the VNC server service"
+  echo "      VNC services will be disabled."
   echo
-  echo "Example:"
   echo "  $BASENAME vnc info"
   echo "      Prints a detailed configuration of each required component (boot option, vnc service, x service)."
+  echo
+  echo "  $BASENAME vnc auth <system|vncpasswd>"
+  echo "      Change the VNC server authentication way (system default or vnc password)."
+  echo
+  echo "  $BASENAME vnc passwd"
+  echo "      Create password of VNC service mode for VNC password authentication."
   echo
 }

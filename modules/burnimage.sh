@@ -12,7 +12,7 @@ function burnimage {
 #       echo "Error: the device \"$device\" was not detected"
 #       exit 1
 #     fi
-    elif [ ( "$option" == "/dev/sda" || "$option" == "/dev/sdb" ) ]; then # && [ lsblk /dev/sd* > /dev/null 2>&1 ]]; then
+    elif [[ ( "$option" == "/dev/sda" || "$option" == "/dev/sdb" ) ]]; then # && [ lsblk /dev/sd* > /dev/null 2>&1 ]]; then
     if lsblk /dev/sd* > /dev/null 2>&1; then
 #   elif [[ "$option" == "$device" && $(lsblk /dev/sd*) == "$device" ]]; then
     # existed_device=$(lsblk /dev/sd* ${device})

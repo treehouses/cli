@@ -140,6 +140,7 @@ system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
                <receivefrom>
 shutdown [now|in|force]                   shutdown the system
+burnimage [path|list|detect]              download and burns the latest 
 EOF
   echo "$helpdefault"
 }

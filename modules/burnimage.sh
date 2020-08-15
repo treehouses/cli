@@ -12,7 +12,8 @@ function burnimage {
       exit 1
     fi
   elif [ "$option" == "" ]; then
-    if [ "$2" == "/dev/sda" || "$2" == "/dev/sdb" ]; then
+    existed_device=$(lsblk /dev/sd* ${device})
+    # if [ "$2" == "/dev/sda" || "$2" == "/dev/sdb" ]; then
       echo "downloading treehouses image."
       rm -f new.sha1
       if wget "http://dev.ole.org/latest.img.gz.sha1" -O new.sha1; then
@@ -24,7 +25,7 @@ function burnimage {
         else
           echo "the image is up-to-date"
         fi
-      fi
+    #   fi
 
       if [ -f "latest.img.gz" ]; then
         echo "writing..."

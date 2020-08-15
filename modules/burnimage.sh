@@ -9,8 +9,8 @@ function burnimage {
       if wget "http://dev.ole.org/latest.img.gz.sha1" -O new.sha1; then
         if [[ ! -e "latest.img.gz" ]] || [[ ! -e "latest.img.gz.sha1" ]] || [[ $(cat new.sha1) != $(cat latest.img.gz.sha1) ]]; then
           rm -f "latest.img.gz.sha1"
-        #   wget "http://dev.ole.org/latest.img.gz.sha1"
-        #   rm -f "latest.img.gz"
+          wget "http://dev.ole.org/latest.img.gz.sha1"
+          rm -f "latest.img.gz"
           wget "http://dev.ole.org/latest.img.gz"
         else
           echo "the image is up-to-date"
@@ -19,7 +19,7 @@ function burnimage {
 
       if [[ -f "latest.img.gz" || -e "latest.img.gz" ]]; then
         echo "writing..."
-        zcat "latest.img.gz" | dd of="$option" bs=4096 conv=noerror
+        dd if="latest.img.gz" of="$option" bs=4096 conv=noerror
         echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
       fi
     fi

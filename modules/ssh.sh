@@ -63,11 +63,11 @@ function ssh {
             else
               rm -rf "/home/$3/.google_authenticator"
             fi
-            exit 0
           else
             echo "No user as $3 found."
+            exit 1
           fi
-          exit 1 ;;
+          ;;
         "change")
           checkargn $# 3
           ssh 2fa remove $3

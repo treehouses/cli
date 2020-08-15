@@ -115,9 +115,10 @@ case "$option" in
             fi
         ;;
         *)
-        echo "Error: only 'system', 'vncpasswd' options are supported"
+            echo "Error: only 'system', 'vncpasswd' options are supported"
         ;;
     esac
+    ;;
   "passwd")
     echo "Creating password of VNC service mode for VNC password authentication..."
     vncpasswd -service

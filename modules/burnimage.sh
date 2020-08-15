@@ -1,6 +1,6 @@
 function burnimage {
   option="$1"
-  device="$2"
+  device="/dev/sd*"
   if [ "$option" == "list" ]; then
     lsblk
 

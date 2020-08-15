@@ -109,7 +109,7 @@ function ssh {
           ssh_help
           ;;
       esac
-      exit 0 ;;
+      ;;
     *)
       echo "Error: only '', 'on', 'off', or 'fingerprint' options are supported"
       ;;

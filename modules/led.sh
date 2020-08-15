@@ -109,6 +109,14 @@ function led {
       echo "this will happen 3 times"
       dragonboat > "$LOGFILE"
       ;;
+      labourday)
+      checkroot
+      echo "leds are set to labourday mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Green LED: flashing 5 times with a decreasing frequency"
+      echo "Red LED: flashing 2 times quickly"
+      labourday > "$LOGFILE"
+      ;;
     independenceday)
       checkroot
       echo "leds are set to independenceday mode."
@@ -569,6 +577,38 @@ function dragonboat {
   led red "$current_red"
 }
 
+function labourday {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  set_brightness 1 0 
+  for i in {0..1}
+  do
+    for j in {1..5}
+    do
+      set_brightness 0 0
+      sleep 0.5
+      set_brightness 0 1
+      sleep 0.5
+    done
+    set_brightness 0 0
+    for j in {1..2}
+    do
+      set_brightness 1 0
+      sleep 0.2
+      set_brightness 1 1
+      sleep 0.2
+    done
+    set_brightness 0 0 && set_brightness 1 0
+    sleep 1
+  done
+
+  led green "$current_green"
+  led red "$current_red"
+}
+
+
+
 function independenceday {
   current_red=$(led "red")
   current_green=$(led "green")
@@ -754,7 +794,7 @@ function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
   echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter|eid]"
-  echo "                      [dragonboat|independenceday|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
+  echo "                      [dragonboat|labourday|independenceday|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -826,6 +866,9 @@ function led_help {
   echo
   echo "  $BASENAME led dragonboat"
   echo "      This will set the mode of the led to dragonboat"
+  echo
+  echo "  $BASENAME led labourday"
+  echo "      This will set the mode of the led to labourday"
   echo
   echo "  $BASENAME led independenceday"
   echo "      This will set the mode of the led to independenceday"

@@ -48,8 +48,8 @@ sshtunnel [add|remove|list|active|check]  helps adding sshtunnels
 led [green|red] [mode]                    sets the led mode
     [newyear|lunarnewyear|valentine]
     [carnival|lantern|stpatricks|easter]
-    [eid|dragonboat|independenceday|onam]
-    [diwali|thanksgiving|christmas]
+    [eid|dragonboat|labourday|independenceday]
+    [onam|diwali|thanksgiving|christmas]
     [heavymetal|dance|kecak|random]
 power [mode|current|freq|status]          sets the power mode or check power mode/CPU frequency
 uptime [boot|start|stop|log]              displays uptime and boot time of the Raspberry Pi

@@ -11,7 +11,7 @@ function burnimage {
       echo "Error: the device \"$device\" was not detected"
       exit 1
     fi
-  elif [ "$option" == "write" ]; then
+  elif [ "$option" == "" ]; then
     if [ "$2" == "/dev/sda" || "$2" == "/dev/sdb" ]; then
       echo "downloading treehouses image."
       rm -f new.sha1

@@ -21,7 +21,7 @@ function burnimage {
       rm -f new.sha1
     #   if wget "http://dev.ole.org/latest.img.gz.sha1" -O new.sha1; then
     if wget "http://dev.ole.org/latest.img.gz" -O new.gz; then
-        if [[ ! -e "latest.img.gz" ]] || [[ ! -e "latest.img.gz.sha1" ]] || [[ $(cat new.gz) != $(cat latest.img.gz.sha1) ]]; then
+        if [[ ! -e "latest.img.gz" ]] || [[ ! -e "latest.img.gz.sha1" ]] || [[ $(cat new.gz) != $(cat latest.img.gz) ]]; then
           rm -f "latest.img.gz.sha1"
           wget "http://dev.ole.org/latest.img.gz.sha1"
           rm -f "latest.img.gz"

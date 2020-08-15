@@ -36,7 +36,6 @@ function burnimage {
         echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
       fi
     fi
-    fi
   else
     echo "Error: no command found"
   fi

@@ -34,7 +34,6 @@ function ssh {
           exit 0
           ;;
         "add" | "remove")
-          checkargn $# 3
           if [ -z "$3" ]; then
             echo "Please specify the user."
           elif [ "$3" == "root" ]; then
@@ -69,6 +68,11 @@ function ssh {
             echo "No user as $3 found."
           fi
           exit 1 ;;
+        "change")
+          checkargn $# 3
+          ssh 2fa remove $3
+          ssh 2fa add $3
+          exit 0 ;;
         "list")
           checkargn $# 2
           printf "%10s%10s\n" "USER" "STATUS"

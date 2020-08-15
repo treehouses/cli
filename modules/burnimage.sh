@@ -11,7 +11,7 @@ function burnimage {
       echo "Error: the device \"$device\" was not detected"
       exit 1
     fi
-  elif [ "$option" == "$device" && $(lsblk /dev/sd* ${device}) ]; then
+  elif [[ "$option" == "$device" && $(lsblk /dev/sd*) == "$device" ]]; then
     # existed_device=$(lsblk /dev/sd* ${device})
     # if [ "$2" == "/dev/sda" || "$2" == "/dev/sdb" ]; then
       echo "downloading treehouses image."

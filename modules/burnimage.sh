@@ -19,7 +19,7 @@ function burnimage {
 
       if [[ -f "latest.img.gz" || -e "latest.img.gz" ]]; then
         echo "writing..."
-        gzip -t "latest.img.gz" | dd of="$option" bs=4096
+        zcat "latest.img.gz" > "$option"
         echo "the image has been written, the treehouses image is still on $(pwd), you can remove or keep it for future burns"
       fi
     fi

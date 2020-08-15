@@ -13,7 +13,7 @@ function burnimage {
 #       exit 1
 #     fi
     elif [[ ( "$option" == "/dev/sda" || "$option" == "/dev/sdb" ) ]]; then # && [ lsblk /dev/sd* > /dev/null 2>&1 ]]; then
-    if lsblk /dev/sd* > /dev/null 2>&1; then
+    if lsblk "$option" > /dev/null 2>&1; then
 #   elif [[ "$option" == "$device" && $(lsblk /dev/sd*) == "$device" ]]; then
     # existed_device=$(lsblk /dev/sd* ${device})
     # if [ "$2" == "/dev/sda" || "$2" == "/dev/sdb" ]; then

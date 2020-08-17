@@ -106,6 +106,11 @@ function message {
             #git clone --quiet https://github.com/tdryer/hangups.git $path/hangups
           #fi
           convid="$3"
+          if [[ -z "$convid" ]]; then
+            echo "Please give a conversation id, please look at the following:"
+            message_help
+          fi
+          
           shift; shift; shift;
           message="$*"
           if ! [[ -z "$message" ]]; then

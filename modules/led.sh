@@ -89,7 +89,7 @@ function led {
       echo "  Green LED: on 0.075 sec off 0.075 sec"
       easter > "$LOGFILE"
       ;;
-		labourday)
+    labourday)
       checkroot
       echo "leds are set to labourday mode."
       echo "Look at your RPi leds, both leds will be in this pattern..."

@@ -113,7 +113,7 @@ function led {
       checkroot
       echo "leds are set to labourday mode."
       echo "Look at your RPi leds, both leds will be in this pattern..."
-      echo "Green LED: flashing 5 times with a decreasing frequency"
+      echo "Green LED: flashing 5 times slowly"
       echo "Red LED: flashing 2 times quickly"
       labourday > "$LOGFILE"
       ;;

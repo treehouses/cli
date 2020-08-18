@@ -72,7 +72,7 @@ sshtunnel [add|remove|list|active|check]  helps adding sshtunnels
 led [green|red] [mode]                    sets the led mode
     [newyear|lunarnewyear|valentine]
     [carnival|lantern|stpatricks|easter]
-    [eid|dragonboat|labourday|independenceday]
+    [labourday|eid|dragonboat|independenceday]
     [onam|diwali|thanksgiving|christmas]
     [heavymetal|dance|kecak|random]
 power [mode|current|freq|status]          sets the power mode or check power mode/CPU frequency

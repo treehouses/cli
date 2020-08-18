@@ -89,6 +89,14 @@ function led {
       echo "  Green LED: on 0.075 sec off 0.075 sec"
       easter > "$LOGFILE"
       ;;
+		labourday)
+      checkroot
+      echo "leds are set to labourday mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Green LED: flashing 5 times slowly"
+      echo "Red LED: flashing 2 times quickly"
+      labourday > "$LOGFILE"
+      ;;
     eid)
       checkroot
       echo "leds are set to eid mode."
@@ -108,14 +116,6 @@ function led {
       echo "Both LED: flashing 10 times with a decreasing frequency"
       echo "this will happen 3 times"
       dragonboat > "$LOGFILE"
-      ;;
-      labourday)
-      checkroot
-      echo "leds are set to labourday mode."
-      echo "Look at your RPi leds, both leds will be in this pattern..."
-      echo "Green LED: flashing 5 times slowly"
-      echo "Red LED: flashing 2 times quickly"
-      labourday > "$LOGFILE"
       ;;
     independenceday)
       checkroot
@@ -793,8 +793,8 @@ function random {
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter|eid]"
-  echo "                      [dragonboat|labourday|independenceday|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
+  echo "       $BASENAME led [newyear|lunarnewyear|valentine|carnival|lantern|stpatricks|easter|labourday|eid]"
+  echo "                      [dragonboat|independenceday|onam|diwali|thanksgiving|christmas|dance|heavymetal|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -861,14 +861,14 @@ function led_help {
   echo "  $BASENAME led easter"
   echo "     This will set the mode of the led to easter"
   echo
+  echo "  $BASENAME led labourday"
+  echo "      This will set the mode of the led to labourday"
+  echo
   echo "  $BASENAME led eid"
   echo "     This will set the mode of the led to eid"
   echo
   echo "  $BASENAME led dragonboat"
   echo "      This will set the mode of the led to dragonboat"
-  echo
-  echo "  $BASENAME led labourday"
-  echo "      This will set the mode of the led to labourday"
   echo
   echo "  $BASENAME led independenceday"
   echo "      This will set the mode of the led to independenceday"

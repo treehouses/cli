@@ -5,7 +5,12 @@ function tg-terminal {
     systemctl is-active tg-terminal.service
     ;;
   "install")
-    tg-terminal-install "$2"
+    if [ -z "$2"]; then
+      echo "Please pass the token as the argument"
+      exit 1
+    else
+      tg-terminal-install "$2"
+    fi
     ;;
   "start")
     systemctl start tg-terminal.service
@@ -14,6 +19,7 @@ function tg-terminal {
   "enable")
     systemctl enable tg-terminal.service --quiet
     echo "Bot enabled."
+    ;;
   *)
     echo "No option as $1."
     exit 1
@@ -22,7 +28,6 @@ function tg-terminal {
 }
 
 function tg-terminal-install {
-  checkargn $# 1
   echo "Installing.."
   rm -rf /srv/tg-terminal/
 	mkdir -p /srv/tg-terminal/shareFolder/
@@ -33,7 +38,7 @@ function tg-terminal-install {
 	wget -q -P /srv/tg-terminal/ https://raw.githubusercontent.com/darthnoward/remoteTelegramShell/master/config.txt || exit 1
   rm -f /etc/systemd/system/tg-terminal.service
   wget -q -P /etc/systemd/system/ https://raw.githubusercontent.com/darthnoward/remoteTelegramShell/master/tg-terminal.service || exit 1
-	sed -i 's/token =/token = $1/g' /srv/tg-terminal/config.txt
+	sed -i "s/token =/token = $1/g" /srv/tg-terminal/config.txt
 	pip3 install -q pyTelegramBotApi || exit 1
   echo "tg-terminal install."	
 }

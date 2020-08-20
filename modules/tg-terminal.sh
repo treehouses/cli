@@ -8,7 +8,7 @@ function tg-terminal {
     if [ -z "$2" ]; then
       echo "Please pass the token as the argument."
       exit 1
-    elif [ -z "$3"]; then
+    elif [ -z "$3" ]; then
       tg-terminal-install "$2" "treehouses"
     else
       tg-terminal-install "$2" "$3"

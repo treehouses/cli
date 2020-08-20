@@ -20,12 +20,12 @@ function tg-terminal {
     echo "tg-terminal uninstalled."
     ;;
   "start")
-    systemctl start tg-terminal.service
+    systemctl start tg-terminal.service --quiet
     echo "Bot started."
     echo "Text your bot on Telegram \"/start\" to get started"
     ;;
   "stop")
-    systemctl stop tg-terminal.service
+    systemctl stop tg-terminal.service --quiet
     echo "Bot stopped."
     ;;
   "enable")
@@ -46,7 +46,7 @@ function tg-terminal {
 
 function tg-terminal-install {
   echo "Installing.."
-  tg-terminal uninstall
+  tg-terminal uninstall > /dev/null
 	mkdir -p /srv/tg-terminal/shareFolder/
 	touch /srv/tg-terminal/users.txt
 	touch /srv/tg-terminal/log.txt
@@ -56,7 +56,7 @@ function tg-terminal-install {
   wget -q -P /etc/systemd/system/ https://raw.githubusercontent.com/darthnoward/remoteTelegramShell/master/tg-terminal.service || exit 1
 	sed -i "s/token =/token = $1/g" /srv/tg-terminal/config.txt
 	pip3 install -q pyTelegramBotApi || exit 1
-  echo "tg-terminal install."	
+  echo "tg-terminal installed."	
 }
 
 function tg-terminal_help {

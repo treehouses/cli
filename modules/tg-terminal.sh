@@ -22,7 +22,7 @@ function tg-terminal {
   "start")
     systemctl start tg-terminal.service --quiet
     echo "Bot started."
-    echo "Text your bot on Telegram \"/start\" to get started"
+    echo "Text your bot on Telegram \"/start\" to get started."
     ;;
   "stop")
     systemctl stop tg-terminal.service --quiet
@@ -46,7 +46,7 @@ function tg-terminal {
 
 function tg-terminal-install {
   echo "Installing.."
-  tg-terminal uninstall > /dev/null
+  tg-terminal uninstall > /dev/null 2>&1
 	mkdir -p /srv/tg-terminal/shareFolder/
 	touch /srv/tg-terminal/users.txt
 	touch /srv/tg-terminal/log.txt

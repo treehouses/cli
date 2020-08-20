@@ -5,7 +5,7 @@ function tg-terminal {
     systemctl is-active tg-terminal.service
     ;;
   "install")
-    if [ -z "$2"]; then
+    if [ -z "$2" ]; then
       echo "Please pass the token as the argument."
       exit 1
     else
@@ -26,7 +26,7 @@ function tg-terminal {
     ;;
   "stop")
     systemctl stop tg-terminal.service
-    echo "bot stopped."
+    echo "Bot stopped."
     ;;
   "enable")
     systemctl enable tg-terminal.service --quiet

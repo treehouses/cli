@@ -72,11 +72,16 @@ function ssh {
             else
               rm -rf "/home/$3/.google_authenticator"
             fi
-            exit 0
           else
             echo "No user as $3 found."
+            exit 1
           fi
-          exit 1 ;;
+          ;;
+        "change")
+          checkargn $# 3
+          ssh 2fa remove $3
+          ssh 2fa add $3
+          exit 0 ;;
         "list")
           checkargn $# 2
           printf "%10s%10s\n" "USER" "STATUS"
@@ -113,7 +118,7 @@ function ssh {
           ssh_help
           ;;
       esac
-      exit 0 ;;
+      ;;
     *)
       echo "Error: only '', 'on', 'off', or 'fingerprint' options are supported"
       ;;

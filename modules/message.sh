@@ -108,6 +108,7 @@ function message_help {
   echo "sed -i \"s/\\-Werror //\" Makefile.in"
   echo "./configure"
   echo "make"
+  echo "cp ./bin/telegram-cli /usr/local/bin/."
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo

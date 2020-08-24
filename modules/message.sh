@@ -65,17 +65,19 @@ function message {
       esac
       ;;
     telegram)
+      check_missing_binary telegram-cli
       case "$2" in
         sendto)
           #path=$(which telegram-cli)
-          echo "use 'git clone https://github.com/vysheng/tg --recursive' into the root directory"
-          if [ -e /root/tg/bin/telegram-cli ]; then
-            contact=$3
-            shift; shift; shift;
-            message=$*
+          #echo "use 'git clone https://github.com/vysheng/tg --recursive' into the root directory"
+          #if [ -e /root/tg/bin/telegram-cli ]; then
+          #if [ -e $path ]; then
+          contact=$3
+          shift; shift; shift;
+          message=$*
             #./bin/telegram-cli -W server.pub -e "msg $contact '$message'"
-            /root/tg/bin/telegram-cli -W server.pub -e "msg $contact '$message'"
-          fi
+          telegram-cli -W server.pub -e "msg $contact '$message'"
+          #fi
           ;;
         *)
           echo "This command does not exist, please look at the following:"

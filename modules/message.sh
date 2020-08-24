@@ -96,6 +96,19 @@ function message_help {
   echo
   echo "Usage: $BASENAME message <chats> <apikey <key> | sendto <group> <message> | receivefrom <group>>"
   echo
+  echo "For Telegram, you must follow these install instructions: "
+  echo
+  echo "apt install libreadline-dev libconfig-dev lua5.2 liblua5.2-dev libevent-dev libjansson-dev libssl1.0-dev libgcrypt20-dev"
+  echo "git clone https://github.com/vysheng/tg --recursive"
+  echo "cd tg"
+  echo "sed -i '107d' ./tgl/mtproto-utils.c"
+  echo "sed -i '101d' ./tgl/mtproto-utils.c"
+  echo "sed -i \"s/\\-rdynamic //\" Makefile.in"
+  echo "sed -i \"s/\\-fPIC//\" Makefile.in"
+  echo "sed -i \"s/\\-Werror //\" Makefile.in"
+  echo "./configure"
+  echo "make"
+  echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo
   echo "You must set your api key at least once every session before sending a message"
@@ -112,5 +125,8 @@ function message_help {
   echo
   echo "  $BASENAME message gitter receivefrom treehouses/Lobby" 
   echo "     Receives unread messages from a gitter channel"
+  echo
+  echo "  $BASENAME message telegram sendto contact \"Hi, you are very awesome\"" 
+  echo "     Sends a message to a Telegram contact"
   echo
 }

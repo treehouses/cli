@@ -116,6 +116,17 @@ function bluetooth {
       echo "Success: the bluetooth service has been restarted."
       ;;
 
+    "pause")
+      checkargn $# 1
+      cp "$TEMPLATES/bluetooth/default" /etc/systemd/system/dbus-org.bluez.service
+      disable_service rpibluetooth
+      stop_service rpibluetooth
+      restart_service bluetooth
+      sleep 3 # Wait few seconds for bluetooth to start
+      restart_service bluealsa # restart the bluetooth audio service
+      echo "Success: the bluetooth service has been switched to default, and the service has been stopped."
+      ;;
+
     *)
       echo "Error: only 'on', 'off', 'pause', 'restart', 'mac', 'id', 'button', 'log', and 'status' options are supported";
       ;;

@@ -71,6 +71,7 @@ function ssh {
               fi
             else
               rm -rf "/home/$3/.google_authenticator"
+              echo "SSH 2FA for $3 has been removed"
             fi
           else
             echo "No user as $3 found."

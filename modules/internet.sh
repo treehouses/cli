@@ -3,7 +3,7 @@ function internet {
 
   case "$1" in
   "")
-    if ip route get 8.8.8.8 2>/dev/null 1>&2; then
+    if nc -w 10 -z 8.8.8.8 53 >/dev/null 1>&2; then
       echo "true"
       exit 0
     fi

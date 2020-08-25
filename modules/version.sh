@@ -83,10 +83,32 @@ EOF
       echo "$line"
       sleep 0.3
     done <<< "$final"
+  elif [ "$1" = "remote" ]; then
+    checkinternet
+    wget -q https://github.com/treehouses/remote/releases
+    line=$(grep -n label-latest releases)
+    line=${line%%:*}
+    line=$(sed -n $(( line + 12 ))p releases)
+    rm releases
+    line=${line:44}
+    echo "Github: v${line%%\"*}"
+    wget -q https://play.google.com/store/apps/details?id=io.treehouses.remote
+    line=$(grep -n Current details\?id=io.treehouses.remote)
+    line=${line%%:*}
+    line=$(sed -n $(( line ))p details\?id=io.treehouses.remote)
+    rm details\?id=io.treehouses.remote
+    line=${line#*Current}
+    line=${line:74}
+    echo "GooglePlay: v${line%%<*}"
+    wget -q https://f-droid.org/en/packages/io.treehouses.remote/
+    line=$(sed -n 304p index.html)
+    rm index.html
+    line=${line#*Version }
+    echo "F-droid: v${line%%<*}"
   elif [ "$1" = "" ]; then
     node -p "require('$SCRIPTFOLDER/package.json').version"
   else
-    echo "Error: only 'contributors' or '' options supported"
+    echo "Error: only 'contributors', 'remote',  or '' options supported"
     exit 1
   fi
 }
@@ -103,5 +125,8 @@ function version_help () {
   echo
   echo "  $BASENAME version contributors"
   echo "      Prints the list of github contributors for @treehouses/cli @treehouses/remote @treehouses/builder @treehouses/control"
+  echo
+  echo "  $BASENAME version remote"
+  echo "      Prints the latest versions of treehouses remote available on various platforms"
   echo
 }

@@ -25,7 +25,15 @@ function ssh {
     "2fa" | "2FA")
       check_missing_packages "libpam-google-authenticator"
       case "$2" in
-        "add" | "remove")
+        "")
+          if grep -q "auth required pam_google_authenticator.so nullok" /etc/pam.d/sshd; then
+            echo "on"
+          else
+            echo "off"
+          fi
+          exit 0
+          ;;
+        "add" | "remove" | "show")
           if [ -z "$3" ]; then
             echo "Please specify the user."
           elif [ "$3" == "root" ]; then
@@ -33,6 +41,11 @@ function ssh {
             echo "You should only login as root user via a ssh key."
           elif cut -d: -f1 /etc/passwd | grep -q "$3"; then
             if [ "$2" == "add" ]; then
+              if [ -f /home/$3/.google_authenticator ]; then
+                echo "2FA for $3 already exists."
+                echo "use \"treehouses ssh 2fa remove $3\" before generating a new one"
+                exit 1
+              fi
               if [ "$4" == "url" ]; then
                 printf "y\ny\nn\ny\ny\n" | runuser -l "$3" -c "google-authenticator" |\
                   grep -o -E "https://.*$"
@@ -43,19 +56,50 @@ function ssh {
                 printf "y\ny\nn\ny\ny\n" | runuser -l "$3" -c "google-authenticator"
               fi
               if [ ! -f "/home/$3/.google_authenticator" ]; then
-                echo "Addtion for $3 user failed"
+                echo "Addition for user $3 failed."
                 exit 1
               fi
               ssh 2fa enable > /dev/null
+            elif [ "$2" == "show" ]; then
+              if [ ! -f "/home/$3/.google_authenticator" ]; then
+                echo "SSH 2FA for $3 is disabled."
+                exit 1
+              else
+                printf "%s%28s\n\n" "Secrey Key:" "$(sed -n 1p /home/$3/.google_authenticator)"
+                echo "Emergency Scratch Codes:"
+                sed -n '5,9p' /home/$3/.google_authenticator
+              fi
             else
               rm -rf "/home/$3/.google_authenticator"
+              echo "SSH 2FA for $3 has been removed"
             fi
-            exit 0
           else
             echo "No user as $3 found."
+            exit 1
           fi
-          exit 1 ;;
+          ;;
+        "change")
+          checkargn $# 3
+          ssh 2fa remove $3
+          ssh 2fa add $3
+          exit 0 ;;
+        "list")
+          checkargn $# 2
+          printf "%10s%10s\n" "USER" "STATUS"
+          l=$(grep "^UID_MIN" /etc/login.defs)
+          l1=$(grep "^UID_MAX" /etc/login.defs)
+          for user in $(awk -F':' -v "min=${l##UID_MIN}" -v "max=${l1##UID_MAX}" '{ if ( $3 >= min && $3 <= max ) print $0}' /etc/passwd | cut -d: -f 1)
+          do
+            if [ -f "/home/$user/.google_authenticator" ]; then
+              status="enabled"
+            else
+              status="disabled"
+            fi
+            printf "%10s%10s\n" "$user" "$status"
+          done
+          ;;
         "enable")
+          checkargn $# 2
           if ! grep -q "auth required pam_google_authenticator.so nullok" /etc/pam.d/sshd; then
             echo "auth required pam_google_authenticator.so nullok" >> /etc/pam.d/sshd
           fi
@@ -65,6 +109,7 @@ function ssh {
           echo "ssh Two Factor Authentication enabled."
           ;;
         "disable")
+          checkargn $# 2
           sed -i '\:auth required pam_google_authenticator.so nullok:d' /etc/pam.d/sshd
           sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
           restart_service sshd
@@ -74,7 +119,7 @@ function ssh {
           ssh_help
           ;;
       esac
-      exit 0 ;;
+      ;;
     *)
       echo "Error: only '', 'on', 'off', or 'fingerprint' options are supported"
       ;;
@@ -105,5 +150,8 @@ function ssh_help {
   echo
   echo "  $BASENAME ssh 2fa enable/disable"
   echo "      Enable/Disable two factor authentication for SSH service."
+  echo
+  echo "  $BASENAME ssh 2fa list"
+  echo "      List ssh 2fa status of every user."
   echo
 }

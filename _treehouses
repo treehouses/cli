@@ -415,6 +415,7 @@ treehouses verbose off
 treehouses verbose on
 treehouses version
 treehouses version contributors
+treehouses version remote
 treehouses vnc
 treehouses vnc info
 treehouses vnc off

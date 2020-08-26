@@ -179,8 +179,9 @@ function check_missing_packages {
 
 function check_missing_binary {
   missing_binary=$1
+  install_instruction="$missing_binary cannot be found\nSearch for it with command 'dpkg -l | grep $missing_binary'\nIf not available, install it with command 'sudo apt install $missing_binary'"
   if [[ $(which $missing_binary) == "" ]]; then
-    echo "\"$missing_binary\" not found, please install first"
+    echo -e "$install_instruction"
     exit 1
   fi
 }

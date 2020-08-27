@@ -1,7 +1,7 @@
 function picture {
   # check if tiv binary exists
-  check_missing_binary tivvv
-  # check_missing_binary tiviiiii "tiv\nis very awesome\nneeds httpsgithub.com/...."
+  # check_missing_binary tivvv
+  check_missing_binary tiviiiii "tiv\nis very awesome\nneeds httpsgithub.com/...."
 
   # check if imagemagick pkg is installed
   check_missing_packages imagemagick

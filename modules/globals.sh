@@ -183,10 +183,9 @@ function check_missing_binary {
   if [[ $(which $binary) == "" ]]; then
     if [[ $installinstructions == "" ]]; then
       echo "\"$binary\" not found, please install first"
-      exit 1
+    else
+      echo -e "$installinstructions"
     fi
-  else
-    echo -e "$installinstructions"
     exit 1
   fi
 }

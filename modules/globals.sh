@@ -178,18 +178,20 @@ function check_missing_packages {
 }
 
 function check_missing_binary {
-  missing_binary=$1
-  install_instruction=$2
-  if [[ $(which $missing_binary) == "" ]]; then
-    echo "\"$missing_binary\" not found, please install first"
-    exit 1
-  else
-    if [[ $2 == "" ]]; then
-      install_instruction="Trying to install $missing_binary...\nSearch for it with command 'dpkg -l | grep $missing_binary'\nThen, install it with command 'sudo apt install $missing_binary'"
-      echo -e "$install_instruction"
+  binary=$1
+  installinstructions=$2
+  if [[ $(which $binary) == "" ]]; then
+    if [[ $installinstructions == "" ]]; then
+      echo "\"$binary\" not found, please install first"
+      exit 1
+    else
+      echo -e "$installinstructions"
     fi
   fi
 }
+
+# check_missing_binary tiv
+# check_missing_binary tiv "tiv\nis very awesome\nneeds httpsgithub.com/...."
 
 # Credits: https://www.shellscript.sh/tips/spinner/
 function spinner() {

@@ -76,7 +76,7 @@ function message {
           shift; shift; shift;
           message=$*
             #./bin/telegram-cli -W server.pub -e "msg $contact '$message'"
-          telegram-cli -W server.pub -e "msg $contact '$message'"
+          telegram-cli -W server.pub -e "msg $contact '$message'" >/dev/null 2>&1
           #fi
           ;;
         *)

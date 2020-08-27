@@ -190,9 +190,6 @@ function check_missing_binary {
   fi
 }
 
-# check_missing_binary tiv
-# check_missing_binary tiv "tiv\nis very awesome\nneeds httpsgithub.com/...."
-
 # Credits: https://www.shellscript.sh/tips/spinner/
 function spinner() {
   spinner="/|\\-/|\\-"

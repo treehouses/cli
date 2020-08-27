@@ -179,10 +179,13 @@ function check_missing_packages {
 
 function check_missing_binary {
   missing_binary=$1
-  install_instruction="$missing_binary cannot be found\nSearch for it with command 'dpkg -l | grep $missing_binary'\nIf not available, install it with command 'sudo apt install $missing_binary'"
+  install_instruction=$2
   if [[ $(which $missing_binary) == "" ]]; then
-    echo -e "$install_instruction"
+    echo "\"$missing_binary\" not found, please install first"
     exit 1
+  else
+    $install_instruction="Trying to install $missing_binary...\nSearch for it with command 'dpkg -l | grep $missing_binary'\nThen, install it with command 'sudo apt install $missing_binary'"
+    echo -e "$install_instruction"
   fi
 }
 

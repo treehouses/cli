@@ -184,7 +184,8 @@ function check_missing_binary {
     echo "\"$missing_binary\" not found, please install first"
     exit 1
   else
-    "$2"="Trying to install $missing_binary...\nSearch for it with command 'dpkg -l | grep $missing_binary'\nThen, install it with command 'sudo apt install $missing_binary'"
+    if [[ $2 == "" ]]; then
+    install_instruction="Trying to install $missing_binary...\nSearch for it with command 'dpkg -l | grep $missing_binary'\nThen, install it with command 'sudo apt install $missing_binary'"
     echo -e "$install_instruction"
   fi
 }

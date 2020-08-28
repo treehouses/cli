@@ -71,10 +71,10 @@ function message {
           pip3 install --quiet hangups 
           hangups --manual-login --debug
           path="$(which treehouses | sed 's/bin\/treehouses//')lib/node_modules/@treehouses/cli/templates"
-          if ! [ -e $path/send_message.py ]; then
+          if ! [ -e $path/send_message.py ] && [ -s $path/send_message.py ]; then
              wget -O $path/send_message.py https://raw.githubusercontent.com/tdryer/hangups/master/examples/send_message.py > "$LOGFILE"
           fi
-          if ! [ -e $path/common.py ]; then
+          if ! [ -e $path/common.py ] && [-s $path/common.py ]; then
             wget -O $path/common.py https://raw.githubusercontent.com/tdryer/hangups/master/examples/common.py > "$LOGFILE"
           fi
           ;;

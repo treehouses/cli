@@ -70,7 +70,7 @@ function message {
           sudo apt-get install python3-pip > /dev/null
           pip3 install --quiet hangups 
           hangups --manual-login --debug
-    path="$(which treehouses | sed 's/bin\/treehouses//')lib/node_modules/@treehouses/cli/templates"
+          path="$(which treehouses | sed 's/bin\/treehouses//')lib/node_modules/@treehouses/cli/templates"
           if ! [ -e $path/send_message.py ]; then
              wget -O $path/send_message.py https://raw.githubusercontent.com/tdryer/hangups/master/examples/send_message.py > "$LOGFILE"
           fi

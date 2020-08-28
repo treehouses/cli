@@ -67,6 +67,13 @@ function message {
     telegram)
       check_missing_binary telegram-cli
       case "$2" in
+        login)
+          if ! [ -e /root/.telegram-cli ]; then
+            telegram-cli
+          else
+            echo "You are already logged in"
+          fi
+          ;;
         sendto)
           #path=$(which telegram-cli)
           #echo "use 'git clone https://github.com/vysheng/tg --recursive' into the root directory"
@@ -110,6 +117,8 @@ function message_help {
   echo "make"
   echo "cp ./bin/telegram-cli /usr/local/bin/."
   echo
+  echo "Then use the login function to login"
+  echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo
   echo "You must set your api key at least once every session before sending a message"
@@ -126,6 +135,9 @@ function message_help {
   echo
   echo "  $BASENAME message gitter receivefrom treehouses/Lobby" 
   echo "     Receives unread messages from a gitter channel"
+  echo
+  echo "  $BASENAME message telegram login"
+  echo "     Logs user into Telegram account" 
   echo
   echo "  $BASENAME message telegram sendto contact \"Hi, you are very awesome\"" 
   echo "     Sends a message to a Telegram contact"

@@ -67,7 +67,7 @@ function message {
     hangouts)
       case "$2" in
         login)
-          sudo apt-get install python3-pip > "LOGFILE"
+          sudo apt-get install python3-pip > /dev/null
           pip3 install --quiet hangups 
           hangups --manual-login --debug
     path="$(which treehouses | sed 's/bin\/treehouses//')lib/node_modules/@treehouses/cli/templates"
@@ -95,7 +95,7 @@ function message {
           shift; shift; shift;
           message="$*"
           if ! [[ -z "$message" ]]; then
-            $(python3 $path/send_message.py --conversation-id $convid --message-text "$message")
+            python3 $path/send_message.py --conversation-id $convid --message-text "$message"
             echo "Thanks for the message!"
           else
             echo "No message was submitted."

@@ -37,9 +37,6 @@ case "$option" in
     elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "inactive" ]; then
       echo "pre-on"
     else
-	    echo $bootoptionstatus
-			echo $vncservicestatus
-			echo $xservicestatus
       echo "VNC server is not configured correctly. Please try $BASENAME vnc on to enable it, or $BASENAME vnc off to disable it."
       echo "Alternatively, you may try $BASENAME vnc status-service to verify the status of each specific required service."
     fi

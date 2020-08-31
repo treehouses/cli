@@ -65,7 +65,7 @@ function ssh {
                 echo "SSH 2FA for $3 is disabled."
                 exit 1
               else
-                printf "%s%28s\n\n" "Secrey Key:" "$(sed -n 1p /home/$3/.google_authenticator)"
+                printf "%s%28s\n\n" "Secret Key:" "$(sed -n 1p /home/$3/.google_authenticator)"
                 echo "Emergency Scratch Codes:"
                 sed -n '5,9p' /home/$3/.google_authenticator
               fi

@@ -412,9 +412,9 @@ function services {
                     echo $seperator
                     ;;
                   "edit")
-                    kill_spinner
                     case $4 in
                       "")
+                        kill_spinner
                         while read -r -u 9 line; do
                           echo $seperator
                           echo "Current:"
@@ -431,6 +431,7 @@ function services {
                         echo $seperator
                         ;;
                       "vim")
+                        kill_spinner
                         checkargn $# 4
                         vim /srv/$service_name/.env
                         ;;

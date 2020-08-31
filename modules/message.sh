@@ -68,7 +68,7 @@ function message {
       check_missing_binary telegram-cli
       case "$2" in
         login)
-          if ! [ -e /root/.telegram-cli ] && [ -s /root/.telegram-cli ]; then
+          if ! [ -e /root/.telegram-cli ] && ! [ -s /root/.telegram-cli ]; then
             telegram-cli
           else
             echo "You are already logged in"

@@ -128,7 +128,7 @@ function ssh {
 
 function ssh_help {
   echo
-  echo "Usage: $BASENAME ssh [on|off|fingerprint]"
+  echo "Usage: $BASENAME ssh [on|off|fingerprint|2fa]"
   echo
   echo "Enables or disables the SSH service"
   echo

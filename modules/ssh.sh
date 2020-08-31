@@ -39,7 +39,7 @@ function ssh {
           elif [ "$3" == "root" ]; then
             echo "You can't add or remove 2FA for root user."
             echo "You should only login as root user via a ssh key."
-          elif cat /etc/passwd | grep "/home" | cut -d: -f1; then
+          elif cat "/etc/passwd" | grep "/home" | cut -d: -f1; then
             if [ "$2" == "add" ]; then
               if [ -f /home/$3/.google_authenticator ]; then
                 echo "2FA for $3 already exists."

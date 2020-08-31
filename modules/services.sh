@@ -1,5 +1,5 @@
 function services {
-  check_missing_binary docker-compose
+  check_missing_binary docker-compose "docker-compose is missing\ninstall instructions can be found in\nhttps://github.com/docker/compose"
 
   local service_name command command_option service results installed
   local array running port_string found local_url tor_url

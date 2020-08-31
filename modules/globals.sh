@@ -178,9 +178,14 @@ function check_missing_packages {
 }
 
 function check_missing_binary {
-  missing_binary=$1
-  if [[ $(which $missing_binary) == "" ]]; then
-    echo "\"$missing_binary\" not found, please install first"
+  binary=$1
+  install_instructions=$2
+  if [[ $(which $binary) == "" ]]; then
+    if [[ $install_instructions == "" ]]; then
+      echo "\"$binary\" not found, please install first"
+    else
+      echo -e "$install_instructions"
+    fi
     exit 1
   fi
 }

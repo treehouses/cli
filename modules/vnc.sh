@@ -95,7 +95,8 @@ function vnc_help {
   echo "      This will disable html, if it is active."
   echo
   echo "  $BASENAME vnc off"
-  echo "      VNC services will be disabled."  echo
+  echo "      VNC services will be disabled."
+  echo
   echo "Enables or disables the VNC server service"
   echo
   echo "Example:"

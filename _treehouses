@@ -232,6 +232,7 @@ treehouses memory used mb
 treehouses message gitter apikey
 treehouses message gitter sendto
 treehouses message gitter receivefrom
+treehouses message hangouts sendto
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet

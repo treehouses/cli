@@ -39,7 +39,7 @@ function ssh {
           elif [ "$3" == "root" ]; then
             echo "You can't add or remove 2FA for root user."
             echo "You should only login as root user via a ssh key."
-          elif cut -d: -f1 /etc/passwd | grep -q "$3"; then
+          elif cat /etc/passwd | grep "/bin/bash" | grep -q "$3" | cut -d: -f1; then
             if [ "$2" == "add" ]; then
               if [ -f /home/$3/.google_authenticator ]; then
                 echo "2FA for $3 already exists."
@@ -56,13 +56,13 @@ function ssh {
                 printf "y\ny\nn\ny\ny\n" | runuser -l "$3" -c "google-authenticator"
               fi
               if [ ! -f "/home/$3/.google_authenticator" ]; then
-                echo "Addition for user $3 failed."
+                echo "ERROR: Adding SSH 2FA for user $3 failed."
                 exit 1
               fi
               ssh 2fa enable > /dev/null
             elif [ "$2" == "show" ]; then
               if [ ! -f "/home/$3/.google_authenticator" ]; then
-                echo "SSH 2FA for $3 is disabled."
+                echo "ERROR: SSH 2FA for $3 is disabled."
                 exit 1
               else
                 printf "%s%28s\n\n" "Secret Key:" "$(sed -n 1p /home/$3/.google_authenticator)"
@@ -70,8 +70,13 @@ function ssh {
                 sed -n '5,9p' /home/$3/.google_authenticator
               fi
             else
-              rm -rf "/home/$3/.google_authenticator"
-              echo "SSH 2FA for $3 has been removed"
+              if [ -f "/home/$3/.google_authenticator" ]; then
+                rm -rf "/home/$3/.google_authenticator"
+                echo "SSH 2FA for $3 has been removed"
+              else
+                echo "ERROR: SSH 2FA for user $3 should be added first."
+                exit 1
+              fi
             fi
           else
             echo "No user as $3 found."
@@ -128,7 +133,7 @@ function ssh {
 
 function ssh_help {
   echo
-  echo "Usage: $BASENAME ssh [on|off|fingerprint|2fa]"
+  echo "Usage: $BASENAME ssh [on|off|fingerprint]"
   echo
   echo "Enables or disables the SSH service"
   echo

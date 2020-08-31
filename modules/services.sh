@@ -332,10 +332,15 @@ function services {
                   fi
                   echo $tor_url
                 done
+              else
+                echo "tor is inactive"
+                exit 1
               fi
             elif [ "$command_option" = "" ]; then
               services $service_name url local
-              services $service_name url tor
+              if [ "$(tor status)" = "active" ]; then
+                services $service_name url tor
+              fi
             else
               echo "ERROR: unknown command option"
               echo "USAGE: $BASENAME services $service_name url [local | tor]"

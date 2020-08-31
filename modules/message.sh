@@ -64,6 +64,34 @@ function message {
           ;;
       esac
       ;;
+    telegram)
+      check_missing_binary telegram-cli
+      case "$2" in
+        login)
+          if ! [ -e /root/.telegram-cli ] && ! [ -s /root/.telegram-cli ]; then
+            telegram-cli
+          else
+            echo "You are already logged in"
+          fi
+          ;;
+        sendto)
+          #path=$(which telegram-cli)
+          #echo "use 'git clone https://github.com/vysheng/tg --recursive' into the root directory"
+          #if [ -e /root/tg/bin/telegram-cli ]; then
+          #if [ -e $path ]; then
+          contact=$3
+          shift; shift; shift;
+          message=$*
+            #./bin/telegram-cli -W server.pub -e "msg $contact '$message'"
+          telegram-cli -W server.pub -e "msg $contact '$message'" >/dev/null 2>&1
+          #fi
+          ;;
+        *)
+          echo "This command does not exist, please look at the following:"
+          message_help
+          ;;
+      esac
+      ;; 
     *)
       echo "This command does not exist, please look at the following:"
       message_help
@@ -74,6 +102,22 @@ function message {
 function message_help {
   echo
   echo "Usage: $BASENAME message <chats> <apikey <key> | sendto <group> <message> | receivefrom <group>>"
+  echo
+  echo "For Telegram, you must follow these install instructions: "
+  echo
+  echo "apt install libreadline-dev libconfig-dev lua5.2 liblua5.2-dev libevent-dev libjansson-dev libssl1.0-dev libgcrypt20-dev"
+  echo "git clone https://github.com/vysheng/tg --recursive"
+  echo "cd tg"
+  echo "sed -i '107d' ./tgl/mtproto-utils.c"
+  echo "sed -i '101d' ./tgl/mtproto-utils.c"
+  echo "sed -i \"s/\\-rdynamic //\" Makefile.in"
+  echo "sed -i \"s/\\-fPIC//\" Makefile.in"
+  echo "sed -i \"s/\\-Werror //\" Makefile.in"
+  echo "./configure"
+  echo "make"
+  echo "cp ./bin/telegram-cli /usr/local/bin/."
+  echo
+  echo "Then use the login function to login"
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo
@@ -91,5 +135,11 @@ function message_help {
   echo
   echo "  $BASENAME message gitter receivefrom treehouses/Lobby" 
   echo "     Receives unread messages from a gitter channel"
+  echo
+  echo "  $BASENAME message telegram login"
+  echo "     Logs user into Telegram account" 
+  echo
+  echo "  $BASENAME message telegram sendto contact \"Hi, you are very awesome\"" 
+  echo "     Sends a message to a Telegram contact"
   echo
 }

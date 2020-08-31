@@ -59,7 +59,7 @@ function message {
           done
           ;;
         *)
-          echo "This command does not exist, please look at the following:"
+          echo "this command does not exist, please look at the following:"
           message_help
           ;;
       esac
@@ -88,6 +88,10 @@ function message {
            #curl -X POST -H 'Authorization: Bearer '$token'' -H 'Content-type: application/json' 'https://slack.com/api/chat.postMessage' -d "{\"channel\": \"'$channel'\", \"text\": \"'$message'\", \"as_user\": \"true\"}"
           #curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token" "https://slack.com/api/chat.postMessage" -d '{"channel": "'$channel'", "text": "'"$message"'", "as_user": "true"}' #works
            ;;
+        *)
+          echo "this command does not exist, please look at the following:"
+          message_help
+          ;;
       esac
       ;;
     *)

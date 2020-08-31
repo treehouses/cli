@@ -120,10 +120,13 @@ function message_help {
   echo "  $BASENAME message gitter receivefrom treehouses/Lobby" 
   echo "     Receives unread messages from a gitter channel"
   echo
-  echo "  $BASENAME message slack sendto \"abc-123-efghijklmnop\" \"C12345678\" \"Hi, you are very awesome\"" 
+  echo "  $BASENAME message slack apikey" 
+  echo "     Sets and saves API token"
+  echo
+  echo "  $BASENAME message slack sendto \"C12345678\" \"Hi, you are very awesome\"" 
   echo "     Sends a message to a slack channel using channel id"
   echo
-  echo "  $BASENAME message slack sendto \"abc-123-efghijklmnop\" \"channel_name\" \"Hi, you are very awesome\"" 
+  echo "  $BASENAME message slack sendto \"channel_name\" \"Hi, you are very awesome\"" 
   echo "     Sends a message to a slack channel using channel name, eg, channel: #channel_name"
   echo
 }

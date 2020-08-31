@@ -1,6 +1,6 @@
 function picture {
   # check if tiv binary exists
-  check_missing_binary tiv "tiv is missing\nprogrammed to display images in terminal\ninstall instructions can be found in https://github.com/stefanhaustein/TerminalImageViewer"
+  check_missing_binary tiv "tiv is missing\ninstall instructions can be found in \nhttps://github.com/stefanhaustein/TerminalImageViewer"
 
   # check if imagemagick pkg is installed
   check_missing_packages imagemagick

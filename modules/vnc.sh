@@ -54,7 +54,7 @@ case "$option" in
   "off")
     sed -i '/hdmi_group=2/d' /boot/config.txt
     sed -i '/hdmi_mode=82/d' /boot/config.txt
-    sed -i 's/hdmi_force_hotplug=1/#hdmi_force_hotplug=1/' /boot/config.txt
+    sed -i 's/^hdmi_force_hotplug=1/#hdmi_force_hotplug=1/' /boot/config.txt
     stop_service vncserver-x11-serviced.service
     disable_service vncserver-x11-serviced.service
     systemctl set-default multi-user.target

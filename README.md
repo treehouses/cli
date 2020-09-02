@@ -157,9 +157,7 @@ magazines                                 downloads specific magazine issue as a
                       [url]               shows the homepage URL of magazine
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
-message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
-               receivefrom read 
-                           meark-read
+message gitter <apikey|send|recieve>      sets api/channel info in config file and sends/recieves message
 shutdown [now|in|force]                   shutdown the system
 ```
 

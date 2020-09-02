@@ -1,5 +1,5 @@
 function services {
-  check_missing_binary docker-compose
+  check_missing_binary docker-compose "docker-compose is missing\ninstall instructions can be found in\nhttps://github.com/docker/compose"
 
   local service_name command command_option service results installed
   local array running port_string found local_url tor_url
@@ -332,10 +332,15 @@ function services {
                   fi
                   echo $tor_url
                 done
+              else
+                echo "tor is inactive"
+                exit 1
               fi
             elif [ "$command_option" = "" ]; then
               services $service_name url local
-              services $service_name url tor
+              if [ "$(tor status)" = "active" ]; then
+                services $service_name url tor
+              fi
             else
               echo "ERROR: unknown command option"
               echo "USAGE: $BASENAME services $service_name url [local | tor]"
@@ -367,7 +372,7 @@ function services {
               echo "try running '$BASENAME services ${service_name} install' first"
               exit 1
             else
-              docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down -v --rmi all --remove-orphans
+              docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml --log-level ERROR down -v --rmi all --remove-orphans
               echo "${service_name} stopped and removed"
             fi
             remove_tor_port
@@ -412,9 +417,9 @@ function services {
                     echo $seperator
                     ;;
                   "edit")
-                    kill_spinner
                     case $4 in
                       "")
+                        kill_spinner
                         while read -r -u 9 line; do
                           echo $seperator
                           echo "Current:"
@@ -431,6 +436,7 @@ function services {
                         echo $seperator
                         ;;
                       "vim")
+                        kill_spinner
                         checkargn $# 4
                         vim /srv/$service_name/.env
                         ;;

@@ -38,7 +38,8 @@ apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system
 locale <locale>                           sets the system locale
 ssh [on|off|fingerprint]                  enables or disables the ssh service,
-    [2fa] <add|enable|disable|remove>     also prints out fingerprint of the ssh daemon
+    [2fa] <add|enable|disable>            prints out fingerprint of the ssh daemon
+          <remove|show>                   and deals with two factor authentication
 vnc [on|off|info]                         enables or disables the vnc server service
 default [network|notice|tunnel]           sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
@@ -48,9 +49,10 @@ sshtunnel [add|remove|list|active|check]  helps adding sshtunnels
 led [green|red] [mode]                    sets the led mode
     [newyear|lunarnewyear|valentine]
     [carnival|lantern|stpatricks|easter]
-    [eid|dragonboat|independenceday|onam]
-    [diwali|thanksgiving|christmas]
-    [heavymetal|dance|kecak|random]
+    [labourday|eid|dragonboat]
+    [independenceday|onam|diwali]
+    [thanksgiving|christmas|heavymetal]
+    [dance|kecak|random]
 power [mode|current|freq|status]          sets the power mode or check power mode/CPU frequency
 uptime [boot|start|stop|log]              displays uptime and boot time of the Raspberry Pi
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified

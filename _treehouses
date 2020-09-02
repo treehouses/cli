@@ -184,6 +184,7 @@ treehouses led newyear
 treehouses led onam
 treehouses led diwali
 treehouses led dragonboat
+treehouses led labourday
 treehouses led independenceday
 treehouses led red
 treehouses led red backlight
@@ -337,6 +338,7 @@ treehouses ssh 2fa add
 treehouses ssh 2fa disable
 treehouses ssh 2fa enable
 treehouses ssh 2fa remove
+treehouses ssh 2fa show
 treehouses ssh fingerprint
 treehouses ssh off
 treehouses ssh on

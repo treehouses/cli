@@ -11,7 +11,7 @@ function message {
           token_info=$(echo $api_info | python -m json.tool | jq '.access_token' | tr -d '"')
           conf_var_update "api_token" "$token_info"
           ;;
-        sendto)
+        send)
           #joins room
           group="$3"
           curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
@@ -29,7 +29,7 @@ function message {
             echo "No message was submitted."
           fi
           ;;
-        receivefrom)
+        receive)
           case "$3" in
             read)
               group="$4"
@@ -59,7 +59,7 @@ function message {
                 i=$((i+1))
               done
               ;;
-            mark-read)
+            mark)
               group="$4"
               curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
               channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $api_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
@@ -113,13 +113,13 @@ function message_help {
   echo "  $BASENAME message gitter apikey \"1234567890\""
   echo "     Sets and saves API token"
   echo
-  echo "  $BASENAME message gitter sendto treehouses/Lobby \"Hi, you are very awesome\""
+  echo "  $BASENAME message gitter send treehouses/Lobby \"Hi, you are very awesome\""
   echo "     Sends a message to a gitter channel"
   echo
-  echo "  $BASENAME message gitter receivefrom read treehouses/Lobby"
+  echo "  $BASENAME message gitter receive read treehouses/Lobby"
   echo "     Receives and displays unread messages from a gitter channel"
   echo
-  echo "  $BASENAME message gitter receivefrom mark-read treehouses/Lobby"
+  echo "  $BASENAME message gitter receive mark treehouses/Lobby"
   echo "     Marks unread messages from a gitter channel to read"
   echo
 }

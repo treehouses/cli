@@ -372,7 +372,7 @@ function services {
               echo "try running '$BASENAME services ${service_name} install' first"
               exit 1
             else
-              docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down -v --rmi all --remove-orphans
+              docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml --log-level ERROR down -v --rmi all --remove-orphans
               echo "${service_name} stopped and removed"
             fi
             remove_tor_port

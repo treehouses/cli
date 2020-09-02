@@ -100,7 +100,7 @@ function message {
 
 function message_help {
   echo
-  echo "Usage: $BASENAME message <chats> <apikey <key> | sendto <group> <message> | receivefrom read|mark-read <group>>"
+  echo "Usage: $BASENAME message <chats> <apikey <key> | send <group> <message> | receive read|mark <group>>"
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo

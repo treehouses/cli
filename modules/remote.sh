@@ -163,7 +163,7 @@ function remote {
       ;;
     *)
       echo "Unknown command option"
-      echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | help | key>"
+      echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | statuspage | ssh2fa | help | key>"
       ;;
   esac
 }

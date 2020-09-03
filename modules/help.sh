@@ -37,7 +37,7 @@ aphidden <local|internet> <ESSID>         creates a hidden mobile ap with or wit
 apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system
 locale <locale>                           sets the system locale
-ssh [on|off|fingerprint]                  enables or disables the ssh service,
+ssh [on|off|fingerprint|ssh2fa]           enables or disables the ssh service,
     [2fa] <add|enable|disable>            prints out fingerprint of the ssh daemon
           <remove|show>                   and deals with two factor authentication
 vnc [on|off|info]                         enables or disables the vnc server service

@@ -120,6 +120,11 @@ function ssh {
           ;;
       esac
       ;;
+    "ssh2fa")
+      checkargn $# 1
+      json_fmt="{\"pi\":{\"secret key\":\"$(ssh 2fa show pi | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"ip\":{\"secret key\":\"$(ssh 2fa show ip | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"nokey\":\"$(ssh 2fa show nokey | grep -o "disabled" )\"}"
+      printf "${json_fmt}\n"
+      ;;
     *)
       echo "Error: only '', 'on', 'off', or 'fingerprint' options are supported"
       ;;
@@ -128,7 +133,7 @@ function ssh {
 
 function ssh_help {
   echo
-  echo "Usage: $BASENAME ssh [on|off|fingerprint|2fa]"
+  echo "Usage: $BASENAME ssh [on|off|fingerprint|2fa|ssh2fa]"
   echo
   echo "Enables or disables the SSH service"
   echo
@@ -153,5 +158,8 @@ function ssh_help {
   echo
   echo "  $BASENAME ssh 2fa list"
   echo "      List ssh 2fa status of every user."
+  echo
+  echo "  $BASENAME ssh ssh2fa"
+  echo "      Outputs json format of all users' 2fa secret keys and scratch codes."
   echo
 }

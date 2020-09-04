@@ -140,7 +140,7 @@ function remote {
           # fi
           # json_fmt="$i:$j"
           json_fmt="{\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k]}"
-          echo -ne $json_fmt\\r
+          echo -ne $json_fmt\r
           done
         done
       done

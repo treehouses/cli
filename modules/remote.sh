@@ -126,16 +126,16 @@ function remote {
 
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
-      for i in "${!users[@]}"
+      for i in "${users[@]}"
       do
         str="$(ssh 2fa show $i)"
-        for i in "${str[@]}"
+        for j in "$i"
         do
           if [[ $str == "SSH 2FA for nokey is disabled." ]]; then
             echo "disabled"
             continue
           fi
-          json_fmt="\"$i\":$str"
+          json_fmt="\"$j\":$str"
           echo "$json_fmt"
         done
       done

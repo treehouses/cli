@@ -110,7 +110,7 @@ function remote {
         if [[ $str == "SSH 2FA for nokey is disabled." ]]; then
           echo "disabled"
         else
-          echo "$(ssh 2fa show $i)"
+          echo "$(ssh 2fa show $i)" > /dev/null 2>&1
         fi
         json_fmt="\"$i\":$str"
         echo $json_fmt

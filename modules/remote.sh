@@ -110,11 +110,8 @@ function remote {
           echo "disabled"
           continue
         fi
-        # else
-        #   echo "$(ssh 2fa show $i)" > /dev/null 2>&1
-        # fi
-        str="\"${i[@]}\":$str"
-        echo $str
+        json_fmt="\"${i[@]}\":$str"
+        echo "$json_fmt\n"
         # printf '[%s] = %s\n' "$i" "${V[i]}"
       done
       # json_fmt="{\"pi\":{\"secret key\":\"$(ssh 2fa show pi | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"ip\":{\"secret key\":\"$(ssh 2fa show ip | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"nokey\":\"$(ssh 2fa show nokey | grep -o "disabled" )\"}"

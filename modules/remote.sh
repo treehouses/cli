@@ -129,7 +129,7 @@ function remote {
       for i in "${!users[@]}"
       do
         str="$(ssh 2fa show $i)"
-        for $str in "${users[@]}"
+        for i in "${str[@]}"
         do
           if [[ $str == "SSH 2FA for nokey is disabled." ]]; then
             echo "disabled"

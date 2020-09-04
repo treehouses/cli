@@ -128,13 +128,13 @@ function remote {
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
       for i in ${users[@]}; 
       do 
-        for j in "$(treehouses ssh 2fa show $i )"; 
+        for j in "$(treehouses ssh 2fa show $i | sed 's/Secret Key://g')"; 
         do
           if [[ "$(treehouses ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
             echo "disabled"
             continue
           fi
-          json_fmt="$({\"$i\":{\"secret key\":\"$j | sed 's/Secret Key://g'\"}})"
+          json_fmt="{\"$i\":{\"secret key\":\"$j\"}}"
           echo $json_fmt
         done
       done

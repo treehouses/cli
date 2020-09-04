@@ -126,8 +126,8 @@ function remote {
 
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
-      for i in ${users[@]};
       str="$(treehouses ssh 2fa show $i )"
+      for i in ${users[@]};
       do
         for j in $str; 
         do

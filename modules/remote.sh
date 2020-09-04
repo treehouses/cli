@@ -126,10 +126,11 @@ function remote {
 
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
+      echo -n "{"
       for i in ${users[@]}; 
       
       do 
-      echo -n "{"
+      
         str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
         str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}')"
         

@@ -104,12 +104,9 @@ function remote {
       checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
       # echo "$users"
-      local line i
-      i=0
       for i in "$users"
-      ((i++))
       do
-        str="$(ssh 2fa show $i)"
+        str="$(ssh 2fa show ${i[@]})"
         if [[ $str == "SSH 2FA for nokey is disabled." ]]; then
           echo "disabled"
         else
@@ -120,7 +117,7 @@ function remote {
       done
       # json_fmt="{\"pi\":{\"secret key\":\"$(ssh 2fa show pi | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"ip\":{\"secret key\":\"$(ssh 2fa show ip | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"nokey\":\"$(ssh 2fa show nokey | grep -o "disabled" )\"}"
       
-      printf "${json_fmt}\n"
+     # printf "${json_fmt}\n"
       ;;
     "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')

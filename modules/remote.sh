@@ -126,15 +126,17 @@ function remote {
 
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
-      str="$(treehouses ssh 2fa show $i )"
+      
       for i in ${users[@]};
       do
+        str="$(treehouses ssh 2fa show $i )"
         for j in $str; 
         do
           # if [[ ]]
           json_fmt="$i:$j"
-          echo $json_fmt
+          
         done
+        echo $json_fmt
       done
 
 

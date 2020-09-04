@@ -137,7 +137,7 @@ function remote {
           fi
           # json_fmt="\"$j\":$str"
           echo "$i"
-          echo "$j"
+          echo "${j[i]}"
           echo "$str"
         done
       done

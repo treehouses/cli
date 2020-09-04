@@ -128,7 +128,8 @@ function remote {
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
       for i in ${users[@]}; 
       do 
-        for j in "$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"; 
+        str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
+        for j in $str
         do
           # if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
           #   echo "disabled"

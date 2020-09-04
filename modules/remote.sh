@@ -129,7 +129,7 @@ function remote {
       for i in "$users"
       do
         str="$(ssh 2fa show ${i[@]})"
-        # for j in "${str[@]}"
+        for j in "${str[@]}"
         # do
         #   if [[ $str == "SSH 2FA for nokey is disabled." ]]; then
         #     echo "disabled"
@@ -138,8 +138,8 @@ function remote {
           # json_fmt="\"$j\":$str"
           # echo "$i"
           # echo "${j[i]}"
-          echo "$str"
-        # done
+          echo "$j"
+        done
       done
       ;;
     "help")

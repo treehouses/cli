@@ -139,6 +139,7 @@ function remote {
           # echo "$i"
           # echo "${j[i]}"
           echo "$j"
+          continue
         done
       done
       ;;

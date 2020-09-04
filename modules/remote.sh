@@ -127,10 +127,11 @@ function remote {
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
       for i in ${users[@]}; 
+      echo -n "{"
       do 
         str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
         str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}')"
-        echo "{"
+        
         for j in $str
         do
         for k in $str2
@@ -144,8 +145,9 @@ function remote {
           echo -n $json_fmt          
           done
         done
-        echo "}"
+        
       done
+      echo -n "}"
 # json_fmt="{\"pi\":{\"secret key\":\"$(ssh 2fa show pi | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"ip\":{\"secret key\":\"$(ssh 2fa show ip | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"nokey\":\"$(ssh 2fa show nokey | grep -o "disabled" )\"}"
       
 

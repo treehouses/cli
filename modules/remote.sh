@@ -139,7 +139,7 @@ function remote {
           # echo "$i"
           # echo "${j[i]}"
           echo $i
-          echo ${j[@]}
+          echo ${j[$i]}
           continue
         done
       done

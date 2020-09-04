@@ -133,12 +133,13 @@ function remote {
           if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
             echo "disabled"
             continue
-          fi
+          else
           for j in "$(ssh 2fa show $i | sed 's/Secret Key://g')"; 
           do
           json_fmt="{\"$i\":{\"secret key\":\"$j\"}}"
           echo $json_fmt
         done
+        fi
       done
 # json_fmt="{\"pi\":{\"secret key\":\"$(ssh 2fa show pi | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"ip\":{\"secret key\":\"$(ssh 2fa show ip | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"nokey\":\"$(ssh 2fa show nokey | grep -o "disabled" )\"}"
       

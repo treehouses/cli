@@ -128,8 +128,10 @@ function remote {
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
       for i in ${users[@]}; 
       do 
-        for j in "$(treehouses ssh 2fa show $i )"; 
-        do 
+        str="$(treehouses ssh 2fa show $i )"
+        for j in $str; 
+        do
+          # if [[ ]]
           json_fmt="$i:$j"
           echo $json_fmt
         done

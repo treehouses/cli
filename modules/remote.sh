@@ -126,23 +126,35 @@ function remote {
 
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
-      for i in "$users"
-      do
-        # str="$(ssh 2fa show ${i[@]})"
-        for j in "$(ssh 2fa show ${users[@]})"
-        do
-        #   if [[ $str == "SSH 2FA for nokey is disabled." ]]; then
-        #     echo "disabled"
-        #     continue
-        #   fi
-          # json_fmt="\"$j\":$str"
-          # echo "$i"
-          # echo "${j[i]}"
-          echo $i
-          echo ${j[$i]}
-          continue
+      for i in ${users[@]}; 
+      do 
+        for j in "$(treehouses ssh 2fa show $i )"; 
+        do 
+          json_fmt="$i:$j"
+          echo $json_fmt
         done
       done
+
+
+
+
+
+
+      #   # str="$(ssh 2fa show ${i[@]})"
+      #   for j in "$(ssh 2fa show ${i[@]})"
+      #   do
+      #   #   if [[ $str == "SSH 2FA for nokey is disabled." ]]; then
+      #   #     echo "disabled"
+      #   #     continue
+      #   #   fi
+      #     # json_fmt="\"$j\":$str"
+      #     # echo "$i"
+      #     # echo "${j[i]}"
+      #     echo $i
+      #     echo ${j[$i]}
+      #     continue
+      #   done
+      # done
       ;;
     "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')

@@ -129,14 +129,15 @@ function remote {
       for i in ${users[@]}; 
       do 
         str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
-        for j in $str
+        str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}')"
+        for j in $str $str2
         do
           # if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
           #   echo "disabled"
           #   continue
           # fi
           # json_fmt="$i:$j"
-          json_fmt="{\"$i\":{\"secret key\":\"$j\"}}"
+          json_fmt="{\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[]}"
           echo $json_fmt
         done
       done

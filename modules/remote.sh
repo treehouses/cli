@@ -106,7 +106,8 @@ function remote {
       echo "$users"
       for i in "$users"
       do
-        if [[ "$(ssh 2fa show $i)" == "SSH 2FA for nokey is disabled." ]], then
+        str="$(ssh 2fa show $i)"
+        if [[ $str == "SSH 2FA for nokey is disabled." ]], then
           echo "disabled"
         else
           echo "$(ssh 2fa show $i)"

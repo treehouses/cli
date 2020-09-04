@@ -110,7 +110,7 @@ function remote {
           echo "disabled"
           continue
         fi
-        else
+        # else
         #   echo "$(ssh 2fa show $i)" > /dev/null 2>&1
         # fi
         str="\"${i[@]}\":$str"

@@ -134,7 +134,8 @@ function remote {
             echo "disabled"
             continue
           fi
-          json_fmt="{\"$i\":{\"secret key\":\"$j\"}}"
+          json_fmt="$i:$j"
+          # json_fmt="{\"$i\":{\"secret key\":\"$j\"}}"
           echo $json_fmt
         done
       done

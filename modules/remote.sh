@@ -109,7 +109,7 @@ function remote {
       
       
       do 
-      ((count++))
+      
       if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
             echo -n "\"$i\":\"disabled\","
             continue
@@ -121,7 +121,7 @@ function remote {
         do
         for k in $str2
         do
-         
+         ((count++))
           json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k]"
           if [[ $count < $users ]]; then
           echo -n ${json_fmt} | awk '{printf "%s"",",$0}'

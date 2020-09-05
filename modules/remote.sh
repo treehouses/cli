@@ -131,7 +131,7 @@ function remote {
       
       do 
       if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
-            echo -n "\"$i\":disabled,"
+            echo -n "\"$i\":\"disabled\","
             continue
           fi
       

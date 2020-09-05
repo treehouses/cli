@@ -103,38 +103,23 @@ function remote {
     "ssh2fa")
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
-      echo -n "{"
+      output="{"
+      # echo -n "{"
       for i in ${users[@]};
       do      
         if [[ "$(ssh 2fa show $i )" == "SSH 2FA for $i is disabled." ]]; then
-          echo -n "\"$i\":\"disabled\","
+          # echo -n "\"$i\":\"disabled\","
+          output="$output\"$i\":\"disabled\","
           continue
         fi
         
         str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
         str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
-        file=""
         json_fmt="\"$i\":{\"secret key\":\"$str\",\"scratch codes\":[$str2]},"
-        file="$file$json_fmt"
-        # for j in $str
-        # do
-        # json_fmt="\"$i\":{\"secret key\":\"$j\",\"scratch codes\":[$str2]},"
-        # file="$file$json_fmt"
-          # for k in $str2
-          # do
-          #   json_fmt="\"$i\":{\"secret key\":\"$j\",\"scratch codes\":[$k]},"
-          
-
-          #   file="$file$json_fmt"
-          #   # file=$(echo -n ${json_fmt})
-          #   # echo -n ${file} #| sed 's/,$//'
-          # done          
-        # done
-        echo -n ${file::-1}
         # echo -n $json_fmt
+        output="$output$json_fmt"
       done      
-      # echo -n ${file::-1}
-      echo -ne "}"'\n'
+      echo -n "${output::-1}}"
       ;;
     "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')

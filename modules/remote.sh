@@ -122,13 +122,10 @@ function remote {
         for k in $str2
         do
          ((count++))
-          json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k]"
-          if [[ $count < $users ]]; then
-          echo -n ${json_fmt} | awk '{printf "%s"",",$0}'
+          json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k],"
+         
+          echo -n ${json_fmt} | sed '$ s/},/}/'
           # sed 's/]/],/g' | sed 's/,}/}/g' 
-          else
-            echo -n ${json_fmt}
-          fi
           done
         done
         

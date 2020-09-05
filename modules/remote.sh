@@ -124,13 +124,13 @@ function remote {
          ((count++))
           json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k],"
          
-          echo -n ${json_fmt} | sed '$ s/},/}/'
+          echo -n ${json_fmt}  #sed '$ s/},/}/'
           # sed 's/]/],/g' | sed 's/,}/}/g' 
           done
         done
         
       done
-      echo -n "}"
+      echo -n "}" | sed 's/],}/]}/g'
 # json_fmt="{\"pi\":{\"secret key\":\"$(ssh 2fa show pi | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"ip\":{\"secret key\":\"$(ssh 2fa show ip | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"nokey\":\"$(ssh 2fa show nokey | grep -o "disabled" )\"}"
       
 

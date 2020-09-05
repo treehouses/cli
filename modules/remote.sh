@@ -131,7 +131,7 @@ function remote {
       
       do 
       if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
-            echo -n "\"$i\":disabled"
+            echo -n "\"$i\":disabled,"
             continue
           fi
       
@@ -147,7 +147,7 @@ function remote {
           # fi
           # json_fmt="$i:$j"
           
-          json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k]"
+          json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k],"
           echo -n ${json_fmt%?}
           # sed 's/]/],/g' | sed 's/,}/}/g' 
           done

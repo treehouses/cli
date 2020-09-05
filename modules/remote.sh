@@ -117,7 +117,7 @@ function remote {
         do
           for k in $str2
           do
-            json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k],"
+            json_fmt="\"$i\":{\"secret key\":\"$j\",\"scratch codes\":[$k]},"
           
             file=$(echo -n ${json_fmt})
             echo -n ${file} #| sed 's/,$//'

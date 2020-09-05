@@ -120,7 +120,7 @@ function remote {
         do
           
           json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k]"
-          echo -n ${json_fmt%?} | awk '{printf "%s"",",$0}'
+          echo -n ${json_fmt} | awk '{printf "%s"",",$0}'
           # sed 's/]/],/g' | sed 's/,}/}/g' 
           done
         done

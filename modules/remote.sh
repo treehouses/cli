@@ -120,7 +120,7 @@ function remote {
             json_fmt="\"$i\":{\"secret key\":\"$j\",\"scratch codes\":[$k]},"
           
             file=$(echo -n ${json_fmt})
-            echo -n ${file} | sed 's/,$//'
+            echo -n ${file} #| sed 's/,$//'
           done
         done
       done      

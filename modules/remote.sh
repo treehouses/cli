@@ -129,7 +129,7 @@ function remote {
           #   # file=$(echo -n ${json_fmt})
           #   # echo -n ${file} #| sed 's/,$//'
           # done          
-        done
+        # done
         echo -n ${file::-1}
       done      
       echo -ne "}"'\n'

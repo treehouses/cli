@@ -130,10 +130,10 @@ function remote {
           #   # echo -n ${file} #| sed 's/,$//'
           # done          
         # done
-        # echo -n ${file::-1}
+        echo -n ${file::-1}
         # echo -n $json_fmt
       done      
-      echo -n ${file::-1}
+      # echo -n ${file::-1}
       echo -ne "}"'\n'
       ;;
     "help")

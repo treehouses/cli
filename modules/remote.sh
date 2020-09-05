@@ -115,7 +115,7 @@ function remote {
         str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
         file=""
         json_fmt="\"$i\":{\"secret key\":\"$str\",\"scratch codes\":[$str2]},"
-        file="$file$json_fmt"
+        # file="$file$json_fmt"
         # for j in $str
         # do
         # json_fmt="\"$i\":{\"secret key\":\"$j\",\"scratch codes\":[$str2]},"
@@ -130,7 +130,8 @@ function remote {
           #   # echo -n ${file} #| sed 's/,$//'
           # done          
         # done
-        echo -n ${file::-1}
+        # echo -n ${file::-1}
+        echo -n $json_fmt
       done      
       echo -ne "}"'\n'
       ;;

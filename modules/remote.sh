@@ -132,10 +132,11 @@ function remote {
       do 
       
         str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
-        str2="$([ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//'])"
+        str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
         
         for j in $str
         do
+        # IFS=","
         for k in $str2
         do
           # if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
@@ -144,7 +145,7 @@ function remote {
           # fi
           # json_fmt="$i:$j"
           json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k],"
-          echo -n $json_fmt | sed "s/,$//g"
+          echo -n $json_fmt | awk '{sub(/,$/,x)}1'
           # sed 's/]/],/g' | sed 's/,}/}/g' 
           done
         done

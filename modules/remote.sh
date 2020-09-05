@@ -101,7 +101,7 @@ function remote {
       printf '%s\n' "${json_statusfmt}"
       ;;
     "ssh2fa")
-     checkargn $# 1
+      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
       output="{"
       for user in ${users[@]};
@@ -116,7 +116,7 @@ function remote {
         fi
         output="$output$outputpart"
       done      
-      echo -n "${output::-1}}"
+      echo "${output::-1}}"
       ;;
     "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')

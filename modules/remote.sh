@@ -103,8 +103,10 @@ function remote {
     "ssh2fa")
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
+      local count=0
       echo -n "{"
       for i in ${users[@]}; 
+      (( count=count+1 ))
       
       do 
       if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
@@ -118,10 +120,14 @@ function remote {
         do
         for k in $str2
         do
-          
+         
           json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k]"
+          if [[ $count < $users ]]; then
           echo -n ${json_fmt} | awk '{printf "%s"",",$0}'
           # sed 's/]/],/g' | sed 's/,}/}/g' 
+          else
+            echo -n ${json_fmt}
+          fi
           done
         done
         

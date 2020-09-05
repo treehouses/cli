@@ -104,20 +104,15 @@ function remote {
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
       output="{"
-      # echo -n "{"
       for i in ${users[@]};
       do      
         if [[ "$(ssh 2fa show $i )" == "SSH 2FA for $i is disabled." ]]; then
-          # echo -n "\"$i\":\"disabled\","
           output="$output\"$i\":\"disabled\","
-          continue
+        else        
+          str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
+          str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
+          output="$output\"$i\":{\"secret key\":\"$str\",\"scratch codes\":[$str2]},"
         fi
-        
-        str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
-        str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
-        json_fmt="\"$i\":{\"secret key\":\"$str\",\"scratch codes\":[$str2]},"
-        # echo -n $json_fmt
-        output="$output$json_fmt"
       done      
       echo -n "${output::-1}}"
       ;;

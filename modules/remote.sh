@@ -104,38 +104,27 @@ function remote {
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
       echo -n "{"
-      for i in ${users[@]}; 
-      
-      
-      do 
-      
-      if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
-            echo -n "\"$i\":\"disabled\","
-            continue
-          fi
-      
+      for i in ${users[@]};
+      do      
+        if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
+          echo -n "\"$i\":\"disabled\","
+          continue
+        fi
+        
         str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
         str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
         for j in $str
         do
-        for k in $str2
-        do
-          json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k],"
-         
-          file=$(echo -n ${json_fmt}) #sed '$ s/},/}/'
-          # sed 's/]/],/g' | sed 's/,}/}/g' 
-          # cat $json_fmt
-          echo -n ${file} | sed 's/,$//'
+          for k in $str2
+          do
+            json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k],"
+          
+            file=$(echo -n ${json_fmt})
+            # echo -n ${file} | sed 's/,$//'
           done
-          # echo ${file} | sed 's/,$//'
         done
-        # echo "${file}" | sed 's/,$//'
-      done
-      
+      done      
       echo -ne "}"'\n'
-# json_fmt="{\"pi\":{\"secret key\":\"$(ssh 2fa show pi | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"ip\":{\"secret key\":\"$(ssh 2fa show ip | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')\",\"scratch codes\":[$(ssh 2fa show pi | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')]},\"nokey\":\"$(ssh 2fa show nokey | grep -o "disabled" )\"}"
-      
-
       ;;
     "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')

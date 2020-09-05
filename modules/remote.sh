@@ -114,10 +114,12 @@ function remote {
         str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
         str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
         file=""
-        for j in $str
-        do
-        json_fmt="\"$i\":{\"secret key\":\"$j\",\"scratch codes\":[$str2]},"
+        json_fmt="\"$i\":{\"secret key\":\"$str\",\"scratch codes\":[$str2]},"
         file="$file$json_fmt"
+        # for j in $str
+        # do
+        # json_fmt="\"$i\":{\"secret key\":\"$j\",\"scratch codes\":[$str2]},"
+        # file="$file$json_fmt"
           # for k in $str2
           # do
           #   json_fmt="\"$i\":{\"secret key\":\"$j\",\"scratch codes\":[$k]},"

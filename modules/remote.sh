@@ -130,6 +130,10 @@ function remote {
       for i in ${users[@]}; 
       
       do 
+      if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
+            echo "disabled"
+            continue
+          fi
       
         str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
         str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"

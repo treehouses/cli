@@ -107,13 +107,13 @@ function remote {
       echo -n "{"
       for i in ${users[@]};
       do
-        if [[ "$show_user" == "SSH 2FA for nokey is disabled." ]]; then
+        if [[ $show_user == "SSH 2FA for nokey is disabled." ]]; then
           echo -n "\"$i\":\"disabled\","
           continue
         fi
         
-        str="$( "$show_user" | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
-        str2="$( "$show_user" | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
+        str="$( $show_user | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
+        str2="$( $show_user | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
         for j in $str
         do
           for k in $str2

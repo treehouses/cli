@@ -104,14 +104,15 @@ function remote {
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
       output="{"
-      for i in ${users[@]};
-      do      
-        if [[ "$(ssh 2fa show $i )" == "SSH 2FA for $i is disabled." ]]; then
-          outputpart="\"$i\":\"disabled\","
+      for user in ${users[@]};
+      do
+        showuser=$(ssh 2fa show $user)
+        if [[ "$showuser" == "SSH 2FA for $user is disabled." ]]; then
+          outputpart="\"$user\":\"disabled\","
         else        
-          str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
-          str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
-          outputpart="\"$i\":{\"secret key\":\"$str\",\"scratch codes\":[$str2]},"
+          secret="$(echo $showuser | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
+          scratch="$(echo $showuser | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
+          outputpart="\"$user\":{\"secret key\":\"$secret\",\"scratch codes\":[$scratch]},"
         fi
         output="$output$outputpart"
       done      

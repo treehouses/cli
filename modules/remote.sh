@@ -134,7 +134,7 @@ function remote {
       
         str="$(ssh 2fa show $i | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
         str2="$(ssh 2fa show $i | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
-        str3="[$str2]${oper}"
+        str3="[$str2]$oper"
         for j in $str
         do
         # IFS=","

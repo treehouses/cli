@@ -103,10 +103,11 @@ function remote {
     "ssh2fa")
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
-      local count=0
+      local count
+      count=0
       echo -n "{"
       for i in ${users[@]}; 
-      (( count=count+1 ))
+      ((count++))
       
       do 
       if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then

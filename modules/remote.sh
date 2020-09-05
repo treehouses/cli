@@ -106,9 +106,10 @@ function remote {
       count=0
       echo -n "{"
       for i in ${users[@]}; 
-      ((count++))
+      
       
       do 
+      ((count++))
       if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
             echo -n "\"$i\":\"disabled\","
             continue

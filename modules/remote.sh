@@ -111,7 +111,7 @@ function remote {
           outputpart="\"$user\":\"disabled\","
         else        
           secret="$(ssh 2fa show $user | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
-          scratch="$(ssh 2fa show $user | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
+          scratch="$(echo "$showuser" | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
           outputpart="\"$user\":{\"secret key\":\"$secret\",\"scratch codes\":[$scratch]},"
         fi
         output="$output$outputpart"

@@ -124,8 +124,9 @@ function remote {
          ((count++))
           json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k],"
          
-          echo -n ${json_fmt} | sed -E '/,\s*$/ { N; s:,\s*(\n\s*},?):\1: }'  #sed '$ s/},/}/'
+          echo -n ${json_fmt} #sed '$ s/},/}/'
           # sed 's/]/],/g' | sed 's/,}/}/g' 
+          cat $json_fmt|sed 's/,$//
           done
         done
         

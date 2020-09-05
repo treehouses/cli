@@ -145,7 +145,7 @@ function remote {
           # fi
           # json_fmt="$i:$j"
           json_fmt="\"$i\":{\"secret key\":\"$j\"},\"scratch codes\":[$k],"
-          echo -n $json_fmt | awk '{sub(/,$/,x)}1'
+          echo -n $json_fmt | sed 's/, *$//'
           # sed 's/]/],/g' | sed 's/,}/}/g' 
           done
         done

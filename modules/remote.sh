@@ -126,7 +126,7 @@ function remote {
          
           echo -n ${json_fmt} #sed '$ s/},/}/'
           # sed 's/]/],/g' | sed 's/,}/}/g' 
-          cat $json_fmt|sed 's/,$//
+          cat $json_fmt|sed 's/,$//'
           done
         done
         

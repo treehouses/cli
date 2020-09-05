@@ -103,7 +103,6 @@ function remote {
     "ssh2fa")
       checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
-      output="{"
       for user in ${users[@]};
       do
         showuser=$(ssh 2fa show $user)
@@ -116,7 +115,7 @@ function remote {
         fi
         output="$output$outputpart"
       done      
-      echo "${output::-1}}"
+      echo "{${output::-1}}"
       ;;
     "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')

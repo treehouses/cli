@@ -104,10 +104,9 @@ function remote {
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
       echo -n "{"
-      i=""
-      for "$i" in ${users[@]};
+      for i in ${users[@]};
       do      
-        if [[ "$(ssh 2fa show $i )" == "SSH 2FA for nokey is disabled." ]]; then
+        if [[ "$(ssh 2fa show $i )" == "SSH 2FA for $i is disabled." ]]; then
           echo -n "\"$i\":\"disabled\","
           continue
         fi

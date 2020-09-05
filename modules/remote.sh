@@ -103,7 +103,6 @@ function remote {
     "ssh2fa")
      checkargn $# 1
       users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
-      local count
       count=0
       echo -n "{"
       for i in ${users[@]}; 

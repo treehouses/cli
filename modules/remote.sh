@@ -101,6 +101,23 @@ function remote {
 
       printf '%s\n' "${json_statusfmt}"
       ;;
+    "ssh2fa")
+      checkargn $# 1
+      users=$(cat /etc/passwd | grep "/home" | cut -d: -f1)
+      for user in ${users[@]};
+      do
+        showuser=$(ssh 2fa show $user)
+        if [[ "$showuser" == "SSH 2FA for $user is disabled." ]]; then
+          outputpart="\"$user\":\"disabled\","
+        else        
+          secret="$(echo "$showuser" | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
+          scratch="$(echo "$showuser" | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
+          outputpart="\"$user\":{\"secret key\":\"$secret\",\"scratch codes\":[$scratch]},"
+        fi
+        output="$output$outputpart"
+      done      
+      echo "{${output::-1}}"
+      ;;
     "help")
       json_var=$(jq -n --arg desc "$(source $SCRIPTFOLDER/modules/help.sh && help)" '{"help":$desc}')
       for file in $SCRIPTFOLDER/modules/*.sh
@@ -158,7 +175,7 @@ function remote {
       ;;
     *)
       echo "Unknown command option"
-      echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | help | key>"
+      echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | statuspage | ssh2fa | help | key>"
       ;;
   esac
 }
@@ -184,7 +201,7 @@ function autorun_helper {
 
 function remote_help {
   echo
-  echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | help | key>"
+  echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | statuspage | ssh2fa | help | key>"
   echo
   echo "Returns a string representation of the current status of the Raspberry Pi"
   echo "Used for Treehouses Remote"
@@ -222,6 +239,9 @@ function remote_help {
   echo
   echo "$BASENAME remote allservices"
   echo "returns json string of services"
+  echo
+  echo "$BASENAME ssh ssh2fa"
+  echo "outputs json format of all users' 2fa secret keys and scratch codes."
   echo
   echo "$BASENAME remote help"
   echo "returns json string of help for all modules"

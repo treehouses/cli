@@ -95,8 +95,9 @@ function remote {
       printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}" "${env_str::-1}" "${size_str::-1}"
       ;;
     "statuspage")
-      checkargn $# 1
-      json_statusfmt="{\"status\":\"$(remote status)\",\"hostname\":\"$(hostname)\",\"arm\":\"$(detect arm)\",\"internet\":\"$(internet)\",\"memory_total\":\"$(memory total gb)\",\"memory_used\":\"$(memory used gb)\",\"temperature\":\"$(temperature)\",\"networkmode\":\"$(networkmode)\",\"info\":\"$(networkmode info | tr '\n' ' ')\",\"storage\":\"$(system disk | tr '\n' ' ' | sed 's/^[[:space:]]*//;s/ \{1,\}/ /g;s/[[:space:]]*$//')\",\"wificountry\":\"$(wificountry)\"}"
+			countryonly=$(wificountry)
+			checkargn $# 1
+      json_statusfmt="{\"status\":\"$(remote status)\",\"hostname\":\"$(hostname)\",\"arm\":\"$(detect arm)\",\"internet\":\"$(internet)\",\"memory_total\":\"$(memory total gb)\",\"memory_used\":\"$(memory used gb)\",\"temperature\":\"$(temperature)\",\"networkmode\":\"$(networkmode)\",\"info\":\"$(networkmode info | tr '\n' ' ')\",\"storage\":\"$(system disk | tr '\n' ' ' | sed 's/^[[:space:]]*//;s/ \{1,\}/ /g;s/[[:space:]]*$//')\",\"wificountry\":\"${countryonly:8}\"}"
 
       printf '%s\n' "${json_statusfmt}"
       ;;

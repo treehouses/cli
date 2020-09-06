@@ -239,7 +239,7 @@ function remote_help {
   echo "$BASENAME remote allservices"
   echo "returns json string of services"
   echo
-  echo "  $BASENAME ssh ssh2fa"
+  echo "$BASENAME ssh ssh2fa"
   echo "outputs json format of all users' 2fa secret keys and scratch codes."
   echo
   echo "$BASENAME remote help"

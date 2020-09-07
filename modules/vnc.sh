@@ -1,3 +1,14 @@
+function restart_vnc_service {
+    stop_service vncserver-x11-serviced.service
+    disable_service vncserver-x11-serviced.service
+    systemctl set-default multi-user.target
+
+    enable_service vncserver-x11-serviced.service
+    start_service vncserver-x11-serviced.service
+    systemctl set-default graphical.target
+    reboot_needed
+}
+
 function vnc {
   local option bootoptionstatus vncservicestatus xservicestatus ipaddress isgraphical
   checkroot
@@ -92,8 +103,7 @@ case "$option" in
                 mkdir -p /root/.vnc/config.d
                 echo "Authentication=SystemAuth" >> /root/.vnc/config.d/vncserver-x11
             fi
-            treehouses vnc off > /dev/null 2>&1
-            treehouses vnc on  > /dev/null 2>&1
+            restart_vnc_service > /dev/null 2>&1
             echo "Please reboot the system for changes to take effect."
         ;;
         "vncpasswd")
@@ -108,8 +118,7 @@ case "$option" in
                 else
                     echo "Authentication=VncAuth" >> /root/.vnc/config.d/vncserver-x11
                 fi
-                treehouses vnc off > /dev/null 2>&1
-                treehouses vnc on  > /dev/null 2>&1
+                restart_vnc_service > /dev/null 2>&1
                 echo "Create your password, run 'treehouses vnc passwd'."
                 echo "Please reboot the system for changes to take effect."
             else

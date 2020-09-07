@@ -33,6 +33,7 @@ function upgrade {
   elif [ "$tag" == "bluetooth" ]; then
     checkroot
     checkrpiwireless
+    checkinternet
     if [ "$2" = "" ]; then
       branch="master"
     else

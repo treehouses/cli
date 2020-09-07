@@ -128,7 +128,7 @@ case "$option" in
         "info")
             if [[ -f /root/.vnc/config.d/vncserver-x11 ]]
             then
-                if cat /root/.vnc/config.d/vncserver-x11 | grep "VncAuth"
+                if grep "VncAuth" < /root/.vnc/config.d/vncserver-x11
                 then
                     echo "You are running VNC password authentication."
                 else

@@ -125,8 +125,20 @@ case "$option" in
                 echo "Please create a password first, run 'treehouses vnc passwd'."
             fi
         ;;
+        "info")
+            if [[ -f /root/.vnc/config.d/vncserver-x11 ]]
+            then
+                if cat /root/.vnc/config.d/vncserver-x11 | grep "VncAuth"
+                then
+                    echo "You are running VNC password authentication."
+                else
+                    echo "You are running system authentication."
+                fi
+            else
+                echo "You are running system authentication."
+            fi
         *)
-            echo "Error: only 'system', 'vncpasswd' options are supported"
+            echo "Error: only 'system', 'vncpasswd', 'info' options are supported"
         ;;
     esac
     ;;
@@ -160,7 +172,7 @@ function vnc_help {
   echo "  $BASENAME vnc info"
   echo "      Prints a detailed configuration of each required component (boot option, vnc service, x service)."
   echo
-  echo "  $BASENAME vnc auth <system|vncpasswd>"
+  echo "  $BASENAME vnc auth <system|vncpasswd|info>"
   echo "      Change the VNC server authentication way (system default or vnc password)."
   echo
   echo "  $BASENAME vnc passwd"

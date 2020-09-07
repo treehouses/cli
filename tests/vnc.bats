@@ -30,3 +30,8 @@ load test-helper
   run "${clicmd}" vnc auth vncpasswd
   assert_success && assert_output -p 'password'
 }
+
+@test "$clinom vnc auth info" {
+  run "${clicmd}" vnc auth info
+  assert_success && assert_output -p 'authentication'
+}

@@ -137,6 +137,7 @@ case "$option" in
             else
                 echo "You are running system authentication."
             fi
+        ;;
         *)
             echo "Error: only 'system', 'vncpasswd', 'info' options are supported"
         ;;

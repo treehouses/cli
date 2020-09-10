@@ -7,7 +7,7 @@ function password {
     if [[ $tree == *"python"* ]]; then
       log_and_exit1 "Error: Password not entered"
     else
-      log_and_exit1 "/U26A0 Error: Password not entered"
+      log_and_exit1 "\U26A0 Error: Password not entered"
     fi
   elif [ $1 == "disable" ]; then
     disablepassword 

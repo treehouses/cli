@@ -4,7 +4,7 @@ function internet {
   case "$1" in
   "")
     if nc -w 10 -z 8.8.8.8 53 >/dev/null 1>&2; then
-      echo -e "\033[1;33m\U26A0\033[0mtrue"
+      echo -e '\U26A0 true'
       exit 0
     fi
     echo "false"

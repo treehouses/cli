@@ -2,8 +2,13 @@ function password {
   checkrpi
   checkroot
   checkargn $# 1
+  warning="\U26A0"
   if [[ $1 == "" ]]; then
-    log_and_exit1 "Error: Password not entered"
+    if [[ ${pstree -ps $$} == *"python"* ]]; then
+      log_and_exit1 "Error: Password not entered"
+    else
+      log_and_exit1 "$warning Error: Password not entered"
+    fi
   elif [ $1 == "disable" ]; then
     disablepassword 
   elif [ $1 == "enable" ]; then

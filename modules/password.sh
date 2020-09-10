@@ -4,12 +4,10 @@ function password {
   checkargn $# 1
   if [[ $1 == "" ]]; then
     tree=$(pstree -ps $$)
-    if [[ $tree == *"python"* ]]; then
-      log_and_exit1 "Error: Password not entered"
-    else
+    if ! [[ $tree == *"python"* ]]; then
       echo -ne "\U26A0 "
-      log_and_exit1 "Error: Password not entered"
     fi
+    log_and_exit1 "Error: Password not entered"
   elif [ $1 == "disable" ]; then
     disablepassword 
   elif [ $1 == "enable" ]; then

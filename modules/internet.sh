@@ -6,7 +6,7 @@ function internet {
     yel=$'\e[0;33m'
     end=$' \e[0m'
     if nc -w 10 -z 8.8.8.8 53 >/dev/null 1>&2; then
-      echo -e "${yel}\U26A0${end} true"
+      echo -e "${yel}\U26A0${end}ERROR---- true"
       exit 0
     fi
     echo "false"

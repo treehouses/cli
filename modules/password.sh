@@ -3,7 +3,8 @@ function password {
   checkroot
   checkargn $# 1
   if [[ $1 == "" ]]; then
-    if [[ "${pstree -ps $$}" == *"python"* ]]; then
+    tree=${pstree -ps $$}
+    if [[ $tree == *"python"* ]]; then
       log_and_exit1 "Error: Password not entered"
     else
       log_and_exit1 "/U26A0 Error: Password not entered"

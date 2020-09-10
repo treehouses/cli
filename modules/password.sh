@@ -3,7 +3,7 @@ function password {
   checkroot
   checkargn $# 1
   if [[ $1 == "" ]]; then
-    if ! [[ ${pstree -ps $$} == *"python"* ]]; then
+    if ! [[ $(pstree -ps $$) == *"python"* ]]; then
       echo -ne "\U26A0 "
     fi
     log_and_exit1 "Error: Password not entered"

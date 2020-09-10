@@ -3,8 +3,10 @@ function internet {
 
   case "$1" in
   "")
+    yel=$'\e[0;33m'
+    end=$' \e[0m'
     if nc -w 10 -z 8.8.8.8 53 >/dev/null 1>&2; then
-      echo -e '\U26A0 true'
+      echo -e "${yel}true${end}'
       exit 0
     fi
     echo "false"

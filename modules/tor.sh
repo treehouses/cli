@@ -3,13 +3,14 @@ function tor {
   checkroot
   checkargn $# 3
   check_missing_packages "tor" "curl"
+  warning=$'\e[0;33m\U26A0 \e[0m'
 
   if { [ ! -d "/var/lib/tor/treehouses" ] || [ ! -f "/var/lib/tor/treehouses/hostname" ]; } && [ "$1" != "start" ] && [ "$1" != "add" ]; then
     if [ -z "$(grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g')" ]; then
-      echo "Error: there are no tor ports added."
+      echo "${warning}Error: there are no tor ports added."
       echo "'$BASENAME add [localPort]' to add a port and be able to use the service"
     else
-      echo "Error: the tor service has not been configured."
+      echo "${warning}Error: the tor service has not been configured."
       echo "Run '$BASENAME tor start' to configure it."
     fi
     exit 1
@@ -44,12 +45,12 @@ function tor {
       local_port="$3"
 
       if [ -z "$port" ]; then
-        echo "Error: you must specify a port"
+        echo "${warning}Error: you must specify a port"
         exit 1
       fi
 
       if  ! [[ "$port" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
-        echo "Error: is not a port"
+        echo "${warning}Error: is not a port"
         exit 1
       fi
 
@@ -58,7 +59,7 @@ function tor {
       fi
 
       if  ! [[ "$local_port" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
-        echo "Error: is not a port"
+        echo "${warning}Error: is not a port"
         exit 1
       fi
 
@@ -75,12 +76,12 @@ function tor {
 
     delete)
       if [ -z "$2" ]; then
-        echo "Error: no port entered"
+        echo "${warning}Error: no port entered"
         exit 1
       fi
 
       if  ! [[ "$2" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
-        echo "Error: $2 is not a port"
+        echo "${warning}Error: $2 is not a port"
         exit 1
       fi
 
@@ -96,7 +97,7 @@ function tor {
 
     deleteall)
       if [ -n "$2" ]; then
-        echo "Error: wrong syntax"
+        echo "${warning}Error: wrong syntax"
         exit 1
       fi
 
@@ -149,7 +150,7 @@ function tor {
         add)
           value="$3"
           if [ -z "$value" ]; then
-            echo "Error: You must specify a channel URL"
+            echo "${warning}Error: You must specify a channel URL"
             exit 1
           fi
 
@@ -159,7 +160,7 @@ function tor {
         delete)
           value="$3"
           if [ -z "$value" ]; then
-            echo "Error: You must specify a channel URL"
+            echo "${warning}Error: You must specify a channel URL"
             exit 1
           fi
 
@@ -193,7 +194,7 @@ function tor {
           echo "Status: $status"
           ;;
         *)
-          echo "Error: only 'on', 'off', 'now', 'add', 'delete', and 'list' options are supported."
+          echo "${warning}Error: only 'on', 'off', 'now', 'add', 'delete', and 'list' options are supported."
           ;;
       esac
       ;;
@@ -211,7 +212,7 @@ function tor {
       ;;
 
     *)
-      echo "Error: only 'list', 'ports', 'add', 'start', 'stop', 'status', 'notice', 'destroy', 'delete', 'deleteall', and 'refresh' options are supported."
+      echo "${warning}Error: only 'list', 'ports', 'add', 'start', 'stop', 'status', 'notice', 'destroy', 'delete', 'deleteall', and 'refresh' options are supported."
       ;;
   esac
 }

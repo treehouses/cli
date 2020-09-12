@@ -21,7 +21,7 @@ function services {
         do
           if [[ ! $file = *"README.md"* ]]; then
             service=$(echo "${file##*/}" | sed -e 's/^install-//' -e 's/.sh$//')
-            if check_arm $service; then
+            if check_arch $service; then
               echo $service
             fi
           fi
@@ -536,9 +536,14 @@ function services {
   esac
 }
 
-function check_arm {
-  arms=($(source $SERVICES/install-${1}.sh && supported_arms))
-  for i in "${arms[@]}"
+function check_arch {
+  source $SERVICES/install-${1}.sh
+  if type supported_arches > /dev/null 2>&1; then
+    arches=($(source $SERVICES/install-${1}.sh && supported_arches))
+  elif type supported_arms > /dev/null 2>&1; then
+    arches=($(source $SERVICES/install-${1}.sh && supported_arms))
+  fi
+  for i in "${arches[@]}"
   do
     if [ "$(detect arch)" = "$i" ]; then
       return 0

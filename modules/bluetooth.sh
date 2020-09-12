@@ -39,6 +39,7 @@ function bluetooth {
 
     "on")
       checkargn $# 1
+			echo "$TEMPLATES"
       cp "$TEMPLATES/bluetooth/hotspot" /etc/systemd/system/dbus-org.bluez.service
       enable_service rpibluetooth
       restart_service bluetooth
@@ -104,6 +105,14 @@ function bluetooth {
       elif [ "$2" = "follow" ]; then
         echo "press (ctrl + c) to exit"
         journalctl -u rpibluetooth -u bluetooth -f
+			elif [ "$2" = "on" ]; then
+				config update bluetoothlog 1
+				bluetooth restart &>"$LOGFILE"
+				echo "Bluetooth log has been turned on"
+			elif [ "$2" = "off" ]; then
+				config update bluetoothlog 0
+				bluetooth restart &>"$LOGFILE"
+				echo "Bluetooth log has been turned off"
       else
         echo "Argument not valid; leave blank or use \"follow\""
         exit 1

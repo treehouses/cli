@@ -56,14 +56,9 @@ function editor {
       supported_editor="vim nano emacs"
 
       if [ "$2" == "emacs" ] && ! command -v emacs > /dev/null; then
-         echo "Emacs is not installed on this system."
-         read -r -p "Do you want to have it installed? [y/N] " response
-         if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-           apt install -y emacs-nox
-         else
-           echo "Emacs not installed."
-           exit 0
-         fi
+        echo "Emacs is not installed on this system."
+        echo "Installing.."
+        apt install -y emacs-nox
       fi
       
       for i in $supported_editor; do 
@@ -108,6 +103,7 @@ function editor {
             cat "$2" >> /etc/nanorc
             ;;
           emacs)
+            echo "Config for emacs is not available."
             ;;
         esac
         echo "$EDITOR is now using config from file \"$2\"."
@@ -124,6 +120,7 @@ function editor {
             cat "$TEMPLATES/editor/nano/nanorc_alternate" >> /etc/nanorc
             ;;
           emacs)
+            echo "Config for emacs is not available."
             ;;
         esac
         echo "$EDITOR is now using the alternate config."
@@ -138,6 +135,7 @@ function editor {
             nano /etc/nanorc
             ;;
           emacs)
+            echo "Config for emacs is not available."
             ;;
         esac
         exit 0
@@ -152,6 +150,7 @@ function editor {
             cp "$TEMPLATES/editor/nano/nanorc_default" /etc/nanorc 
             ;;
           emacs)
+            echo "Config for emacs is not available."
             ;;
         esac
         echo "$EDITOR config reset to default."

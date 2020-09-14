@@ -181,7 +181,8 @@ function remote {
       esac
       ;;
     *)
-      echo "Unknown command option"
+      warningsign
+      echo "ERROR: unknown command option"
       echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | statuspage | ssh2fa | help | key>"
       ;;
   esac

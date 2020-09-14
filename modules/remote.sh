@@ -33,6 +33,7 @@ function remote {
           echo $results
           ;;
         *)
+          warningsign
           echo "Error: incorrect command"
           echo "Usage: $BASENAME remote services <available | installed | running>"
           exit 1
@@ -42,11 +43,13 @@ function remote {
     "version")
       checkargn $# 2
       if [ -z "$2" ]; then
+        warningsign
         echo "Error: version number required"
         echo "Usage: $BASENAME remote version <version_number>"
         exit 1
       fi
       if ! [[ "$2" =~ ^[0-9]+$ ]]; then
+        warningsign
         echo "Error: not a number"
         exit 1
       fi
@@ -68,6 +71,7 @@ function remote {
         done <<< "$every_command"
         printf "{\"commands\":["%s"]}\n" "${cmd_str::-1}"
       else
+        warningsign
         echo "Error: incorrect command"
         echo "Usage: $BASENAME remote commands [json]"
         exit 1
@@ -154,10 +158,12 @@ function remote {
           profile=$5
 
           if [ -z "$public_key" ]; then
+            warningsign
             echo "Error: public key required"
             echo "Usage: $BASENAME remote key receive \"\$public_key\" \"\$private_key\" [profile]"
             exit 1
           elif [ -z "$private_key" ]; then
+            warningsign
             echo "Error: private key required"
             echo "Usage: $BASENAME remote key receive \"\$public_key\" \"\$private_key\" [profile]"
             exit 1
@@ -167,6 +173,7 @@ function remote {
           fi
           ;;
         *)
+          warningsign
           echo "Error: incorrect command"
           echo "Usage: $BASENAME remote key <send | receive>"
           exit 1

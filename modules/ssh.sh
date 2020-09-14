@@ -121,6 +121,7 @@ function ssh {
       esac
       ;;
     *)
+      warningsign
       echo "Error: only '', 'on', 'off', or 'fingerprint' options are supported"
       ;;
   esac

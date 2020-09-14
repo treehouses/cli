@@ -3,6 +3,7 @@ function password {
   checkroot
   checkargn $# 1
   if [[ $1 == "" ]]; then
+    warningsign
     log_and_exit1 "Error: Password not entered"
   elif [ $1 == "disable" ]; then
     disablepassword 

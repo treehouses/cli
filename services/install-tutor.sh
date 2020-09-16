@@ -2,23 +2,19 @@
 
 address=$(sudo treehouses tor)
 function install {
-  # create service directory
-  mkdir -p /srv/tutor
-  if [ "$(tor status)" = "inactive" ] || [[ "$(tor status)" =~ "Error" ]]; then
-    address=$(networkmode info | grep -oP -m1 '(?<=ip: ).*?(?=,)')
-  else
-    address=$(tor)
-  fi
 
   # create yml(s)
+  # yml is empty because tutor uses internal ymls
+  # it is created for treehouses services to recognize 
+  # tutor is installed
   touch /srv/tutor/tutor.yml
 
   # add autorun
   {
-    echo "seafile_autorun=true"
+    echo "tutor_autorun=true"
     echo
-    echo "if [ \"\$seafile_autorun\" = true ]; then"
-    echo "  treehouses services seafile up"
+    echo "if [ \"\$tutor_autorun\" = true ]; then"
+    echo "  treehouses services tutor up"
     echo "fi"
     echo
     echo
@@ -50,17 +46,18 @@ function get_ports {
 
 # add size (in MB)
 function get_size {
-  echo "553"
+  echo "4940"
 }
 
 # add info
 function get_info {
-  echo "https://github.com/treehouses/rpi-seafile"
+  echo "https://github.com/ole-vi/tutor-rpi"
   echo
-  echo "\"Seafile is an open source file sync&share solution designed for"
-  echo "high reliability, performance and productivity. Sync, share and"
-  echo "collaborate across devices and teams. Build your team's knowledge"
-  echo "base with Seafile's built-in Wiki feature. https://www.seafile.com/\""
+  echo "\"Tutor is a docker-based Open edX distribution, both for"
+  echo "production and local development. The goal of Tutor is to"
+  echo "make it easy to deploy, customize, upgrade and scale Open edX."
+  echo "Tutor is reliable, fast, extensible, and it is already"
+  echo "used by dozens of Open edX platforms around the world."\"
 }
 
 # add svg icon

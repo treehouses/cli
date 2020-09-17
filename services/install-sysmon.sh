@@ -10,8 +10,9 @@ version: '3'
 services:
   sysmon:
     image: treehouses/sysmon
-    network: host
-    pid: host
+    build:
+      network: host
+      pid: host
 EOF
 
 #  # create .env with default values

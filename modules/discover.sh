@@ -7,8 +7,7 @@ function discover {
 
   if [ $option = "scan" ] || [ $option = "ping" ] || [ $option = "ports" ]; then
     if [ -z $2 ]; then
-      echo "You need to provide an IP address or URL for this command".
-      exit 1
+      log_and_exit1 "You need to provide an IP address or URL for this command".
     fi
     ip=$2
   fi
@@ -39,8 +38,7 @@ function discover {
       ;;
     mac)
       if ! [[ "$2" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]]; then
-        echo "Invalid mac address"
-        exit 1
+        log_and_exit1 "Invalid mac address"
       fi
       mac=$2
       mac_ip=$(arp -n |grep -i "$mac" |awk '{print $1}')

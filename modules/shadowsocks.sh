@@ -87,7 +87,7 @@ function shadowsocks {
               echo "Use \`$BASENAME shadowsocks enter $2\` to enter shell session proxied by shadowsocks client."
             else
               echo "$2 fails to start."
-              echo "Please check your config." && exit 1
+              log_and_exit1 "Please check your config."
             fi
           else
             systemctl enable shadowsocks-libev-local@$2.service --quiet
@@ -143,7 +143,7 @@ function shadowsocks {
         fi
         if ! jq -e . >/dev/null 2>&1 <<< "$(<$2)"; then
           echo "Invalid json format"
-          echo "Abort." && exit 1
+          log_and_exit1 "Abort."
         fi
         cp "$2" /etc/shadowsocks-libev/$name_conf.json
       elif [ $# -gt 2 ]; then
@@ -153,7 +153,7 @@ function shadowsocks {
         shadowsocks add $file
       elif [ ! -z "$2" ] && [ ! -f "$2" ]; then
         echo "Invalid file location"
-        echo "Abort." && exit 1
+        log_and_exit1 "Abort."
       else
         checkargn $# 1
         echo
@@ -185,8 +185,7 @@ function shadowsocks {
         if [ -z "$(diff $TEMPLATES/network/shadowsocks.json /etc/shadowsocks-libev/$name_conf.json)" ]; then
           echo "Config not saved."
           rm -rf /etc/shadowsocks-libev/$name_conf.json
-          echo "Abort."
-          exit 1
+          log_and_exit1 "Abort."
         fi
       fi
 
@@ -240,18 +239,16 @@ function shadowsocks {
               exit 0
             else
               echo "Proxychains4 configuration file not found."
-              echo "Abort."
-              exit 1
+              log_and_exit1 "Abort."
             fi
             break
           fi
         done
         echo "$name is not running!"
-        echo "Please do \`$BASENAME shadowsocks start $name\` first."
-        exit 1
+        log_and_exit1 "Please do \`$BASENAME shadowsocks start $name\` first."
       else
         echo "No instance of Shadowsocks client running!"
-        echo "Abort." && exit 1
+        log_and_exit1 "Abort."
       fi ;;
       
     profile)

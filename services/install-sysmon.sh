@@ -5,7 +5,7 @@ function install {
   mkdir -p /srv/sysmon
 
   # create yml(s)
-  cat << EOF > /srv/<service>/<service>.yml
+  cat << EOF > /srv/sysmon/sysmon.yml
 version: '3'
 services:
   sysmon:

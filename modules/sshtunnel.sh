@@ -5,8 +5,7 @@ function sshtunnel {
 
   if { [ ! -f "/etc/tunnel" ] || [ ! -f "/etc/cron.d/autossh" ]; } && [[ ! "$*" =~ "add host" ]] && [[ ! "$*" =~ "remove all" ]] && [[ ! "$*" =~ "check" ]] && [[ ! "$*" =~ "key" ]]; then
     echo "Error: no tunnel has been set up"
-    echo "Run '$BASENAME sshtunnel add host <port interval> [host]' to add a key for the tunnel"
-    exit 1
+    log_and_exit1 "Run '$BASENAME sshtunnel add host <port interval> [host]' to add a key for the tunnel"
   fi
 
   re='^[0-9]+$'
@@ -21,8 +20,7 @@ function sshtunnel {
 
           if [ -z "$portinterval" ] || [[ ! $portinterval =~ $re ]]; then
             echo "Error: a numeric port interval is required"
-            echo "Usage: $BASENAME sshtunnel add host <port interval> [host]"
-            exit 1
+            log_and_exit1 "Usage: $BASENAME sshtunnel add host <port interval> [host]"
           fi
 
           # host validation
@@ -30,16 +28,14 @@ function sshtunnel {
             host="ole@pirate.ole.org"
           elif ! echo $host | grep -q "[]@[]"; then
             echo "Error: invalid host"
-            echo "user@host"
-            exit 1
+            log_and_exit1 "user@host"
           fi
           hostname=$(echo "$host" | tr "@" \\n | sed -n 2p)
 
           # check if host already exists
           if grep -qs "$host" /etc/tunnel; then
             echo "Error: host already exists"
-            echo "Try adding individual ports to the host or adding a different host"
-            exit 1
+            log_and_exit1 "Try adding individual ports to the host or adding a different host"
           fi
 
           # check if monitoring port already in use
@@ -106,16 +102,13 @@ function sshtunnel {
 
               if [ -z "$actual" ] || [[ ! $actual =~ $re ]]; then
                 echo "Error: a numeric port is required"
-                echo "Usage: $BASENAME sshtunnel add port offset <actual> <offset> [host]"
-                exit 1
+                log_and_exit1 "Usage: $BASENAME sshtunnel add port offset <actual> <offset> [host]"
               elif [ -z "$offset" ] || [[ ! $offset =~ $re ]]; then
                 echo "Error: a numeric offset is required"
-                echo "Usage: $BASENAME sshtunnel add port offset <actual> <offset> [host]"
-                exit 1
+                log_and_exit1 "Usage: $BASENAME sshtunnel add port offset <actual> <offset> [host]"
               elif [ "$offset" -ge 100 ]; then
                 echo "Error: offset is greater than or equal to 100"
-                echo "Use an offset less than 100 (save some ports for others!)"
-                exit 1
+                log_and_exit1 "Use an offset less than 100 (save some ports for others!)"
               fi
 
               # host validation
@@ -123,8 +116,7 @@ function sshtunnel {
                 host="ole@pirate.ole.org"
               elif ! echo $host | grep -q "[]@[]"; then
                 echo "Error: invalid host"
-                echo "user@host"
-                exit 1
+                log_and_exit1 "user@host"
               fi
 
               # get port interval for given host
@@ -188,12 +180,10 @@ function sshtunnel {
 
               if [ -z "$actual" ] || [[ ! $actual =~ $re ]]; then
                 echo "Error: a numeric port is required"
-                echo "Usage: $BASENAME sshtunnel add port actual <actual> <port> [host]"
-                exit 1
+                log_and_exit1 "Usage: $BASENAME sshtunnel add port actual <actual> <port> [host]"
               elif [ -z "$port" ] || [[ ! $port =~ $re ]]; then
                 echo "Error: a numeric port is required"
-                echo "Usage: $BASENAME sshtunnel add port actual <actual> <port> [host]"
-                exit 1
+                log_and_exit1 "Usage: $BASENAME sshtunnel add port actual <actual> <port> [host]"
               fi
 
               # host validation
@@ -201,8 +191,7 @@ function sshtunnel {
                 host="ole@pirate.ole.org"
               elif ! echo $host | grep -q "[]@[]"; then
                 echo "Error: invalid host"
-                echo "user@host"
-                exit 1
+                log_and_exit1 "user@host"
               fi
 
               # if host exists
@@ -260,15 +249,13 @@ function sshtunnel {
               ;;
             *)
               echo "Error: unknown command"
-              echo "Usage: $BASENAME sshtunnel add port <offset | actual>"
-              exit 1
+              log_and_exit1 "Usage: $BASENAME sshtunnel add port <offset | actual>"
               ;;
           esac
           ;;
         *)
           echo "Error: unknown command"
-          echo "Usage: $BASENAME sshtunnel add <host | port>"
-          exit 1
+          log_and_exit1 "Usage: $BASENAME sshtunnel add <host | port>"
           ;;
       esac
       ;;
@@ -294,8 +281,7 @@ function sshtunnel {
 
           if [ -z "$port" ]; then
             echo "Error: a port is required"
-            echo "Usage: $BASENAME sshtunnel remove port <port> [host]"
-            exit 1
+            log_and_exit1 "Usage: $BASENAME sshtunnel remove port <port> [host]"
           fi
 
           # host validation
@@ -303,8 +289,7 @@ function sshtunnel {
             host="ole@pirate.ole.org"
           elif ! echo $host | grep -q "[]@[]"; then
             echo "Error: invalid host"
-            echo "user@host"
-            exit 1
+            log_and_exit1 "user@host"
           fi
 
           counter=1
@@ -341,12 +326,10 @@ function sshtunnel {
 
           if [ -z "$host" ]; then
             echo "Error: a host is required"
-            echo "Usage: $BASENAME sshtunnel remove host <host>"
-            exit 1
+            log_and_exit1 "Usage: $BASENAME sshtunnel remove host <host>"
           elif ! echo $host | grep -q "[]@[]"; then
             echo "Error: invalid host"
-            echo "user@host"
-            exit 1
+            log_and_exit1 "user@host"
           fi
 
           counter=1
@@ -362,8 +345,7 @@ function sshtunnel {
           done < <(cat /etc/tunnel)
 
           if [ -z $endline ]; then
-            echo "Host not found in /etc/tunnel"
-            exit 1
+            log_and_exit1 "Host not found in /etc/tunnel"
           fi
 
           sed -i "$((startline - 1)), $endline d" /etc/tunnel
@@ -375,8 +357,7 @@ function sshtunnel {
           ;;
         *)
           echo "Error: unknown command"
-          echo "Usage: $BASENAME sshtunnel remove <all | port | host>"
-          exit 1
+          log_and_exit1 "Usage: $BASENAME sshtunnel remove <all | port | host>"
           ;;
       esac
       ;;
@@ -405,8 +386,7 @@ function sshtunnel {
       if [ ! -z "$host" ]; then
         if ! echo $host | grep -q "[]@[]"; then
           echo "Error: invalid host"
-          echo "user@host"
-          exit 1
+          log_and_exit1 "user@host"
         fi
 
         newgroup=true
@@ -535,14 +515,12 @@ function sshtunnel {
               if [ -f /root/.ssh/id_rsa${profile}${tag} ]; then
                 cat /root/.ssh/id_rsa${profile}${tag}
               else
-                echo "No $3 key found"
-                exit 1
+                log_and_exit1 "No $3 key found"
               fi
               ;;
             *)
               echo "Error: unknown command"
-              echo "Usage: $BASENAME sshtunnel key send <public | private> [profile]"
-              exit 1
+              log_and_exit1 "Usage: $BASENAME sshtunnel key send <public | private> [profile]"
               ;;
           esac
           ;;
@@ -574,15 +552,13 @@ function sshtunnel {
               ;;
             *)
               echo "Error: unknown command"
-              echo "Usage: $BASENAME sshtunnel key receive <public | private> <\$key> [profile]"
-              exit 1
+              log_and_exit1 "Usage: $BASENAME sshtunnel key receive <public | private> <\$key> [profile]"
               ;;
           esac
           ;;
         *)
           echo "Error: unknown command"
-          echo "Usage: $BASENAME sshtunnel key [verify | send | receive]"
-          exit 1
+          log_and_exit1 "Usage: $BASENAME sshtunnel key [verify | send | receive]"
           ;;
       esac
       ;;
@@ -603,8 +579,7 @@ function sshtunnel {
           checkargn $# 3
           value="$3"
           if [ -z "$value" ]; then
-            echo "Error: You must specify a channel URL"
-            exit 1
+            log_and_exit1 echo "Error: You must specify a channel URL"
           fi
 
           echo "$value" >> /etc/tunnel_report_channels.txt
@@ -614,8 +589,7 @@ function sshtunnel {
           checkargn $# 3
           value="$3"
           if [ -z "$value" ]; then
-            echo "Error: You must specify a channel URL"
-            exit 1
+            log_and_exit1 "Error: You must specify a channel URL"
           fi
 
           value=$(echo $value | sed 's/\//\\\//g')
@@ -675,8 +649,7 @@ function sshtunnel {
           ;;
         *)
           echo "Error: unknown command"
-          echo "Usage: $BASENAME sshtunnel notice [on | add | delete | list | off | now]"
-          exit 1
+          log_and_exit1 "Usage: $BASENAME sshtunnel notice [on | add | delete | list | off | now]"
           ;;
       esac
       ;;
@@ -712,8 +685,7 @@ function sshtunnel {
       ;;
     *)
       echo "Error: unknown command"
-      echo "Usage: $BASENAME sshtunnel [add|remove|refresh|list|active|check|key|notice|ports]"
-      exit 1
+      log_and_exit1 "Usage: $BASENAME sshtunnel [add|remove|refresh|list|active|check|key|notice|ports]"
       ;;
   esac
 }

@@ -23,8 +23,8 @@ EOF
   cat << EOF > /srv/sysmon/autorun
 sysmon_autorun=true
 
-if [ "$<service>_autorun" = true ]; then
-  treehouses services <service> up
+if [ "$sysmon_autorun" = true ]; then
+  treehouses services sysmon up
 fi
 
 

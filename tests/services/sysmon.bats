@@ -3,7 +3,7 @@ load ../test-helper
 
 @test "$clinom services sysmon info" {
   run "${clicmd}" services sysmon info
-  assert_success && assert_output -p 'https://github.com/treehouses/sysmon'
+  assert_success && assert_output -p 'sysmon'
 }
 
 @test "$clinom services sysmon install" {
@@ -28,14 +28,9 @@ load ../test-helper
   assert_success && assert_output -p 'sysmon'
 }
 
-@test "$clinom services running" {
-  run "${clicmd}" services running
-  assert_success && assert_output -p 'sysmon'
-}
-
 @test "$clinom services running full" {
   run "${clicmd}" services running full
-  assert_success && assert_output -p 'treehouses/sysmon'
+  assert_success && assert_output -p 'sysmon'
 }
 
 @test "$clinom services installed" {

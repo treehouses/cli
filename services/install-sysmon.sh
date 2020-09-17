@@ -10,7 +10,7 @@ version: '3'
 services:
   sysmon:
     image: treehouses/sysmon
-    networks: host
+    network_mode: "host"
     pid: "host"
 EOF
 

@@ -12,8 +12,7 @@ function memory_total() {
       t=$(free | grep -i Mem | awk '{printf $2}')
       ;;
     *)
-      echo "error: only 'gb' and 'mb' argument accepted (check 'treehouses help memory')"
-      exit 1
+      log_and_exit1 "error: only 'gb' and 'mb' argument accepted (check 'treehouses help memory')"
       ;;
   esac
 }
@@ -40,8 +39,7 @@ function memory_used {
       ubc=$((u+bc))
       ;;
      *)
-      echo "error: only 'gb' and 'mb' argument accepted (check 'treehouses help memory')"
-      exit 1
+      log_and_exit1 "error: only 'gb' and 'mb' argument accepted (check 'treehouses help memory')"
       ;;
   esac
 }
@@ -60,8 +58,7 @@ function memory_free {
       f=$(free | grep -i Mem | awk '{printf $4}')
       ;;
     *)
-      echo "error: only 'gb' and 'mb' argument accepted (check 'treehouses help memory')"
-      exit 1
+      log_and_exit1 "error: only 'gb' and 'mb' argument accepted (check 'treehouses help memory')"
       ;;
   esac
 }
@@ -115,8 +112,7 @@ function memory() {
       echo "Your $COMP has $t bytes of total memory with $ubc bytes used and $f bytes available"
       ;;
     *)
-      echo "error: only 'gb' and 'mb' argument accepted (check 'treehouses help memory )"
-      exit 1
+      log_and_exit1 "error: only 'gb' and 'mb' argument accepted (check 'treehouses help memory )"
   esac
 }
 

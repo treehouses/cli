@@ -43,7 +43,8 @@ function ssh {
             if [ "$2" == "add" ]; then
               if [ -f /home/$3/.google_authenticator ]; then
                 echo "2FA for $3 already exists."
-                log_and_exit1 "use \"treehouses ssh 2fa remove $3\" before generating a new one"
+                echo "use \"treehouses ssh 2fa remove $3\" before generating a new one"
+                exit 1
               fi
               if [ "$4" == "url" ]; then
                 printf "y\ny\nn\ny\ny\n" | runuser -l "$3" -c "google-authenticator" |\

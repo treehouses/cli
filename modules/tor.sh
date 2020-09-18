@@ -44,13 +44,11 @@ function tor {
       local_port="$3"
 
       if [ -z "$port" ]; then
-        echo "Error: you must specify a port"
-        exit 1
+        log_and_exit1 "Error: you must specify a port"
       fi
 
       if  ! [[ "$port" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
-        echo "Error: is not a port"
-        exit 1
+        log_and_exit1 "Error: is not a port"
       fi
 
       if [ -z "$local_port" ]; then
@@ -58,8 +56,7 @@ function tor {
       fi
 
       if  ! [[ "$local_port" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
-        echo "Error: is not a port"
-        exit 1
+        log_and_exit1 "Error: is not a port"
       fi
 
       existing_port=$(grep -Poi "^HiddenServicePort $port .*" /etc/tor/torrc)
@@ -75,13 +72,11 @@ function tor {
 
     delete)
       if [ -z "$2" ]; then
-        echo "Error: no port entered"
-        exit 1
+        log_and_exit1 "Error: no port entered"
       fi
 
       if  ! [[ "$2" =~ ^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$ ]]; then
-        echo "Error: $2 is not a port"
-        exit 1
+        log_and_exit1 "Error: $2 is not a port"
       fi
 
       if ! grep -wq "HiddenServicePort $2" /etc/tor/torrc ; then
@@ -96,8 +91,7 @@ function tor {
 
     deleteall)
       if [ -n "$2" ]; then
-        echo "Error: wrong syntax"
-        exit 1
+        log_and_exit1 "Error: wrong syntax"
       fi
 
       sed -i "/^HiddenServicePort /d" /etc/tor/torrc
@@ -149,8 +143,7 @@ function tor {
         add)
           value="$3"
           if [ -z "$value" ]; then
-            echo "Error: You must specify a channel URL"
-            exit 1
+            log_and_exit1 "Error: You must specify a channel URL"
           fi
 
           echo "$value" >> /etc/tor_report_channels.txt
@@ -159,8 +152,7 @@ function tor {
         delete)
           value="$3"
           if [ -z "$value" ]; then
-            echo "Error: You must specify a channel URL"
-            exit 1
+            log_and_exit1 "Error: You must specify a channel URL"
           fi
 
           value=$(echo $value | sed 's/\//\\\//g')

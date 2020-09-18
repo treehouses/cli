@@ -99,7 +99,7 @@ services                                  executes the given command on the spec
    [pylon]                                Pylon is a web based integrated development environment built with Node.js as a backend
    [rutorrent]                            Rutorrent is a popular rtorrent client with a webui for ease of use
    [webssh]                               Webssh is a simple web application to be used as an ssh client to connect to your ssh servers
-   [sysmon]                               Sysmon is an intuitive remotely-accessible system performance monitoring and task management tool for servers
+   [sysmon]                               Sysmon is an intuitive system performance monitoring and task management tool for servers
 tor [list|ports|add|delete|deleteall]     deals with services on tor hidden network
     [start|stop|destroy|notice]
     [status|refresh]

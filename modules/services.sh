@@ -316,6 +316,8 @@ function services {
                   local_url+="/admin"
                 elif [ "$service_name" = "couchdb" ]; then
                   local_url+="/_utils"
+                elif [ "$service_name" = "sysmon" ]; then
+                  local_url+="/primary"
                 fi
                 echo $local_url
               done

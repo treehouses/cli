@@ -11,6 +11,7 @@ services:
   sysmon:
     image: treehouses/sysmon
     network_mode: "host"
+    #using port 6969
     pid: "host"
 EOF
 
@@ -45,7 +46,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "8098"
+  echo "6969"
 }
 
 # add size (in MB)

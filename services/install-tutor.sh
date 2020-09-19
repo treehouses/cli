@@ -3,6 +3,8 @@
 address=$(sudo treehouses tor)
 function install {
 
+  mkdir -p /srv/tutor
+
   # create yml(s)
   # yml is empty because tutor uses internal ymls
   # it is created for treehouses services to recognize 

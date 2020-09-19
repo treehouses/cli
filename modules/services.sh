@@ -137,7 +137,7 @@ function services {
                if source $SERVICES/install-tutor.sh && install ; then
                  if [ -z $isTutorInstalled ]; then
                     echo "need to install tutor"
-                    wget -q https://github.com/ole-vi/tutor-rpi/releases/download/v10.0.10-treehouses/tutor 
+                    wget -q  https://github.com/ole-vi/tutor-rpi/releases/download/v10.0.10-treehouses.1/tutor
                     chmod +x tutor
                     mv tutor /usr/local/bin/
                  else
@@ -416,6 +416,12 @@ function services {
               echo "ERROR: ${service_name}.yml not found"
               echo "try running '$BASENAME services ${service_name} install' first"
               exit 1
+            elif [ "$service_name" = "tutor" ]; then
+              su pi -c "tutor local stop"
+              echo "${service_name} stopped and removed"
+              docker rmi $(docker images --filter=reference='hirotochigi/openedx*' --format "{{.Repository}}:{{.Tag}}")
+              rm -rf "$(tutor config printroot)"
+              rm /usr/local/bin/tutor
             else
               docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down -v --rmi all --remove-orphans
               echo "${service_name} stopped and removed"

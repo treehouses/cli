@@ -43,6 +43,12 @@ function log_and_exit1() {
   exit 1
 }
 
+function log_comment_and_exit1(){
+  logit "$1" "$3" "$4"
+  echo "$2"
+  exit 1
+}
+
 # Sets logging level to be used by the entire app
 # Can also show the log
 function log {

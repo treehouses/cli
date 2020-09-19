@@ -667,6 +667,7 @@ function services_help {
   echo "  pylon           Pylon is a web based integrated development environment built with Node.js as a backend"
   echo "  rutorrent       Rutorrent is a popular rtorrent client with a webui for ease of use"
   echo "  webssh          Webssh is a simple web application to be used as an ssh client to connect to your ssh servers"
+  echo "  novnc           noVNC is an open source VNC client and runs well in any modern browsers"
   echo
   echo
   echo "Top-Level Commands:"

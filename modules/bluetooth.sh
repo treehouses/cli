@@ -107,12 +107,10 @@ function bluetooth {
         journalctl -u rpibluetooth -u bluetooth -f
 			elif [ "$2" = "on" ]; then
 				config update bluetoothlog 1
-				bluetooth restart &>"$LOGFILE"
-				echo "Bluetooth log has been turned on"
+				echo "run treehouses bluetooth restart for changes to take effect"
 			elif [ "$2" = "off" ]; then
 				config update bluetoothlog 0
-				bluetooth restart &>"$LOGFILE"
-				echo "Bluetooth log has been turned off"
+				echo "run treehouses bluetooth restart for changes to take effect"
       else
         echo "Argument not valid; leave blank or use \"follow\""
         exit 1

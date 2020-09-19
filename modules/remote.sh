@@ -33,8 +33,11 @@ function remote {
           echo $results
           ;;
         *)
-          echo "Error: incorrect command"
-          log_and_exit1 "Usage: $BASENAME remote services <available | installed | running>"
+          # echo "Error: incorrect command"
+          echo "Usage: $BASENAME remote services <available | installed | running>"
+          # exit 1
+          log_comment_and_exit1 "Error: incorrect command"
+          # log_and_exit1 "Usage: $BASENAME remote services <available | installed | running>"
           ;;
       esac
       ;;

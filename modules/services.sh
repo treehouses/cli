@@ -136,7 +136,7 @@ function services {
             elif [ "$service_name" = "tutor" ]; then
                if source $SERVICES/install-tutor.sh && install ; then
                  if [ -z $isTutorInstalled ]; then
-                    echo "need to install tutor"
+                    echo "install tutor"
                     wget -q  https://github.com/ole-vi/tutor-rpi/releases/download/v10.0.10-treehouses.1/tutor
                     chmod +x tutor
                     mv tutor /usr/local/bin/
@@ -144,7 +144,7 @@ function services {
                    echo "tutor is installed"
                  fi
                else
-                 echo "ERROR: cannot run install script"
+                 echo "ERROR: script does not work"
                  exit 1
                fi
             elif source $SERVICES/install-${service_name}.sh && install ; then
@@ -192,7 +192,8 @@ function services {
               fi
             elif [ "$service_name" = "tutor" ]; then
               if [ -z $isTutorInstalled ]; then
-                echo "ERROR: Tutor is not installed: Executed treehouses services tutor install"
+                echo "ERROR: Tutor is not installed"
+		echo "Try treehouses services tutor install"
               else
                 su pi -c "tutor local quickstartfortreehouses"
               fi
@@ -215,7 +216,7 @@ function services {
             elif [ "$service_name" = "tutor" ]; then
               su pi -c "tutor local stop"
               remove_tor_port
-              echo "${service_name} stopped and removed"
+              echo "tutor stopped and removed"
             else
               docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down
               remove_tor_port
@@ -224,11 +225,17 @@ function services {
             ;;
           start)
             checkargn $# 2
-            if docker ps -a | grep -q $service_name; then
-              if [ "$service_name" = "tutor" ]; then
-                su pi -c "tutor local start"
-                echo "${service_name} started"
-              elif [ ! -f /srv/${service_name}/${service_name}.yml ]; then
+            if [ "$service_name" = "tutor" ]; then
+	      tutor_conf_dict=$(su pi -c "tutor config printroot")
+              if [ -d $tutor_conf_dict ]; then
+                su pi -c "tutor local start -d"
+                echo "tutor started"
+	      else
+		echo "tutor config is not created yet"
+		echo "try '$BASENAME services tutor up'"
+	      fi
+            elif docker ps -a | grep -q $service_name; then
+              if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
                 echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
                 echo "try running '$BASENAME services ${service_name} install' first"
                 exit 1
@@ -252,7 +259,7 @@ function services {
                 exit 1
               elif [ "$service_name" = "tutor" ]; then
                 su pi -c "tutor local stop"
-                echo "${service_name} stopped"
+                echo "tutor stopped"
               else
                 if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml stop; then
                   echo "${service_name} stopped"
@@ -266,12 +273,13 @@ function services {
             ;;
           restart)
             if [ "$service_name" = "tutor" ]; then
-              if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
-                echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
-                echo "try running '$BASENAME services ${service_name} install' first"
+              if [ ! -f /srv/tutor/tutor.yml ]; then
+                echo "ERROR: /srv/tutor/tutor.yml not found"
+                echo "try running '$BASENAME services tutor install' first"
                 exit 1
               else
-                su pi -c "tutor local reboot"
+                su pi -c "tutor local stop"
+                su pi -c "tutor local start -d"
               fi
             else
               checkargn $# 2
@@ -418,7 +426,7 @@ function services {
               exit 1
             elif [ "$service_name" = "tutor" ]; then
               su pi -c "tutor local stop"
-              echo "${service_name} stopped and removed"
+              echo "tutor stopped and removed"
               docker rmi $(docker images --filter=reference='hirotochigi/openedx*' --format "{{.Repository}}:{{.Tag}}")
               rm -rf "$(tutor config printroot)"
               rm /usr/local/bin/tutor

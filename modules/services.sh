@@ -1,6 +1,11 @@
+#address=$(source services/install-tutor.sh && get_env)
+#tutorCommand="\n${address}\n\nemail@internet.com\n\n\nN\n"
+#tutorCommand="\nuq4vski2iets4dhbvlcoojd57s3qyfanuejies3fouinubughjsw72qd.onion\n\nemail@internet.com\n\n\nN\n"
+
 function services {
   check_missing_binary docker-compose "docker-compose is missing\ninstall instructions can be found in\nhttps://github.com/docker/compose"
 
+  isTutorInstalled=$(ls /usr/local/bin | grep "tutor")
   local service_name command command_option service results installed
   local array running port_string found local_url tor_url
   service_name="$1"
@@ -128,6 +133,20 @@ function services {
                 echo "ERROR: cannot run install script"
                 exit 1
               fi
+            elif [ "$service_name" = "tutor" ]; then
+               if source $SERVICES/install-tutor.sh && install ; then
+                 if [ -z $isTutorInstalled ]; then
+                    echo "install tutor"
+                    wget -q  https://github.com/ole-vi/tutor-rpi/releases/download/v10.0.10-treehouses.1/tutor
+                    chmod +x tutor
+                    mv tutor /usr/local/bin/
+                 else
+                   echo "tutor is installed"
+                 fi
+               else
+                 echo "ERROR: script does not work"
+                 exit 1
+               fi
             elif source $SERVICES/install-${service_name}.sh && install ; then
               retries=0
               while [ "$retries" -lt 5 ];
@@ -171,6 +190,13 @@ function services {
                   exit 1
                 fi
               fi
+            elif [ "$service_name" = "tutor" ]; then
+              if [ -z $isTutorInstalled ]; then
+                echo "ERROR: Tutor is not installed"
+		echo "Try treehouses services tutor install"
+              else
+                su pi -c "tutor local quickstartfortreehouses"
+              fi
             else
               check_space $service_name
               if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
@@ -187,6 +213,10 @@ function services {
             checkargn $# 2
             if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
               echo "${service_name}.yml not found"
+            elif [ "$service_name" = "tutor" ]; then
+              su pi -c "tutor local stop"
+              remove_tor_port
+              echo "tutor stopped and removed"
             else
               docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down
               remove_tor_port
@@ -195,7 +225,16 @@ function services {
             ;;
           start)
             checkargn $# 2
-            if docker ps -a | grep -q $service_name; then
+            if [ "$service_name" = "tutor" ]; then
+	      tutor_conf_dict=$(su pi -c "tutor config printroot")
+              if [ -d $tutor_conf_dict ]; then
+                su pi -c "tutor local start -d"
+                echo "tutor started"
+	      else
+		echo "tutor config is not created yet"
+		echo "try '$BASENAME services tutor up'"
+	      fi
+            elif docker ps -a | grep -q $service_name; then
               if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
                 echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
                 echo "try running '$BASENAME services ${service_name} install' first"
@@ -218,6 +257,9 @@ function services {
                 echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
                 echo "try running '$BASENAME services ${service_name} install' first"
                 exit 1
+              elif [ "$service_name" = "tutor" ]; then
+                su pi -c "tutor local stop"
+                echo "tutor stopped"
               else
                 if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml stop; then
                   echo "${service_name} stopped"
@@ -230,9 +272,20 @@ function services {
             fi
             ;;
           restart)
-            checkargn $# 2
-            services $service_name stop
-            services $service_name up
+            if [ "$service_name" = "tutor" ]; then
+              if [ ! -f /srv/tutor/tutor.yml ]; then
+                echo "ERROR: /srv/tutor/tutor.yml not found"
+                echo "try running '$BASENAME services tutor install' first"
+                exit 1
+              else
+                su pi -c "tutor local stop"
+                su pi -c "tutor local start -d"
+              fi
+            else
+              checkargn $# 2
+              services $service_name stop
+              services $service_name up
+            fi
             ;;
           autorun)
             checkargn $# 3
@@ -371,6 +424,12 @@ function services {
               echo "ERROR: ${service_name}.yml not found"
               echo "try running '$BASENAME services ${service_name} install' first"
               exit 1
+            elif [ "$service_name" = "tutor" ]; then
+              su pi -c "tutor local stop"
+              echo "tutor stopped and removed"
+              docker rmi $(docker images --filter=reference='hirotochigi/openedx*' --format "{{.Repository}}:{{.Tag}}")
+              rm -rf "$(tutor config printroot)"
+              rm /usr/local/bin/tutor
             else
               docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml --log-level ERROR down -v --rmi all --remove-orphans
               echo "${service_name} stopped and removed"
@@ -548,6 +607,16 @@ function check_arm {
 }
 
 function check_available_services {
+  if [ "${1}" == "tutor" ]; then
+     memory=$(treehouses memory | awk 'END {print $4}' | numfmt --from=iec)
+     if [ $memory -lt "800000" ]; then
+       echo "ERROR: not enough memory"
+       echo "Tutor needs 8G RAM"
+       exit 1
+     else
+       return 0
+     fi
+   fi
   array=($(services available))
   for service in "${array[@]}"
   do

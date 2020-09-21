@@ -133,7 +133,7 @@ function message_help {
   echo "  $BASENAME message gitter apitoken"
   echo "     check for API token"
   echo 
-  echo "  $BASENAME message gitter authorize "\"1234567890\"""
+  echo "  $BASENAME message gitter authorize \"1234567890\""
   echo "     sets and saves API token"
   echo
   echo "  $BASENAME message gitter send treehouses/Lobby \"Hi, you are very awesome\""

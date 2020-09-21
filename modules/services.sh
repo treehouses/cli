@@ -294,6 +294,8 @@ function services {
                   local_url+="/admin"
                 elif [ "$service_name" = "couchdb" ]; then
                   local_url+="/_utils"
+                elif [ "$service_name" = "sysmon" ]; then
+                  local_url+="/primary"
                 fi
                 echo $local_url
               done
@@ -624,6 +626,7 @@ function services_help {
   echo "  pylon           Pylon is a web based integrated development environment built with Node.js as a backend"
   echo "  rutorrent       Rutorrent is a popular rtorrent client with a webui for ease of use"
   echo "  webssh          Webssh is a simple web application to be used as an ssh client to connect to your ssh servers"
+  echo "  sysmon          Sysmon is an intuitive system performance monitoring and task management tool for servers"
   echo
   echo
   echo "Top-Level Commands:"

@@ -5,7 +5,7 @@ function discover {
 
   option=$1
 
-  if [ $option = "scan" ] || [ $option = "ping" ] || [ $option = "ports" ]; then
+  if [[ $option = "scan" || $option = "ping" || $option = "ports" ]]; then
     if [ -z $2 ]; then
       log_and_exit1 "You need to provide an IP address or URL for this command."
     fi

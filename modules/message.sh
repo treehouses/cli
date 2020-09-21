@@ -120,7 +120,7 @@ function message {
 
 function message_help {
   echo
-  echo "Usage: $BASENAME message <chats> <apitoken>| <authorize> <code> | send <group> <message> | receive read|mark <group>>"
+  echo "Usage: $BASENAME message <chats> <apitoken> | <authorize> <code> | send <group> <message> | receive read|mark <group>>"
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo
@@ -132,6 +132,7 @@ function message_help {
   echo
   echo "  $BASENAME message gitter apitoken"
   echo "     check for API token"
+  echo 
   echo "  $BASENAME message gitter authorize "\"1234567890\"""
   echo "     sets and saves API token"
   echo

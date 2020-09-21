@@ -2,7 +2,7 @@ function message {
   chats="$1"
   function check_apitoken {
     channel=$1
-    api_token=$(echo "$(config)" | grep "$channel" | cut -d "=" -f2)
+    api_token=$(config | grep "$channel" | cut -d "=" -f2)
     if [[ $api_token == "" ]] || [[ $api_token == "null" ]]; then
       return
     else

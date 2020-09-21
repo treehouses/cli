@@ -109,6 +109,13 @@ function message {
           echo "This command does not exist, please look at the following:"
           message_help
           ;;
+      esac
+      ;;
+    *)
+      echo "This command does not exist, please look at the following:"
+      message_help
+      ;;
+  esac
 }
 
 function message_help {

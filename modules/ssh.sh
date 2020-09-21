@@ -56,14 +56,12 @@ function ssh {
                 printf "y\ny\nn\ny\ny\n" | runuser -l "$3" -c "google-authenticator"
               fi
               if [ ! -f "/home/$3/.google_authenticator" ]; then
-                echo "Addition for user $3 failed."
-                exit 1
+                log_and_exit1 "Addition for user $3 failed."
               fi
               ssh 2fa enable > /dev/null
             elif [ "$2" == "show" ]; then
               if [ ! -f "/home/$3/.google_authenticator" ]; then
-                echo "SSH 2FA for $3 is disabled."
-                exit 1
+                log_and_exit1 "SSH 2FA for $3 is disabled."
               else
                 printf "%s%28s\n\n" "Secret Key:" "$(sed -n 1p /home/$3/.google_authenticator)"
                 echo "Emergency Scratch Codes:"
@@ -74,8 +72,7 @@ function ssh {
               echo "SSH 2FA for $3 has been removed"
             fi
           else
-            echo "No user as $3 found."
-            exit 1
+            log_and_exit1 "No user as $3 found."
           fi
           ;;
         "change")

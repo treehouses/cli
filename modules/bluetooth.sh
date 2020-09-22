@@ -97,7 +97,26 @@ function bluetooth {
       checkargn $# 1
       button bluetooth
       ;;
-
+    "loglevel")
+    if [ "$2" = "critical" ]; then
+      config update bluetoothlog 5
+      echo "run treehouses bluetooth restart for changes to take effect"
+    elif [ "$2" = "error" ]; then
+      config update bluetoothlog 4
+      echo "run treehouses bluetooth restart for changes to take effect"
+    elif [ "$2" = "warning" ]; then
+      config update bluetoothlog 3
+      echo "run treehouses bluetooth restart for changes to take effect"
+    elif [ "$2" = "info" ]; then
+      config update bluetoothlog 2
+      echo "run treehouses bluetooth restart for changes to take effect"
+    elif [ "$2" = "debug" ]; then
+      config update bluetoothlog 1
+      echo "run treehouses bluetooth restart for changes to take effect"
+    else
+      echo "you have to specify noset, debug, info, warning, error, critical"
+    fi
+      ;;
     "log")
       if [ "$2" = "" ]; then
         checkargn $# 1

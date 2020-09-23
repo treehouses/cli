@@ -1,12 +1,13 @@
 function message {
   chats="$1"
   function check_apitoken {
-    channel=$1
-    api_token=$(config | grep "$channel" | cut -d "=" -f2)
-    if [[ $api_token == "" ]] || [[ $api_token == "null" ]]; then
-      return
+    channelname=$1
+    access_token=$(config | grep "$channelname" | cut -d "=" -f2)
+    if [[ $access_token == "" ]] || [[ $access_token == "null" ]]; then
+      echo "You do not have an authorized access token"
+      return 0
     else
-      echo "$api_token"
+      echo "Your access token is $access_token"
       exit 0
     fi
   }
@@ -14,21 +15,22 @@ function message {
     gitter)
       case "$2" in
         apitoken)
-          check_apitoken gitter_api_token
-          echo "navigate to https://gitter.im/login/oauth/authorize?client_id=6c3ac0766e94e8b760e372e0da66e3ac4470ff3f&response_type=code&redirect_uri=http://localhost:7000/login/callback"
+          check_apitoken gitter_access_token
+          echo "Ensure you have logged in to your account https://gitter.im/login?action=login"
+          echo "Then,navigate to https://gitter.im/login/oauth/authorize?client_id=6c3ac0766e94e8b760e372e0da66e3ac4470ff3f&response_type=code&redirect_uri=http://localhost:7000/login/callback"
           echo "Click 'Allow' and get the code at the end of the redirect link: "
           echo "run $BASENAME message gitter authorize <code>"
           ;;
         authorize)
-          check_apitoken gitter_api_token
+          check_apitoken gitter_access_token
           if [[ $3 == "" ]]; then
             echo "authorization code is missing"
           else
             code=$3
             api_info=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" "https://gitter.im/login/oauth/token" -d '{"client_id": "6c3ac0766e94e8b760e372e0da66e3ac4470ff3f", "client_secret": "4649fa1132fae15cff89737268046bc9e65536bc", "code": "'$code'", "redirect_uri": "http://localhost:7000/login/callback", "grant_type": "authorization_code"}')
             token_info=$(echo $api_info | python -m json.tool | jq '.access_token' | tr -d '"')
-            conf_var_update "gitter_api_token" "$token_info"
-            echo "$token_info"
+            conf_var_update "gitter_access_token" "$token_info"
+            echo "Your API token is $token_info"
           fi
           ;;
         send)

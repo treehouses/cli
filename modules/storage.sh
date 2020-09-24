@@ -16,8 +16,7 @@ function storage_total() {
       t=$(echo "scale=2;$t_M/(1024*(10^-2))" | bc)
       ;;
     *)
-      echo "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
-      exit 1
+      log_and_exit1 "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
       ;;
   esac
 }
@@ -40,8 +39,7 @@ function storage_used {
       u=$(echo "scale=2;$u_M/(1024*(10^-2))" | bc)
       ;;
      *)
-      echo "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
-      exit 1
+      log_and_exit1 "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
       ;;
   esac
 }
@@ -64,8 +62,7 @@ function storage_free {
       f=$(echo "scale=2;$f_G/(1024*(10^-2))" | bc)
       ;;
     *)
-      echo "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
-      exit 1
+      log_and_exit1 "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
       ;;
   esac
 }
@@ -125,8 +122,7 @@ function storage() {
       echo "Your $COMP has $t gigabytes of total storage with $u gigabytes used and $f gigabytes available"
       ;;
     *)
-      echo "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
-      exit 1
+      log_and_exit1 "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
       ;;
   esac
 }

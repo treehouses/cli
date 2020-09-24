@@ -67,11 +67,11 @@ function reboots {
 
 function reboots_help {
   echo
-  echo "  Usage: $BASENAME reboots <now|in|cron|daily|weekly|monthly>"
+  echo "Usage: $BASENAME reboots <now|in|cron|daily|weekly|monthly>"
   echo
-  echo "  Reboots system at selected time and removes it if reboot task already active"
+  echo "Reboots system at selected time and removes it if reboot task already active"
   echo
-  echo "  Example:"
+  echo "Example:"
   echo "  $BASENAME reboots daily"
   echo "  System will reboot daily at 00:00"
   echo

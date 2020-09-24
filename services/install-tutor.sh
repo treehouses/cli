@@ -23,7 +23,7 @@ function install {
   } > /srv/tutor/autorun
 }
 
-function get_env {
+function get_url {
  echo $address 
 }
 

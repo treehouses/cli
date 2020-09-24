@@ -23,24 +23,24 @@ function inspire() {
 
 function inspire_help {
   echo
-  echo "  Usage: $BASENAME inspire [joke|qotd|random]"
+  echo "Usage: $BASENAME inspire [joke|qotd|random]"
   echo
-  echo "  Prints out inspirational quote based on input."
+  echo "Prints out inspirational quote based on input."
   echo
-  echo "  Example:"
-  echo "    $BASENAME inspire"
-  echo "    By believing passionately in something that does not yet exist, we create it."
+  echo "Example:"
+  echo "  $BASENAME inspire"
+  echo "  By believing passionately in something that does not yet exist, we create it."
   echo 
-  echo "    $BASENAME inspire fact"
-  echo "    Leonardo Da Vinci invented the scissors."
+  echo "  $BASENAME inspire fact"
+  echo "  Leonardo Da Vinci invented the scissors."
   echo
-  echo "    $BASENAME inspire qotd"
-  echo "    If opportunity doesn’t knock, build a door."
+  echo "  $BASENAME inspire qotd"
+  echo "  If opportunity doesn’t knock, build a door."
   echo
-  echo "    $BASENAME inspire joke"
-  echo "    Chuck Norris once round-house kicked a salesman. Over the phone."
+  echo "  $BASENAME inspire joke"
+  echo "  Chuck Norris once round-house kicked a salesman. Over the phone."
   echo
-  echo "    $BASENAME inspire random"
-  echo "    Quick decisions are unsafe decisions."
+  echo "  $BASENAME inspire random"
+  echo "  Quick decisions are unsafe decisions."
   echo
 }

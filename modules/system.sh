@@ -105,18 +105,18 @@ function system_ramtask {
 
 function system_help {
   echo
-  echo "  Usage: $BASENAME system [all|cpu|ram|disk|volt|temperature]"
+  echo "Usage: $BASENAME system [all|cpu|ram|disk|volt|temperature]"
   echo
-  echo "  Listing real time system information corresponding to arguments"
+  echo "Listing real time system information corresponding to arguments"
   echo
-  echo "  Examples:"
-  echo "    $BASENAME system"
-  echo "                            display all available system info"
+  echo "Examples:"
+  echo "  $BASENAME system"
+  echo "  display all available system info"
   echo
-  echo "    $BASENAME system volt"
-  echo "                            display the voltage of raspberry pi"
+  echo "  $BASENAME system volt"
+  echo "  display the voltage of raspberry pi"
   echo
-  echo "    $BASENAME system disk temperature cpu"
-  echo "                            display disk occupancy and temperature"
+  echo "  $BASENAME system disk temperature cpu"
+  echo "  display disk occupancy and temperature"
   echo
 }

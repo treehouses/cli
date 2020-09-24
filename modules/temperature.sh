@@ -25,10 +25,7 @@ function temperature () {
       echo $result"K"
       ;;
     *)
-      echo "not a valid option"
-      echo
-      temperature_help
-      exit 1
+      log_help_and_exit1 "Error: not a valid option" temperature
       ;;
   esac
 }

@@ -87,8 +87,7 @@ function bluetooth {
           echo "${bid}"
           ;;
         *)
-          echo "Argument not valid; leave blank or use \"number\""
-          exit 1
+          log_and_exit1 "Argument not valid; leave blank or use \"number\""
           ;;
       esac
       ;;
@@ -112,8 +111,7 @@ function bluetooth {
 				config update bluetoothlog 0
 				echo "run treehouses bluetooth restart for changes to take effect"
       else
-        echo "Argument not valid; leave blank or use \"follow\""
-        exit 1
+        log_and_exit1 "Argument not valid; leave blank or use \"follow\""
       fi
       ;;
 

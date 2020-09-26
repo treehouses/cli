@@ -270,9 +270,8 @@ function shadowsocks {
       exit 0 ;;
 
     *)
-      echo "Error: No option as $1."
-      shadowsocks_help 
-      exit 1 ;;
+      log_help_and_exit1 "Error: No option as $1." shadowsocks
+      ;;
   esac
 }
 

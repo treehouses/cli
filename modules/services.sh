@@ -9,9 +9,7 @@ function services {
 
   case $service_name in
     "")
-      echo "ERROR: no command given"
-      services_help
-      exit 1
+      log_help_and_exit1 "ERROR: no command given" services
       ;;
     # list all services available to be installed
     "available")

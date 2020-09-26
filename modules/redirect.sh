@@ -42,14 +42,10 @@ function redirect {
           exit 0
         fi
       done
-      echo "$2 not found!"
-      redirect_help
-      exit 1
+      log_help_and_exit1 "Error: $2 not found!" redirect
       ;;
     *)
-      echo "No such option as $1!"
-      redirect_help
-      exit 1
+      log_help_and_exit1 "Error: no such option as $1!" redirect
       ;;  
   esac
 }

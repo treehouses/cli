@@ -20,7 +20,6 @@ function message {
     gitter)
       case "$2" in
         apitoken)
-          check_apitoken gitter
           if check_apitoken gitter; then
             get_apitoken gitter
           else

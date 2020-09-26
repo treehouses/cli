@@ -5,7 +5,7 @@ function discover {
 
   option=$1
 
-  if [ $option = "scan" ] || [ $option = "ping" ] || [ $option = "ports" ]; then
+  if [[ $option = "scan" || $option = "ping" || $option = "ports" ]]; then
     if [ -z $2 ]; then
       log_and_exit1 "You need to provide an IP address or URL for this command."
     fi
@@ -73,8 +73,8 @@ function discover {
                 grep -o -E "([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})")"
             done ;;
           *)
-            echo "No option as $2"
-            discover_help && exit 1 ;;
+            log_help_and_exit1 "Error: no option as $2" discover
+            ;;
         esac
       fi ;;
     self)
@@ -109,9 +109,7 @@ function discover {
         printf "%15s%15s\n" "$program" "$port"
       done ;;
     *)
-      echo "Unknown operation provided." 1>&2
-      discover_help
-      exit 1
+      log_help_and_exit1 "Error: unknown operation provided." discover
       ;;
   esac
 }

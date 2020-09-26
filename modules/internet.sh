@@ -19,8 +19,7 @@ function internet {
     echo "$info" | grep -E '"(org|timezone)"'
     ;;
   *)
-    echo "ERROR: incorrect command"
-    internet_help
+    log_help_and_exit1 "ERROR: incorrect command" internet
     ;;
   esac
 }

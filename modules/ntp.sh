@@ -29,8 +29,7 @@ function ntp {
     reboot_needed
     echo "Success: please reboot you rpi to apply changes."
   else
-    echo "Error: only local or internet are supported options"
-    exit 1
+    log_and_exit1 "Error: only local or internet are supported options"
   fi
 }
 

@@ -22,8 +22,7 @@ function verbose {
       logit "Successfully disabled verbosity"
       ;;
     *)
-      logit "Error: only 'on' and 'off' options are supported";
-      exit 1;
+      log_and_exit1 "Error: only 'on' and 'off' options are supported"
       ;;
   esac
   conf_var_update "LOGFILE" "$LOGFILE"

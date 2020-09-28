@@ -48,8 +48,7 @@ function camera {
     "capture")
       mkdir -p ${directory}
       if ! grep -q "start_x=1" ${config} ; then
-        echo "You need to enable AND reboot first in order to take pictures."
-        exit 1
+        log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
       else
         echo "Camera is capturing and storing a time-stamped ${savetype} photo in ${directory}."
         raspistill -e ${savetype} -n -o "${directory}$BASENAME-${timestamp}.png" && echo "Success: Pictures generated"
@@ -59,8 +58,7 @@ function camera {
     "record")
       mkdir -p ${viddir}
       if ! grep -q "start_x=1" ${config} ; then
-        echo "You need to enable AND reboot first in order to take pictures."
-        exit 1
+        log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
       fi
       case "$2" in 
         "")
@@ -73,8 +71,7 @@ function camera {
         
         *)
           if ! [[ "$2" =~ ^[1-9][0-9]*$ ]] ; then #^[0-9]+$ to accept 0 for indefinite recording
-            echo "Positive integers only."
-            exit 1
+            log_and_exit1 "Error: positive integers only."
           else        
             echo "Camera is recording ${2} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
             let length=$2*1000
@@ -89,8 +86,7 @@ function camera {
     "detect")
       mkdir -p ${directory}
       if ! grep -q "start_x=1" ${config} ; then
-        echo "You need to enable AND reboot first in order to take pictures."
-        exit 1
+        log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
       else
         if camera capture |& grep -q "mmal: main:" ; then
           echo "Camera is not plugged in."

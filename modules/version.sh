@@ -108,8 +108,7 @@ EOF
   elif [ "$1" = "" ]; then
     node -p "require('$SCRIPTFOLDER/package.json').version"
   else
-    echo "Error: only 'contributors', 'remote',  or '' options supported"
-    exit 1
+    log_and_exit1 "Error: only 'contributors', 'remote',  or '' options supported"
   fi
 }
 

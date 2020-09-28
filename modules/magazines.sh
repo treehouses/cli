@@ -4,8 +4,7 @@ function magazines() {
   req="$2"
   available_mag=0
   if [ -z "$magtype" ]; then
-    echo "ERROR: no magazine type given"
-    exit 1
+    log_and_exit1 "ERROR: no magazine type given"
   elif [ "$magtype" = "available" ]; then
     checkargn $# 1
     if [ -d "$MAGAZINES" ]; then
@@ -17,8 +16,7 @@ function magazines() {
       done
       exit 0
     else
-      echo "ERROR: $MAGAZINES directory does not exist"
-      exit 1
+      log_and_exit1 "ERROR: $MAGAZINES directory does not exist"
     fi
   elif [ "$magtype" = "downloaded" ]; then
     checkargn $# 1

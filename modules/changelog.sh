@@ -40,7 +40,7 @@ case "$displaymode" in
       esac
       ;;
   *)
-    log_and_exit1 "Error: only 'view', 'compare' and blank options are supported. "
+    log_and_exit1 "Error: only 'view', 'compare' and blank options are supported."
     ;;
   esac
 }

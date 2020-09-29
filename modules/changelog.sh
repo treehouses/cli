@@ -8,8 +8,7 @@ version1="$2"
 version2="$3"
 
 if [ ! -f "$LOGPATH" ]; then
-  echo "File does not exist!"
-  exit 1
+  log_and_exit1 "Error: file does not exist!"
 fi
 
 case "$displaymode" in
@@ -24,8 +23,7 @@ case "$displaymode" in
   compare)
       case "$version1" in
       "")
-        echo "Error: only 'compare [previous version]' and 'compare [previous version] [later version] are supported."
-        exit 1
+        log_and_exit1 "Error: only 'compare [previous version]' and 'compare [previous version] [later version] are supported."
         ;;
       *)
         case "$version2" in
@@ -42,9 +40,8 @@ case "$displaymode" in
       esac
       ;;
   *)
-      echo "Error: only 'view', 'compare' and blank options are supported. "
-      exit 1
-      ;;
+    log_and_exit1 "Error: only 'view', 'compare' and blank options are supported."
+    ;;
   esac
 }
 

@@ -97,8 +97,7 @@ function detectbluetooth {
 
 function detectarm {
   if [ "$(detectrpi)" = "nonrpi" ]; then
-    echo "rpi required"
-    exit 1
+    log_and_exit1 "Error: rpi required"
   else
     < /proc/cpuinfo grep "model name" | grep -oP '(?<=\().*(?=\))' -m1
   fi

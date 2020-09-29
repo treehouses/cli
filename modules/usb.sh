@@ -26,9 +26,7 @@ function usb {
         lsusb -t
         ;;
       *)
-        echo "Error: unknown command"
-        usb_help
-        exit 1
+        log_help_and_exit1 "Error: unknown command" usb
         ;;
     esac 
   elif [[ $(detectrpi) =~ 'RPI4' ]]; then

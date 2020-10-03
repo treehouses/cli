@@ -34,6 +34,7 @@ function message {
         apitoken)
           if check_apitoken gitter; then
             get_apitoken gitter
+          else
             echo "To get an authorized access token"
             echo "Ensure you have logged in to your account https://gitter.im/login?action=login"
             echo "Then,navigate to https://gitter.im/login/oauth/authorize?client_id=6c3ac0766e94e8b760e372e0da66e3ac4470ff3f&response_type=code&redirect_uri=http://localhost:7000/login/callback"
@@ -53,14 +54,11 @@ function message {
           fi
           ;;
         send)
-          if [[ $3 == "" ]]; then
-            echo "Group information is missing"
-            echo "usage: $BASENAME message gitter send <group>"
-            exit 1
-          fi
           group=$3
           if check_apitoken gitter; then
-            if ! check_group $group; then
+            if [[ $3 == "" ]]; then
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message gitter send <group>"
+            elif ! check_group $group; then
               echo "You are not part of this group"
             else
               curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
@@ -80,19 +78,16 @@ function message {
             fi
           else
             echo "To get access token, run $BASENAME message gitter apitoken"
-            exit 1
+            log_and_exit1
           fi
           ;;
         show)
-          if [ $3 == "" ]; then
-            echo "gitter group information is missing"
-            echo "Usage: $BASENAME message gitter show <group>"
-            exit 1
-          fi
           group=$3
           if check_apitoken gitter; then
-            if ! check_group $group; then
-              echo "You are not part of this group"
+            if [[ $group == "" ]]; then
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message gitter send <group>"
+            elif ! check_group $group; then
+              log_and_exit1 "You are not part of this group"
             else
               curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
               channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
@@ -122,18 +117,16 @@ function message {
             fi
           else
             echo "To get access token, run $BASENAME message gitter apitoken"
+            log_and_exit1
           fi
           ;;
         read)
-          if [[ $3 == "" ]]; then
-            echo "gitter group information is missing"
-            echo "Usage: $BASENAME message gitter read <group>"
-            exit 1
-          fi
           group="$3"
           if check_apitoken gitter; then
-            if ! check_group $group; then
-              echo "You are not part of this group"
+            if [[ $group == "" ]]; then
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message gitter send <group>"
+            elif ! check_group $group; then
+              log_and_exit1 "You are not part of this group"
             else
               curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
               channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
@@ -164,18 +157,16 @@ function message {
             fi
           else
             echo "To get access token, run $BASENAME message gitter apitoken"
+            log_and_exit1
           fi
           ;;
         mark)
-          if [[ $3 == "" ]]; then
-            echo "gitter group information is missing"
-            echo "Usage: $BASENAME message gitter mark <group>"
-            exit 1
-          fi
           group="$3"
           if check_apitoken gitter; then
-            if ! check_group $group; then
-              echo "You are not part of this group"
+            if [[ $group == "" ]]; then
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message gitter send <group>"
+            elif ! check_group $group; then
+              log_and_exit1 "You are not part of this group"
             else
               curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
               channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
@@ -196,25 +187,25 @@ function message {
               done
             fi
           else
-            echo "To get access token, run $BASENAME message gitter apitoken"
+            log_help_and_exit1 "To get access token, run $BASENAME message gitter apitoken"
           fi
           ;;
         *)
-          echo "This command does not exist, please look at the following:"
-          message_help
+          echo "This command does not exist"
+          log_help_and_exit1 "please look at the following:" message
           ;;
       esac
       ;;
     *)
-      echo "This command does not exist, please look at the following:"
-      message_help
+      echo "This command does not exist"
+      log_help_and_exit1 " please look at the following:" message
       ;;
   esac
 }
 
 function message_help {
   echo
-  echo "Usage: $BASENAME message <chats> <apitoken> | <authorize> <code> | send <group> <message> | receive read|mark <group>>"
+  echo "Usage: $BASENAME message <chats> <apitoken> | <authorize> <code> | send <group> <message> | show|read|mark <group>"
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo
@@ -233,13 +224,13 @@ function message_help {
   echo "  $BASENAME message gitter send treehouses/Lobby \"Hi, you are very awesome\""
   echo "     Sends a message to a gitter channel"
   echo
-  echo "  $BASENAME message gitter receive show treehouses/Lobby"
+  echo "  $BASENAME message gitter show treehouses/Lobby"
   echo "     Marks unread messages from a gitter channel to read"
   echo
-  echo "  $BASENAME message gitter receive read treehouses/Lobby"
+  echo "  $BASENAME message gitter read treehouses/Lobby"
   echo "     Receives and displays unread messages from a gitter channel"
   echo
-  echo "  $BASENAME message gitter receive mark treehouses/Lobby"
+  echo "  $BASENAME message gitter mark treehouses/Lobby"
   echo "     Marks unread messages from a gitter channel to read"
   echo
 }

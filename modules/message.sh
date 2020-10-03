@@ -34,6 +34,7 @@ function message {
         apitoken)
           if check_apitoken gitter; then
             get_apitoken gitter
+          else
             echo "To get an authorized access token"
             echo "Ensure you have logged in to your account https://gitter.im/login?action=login"
             echo "Then,navigate to https://gitter.im/login/oauth/authorize?client_id=6c3ac0766e94e8b760e372e0da66e3ac4470ff3f&response_type=code&redirect_uri=http://localhost:7000/login/callback"

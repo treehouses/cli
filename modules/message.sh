@@ -21,7 +21,7 @@ function message {
     group_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")
     group_names=($(echo $group_info | python -m json.tool | jq '.[].name' | tr -d '"'))
     for i in "${group_names[@]}"; do
-      if [[ $i == $group ]]; then
+      if [[ $i == "$group" ]]; then
         return 0
         break
       fi

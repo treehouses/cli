@@ -232,9 +232,9 @@ treehouses memory used mb
 treehouses message gitter apitoken
 treehouses message gitter authorize
 treehouses message gitter send
-treehouses message gitter receive show
-treehouses message gitter receive read
-treehouses message gitter receive mark
+treehouses message gitter show
+treehouses message gitter read
+treehouses message gitter mark
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet
@@ -330,7 +330,7 @@ $(services_cmds)
 treehouses services ports
 treehouses services running
 treehouses services running full
-treehouses shutdown 
+treehouses shutdown
 treehouses shutdown now
 treehouses shutdown in
 treehouses shutdown force

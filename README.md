@@ -165,7 +165,7 @@ magazines                                 downloads specific magazine issue as a
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves message
-               <send|recieve>
+               <send|show|read|mark>
 shutdown [now|in|force]                   shutdown the system
 ```
 

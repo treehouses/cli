@@ -4,7 +4,6 @@ function message {
     channelname=$1
     access_token=$(config | grep "$channelname" | cut -d "=" -f2)
     if [[ $access_token == "" ]] || [[ $access_token == "null" ]]; then
-      echo "You do not have an authorized access token"
       return 1
     else
       return 0
@@ -16,7 +15,19 @@ function message {
     echo "Your API access token is $access_token"
     return 0
   }
-  case "$chats" in
+  function check_group {
+    group=$1
+    group_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")
+    group_names=($(echo $group_info | python -m json.tool | jq '.[].name' | tr -d '"'))
+    for i in "${group_names[@]}"; do
+      if [[ $i == "$group" ]]; then
+        return 0
+        break
+      fi
+    done
+    return 1
+  }
+   case "$chats" in
     gitter)
       case "$2" in
         apitoken)
@@ -42,40 +53,40 @@ function message {
           fi
           ;;
         send)
+          group=$3
           if check_apitoken gitter; then
-            #joins room
             if [[ $3 == "" ]]; then
-              echo "Group information is missing"
-              echo "$BASENAME message gitter send <group>"
-            fi
-            group="$3"
-            curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
-            channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
-            #finds channel id and removes double quotes
-            channelid=$(echo $channelinfo | python -m json.tool | jq '.id' | tr -d '"')
-             shift; shift; shift;
-            message="$*"
-            if ! [[ -z "$message" ]]; then
-              body="{\"text\":\"\n$message\"}"
-              channel=https://api.gitter.im/v1/rooms/$channelid/chatMessages
-              curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "$channel" -d "$body"> "$LOGFILE"
-              echo "Thanks for the message!"
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message gitter send <group>"
+            elif ! check_group $group; then
+              log_and_exit1 "You are not part of this group"
             else
-              echo "No message was submitted."
+              curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
+              channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
+              #finds channel id and removes double quotes
+              channelid=$(echo $channelinfo | python -m json.tool | jq '.id' | tr -d '"')
+              shift; shift; shift;
+              message="$*"
+              if ! [[ -z "$message" ]]; then
+                body="{\"text\":\"\n$message\"}"
+                channel=https://api.gitter.im/v1/rooms/$channelid/chatMessages
+                curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "$channel" -d "$body"> "$LOGFILE"
+                echo "Thanks for the message!"
+              else
+                log_and_exit1 "No message was submitted."
+              fi
             fi
           else
-            echo "To get access token, run $BASENAME message gitter apitoken"
-            exit 1
+            log_comment_and_exit1 "Error:You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
           fi
           ;;
-        receive)
-          case "$3" in
-            show)
-              if check_apitoken gitter; then
-                if [ $4 == "" ]; then
-                  echo "gitter group information is missing"
-                fi
-              group="$4"
+        show)
+          group=$3
+          if check_apitoken gitter; then
+            if [[ $group == "" ]]; then
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message gitter send <group>"
+            elif ! check_group $group; then
+              log_and_exit1 "You are not part of this group"
+            else
               curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
               channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
               #finds channel id and removes double quotes
@@ -93,100 +104,102 @@ function message {
                 message_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms/$channelid/chatMessages/$message_id")
                 message=$(echo $message_info | python -m json.tool | jq '.text')
                 from_name=$(echo $message_info | python -m json.tool | jq '.fromUser.displayName' | tr -d '"')
-                from_user=$(echo $message_info | python -m json.tool | jq '.fromUser.username' | tr -d '"') 
-                sent_time=$(echo $message_info | python -m json.tool | jq '.sent' | tr -d '"')  
+                from_user=$(echo $message_info | python -m json.tool | jq '.fromUser.username' | tr -d '"')
+                sent_time=$(echo $message_info | python -m json.tool | jq '.sent' | tr -d '"')
                 #displays message
                 echo "From: $from_name@$from_user"
                 echo "Message: $message"
                 echo "Sent: $sent_time"
                 i=$((i+1))
               done
-            else
-              echo "To get access token, run $BASENAME message gitter apitoken"
             fi
-            ;;
-            read)
-              if check_apitoken gitter; then
-                if [ $4 == "" ]; then
-                  echo "gitter group information is missing"
-                fi
-                group="$4"
-                curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
-                channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
-                #finds channel id and removes double quotes
-                channelid=$(echo $channelinfo | python -m json.tool | jq '.id' | tr -d '"')
-                user_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user")
-                user_id=$(echo $user_info | python -m json.tool | jq '.[].id' | tr -d '"')
-                i=0
-                length=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems" | python -m json.tool | jq '.chat | length')
-                if [ $length == 0 ];then
-                  echo "You have no unread messages at the moment"
-                fi
-                unread_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems")
-                while [ "$i" -lt $length ]; do
-                  message_id=$(echo $unread_info | python -m json.tool | jq '.chat['$i']' | tr -d '"')
-                  message_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms/$channelid/chatMessages/$message_id")
-                  message=$(echo $message_info | python -m json.tool | jq '.text')
-                  from_name=$(echo $message_info | python -m json.tool | jq '.fromUser.displayName' | tr -d '"')
-                  from_user=$(echo $message_info | python -m json.tool | jq '.fromUser.username' | tr -d '"') 
-                  sent_time=$(echo $message_info | python -m json.tool | jq '.sent' | tr -d '"')  
-                  curl -X POST -s -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems" -d '{"chat":["'$message_id'"]}' > "$LOGFILE"
-                  #displays message
-                  echo "From: $from_name@$from_user"
-                  echo "Message: $message"
-                  echo "Sent: $sent_time"
-                  i=$((i+1))
-                done
-              else
-                echo "To get access token, run $BASENAME message gitter apitoken"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
+          fi
+          ;;
+        read)
+          group="$3"
+          if check_apitoken gitter; then
+            if [[ $group == "" ]]; then
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message gitter send <group>"
+            elif ! check_group $group; then
+              log_and_exit1 "You are not part of this group"
+            else
+              curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
+              channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
+              #finds channel id and removes double quotes
+              channelid=$(echo $channelinfo | python -m json.tool | jq '.id' | tr -d '"')
+              user_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user")
+              user_id=$(echo $user_info | python -m json.tool | jq '.[].id' | tr -d '"')
+              i=0
+              length=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems" | python -m json.tool | jq '.chat | length')
+              if [ $length == 0 ];then
+               echo "You have no unread messages at the moment"
               fi
-              ;;
-            mark)
-              if check_apitoken gitter; then
-                group="$4"
-                curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
-                channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
-                #finds channel id and removes double quotes
-                channelid=$(echo $channelinfo | python -m json.tool | jq '.id' | tr -d '"')
-                user_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user")
-                user_id=$(echo $user_info | python -m json.tool | jq '.[].id' | tr -d '"')
-                i=0
-                length=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems" | python -m json.tool | jq '.chat | length')
-                if [ $length == 0 ];then
-                  echo "You have no unread messages at the moment"
-                fi
-                unread_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems")
-                while [ "$i" -lt $length ]; do
-                  message_id=$(echo $unread_info | python -m json.tool | jq '.chat['$i']' | tr -d '"')
-                  curl -X POST -s -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems" -d '{"chat":["'$message_id'"]}' > "$LOGFILE"
-                  i=$((i+1))
-                done
-              else
-                echo "To get access token, run $BASENAME message gitter apitoken"
+              unread_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems")
+              while [ "$i" -lt $length ]; do
+                message_id=$(echo $unread_info | python -m json.tool | jq '.chat['$i']' | tr -d '"')
+                message_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms/$channelid/chatMessages/$message_id")
+                message=$(echo $message_info | python -m json.tool | jq '.text')
+                from_name=$(echo $message_info | python -m json.tool | jq '.fromUser.displayName' | tr -d '"')
+                from_user=$(echo $message_info | python -m json.tool | jq '.fromUser.username' | tr -d '"')
+                sent_time=$(echo $message_info | python -m json.tool | jq '.sent' | tr -d '"')
+                curl -X POST -s -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems" -d '{"chat":["'$message_id'"]}' > "$LOGFILE"
+                #displays message
+                echo "From: $from_name@$from_user"
+                echo "Message: $message"
+                echo "Sent: $sent_time"
+                i=$((i+1))
+              done
+            fi
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
+          fi
+          ;;
+        mark)
+          group="$3"
+          if check_apitoken gitter; then
+            if [[ $group == "" ]]; then
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message gitter send <group>"
+            elif ! check_group $group; then
+              log_and_exit1 "You are not part of this group"
+            else
+              curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
+              channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
+              #finds channel id and removes double quotes
+              channelid=$(echo $channelinfo | python -m json.tool | jq '.id' | tr -d '"')
+              user_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user")
+              user_id=$(echo $user_info | python -m json.tool | jq '.[].id' | tr -d '"')
+              i=0
+              length=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems" | python -m json.tool | jq '.chat | length')
+              if [ $length == 0 ];then
+                echo "You have no unread messages at the moment"
               fi
-              ;;
-            *)
-              echo "This command does not exist, please look at the following:"
-              message_help
-              ;;
-          esac
+              unread_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems")
+              while [ "$i" -lt $length ]; do
+                message_id=$(echo $unread_info | python -m json.tool | jq '.chat['$i']' | tr -d '"')
+                curl -X POST -s -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/user/$user_id/rooms/$channelid/unreadItems" -d '{"chat":["'$message_id'"]}' > "$LOGFILE"
+                i=$((i+1))
+              done
+            fi
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
+          fi
           ;;
         *)
-          echo "This command does not exist, please look at the following:"
-          message_help
+          log_help_and_exit1 "Error: This command does not exist" message
           ;;
       esac
       ;;
     *)
-      echo "This command does not exist, please look at the following:"
-      message_help
+      log_help_and_exit1 "Error: This command does not exist" message
       ;;
   esac
 }
 
 function message_help {
   echo
-  echo "Usage: $BASENAME message <chats> <apitoken> | <authorize> <code> | send <group> <message> | receive read|mark <group>>"
+  echo "Usage: $BASENAME message <chats> <apitoken> | <authorize> <code> | send <group> <message> | show|read|mark <group>"
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo
@@ -198,20 +211,20 @@ function message_help {
   echo
   echo "  $BASENAME message gitter apitoken"
   echo "     check for API token"
-  echo 
+  echo
   echo "  $BASENAME message gitter authorize \"1234567890\""
   echo "     sets and saves API token"
   echo
   echo "  $BASENAME message gitter send treehouses/Lobby \"Hi, you are very awesome\""
   echo "     Sends a message to a gitter channel"
   echo
-  echo "  $BASENAME message gitter receive show treehouses/Lobby"
+  echo "  $BASENAME message gitter show treehouses/Lobby"
   echo "     Marks unread messages from a gitter channel to read"
   echo
-  echo "  $BASENAME message gitter receive read treehouses/Lobby"
+  echo "  $BASENAME message gitter read treehouses/Lobby"
   echo "     Receives and displays unread messages from a gitter channel"
   echo
-  echo "  $BASENAME message gitter receive mark treehouses/Lobby"
+  echo "  $BASENAME message gitter mark treehouses/Lobby"
   echo "     Marks unread messages from a gitter channel to read"
   echo
 }

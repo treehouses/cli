@@ -4,7 +4,6 @@ function message {
     channelname=$1
     access_token=$(config | grep "$channelname" | cut -d "=" -f2)
     if [[ $access_token == "" ]] || [[ $access_token == "null" ]]; then
-      echo "You do not have an authorized access token"
       return 1
     else
       return 0
@@ -77,7 +76,7 @@ function message {
               fi
             fi
           else
-            log_comment_and_exit1 "To get access token, run $BASENAME message gitter apitoken"
+            log_comment_and_exit1 "Error:You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
           fi
           ;;
         show)
@@ -115,7 +114,7 @@ function message {
               done
             fi
           else
-            log_comment_and_exit1 "To get access token, run $BASENAME message gitter apitoken"
+            log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
           fi
           ;;
         read)
@@ -154,7 +153,7 @@ function message {
               done
             fi
           else
-            log_comment_and_exit1 "To get access token, run $BASENAME message gitter apitoken"
+            log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
           fi
           ;;
         mark)
@@ -184,7 +183,7 @@ function message {
               done
             fi
           else
-            log_comment_and_exit1 "To get access token, run $BASENAME message gitter apitoken"
+            log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
           fi
           ;;
         *)

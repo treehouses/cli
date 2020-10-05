@@ -59,7 +59,7 @@ function message {
             if [[ $3 == "" ]]; then
               log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message gitter send <group>"
             elif ! check_group $group; then
-              echo "You are not part of this group"
+              log_and_exit1 "You are not part of this group"
             else
               curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
               channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
@@ -73,12 +73,11 @@ function message {
                 curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "$channel" -d "$body"> "$LOGFILE"
                 echo "Thanks for the message!"
               else
-                echo "No message was submitted."
+                log_and_exit1 "No message was submitted."
               fi
             fi
           else
-            echo "To get access token, run $BASENAME message gitter apitoken"
-            log_and_exit1
+            log_comment_and_exit1 "To get access token, run $BASENAME message gitter apitoken"
           fi
           ;;
         show)
@@ -116,8 +115,7 @@ function message {
               done
             fi
           else
-            echo "To get access token, run $BASENAME message gitter apitoken"
-            log_and_exit1
+            log_comment_and_exit1 "To get access token, run $BASENAME message gitter apitoken"
           fi
           ;;
         read)
@@ -156,8 +154,7 @@ function message {
               done
             fi
           else
-            echo "To get access token, run $BASENAME message gitter apitoken"
-            log_and_exit1
+            log_comment_and_exit1 "To get access token, run $BASENAME message gitter apitoken"
           fi
           ;;
         mark)
@@ -187,18 +184,16 @@ function message {
               done
             fi
           else
-            log_help_and_exit1 "To get access token, run $BASENAME message gitter apitoken"
+            log_comment_and_exit1 "To get access token, run $BASENAME message gitter apitoken"
           fi
           ;;
         *)
-          echo "This command does not exist"
-          log_help_and_exit1 "please look at the following:" message
+          log_help_and_exit1 "Error: This command does not exist" message
           ;;
       esac
       ;;
     *)
-      echo "This command does not exist"
-      log_help_and_exit1 " please look at the following:" message
+      log_help_and_exit1 "Error: This command does not exist" message
       ;;
   esac
 }

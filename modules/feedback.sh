@@ -1,10 +1,3 @@
-token="adfab56b2f10b85f94db25f18e51a4b465dbd670"
-channel="https://api.gitter.im/v1/rooms/5ba5af3cd73408ce4fa8fcfb/chatMessages"
-# set on ../templates/network/tor_report.sh
-if [ ! -z "$gitter_channel" ]; then
-  channel="$gitter_channel"
-fi
-
 function feedback {
   local message ip6_regex ip4_regex ip_address body
   message="$*"

@@ -1,4 +1,5 @@
 function rebootneeded {
+  checkargn $# 0
   if [ -f "/etc/reboot-needed" ]; then
     echo "true";
     exit 0

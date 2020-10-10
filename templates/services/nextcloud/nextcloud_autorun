@@ -1,6 +1,0 @@
-nextcloud_autorun=true
-
-if [ "$nextcloud_autorun" = true ]; then
-  docker-compose -f /srv/nextcloud/nextcloud.yml -p nextcloud up -d
-fi
-

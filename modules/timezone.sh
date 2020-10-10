@@ -1,16 +1,16 @@
 function timezone {
   local timezone
+  checkroot
+  checkargn $# 1
   timezone="$1"
   if [ -z "$timezone" ];
   then
-    echo "Error: the timezone is missing"
-    exit 1;
+    log_and_exit1 "Error: the timezone is missing"
   fi
 
   if [ ! -f "/usr/share/zoneinfo/$timezone" ];
   then
-    echo "Error: the timezone is not supported"
-    exit 1;
+    log_and_exit1 "Error: the timezone is not supported"
   fi
 
   rm /etc/localtime

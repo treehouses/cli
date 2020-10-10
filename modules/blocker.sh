@@ -4,7 +4,7 @@ function apply_blocker {
     ($TEMPLATES/blocker/blocker.sh)
   fi
   folder_nh="$TEMPLATES/blocker"
-  case "$BLOCKER" in 
+  case "$BLOCKER" in
     "1")
       file_nh=$(<$folder_nh/1_hosts)
       ;;
@@ -19,7 +19,7 @@ function apply_blocker {
       ;;
     "max")
       file_nh=$(<$folder_nh/5_hosts)
-      ;;      
+      ;;
   esac
   hostn=$(hostname)
   cp "$TEMPLATES/hosts" "$TEMPLATES/hosts1"
@@ -35,6 +35,8 @@ function apply_blocker {
 }
 
 function blocker {
+  checkroot
+  checkargn $# 1
   case "$1" in
     "")
 	  case "$BLOCKER" in

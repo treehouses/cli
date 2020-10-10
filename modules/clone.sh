@@ -1,5 +1,8 @@
 function clone {
   local device a b
+  checkrpi
+  checkroot
+  checkargn $# 1
   device="$1"
   if [ -z "$device" ]; then
     device="/dev/sdb"
@@ -24,7 +27,7 @@ function clone {
   if [ $a -eq $b ] || [ $a -lt $b ]; then
     echo "copying...."
     echo u > /proc/sysrq-trigger
-    dd if=/dev/mmcblk0 bs=1M of="$device"
+    dd if=/dev/mmcblk0 bs=1M of="$device" status=progress
   fi
 
   echo ; echo "A reboot is needed to re-enable write permissions to OS."
@@ -32,7 +35,7 @@ function clone {
 
 function clone_help {
   echo
-  echo "Usage: $BASENAME burn [device path]"
+  echo "Usage: $BASENAME clone [device path]"
   echo
   echo "clones your treehouses image to an SDCard"
   echo

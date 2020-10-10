@@ -1,6 +1,0 @@
-netdata_autorun=true
-
-if [ "$netdata_autorun" = true ]; then
-  docker-compose -f /srv/netdata/netdata.yml -p netdata up -d
-fi
-

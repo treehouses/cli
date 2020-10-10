@@ -83,11 +83,6 @@ function log {
         "max")
           logit "log X: level is set to max"
           ;;
-        "log")
-	  if ["$2" = ""]; then
-            logit "Hererererer" 
-	  fi
-          ;;
       esac
       exit 0;
       ;;

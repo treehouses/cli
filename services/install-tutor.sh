@@ -1,10 +1,20 @@
 #!/bin/bash
 
 address=$(sudo treehouses tor)
+isTutorInstalled=$(ls /usr/local/bin | grep "tutor")
 function install {
 
   mkdir -p /srv/tutor
 
+  if [ -z $isTutorInstalled ]; then
+    echo "install tutor"
+    wget -q  https://github.com/ole-vi/tutor-rpi/releases/download/v10.0.10-treehouses.1/tutor
+    chmod +x tutor
+    mv tutor /usr/local/bin/
+  else
+    echo "tutor is installed"
+  fi
+    
   # create yml(s)
   # yml is empty because tutor uses internal ymls
   # it is created for treehouses services to recognize 
@@ -21,6 +31,10 @@ function install {
     echo
     echo
   } > /srv/tutor/autorun
+}
+
+function up {
+  su pi -c "tutor local quickstartfortreehouses"
 }
 
 function get_url {

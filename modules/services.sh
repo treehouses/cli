@@ -1,6 +1,3 @@
-#address=$(source services/install-tutor.sh && get_env)
-#tutorCommand="\n${address}\n\nemail@internet.com\n\n\nN\n"
-#tutorCommand="\nuq4vski2iets4dhbvlcoojd57s3qyfanuejies3fouinubughjsw72qd.onion\n\nemail@internet.com\n\n\nN\n"
 
 function services {
   check_missing_binary docker-compose "docker-compose is missing\ninstall instructions can be found in\nhttps://github.com/docker/compose"
@@ -134,19 +131,7 @@ function services {
                 exit 1
               fi
             elif [ "$service_name" = "tutor" ]; then
-               if source $SERVICES/install-tutor.sh && install ; then
-                 if [ -z $isTutorInstalled ]; then
-                    echo "install tutor"
-                    wget -q  https://github.com/ole-vi/tutor-rpi/releases/download/v10.0.10-treehouses.1/tutor
-                    chmod +x tutor
-                    mv tutor /usr/local/bin/
-                 else
-                   echo "tutor is installed"
-                 fi
-               else
-                 echo "ERROR: script does not work"
-                 exit 1
-               fi
+              source $SERVICES/install-tutor.sh && install
             elif source $SERVICES/install-${service_name}.sh && install ; then
               retries=0
               while [ "$retries" -lt 5 ];
@@ -191,12 +176,9 @@ function services {
                 fi
               fi
             elif [ "$service_name" = "tutor" ]; then
-              if [ -z $isTutorInstalled ]; then
-                echo "ERROR: Tutor is not installed"
-		echo "Try treehouses services tutor install"
-              else
-                su pi -c "tutor local quickstartfortreehouses"
-              fi
+              if [ "$(source $SERVICES/install-${service_name}.sh && up)" = "true" ]; then
+	        echo "Open Edx start"
+	      fi
             else
               check_space $service_name
               if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then

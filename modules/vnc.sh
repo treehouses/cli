@@ -106,7 +106,7 @@ case "$option" in
             restart_vnc_service > /dev/null 2>&1
             echo "Please reboot the system for changes to take effect."
         ;;
-        "vncpasswd")
+        "vnc")
             if [[ -f /root/.vnc/config.d/vncserver-x11 ]]
             then
                 echo "Changing VNC server authentication to VNC password authentication way..."
@@ -122,7 +122,7 @@ case "$option" in
                 echo "Create your password, run 'treehouses vnc passwd'."
                 echo "Please reboot the system for changes to take effect."
             else
-                echo "Please create a password first, run 'treehouses vnc passwd'."
+                echo "Please create a password first, run 'treehouses vnc password'."
             fi
         ;;
         "info")
@@ -139,16 +139,16 @@ case "$option" in
             fi
         ;;
         *)
-            echo "Error: only 'system', 'vncpasswd', 'info' options are supported"
+            echo "Error: only 'system', 'vnc', 'info' options are supported"
         ;;
     esac
     ;;
-  "passwd")
+  "password")
     echo "Creating password of VNC service mode for VNC password authentication..."
     vncpasswd -service
     ;;
  *)
-    echo "Error: only 'on', 'off', 'info', 'auth', 'passwd' options are supported";
+    echo "Error: only 'on', 'off', 'info', 'auth', 'password' options are supported";
     exit 1;
     ;;
   esac
@@ -173,10 +173,10 @@ function vnc_help {
   echo "  $BASENAME vnc info"
   echo "      Prints a detailed configuration of each required component (boot option, vnc service, x service)."
   echo
-  echo "  $BASENAME vnc auth <system|vncpasswd|info>"
+  echo "  $BASENAME vnc auth <system|vnc|info>"
   echo "      Change the VNC server authentication way (system default or vnc password)."
   echo
-  echo "  $BASENAME vnc passwd"
+  echo "  $BASENAME vnc password"
   echo "      Create password of VNC service mode for VNC password authentication."
   echo
 }

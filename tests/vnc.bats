@@ -26,7 +26,7 @@ load test-helper
   assert_success && assert_output -p 'system'
 }
 
-@test "$clinom vnc auth vncpasswd" {
+@test "$clinom vnc auth vnc" {
   run "${clicmd}" vnc auth vncpasswd
   assert_success && assert_output -p 'password'
 }

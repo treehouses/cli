@@ -33,8 +33,7 @@ function ssh {
           fi
           exit 0
           ;;
-        "add" | "remove")
-          checkargn $# 3
+        "add" | "remove" | "show")
           if [ -z "$3" ]; then
             echo "Please specify the user."
           elif [ "$3" == "root" ]; then
@@ -57,18 +56,30 @@ function ssh {
                 printf "y\ny\nn\ny\ny\n" | runuser -l "$3" -c "google-authenticator"
               fi
               if [ ! -f "/home/$3/.google_authenticator" ]; then
-                echo "Addition for user $3 failed."
-                exit 1
+                log_and_exit1 "Addition for user $3 failed."
               fi
               ssh 2fa enable > /dev/null
+            elif [ "$2" == "show" ]; then
+              if [ ! -f "/home/$3/.google_authenticator" ]; then
+                log_and_exit1 "SSH 2FA for $3 is disabled."
+              else
+                printf "%s%28s\n\n" "Secret Key:" "$(sed -n 1p /home/$3/.google_authenticator)"
+                echo "Emergency Scratch Codes:"
+                sed -n '5,9p' /home/$3/.google_authenticator
+              fi
             else
               rm -rf "/home/$3/.google_authenticator"
+              echo "SSH 2FA for $3 has been removed"
             fi
-            exit 0
           else
-            echo "No user as $3 found."
+            log_and_exit1 "No user as $3 found."
           fi
-          exit 1 ;;
+          ;;
+        "change")
+          checkargn $# 3
+          ssh 2fa remove $3
+          ssh 2fa add $3
+          exit 0 ;;
         "list")
           checkargn $# 2
           printf "%10s%10s\n" "USER" "STATUS"
@@ -105,7 +116,7 @@ function ssh {
           ssh_help
           ;;
       esac
-      exit 0 ;;
+      ;;
     *)
       echo "Error: only '', 'on', 'off', or 'fingerprint' options are supported"
       ;;
@@ -114,7 +125,7 @@ function ssh {
 
 function ssh_help {
   echo
-  echo "Usage: $BASENAME ssh [on|off|fingerprint]"
+  echo "Usage: $BASENAME ssh [on|off|fingerprint|2fa]"
   echo
   echo "Enables or disables the SSH service"
   echo

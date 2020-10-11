@@ -12,11 +12,11 @@ function storage_total() {
       t=$(df -BK | grep '/dev/root' | awk '{print $2}')
       ;;
     '')
-      t=$(df | grep '/dev/root' | awk '{print $2}')
+      t_M=$(df -BG | grep '/dev/root' | awk '{print $2}')
+      t=$(echo "scale=2;$t_M/(1024*(10^-2))" | bc)
       ;;
     *)
-      echo "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
-      exit 1
+      log_and_exit1 "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
       ;;
   esac
 }
@@ -35,11 +35,11 @@ function storage_used {
       u=$(df -BK | grep '/dev/root' | awk '{print $3}')
       ;;
     '')
-      u=$(df | grep '/dev/root' | awk '{print $3}')
+      u_M=$(df -BG | grep '/dev/root' | awk '{print $3}')
+      u=$(echo "scale=2;$u_M/(1024*(10^-2))" | bc)
       ;;
      *)
-      echo "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
-      exit 1
+      log_and_exit1 "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
       ;;
   esac
 }
@@ -58,11 +58,11 @@ function storage_free {
       f=$(df -BK | grep '/dev/root' | awk '{print $4}')
       ;;
     '')
-      f=$(df | grep '/dev/root' | awk '{print $4}')
+      f_G=$(df -BG | grep '/dev/root' | awk '{print $4}')
+      f=$(echo "scale=2;$f_G/(1024*(10^-2))" | bc)
       ;;
     *)
-      echo "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
-      exit 1
+      log_and_exit1 "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
       ;;
   esac
 }
@@ -116,13 +116,13 @@ function storage() {
       echo "Your $COMP has $t (kilobytes) of total storage with $u (kilobytes) used and $f (kilobytes) available"
       ;;
     '')
-      echo "ERROR: no command given"
-      storage_help
-      exit 1
+      storage_total "$option"
+      storage_used "$option"
+      storage_free "$option"
+      echo "Your $COMP has $t gigabytes of total storage with $u gigabytes used and $f gigabytes available"
       ;;
     *)
-      echo "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
-      exit 1
+      log_and_exit1 "error: only 'gb', 'mb' and 'kb' argument accepted (check 'treehouses help storage')"
       ;;
   esac
 }
@@ -132,6 +132,10 @@ function storage_help {
   echo "Usage: $BASENAME storage [total|used|free] [gb|mb|kb]"
   echo
   echo "Displays the various values for total, used, and free storage."
+  echo
+  echo "Example:"
+  echo "  $BASENAME storage"
+  echo "      This will display in a single sentence 3 different storage values for total, used and free storage in gigabytes."
   echo
   echo "  $BASENAME storage gb"
   echo "      This will display in a single sentence 3 different storage values in gigabytes for total, used and free storage."

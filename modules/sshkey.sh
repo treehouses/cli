@@ -23,8 +23,7 @@ function sshkey () {
       echo "$@"
     else
       rm $temp_file
-      echo "ERROR: invalid public key"
-      exit 1
+      log_and_exit1 "ERROR: invalid public key"
     fi
   elif [ "$1" == "list" ]; then
     echo "==== root keys ===="
@@ -36,8 +35,7 @@ function sshkey () {
   elif [ "$1" == "delete" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing argument"
-      echo "Usage: $BASENAME sshkey delete \"<key>\""
-      exit 1
+      log_and_exit1 "Usage: $BASENAME sshkey delete \"<key>\""
     fi
     keys="$(echo "$@" | sed 's/delete //')"
     if grep -Fxq "$keys" /root/.ssh/authorized_keys; then
@@ -63,14 +61,12 @@ function sshkey () {
   elif [ "$1" == "github" ]; then
     if [ -z "$2" ]; then
       echo "Error: missing arguments"
-      echo "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
-      exit 1
+      log_and_exit1 "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
     fi
     if [ "$2" == "adduser" ]; then
       if [ -z "$3" ]; then
         echo "Error: missing argument"
-        echo "Usage: $BASENAME sshkey adduser <username>"
-        exit 1
+        log_and_exit1 "Usage: $BASENAME sshkey adduser <username>"
       fi
       keys=$(curl -s "https://github.com/$3.keys")
       if [ ! -z "$keys" ]; then
@@ -80,8 +76,7 @@ function sshkey () {
     elif [ "$2" == "deleteuser" ]; then
       if [ -z "$3" ]; then
         echo "Error: missing argument"
-        echo "Usage: $BASENAME sshkey deleteuser <username>"
-        exit 1
+        log_and_exit1 "Usage: $BASENAME sshkey deleteuser <username>"
       fi
       githubusername="$3"
       auth_files="/root/.ssh/authorized_keys /home/pi/.ssh/authorized_keys"
@@ -100,8 +95,7 @@ function sshkey () {
     elif [ "$2" == "addteam" ]; then
       if [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
         echo "Error: missing arguments"
-        echo "Usage: $BASENAME sshkey github addteam <organization> <team_name> <access_token>"
-        exit 1
+        log_and_exit1 "Usage: $BASENAME sshkey github addteam <organization> <team_name> <access_token>"
       fi
       teams=$(curl -s -X GET "https://api.github.com/orgs/$3/teams" -H "Authorization: token $5")
       team_id=$(echo "$teams" | jq ".[] | select(.name==\"$4\").id")
@@ -111,13 +105,11 @@ function sshkey () {
       done <<< "$members"
     else
       echo "Error: unsupported command"
-      echo "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
-      exit 1
+      log_and_exit1 "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
     fi
   else
     echo "Error: unsupported command"
-    echo "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
-    exit 1
+    log_and_exit1 "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
   fi
 }
 

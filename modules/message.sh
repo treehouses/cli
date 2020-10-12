@@ -35,28 +35,34 @@ function message {
             get_apitoken gitter
           elif [[ $3 != "" ]] && [[ $4 != "" ]]; then
             client_id=$3
-            redirect_uri=$4
+            if [[ $4 == http?(s)://* ]]; then
+              redirect_uri=$4
+            else
+              log_and_exit1 "Invalid URL"
+            fi
             conf_var_update "client_id" "$client_id"
             conf_var_update "redirect_url" "$redirect_uri"
             echo "Navigate to  https://gitter.im/login/oauth/authorize?client_id=$client_id&response_type=code&redirect_uri=$redirect_uri"
             echo "Click 'Allow' and get the code at the end of the redirect link:"
-            echo "run $BASENAME message gitter authorize <code> <client Secret>"
+            echo "Example:redirect link: http://www.localhost.com/?code=1234567890, code=1234567890"
+            echo "run $BASENAME message gitter authorize <code> <0auth Secret>"
           else
             echo "You do not have an authorized access token"
             echo "To get an authorized access token"
             echo "Navigate to https://developer.gitter.im/apps and signin"
             echo "Create a new app and provide aplication name and a redirect url where you will be send after authorization"
-            echo "After creating your app, you will be provided a client key, a client secret and the redirect URL"
-            echo "Run $BASENAME message gitter apitoken <client key> <redirect url>"
+            echo "After creating your app, you will be provided a 0auth key, a 0auth secret and the redirect URL"
+            echo "Run $BASENAME message gitter apitoken <0auth key> <redirect url>"
             echo "Click 'Allow' and get the code at the end of the redirect link:"
-            echo "Run $BASENAME message gitter authorize <code> <client Secret>"
+            echo "Example: If redirect link is \"http://www.localhost.com/?code=1234567890\",then \"code=1234567890\""
+            echo "Run $BASENAME message gitter authorize <code> <0auth Secret>"
           fi
           ;;
         authorize)
           if [[ $3 == "" ]]; then
             echo "authorization code is missing"
           elif [[ $4 == "" ]]; then
-             echo "client secret is missing"
+             echo "0auth secret is missing"
           else
             code=$3
             client_key=$4

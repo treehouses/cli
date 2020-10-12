@@ -51,7 +51,7 @@ function message {
             echo "To get an authorized access token"
             echo "Navigate to https://developer.gitter.im/apps and signin"
             echo "Create a new app and provide aplication name and a redirect url where you will be send after authorization"
-            echo "After creating your app, you will be provided a oauth key, a 0auth secret and the redirect URL"
+            echo "After creating your app, you will be provided a oauth key, a oauth secret and the redirect URL"
             echo "Run $BASENAME message gitter apitoken <oauth key> <redirect url>"
             echo "Click 'Allow' and get the code at the end of the redirect link:"
             echo "Example: If redirect link is \"http://www.localhost.com/?code=1234567890\",then \"code=1234567890\""

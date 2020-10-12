@@ -51,18 +51,18 @@ function message {
             echo "To get an authorized access token"
             echo "Navigate to https://developer.gitter.im/apps and signin"
             echo "Create a new app and provide aplication name and a redirect url where you will be send after authorization"
-            echo "After creating your app, you will be provided a 0auth key, a 0auth secret and the redirect URL"
-            echo "Run $BASENAME message gitter apitoken <0auth key> <redirect url>"
+            echo "After creating your app, you will be provided a oauth key, a 0auth secret and the redirect URL"
+            echo "Run $BASENAME message gitter apitoken <oauth key> <redirect url>"
             echo "Click 'Allow' and get the code at the end of the redirect link:"
             echo "Example: If redirect link is \"http://www.localhost.com/?code=1234567890\",then \"code=1234567890\""
-            echo "Run $BASENAME message gitter authorize <code> <0auth Secret>"
+            echo "Run $BASENAME message gitter authorize <code> <oauth Secret>"
           fi
           ;;
         authorize)
           if [[ $3 == "" ]]; then
             echo "authorization code is missing"
           elif [[ $4 == "" ]]; then
-             echo "0auth secret is missing"
+             echo "oauth secret is missing"
           else
             code=$3
             client_key=$4
@@ -222,7 +222,7 @@ function message {
 
 function message_help {
   echo
-  echo "Usage: $BASENAME message <chats> <apitoken>|<0auth key> <redirect URL> | <authorize> <code> <0auth secret>| send <group> <message> | show|read|mark <group>"
+  echo "Usage: $BASENAME message <chats> <apitoken>|<oauth key> <redirect URL> | <authorize> <code> <oauth secret>| send <group> <message> | show|read|mark <group>"
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo

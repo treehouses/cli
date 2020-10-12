@@ -222,7 +222,7 @@ function message {
 
 function message_help {
   echo
-  echo "Usage: $BASENAME message <chats> <apitoken>|<client key> <redirect URL> | <authorize> <code> <client secret>| send <group> <message> | show|read|mark <group>"
+  echo "Usage: $BASENAME message <chats> <apitoken>|<0auth key> <redirect URL> | <authorize> <code> <0auth secret>| send <group> <message> | show|read|mark <group>"
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo

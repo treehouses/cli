@@ -33,20 +33,43 @@ function message {
         apitoken)
           if check_apitoken gitter; then
             get_apitoken gitter
+          elif [[ $3 != "" ]] && [[ $4 != "" ]]; then
+            client_id=$3
+            if [[ $4 == http?(s)://* ]]; then
+              redirect_uri=$4
+            else
+              log_and_exit1 "Invalid URL"
+            fi
+            conf_var_update "client_id" "$client_id"
+            conf_var_update "redirect_url" "$redirect_uri"
+            echo "Navigate to  https://gitter.im/login/oauth/authorize?client_id=$client_id&response_type=code&redirect_uri=$redirect_uri"
+            echo "Click 'Allow' and get the code at the end of the redirect link:"
+            echo "Example:redirect link: http://www.localhost.com/?code=1234567890, code=1234567890"
+            echo "run $BASENAME message gitter authorize <code> <0auth Secret>"
           else
+            echo "You do not have an authorized access token"
             echo "To get an authorized access token"
-            echo "Ensure you have logged in to your account https://gitter.im/login?action=login"
-            echo "Then,navigate to https://gitter.im/login/oauth/authorize?client_id=6c3ac0766e94e8b760e372e0da66e3ac4470ff3f&response_type=code&redirect_uri=http://localhost:7000/login/callback"
-            echo "Click 'Allow' and get the code at the end of the redirect link: "
-            echo "run $BASENAME message gitter authorize <code>"
+            echo "Navigate to https://developer.gitter.im/apps and signin"
+            echo "Create a new app and provide aplication name and a redirect url where you will be send after authorization"
+            echo "After creating your app, you will be provided a oauth key, a oauth secret and the redirect URL"
+            echo "Run $BASENAME message gitter apitoken <oauth key> <redirect url>"
+            echo "Click 'Allow' and get the code at the end of the redirect link:"
+            echo "Example: If redirect link is \"http://www.localhost.com/?code=1234567890\",then \"code=1234567890\""
+            echo "Run $BASENAME message gitter authorize <code> <oauth Secret>"
           fi
           ;;
         authorize)
           if [[ $3 == "" ]]; then
             echo "authorization code is missing"
+          elif [[ $4 == "" ]]; then
+             echo "oauth secret is missing"
           else
             code=$3
-            api_info=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" "https://gitter.im/login/oauth/token" -d '{"client_id": "6c3ac0766e94e8b760e372e0da66e3ac4470ff3f", "client_secret": "4649fa1132fae15cff89737268046bc9e65536bc", "code": "'$code'", "redirect_uri": "http://localhost:7000/login/callback", "grant_type": "authorization_code"}')
+            client_key=$4
+            conf_var_update "client_key" "$client_key"
+            client_id=$(config | grep "$client_id" | cut -d "=" -f2)
+            redirect_uri=$(config | grep "$redirect_url" | cut -d "=" -f2)
+            api_info=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" "https://gitter.im/login/oauth/token" -d '{"client_id": "'$client_id'", "client_secret": "'$client_key'", "code": "'$code'", "redirect_uri": "'$redirect_uri'", "grant_type": "authorization_code"}')
             token_info=$(echo $api_info | python -m json.tool | jq '.access_token' | tr -d '"')
             conf_var_update "gitter_access_token" "$token_info"
             echo "Your API access token is $token_info"
@@ -199,7 +222,7 @@ function message {
 
 function message_help {
   echo
-  echo "Usage: $BASENAME message <chats> <apitoken> | <authorize> <code> | send <group> <message> | show|read|mark <group>"
+  echo "Usage: $BASENAME message <chats> <apitoken>|<oauth key> <redirect URL> | <authorize> <code> <oauth secret>| send <group> <message> | show|read|mark <group>"
   echo
   echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
   echo

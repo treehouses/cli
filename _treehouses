@@ -426,6 +426,10 @@ treehouses vnc
 treehouses vnc info
 treehouses vnc off
 treehouses vnc on
+treehouses vnc auth system
+treehouses vnc auth vnc
+treehouses vnc auth info
+treehouses vnc password
 treehouses wifi
 treehouses wificountry
 treehouses wifihidden

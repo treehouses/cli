@@ -26,14 +26,7 @@ function dhcp () {
 
 function dhcp_help {
   echo
-  echo "Usage: $BASENAME dhcp [list]"
+  echo "Usage: $BASENAME dhcp [list|status]"
   echo
   echo "dhcp details for Raspberry Pi"
-  echo
-  echo "Example:"
-  echo "  $BASENAME dhcp"
-  echo "  47.2"
-  echo
-  echo "  $BASENAME dhcp list"
-  echo "  47.2°C"
 }

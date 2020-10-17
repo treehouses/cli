@@ -14,7 +14,7 @@ function install {
   else
     echo "tutor is installed"
   fi
-    
+
   # create yml(s)
   # yml is empty because tutor uses internal ymls
   # it is created for treehouses services to recognize 
@@ -32,11 +32,12 @@ function install {
     echo
   } > /srv/tutor/autorun
 
- {
+  {
+    echo '#!/bin/bash'
     echo 'function get_email_address {'
     echo '  echo "hiro@ole.org"'
     echo '}'
- } > /srv/tutor/env.sh
+  } > /srv/tutor/env.sh
 }
 
 function up {
@@ -67,17 +68,9 @@ function cleanup {
   rm /usr/local/bin/tutor
 }
 
-function get_url {
- echo $address 
-}
-
-function get_email_address {
-  echo "hiro@ole.org"
-}
-
 # environment var
 function uses_env {
-  echo false 
+  echo false
 }
 
 # add supported arm(s)

@@ -284,16 +284,11 @@ function services {
               if [[ "$base_url" =~ "," ]]; then
                 base_url=$(echo $base_url | cut -f1 -d,)
               fi
-
               for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
               do
                 local_url="$base_url:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
-                if [ "$service_name" = "pihole" ]; then
-                  local_url+="/admin"
-                elif [ "$service_name" = "couchdb" ]; then
-                  local_url+="/_utils"
-                elif [ "$service_name" = "sysmon" ]; then
-                  local_url+="/primary"
+                if source services/install-${service_name}.sh && type -t get_paths >/dev/null; then
+                  local_url+=$(source $SERVICES/install-${service_name}.sh && get_paths | sed -n "$i p")
                 fi
                 echo $local_url
               done

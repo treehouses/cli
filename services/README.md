@@ -84,10 +84,19 @@ Using the [template](#Template), fill in the sections as required.
 1. add port(s)
 
    Replace `<port>` with the port(s) your service uses.
-   
+
    If your service uses multiple ports, add each port on their own individual lines.
    ```
      echo "<port>"
+   ```
+
+1. add path(s)
+
+   Replace `<path>` with the path(s) your service uses.
+
+   If your service has specific path, add path on their own individual lines.
+   ```
+     echo "<path>"
    ```
 
 1. add size (in MB)
@@ -165,6 +174,11 @@ function supported_arches {
 # add port(s)
 function get_ports {
   echo "<port>"
+}
+
+# add path(s)
+function get_paths {
+  echo "<path>"
 }
 
 # add size (in MB)

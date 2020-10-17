@@ -131,14 +131,14 @@ function services {
                 echo "ERROR: cannot run install script"
                 exit 1
               fi
-	    elif [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
-	      if source services/install-tutor.sh && ! type -t install ; then
-	        echo "no install function"
+            elif [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
+              if source services/install-tutor.sh && ! type -t install ; then
+                echo "no install function"
               elif source $SERVICES/install-${service_name}.sh && install ; then
                 echo "${service_name} build installed"
-              else 
+              else
                 echo "${service_name} not work"
-	      fi
+              fi
             elif source $SERVICES/install-${service_name}.sh && install ; then
               retries=0
               while [ "$retries" -lt 5 ];
@@ -182,14 +182,14 @@ function services {
                   exit 1
                 fi
               fi
-	    elif [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
-	      if source services/install-tutor.sh && ! type -t up ; then
-	        echo "no up function"
+            elif [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
+              if source services/install-tutor.sh && ! type -t up ; then
+                echo "no up function"
               elif source $SERVICES/install-${service_name}.sh && up ; then
                 echo "${service_name} build and started"
-              else 
+              else
                 echo "${service_name} not work"
-	      fi
+              fi
             else
               check_space $service_name
               if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
@@ -201,20 +201,20 @@ function services {
             do
               check_tor "$(services $service_name port | sed -n "$i p")"
             done
-	    ;;
+            ;;
           down)
             checkargn $# 2
             if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
               echo "${service_name}.yml not found"
-	    elif [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
-	      if source services/install-tutor.sh && ! type -t down ; then
-	        echo "no down function"
+            elif [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
+              if source services/install-tutor.sh && ! type -t down ; then
+                echo "no down function"
               elif source $SERVICES/install-${service_name}.sh && down ; then
                 remove_tor_port
                 echo "${service_name} stopped and removed"
-              else 
+              else
                 echo "${service_name} not work"
-	      fi
+              fi
             else
               docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down
               remove_tor_port
@@ -223,14 +223,14 @@ function services {
             ;;
           start)
             checkargn $# 2
-	    if [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
-	      if source services/install-tutor.sh && ! type -t start ; then
-	        echo "no start function"
+            if [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
+              if source services/install-tutor.sh && ! type -t start ; then
+                echo "no start function"
               elif source $SERVICES/install-${service_name}.sh && start ; then
                 echo "${service_name} started"
-              else 
+              else
                 echo "${service_name} not work"
-	      fi
+              fi
             elif docker ps -a | grep -q $service_name; then
               if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
                 echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
@@ -254,14 +254,14 @@ function services {
                 echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
                 echo "try running '$BASENAME services ${service_name} install' first"
                 exit 1
-	      elif [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
+              elif [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
                 if source services/install-tutor.sh && ! type -t stop ; then
-	          echo "no stop function"
+                  echo "no stop function"
                 elif source $SERVICES/install-${service_name}.sh && stop ; then
                   echo "${service_name} stopped"
-                else 
+                else
                   echo "${service_name} not work"
-	        fi
+                fi
               else
                 if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml stop; then
                   echo "${service_name} stopped"
@@ -274,14 +274,14 @@ function services {
             fi
             ;;
           restart)
-	    if [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
+            if [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
               if source services/install-tutor.sh && ! type -t restart ; then
-	        echo "no restart function"
+                echo "no restart function"
               elif source $SERVICES/install-${service_name}.sh && restart ; then
                 echo "${service_name} restart"
-              else 
+              else
                 echo "${service_name} not work"
-	      fi
+              fi
             else
               checkargn $# 2
               services $service_name stop
@@ -425,14 +425,14 @@ function services {
               echo "ERROR: ${service_name}.yml not found"
               echo "try running '$BASENAME services ${service_name} install' first"
               exit 1
-	    elif [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
-	      if source services/install-tutor.sh && ! type -t cleanup ; then
-	        echo "no start function"
+            elif [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
+              if source services/install-tutor.sh && ! type -t cleanup ; then
+                echo "no start function"
               elif source $SERVICES/install-${service_name}.sh && cleanup ; then
                 echo "${service_name} stopped and removed"
-              else 
+              else
                 echo "${service_name} not work"
-	      fi
+              fi
             else
               docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down -v --rmi all --remove-orphans
               echo "${service_name} stopped and removed"

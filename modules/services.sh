@@ -298,10 +298,8 @@ function services {
                 for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
                 do
                   tor_url="$base_tor:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
-                  if [ "$service_name" = "pihole" ]; then
-                    tor_url+="/admin"
-                  elif [ "$service_name" = "couchdb" ]; then
-                    tor_url+="/_utils"
+                  if source services/install-${service_name}.sh && type -t get_paths >/dev/null; then
+                    tor_url+=$(source $SERVICES/install-${service_name}.sh && get_paths | sed -n "$i p")
                   fi
                   echo $tor_url
                 done

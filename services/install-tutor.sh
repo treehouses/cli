@@ -37,6 +37,30 @@ function up {
   su pi -c "tutor local quickstartfortreehouses"
 }
 
+function down {
+  su pi -c "tutor local stop"
+}
+
+function start {
+  su pi -c "tutor local start -d"
+}
+
+function stop {
+  su pi -c "tutor local stop"
+}
+
+function stop {
+  su pi -c "tutor local stop"
+  su pi -c "tutor local start -d"
+}
+
+function cleanup {
+  su pi -c "tutor local stop"
+  docker rmi $(docker images --filter=reference='hirotochigi/openedx*' --format "{{.Repository}}:{{.Tag}}")
+  rm -rf "$(tutor config printroot)"
+  rm /usr/local/bin/tutor
+}
+
 function get_url {
  echo $address 
 }

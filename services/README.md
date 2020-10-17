@@ -177,9 +177,9 @@ function get_ports {
 }
 
 # add path(s)
-function get_paths {
-  echo "<path>"
-}
+#function get_paths {
+#  echo "<path>"
+#}
 
 # add size (in MB)
 function get_size {

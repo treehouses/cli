@@ -11,8 +11,6 @@ function install {
     wget -q  https://github.com/ole-vi/tutor-rpi/releases/download/v10.0.10-treehouses.1/tutor
     chmod +x tutor
     mv tutor /usr/local/bin/
-  else
-    echo "tutor is installed"
   fi
 
   # create yml(s)
@@ -32,8 +30,10 @@ function install {
     echo
   } > /srv/tutor/autorun
 
+  # add env.sh, tutor uses the function.
   {
     echo '#!/bin/bash'
+    echo
     echo 'function get_email_address {'
     echo '  echo "hiro@ole.org"'
     echo '}'
@@ -56,7 +56,7 @@ function stop {
   su pi -c "tutor local stop"
 }
 
-function stop {
+function restart {
   su pi -c "tutor local stop"
   su pi -c "tutor local start -d"
 }
@@ -64,7 +64,8 @@ function stop {
 function cleanup {
   su pi -c "tutor local stop"
   docker rmi $(docker images --filter=reference='hirotochigi/openedx*' --format "{{.Repository}}:{{.Tag}}")
-  rm -rf "$(tutor config printroot)"
+  tutor_root="$(tutor config printroot)"
+  rm -rf $tutor_root
   rm /usr/local/bin/tutor
 }
 

@@ -282,15 +282,6 @@ function services {
               else 
                 echo "${service_name} not work"
 	      fi
-            #if [ "$service_name" = "tutor" ]; then
-            #  if [ ! -f /srv/tutor/tutor.yml ]; then
-            #    echo "ERROR: /srv/tutor/tutor.yml not found"
-            #    echo "try running '$BASENAME services tutor install' first"
-            #    exit 1
-            #  else
-            #    su pi -c "tutor local stop"
-            #    su pi -c "tutor local start -d"
-            #  fi
             else
               checkargn $# 2
               services $service_name stop
@@ -442,12 +433,6 @@ function services {
               else 
                 echo "${service_name} not work"
 	      fi
-            #elif [ "$service_name" = "tutor" ]; then
-            #  su pi -c "tutor local stop"
-            #  echo "tutor stopped and removed"
-            #  docker rmi $(docker images --filter=reference='hirotochigi/openedx*' --format "{{.Repository}}:{{.Tag}}")
-            #  rm -rf "$(tutor config printroot)"
-            #  rm /usr/local/bin/tutor
             else
               docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down -v --rmi all --remove-orphans
               echo "${service_name} stopped and removed"

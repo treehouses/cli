@@ -1,11 +1,11 @@
 #!/bin/bash
 
 address=$(sudo treehouses tor)
-isTutorInstalled=$(ls /usr/local/bin | grep "tutor")
 function install {
 
   mkdir -p /srv/tutor
 
+  isTutorInstalled=$(ls /usr/local/bin | grep "tutor")
   if [ -z $isTutorInstalled ]; then
     echo "install tutor"
     wget -q  https://github.com/ole-vi/tutor-rpi/releases/download/v10.0.10-treehouses.1/tutor

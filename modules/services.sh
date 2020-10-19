@@ -597,8 +597,8 @@ function services_help {
   echo
   for i in $(services available)
   do
-    index1="                  "
-    echo "${index1:16:18}$i${index1:$((${#i}+2)):18}$(source $SERVICES/install-${i}.sh && get_description)"
+    index="                  "
+    echo "${index:16:18}$i${index:$((${#i}+2)):18}$(source $SERVICES/install-${i}.sh && get_description)"
   done
   echo
   echo

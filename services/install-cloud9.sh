@@ -52,7 +52,7 @@ function get_size {
  echo "688"
 }
 
-# add help
+# add description
 function get_description {
   echo "Cloud9 is a complete web based IDE with terminal access"
 }

@@ -186,6 +186,11 @@ function get_size {
   echo "1341"
 }
 
+# add description
+function get_description {
+  echo "Invoiceninja is the leading self-host platform to create invoices"
+}
+
 # add info
 function get_info {
   echo "https://github.com/ole-vi/invoiceninja"

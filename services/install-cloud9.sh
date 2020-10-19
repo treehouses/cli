@@ -52,6 +52,11 @@ function get_size {
  echo "688"
 }
 
+# add help
+function get_description {
+  echo "Cloud9 is a complete web based IDE with terminal access"
+}
+
 # add info
 function get_info {
   echo "https://github.com/linuxserver/docker-cloud9.git"

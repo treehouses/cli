@@ -50,6 +50,11 @@ function get_size {
   echo "550"
 }
 
+# add description
+function get_description {
+  echo "PrivateBin is a minimalist, open source online pastebin"
+}
+
 # add info
 function get_info {
   echo "https://github.com/treehouses/privatebin"

@@ -51,8 +51,12 @@ function log_comment_and_exit1() {
 
 function log_help_and_exit1() {
   logit "$1" "$3"
-  "$2_help"
-  exit 1
+  if type -t $2_help >/dev/null; then
+    "$2_help"
+     exit 1
+  else
+    echo "Error: help not found"
+  fi
 }
 
 # Sets logging level to be used by the entire app

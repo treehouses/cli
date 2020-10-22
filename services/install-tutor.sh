@@ -1,7 +1,13 @@
 #!/bin/bash
 
-address=$(sudo treehouses tor)
 function install {
+
+  memory=$(treehouses memory | awk 'END {print $4}' | numfmt --from=iec)
+  if [ $memory -lt "800000" ]; then
+     echo "ERROR: not enough memory"
+     echo "Tutor needs 8G RAM"
+     exit 1
+  fi
 
   mkdir -p /srv/tutor
 

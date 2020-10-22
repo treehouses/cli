@@ -131,11 +131,7 @@ function services {
               fi
             elif source $SERVICES/install-${service_name}.sh && install ; then
               if [ ! -s /srv/${service_name}/${service_name}.yml ] ; then
-                if source $SERVICES/install-${service_name}.sh && install ; then
-                  echo "${service_name} build installed"
-                else
-                  echo "${service_name} not work"
-                fi
+                echo "${service_name} installed"
               else
                 retries=0
                 while [ "$retries" -lt 5 ];
@@ -598,16 +594,6 @@ function check_arm {
 }
 
 function check_available_services {
-  if [ "${1}" == "tutor" ]; then
-     memory=$(treehouses memory | awk 'END {print $4}' | numfmt --from=iec)
-     if [ $memory -lt "800000" ]; then
-       echo "ERROR: not enough memory"
-       echo "Tutor needs 8G RAM"
-       exit 1
-     else
-       return 0
-     fi
-   fi
   array=($(services available))
   for service in "${array[@]}"
   do

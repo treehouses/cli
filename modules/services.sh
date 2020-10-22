@@ -130,34 +130,34 @@ function services {
                 echo "ERROR: cannot run install script"
                 exit 1
               fi
-            elif [[ " ${service_list[@]} " =~ " ${service_name} " ]]; then
-              if source $SERVICES/install-${service_name}.sh && ! type -t install ; then
-                echo "no install function"
-              elif source $SERVICES/install-${service_name}.sh && install ; then
-                echo "${service_name} build installed"
-              else
-                echo "${service_name} not work"
-              fi
             elif source $SERVICES/install-${service_name}.sh && install ; then
-              retries=0
-              while [ "$retries" -lt 5 ];
-              do
-                if ! docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml pull ; then
-                  if [ "$retries" -lt 4 ]; then
-                    echo "retrying pull in 6 seconds"
-                    sleep 6
-                  fi
-                  ((retries+=1))
+              if [ ! -s /srv/${service_name}/${service_name}.yml ] ; then
+                if source $SERVICES/install-${service_name}.sh && install ; then
+                  echo "${service_name} build installed"
                 else
-                  echo "${service_name} installed"
-                  if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
-                    echo "modify default environment variables by running '$BASENAME services ${service_name} config edit'"
-                  fi
-                  exit 0
+                  echo "${service_name} not work"
                 fi
-              done
-              echo "ERROR: cannot pull docker image"
-              exit 1
+              else
+                retries=0
+                while [ "$retries" -lt 5 ];
+                do
+                  if ! docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml pull ; then
+                    if [ "$retries" -lt 4 ]; then
+                      echo "retrying pull in 6 seconds"
+                      sleep 6
+                    fi
+                    ((retries+=1))
+                  else
+                    echo "${service_name} installed"
+                    if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
+                      echo "modify default environment variables by running '$BASENAME services ${service_name} config edit'"
+                    fi
+                    exit 0
+                  fi
+                done
+                echo "ERROR: cannot pull docker image"
+                exit 1
+              fi
             else
               echo "ERROR: cannot run install script"
               exit 1

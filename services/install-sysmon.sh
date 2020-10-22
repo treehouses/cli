@@ -59,6 +59,11 @@ function get_size {
   echo "293"
 }
 
+# add description
+function get_description {
+  echo "Sysmon is an intuitive system performance monitoring and task management tool for servers"
+}
+
 # add info
 function get_info {
   echo "https://github.com/t0xic0der/sysmon"

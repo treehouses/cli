@@ -56,6 +56,11 @@ function get_size {
   echo "350"
 }
 
+# add description
+function get_description {
+  echo "CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
+}
+
 # add info
 function get_info {
   echo "https://github.com/treehouses/rpi-couchdb"

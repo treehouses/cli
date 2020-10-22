@@ -95,6 +95,11 @@ function get_info {
   echo "unwanted content, without installing any client-side software.\""
 }
 
+# add description
+function get_description {
+  echo "Pi-hole is a DNS sinkhole that protects your devices from unwanted content"
+}
+
 # add svg icon
 function get_icon {
   cat <<EOF

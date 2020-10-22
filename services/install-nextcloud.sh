@@ -50,6 +50,11 @@ function get_size {
   echo "900"
 }
 
+# add description
+function get_description {
+  echo "Nextcloud is a safe home for all your data, files, etc"
+}
+
 # add info
 function get_info {
   echo "https://github.com/nextcloud"

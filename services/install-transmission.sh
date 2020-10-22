@@ -61,6 +61,11 @@ function get_size {
   echo "77"
 }
 
+# add description
+function get_description {
+  echo "Transmission is a BitTorrent client with many powerful features"
+}
+
 # add info
 function get_info {
   echo "https://github.com/linuxserver/docker-transmission"

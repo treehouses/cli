@@ -106,6 +106,13 @@ Using the [template](#Template), fill in the sections as required.
      echo "<size>"
    ```
 
+1. add description
+
+   Replace `<description>` with a short description of your service.
+   ```
+     echo "\"<description>\""
+   ```
+
 1. add info
 
    Replace `<url>` with the url of your service (eg. GitHub repository).
@@ -184,6 +191,11 @@ function get_ports {
 # add size (in MB)
 function get_size {
   echo "<size>"
+}
+
+# add description
+function get_description {
+  echo "<description>"
 }
 
 # add info

@@ -1,4 +1,3 @@
-service_list=("tutor")
 
 function services {
   check_missing_binary docker-compose "docker-compose is missing\ninstall instructions can be found in\nhttps://github.com/docker/compose"

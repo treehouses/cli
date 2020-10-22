@@ -77,6 +77,11 @@ function get_ports {
   echo "8053"
 }
 
+# get path(s)
+function get_paths {
+  echo "/admin"
+}
+
 # add size (in MB)
 function get_size {
   echo "350"

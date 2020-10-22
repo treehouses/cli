@@ -49,6 +49,11 @@ function get_ports {
   echo "6969"
 }
 
+# get path(s)
+function get_paths {
+  echo "/primary"
+}
+
 # add size (in MB)
 function get_size {
   echo "293"

@@ -70,7 +70,7 @@ function restart {
 function cleanup {
   su pi -c "tutor local stop"
   docker rmi $(docker images --filter=reference='hirotochigi/openedx*' --format "{{.Repository}}:{{.Tag}}")
-  tutor_root="$(tutor config printroot)"
+  tutor_root=$(tutor config printroot)
   rm -rf $tutor_root
   rm /usr/local/bin/tutor
 }
@@ -87,7 +87,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "8090"
+  echo "8098 80"
 }
 
 # add size (in MB)

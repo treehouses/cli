@@ -176,7 +176,7 @@ function services {
                   exit 1
                 fi
               fi
-            elif source $SERVICES/install-${service_name}.sh && ! type -t up  ; then
+            elif source $SERVICES/install-${service_name}.sh && ! type -t up > /dev/null ; then
               check_space $service_name
               if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
                 validate_yml $service_name
@@ -214,7 +214,7 @@ function services {
           start)
             checkargn $# 2
             if docker ps -a | grep -q $service_name; then
-              if source $SERVICES/install-${service_name}.sh && ! type -t start > /dev/null 6; then
+              if source $SERVICES/install-${service_name}.sh && ! type -t start > /dev/null ; then
                 if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
                   echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
                   echo "try running '$BASENAME services ${service_name} install' first"

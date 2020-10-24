@@ -213,22 +213,20 @@ function services {
             ;;
           start)
             checkargn $# 2
-            if docker ps -a | grep -q $service_name; then
-              if source $SERVICES/install-${service_name}.sh && ! type -t start > /dev/null ; then
-                if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
-                  echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
-                  echo "try running '$BASENAME services ${service_name} install' first"
-                  exit 1
-                else
-                  if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml start; then
-                    echo "${service_name} started"
-                  fi
-                fi
+            if source $SERVICES/install-${service_name}.sh && type -t start > /dev/null ; then
+              if source $SERVICES/install-${service_name}.sh && start ; then
+                echo "${service_name} started"
               else
-                if source $SERVICES/install-${service_name}.sh && start ; then
+                echo "${service_name} not work"
+              fi
+            elif docker ps -a | grep -q $service_name; then
+              if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
+                echo "ERROR: /srv/${service_name}/${service_name}.yml not found"
+                echo "try running '$BASENAME services ${service_name} install' first"
+                exit 1
+              else
+                if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml start; then
                   echo "${service_name} started"
-                else
-                  echo "${service_name} not work"
                 fi
               fi
             else

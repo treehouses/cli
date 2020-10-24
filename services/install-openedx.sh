@@ -5,45 +5,45 @@ function install {
   memory=$(treehouses memory | awk 'END {print $4}' | numfmt --from=iec)
   if [ $memory -lt "800000" ]; then
      echo "ERROR: not enough memory"
-     echo "Tutor needs 8G RAM"
+     echo "openedx needs 8G RAM"
      exit 1
   fi
 
-  mkdir -p /srv/tutor
+  mkdir -p /srv/openedx
 
   isTutorInstalled=$(ls /usr/local/bin | grep "tutor")
   if [ -z $isTutorInstalled ]; then
-    echo "install tutor"
+    echo "install openedx"
     wget -q  https://github.com/ole-vi/tutor-rpi/releases/download/v10.0.10-treehouses.1/tutor
     chmod +x tutor
     mv tutor /usr/local/bin/
   fi
 
   # create yml(s)
-  # yml is empty because tutor uses internal ymls
+  # yml is empty because openedx uses internal ymls
   # it is created for treehouses services to recognize 
   # tutor is installed
-  touch /srv/tutor/tutor.yml
+  touch /srv/openedx/openedx.yml
 
   # add autorun
   {
-    echo "tutor_autorun=true"
+    echo "openedx_autorun=true"
     echo
-    echo "if [ \"\$tutor_autorun\" = true ]; then"
-    echo "  treehouses services tutor up"
+    echo "if [ \"\$openedx_autorun\" = true ]; then"
+    echo "  treehouses services openedx up"
     echo "fi"
     echo
     echo
-  } > /srv/tutor/autorun
+  } > /srv/openedx/autorun
 
-  # add env.sh, tutor uses the function.
+  # add env.sh, openedx uses the function.
   {
     echo '#!/bin/bash'
     echo
     echo 'function get_email_address {'
     echo '  echo "hiro@ole.org"'
     echo '}'
-  } > /srv/tutor/env.sh
+  } > /srv/openedx/env.sh
 }
 
 function up {
@@ -70,8 +70,8 @@ function restart {
 function cleanup {
   su pi -c "tutor local stop"
   docker rmi $(docker images --filter=reference='hirotochigi/openedx*' --format "{{.Repository}}:{{.Tag}}")
-  tutor_root=$(tutor config printroot)
-  rm -rf $tutor_root
+  openedx_root=$(tutor config printroot)
+  rm -rf $openedx_root
   rm /usr/local/bin/tutor
 }
 
@@ -87,7 +87,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "8098 80"
+  echo "8098"
 }
 
 # add size (in MB)

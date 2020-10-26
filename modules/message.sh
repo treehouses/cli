@@ -222,13 +222,12 @@ function message {
           elif [[ $3 != "" ]]; then
             echo "your apitoken is $3"
             conf_var_update "slacktoken" "$3"
-            exit 0
           else
             echo "You do not have an authorized access token for slack"
             echo "To get an authorized access token"
-            echo "Then go to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
-            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope \"under user token\" scope as \"chat:write\" for the APP from the drop down list"
-            echo "Then install APP to the workspace and allow the permission in the redirected link and then you will be provided by the \"OAuth access token\""
+            echo " Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
+            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope \"under user token\" scope as \"channel:write\" for the APP from the drop down list"
+            echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
             echo "Run $BASENAME message slack apitoken <oauth access token>"
           fi
           ;;
@@ -240,7 +239,8 @@ function message {
             fi
             shift; shift; shift;
             message=$*
-           message_response=$(curl -s -X POST -H 'Authorization: Bearer '$access_token'' -H 'Content-type: application/json' --data '{"channel":"'$channel'","text":"'$message'"}' https://slack.com/api/chat.postMessage)
+            echo "$message"
+           message_response=$(curl -s -X POST -H 'Authorization: Bearer '$access_token'' -H 'Content-type: application/json' --data "{\"channel\":\"$channel\",\"text\":\"$message\"}" https://slack.com/api/chat.postMessage)
            message_response=$(echo $message_response | python -m json.tool | jq '.ok' | tr -d '"')
            if [[ $message_response == "true" ]]; then
              echo "message successfully delivered to $channel"

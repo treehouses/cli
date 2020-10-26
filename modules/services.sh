@@ -284,16 +284,11 @@ function services {
               if [[ "$base_url" =~ "," ]]; then
                 base_url=$(echo $base_url | cut -f1 -d,)
               fi
-
               for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
               do
                 local_url="$base_url:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
-                if [ "$service_name" = "pihole" ]; then
-                  local_url+="/admin"
-                elif [ "$service_name" = "couchdb" ]; then
-                  local_url+="/_utils"
-                elif [ "$service_name" = "sysmon" ]; then
-                  local_url+="/primary"
+                if source services/install-${service_name}.sh && type -t get_paths >/dev/null; then
+                  local_url+=$(source $SERVICES/install-${service_name}.sh && get_paths | sed -n "$i p")
                 fi
                 echo $local_url
               done
@@ -303,10 +298,8 @@ function services {
                 for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
                 do
                   tor_url="$base_tor:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
-                  if [ "$service_name" = "pihole" ]; then
-                    tor_url+="/admin"
-                  elif [ "$service_name" = "couchdb" ]; then
-                    tor_url+="/_utils"
+                  if source services/install-${service_name}.sh && type -t get_paths >/dev/null; then
+                    tor_url+=$(source $SERVICES/install-${service_name}.sh && get_paths | sed -n "$i p")
                   fi
                   echo $tor_url
                 done
@@ -595,36 +588,11 @@ function services_help {
   echo
   echo "Available Services:"
   echo
-  echo "  planet          Planet Learning is a generic learning system built in Angular & CouchDB"
-  echo "  kolibri         Kolibri is a learning platform using DJango"
-  echo "  nextcloud       Nextcloud is a safe home for all your data, files, etc"
-  echo "  netdata         Netdata is a distributed, real-time performance and health monitoring for systems"
-  echo "  mastodon        Mastodon is a free, open-source social network server"
-  echo "  moodle          Moodle is a Learning management system built in PHP"
-  echo "  pihole          Pi-hole is a DNS sinkhole that protects your devices from unwanted content"
-  echo "  privatebin      PrivateBin is a minimalist, open source online pastebin"
-  echo "  portainer       Portainer is a lightweight management UI for Docker environments"
-  echo "  ntopng          Ntopng is a network traffic probe that monitors network usage"
-  echo "  couchdb         CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
-  echo "  mariadb         MariaDB is a community-developed fork of the MySQL relational database management system"
-  echo "  mongodb         MongoDB is a general purpose, distributed, document-based, NoSQL database."
-  echo "  seafile         Seafile is an open-source, cross-platform file-hosting software system"
-  echo "  librespeed      Librespeed is a very lightweight Speedtest implemented in Javascript"
-  echo "  turtleblocksjs  TurtleBlocks is an activity with a Logo-inspired graphical \"turtle\" "
-  echo "  musicblocks     MusicBlocks is a programming language for exploring musical concepts in an fun way" 
-  echo "  minetest        Minetest is an open source infinite-world block sandbox game engine with survival and crafting"
-  echo "  invoiceninja    Invoiceninja is the leading self-host platform to create invoices."
-  echo "  grocy           Grocy is web-based, self-hosted groceries and household management utility for your home"
-  echo "  dokuwiki        Dokuwiki is a simple to use and highly versatile Open Source wiki software"
-  echo "  bookstack       Bookstack is a free and open source Wiki designed for creating beautiful documentation"
-  echo "  transmission    Transmission is a BitTorrent client with many powerful features"
-  echo "  piwigo          Piwigo is a photo gallery software to publish and manage your collection of pictures"
-  echo "  cloud9          Cloud9 is a complete web based IDE with terminal access"
-  echo "  jellyfin        Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media"
-  echo "  pylon           Pylon is a web based integrated development environment built with Node.js as a backend"
-  echo "  rutorrent       Rutorrent is a popular rtorrent client with a webui for ease of use"
-  echo "  webssh          Webssh is a simple web application to be used as an ssh client to connect to your ssh servers"
-  echo "  sysmon          Sysmon is an intuitive system performance monitoring and task management tool for servers"
+  for i in $(services available)
+  do
+    index="                  "
+    echo "${index:16:18}$i${index:$((${#i}+2)):18}$(source $SERVICES/install-${i}.sh && get_description)"
+  done
   echo
   echo
   echo "Top-Level Commands:"

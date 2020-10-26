@@ -225,7 +225,7 @@ function message {
           else
             echo "You do not have an authorized access token for slack"
             echo "To get an authorized access token"
-            echo " Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
+            echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
             echo "Go to \"OAuth & Permission\" under \"features \" and select the scope \"under user token\" scope as \"channel:write\" for the APP from the drop down list"
             echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
             echo "Run $BASENAME message slack apitoken <oauth access token>"

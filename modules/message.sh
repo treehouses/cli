@@ -224,6 +224,7 @@ function message {
             conf_var_update "slacktoken" "$3"
           else
             echo "You do not have an authorized access token for slack"
+            eche ""
             echo "To get an authorized access token"
             echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
             echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\" for the APP from the drop down list"

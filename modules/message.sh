@@ -214,6 +214,48 @@ function message {
           ;;
       esac
       ;;
+    slack)
+      case "$2" in
+        apitoken)
+          if check_apitoken slack; then
+            get_apitoken slack
+          elif [[ $3 != "" ]]; then
+            echo "your apitoken is $3"
+            conf_var_update "slacktoken" "$3"
+          else
+            echo "You do not have an authorized access token for slack"
+            eche ""
+            echo "To get an authorized access token"
+            echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
+            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\" for the APP from the drop down list"
+            echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
+            echo "Run $BASENAME message slack apitoken <oauth access token>"
+          fi
+          ;;
+        send)
+          channel=$3
+          if check_apitoken slack; then
+            if [[ $3 == "" ]]; then
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message slack send <group>"
+            fi
+            shift; shift; shift;
+            message=$*
+            echo "$message"
+            message_response=$(curl -s -X POST -H 'Authorization: Bearer '$access_token'' -H 'Content-type: application/json' --data "{\"channel\":\"$channel\",\"text\":\"$message\"}" https://slack.com/api/chat.postMessage)
+            message_response=$(echo $message_response | python -m json.tool | jq '.ok' | tr -d '"')
+            if [[ $message_response == "true" ]]; then
+              echo "message successfully delivered to $channel"
+            else
+              log_comment_and_exit1 "ERROR: message not delivered"
+            fi
+          else
+            log_comment_and_exit1 "Error:You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
+          fi
+          ;;
+        *)
+          log_help_and_exit1 "Error: This command does not exist" message
+      esac
+      ;;
     *)
       log_help_and_exit1 "Error: This command does not exist" message
       ;;
@@ -233,7 +275,7 @@ function message_help {
   echo "Example:"
   echo
   echo "  $BASENAME message gitter apitoken"
-  echo "     check for API token"
+  echo "     check for API token for gitter"
   echo
   echo "  $BASENAME message gitter authorize \"1234567890\""
   echo "     sets and saves API token"
@@ -249,5 +291,11 @@ function message_help {
   echo
   echo "  $BASENAME message gitter mark treehouses/Lobby"
   echo "     Marks unread messages from a gitter channel to read"
+  echo
+  echo "  $BASENAME message slack apitoken"
+  echo "     check for API token for slack"
+  echo
+  echo "  $BASENAME message slack send \"channel_name or channel ID\" \"Hi, you are very awesome\""
+  echo "     Sends a message to a slack channel using channel name, eg, channel: #channel_name"
   echo
 }

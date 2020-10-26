@@ -241,13 +241,13 @@ function message {
             shift; shift; shift;
             message=$*
             echo "$message"
-           message_response=$(curl -s -X POST -H 'Authorization: Bearer '$access_token'' -H 'Content-type: application/json' --data "{\"channel\":\"$channel\",\"text\":\"$message\"}" https://slack.com/api/chat.postMessage)
-           message_response=$(echo $message_response | python -m json.tool | jq '.ok' | tr -d '"')
-           if [[ $message_response == "true" ]]; then
-             echo "message successfully delivered to $channel"
-           else
-             log_comment_and_exit1 "ERROR: message not delivered"
-           fi
+            message_response=$(curl -s -X POST -H 'Authorization: Bearer '$access_token'' -H 'Content-type: application/json' --data "{\"channel\":\"$channel\",\"text\":\"$message\"}" https://slack.com/api/chat.postMessage)
+            message_response=$(echo $message_response | python -m json.tool | jq '.ok' | tr -d '"')
+            if [[ $message_response == "true" ]]; then
+              echo "message successfully delivered to $channel"
+            else
+              log_comment_and_exit1 "ERROR: message not delivered"
+            fi
           else
             log_comment_and_exit1 "Error:You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
           fi

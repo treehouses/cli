@@ -11,7 +11,7 @@ function message {
   }
   function get_apitoken {
     channelname=$1
-    access_token=$(config | grep "$channelname" | cut -d "=" -f2)
+    access_token=$(config | grep "$channelname" | grep "token" | cut -d "=" -f2)
     echo "Your API access token is $access_token"
     return 0
   }
@@ -221,7 +221,7 @@ function message {
             get_apitoken slack
           elif [[ $3 != "" ]]; then
             echo "your apitoken is $3"
-            conf_var_update "slacktoken" "$3"
+            conf_var_update "slack_apitoken" "$3"
           else
             echo "You do not have an authorized access token for slack"
             eche ""

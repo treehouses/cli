@@ -217,14 +217,19 @@ function message {
     slack)
       case "$2" in
         apitoken)
-          if check_apitoken slack; then
+          if [[ $3 != "" ]]; then
+            tempVar=$(echo $3 | cut -d "-" -f 1)
+            if [[ $tempVar == "xoxp" ]]; then
+              conf_var_update "slack_apitoken" "$3"
+              echo "your apitoken is $3"
+            else
+              log_comment_and_exit1 "invalid token"
+            fi
+          elif check_apitoken slack; then
             get_apitoken slack
-          elif [[ $3 != "" ]]; then
-            echo "your apitoken is $3"
-            conf_var_update "slack_apitoken" "$3"
           else
             echo "You do not have an authorized access token for slack"
-            eche ""
+            echo ""
             echo "To get an authorized access token"
             echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
             echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\" for the APP from the drop down list"

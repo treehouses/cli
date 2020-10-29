@@ -86,8 +86,7 @@ function bluetooth {
           echo "${bid}"
           ;;
         *)
-          echo "Argument not valid; leave blank or use \"number\""
-          exit 1
+          log_and_exit1 "Argument not valid; leave blank or use \"number\""
           ;;
       esac
       ;;
@@ -105,8 +104,7 @@ function bluetooth {
         echo "press (ctrl + c) to exit"
         journalctl -u rpibluetooth -u bluetooth -f
       else
-        echo "Argument not valid; leave blank or use \"follow\""
-        exit 1
+        log_and_exit1 "Argument not valid; leave blank or use \"follow\""
       fi
       ;;
 

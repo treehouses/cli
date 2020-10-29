@@ -62,6 +62,11 @@ function get_size {
   echo "162"
 }
 
+# add description
+function get_description {
+  echo "Rutorrent is a popular rtorrent client with a webui for ease of use"
+}
+
 # add info
 function get_info {
   echo "https://github.com/linuxserver/docker-rutorrent.git"

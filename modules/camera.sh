@@ -48,8 +48,7 @@ function camera {
     "capture")
       mkdir -p ${directory}
       if ! grep -q "start_x=1" ${config} ; then
-        echo "You need to enable AND reboot first in order to take pictures."
-        exit 1
+        log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
       else
         echo "Camera is capturing and storing a time-stamped ${savetype} photo in ${directory}."
         raspistill -e ${savetype} -n -o "${directory}$BASENAME-${timestamp}.png" && echo "Success: Pictures generated"
@@ -59,8 +58,7 @@ function camera {
     "record")
       mkdir -p ${viddir}
       if ! grep -q "start_x=1" ${config} ; then
-        echo "You need to enable AND reboot first in order to take pictures."
-        exit 1
+        log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
       fi
       case "$2" in 
         "")
@@ -73,8 +71,7 @@ function camera {
         
         *)
           if ! [[ "$2" =~ ^[1-9][0-9]*$ ]] ; then #^[0-9]+$ to accept 0 for indefinite recording
-            echo "Positive integers only."
-            exit 1
+            log_and_exit1 "Error: positive integers only."
           else        
             echo "Camera is recording ${2} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
             let length=$2*1000
@@ -89,8 +86,7 @@ function camera {
     "detect")
       mkdir -p ${directory}
       if ! grep -q "start_x=1" ${config} ; then
-        echo "You need to enable AND reboot first in order to take pictures."
-        exit 1
+        log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
       else
         if camera capture |& grep -q "mmal: main:" ; then
           echo "Camera is not plugged in."
@@ -125,30 +121,30 @@ function camera {
 
 function camera_help {
   echo
-  echo "  Usage: $BASENAME camera [on|off|detect|capture|record]"
+  echo "Usage: $BASENAME camera [on|off|detect|capture|record]"
   echo
-  echo "  Example:"
-  echo "    $BASENAME camera"
-  echo "      Config file has Camera settings which are currently disabled. Use \"$BASENAME help camera\" for more commands."
+  echo "Example:"
+  echo "  $BASENAME camera"
+  echo "    Config file has Camera settings which are currently disabled. Use \"$BASENAME help camera\" for more commands."
   echo
-  echo "    $BASENAME camera on"
-  echo "      Camera is already enabled. Use \"$BASENAME camera capture\" to take a photo."
-  echo "      If you are having issues using the camera, try rebooting."
+  echo "  $BASENAME camera on"
+  echo "    Camera is already enabled. Use \"$BASENAME camera capture\" to take a photo."
+  echo "    If you are having issues using the camera, try rebooting."
   echo
-  echo "    $BASENAME camera off"
-  echo "      Camera has been disabled. Reboot needed for settings to take effect."
+  echo "  $BASENAME camera off"
+  echo "    Camera has been disabled. Reboot needed for settings to take effect."
   echo
-  echo "    $BASENAME camera detect"
-  echo "      Camera is plugged in."
-  echo "      Camera Module v1 detected."
+  echo "  $BASENAME camera detect"
+  echo "    Camera is plugged in."
+  echo "    Camera Module v1 detected."
   echo
-  echo "    $BASENAME camera capture"
-  echo "      Camera is capturing and storing a time-stamped photo in ${directory}."
+  echo "  $BASENAME camera capture"
+  echo "    Camera is capturing and storing a time-stamped photo in ${directory}."
   echo
-  echo "    $BASENAME camera record"
-  echo "      Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
+  echo "  $BASENAME camera record"
+  echo "    Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
   echo
-  echo "    $BASENAME camera record [seconds]"
-  echo "      Camera is recording [seconds] seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
+  echo "  $BASENAME camera record [seconds]"
+  echo "    Camera is recording [seconds] seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
   echo
 }

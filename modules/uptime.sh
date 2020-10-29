@@ -22,9 +22,7 @@ function uptime {
       uprecords
       ;;
     *)
-      echo "Error: unknown operation provided"
-      uptime_help
-      exit 1
+      log_help_and_exit1 "Error: unknown operation provided" uptime
       ;;
   esac
 }

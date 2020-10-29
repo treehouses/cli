@@ -1,12 +1,9 @@
 #!/bin/bash
 
 function install {
-
   memory=$(treehouses memory | awk 'END {print $4}' | numfmt --from=iec)
   if [ $memory -lt "800000" ]; then
-     echo "ERROR: not enough memory"
-     echo "openedx needs 8G RAM"
-     exit 1
+     log_and_exit1 "ERROR: not enough memory\nopenedx needs 8G RAM"
   fi
 
   mkdir -p /srv/openedx

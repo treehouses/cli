@@ -11,7 +11,7 @@ function message {
   }
   function get_apitoken {
     channelname=$1
-    access_token=$(config | grep "$channelname" | cut -d "=" -f2)
+    access_token=$(config | grep "$channelname" | grep "token" | cut -d "=" -f2)
     echo "Your API access token is $access_token"
     return 0
   }
@@ -220,7 +220,7 @@ function message {
           if [[ $3 != "" ]]; then
             tempVar=$(echo $3 | cut -d "-" -f 1)
             if [[ $tempVar == "xoxp" ]]; then
-              conf_var_update "slacktoken" "$3"
+              conf_var_update "slack_apitoken" "$3"
               echo "your apitoken is $3"
             else
               log_comment_and_exit1 "invalid token"

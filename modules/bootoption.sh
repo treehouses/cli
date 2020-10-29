@@ -1,6 +1,8 @@
-#!/bin/bash
-
 function bootoption {
+  local option
+  checkrpi
+  checkroot
+  checkargn $# 2
   option="$1"
   if [ "$option" = "console" ]; then
     systemctl set-default multi-user.target > "$LOGFILE"
@@ -31,8 +33,7 @@ EOF
       reboot_needed
       echo "OK: A reboot is required to see the changes"
     else
-      echo "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
-      exit 1
+      log_and_exit1 "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
     fi
   elif [ "$option" = "desktop autologin" ]; then
     if [ -e /etc/init.d/lightdm ]; then
@@ -47,19 +48,23 @@ EOF
       reboot_needed
       echo "OK: A reboot is required to see the changes"
     else
-      echo "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
-      exit 1
+      log_and_exit1 "Error: Do 'sudo apt-get install lightdm' to allow configuration of boot to desktop"
     fi
+  elif [ "$option" = "modules" ]; then
+    checkargn $# 1
+    lsmod
+  elif [ "$option" = "params" ]; then
+    checkargn $# 1
+    echo "$(</proc/cmdline)" | tr ' ' '\n' | sed '/^$/d'
   else
-    echo "Error: only 'console', 'console autologin', 'desktop', 'desktop autologin' options are supported."
-    exit 1
+    log_and_exit1 "Error: only 'console', 'console autologin', 'desktop', 'desktop autologin', 'modules', 'params' options are supported."
   fi
 }
 
 
 function bootoption_help {
   echo
-  echo "Usage: $BASENAME bootoption <console|console autologin|desktop|desktop autologin>"
+  echo "Usage: $BASENAME bootoption <modules|params|console|console autologin|desktop|desktop autologin>"
   echo
   echo "Changes the boot mode, to console or desktop"
   echo
@@ -75,5 +80,11 @@ function bootoption_help {
   echo
   echo "  $BASENAME bootoption desktop autologin"
   echo "      The rpi will boot to desktop by default and autologin in the user that run the command"
+  echo
+  echo "  $BASENAME bootoption params"
+  echo "      Shows parameters the system booted with"
+  echo
+  echo "  $BASENAME bootoption modules"
+  echo "      Shows modules the kernel loaded at boot"
   echo
 }

@@ -4,9 +4,14 @@ node_js:
 before_install:
 - npm install -g auto-changelog
 install:
-- auto-changelog
+- auto-changelog --template .travis/changelog-template.hbs
+- sed -i -e "s#&lt;#<#g" CHANGELOG.md
+- sed -i -e "s#&gt;#>#g" CHANGELOG.md
 - ls -al
 - cat CHANGELOG.md
+script:
+- ./templates/blocker/blocker.sh
+- ls -al ./templates/blocker/
 deploy:
   provider: npm
   edge: true

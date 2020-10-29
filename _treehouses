@@ -2,167 +2,510 @@
 
 _treehouses_complete()
 {
-  local cur prev
-
-  # Valid top-level completions
-  commands="addwifibridge ap aphidden apchannel bluetooth bluetoothid bootoption bridge burn button camera clone \
-            container coralenv cron default detect detectrpi discover ethernet expandfs \
-            feedback help image internet led locale log memory networkmode ntp openvpn password \
-            rebootneeded reboots rename restore rtc services speedtest ssh sshkey sshtunnel \
-            staticwifi temperature timezone tor upgrade usb verbose version vnc wifi \
-            wifibridge wificountry wifihidden wifistatus"
-  ap_cmdas="local internet"
-  aphidden_cmds="local internet"
-  apchannel_cmds="1 2 3 4 5 6 7 8 9 10 11"
-  bluetooth_cmds="on off pause mac id"
-  bootoption_cmds="console desktop"
-  bootoption_second_cmds="autologin"
-  button_cmds="off bluetooth"
-  camera_cmds="on off capture"
-  container_cmds="none docker balena"
-  coralenv_cmds="install demo-on demo-off demo-always-on"
-  discover_cmds="rpi scan interface ping ports mac"
-  help_cmds=$commands
-  led_cmds="green red dance thanksgiving christmas newyear valentine carneval"
-  log_cmds="0 1 2 3 4 show max"
-  memory_cmds="total used free"
-  networkmode_cmds="info"
-  ntp_cmds="local internet"
-  openvpn_cmds="use show delete notice start stop load"
-  reboots_cmds="now in cron daily weekly monthly"
-  rtc_cmds="on off"
-  rtc_on_cmds="ds3231 rasclock"
-  services_cmds="available installed running ports"
-  cron_cmds="list 0W tor timestamp add delete deleteall"
-  sshkey_cmds="add list delete deleteal addgithubusername deletegithubusername addgithubgroup"
-  ssh_cmds="on off"
-  sshtunnel_cmds="add remove list key notice"
-  temperature_cmds="celsius fahrenheit"
-  tor_cmds="list add delete deleteall start stop destroy notice status refresh"
-  usb_cmds="on off"
-  notice_cmds="on off add delete list"
-  remote_cmds="status upgrade services"
-  addwifibridge_cmds="on off"
-
-# upgrade_cmds="" I am not sure whether we should put autocompletion here.
-
-  verbose_cmds="on off"
-  vnc_cmds="on off info"
-
-
-  COMPREPLY=()
-  cur=${COMP_WORDS[COMP_CWORD]}
-  prev=${COMP_WORDS[COMP_CWORD-1]}
-
-  if [ $COMP_CWORD -eq 1 ]
-  then
-    COMPREPLY=( $(compgen -W "${commands}" -- $cur) )
-  elif [ $COMP_CWORD -eq 2 ]
-  then
-    case "$prev" in
-      "ap")
-        COMPREPLY=( $(compgen -W "$ap_cmds" -- $cur) )
-        ;;
-      "apchannel")
-        COMPREPLY=( $(compgen -W "$apchannel_cmds" -- $cur) ) #cannot ascending order
-        ;;
-      "bluetooth")
-        COMPREPLY=( $(compgen -W "$bluetooth_cmds" -- $cur) )
-        ;;
-      "bootoption")
-        COMPREPLY=( $(compgen -W "$bootoption_cmds" -- $cur) )
-        ;;
-      "button")
-        COMPREPLY=( $(compgen -W "$button_cmds" -- $cur) )
-        ;;
-      "camera")
-        COMPREPLY=( $(compgen -W "$camera_cmds" -- $cur) )
-        ;;
-      "container")
-        COMPREPLY=( $(compgen -W "$container_cmds" -- $cur) )
-        ;;
-      "coralenv")
-        COMPREPLY=( $(compgen -W "$coralenv_cmds" -- $cur) )
-        ;;
-      "cron")
-        COMPREPLY=( $(compgen -W "$cron_cmds" -- $cur) )
-        ;;
-      "discover")
-        COMPREPLY=( $(compgen -W "$discover_cmds" -- $cur) )
-        ;;
-      "help")
-        COMPREPLY=( $(compgen -W "$help_cmds" -- $cur) )
-        ;;
-      "led")
-        COMPREPLY=( $(compgen -W "$led_cmds" -- $cur) )
-        ;;
-      "memory")
-        COMPREPLY=( $(compgen -W "$memory_cmds" -- $cur) )
-        ;;
-      "networkmode")
-        COMPREPLY=( $(compgen -W "$networkmode_cmds" -- $cur) )
-        ;;
-      "ntp")
-        COMPREPLY=( $(compgen -W "$ntp_cmds" -- $cur) )
-        ;;
-      "openvpn")
-        COMPREPLY=( $(compgen -W "$openvpn_cmds" -- $cur) )
-        ;;
-      "rtc")
-        COMPREPLY=( $(compgen -W "$rtc_cmds" -- $cur) )
-        ;;
-      "reboots")
-        COMPREPLY=( $(compgen -W "$reboots_cmds" -- $cur) )
-        ;;
-      "sshkey")
-        COMPREPLY=( $(compgen -W "$sshkey_cmds" -- $cur) )
-        ;;
-      "ssh")
-        COMPREPLY=( $(compgen -W "$ssh_cmds" -- $cur) )
-        ;;
-      "sshtunnel")
-        COMPREPLY=( $(compgen -W "$sshtunnel_cmds" -- $cur) )
-        ;;
-      "temperature")
-        COMPREPLY=( $(compgen -W "$temperature_cmds" -- $cur) )
-        ;;
-      "tor")
-        COMPREPLY=( $(compgen -W "$tor_cmds" -- $cur) )
-        ;;
-      "verbose")
-        COMPREPLY=( $(compgen -W "$verbose_cmds" -- $cur) )
-        ;;
-      "log")
-        COMPREPLY=( $(compgen -W "$log_cmds" -- $cur) )
-        ;;
-      "usb")
-        COMPREPLY=( $(compgen -W "$usb_cmds" -- $cur) )
-        ;;
-      "vnc")
-        COMPREPLY=( $(compgen -W "$vnc_cmds" -- $cur) )
-        ;;
-      "wifistatus")
-        COMPREPLY=( $(compgen -W "$wifistatus_cmds" -- $cur) )
-        ;;
-      "*")
-        ;;
-    esac
-  elif [ $COMP_CWORD -eq 3 ]
-  then
-    case "$prev" in
-      "console")
-        COMPREPLY=( $(compgen -W "$bootoption_second_cmds" -- $cur) )
-        ;;
-      "desktop")
-        COMPREPLY=( $(compgen -W "$bootoption_second_cmds" -- $cur) )
-        ;;
-      "notice")
-        COMPREPLY=( $(compgen -W "$notice_cmds" -- $cur) )
-        ;;
-      "*")
-        ;;
-    esac
-  fi
+  local idx subcmds
+  every_command=""
+  read -r -d '' every_command <<EOF || true
+treehouses ap internet
+treehouses ap local
+treehouses apchannel
+treehouses aphidden internet
+treehouses aphidden local
+treehouses blocker
+treehouses blocker 0
+treehouses blocker 1
+treehouses blocker 2
+treehouses blocker 3
+treehouses blocker 4
+treehouses blocker max
+treehouses bluetooth button
+treehouses bluetooth id
+treehouses bluetooth id number
+treehouses bluetooth log
+treehouses bluetooth log follow
+treehouses bluetooth mac
+treehouses bluetooth off
+treehouses bluetooth on
+treehouses bluetooth pause
+treehouses bluetooth restart
+treehouses bluetooth status
+treehouses bootoption console
+treehouses bootoption console autologin
+treehouses bootoption desktop
+treehouses bootoption desktop autologin
+treehouses bootoption modules
+treehouses bootoption params
+treehouses bridge
+treehouses burn
+treehouses button bluetooth
+treehouses button off
+treehouses camera
+treehouses camera capture
+treehouses camera off
+treehouses camera on
+treehouses camera detect
+treehouses changelog
+treehouses changelog view
+treehouses changelog compare
+treehouses clone
+treehouses container
+treehouses container balena
+treehouses container docker
+treehouses container none
+treehouses config
+treehouses config update
+treehouses config add
+treehouses config delete
+treehouses config clear
+treehouses coralenv demo-always-on
+treehouses coralenv demo-off
+treehouses coralenv demo-on
+treehouses coralenv install
+treehouses cron
+treehouses cron 0W
+treehouses cron add
+treehouses cron delete
+treehouses cron deleteall
+treehouses cron list
+treehouses cron timestamp
+treehouses cron tor
+treehouses default
+treehouses default network
+treehouses default notice
+treehouses default tunnel
+treehouses detect
+treehouses detect arm
+treehouses detect arch
+treehouses detect bluetooth
+treehouses detect rpi
+treehouses detect rpi full
+treehouses detect rpi model
+treehouses detect wifi
+treehouses discover gateway
+treehouses discover gateway list
+treehouses discover interface
+treehouses discover mac
+treehouses discover ping
+treehouses discover ports
+treehouses discover rpi
+treehouses discover scan
+treehouses discover self
+treehouses discover wifi
+treehouses ethernet
+treehouses expandfs
+treehouses feedback
+treehouses gpio
+treehouses help
+treehouses help ap
+treehouses help apchannel
+treehouses help aphidden
+treehouses help blocker
+treehouses help bluetooth
+treehouses help bootoption
+treehouses help bridge
+treehouses help burn
+treehouses help button
+treehouses help camera
+treehouses help changelog
+treehouses help clone
+treehouses help container
+treehouses help coralenv
+treehouses help cron
+treehouses help default
+treehouses help detect
+treehouses help discover
+treehouses help ethernet
+treehouses help expandfs
+treehouses help feedback
+treehouses help image
+treehouses help internet
+treehouses help led
+treehouses help locale
+treehouses help log
+treehouses help magazine
+treehouses help memory
+treehouses help networkmode
+treehouses help ntp
+treehouses help openvpn
+treehouses help password
+treehouses help rebootneeded
+treehouses help reboots
+treehouses help redirect
+treehouses help remote
+treehouses help rename
+treehouses help restore
+treehouses help rtc
+treehouses help sdbench
+treehouses help services
+treehouses help speedtest
+treehouses help ssh
+treehouses help sshkey
+treehouses help sshtunnel
+treehouses help staticwifi
+treehouses help storage
+treehouses help temperature
+treehouses help timezone
+treehouses help tor
+treehouses help upgrade
+treehouses help usb
+treehouses help verbose
+treehouses help version
+treehouses help vnc
+treehouses help wifi
+treehouses help wificountry
+treehouses help wifihidden
+treehouses help wifistatus
+treehouses image
+treehouses inspire
+treehouses inspire fact
+treehouses inspire joke
+treehouses inspire qotd
+treehouses inspire random
+treehouses internet
+treehouses internet reverse
+treehouses led
+treehouses led carnival
+treehouses led christmas
+treehouses led dance
+treehouses led eid
+treehouses led green
+treehouses led green backlight
+treehouses led green cpu0
+treehouses led green default-on
+treehouses led green gpio
+treehouses led green heartbeat
+treehouses led green input
+treehouses led green kbd-
+treehouses led green none
+treehouses led green oneshot
+treehouses led green timer
+treehouses led kecak
+treehouses led lunarnewyear
+treehouses led newyear
+treehouses led onam
+treehouses led diwali
+treehouses led dragonboat
+treehouses led labourday
+treehouses led independenceday
+treehouses led red
+treehouses led red backlight
+treehouses led red cpu0
+treehouses led red default-on
+treehouses led red gpio
+treehouses led red heartbeat
+treehouses led red input
+treehouses led red kbd-
+treehouses led red none
+treehouses led red oneshot
+treehouses led red timer
+treehouses led thanksgiving
+treehouses led valentine
+treehouses led heavymetal
+treehouses led stpatricks
+treehouses led easter
+treehouses led lantern
+treehouses led random
+treehouses locale
+treehouses log
+treehouses log 0
+treehouses log 1
+treehouses log 2
+treehouses log 3
+treehouses log 4
+treehouses log max
+treehouses log show
+treehouses log show 5
+treehouses magazines available
+treehouses magazines downloaded
+$(magazines_cmds)
+treehouses memory
+treehouses memory gb
+treehouses memory mb
+treehouses memory free
+treehouses memory free gb
+treehouses memory free mb
+treehouses memory total
+treehouses memory total gb
+treehouses memory total mb
+treehouses memory used
+treehouses memory used gb
+treehouses memory used mb
+treehouses message gitter apitoken
+treehouses message gitter authorize
+treehouses message gitter send
+treehouses message gitter show
+treehouses message gitter read
+treehouses message gitter mark
+treehouses networkmode
+treehouses networkmode info
+treehouses ntp internet
+treehouses ntp local
+treehouses openvpn
+treehouses openvpn delete
+treehouses openvpn load
+treehouses openvpn notice
+treehouses openvpn notice add
+treehouses openvpn notice delete
+treehouses openvpn notice list
+treehouses openvpn notice off
+treehouses openvpn notice on
+treehouses openvpn show
+treehouses openvpn start
+treehouses openvpn stop
+treehouses openvpn use
+treehouses shadowsocks
+treehouses shadowsocks add
+treehouses shadowsocks disable
+treehouses shadowsocks enable
+treehouses shadowsocks enter
+treehouses shadowsocks list
+treehouses shadowsocks restart
+treehouses shadowsocks remove
+treehouses shadowsocks start
+treehouses shadowsocks stop
+treehouses storage gb
+treehouses storage mb
+treehouses storage kb
+treehouses storage free
+treehouses storage free gb
+treehouses storage free mb
+treehouses storage free kb
+treehouses storage total
+treehouses storage total gb
+treehouses storage total mb
+treehouses storage total kb
+treehouses storage used
+treehouses storage used gb
+treehouses storage used mb
+treehouses storage used kb
+treehouses password
+treehouses password disable
+treehouses password enable
+treehouses picture
+treehouses power conservative
+treehouses power current
+treehouses power default
+treehouses power freq
+treehouses power ondemand
+treehouses power performance
+treehouses power powersave
+treehouses power status
+treehouses power userspace
+treehouses rebootneeded
+treehouses reboots
+treehouses reboots cron
+treehouses reboots daily
+treehouses reboots in
+treehouses reboots monthly
+treehouses reboots now
+treehouses reboots weekly
+treehouses redirect add
+treehouses redirect list
+treehouses redirect remove
+treehouses redirect start
+treehouses remote allservices
+treehouses remote check
+treehouses remote commands
+treehouses remote help
+treehouses remote key receive
+treehouses remote key send
+treehouses remote services available
+treehouses remote services installed
+treehouses remote services running
+treehouses remote status
+treehouses remote statuspage
+treehouses remote ssh2fa
+treehouses remote upgrade
+treehouses remote version
+treehouses rename
+treehouses restore
+treehouses rtc off
+treehouses rtc on
+treehouses rtc on ds3231
+treehouses rtc on rasclock
+treehouses sdbench
+treehouses services available
+treehouses services installed
+treehouses services installed full
+$(services_cmds)
+treehouses services ports
+treehouses services running
+treehouses services running full
+treehouses shutdown
+treehouses shutdown now
+treehouses shutdown in
+treehouses shutdown force
+treehouses speedtest
+treehouses speedtest -h
+treehouses ssh
+treehouses ssh 2fa
+treehouses ssh 2fa add
+treehouses ssh 2fa disable
+treehouses ssh 2fa enable
+treehouses ssh 2fa remove
+treehouses ssh 2fa show
+treehouses ssh fingerprint
+treehouses ssh off
+treehouses ssh on
+treehouses sshkey add
+treehouses sshkey delete
+treehouses sshkey deleteall
+treehouses sshkey github addteam
+treehouses sshkey github adduser
+treehouses sshkey github deleteuser
+treehouses sshkey list
+treehouses sshtunnel
+treehouses sshtunnel active
+treehouses sshtunnel add host
+treehouses sshtunnel add port actual
+treehouses sshtunnel add port offset
+treehouses sshtunnel check
+treehouses sshtunnel key
+treehouses sshtunnel key receive private
+treehouses sshtunnel key receive public
+treehouses sshtunnel key send private
+treehouses sshtunnel key send public
+treehouses sshtunnel key verify
+treehouses sshtunnel list
+treehouses sshtunnel notice
+treehouses sshtunnel notice add
+treehouses sshtunnel notice delete
+treehouses sshtunnel notice list
+treehouses sshtunnel notice now
+treehouses sshtunnel notice off
+treehouses sshtunnel notice on
+treehouses sshtunnel refresh
+treehouses sshtunnel ports
+treehouses sshtunnel remove all
+treehouses sshtunnel remove host
+treehouses sshtunnel remove port
+treehouses staticwifi
+treehouses temperature
+treehouses temperature celsius
+treehouses temperature fahrenheit
+treehouses temperature kelvin
+treehouses tether
+treehouses timezone
+treehouses tor
+treehouses tor add
+treehouses tor delete
+treehouses tor deleteall
+treehouses tor destroy
+treehouses tor list
+treehouses tor ports
+treehouses tor notice
+treehouses tor notice add
+treehouses tor notice delete
+treehouses tor notice list
+treehouses tor notice now
+treehouses tor notice off
+treehouses tor notice on
+treehouses tor refresh
+treehouses tor start
+treehouses tor status
+treehouses tor stop
+treehouses upgrade
+treehouses upgrade cli
+treehouses upgrade force
+treehouses upgrade bluetooth
+treehouses upgrade check
+treehouses uptime
+treehouses uptime boot
+treehouses uptime start
+treehouses uptime stop
+treehouses uptime log
+treehouses usb
+treehouses usb off
+treehouses usb on
+treehouses verbose
+treehouses verbose off
+treehouses verbose on
+treehouses version
+treehouses version contributors
+treehouses version remote
+treehouses vnc
+treehouses vnc info
+treehouses vnc off
+treehouses vnc on
+treehouses vnc auth system
+treehouses vnc auth vnc
+treehouses vnc auth info
+treehouses vnc password
+treehouses wifi
+treehouses wificountry
+treehouses wifihidden
+treehouses wifistatus
+treehouses convert
+treehouses resolution
+treehouses system
+treehouses system all
+treehouses system cpu
+treehouses system cputask
+treehouses system disk
+treehouses system ram
+treehouses system ramtask
+treehouses system temperature
+treehouses system volt
+EOF
+# COMP_LINE is the line you typed in terminal
+# COMP_WORDS is array form of COMP_LINE
+# COMP_CWORD is the word your currently on that you typed
+# awk : grab next word after what you typed available in every_command
+# uniq : remove duplicate lines because next word is in many commands
+# sed : change newlines to spaces
+  idx=$COMP_CWORD
+  ((idx=idx+1)) # We want the next word
+  subcmds=$(echo -e "${every_command}\n${every_command//treehouses/.\/cli.sh}" \
+    | grep "$COMP_LINE" \
+    | awk -v idx="$idx" '{print $idx}' \
+    | uniq \
+    | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g')
+  # COMPREPLY is what bash reads when you do tabtab So our completion goes in there
+  COMPREPLY=( $(compgen -W "${subcmds}" -- ${COMP_WORDS[COMP_CWORD]}) )
 }
 
-complete -F _treehouses_complete treehouses
+function services_cmds {
+  while IFS= read -r line;
+  do
+    printf "treehouses services $line
+treehouses services $line autorun
+treehouses services $line autorun false
+treehouses services $line autorun true
+treehouses services $line cleanup
+treehouses services $line down
+treehouses services $line config
+treehouses services $line config available
+treehouses services $line config edit
+treehouses services $line config edit request
+treehouses services $line config edit send
+treehouses services $line config edit vim
+treehouses services $line config new
+treehouses services $line config select
+treehouses services $line icon
+treehouses services $line icon oneline
+treehouses services $line info
+treehouses services $line install
+treehouses services $line port
+treehouses services $line ps
+treehouses services $line restart
+treehouses services $line size
+treehouses services $line start
+treehouses services $line stop
+treehouses services $line up
+treehouses services $line url
+treehouses services $line url local
+treehouses services $line url tor\n"
+  done <<< "$(find "$(which treehouses | sed 's/bin\/treehouses//')"lib/node_modules/@treehouses/cli/services -type f -printf "%f\n" | grep .sh | sed 's/install-//' | sed 's/.sh//')"
+}
+
+function magazines_cmds {
+  while IFS= read -r line;
+  do
+    printf "treehouses magazines $line
+treehouses magazines $line all
+treehouses magazines $line latest
+treehouses magazines $line list
+treehouses magazines $line url\n"
+  done <<< "$(find "$(which treehouses | sed 's/bin\/treehouses//')"lib/node_modules/@treehouses/cli/magazines -type f -printf "%f\n" | grep .sh | sed 's/download-//' | sed 's/.sh//')"
+}
+
+complete -F _treehouses_complete treehouses ./cli.sh

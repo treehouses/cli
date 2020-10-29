@@ -1,8 +1,8 @@
-#!/bin/bash
-
 # $LOGFILE is used like so systemctl disable "$1" >"$LOGFILE" 2>"$LOGFILE"
 # /dev/null is the void (output and errors vanish) $(tty) is the terminal screen
 function verbose {
+  checkroot
+  checkargn $# 1
   case "$1" in
     "")
       if [[ "$LOGFILE" == /dev/null ]]
@@ -22,8 +22,7 @@ function verbose {
       logit "Successfully disabled verbosity"
       ;;
     *)
-      logit "Error: only 'on' and 'off' options are supported";
-      exit 1;
+      log_and_exit1 "Error: only 'on' and 'off' options are supported"
       ;;
   esac
   conf_var_update "LOGFILE" "$LOGFILE"

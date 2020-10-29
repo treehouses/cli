@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function start_service {
   if [ "$(systemctl is-active "$1" 2>"$LOGFILE")" = "inactive" ]
   then
@@ -27,39 +25,54 @@ function enable_service {
 }
 
 function disable_service {
-  if [ "$(systemctl is-enabled "$1" 2>"$LOGFILE")" = "enabled" ]
-  then
+  if [ "$(systemctl is-enabled "$1" 2>"$LOGFILE")" = "enabled" ]; then
     systemctl disable "$1" >"$LOGFILE" 2>"$LOGFILE"
   fi
 }
 
 function checkroot {
-  if [ "$(id -u)" -ne 0 ];
-  then
-      echo "Error: Must be run with root permissions"
-      exit 1
+  if [ "$(id -u)" -ne 0 ]; then
+      log_and_exit1 "Error: Must be run with root permissions"
   fi
 }
 
 function checkrpi {
-  if [ "$(detectrpi)" == "nonrpi" ];
-  then
-    echo "Error: Must be run with rpi system"
+  if [ "$(detectrpi)" == "nonrpi" ]; then
+    log_and_exit1 "Error: Must be run with rpi system"
+  fi
+}
+
+function checkargn {
+  local helpfunc
+  if [[ $1 -gt $2 ]]; then
+    echo "Error: Too many arguments."
+    helpfunc="$(echo $SCRIPTARGS | cut -d' ' -f1)"
+    if [[ $helpfunc = "help" ]]; then
+      help
+    else
+      eval "${helpfunc}_help"
+    fi
     exit 1
   fi
 }
 
-function checkwrpi {
-  declare -a wRPIs=("RPIZW" "RPI3A" "RPI3B" "RPI4B")
-  model="$(detectrpi)"
-  check="${model:0:5}"
-  for i in "${wRPIs[@]}"; do
-    if [ "$i" == "$check" ]; then
-      return 1
-    fi
-  done
-  echo "Bluetooth does not exist on this device"
-  exit 1
+function checkrpiwireless {
+  checkrpi
+  if [[ "$(detect bluetooth)" == "false" ]]; then
+    log_and_exit1 "Error: no Bluetooth device detected"
+  fi
+}
+
+function checkinternet {
+  if [[ $(internet) == "false" ]]; then
+    log_and_exit1 "Error: no Internet found"
+  fi
+}
+
+function checkwifi {
+  if iwconfig wlan0 | grep -q "ESSID:off/any"; then
+    log_comment_and_exit1 "Error: wifi is not connected" "check SSID and password and try again"
+  fi
 }
 
 function restart_hotspot {
@@ -118,6 +131,7 @@ function reboot_needed {
 }
 
 function get_ipv4_ip {
+  local interface
   interface="$1"
   if iface_exists "$interface"; then
     if [ "$interface" == "ap0" ]; then
@@ -129,6 +143,7 @@ function get_ipv4_ip {
 }
 
 function iface_exists {
+  local interface
   interface="$1"
   if grep -q "$interface:" < /proc/net/dev ; then
     return 0
@@ -138,6 +153,7 @@ function iface_exists {
 }
 
 function check_missing_packages {
+  local missing_deps
   missing_deps=()
   for command in "$@"; do
     if [ "$(dpkg-query -W -f='${Status}' $command 2>"$LOGFILE" | grep -c 'ok installed')" -eq 0 ]; then
@@ -146,8 +162,62 @@ function check_missing_packages {
   done
 
   if (( ${#missing_deps[@]} > 0 )) ; then
-      echo "Missing required programs: ${missing_deps[*]}"
-      echo "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
-      exit 1
+    log_comment_and_exit1 "Error: missing required programs: ${missing_deps[*]}" "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
   fi
+}
+
+function check_missing_binary {
+  binary=$1
+  install_instructions=$2
+  if [[ $(which $binary) == "" ]]; then
+    if [[ $install_instructions == "" ]]; then
+      echo "\"$binary\" not found, please install first"
+    else
+      echo -e "$install_instructions"
+    fi
+    exit 1
+  fi
+}
+
+# Credits: https://www.shellscript.sh/tips/spinner/
+function spinner() {
+  spinner="/|\\-/|\\-"
+  tput civis
+  while :
+  do
+    for i in $(seq 0 7)
+    do
+      echo -n "${spinner:$i:1}"
+      echo -en "\010"
+      sleep 0.5
+    done
+  done
+}
+
+function kill_spinner() {
+  if [[ "$KILLDONE" != 1 ]]; then
+    kill -9 $SPINPID
+    KILLDONE=1
+  fi
+  tput cvvis
+  return
+}
+
+function start_spinner() {
+  local tree carg cstring
+  tree=$(pstree -ps $$)
+  cstring="discover wifi wifihidden bridge container upgrade
+           led clone restore burn services speedtest usb"
+  carg="$(echo $SCRIPTARGS | cut -d' ' -f1)"
+  if [[ $tree == *"python"* ]] || [[ $tree == *"cron"* ]] || \
+     [[ ! "$cstring" == *"$carg"* ]]
+  then
+    NOSPIN=1
+    return
+  fi
+  set -m
+  trap kill_spinner {0..15} SIGTSTP
+  spinner &
+  SPINPID=$!
+  disown
 }

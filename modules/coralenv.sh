@@ -1,15 +1,17 @@
-#!/bin/bash
-
 function coralenv {
+  local param cronjob
+  checkrpi
+  checkroot
+  checkargn $# 1
   param=$1
   cronjob='@reboot nohup python3 /usr/lib/python3/dist-packages/coral/enviro/enviro_demo.py &>"$LOGFILE" &'
-  
+
   if [ ! -d /usr/share/doc/python3-coral-enviro ] ; then
     warn "Error: the Coral python environment is not installed"
     echo "You can install it using the command:"
     echo "$BASENAME coralenv install"
     echo
-    echo "To install them manually, run:";    
+    echo "To install them manually, run:";
     echo "echo \"deb https://packages.cloud.google.com/apt coral-cloud-stable main\" | sudo tee /etc/apt/sources.list.d/coral-cloud.list"
     echo "curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -"
     echo "sudo apt update"
@@ -48,7 +50,7 @@ if [ -e /sys/bus/iio/devices/iio:device0 ]; then # Checks if board is attached
       ;;
     esac
   else
-    echo "Coral Environmmental Board not detected" && exit 1
+    log_and_exit1 "Error: Coral Environmmental Board not detected"
   fi
 }
 
@@ -75,4 +77,4 @@ function coralenv_help {
   echo "  $BASENAME coralenv demo-off"
   echo "      Stops the demo and the board's display will turn off on reboot."
   echo
-} 
+}

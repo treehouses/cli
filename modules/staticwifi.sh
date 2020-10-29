@@ -1,6 +1,16 @@
-#!/bin/bash
-
 function staticwifi {
+  local essid password
+  checkrpi
+  checkroot
+  checkargn $# 6
+
+  if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
+    echo "Error: argument(s) missing"
+    echo "Usage: $BASENAME staticwifi <ip> <mask> <gateway> <dns> <ESSID> [password]"
+    echo "ip, mask, gateway, dns, and ESSID are required fields"
+    exit 1
+  fi
+
   cp "$TEMPLATES/network/interfaces/modular" /etc/network/interfaces
   cp "$TEMPLATES/network/wlan0/static" /etc/network/interfaces.d/wlan0
 
@@ -19,20 +29,14 @@ function staticwifi {
   then
     if [ ${#password} -lt 8 ];
     then
-      echo "Error: password must have at least 8 characters"
-      exit 1
+      log_and_exit1 "Error: password must have at least 8 characters"
     fi
   fi
 
   {
     echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
     echo "update_config=1"
-    wificountry="US"
-    if [ -r /etc/rpi-wifi-country ];
-    then
-      wificountry=$(cat /etc/rpi-wifi-country)
-    fi
-    echo "country=$wificountry"
+    echo "country=$WIFICOUNTRY"
   } > /etc/wpa_supplicant/wpa_supplicant.conf
 
   if [ -z "$password" ];

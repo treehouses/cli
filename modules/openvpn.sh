@@ -1,12 +1,11 @@
-#!/bin/bash
-
 function openvpn {
+  local command filename password url option value status
+  checkroot
+  checkargn $# 3
   command="$1"
 
   if ! hash "openvpn" 2>"$LOGFILE"; then
-    echo "Error: couldn't find openvpn installed."
-    echo "On debian systems it can be installed by running 'apt-get install openvpn'"
-    exit 1
+    log_comment_and_exit1 "Error: couldn't find openvpn installed." "On debian systems it can be installed by running 'apt-get install openvpn'"
   fi
 
   if [ "$command" == "use" ]; then
@@ -71,8 +70,7 @@ function openvpn {
     elif [ "$option" = "add" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        echo "Error: You must specify a channel URL"
-        exit 1
+        log_and_exit1 "Error: You must specify a channel URL"
       fi
 
       echo "$value" >> /etc/openvpn_report_channels.txt
@@ -80,8 +78,7 @@ function openvpn {
     elif [ "$option" = "delete" ]; then
       value="$3"
       if [ -z "$value" ]; then
-        echo "Error: You must specify a channel URL"
-        exit 1
+        log_and_exit1 "Error: You must specify a channel URL"
       fi
 
       value=$(echo $value | sed 's/\//\\\//g')

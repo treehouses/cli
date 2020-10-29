@@ -1,6 +1,7 @@
-#!/bin/bash
-
 function cron {
+  local options cronjob
+  checkroot
+  checkargn $# 2
   options="$1"
   case "$options" in
     ""|"list") #lists current cron tasks

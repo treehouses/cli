@@ -281,7 +281,7 @@ function message_help {
   echo "Example:"
   echo
   echo "  $BASENAME message gitter apitoken"
-  echo "     Checks for API token for gitter"
+  echo "     Check for API token for gitter"
   echo
   echo "  $BASENAME message gitter authorize \"1234567890\""
   echo "     Sets and saves API token"

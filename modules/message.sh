@@ -11,7 +11,7 @@ function message {
   }
   function get_apitoken {
     channelname=$1_apitoken
-    access_token=$(config | grep "$channelname_" | grep "token" | cut -d "=" -f2)
+    access_token=$(config | grep "$channelname" | grep "token" | cut -d "=" -f2)
     echo "Your API access token is $access_token"
     return 0
   }

@@ -237,7 +237,7 @@ function message {
             echo "Run $BASENAME message slack apitoken <oauth access token>"
           fi
           ;;
-        checkchannels)
+        channels)
           if check_apitoken slack; then
             list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
             channel_names=$(echo $list | python -m json.tool | jq '.channels[].name' | tr -d '"')

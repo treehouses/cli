@@ -167,6 +167,7 @@ system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves message
                <send|show|read|mark>
         slack <apitoken|send>             sets api/channel info in config file and sends message
+        slack <checkchannels>             check the channels of user
 shutdown [now|in|force]                   shutdown the system
 ```
 

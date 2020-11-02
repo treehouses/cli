@@ -315,8 +315,8 @@ function message_help {
   echo "  $BASENAME message slack apitoken"
   echo "     check for API token for slack"
   echo
-  echo "  $BASENAME message slack checkchannels"
-  echo "     check for the channels of user"
+  echo "  $BASENAME message slack channels"
+  echo "     check for channels"
   echo
   echo "  $BASENAME message slack send \"channel_name or channel ID\" \"Hi, you are very awesome\""
   echo "     Sends a message to a slack channel using channel name, eg, channel: #channel_name"

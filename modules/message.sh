@@ -14,7 +14,7 @@ function message {
     access_token=$(config | grep "$channelname" | grep "token" | cut -d "=" -f2)
     echo "Your API access token is $access_token"
     return 0
-  }
+   }
   function check_group {
     group=$1
     group_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")
@@ -219,18 +219,17 @@ function message {
         apitoken)
           if [[ $3 != "" ]]; then
             tempVar=$(echo $3 | cut -d "-" -f 1)
-            if [[ $tempVar == "xoxp" ]]; then
+            if [[ $tempVar != "xoxp" ]]; then
+              log_comment_and_exit1 "invalid token"
+            else
               conf_var_update "slack_apitoken" "$3"
               echo "your apitoken is $3"
-            else
-              log_comment_and_exit1 "invalid token"
             fi
           elif check_apitoken slack; then
             get_apitoken slack
           else
-            echo "You do not have an authorized access token for slack"
-            echo ""
             echo "To get an authorized access token"
+            echo ""
             echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
             echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\" for the APP from the drop down list"
             echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
@@ -244,13 +243,7 @@ function message {
             echo "Channels names:"
             echo "$channel_names"
           else
-            echo "You do not have an authorized access token for slack"
-            echo ""
-            echo "To get an authorized access token"
-            echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
-            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\" for the APP from the drop down list"
-            echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
-            echo "Run $BASENAME message slack apitoken <oauth access token>"
+            log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
           fi
           ;;
         send)

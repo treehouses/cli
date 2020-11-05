@@ -14,7 +14,7 @@ function message {
     access_token=$(config | grep "$channelname" | grep "token" | cut -d "=" -f2)
     echo "Your API access token is $access_token"
     return 0
-   }
+  }
   function check_group {
     group=$1
     group_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")

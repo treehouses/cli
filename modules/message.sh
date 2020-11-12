@@ -232,7 +232,7 @@ function message {
             echo ""
             echo "To get an authorized access token"
             echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
-            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\" for the APP from the drop down list"
+            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\". \"channel:read\"and  for the APP from the drop down list"
             echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
             echo "Run $BASENAME message slack apitoken <oauth access token>"
           fi
@@ -255,6 +255,45 @@ function message {
             fi
           else
             log_comment_and_exit1 "Error:You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
+          fi
+          ;;
+        read)
+          if check_apitoken slack; then
+            if [[ $3 == "" ]]; then
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message slack read <group>"
+            fi
+            channel=$3
+            channel_info=$(curl -s -F token=$access_token -F channel=$channel https://slack.com/api/conversations.info)
+            #last_read=$(echo $channel_info | python -m json.tool | jq '.channel.last_read' | tr -d '"')
+            #echo "$last_read"
+            last_read=1603741036.001400
+            history=$(curl -s -F token=$access_token -F unreads=true -F channel=$channel https://slack.com/api/conversations.history)
+            time=($(echo $history | python -m json.tool | jq '.messages[].ts' | tr -d '"'))
+            unread_time=()
+            for i in "${time[@]}"; do
+              if [[ $last_read == $i ]]; then
+                break
+              else
+                unread_time+=($i)
+              fi
+            done
+            unread_time=($(printf '%s\n' "${unread_time[@]}" | tac | tr '\n' ' '))
+            for i in "${unread_time[@]}"; do
+              msg_info=$(curl -s -F token=$access_token -F channel=$channel -F latest=$i -F limit=1 -F inclusive=true https://slack.com/api/conversations.history)
+              msg=$(echo $msg_info | python -m json.tool | jq '.messages[].text' | tr -d '"')
+              msg_length=$(echo ${msg_info} | jq '.messages[].text | length')
+              userid=$(echo $msg_info | python -m json.tool | jq '.messages[].user' | tr -d '"')
+              name_info=$(curl -s -F token=$access_token -F user=$userid -F latest=$i https://slack.com/api/users.info)
+              name=$(echo $name_info | python -m json.tool | jq '.user.real_name' | tr -d '"')
+              time_info=$(date -d @$i)
+              date=$(echo ${time_info} | cut -d " " -f1-3)
+              year=$(echo ${time_info} | cut -d " " -f6)
+              send_time=$(echo ${time_info} | cut -d " " -f4)
+              echo "Date: $date $year"
+              echo "Time: $send_time"
+              echo "From: $name"
+              echo "Message: $msg"
+            done
           fi
           ;;
         *)
@@ -302,5 +341,8 @@ function message_help {
   echo
   echo "  $BASENAME message slack send \"channel_name or channel ID\" \"Hi, you are very awesome\""
   echo "     Sends a message to a slack channel using channel name, eg, channel: #channel_name"
+  echo
+  echo "  $BASENAME message slack read \"channel ID\""
+  echo "     Reads messages from a slack channel using channelID"
   echo
 }

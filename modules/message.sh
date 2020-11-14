@@ -259,6 +259,7 @@ function message {
           fi
           ;;
         read)
+          channel=$3
           if check_apitoken slack; then
             if [[ $3 == "" ]]; then
               log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message slack read <group>"
@@ -273,8 +274,7 @@ function message {
                   log_comment_and_exit1 "ERROR: invalid channel id"
                 fi
               done
-            }
-            channel=$3
+            }            
             check_channel $3
             channel_info=$(curl -s -F token=$access_token -F channel=$channel https://slack.com/api/conversations.info)
             last_read=$(echo $channel_info | python -m json.tool | jq '.channel.last_read' | tr -d '"')

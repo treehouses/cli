@@ -315,9 +315,9 @@ function message {
         mark)
           channel=$3
           function check_channel {
-            channel_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
-            channel_list=($(echo $channel_list | python -m json.tool | jq '.channels[].id' | tr -d '"'))
-            for i in "${channel_list[@]}"; do
+            channelList=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
+            channelList=($(echo $channelList | python -m json.tool | jq '.channels[].id' | tr -d '"'))
+            for i in "${channelList[@]}"; do
               if [ $i == $1 ]; then
                 return 0
                 break

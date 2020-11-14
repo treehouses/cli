@@ -1,7 +1,7 @@
 function message {
   chats="$1"
   function check_apitoken {
-    channelname=$1
+    channelname=$1_apitoken
     access_token=$(config | grep "$channelname" | cut -d "=" -f2)
     if [[ $access_token == "" ]] || [[ $access_token == "null" ]]; then
       return 1
@@ -10,7 +10,7 @@ function message {
     fi
   }
   function get_apitoken {
-    channelname=$1
+    channelname=$1_apitoken
     access_token=$(config | grep "$channelname" | grep "token" | cut -d "=" -f2)
     echo "Your API access token is $access_token"
     return 0
@@ -27,7 +27,7 @@ function message {
     done
     return 1
   }
-   case "$chats" in
+  case "$chats" in
     gitter)
       case "$2" in
         apitoken)
@@ -40,14 +40,15 @@ function message {
             else
               log_and_exit1 "Invalid URL"
             fi
-            conf_var_update "client_id" "$client_id"
-            conf_var_update "redirect_url" "$redirect_uri"
+            conf_var_update "gitter_clientid" "$client_id"
+            conf_var_update "gitter_redirecturl" "$redirect_uri"
             echo "Navigate to  https://gitter.im/login/oauth/authorize?client_id=$client_id&response_type=code&redirect_uri=$redirect_uri"
             echo "Click 'Allow' and get the code at the end of the redirect link:"
             echo "Example:redirect link: http://www.localhost.com/?code=1234567890, code=1234567890"
             echo "run $BASENAME message gitter authorize <code> <0auth Secret>"
           else
             echo "You do not have an authorized access token"
+            echo ""
             echo "To get an authorized access token"
             echo "Navigate to https://developer.gitter.im/apps and signin"
             echo "Create a new app and provide aplication name and a redirect url where you will be send after authorization"
@@ -66,12 +67,12 @@ function message {
           else
             code=$3
             client_key=$4
-            conf_var_update "client_key" "$client_key"
-            client_id=$(config | grep "$client_id" | cut -d "=" -f2)
-            redirect_uri=$(config | grep "$redirect_url" | cut -d "=" -f2)
+            conf_var_update "gitter_clientkey" "$client_key"
+            client_id=$(config | grep "$gitter_clientid" | cut -d "=" -f2)
+            redirect_uri=$(config | grep "$gitter_redirecturl" | cut -d "=" -f2)
             api_info=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" "https://gitter.im/login/oauth/token" -d '{"client_id": "'$client_id'", "client_secret": "'$client_key'", "code": "'$code'", "redirect_uri": "'$redirect_uri'", "grant_type": "authorization_code"}')
             token_info=$(echo $api_info | python -m json.tool | jq '.access_token' | tr -d '"')
-            conf_var_update "gitter_access_token" "$token_info"
+            conf_var_update "gitter_apitoken" "$token_info"
             echo "Your API access token is $token_info"
           fi
           ;;
@@ -283,15 +284,15 @@ function message_help {
   echo
   echo "You must set your api key at least once every session before sending a message"
   echo
-  echo "Sends message to a chat service"
+  echo "Send message to a chat service"
   echo
   echo "Example:"
   echo
   echo "  $BASENAME message gitter apitoken"
-  echo "     check for API token for gitter"
+  echo "     Check for API token for gitter"
   echo
   echo "  $BASENAME message gitter authorize \"1234567890\""
-  echo "     sets and saves API token"
+  echo "     Sets and saves API token"
   echo
   echo "  $BASENAME message gitter send treehouses/Lobby \"Hi, you are very awesome\""
   echo "     Sends a message to a gitter channel"

@@ -246,7 +246,6 @@ function message {
             fi
             shift; shift; shift;
             message=$*
-            echo "$message"
             message_response=$(curl -s -X POST -H 'Authorization: Bearer '$access_token'' -H 'Content-type: application/json' --data "{\"channel\":\"$channel\",\"text\":\"$message\"}" https://slack.com/api/chat.postMessage)
             message_response=$(echo $message_response | python -m json.tool | jq '.ok' | tr -d '"')
             if [[ $message_response == "true" ]]; then
@@ -274,7 +273,7 @@ function message {
                   log_comment_and_exit1 "ERROR: invalid channel id"
                 fi
               done
-            }            
+            }
             check_channel $3
             channel_info=$(curl -s -F token=$access_token -F channel=$channel https://slack.com/api/conversations.info)
             last_read=$(echo $channel_info | python -m json.tool | jq '.channel.last_read' | tr -d '"')

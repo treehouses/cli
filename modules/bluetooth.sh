@@ -39,7 +39,6 @@ function bluetooth {
 
     "on")
       checkargn $# 1
-			echo "$TEMPLATES"
       cp "$TEMPLATES/bluetooth/hotspot" /etc/systemd/system/dbus-org.bluez.service
       enable_service rpibluetooth
       restart_service bluetooth

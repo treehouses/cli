@@ -263,7 +263,7 @@ function message {
             channel_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
             channel_list=($(echo $channel_list | python -m json.tool | jq '.channels[].id' | tr -d '"'))
             for i in "${channel_list[@]}"; do
-              if [[ $i == $1 ]]; then
+              if [ $i == $1 ]; then
                 return 0
                 break
               fi

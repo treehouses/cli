@@ -220,22 +220,31 @@ function message {
         apitoken)
           if [[ $3 != "" ]]; then
             tempVar=$(echo $3 | cut -d "-" -f 1)
-            if [[ $tempVar == "xoxp" ]]; then
+            if [[ $tempVar != "xoxp" ]]; then
+              log_comment_and_exit1 "invalid token"
+            else
               conf_var_update "slack_apitoken" "$3"
               echo "your apitoken is $3"
-            else
-              log_comment_and_exit1 "invalid token"
             fi
           elif check_apitoken slack; then
             get_apitoken slack
           else
-            echo "You do not have an authorized access token for slack"
-            echo ""
             echo "To get an authorized access token"
+            echo ""
             echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
             echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\" for the APP from the drop down list"
             echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
             echo "Run $BASENAME message slack apitoken <oauth access token>"
+          fi
+          ;;
+        channels)
+          if check_apitoken slack; then
+            list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
+            channel_names=$(echo $list | python -m json.tool | jq '.channels[].name' | tr -d '"')
+            echo "Channels names:"
+            echo "$channel_names"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
           fi
           ;;
         send)
@@ -246,7 +255,6 @@ function message {
             fi
             shift; shift; shift;
             message=$*
-            echo "$message"
             message_response=$(curl -s -X POST -H 'Authorization: Bearer '$access_token'' -H 'Content-type: application/json' --data "{\"channel\":\"$channel\",\"text\":\"$message\"}" https://slack.com/api/chat.postMessage)
             message_response=$(echo $message_response | python -m json.tool | jq '.ok' | tr -d '"')
             if [[ $message_response == "true" ]]; then
@@ -300,6 +308,9 @@ function message_help {
   echo
   echo "  $BASENAME message slack apitoken"
   echo "     check for API token for slack"
+  echo
+  echo "  $BASENAME message slack channels"
+  echo "     check for channels"
   echo
   echo "  $BASENAME message slack send \"channel_name or channel ID\" \"Hi, you are very awesome\""
   echo "     Sends a message to a slack channel using channel name, eg, channel: #channel_name"

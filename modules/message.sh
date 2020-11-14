@@ -298,6 +298,7 @@ function message {
                   userid=$(echo $msg_info | python -m json.tool | jq '.messages[].user' | tr -d '"')
                   name_info=$(curl -s -F token=$access_token -F user=$userid -F latest=$i https://slack.com/api/users.info)
                   name=$(echo $name_info | python -m json.tool | jq '.user.real_name' | tr -d '"')
+                  curl -s -F token=$access_token -F channel=$channel -F ts=$i https://slack.com/api/conversations.mark > "$LOGFILE"
                   time_info=$(date -d @$i)
                   date=$(echo ${time_info} | cut -d " " -f1-3)
                   year=$(echo ${time_info} | cut -d " " -f6)

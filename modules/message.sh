@@ -1,7 +1,7 @@
 function message {
   chats="$1"
   function check_apitoken {
-    channelname=$1
+    channelname=$1_apitoken
     access_token=$(config | grep "$channelname" | cut -d "=" -f2)
     if [[ $access_token == "" ]] || [[ $access_token == "null" ]]; then
       return 1
@@ -10,8 +10,8 @@ function message {
     fi
   }
   function get_apitoken {
-    channelname=$1
-    access_token=$(config | grep "$channelname" | cut -d "=" -f2)
+    channelname=$1_apitoken
+    access_token=$(config | grep "$channelname" | grep "token" | cut -d "=" -f2)
     echo "Your API access token is $access_token"
     return 0
   }
@@ -27,7 +27,7 @@ function message {
     done
     return 1
   }
-   case "$chats" in
+  case "$chats" in
     gitter)
       case "$2" in
         apitoken)
@@ -40,14 +40,15 @@ function message {
             else
               log_and_exit1 "Invalid URL"
             fi
-            conf_var_update "client_id" "$client_id"
-            conf_var_update "redirect_url" "$redirect_uri"
+            conf_var_update "gitter_clientid" "$client_id"
+            conf_var_update "gitter_redirecturl" "$redirect_uri"
             echo "Navigate to  https://gitter.im/login/oauth/authorize?client_id=$client_id&response_type=code&redirect_uri=$redirect_uri"
             echo "Click 'Allow' and get the code at the end of the redirect link:"
             echo "Example:redirect link: http://www.localhost.com/?code=1234567890, code=1234567890"
             echo "run $BASENAME message gitter authorize <code> <0auth Secret>"
           else
             echo "You do not have an authorized access token"
+            echo ""
             echo "To get an authorized access token"
             echo "Navigate to https://developer.gitter.im/apps and signin"
             echo "Create a new app and provide aplication name and a redirect url where you will be send after authorization"
@@ -66,12 +67,12 @@ function message {
           else
             code=$3
             client_key=$4
-            conf_var_update "client_key" "$client_key"
-            client_id=$(config | grep "$client_id" | cut -d "=" -f2)
-            redirect_uri=$(config | grep "$redirect_url" | cut -d "=" -f2)
+            conf_var_update "gitter_clientkey" "$client_key"
+            client_id=$(config | grep "$gitter_clientid" | cut -d "=" -f2)
+            redirect_uri=$(config | grep "$gitter_redirecturl" | cut -d "=" -f2)
             api_info=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" "https://gitter.im/login/oauth/token" -d '{"client_id": "'$client_id'", "client_secret": "'$client_key'", "code": "'$code'", "redirect_uri": "'$redirect_uri'", "grant_type": "authorization_code"}')
             token_info=$(echo $api_info | python -m json.tool | jq '.access_token' | tr -d '"')
-            conf_var_update "gitter_access_token" "$token_info"
+            conf_var_update "gitter_apitoken" "$token_info"
             echo "Your API access token is $token_info"
           fi
           ;;
@@ -214,6 +215,61 @@ function message {
           ;;
       esac
       ;;
+    slack)
+      case "$2" in
+        apitoken)
+          if [[ $3 != "" ]]; then
+            tempVar=$(echo $3 | cut -d "-" -f 1)
+            if [[ $tempVar != "xoxp" ]]; then
+              log_comment_and_exit1 "invalid token"
+            else
+              conf_var_update "slack_apitoken" "$3"
+              echo "your apitoken is $3"
+            fi
+          elif check_apitoken slack; then
+            get_apitoken slack
+          else
+            echo "To get an authorized access token"
+            echo ""
+            echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
+            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\" for the APP from the drop down list"
+            echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
+            echo "Run $BASENAME message slack apitoken <oauth access token>"
+          fi
+          ;;
+        channels)
+          if check_apitoken slack; then
+            list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
+            channel_names=$(echo $list | python -m json.tool | jq '.channels[].name' | tr -d '"')
+            echo "Channels names:"
+            echo "$channel_names"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
+          fi
+          ;;
+        send)
+          channel=$3
+          if check_apitoken slack; then
+            if [[ $3 == "" ]]; then
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message slack send <group>"
+            fi
+            shift; shift; shift;
+            message=$*
+            message_response=$(curl -s -X POST -H 'Authorization: Bearer '$access_token'' -H 'Content-type: application/json' --data "{\"channel\":\"$channel\",\"text\":\"$message\"}" https://slack.com/api/chat.postMessage)
+            message_response=$(echo $message_response | python -m json.tool | jq '.ok' | tr -d '"')
+            if [[ $message_response == "true" ]]; then
+              echo "message successfully delivered to $channel"
+            else
+              log_comment_and_exit1 "ERROR: message not delivered"
+            fi
+          else
+            log_comment_and_exit1 "Error:You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
+          fi
+          ;;
+        *)
+          log_help_and_exit1 "Error: This command does not exist" message
+      esac
+      ;;
     *)
       log_help_and_exit1 "Error: This command does not exist" message
       ;;
@@ -228,15 +284,15 @@ function message_help {
   echo
   echo "You must set your api key at least once every session before sending a message"
   echo
-  echo "Sends message to a chat service"
+  echo "Send message to a chat service"
   echo
   echo "Example:"
   echo
   echo "  $BASENAME message gitter apitoken"
-  echo "     check for API token"
+  echo "     Check for API token for gitter"
   echo
   echo "  $BASENAME message gitter authorize \"1234567890\""
-  echo "     sets and saves API token"
+  echo "     Sets and saves API token"
   echo
   echo "  $BASENAME message gitter send treehouses/Lobby \"Hi, you are very awesome\""
   echo "     Sends a message to a gitter channel"
@@ -249,5 +305,14 @@ function message_help {
   echo
   echo "  $BASENAME message gitter mark treehouses/Lobby"
   echo "     Marks unread messages from a gitter channel to read"
+  echo
+  echo "  $BASENAME message slack apitoken"
+  echo "     check for API token for slack"
+  echo
+  echo "  $BASENAME message slack channels"
+  echo "     check for channels"
+  echo
+  echo "  $BASENAME message slack send \"channel_name or channel ID\" \"Hi, you are very awesome\""
+  echo "     Sends a message to a slack channel using channel name, eg, channel: #channel_name"
   echo
 }

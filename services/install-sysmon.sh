@@ -49,9 +49,19 @@ function get_ports {
   echo "6969"
 }
 
+# get path(s)
+function get_paths {
+  echo "/primary"
+}
+
 # add size (in MB)
 function get_size {
   echo "293"
+}
+
+# add description
+function get_description {
+  echo "Sysmon is an intuitive system performance monitoring and task management tool for servers"
 }
 
 # add info

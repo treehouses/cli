@@ -67,6 +67,11 @@ function get_size {
   echo "200"
 }
 
+# add description
+function get_description {
+  echo "Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media"
+}
+
 # add info
 function get_info {
   echo "https://github.com/linuxserver/docker-jellyfin"

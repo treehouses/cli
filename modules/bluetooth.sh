@@ -86,8 +86,7 @@ function bluetooth {
           echo "${bid}"
           ;;
         *)
-          echo "Argument not valid; leave blank or use \"number\""
-          exit 1
+          log_and_exit1 "Argument not valid; leave blank or use \"number\""
           ;;
       esac
       ;;
@@ -105,8 +104,7 @@ function bluetooth {
         echo "press (ctrl + c) to exit"
         journalctl -u rpibluetooth -u bluetooth -f
       else
-        echo "Argument not valid; leave blank or use \"follow\""
-        exit 1
+        log_and_exit1 "Argument not valid; leave blank or use \"follow\""
       fi
       ;;
 
@@ -114,6 +112,17 @@ function bluetooth {
       bluetooth off &>"$LOGFILE"
       bluetooth on &>"$LOGFILE"
       echo "Success: the bluetooth service has been restarted."
+      ;;
+
+    "pause")
+      checkargn $# 1
+      cp "$TEMPLATES/bluetooth/default" /etc/systemd/system/dbus-org.bluez.service
+      disable_service rpibluetooth
+      stop_service rpibluetooth
+      restart_service bluetooth
+      sleep 3 # Wait few seconds for bluetooth to start
+      restart_service bluealsa # restart the bluetooth audio service
+      echo "Success: the bluetooth service has been switched to default, and the service has been stopped."
       ;;
 
     *)

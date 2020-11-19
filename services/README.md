@@ -84,10 +84,19 @@ Using the [template](#Template), fill in the sections as required.
 1. add port(s)
 
    Replace `<port>` with the port(s) your service uses.
-   
+
    If your service uses multiple ports, add each port on their own individual lines.
    ```
      echo "<port>"
+   ```
+
+1. add path(s)
+
+   Replace `<path>` with the path(s) your service uses.
+
+   If your service has specific path, add path on their own individual lines.
+   ```
+     echo "<path>"
    ```
 
 1. add size (in MB)
@@ -95,6 +104,13 @@ Using the [template](#Template), fill in the sections as required.
    Replace `<size>` with the size of your service in MB (leave out the MB units).
    ```
      echo "<size>"
+   ```
+
+1. add description
+
+   Replace `<description>` with a short description of your service.
+   ```
+     echo "\"<description>\""
    ```
 
 1. add info
@@ -167,9 +183,19 @@ function get_ports {
   echo "<port>"
 }
 
+# add path(s)
+#function get_paths {
+#  echo "<path>"
+#}
+
 # add size (in MB)
 function get_size {
   echo "<size>"
+}
+
+# add description
+function get_description {
+  echo "<description>"
 }
 
 # add info

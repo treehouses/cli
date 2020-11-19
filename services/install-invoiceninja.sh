@@ -59,25 +59,25 @@ function install {
     echo "#      - web        # uncomment if you want to use  external network (reverse proxy for example)"
     echo "      - default"
     echo ""
-    echo "  cron:"
-    echo "    image: invoiceninja/invoiceninja"
-    echo "    env_file: .env"
-    echo "    volumes:"
-    echo "      -  storage:/var/www/app/storage"
-    echo "      -  logo:/var/www/app/public/logo"
-    echo "      -  public:/var/www/app/public"
-    echo "    entrypoint: |"
-    echo "      bash -c 'bash -s <<EOF"
-    echo "      trap \"break;exit\" SIGHUP SIGINT SIGTERM"
-    echo "      sleep 300s"
-    echo "      while /bin/true; do"
-    echo "        ./artisan ninja:send-invoices"
-    echo "        ./artisan ninja:send-reminders"
-    echo "        sleep 1d"
-    echo "      done"
-    echo "      EOF'"
-    echo "    networks:"
-    echo "      - default"
+    echo "#  cron:"
+    echo "#    image: invoiceninja/invoiceninja"
+    echo "#    env_file: .env"
+    echo "#    volumes:"
+    echo "#      -  storage:/var/www/app/storage"
+    echo "#      -  logo:/var/www/app/public/logo"
+    echo "#      -  public:/var/www/app/public"
+    echo "#    entrypoint: |"
+    echo "#      bash -c 'bash -s <<EOF"
+    echo "#      trap \"break;exit\" SIGHUP SIGINT SIGTERM"
+    echo "#      sleep 300s"
+    echo "#      while /bin/true; do"
+    echo "#        ./artisan ninja:send-invoices"
+    echo "#        ./artisan ninja:send-reminders"
+    echo "#        sleep 1d"
+    echo "#      done"
+    echo "#      EOF'"
+    echo "#    networks:"
+    echo "#      - default"
   } > /srv/invoiceninja/invoiceninja.yml
 
   # create .env with default values
@@ -184,6 +184,11 @@ function get_ports {
 # add size (in MB)
 function get_size {
   echo "1341"
+}
+
+# add description
+function get_description {
+  echo "Invoiceninja is the leading self-host platform to create invoices"
 }
 
 # add info

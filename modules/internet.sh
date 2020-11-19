@@ -3,16 +3,15 @@ function internet {
 
   case "$1" in
   "")
-    if ip route get 8.8.8.8 2>/dev/null 1>&2; then
+    if nc -w 10 -z 8.8.8.8 53 >/dev/null 1>&2; then
       echo "true"
       exit 0
     fi
     echo "false"
     ;;  
   "reverse")
-     if ! ip route get 8.8.8.8 2>/dev/null 1>&2; then
-      echo "Error: no internet found"
-      exit 1
+    if ! nc -w 10 -z 8.8.8.8 53 >/dev/null 1>&2; then
+      log_and_exit1 "Error: no internet found"
     fi
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
     echo "$info" | grep -E '"(ip)"'
@@ -20,8 +19,7 @@ function internet {
     echo "$info" | grep -E '"(org|timezone)"'
     ;;
   *)
-    echo "ERROR: incorrect command"
-    internet_help
+    log_help_and_exit1 "ERROR: incorrect command" internet
     ;;
   esac
 }

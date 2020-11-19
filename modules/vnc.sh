@@ -169,11 +169,8 @@ function vnc_help {
   echo
   echo "  $BASENAME vnc off"
   echo "      VNC services will be disabled."
-<<<<<<< HEAD
   echo
   echo "Enables or disables the VNC server service"
-=======
->>>>>>> master
   echo
   echo "  $BASENAME vnc info"
   echo "      Prints a detailed configuration of each required component (boot option, vnc service, x service)."

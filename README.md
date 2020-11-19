@@ -168,8 +168,6 @@ message gitter <apitoken|authorize>       sets api/channel info in config file a
                <send|show|read|mark>
         slack <apitoken|send|channels>    sets api/channel info in config file and sends message
               <show|mark>                 shows and marks messages
-
-
 shutdown [now|in|force]                   shutdown the system
 ```
 

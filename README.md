@@ -164,10 +164,10 @@ magazines                                 downloads specific magazine issue as a
                       [url]               shows the homepage URL of magazine
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
-message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves message
+message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves messages in gitter
                <send|show|read|mark>
-        slack <apitoken|send|channels>    sets api/channel info in config file, shows channels and sends message
-              <read>                      read new messages
+        slack <apitoken|channels>         sets api/channel info in config file and sends/recieves messages in slack
+              <send|show|read|mark>
 shutdown [now|in|force]                   shutdown the system
 ```
 

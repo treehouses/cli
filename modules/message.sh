@@ -232,7 +232,7 @@ function message {
             echo "To get an authorized access token"
             echo ""
             echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
-            echo "Go to \"OAuth & Permission\", select the scope from \"User Token Scopes\" and add \"chat:write\", \"channel:read\", \"channel:history\", \"group:read\" and \"users.read\" for the APP from the drop down list"
+            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\", \"channels:write\", \"channel:read\", \"channel:history\", \"groups:write\", \"group:read\", \"mpim:write\", \"im:write\" and \"users.read\" for the APP from the drop down list"
             echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
             echo "Run $BASENAME message slack apitoken <oauth access token>"
           fi
@@ -264,6 +264,60 @@ function message {
             fi
           else
             log_comment_and_exit1 "Error:You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
+          fi
+          ;;
+        show)
+          channel=$3
+          function check_channel {
+            channel_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
+            channel_list=($(echo $channel_list | python -m json.tool | jq '.channels[].id' | tr -d '"'))
+            for i in "${channel_list[@]}"; do
+              if [ $i == $1 ]; then
+                return 0
+                break
+              fi
+            done
+            return 1
+          }
+          if check_apitoken slack; then
+            if [[ $channel == "" ]]; then
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message slack read <group>"
+            elif ! check_channel $channel; then
+              log_and_exit1 "invalid channel ID"
+            else
+              channel_info=$(curl -s -F token=$access_token -F channel=$channel https://slack.com/api/conversations.info)
+              last_read=$(echo $channel_info | python -m json.tool | jq '.channel.last_read' | tr -d '"')
+              channel_history=$(curl -s -F token=$access_token -F channel=$channel https://slack.com/api/conversations.history)
+              time=($(echo $channel_history | python -m json.tool | jq '.messages[].ts' 2> /dev/null | tr -d '"'))
+              unread_time=()
+              for i in "${time[@]}"; do
+                if [ $last_read == $i ]; then
+                  break
+                else
+                  unread_time+=($i)
+                fi
+              done
+              unread_time=($(printf '%s\n' "${unread_time[@]}" | tac | tr '\n' ' '))
+              if [ ${#unread_time[@]} -eq 0 ]; then
+                echo "You have no unread messages at the moment"
+              else
+                for i in "${unread_time[@]}"; do
+                  msg_info=$(curl -s -F token=$access_token -F channel=$channel -F latest=$i -F limit=1 -F inclusive=true https://slack.com/api/conversations.history)
+                  msg=$(echo $msg_info | python -m json.tool | jq '.messages[].text' | tr -d '"')
+                  userid=$(echo $msg_info | python -m json.tool | jq '.messages[].user' | tr -d '"')
+                  name_info=$(curl -s -F token=$access_token -F user=$userid -F latest=$i https://slack.com/api/users.info)
+                  name=$(echo $name_info | python -m json.tool | jq '.user.profile.real_name' | tr -d '"')
+                  time_info=$(date -d @$i)
+                  date=$(echo ${time_info} | cut -d " " -f1-3)
+                  year=$(echo ${time_info} | cut -d " " -f6)
+                  send_time=$(echo ${time_info} | cut -d " " -f4)
+                  echo "Date: $date $year"
+                  echo "Time: $send_time"
+                  echo "From: $name"
+                  echo "Message: $msg"
+                done
+              fi
+            fi
           fi
           ;;
         read)
@@ -322,6 +376,49 @@ function message {
             fi
           fi
           ;;
+        mark)
+          channel=$3
+          function check_channel {
+            channelList=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
+            channelList=($(echo $channelList | python -m json.tool | jq '.channels[].id' | tr -d '"'))
+            for i in "${channelList[@]}"; do
+              if [ $i == $1 ]; then
+                return 0
+                break
+              fi
+            done
+            return 1
+          }
+          if check_apitoken slack; then
+            if [[ $channel == "" ]]; then
+              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message slack read <group>"
+            elif ! check_channel $channel; then
+              log_and_exit1 "invalid channel ID"
+            else
+              channel_info=$(curl -s -F token=$access_token -F channel=$channel https://slack.com/api/conversations.info)
+              last_read=$(echo $channel_info | python -m json.tool | jq '.channel.last_read' | tr -d '"')
+              channel_history=$(curl -s -F token=$access_token -F channel=$channel https://slack.com/api/conversations.history)
+              time=($(echo $channel_history | python -m json.tool | jq '.messages[].ts' 2> /dev/null | tr -d '"'))
+              unread_time=()
+              for i in "${time[@]}"; do
+                if [ $last_read == $i ]; then
+                  break
+                else
+                  unread_time+=($i)
+                fi
+              done
+              unread_time=($(printf '%s\n' "${unread_time[@]}" | tac | tr '\n' ' '))
+              if [ ${#unread_time[@]} -eq 0 ]; then
+                echo "You have no unread messages at the moment"
+              else
+                for i in "${unread_time[@]}"; do
+                  curl -s -F token=$access_token -F channel=$channel -F ts=$i https://slack.com/api/conversations.mark > "$LOGFILE"
+                done
+                echo "Done. Messages marked as read "
+              fi
+            fi
+          fi
+          ;;
         *)
           log_help_and_exit1 "Error: This command does not exist" message
       esac
@@ -371,7 +468,13 @@ function message_help {
   echo "  $BASENAME message slack send \"channel_name or channel ID\" \"Hi, you are very awesome\""
   echo "     Sends a message to a slack channel using channel name, eg, channel: #channel_name"
   echo
+  echo "  $BASENAME message slack show \"channel ID\""
+  echo "     Shows messages of a slack channel using channel ID"
+  echo
   echo "  $BASENAME message slack read \"channel ID\""
   echo "     Reads messages from a slack channel using channelID"
+  echo
+  echo "  $BASENAME message slack mark \"channel ID\""
+  echo "     Marks messages of a slack channel using channel ID"
   echo
 }

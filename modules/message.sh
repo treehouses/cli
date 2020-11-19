@@ -233,7 +233,7 @@ function message {
             echo ""
             echo "To get an authorized access token"
             echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
-            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\" for the APP from the drop down list"
+            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\",\"channels:write\",\"groups:write\",\"mpim:write\",\"im:write\" for the APP from the drop down list"
             echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
             echo "Run $BASENAME message slack apitoken <oauth access token>"
           fi
@@ -298,7 +298,7 @@ function message {
                   msg=$(echo $msg_info | python -m json.tool | jq '.messages[].text' | tr -d '"')
                   userid=$(echo $msg_info | python -m json.tool | jq '.messages[].user' | tr -d '"')
                   name_info=$(curl -s -F token=$access_token -F user=$userid -F latest=$i https://slack.com/api/users.info)
-                  name=$(echo $name_info | python -m json.tool | jq '.user.real_name' | tr -d '"')
+                  name=$(echo $name_info | python -m json.tool | jq '.user.profile.real_name' | tr -d '"')
                   time_info=$(date -d @$i)
                   date=$(echo ${time_info} | cut -d " " -f1-3)
                   year=$(echo ${time_info} | cut -d " " -f6)
@@ -400,5 +400,11 @@ function message_help {
   echo
   echo "  $BASENAME message slack send \"channel_name or channel ID\" \"Hi, you are very awesome\""
   echo "     Sends a message to a slack channel using channel name, eg, channel: #channel_name"
+  echo
+  echo "  $BASENAME message slack show \"channel ID\""
+  echo "     Shows messages of a slack channel using channel ID"
+  echo
+  echo "  $BASENAME message slack mark \"channel ID\""
+  echo "     Marks messages of a slack channel using channel ID"
   echo
 }

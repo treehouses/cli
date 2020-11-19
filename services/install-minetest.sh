@@ -64,6 +64,11 @@ function get_size {
   echo "22"
 }
 
+# add description
+function get_description {
+  echo "Minetest is an open source infinite-world block sandbox game engine with survival and crafting"
+}
+
 # add info
 function get_info {
   echo "https://www.minetest.net/"

@@ -229,9 +229,15 @@ treehouses memory total mb
 treehouses memory used
 treehouses memory used gb
 treehouses memory used mb
-treehouses message gitter apikey
-treehouses message gitter sendto
-treehouses message gitter receivefrom
+treehouses message gitter apitoken
+treehouses message gitter authorize
+treehouses message gitter send
+treehouses message gitter show
+treehouses message gitter read
+treehouses message gitter mark
+treehouses message slack apitoken
+treehouses message slack channels
+treehouses message slack send
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet
@@ -310,6 +316,7 @@ treehouses remote services installed
 treehouses remote services running
 treehouses remote status
 treehouses remote statuspage
+treehouses remote ssh2fa
 treehouses remote upgrade
 treehouses remote version
 treehouses rename
@@ -326,7 +333,7 @@ $(services_cmds)
 treehouses services ports
 treehouses services running
 treehouses services running full
-treehouses shutdown 
+treehouses shutdown
 treehouses shutdown now
 treehouses shutdown in
 treehouses shutdown force
@@ -338,6 +345,7 @@ treehouses ssh 2fa add
 treehouses ssh 2fa disable
 treehouses ssh 2fa enable
 treehouses ssh 2fa remove
+treehouses ssh 2fa show
 treehouses ssh fingerprint
 treehouses ssh off
 treehouses ssh on
@@ -421,6 +429,10 @@ treehouses vnc
 treehouses vnc info
 treehouses vnc off
 treehouses vnc on
+treehouses vnc auth system
+treehouses vnc auth vnc
+treehouses vnc auth info
+treehouses vnc password
 treehouses wifi
 treehouses wificountry
 treehouses wifihidden

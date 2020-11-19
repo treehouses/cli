@@ -62,8 +62,9 @@ apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system
 locale <locale>                           sets the system locale
 ssh [on|off|fingerprint]                  enables or disables the ssh service,
-    [2fa] <add|enable|disable|remove>     also prints out fingerprint of the ssh daemon
-vnc [on|off|info]                         enables or disables the vnc server service
+    [2fa] <add|enable|disable>            prints out fingerprint of the ssh daemon
+          <remove|show>                   and deals with two factor authentication
+vnc [on|off|info|auth|password]           enables or disables the vnc server service
 default [network|notice|tunnel]           sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
 upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
@@ -122,6 +123,7 @@ services                                  executes the given command on the spec
    [pylon]                                Pylon is a web based integrated development environment built with Node.js as a backend
    [rutorrent]                            Rutorrent is a popular rtorrent client with a webui for ease of use
    [webssh]                               Webssh is a simple web application to be used as an ssh client to connect to your ssh servers
+   [sysmon]                               Sysmon is an intuitive system performance monitoring and task management tool for servers
 tor [list|ports|add|delete|deleteall]     deals with services on tor hidden network
     [start|stop|destroy|notice]
     [status|refresh]
@@ -145,7 +147,7 @@ usb [on|off]                              turns usb ports on or off
 redirect [add|list|remove|start]          redirects internet hostnames to rpi
 remote <check|status|upgrade|services>    helps with treehouses remote android app
        <version|commands|allservices>
-       <statuspage|help|key>
+       <statuspage|ssh2fa|help|key>
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
@@ -162,8 +164,9 @@ magazines                                 downloads specific magazine issue as a
                       [url]               shows the homepage URL of magazine
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
-message gitter <apikey|sendto>            sends message to service or sets api/channel info in config file
-               <receivefrom>
+message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves message
+               <send|show|read|mark>
+        slack <apitoken|send|channels>    sets api/channel info in config file and sends message
 shutdown [now|in|force]                   shutdown the system
 ```
 

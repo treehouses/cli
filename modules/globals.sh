@@ -25,25 +25,20 @@ function enable_service {
 }
 
 function disable_service {
-  if [ "$(systemctl is-enabled "$1" 2>"$LOGFILE")" = "enabled" ]
-  then
+  if [ "$(systemctl is-enabled "$1" 2>"$LOGFILE")" = "enabled" ]; then
     systemctl disable "$1" >"$LOGFILE" 2>"$LOGFILE"
   fi
 }
 
 function checkroot {
-  if [ "$(id -u)" -ne 0 ];
-  then
-      echo "Error: Must be run with root permissions"
-      exit 1
+  if [ "$(id -u)" -ne 0 ]; then
+      log_and_exit1 "Error: Must be run with root permissions"
   fi
 }
 
 function checkrpi {
-  if [ "$(detectrpi)" == "nonrpi" ];
-  then
-    echo "Error: Must be run with rpi system"
-    exit 1
+  if [ "$(detectrpi)" == "nonrpi" ]; then
+    log_and_exit1 "Error: Must be run with rpi system"
   fi
 }
 
@@ -64,23 +59,19 @@ function checkargn {
 function checkrpiwireless {
   checkrpi
   if [[ "$(detect bluetooth)" == "false" ]]; then
-    echo "Error: no Bluetooth device detected"
-    exit 1
+    log_and_exit1 "Error: no Bluetooth device detected"
   fi
 }
 
 function checkinternet {
   if [[ $(internet) == "false" ]]; then
-    echo "Error: no Internet found"
-    exit 1
+    log_and_exit1 "Error: no Internet found"
   fi
 }
 
 function checkwifi {
   if iwconfig wlan0 | grep -q "ESSID:off/any"; then
-    echo "wifi is not connected"
-    echo "check SSID and password and try again"
-    exit 1
+    log_comment_and_exit1 "Error: wifi is not connected" "check SSID and password and try again"
   fi
 }
 
@@ -171,16 +162,19 @@ function check_missing_packages {
   done
 
   if (( ${#missing_deps[@]} > 0 )) ; then
-    echo "Missing required programs: ${missing_deps[*]}"
-    echo "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
-    exit 1
+    log_comment_and_exit1 "Error: missing required programs: ${missing_deps[*]}" "On Debian/Ubuntu try 'sudo apt install ${missing_deps[*]}'"
   fi
 }
 
 function check_missing_binary {
-  missing_binary=$1
-  if [[ $(which $missing_binary) == "" ]]; then
-    echo "\"$missing_binary\" not found, please install first"
+  binary=$1
+  install_instructions=$2
+  if [[ $(which $binary) == "" ]]; then
+    if [[ $install_instructions == "" ]]; then
+      echo "\"$binary\" not found, please install first"
+    else
+      echo -e "$install_instructions"
+    fi
     exit 1
   fi
 }

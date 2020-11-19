@@ -71,6 +71,11 @@ function get_size {
   echo "28"
 }
 
+# add description
+function get_description {
+  echo "Librespeed is a very lightweight Speedtest implemented in Javascript"
+}
+
 # add info
 function get_info {
   echo "https://github.com/librespeed/speedtest"

@@ -22,62 +22,62 @@ function vnc {
     exit 1;
   fi
 
-case "$option" in
-  "")
-    if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "inactive" ]; then
-      echo "off"
-      echo "To enable it, use $BASENAME vnc on"
-    elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "active" ]; then
-      echo "on"
-      echo "To disable it, use $BASENAME vnc off"
-    elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
-      echo "failed, raise issue on treehouses cli and describe behavior to get to here, thank you"
-    elif [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "active" ]; then
+  case "$option" in
+    "")
+      if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "inactive" ]; then
+        echo "off"
+        echo "To enable it, use $BASENAME vnc on"
+      elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "active" ]; then
+        echo "on"
+        echo "To disable it, use $BASENAME vnc off"
+      elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
+        echo "failed, raise issue on treehouses cli and describe behavior to get to here, thank you"
+      elif [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "active" ]; then
+        echo "pre-off"
+      elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "inactive" ]; then
+        echo "pre-on"
+      else
+        echo "VNC server is not configured correctly. Please try $BASENAME vnc on to enable it, or $BASENAME vnc off to disable it."
+        echo "Alternatively, you may try $BASENAME vnc status-service to verify the status of each specific required service."
+      fi
+      ;;
+    "on")
+      grep -qF 'hdmi_group=2' '/boot/config.txt' || echo 'hdmi_group=2' | tee -a '/boot/config.txt'
+      grep -qF 'hdmi_mode=82' '/boot/config.txt' || echo 'hdmi_mode=82' | tee -a '/boot/config.txt'
+      sed -i 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' /boot/config.txt
+      enable_service vncserver-x11-serviced.service
+      start_service vncserver-x11-serviced.service
+      systemctl set-default graphical.target
+      reboot_needed
+      echo 'pre-on'
+      ;;
+    "off")
+      sed -i '/hdmi_group=2/d' /boot/config.txt
+      sed -i '/hdmi_mode=82/d' /boot/config.txt
+      sed -i 's/hdmi_force_hotplug=1/#hdmi_force_hotplug=1/' /boot/config.txt
+      stop_service vncserver-x11-serviced.service
+      disable_service vncserver-x11-serviced.service
+      systemctl set-default multi-user.target
+      reboot_needed
+      echo "Success: the vnc service has been stopped and disabled when the system boots."
       echo "pre-off"
-    elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "inactive" ]; then
-      echo "pre-on"
-    else
-      echo "VNC server is not configured correctly. Please try $BASENAME vnc on to enable it, or $BASENAME vnc off to disable it."
-      echo "Alternatively, you may try $BASENAME vnc status-service to verify the status of each specific required service."
-    fi
-    ;;
-  "on")
-    grep -qF 'hdmi_group=2' '/boot/config.txt' || echo 'hdmi_group=2' | tee -a '/boot/config.txt'
-    grep -qF 'hdmi_mode=82' '/boot/config.txt' || echo 'hdmi_mode=82' | tee -a '/boot/config.txt'
-    sed -i 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' /boot/config.txt
-    enable_service vncserver-x11-serviced.service
-    start_service vncserver-x11-serviced.service
-    systemctl set-default graphical.target
-    reboot_needed
-		echo 'pre-on'
-    ;;
-  "off")
-    sed -i '/hdmi_group=2/d' /boot/config.txt
-    sed -i '/hdmi_mode=82/d' /boot/config.txt
-    sed -i 's/hdmi_force_hotplug=1/#hdmi_force_hotplug=1/' /boot/config.txt
-    stop_service vncserver-x11-serviced.service
-    disable_service vncserver-x11-serviced.service
-    systemctl set-default multi-user.target
-    reboot_needed
-    echo "Success: the vnc service has been stopped and disabled when the system boots."
-		echo "pre-off"
-    ;;
-  "info")
-    echo "The system boots into $isgraphical"
-    echo "The VNC service is $vncservicestatus"
-    echo "The X window service is $xservicestatus"
-    echo "In order to access your desktop via a VNC viewer, the system needs to boot into Desktop, and VNC and X window services need to be running"
-    if [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
-      echo "Please reboot your system."
-    fi
-    if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "active" ]; then
-      echo "Please reboot your system."
-    fi
-    ;;
- *)
-    echo "Error: only 'on', 'off', 'info' options are supported";
-    exit 1;
-    ;;
+      ;;
+    "info")
+      echo "The system boots into $isgraphical"
+      echo "The VNC service is $vncservicestatus"
+      echo "The X window service is $xservicestatus"
+      echo "In order to access your desktop via a VNC viewer, the system needs to boot into Desktop, and VNC and X window services need to be running"
+      if [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
+        echo "Please reboot your system."
+      fi
+      if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "active" ]; then
+        echo "Please reboot your system."
+      fi
+      ;;
+   *)
+      echo "Error: only 'on', 'off', 'info' options are supported";
+      exit 1;
+      ;;
   esac
 }
 

@@ -232,7 +232,7 @@ function message {
             echo "To get an authorized access token"
             echo ""
             echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
-            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\",\"channels:write\",\"groups:write\",\"mpim:write\",\"im:write\" for the APP from the drop down list"
+            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\", \"channels:write\", \"channel:read\", \"channel:history\", \"groups:write\", \"group:read\", \"mpim:write\", \"im:write\" and \"users.read\" for the APP from the drop down list"
             echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
             echo "Run $BASENAME message slack apitoken <oauth access token>"
           fi
@@ -376,7 +376,6 @@ function message {
             fi
           fi
           ;;
-        *)
         mark)
           channel=$3
           function check_channel {

@@ -149,6 +149,7 @@ remote <check|status|upgrade|services>    helps with treehouses remote android a
        <version|commands|allservices>
        <statuspage|ssh2fa|help|key>
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
+log2ram [status|on|off]                   writes log to ram instead of disk
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
 inspire [fact|joke|qotd|random]           displays quote based on user input

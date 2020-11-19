@@ -4,7 +4,7 @@ function localtunnel {
 
   case "$1" in
     "")
-      picture_help
+      localtunnel_help
     ;;
     
     *)

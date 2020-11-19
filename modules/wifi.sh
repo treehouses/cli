@@ -4,8 +4,7 @@ function wifimain {
   checkroot
   checkargn $# 3
   if [ -z "$1" ]; then
-    echo "Error: name of the network missing"
-    exit 1
+    log_and_exit1 "Error: name of the network missing"
   fi
 
   wifinetwork=$1
@@ -15,8 +14,7 @@ function wifimain {
   then
     if [ ${#wifipassword} -lt 8 ]
     then
-      echo "Error: password must have at least 8 characters"
-      exit 1
+      log_and_exit1 "Error: password must have at least 8 characters"
     fi
   fi
 

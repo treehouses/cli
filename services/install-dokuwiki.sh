@@ -56,6 +56,11 @@ function get_size {
   echo "146"
 }
 
+# add description
+function get_description {
+  echo "Dokuwiki is a simple to use and highly versatile Open Source wiki software"
+}
+
 # add info
 function get_info {
   echo "https://github.com/linuxserver/docker-dokuwiki"

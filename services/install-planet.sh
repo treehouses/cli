@@ -84,6 +84,11 @@ function get_size {
   echo "450"
 }
 
+# add description
+function get_description {
+  echo "Planet Learning is a generic learning system built in Angular & CouchDB"
+}
+
 # add info
 function get_info {
   echo "https://github.com/open-learning-exchange/planet"

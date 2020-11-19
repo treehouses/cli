@@ -40,7 +40,7 @@ locale <locale>                           sets the system locale
 ssh [on|off|fingerprint]                  enables or disables the ssh service,
     [2fa] <add|enable|disable>            prints out fingerprint of the ssh daemon
           <remove|show>                   and deals with two factor authentication
-vnc [on|off|info]                         enables or disables the vnc server service
+vnc [on|off|info|auth|password]           enables or disables the vnc server service
 default [network|notice|tunnel]           sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
 upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
@@ -141,7 +141,8 @@ magazines                                 downloads specific magazine issue as a
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves message
-               <send|recieve>
+               <send|show|read|mark>
+        slack <apitoken|send|channels>    sets api/channel info in config file and sends message
 shutdown [now|in|force]                   shutdown the system
 EOF
   echo "$helpdefault"

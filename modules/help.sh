@@ -31,6 +31,7 @@ config [update|add|delete|clear]          commands for interacting with config f
 container <none|docker|balena>            enables (and start) the desired container
 bluetooth [on|off|pause|restart|button]   switches bluetooth from regular to hotspot mode and shows id or MAC address
           [mac|id|status|log]
+          [loglevel] <1|2|3|4|5> [on|off] sets bluetooth log level
 ap <local|internet> <ESSID> [password]    creates a mobile ap, which has two modes: local (no eth0 bridging), internet (eth0 bridging)
 aphidden <local|internet> <ESSID>         creates a hidden mobile ap with or without internet access
          [password]

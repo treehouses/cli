@@ -22,6 +22,12 @@ treehouses bluetooth id
 treehouses bluetooth id number
 treehouses bluetooth log
 treehouses bluetooth log follow
+treehouses bluetooth loglevel off
+treehouses bluetooth loglevel 1
+treehouses bluetooth loglevel 2
+treehouses bluetooth loglevel 3
+treehouses bluetooth loglevel 4
+treehouses bluetooth loglevel 5
 treehouses bluetooth mac
 treehouses bluetooth off
 treehouses bluetooth on

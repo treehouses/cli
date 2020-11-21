@@ -216,6 +216,31 @@ function message {
       esac
       ;;
     slack)
+      function check_channel {
+        channel_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
+        channel_list=($(echo $channel_list | python -m json.tool | jq '.channels[].id' | tr -d '"'))
+        for i in "${channel_list[@]}"; do
+          if [ $i == $1 ]; then
+            return 0
+            break
+          fi
+        done
+        return 1
+      }
+      function channel_get {
+      name="$1"
+      count=0
+      conversation_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
+      channel_name=($(echo $conversation_list | python -m json.tool | jq '.channels[].name' | tr -d '"'))
+      for i in "${channel_name[@]}"; do
+        if [[ $name == $i ]]; then
+          channel_id=$(echo $conversation_list | python -m json.tool | jq '.channels['$count'].id' | tr -d '"')
+          echo $channel_id
+          break
+        fi
+        ((count=count+1))
+      done
+      }
       case "$2" in
         apitoken)
           if [[ $3 != "" ]]; then
@@ -250,8 +275,10 @@ function message {
         send)
           channel=$3
           if check_apitoken slack; then
-            if [[ $3 == "" ]]; then
-              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message slack send <group>"
+            if [[ $channel == "" ]]; then
+              log_comment_and_exit1 "ERROR: Channel information is missing" "usage: $BASENAME message slack send <group>"
+            elif [[ "${channel:0:1}" == [a-z] ]]; then
+              channel=$(channel_get $3)
             fi
             shift; shift; shift;
             message=$*
@@ -268,22 +295,14 @@ function message {
           ;;
         show)
           channel=$3
-          function check_channel {
-            channel_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
-            channel_list=($(echo $channel_list | python -m json.tool | jq '.channels[].id' | tr -d '"'))
-            for i in "${channel_list[@]}"; do
-              if [ $i == $1 ]; then
-                return 0
-                break
-              fi
-            done
-            return 1
-          }
           if check_apitoken slack; then
             if [[ $channel == "" ]]; then
-              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message slack read <group>"
-            elif ! check_channel $channel; then
-              log_and_exit1 "invalid channel ID"
+              log_comment_and_exit1 "ERROR: Channel information is missing" "usage: $BASENAME message slack read <group>"
+            elif [[ "${channel:0:1}" == [a-z] ]]; then
+              channel=$(channel_get $3)
+            fi
+            if ! check_channel $channel; then
+              log_and_exit1 "invalid channel ID or channel name"
             else
               channel_info=$(curl -s -F token=$access_token -F channel=$channel https://slack.com/api/conversations.info)
               last_read=$(echo $channel_info | python -m json.tool | jq '.channel.last_read' | tr -d '"')
@@ -322,22 +341,14 @@ function message {
           ;;
         read)
           channel=$3
-          function check_channel {
-            channel_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
-            channel_list=($(echo $channel_list | python -m json.tool | jq '.channels[].id' | tr -d '"'))
-            for i in "${channel_list[@]}"; do
-              if [ $i == $1 ]; then
-                return 0
-                break
-              fi
-            done
-            return 1
-          }
           if check_apitoken slack; then
             if [[ $channel == "" ]]; then
-              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message slack read <group>"
-            elif ! check_channel $channel; then
-              log_and_exit1 "invalid channel ID"
+              log_comment_and_exit1 "ERROR: Channel information is missing" "usage: $BASENAME message slack read <group>"
+            elif [[ "${channel:0:1}" == [a-z] ]]; then
+              channel=$(channel_get $3)
+            fi
+            if ! check_channel $channel; then
+              log_and_exit1 "invalid channel ID or channel name"
             else
               channel_info=$(curl -s -F token=$access_token -F channel=$channel https://slack.com/api/conversations.info)
               last_read=$(echo $channel_info | python -m json.tool | jq '.channel.last_read' | tr -d '"')
@@ -378,22 +389,14 @@ function message {
           ;;
         mark)
           channel=$3
-          function check_channel {
-            channelList=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
-            channelList=($(echo $channelList | python -m json.tool | jq '.channels[].id' | tr -d '"'))
-            for i in "${channelList[@]}"; do
-              if [ $i == $1 ]; then
-                return 0
-                break
-              fi
-            done
-            return 1
-          }
           if check_apitoken slack; then
             if [[ $channel == "" ]]; then
-              log_comment_and_exit1 "ERROR: Group information is missing" "usage: $BASENAME message slack read <group>"
-            elif ! check_channel $channel; then
-              log_and_exit1 "invalid channel ID"
+              log_comment_and_exit1 "ERROR: Channel information is missing" "usage: $BASENAME message slack read <group>"
+            elif [[ "${channel:0:1}" == [a-z] ]]; then
+              channel=$(channel_get $3)
+            fi
+            if ! check_channel $channel; then
+              log_and_exit1 "invalid channel ID or channel name"
             else
               channel_info=$(curl -s -F token=$access_token -F channel=$channel https://slack.com/api/conversations.info)
               last_read=$(echo $channel_info | python -m json.tool | jq '.channel.last_read' | tr -d '"')

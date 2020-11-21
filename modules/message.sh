@@ -216,7 +216,7 @@ function message {
       esac
       ;;
     slack)
-      function get_channel_id {
+      function check_channel {
         channel_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
         channel_list=($(echo $channel_list | python -m json.tool | jq '.channels[].id' | tr -d '"'))
         for i in "${channel_list[@]}"; do
@@ -227,7 +227,7 @@ function message {
         done
         return 1
       }
-      function channel_get {
+      function get_channel_id {
       name="$1"
       count=0
       conversation_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)

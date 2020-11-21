@@ -216,7 +216,7 @@ function message {
       esac
       ;;
     slack)
-      function check_channel {
+      function get_channel_id {
         channel_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
         channel_list=($(echo $channel_list | python -m json.tool | jq '.channels[].id' | tr -d '"'))
         for i in "${channel_list[@]}"; do
@@ -278,7 +278,7 @@ function message {
             if [[ $channel == "" ]]; then
               log_comment_and_exit1 "ERROR: Channel information is missing" "usage: $BASENAME message slack send <group>"
             elif [[ "${channel:0:1}" == [a-z] ]]; then
-              channel=$(channel_get $3)
+              channel=$(get_channel_id $3)
             fi
             shift; shift; shift;
             message=$*
@@ -299,7 +299,7 @@ function message {
             if [[ $channel == "" ]]; then
               log_comment_and_exit1 "ERROR: Channel information is missing" "usage: $BASENAME message slack read <group>"
             elif [[ "${channel:0:1}" == [a-z] ]]; then
-              channel=$(channel_get $3)
+              channel=$(get_channel_id $3)
             fi
             if ! check_channel $channel; then
               log_and_exit1 "invalid channel ID or channel name"
@@ -345,7 +345,7 @@ function message {
             if [[ $channel == "" ]]; then
               log_comment_and_exit1 "ERROR: Channel information is missing" "usage: $BASENAME message slack read <group>"
             elif [[ "${channel:0:1}" == [a-z] ]]; then
-              channel=$(channel_get $3)
+              channel=$(get_channel_id $3)
             fi
             if ! check_channel $channel; then
               log_and_exit1 "invalid channel ID or channel name"
@@ -393,7 +393,7 @@ function message {
             if [[ $channel == "" ]]; then
               log_comment_and_exit1 "ERROR: Channel information is missing" "usage: $BASENAME message slack read <group>"
             elif [[ "${channel:0:1}" == [a-z] ]]; then
-              channel=$(channel_get $3)
+              channel=$(get_channel_id $3)
             fi
             if ! check_channel $channel; then
               log_and_exit1 "invalid channel ID or channel name"

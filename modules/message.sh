@@ -15,10 +15,30 @@ function message {
     echo "Your API access token is $access_token"
     return 0
   }
+  function get_channel {
+    platform=$1
+    case "$platform" in
+      gitter)
+          channel_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")
+          channel_names=$(echo $channel_info | python -m json.tool | jq '.[].name' | tr -d '"')
+          echo "$channel_names"
+        ;;
+      slack)
+        channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+        channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
+        user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
+        users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
+        channel_names=$(echo -e "$channels\n$users")
+        echo "$channel_names"
+        ;;
+      *)
+        log_and_exit1
+        ;;
+    esac
+  }
   function check_group {
     group=$1
-    group_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")
-    group_names=($(echo $group_info | python -m json.tool | jq '.[].name' | tr -d '"'))
+    group_names=($(get_channel gitter))
     for i in "${group_names[@]}"; do
       if [[ $i == "$group" ]]; then
         return 0
@@ -74,6 +94,15 @@ function message {
             token_info=$(echo $api_info | python -m json.tool | jq '.access_token' | tr -d '"')
             conf_var_update "gitter_apitoken" "$token_info"
             echo "Your API access token is $token_info"
+          fi
+          ;;
+        channels)
+          if check_apitoken gitter; then
+            channels_names=$(get_channel gitter)
+            echo "Channel Names"
+            echo "$channels_names"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
           fi
           ;;
         send)
@@ -257,16 +286,15 @@ function message {
             echo "To get an authorized access token"
             echo ""
             echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
-            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\", \"channels:write\", \"channel:read\", \"channel:history\", \"groups:write\", \"group:read\", \"mpim:write\", \"im:write\" and \"users.read\" for the APP from the drop down list"
+            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\", \"channels:write\", \"channel:read\", \"channel:history\", \"groups:write\", \"group:read\", \"mpim:write\", \"im:write\", \"usergroups.read\" and \"users.read\" for the APP from the drop down list"
             echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
             echo "Run $BASENAME message slack apitoken <oauth access token>"
           fi
           ;;
         channels)
           if check_apitoken slack; then
-            list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
-            channel_names=$(echo $list | python -m json.tool | jq '.channels[].name' | tr -d '"')
-            echo "Channels names:"
+            channel_names=$(get_channel slack)
+            echo "Channels Names:"
             echo "$channel_names"
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
@@ -449,6 +477,9 @@ function message_help {
   echo
   echo "  $BASENAME message gitter authorize \"1234567890\""
   echo "     Sets and saves API token"
+  echo
+  echo "  $BASENAME message gitter channels"
+  echo "     check for channels"
   echo
   echo "  $BASENAME message gitter send treehouses/Lobby \"Hi, you are very awesome\""
   echo "     Sends a message to a gitter channel"

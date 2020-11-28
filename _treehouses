@@ -231,6 +231,7 @@ treehouses memory used gb
 treehouses memory used mb
 treehouses message gitter apitoken
 treehouses message gitter authorize
+treehouses message gitter channels
 treehouses message gitter send
 treehouses message gitter show
 treehouses message gitter read

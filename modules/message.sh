@@ -20,7 +20,7 @@ function message {
         channel_names=$(echo $channel_info | python -m json.tool | jq '.[].name' | tr -d '"')
         echo "$channel_names"
 }
-  function get_channel_gitter{
+  function get_channel_slack{
         channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
         channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
         user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
@@ -90,7 +90,7 @@ function message {
           ;;
         channels)
           if check_apitoken gitter; then
-            channels_names=$(get_channel gitter)
+            channels_names=$(get_channel_gitter)
             echo "Channel Names"
             echo "$channels_names"
           else
@@ -285,7 +285,7 @@ function message {
           ;;
         channels)
           if check_apitoken slack; then
-            channel_names=$(get_channel slack)
+            channel_names=$(get_channel_slack)
             echo "Channels Names:"
             echo "$channel_names"
           else

@@ -11,7 +11,7 @@ function install {
     echo "services:"
     echo "  privatebin:"
     echo "    container_name: privatebin"
-    echo "    image: privatebin:latest"
+    echo "    image: treehouses/privatebin"
     echo "    ports:"
     echo "      - \"8083:80\""
   } > /srv/privatebin/privatebin.yml

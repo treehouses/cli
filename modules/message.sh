@@ -30,7 +30,7 @@ function message {
   }
   function check_group {
     group=$1
-    group_names=($(get_channel gitter))
+    group_names=($(get_channel_gitter))
     for i in "${group_names[@]}"; do
       if [[ $i == "$group" ]]; then
         return 0

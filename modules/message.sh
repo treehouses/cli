@@ -30,7 +30,7 @@ function message {
   }
   function check_group {
     group=$1
-    group_names=($(get_channel gitter))
+    group_names=($(get_channel_gitter))
     for i in "${group_names[@]}"; do
       if [[ $i == "$group" ]]; then
         return 0
@@ -91,7 +91,7 @@ function message {
         channels)
           if check_apitoken gitter; then
             channels_names=$(get_channel_gitter)
-            echo "Channel Names"
+            echo "Channel Names:"
             echo "$channels_names"
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"

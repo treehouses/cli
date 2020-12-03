@@ -91,7 +91,8 @@ function message {
         channels)
           if check_apitoken gitter; then
             channels_names=$(get_channel_gitter)
-            echo "Channel Names"
+            echo "Channel Names:"
+            echo
             echo "$channels_names"
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
@@ -287,6 +288,7 @@ function message {
           if check_apitoken slack; then
             channel_names=$(get_channel_slack)
             echo "Channels Names:"
+            echo
             echo "$channel_names"
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"

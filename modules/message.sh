@@ -440,10 +440,10 @@ function message {
             fi
             conf_var_update "discord_clientid" "$client_id"
             conf_var_update "discord_redirecturl" "$redirect_uri"
-            athorization_url=$(curl -Ls -o /dev/null -w %{url_effective} https://discord.com/api/oauth2/authorize?response_type=token\&client_id=${client_id}\&scope=identify)
+            authorization_url=$(curl -Ls -o /dev/null -w %{url_effective} https://discord.com/api/oauth2/authorize?response_type=token\&client_id=${client_id}\&scope=identify)
             echo "To get the access token, navigate to"
             echo
-            echo "$athorization_url"
+            echo "$authorization_url"
             echo
             echo "Then, click \"Authorize\" to provide permissions for your app"
             echo "From the redirected link , you will get your access token for discord"

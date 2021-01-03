@@ -14,7 +14,7 @@ function install {
   isTutorInstalled=$(ls /usr/local/bin | grep "tutor")
   if [ -z $isTutorInstalled ]; then
     echo "install openedx"
-    wget -q  https://github.com/ole-vi/tutor-rpi/releases/download/v10.0.10-treehouses.1/tutor
+    wget -q  https://github.com/treehouses/openedx/releases/download/v10.0.10-treehouses.1/tutor
     chmod +x tutor
     mv tutor /usr/local/bin/
   fi

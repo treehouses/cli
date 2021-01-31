@@ -19,6 +19,13 @@ function install {
     mv tutor /usr/local/bin/
   fi
 
+  STR=$(treehouses tor)
+  SUB='Error'
+  if [[ "$STR" == *"$SUB"* ]]; then
+    treehouses tor add 80
+    treehouses tor start
+  fi
+
   # create yml(s)
   # yml is empty because openedx uses internal ymls
   # it is created for treehouses services to recognize 
@@ -87,7 +94,7 @@ function supported_arms {
 
 # add port(s)
 function get_ports {
-  echo "8098"
+  echo "8099"
 }
 
 # add size (in MB)

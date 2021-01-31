@@ -76,7 +76,7 @@ function restart {
 
 function cleanup {
   su pi -c "tutor local stop"
-  docker rmi $(docker images --filter=reference='hirotochigi/openedx*' --format "{{.Repository}}:{{.Tag}}")
+  docker rmi $(docker images --filter=reference='treehouses/openedx*' --format "{{.Repository}}:{{.Tag}}")
   openedx_root=$(tutor config printroot)
   rm -rf $openedx_root
   rm /usr/local/bin/tutor

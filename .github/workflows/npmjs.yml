@@ -2,9 +2,9 @@ name: npmjs
 
 on:
   push:
-  branches:
-    - 'master'
-    - 'add-githubaction'
+    branches:
+      - 'master'
+      - 'add-githubaction'
 
 jobs:
   build:

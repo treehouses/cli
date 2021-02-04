@@ -25,9 +25,9 @@ jobs:
           cat CHANGELOG.md
       - name: publish
         uses: actions/setup-node@v2
+        run: npm publish
         with:
           node-version: 10
           registry-url: https://registry.npmjs.org/
-          package: ./package.json
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

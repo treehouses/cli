@@ -1,4 +1,4 @@
-name: npmjs
+name: npmjs.org
 
 on:
   push:
@@ -12,11 +12,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 10
-          registry-url: https://registry.npmjs.org/
-          package: ./package.json
+      - name: build
         run: |
           npm install -g auto-changelog
           auto-changelog --template .travis/changelog-template.hbs
@@ -26,5 +22,11 @@ jobs:
           cat CHANGELOG.md
           ./templates/blocker/blocker.sh
           ls -al ./templates/blocker/
+      - name: publish
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 10
+          registry-url: https://registry.npmjs.org/
+          package: ./package.json
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

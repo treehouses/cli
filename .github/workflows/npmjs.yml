@@ -14,14 +14,15 @@ jobs:
       - uses: actions/checkout@v2
       - name: build
         run: |
+          ./templates/blocker/blocker.sh
+          ls -al ./templates/blocker/
           sudo npm install -g auto-changelog
+          cat .travis/changelog-template.hbs
           auto-changelog --template .travis/changelog-template.hbs
           sed -i -e "s#&lt;#<#g" CHANGELOG.md
           sed -i -e "s#&gt;#>#g" CHANGELOG.md
           ls -al
           cat CHANGELOG.md
-          ./templates/blocker/blocker.sh
-          ls -al ./templates/blocker/
       - name: publish
         uses: actions/setup-node@v2
         with:

@@ -29,6 +29,6 @@ jobs:
           ls -al
           cat CHANGELOG.md
       - name: publish
-        run: #npm publish
+        run: echo "npm publish"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

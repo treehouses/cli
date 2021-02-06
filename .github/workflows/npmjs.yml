@@ -22,12 +22,13 @@ jobs:
           ls -al ./templates/blocker/
           sudo npm install -g auto-changelog
           cat .travis/changelog-template.hbs
+          auto-changelog --version
           auto-changelog --template .travis/changelog-template.hbs
           sed -i -e "s#&lt;#<#g" CHANGELOG.md
           sed -i -e "s#&gt;#>#g" CHANGELOG.md
           ls -al
           cat CHANGELOG.md
       - name: publish
-        run: npm publish
+        run: #npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

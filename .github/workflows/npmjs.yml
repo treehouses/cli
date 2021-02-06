@@ -23,6 +23,7 @@ jobs:
           sudo npm install -g auto-changelog
           cat .travis/changelog-template.hbs
           auto-changelog --version
+          git tag
           auto-changelog --template .travis/changelog-template.hbs
           sed -i -e "s#&lt;#<#g" CHANGELOG.md
           sed -i -e "s#&gt;#>#g" CHANGELOG.md

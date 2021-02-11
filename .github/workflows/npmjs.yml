@@ -1,4 +1,4 @@
-name: npmjs.org
+name: publish on npmjs.org
 
 on:
   push:
@@ -22,16 +22,13 @@ jobs:
           ./templates/blocker/blocker.sh
           ls -al ./templates/blocker/
           sudo npm install -g auto-changelog
-          cat .travis/changelog-template.hbs
           auto-changelog --version
-          git tag > list
-          cat list
-          auto-changelog --template .travis/changelog-template.hbs
+          auto-changelog --template .github/workflows/changelog-template.hbs
           sed -i -e "s#&lt;#<#g" CHANGELOG.md
           sed -i -e "s#&gt;#>#g" CHANGELOG.md
           ls -al
           cat CHANGELOG.md
       - name: publish
-        run: echo "npm publish"
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

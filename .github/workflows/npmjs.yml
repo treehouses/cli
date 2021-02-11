@@ -27,6 +27,8 @@ jobs:
           sed -i -e "s#&lt;#<#g" CHANGELOG.md
           sed -i -e "s#&gt;#>#g" CHANGELOG.md
           ls -al
+          sync
+          sync
           cat CHANGELOG.md
       - name: publish
         run: npm publish

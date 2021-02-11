@@ -24,12 +24,10 @@ jobs:
           sudo npm install -g auto-changelog
           auto-changelog --version
           auto-changelog --template .github/workflows/changelog-template.hbs
+          sync
           sed -i -e "s#&lt;#<#g" CHANGELOG.md
           sed -i -e "s#&gt;#>#g" CHANGELOG.md
           ls -al
-          sync
-          sync
-          cat CHANGELOG.md
       - name: publish
         run: npm publish
         env:

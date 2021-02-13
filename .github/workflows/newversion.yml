@@ -1,4 +1,4 @@
-name: publish on npmjs.org
+name: new version
 
 on:
   push:
@@ -28,11 +28,10 @@ jobs:
           sed -i -e "s#&lt;#<#g" CHANGELOG.md
           sed -i -e "s#&gt;#>#g" CHANGELOG.md
           ls -al
-      - name: Create Release
-        id: create_release
+      - name: release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SCRIPTPATH=$(realpath "$0")
+galad
 SCRIPTFOLDER=$(dirname "$SCRIPTPATH")
 SCRIPTARGS="$*"
 TEMPLATES="$SCRIPTFOLDER/templates"

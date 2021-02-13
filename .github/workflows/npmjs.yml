@@ -2,8 +2,8 @@ name: publish on npmjs.org
 
 on:
   push:
-    branches:
-      - 'master'
+    tags:
+      - '*.*.*'
 
 jobs:
   build:

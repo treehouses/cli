@@ -92,6 +92,7 @@ treehouses discover self
 treehouses discover wifi
 treehouses ethernet
 treehouses expandfs
+treehouses faketemperature
 treehouses feedback
 treehouses gpio
 treehouses help

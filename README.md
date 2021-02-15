@@ -169,6 +169,7 @@ message gitter <apitoken|authorize>       sets api/channel info in config file a
         slack <apitoken|channels>         sets api/channel info in config file and sends/recieves messages in slack
               <send|show|read|mark>
 shutdown [now|in|force]                   shutdown the system
+faketemperature [fahrenheit|kelvin]	  displays the CPU temperature of a raspberry pi
 ```
 
 ## Additional README's

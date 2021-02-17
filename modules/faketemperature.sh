@@ -15,8 +15,7 @@ function faketemperature () {
 		;;
 
 		"farenheit")
-		#echo "($number"°C"" x 9/5) + 32"
-		echo "to be determined"
+		echo "$number"°C" x (9/5) + 32"
 		;;
 
 	esac

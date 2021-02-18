@@ -292,7 +292,7 @@ function blackliberation {
   current_red=$(led "red")
   current_green=$(led "green")
 
-  for i in (1..20)
+  for i in {1..20}
     do	  
       led green heartbeat
       led red heartbeat

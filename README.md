@@ -185,4 +185,5 @@ README.md              # readme
 _treehouses            # tabcompletion
 /modules/<featurefile> # bash
 /tests/<featurefile>   # bash bats tests
+echo " temperature [fahrenheit|[kelvin] displays raspberry pi's CPU temperature"
 ```

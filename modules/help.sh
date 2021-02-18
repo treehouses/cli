@@ -161,3 +161,5 @@ function help {
     fi
   fi
 }
+
+echo " temperature [fahrenheit|kelvin] displays raspberry pi's CPU temperature"

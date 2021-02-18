@@ -242,7 +242,6 @@ function led {
     newValue=$(sed 's/.*\[\(.*\)\].*/\1/g' < "$led/trigger")
     set_brightness "${led: -1}" 1
 
-    
     if [ "$color" = "green" ]; then
       echo -e "$green: $newValue"
     elif [ "$color" = "red" ]; then

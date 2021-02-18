@@ -49,6 +49,11 @@ function get_size {
   echo "214"
 }
 
+# add description
+function get_description {
+  echo "TurtleBlocks is an activity with a Logo-inspired graphical \"turtle\" "
+}
+
 # add info
 function get_info {
   echo "https://github.com/treehouses/turtleblocksjs"

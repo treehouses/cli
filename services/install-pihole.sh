@@ -77,6 +77,11 @@ function get_ports {
   echo "8053"
 }
 
+# get path(s)
+function get_paths {
+  echo "/admin"
+}
+
 # add size (in MB)
 function get_size {
   echo "350"
@@ -88,6 +93,11 @@ function get_info {
   echo
   echo "\"The Pi-hole® is a DNS sinkhole that protects your devices from"
   echo "unwanted content, without installing any client-side software.\""
+}
+
+# add description
+function get_description {
+  echo "Pi-hole is a DNS sinkhole that protects your devices from unwanted content"
 }
 
 # add svg icon

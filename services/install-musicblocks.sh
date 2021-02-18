@@ -49,6 +49,11 @@ function get_size {
   echo "217"
 }
 
+# add description
+function get_description {
+  echo "MusicBlocks is a programming language for exploring musical concepts in an fun way"
+}
+
 # add info
 function get_info {
   echo "https://github.com/treehouses/musicblocks"

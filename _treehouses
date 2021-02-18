@@ -235,6 +235,12 @@ treehouses message gitter send
 treehouses message gitter show
 treehouses message gitter read
 treehouses message gitter mark
+treehouses message slack apitoken
+treehouses message slack channels
+treehouses message slack send
+treehouses message slack show
+treehouses message slack mark
+treehouses message slack read
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet

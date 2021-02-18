@@ -37,6 +37,7 @@ function uses_env {
 function supported_arms {
   echo "armv7l"
   echo "armv6l"
+  echo "aarch64"
   echo "x86_64"
 }
 

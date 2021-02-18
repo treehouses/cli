@@ -19,7 +19,7 @@ function message {
     channel_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")
     channel_names=$(echo $channel_info | python -m json.tool | jq '.[].name' | tr -d '"')
     echo "$channel_names"
-}
+  }
   function get_channel_slack {
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
     channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')

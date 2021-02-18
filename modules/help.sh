@@ -142,6 +142,7 @@ resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves messages in gitter
                <send|show|read|mark>
+               <channels>
         slack <apitoken|channels>         sets api/channel info in config file and sends/recieves messages in slack
               <send|show|read|mark>
 shutdown [now|in|force]                   shutdown the system

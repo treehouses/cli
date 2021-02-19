@@ -294,20 +294,16 @@ function blackhistorymonth {
 
   for i in {1..20}
     do
-      set_brightness 0 1
-      set_brightness 1 1
+      set_brightness 0 1 && set_brightness 1 1
       sleep .1
 
-      set_brightness 0 0
-      set_brightness 1 0
+      set_brightness 0 0 && set_brightness 1 0
       sleep .15
 
-      set_brightness 0 1
-      set_brightness 1 1
+      set_brightness 0 1 && set_brightness 1 1
       sleep .1
 
-      set_brightness 0 0
-      set_brightness 0 0
+      set_brightness 0 0 && set_brightness 0 0
       sleep .65
     done
 

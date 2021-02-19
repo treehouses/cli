@@ -114,6 +114,7 @@ coralenv [install|demo-on|demo-off]       plays with the coral environmental boa
 memory [total|used|free] [gb|mb]          displays the total memory of the device, the memory used as well as the available free memory
 storage [total|used|free] [gb|mb|kb]      displays the total storage of the device, the storage used as well as the available free storage
 temperature [celsius|fahrenheit|kelvin]   displays raspberry pi's CPU temperature
+temps [fahrenheit|kelvin]                 displays pi's CPU temperature in celcius, fahrenheit, or kelvin
 speedtest                                 tests internet download and upload speed
 camera [on|off|detect|capture|record]     enables and disables camera, detects camera module version, captures photo, records video
 picture [file|url]                        displays a picture in the terminal
@@ -161,5 +162,3 @@ function help {
     fi
   fi
 }
-
-echo " temperature [fahrenheit|kelvin] displays raspberry pi's CPU temperature"

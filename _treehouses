@@ -241,10 +241,6 @@ treehouses message slack send
 treehouses message slack show
 treehouses message slack mark
 treehouses message slack read
-treehouses mycoolnewfile
-treehouses mycoolnewfile celsius
-treehouses mycoolnewfile fahrenheit
-treehouses mycoolnewfile kelvin
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet
@@ -393,6 +389,9 @@ treehouses temperature
 treehouses temperature celsius
 treehouses temperature fahrenheit
 treehouses temperature kelvin
+treehouses temps
+treehouses temps fahrenheit
+treehouses temps kelvin
 treehouses tether
 treehouses timezone
 treehouses tor

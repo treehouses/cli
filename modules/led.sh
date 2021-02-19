@@ -30,13 +30,13 @@ function led {
       echo "Both LED: flash 2 times"
       newyear > "$LOGFILE"
       ;;
-    blackliberation)
+    blackhistorymonth)
       checkroot
-      echo "leds are set to blackliberation mode."
+      echo "leds are set to blackhistorymonth mode."
       echo "Look at your RPi leds, both leds will be in this pattern..."
       echo "Both LED: hearbeat"
       echo "this will happen 20 times"
-      blackliberation > "$LOGFILE"
+      blackhistorymonth > "$LOGFILE"
       ;;
     lunarnewyear)
       checkroot
@@ -288,19 +288,32 @@ function newyear {
   led red "$current_red"
 }
 
-function blackliberation {
+function blackhistorymonth {
   current_red=$(led "red")
   current_green=$(led "green")
 
   for i in {1..20}
-    do	  
-      led green heartbeat
-      led red heartbeat
+    do
+      set_brightness 0 1
+      set_brightness 1 1
+      sleep .1
+
+      set_brightness 0 0
+      set_brightness 1 0
+      sleep .15
+
+      set_brightness 0 1
+      set_brightness 1 1
+      sleep .1
+
+      set_brightness 0 0
+      set_brightness 0 0
+      sleep .65
     done
-  
+
   led red "$current_red"
   led green "$current_green"
-}  
+}
 
 function lunarnewyear {
   current_green=$(led "green")
@@ -815,7 +828,7 @@ function random {
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [newyear|blackliberation|lunarnewyear|valentine|carnival|lantern|stpatricks|]"
+  echo "       $BASENAME led [newyear|blackhistorymonth|lunarnewyear|valentine|carnival|lantern|stpatricks|]"
   echo "                      [easter|labourday|eid|dragonboat|independenceday|onam|diwali|thanksgiving]"
   echo "                      [christmas|dance|heavymetal|random]"
   echo
@@ -866,8 +879,8 @@ function led_help {
   echo "  $BASENAME led newyear"
   echo "      This will set the mode of the led to newyear"
   echo
-  echo "  $BASENAME led blackliberation"
-  echo "      This wil set the mode of the led to blackliberation"
+  echo "  $BASENAME led blackhistorymonth"
+  echo "      This wil set the mode of the led to blackhistorymonth"
   echo
   echo "  $BASENAME led lunarnewyear"
   echo "      This wil set the mode of the led to lunarnewyear"

@@ -294,6 +294,7 @@ function blackhistorymonth {
 
   for i in {1..20}
     do
+      led green default-on && led red default-on
       set_brightness 0 1 && set_brightness 1 1
       sleep .1
 

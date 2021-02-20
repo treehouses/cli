@@ -51,7 +51,11 @@ function log_comment_and_exit1() {
 
 function log_help_and_exit1() {
   logit "$1" "$3"
-  "$2_help"
+  if type -t $2_help >/dev/null; then
+    "$2_help"
+  else
+    echo "Panic: help function not found"
+  fi
   exit 1
 }
 

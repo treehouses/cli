@@ -47,12 +47,12 @@ upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
 sshtunnel [add|remove|list|active|check]  helps adding sshtunnels
           [key|refresh|notice|ports]
 led [green|red] [mode]                    sets the led mode
-    [newyear|lunarnewyear|valentine]
-    [carnival|lantern|stpatricks|easter]
-    [labourday|eid|dragonboat]
-    [independenceday|onam|diwali]
-    [thanksgiving|christmas|heavymetal]
-    [dance|kecak|random]
+    [newyear|blackhistorymonth]
+    [lunarnewyear|valentine|carnival]
+    [lantern|stpatricks|easter|labourday]
+    [eid|dragonboat|independenceday|onam]
+    [diwali|thanksgiving|christmas]
+    [heavymetal|dance|kecak|random]
 power [mode|current|freq|status]          sets the power mode or check power mode/CPU frequency
 uptime [boot|start|stop|log]              displays uptime and boot time of the Raspberry Pi
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified

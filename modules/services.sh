@@ -537,15 +537,13 @@ function services {
 }
 
 function check_arch {
-  source $SERVICES/install-${1}.sh
-    arches=($(source $SERVICES/install-${1}.sh && supported_arches))
-  for i in "${arches[@]}"
-    do
-      if [ "$(detect arch)" == "$i" ]; then
-        return 0
-      fi
-    done
-    return 1
+  arches=($(source $SERVICES/install-${1}.sh && supported_arches))
+  for i in "${arches[@]}"; do
+    if [ "$(detect arch)" == "$i" ]; then
+      return 0
+    fi
+  done
+  return 1
 }
 
 function check_available_services {

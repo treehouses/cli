@@ -40,7 +40,7 @@ locale <locale>                           sets the system locale
 ssh [on|off|fingerprint]                  enables or disables the ssh service,
     [2fa] <add|enable|disable>            prints out fingerprint of the ssh daemon
           <remove|show>                   and deals with two factor authentication
-vnc [on|off|info]                         enables or disables the vnc server service
+vnc [on|off|info|auth|password]           enables or disables the vnc server service
 default [network|notice|tunnel]           sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country
 upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
@@ -99,6 +99,7 @@ services                                  executes the given command on the spec
    [pylon]                                Pylon is a web based integrated development environment built with Node.js as a backend
    [rutorrent]                            Rutorrent is a popular rtorrent client with a webui for ease of use
    [webssh]                               Webssh is a simple web application to be used as an ssh client to connect to your ssh servers
+   [sysmon]                               Sysmon is an intuitive system performance monitoring and task management tool for servers
 tor [list|ports|add|delete|deleteall]     deals with services on tor hidden network
     [start|stop|destroy|notice]
     [status|refresh]
@@ -139,7 +140,11 @@ magazines                                 downloads specific magazine issue as a
                       [url]               shows the homepage URL of magazine
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
-message gitter <apikey|send|recieve>      sets api/channel info in config file and sends/recieves message
+message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves messages in gitter
+               <send|show|read|mark>
+               <channels>
+        slack <apitoken|channels>         sets api/channel info in config file and sends/recieves messages in slack
+              <send|show|read|mark>
 shutdown [now|in|force]                   shutdown the system
 EOF
   echo "$helpdefault"

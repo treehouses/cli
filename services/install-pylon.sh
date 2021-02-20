@@ -61,6 +61,11 @@ function get_size {
   echo "255"
 }
 
+# add description
+function get_description {
+  echo "Pylon is a web based integrated development environment built with Node.js as a backend"
+}
+
 # add info
 function get_info {
   echo "https://github.com/linuxserver/docker-pylon.git"

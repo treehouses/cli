@@ -46,9 +46,19 @@ function get_ports {
   echo "5984"
 }
 
+# get path(s)
+function get_paths {
+  echo "/_utils"
+}
+
 # add size (in MB)
 function get_size {
   echo "350"
+}
+
+# add description
+function get_description {
+  echo "CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang"
 }
 
 # add info

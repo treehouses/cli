@@ -69,6 +69,11 @@ function get_size {
   echo "553"
 }
 
+# add description
+function get_description {
+  echo "Seafile is an open-source, cross-platform file-hosting software system"
+}
+
 # add info
 function get_info {
   echo "https://github.com/treehouses/rpi-seafile"

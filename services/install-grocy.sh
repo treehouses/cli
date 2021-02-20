@@ -68,6 +68,11 @@ function get_size {
   echo "55"
 }
 
+# add description
+function get_description {
+  echo "Grocy is web-based, self-hosted groceries and household management utility for your home"
+}
+
 # add info
 function get_info {
   echo "https://github.com/linuxserver/docker-grocy"

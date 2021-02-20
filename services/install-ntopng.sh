@@ -48,6 +48,11 @@ function get_size {
   echo "400"
 }
 
+# add description
+function get_description {
+  echo "Ntopng is a network traffic probe that monitors network usage"
+}
+
 # add info
 function get_info {
   echo "https://github.com/ntop/ntopng"

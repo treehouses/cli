@@ -75,6 +75,11 @@ function get_size {
   echo "350"
 }
 
+# add description
+function get_description {
+  echo "Moodle is a Learning management system built in PHP"
+}
+
 # add info
 function get_info {
   echo "https://github.com/treehouses/moodole"

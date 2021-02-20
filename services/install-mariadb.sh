@@ -54,6 +54,11 @@ function get_size {
   echo "275"
 }
 
+# add description
+function get_description {
+  echo "MariaDB is a community-developed fork of the MySQL relational database management system"
+}
+
 # add info
 function get_info {
   echo "https://mariadb.org/"

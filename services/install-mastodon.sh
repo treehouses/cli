@@ -89,6 +89,11 @@ function get_size {
   echo "1000"
 }
 
+# add description
+function get_description {
+  echo "Mastodon is a free, open-source social network server"
+}
+
 # add info
 function get_info {
   echo "https://github.com/gilir/rpi-mastodon, https://github.com/tootsuite/mastodon"

@@ -65,6 +65,11 @@ function get_size {
   echo "258"
 }
 
+# add description
+function get_description {
+  echo "MongoDB is a general purpose, distributed, document-based, NoSQL database"
+}
+
 # add info
 function get_info {
   echo "\"https://github.com/treehouses/rpi-mongo"

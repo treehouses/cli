@@ -54,6 +54,11 @@ function get_size {
   echo "122"
 }
 
+# add description
+function get_description {
+  echo "Webssh is a simple web application to be used as an ssh client to connect to your ssh servers"
+}
+
 # add info
 function get_info {
   echo "https://github.com/treehouses/webssh"

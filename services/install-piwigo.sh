@@ -74,6 +74,11 @@ function get_size {
   echo "504"
 }
 
+# add description
+function get_description {
+  echo "Piwigo is a photo gallery software to publish and manage your collection of pictures"
+}
+
 # add info
 function get_info {
   echo "https://github.com/linuxserver/docker-piwigo"

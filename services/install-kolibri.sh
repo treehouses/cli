@@ -49,6 +49,11 @@ function get_size {
   echo "650"
 }
 
+# add description
+function get_description {
+  echo "Kolibri is a learning platform using DJango"
+}
+
 # add info
 function get_info {
   echo "https://github.com/treehouses/kolibri"

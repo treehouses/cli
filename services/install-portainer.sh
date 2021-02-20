@@ -53,6 +53,11 @@ function get_size {
   echo "100"
 }
 
+# add description
+function get_description {
+  echo "Portainer is a lightweight management UI for Docker environments"
+}
+
 # add info
 function get_info {
   echo "https://github.com/portainer/portainer"

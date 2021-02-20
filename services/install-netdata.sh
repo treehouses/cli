@@ -59,6 +59,11 @@ function get_size {
   echo "300"
 }
 
+# add description
+function get_description {
+  echo "Netdata is a distributed, real-time performance and health monitoring for systems"
+}
+
 # add info
 function get_info {
   echo "https://github.com/netdata/netdata"

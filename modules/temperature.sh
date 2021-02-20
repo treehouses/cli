@@ -25,31 +25,28 @@ function temperature () {
       echo $result"K"
       ;;
     *)
-      echo "not a valid option"
-      echo
-      temperature_help
-      exit 1
+      log_help_and_exit1 "Error: not a valid option" temperature
       ;;
   esac
 }
 
 function temperature_help {
   echo
-  echo "  Usage: $BASENAME temperature [celsius|fahrenheit|kelvin]"
+  echo "Usage: $BASENAME temperature [celsius|fahrenheit|kelvin]"
   echo
-  echo "  Measures CPU temperature of Raspberry Pi"
+  echo "Measures CPU temperature of Raspberry Pi"
   echo
-  echo "  Example:"
-  echo "    $BASENAME temperature"
-  echo "    47.2"
+  echo "Example:"
+  echo "  $BASENAME temperature"
+  echo "  47.2"
   echo
-  echo "    $BASENAME temperature celsius"
-  echo "    47.2°C"
+  echo "  $BASENAME temperature celsius"
+  echo "  47.2°C"
   echo
-  echo "    $BASENAME temperature fahrenheit"
-  echo "    117.0°F"
+  echo "  $BASENAME temperature fahrenheit"
+  echo "  117.0°F"
   echo
-  echo "    $BASENAME temperature kelvin"
-  echo "    320.35K"
+  echo "  $BASENAME temperature kelvin"
+  echo "  320.35K"
   echo
 }

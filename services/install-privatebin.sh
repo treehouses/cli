@@ -37,6 +37,7 @@ function uses_env {
 function supported_arches {
   echo "armv7l"
   echo "armv6l"
+  echo "aarch64"
   echo "x86_64"
 }
 
@@ -48,6 +49,11 @@ function get_ports {
 # add size (in MB)
 function get_size {
   echo "550"
+}
+
+# add description
+function get_description {
+  echo "PrivateBin is a minimalist, open source online pastebin"
 }
 
 # add info

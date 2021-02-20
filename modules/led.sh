@@ -292,9 +292,11 @@ function blackhistorymonth {
   current_red=$(led "red")
   current_green=$(led "green")
 
+  set_brightness 0 0 && set_brightness 1 0
+  sleep 1
+
   for i in {1..20}
     do
-      led green default-on && led red default-on
       set_brightness 0 1 && set_brightness 1 1
       sleep .1
 

@@ -306,7 +306,7 @@ function blackhistorymonth {
       set_brightness 0 1 && set_brightness 1 1
       sleep .1
 
-      set_brightness 0 0 && set_brightness 0 0
+      set_brightness 0 0 && set_brightness 1 0
       sleep .65
     done
 

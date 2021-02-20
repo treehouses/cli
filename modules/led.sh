@@ -832,7 +832,7 @@ function random {
 function led_help {
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
-  echo "       $BASENAME led [newyear|blackhistorymonth|lunarnewyear|valentine|carnival|lantern|stpatricks|]"
+  echo "       $BASENAME led [newyear|blackhistorymonth|lunarnewyear|valentine|carnival|lantern|stpatricks]"
   echo "                      [easter|labourday|eid|dragonboat|independenceday|onam|diwali|thanksgiving]"
   echo "                      [christmas|dance|heavymetal|random]"
   echo
@@ -884,10 +884,10 @@ function led_help {
   echo "      This will set the mode of the led to newyear"
   echo
   echo "  $BASENAME led blackhistorymonth"
-  echo "      This wil set the mode of the led to blackhistorymonth"
+  echo "      This will set the mode of the led to blackhistorymonth"
   echo
   echo "  $BASENAME led lunarnewyear"
-  echo "      This wil set the mode of the led to lunarnewyear"
+  echo "      This will set the mode of the led to lunarnewyear"
   echo
   echo "  $BASENAME led valentine"
   echo "      This will set the mode of the led to valentine"

@@ -538,18 +538,14 @@ function services {
 
 function check_arch {
   source $SERVICES/install-${1}.sh
-  if type supported_arches > /dev/null 2>&1; then
     arches=($(source $SERVICES/install-${1}.sh && supported_arches))
-  elif type supported_arms > /dev/null 2>&1; then
-    arches=($(source $SERVICES/install-${1}.sh && supported_arms))
-  fi
   for i in "${arches[@]}"
-  do
-    if [ "$(detect arch)" = "$i" ]; then
-      return 0
-    fi
-  done
-  return 1
+    do
+      if [ "$(detect arch)" == "$i" ]; then
+        return 0
+      fi
+    done
+    return 1
 }
 
 function check_available_services {

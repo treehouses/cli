@@ -34,7 +34,12 @@ function led {
       checkroot
       echo "leds are set to blackhistorymonth mode."
       echo "Look at your RPi leds, both leds will be in this pattern..."
-      echo "Both LED: hearbeat"
+      echo "Both LED's will flash in unison like a heartbeat"
+      echo "Both LED: off 1 second"
+      echo "Both LED: on .1 seconds"
+      echo "Both LED: off .15 seconds"
+      echo "Both LED: on .1 seconds"
+      echo "Both LED: off .65 seconds"
       echo "this will happen 20 times"
       blackhistorymonth > "$LOGFILE"
       ;;

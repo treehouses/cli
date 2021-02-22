@@ -748,8 +748,8 @@ function sandstorm {
         x=$(( x + 1 ))
       done
 
-    led red "$current_red"
-    led green heartbeat
+  led green "$current_green"
+  led red "$current_red"
 }
 
 function thanksgiving {

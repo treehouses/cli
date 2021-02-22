@@ -15,10 +15,22 @@ function message {
     echo "Your API access token is $access_token"
     return 0
   }
+  function get_channel_gitter {
+    channel_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")
+    channel_names=$(echo $channel_info | python -m json.tool | jq '.[].name' | tr -d '"')
+    echo "$channel_names"
+  }
+  function get_channel_slack {
+    channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+    channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
+    user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
+    users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
+    channel_names=$(echo -e "$channels\n$users")
+    echo "$channel_names"
+  }
   function check_group {
     group=$1
-    group_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")
-    group_names=($(echo $group_info | python -m json.tool | jq '.[].name' | tr -d '"'))
+    group_names=($(get_channel_gitter))
     for i in "${group_names[@]}"; do
       if [[ $i == "$group" ]]; then
         return 0
@@ -74,6 +86,15 @@ function message {
             token_info=$(echo $api_info | python -m json.tool | jq '.access_token' | tr -d '"')
             conf_var_update "gitter_apitoken" "$token_info"
             echo "Your API access token is $token_info"
+          fi
+          ;;
+        channels)
+          if check_apitoken gitter; then
+            channels_names=$(get_channel_gitter)
+            echo "Channel Names:"
+            echo "$channels_names"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
           fi
           ;;
         send)
@@ -257,16 +278,16 @@ function message {
             echo "To get an authorized access token"
             echo ""
             echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
-            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\", \"channels:write\", \"channel:read\", \"channel:history\", \"groups:write\", \"group:read\", \"mpim:write\", \"im:write\" and \"users.read\" for the APP from the drop down list"
+            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\", \"channels:write\", \"channel:read\", \"channel:history\", \"groups:write\", \"group:read\", \"mpim:write\", \"im:write\", \"usergroups.read\" and \"users.read\" for the APP from the drop down list"
             echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
             echo "Run $BASENAME message slack apitoken <oauth access token>"
           fi
           ;;
         channels)
           if check_apitoken slack; then
-            list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
-            channel_names=$(echo $list | python -m json.tool | jq '.channels[].name' | tr -d '"')
-            echo "Channels names:"
+            channel_names=$(get_channel_slack)
+            echo "Channels Names:"
+            echo
             echo "$channel_names"
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
@@ -426,6 +447,55 @@ function message {
           log_help_and_exit1 "Error: This command does not exist" message
       esac
       ;;
+    discord)
+      case "$2" in
+        apitoken)
+          if check_apitoken discord; then
+            get_apitoken discord
+          elif [[ $3 != "" ]] && [[ $4 != "" ]]; then
+            client_id=$3
+            if [[ $4 == http?(s)://* ]]; then
+              redirect_uri=$4
+            else
+              log_and_exit1 "Invalid URL"
+            fi
+            conf_var_update "discord_clientid" "$client_id"
+            conf_var_update "discord_redirecturl" "$redirect_uri"
+            authorization_url=$(curl -Ls -o /dev/null -w %'{'url_effective'}' https://discord.com/api/oauth2/authorize?response_type=token\&client_id=${client_id}\&scope=identify)
+            echo "To get the access token, navigate to"
+            echo
+            echo "$authorization_url"
+            echo
+            echo "Then, click \"Authorize\" to provide permissions for your app"
+            echo "From the redirected link , you will get your access token for discord"
+            echo
+            echo "For example, if redirected link is \"http://localhost/token_type=Bearer&access_token=1234567890&expires_in=604800&scope=identify\"' then the access token is \"1234567890\""
+            echo "Then, run $BASENAME message discord authorize <access_token>"
+          else
+            echo "You do not have an authorized access token"
+            echo ""
+            echo "To get an authorized access token"
+            echo ""
+            echo "Navigate to https://discord.com/developers/applications. Create an APP by clicking \"New Application\" and provide a suitable name for your APP."
+            echo "Then move to the option \"OAuth2\" below \"General Information\" and add a redirect URL ( For eg: http://localhost/ ) by clicking \"Add Redirect\" below \"Redirects\"."
+            echo "Then, save the settings by pressing green save button at the bottom of the page."
+            echo "Note both the CLIENT ID and your Redirect URL"
+            echo "Run $BASENAME message discord apitoken <client_id> <redirect_url>"
+          fi
+            ;;
+        authorize)
+          if [[ $3 == "" ]]; then
+            echo "authorization code is missing"
+          else
+          access_token=$3
+            conf_var_update "discord_apitoken" "$access_token"
+            echo "you have successfully authorized and your access token is $access_token "
+          fi
+          ;;
+        *)
+          log_help_and_exit1 "Error: This command does not exist" message
+      esac
+      ;;
     *)
       log_help_and_exit1 "Error: This command does not exist" message
       ;;
@@ -449,6 +519,9 @@ function message_help {
   echo
   echo "  $BASENAME message gitter authorize \"1234567890\""
   echo "     Sets and saves API token"
+  echo
+  echo "  $BASENAME message gitter channels"
+  echo "     check for channels"
   echo
   echo "  $BASENAME message gitter send treehouses/Lobby \"Hi, you are very awesome\""
   echo "     Sends a message to a gitter channel"
@@ -479,5 +552,11 @@ function message_help {
   echo
   echo "  $BASENAME message slack mark \"channel ID\""
   echo "     Marks messages of a slack channel using channel ID"
+  echo
+  echo "  $BASENAME message discord apitoken"
+  echo "     Check for API token for discord"
+  echo
+  echo "  $BASENAME message discord authorize \"1234567890\""
+  echo "     Sets and saves API token"
   echo
 }

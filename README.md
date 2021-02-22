@@ -9,7 +9,7 @@
 
 @treehouses/cli is a command-line interface for Raspberry Pi that is used to manage various services and functions.
 Including vnc, ssh, tor, vpn, networking, starting services, bluetooth, led lights, and much more!
-Also [treehouses remote](https://github.com/treehouses/remote) uses this interface. 
+Also [treehouses remote](https://github.com/treehouses/remote) uses this interface.
 
 ## Install
 
@@ -71,12 +71,12 @@ upgrade [tag|check|bluetooth|force|cli]   upgrades treehouses package using npm
 sshtunnel [add|remove|list|active|check]  helps adding sshtunnels
           [key|refresh|notice|ports]
 led [green|red] [mode]                    sets the led mode
-    [newyear|lunarnewyear|valentine]
-    [carnival|lantern|stpatricks|easter]
-    [labourday|eid|dragonboat]
-    [independenceday|onam|diwali]
-    [thanksgiving|christmas|heavymetal]
-    [dance|kecak|random|sandstorm]
+    [newyear|blackhistorymonth]
+    [lunarnewyear|valentine|carnival]
+    [lantern|stpatricks|easter|labourday]
+    [eid|dragonboat|independenceday|onam]
+    [diwali|thanksgiving|christmas]
+    [heavymetal|dance|kecak|sandstorm|random]
 power [mode|current|freq|status]          sets the power mode or check power mode/CPU frequency
 uptime [boot|start|stop|log]              displays uptime and boot time of the Raspberry Pi
 rtc <on|off> [rasclock|ds3231]            sets up the rtc clock specified
@@ -166,8 +166,10 @@ resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves messages in gitter
                <send|show|read|mark>
+               <channels>
         slack <apitoken|channels>         sets api/channel info in config file and sends/recieves messages in slack
               <send|show|read|mark>
+        discord <apitoken|authorize>      sets api/channel info in config file
 shutdown [now|in|force]                   shutdown the system
 ```
 
@@ -176,7 +178,7 @@ shutdown [now|in|force]                   shutdown the system
 - [Tests](https://github.com/treehouses/cli/tree/master/tests/README.md)
 
 ## Add a new feature
-Feel free to make a pull request to our repository.  
+Feel free to make a pull request to our repository.
 Remember the following files
 will have to be updated to add a feature:
 ```

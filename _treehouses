@@ -241,6 +241,8 @@ treehouses message slack send
 treehouses message slack show
 treehouses message slack mark
 treehouses message slack read
+treehouses message discord apitoken
+treehouses message discord authorize
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet

@@ -447,6 +447,55 @@ function message {
           log_help_and_exit1 "Error: This command does not exist" message
       esac
       ;;
+    discord)
+      case "$2" in
+        apitoken)
+          if check_apitoken discord; then
+            get_apitoken discord
+          elif [[ $3 != "" ]] && [[ $4 != "" ]]; then
+            client_id=$3
+            if [[ $4 == http?(s)://* ]]; then
+              redirect_uri=$4
+            else
+              log_and_exit1 "Invalid URL"
+            fi
+            conf_var_update "discord_clientid" "$client_id"
+            conf_var_update "discord_redirecturl" "$redirect_uri"
+            authorization_url=$(curl -Ls -o /dev/null -w %'{'url_effective'}' https://discord.com/api/oauth2/authorize?response_type=token\&client_id=${client_id}\&scope=identify)
+            echo "To get the access token, navigate to"
+            echo
+            echo "$authorization_url"
+            echo
+            echo "Then, click \"Authorize\" to provide permissions for your app"
+            echo "From the redirected link , you will get your access token for discord"
+            echo
+            echo "For example, if redirected link is \"http://localhost/token_type=Bearer&access_token=1234567890&expires_in=604800&scope=identify\"' then the access token is \"1234567890\""
+            echo "Then, run $BASENAME message discord authorize <access_token>"
+          else
+            echo "You do not have an authorized access token"
+            echo ""
+            echo "To get an authorized access token"
+            echo ""
+            echo "Navigate to https://discord.com/developers/applications. Create an APP by clicking \"New Application\" and provide a suitable name for your APP."
+            echo "Then move to the option \"OAuth2\" below \"General Information\" and add a redirect URL ( For eg: http://localhost/ ) by clicking \"Add Redirect\" below \"Redirects\"."
+            echo "Then, save the settings by pressing green save button at the bottom of the page."
+            echo "Note both the CLIENT ID and your Redirect URL"
+            echo "Run $BASENAME message discord apitoken <client_id> <redirect_url>"
+          fi
+            ;;
+        authorize)
+          if [[ $3 == "" ]]; then
+            echo "authorization code is missing"
+          else
+          access_token=$3
+            conf_var_update "discord_apitoken" "$access_token"
+            echo "you have successfully authorized and your access token is $access_token "
+          fi
+          ;;
+        *)
+          log_help_and_exit1 "Error: This command does not exist" message
+      esac
+      ;;
     *)
       log_help_and_exit1 "Error: This command does not exist" message
       ;;
@@ -503,5 +552,11 @@ function message_help {
   echo
   echo "  $BASENAME message slack mark \"channel ID\""
   echo "     Marks messages of a slack channel using channel ID"
+  echo
+  echo "  $BASENAME message discord apitoken"
+  echo "     Check for API token for discord"
+  echo
+  echo "  $BASENAME message discord authorize \"1234567890\""
+  echo "     Sets and saves API token"
   echo
 }

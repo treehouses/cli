@@ -169,6 +169,7 @@ message gitter <apitoken|authorize>       sets api/channel info in config file a
                <channels>
         slack <apitoken|channels>         sets api/channel info in config file and sends/recieves messages in slack
               <send|show|read|mark>
+        discord <apitoken|authorize>      sets api/channel info in config file
 shutdown [now|in|force]                   shutdown the system
 ```
 

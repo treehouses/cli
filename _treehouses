@@ -166,6 +166,9 @@ treehouses led
 treehouses led carnival
 treehouses led christmas
 treehouses led dance
+treehouses led diwali
+treehouses led dragonboat
+treehouses led easter
 treehouses led eid
 treehouses led green
 treehouses led green backlight
@@ -178,14 +181,15 @@ treehouses led green kbd-
 treehouses led green none
 treehouses led green oneshot
 treehouses led green timer
+treehouses led heavymetal
+treehouses led independenceday
 treehouses led kecak
+treehouses led labourday
+treehouses led lantern
 treehouses led lunarnewyear
 treehouses led newyear
 treehouses led onam
-treehouses led diwali
-treehouses led dragonboat
-treehouses led labourday
-treehouses led independenceday
+treehouses led random
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -197,13 +201,9 @@ treehouses led red kbd-
 treehouses led red none
 treehouses led red oneshot
 treehouses led red timer
+treehouses led stpatricks
 treehouses led thanksgiving
 treehouses led valentine
-treehouses led heavymetal
-treehouses led stpatricks
-treehouses led easter
-treehouses led lantern
-treehouses led random
 treehouses locale
 treehouses log
 treehouses log 0

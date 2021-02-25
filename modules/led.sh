@@ -208,6 +208,15 @@ function led {
       echo "Both LED: on 1 sec; off 1 sec; twice"
       kecak > "$LOGFILE"
       ;;    
+    sandstorm)
+      checkroot
+      echo "leds are set to sandstorm mode."
+      echo "Look at your RPi leds, both leds will be in this pattern..."
+      echo "Green and Red LED will flash at the beat of Darude - Sandstorm."
+      echo "This pattern is 25 seconds long..."
+      echo "Have fun!!"
+      sandstorm > "$LOGFILE"
+      ;;
     random)
       checkroot
       random
@@ -815,6 +824,97 @@ function kecak {
   led green "$current_green"
 }
 
+function sandstorm {
+  current_green=$(led "green")
+  current_red=$(led "red")
+
+  set_brightness 0 0 && set_brightness 1 0 # green and red off
+  sleep 0.5
+
+  #intro
+  x=0
+  while [ $x -le 2 ]; do
+    for ((i=0;i<6;i++)); do
+      set_brightness 0 1 && set_brightness 1 0 # green on and red off
+      sleep 0.125
+      set_brightness 0 0 && set_brightness 1 1 # green off and red on
+      sleep 0.125
+    done
+    set_brightness 0 1 && set_brightness 1 0 # green on and red off
+    sleep 1.0 
+    x=$(( x + 1 ))
+  done
+
+  #bridge
+  x=0
+  while [ $x -le 3 ]; do
+    for ((i=0;i<6;i++)); do
+      set_brightness 0 1 && set_brightness 1 0 # green on and red off
+      sleep 0.0625
+      set_brightness 0 0 && set_brightness 1 1 # green off and red on
+      sleep 0.0625
+    done
+    set_brightness 0 1 && set_brightness 1 0 # green on and red off
+    sleep .15
+    x=$(( x + 1 ))
+  done
+    
+  x=0
+  while [ $x -le 3 ]; do
+    for ((i=0;i<5;i++)); do
+      set_brightness 0 1 && set_brightness 1 0 # green on and red off
+      sleep 0.03125
+      set_brightness 0 0 && set_brightness 1 1 # green off and red on
+      sleep 0.03125
+    done
+    set_brightness 0 1 && set_brightness 1 0 # green on and red off
+    x=$(( x + 1 ))
+  done
+
+  #chorus
+  x=0
+  while [ $x -le 2 ]; do
+    for ((i=0;i<6;i++)); do
+      set_brightness 0 1 && set_brightness 1 0 # green on and red off
+      sleep 0.08
+      set_brightness 0 0 && set_brightness 1 1 # green off and red on
+      sleep 0.08
+    done
+    set_brightness 0 1 && set_brightness 1 0 # green on and red off
+    sleep .10
+    x=$(( x + 1 ))
+  done
+    
+  x=0
+  while [ $x -le 1 ]; do
+    for ((i=0;i<6;i++)); do
+      set_brightness 0 0 && set_brightness 1 1 # green off and red on
+      sleep 0.08
+      set_brightness 0 1 && set_brightness 1 0 # green on and red off
+      sleep 0.08
+    done
+    set_brightness 0 0 && set_brightness 1 1 # green off and red on
+    sleep .20
+    x=$(( x + 1 ))
+  done
+
+  x=0
+  while [ $x -le 3 ]; do
+    for ((i=0;i<6;i++)); do
+      set_brightness 0 1 && set_brightness 1 0 # green on and red off
+      sleep 0.08
+      set_brightness 0 0 && set_brightness 1 1 # green off and red on
+      sleep 0.08
+    done
+    set_brightness 0 1 && set_brightness 1 0 # green on and red off
+    sleep .10
+    x=$(( x + 1 ))
+  done
+
+  led green "$current_green"
+  led red "$current_red"
+}
+
 function random {
   echo "selecting from: "
   led_help | grep "\[" | cut -d "[" -f2 | cut -d "]" -f1  | sed -n '1!p'| head -2 | sed 's/|/ /g'| sed -e 's/ random//'
@@ -834,7 +934,7 @@ function led_help {
   echo "Usage: $BASENAME led [green|red] [mode]"
   echo "       $BASENAME led [newyear|blackhistorymonth|lunarnewyear|valentine|carnival|lantern|stpatricks]"
   echo "                      [easter|labourday|eid|dragonboat|independenceday|onam|diwali|thanksgiving]"
-  echo "                      [christmas|dance|heavymetal|random]"
+  echo "                      [christmas|dance|heavymetal|sandstorm|random]"
   echo
   echo "Sets or returns the led mode"
   echo
@@ -936,6 +1036,9 @@ function led_help {
   echo
   echo "  $BASENAME led kecak"
   echo "      This will set the mode of the led to kecak"
+  echo
+  echo "  $BASENAME led sandstorm"
+  echo "      This will set the mode of the led to sandstorm"
   echo
   echo "  $BASENAME led random"
   echo "     This will set the mode of the led to one of the above festivities"

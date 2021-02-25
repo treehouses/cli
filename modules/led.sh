@@ -276,8 +276,7 @@ function newyear {
   sleep 1
 
   counter=0
-  while [ $counter -le 2 ]
-  do
+  while [ $counter -le 2 ]; do
     set_brightness 1 0 && set_brightness 0 1
     sleep 0.5
     set_brightness 1 1 && set_brightness 0 0
@@ -289,8 +288,7 @@ function newyear {
   sleep 0.5
 
   counter=0
-  while [ $counter -le 2 ]
-  do
+  while [ $counter -le 2 ]; do
     set_brightness 1 1 && set_brightness 0 1
     sleep 0.5
     set_brightness 1 0 && set_brightness 0 0
@@ -309,20 +307,19 @@ function blackhistorymonth {
   set_brightness 0 0 && set_brightness 1 0
   sleep 1
 
-  for i in {1..20}
-    do
-      set_brightness 0 1 && set_brightness 1 1
-      sleep .1
+  for i in {1..20}; do
+    set_brightness 0 1 && set_brightness 1 1
+    sleep .1
 
-      set_brightness 0 0 && set_brightness 1 0
-      sleep .15
+    set_brightness 0 0 && set_brightness 1 0
+    sleep .15
 
-      set_brightness 0 1 && set_brightness 1 1
-      sleep .1
+    set_brightness 0 1 && set_brightness 1 1
+    sleep .1
 
-      set_brightness 0 0 && set_brightness 1 0
-      sleep .65
-    done
+    set_brightness 0 0 && set_brightness 1 0
+    sleep .65
+  done
 
   led red "$current_red"
   led green "$current_green"
@@ -332,8 +329,7 @@ function lunarnewyear {
   current_green=$(led "green")
   current_red=$(led "red")
 
-  for i in 1 2 3 4 5 6 7 8
-  do
+  for i in 1 2 3 4 5 6 7 8; do
     set_brightness 1 0 && sleep 0.1
     set_brightness 1 1 && sleep 0.1
   done
@@ -353,8 +349,7 @@ function valentine {
   sleep 0.25
 
   counter=0
-  while [ $counter -le 4 ]
-  do
+  while [ $counter -le 4 ]; do
     set_brightness 1 0 && set_brightness 0 1
     sleep 0.25
     set_brightness 1 1 && set_brightness 0 0
@@ -366,8 +361,7 @@ function valentine {
   sleep 0.25
 
   counter=0
-  while [ $counter -le 4 ]
-  do
+  while [ $counter -le 4 ]; do
     set_brightness 1 1 && set_brightness 0 1
     sleep 0.25
     set_brightness 1 0 && set_brightness 0 0
@@ -414,8 +408,7 @@ function lantern {
   set_brightness 1 0
 
   x=1
-  while [ $x -lt 4 ]
-  do
+  while [ $x -lt 4 ]; do
     set_brightness 0 1
     sleep 0.25
     set_brightness 0 0
@@ -423,8 +416,7 @@ function lantern {
     x=$(( x+1 ))
   done
 
-  while [ $x -lt 7 ]
-  do
+  while [ $x -lt 7 ]; do
     set_brightness 0 1
     sleep 0.125
     set_brightness 0 0
@@ -443,8 +435,7 @@ function stpatricks {
   set_brightness 1 0    # red off
   set_brightness 0 0    # green off
 
-  for i in {0..4}
-  do
+  for i in {0..4}; do
     set_brightness 0 1 && sleep 0.25
     set_brightness 0 0 && sleep 0.25
     set_brightness 0 1 && sleep 0.25
@@ -453,8 +444,7 @@ function stpatricks {
     set_brightness 0 0 && sleep 1
   done
 
-  for i in {0..19}
-  do
+  for i in {0..19}; do
     set_brightness 0 1 && sleep 0.05
     set_brightness 0 0 && sleep 0.05
   done
@@ -474,16 +464,14 @@ function easter {
   set_brightness 1 1 && sleep 0.25
   set_brightness 1 0 && sleep 2.0
 
-  for i in {0..2}
-  do
+  for i in {0..2}; do
     set_brightness 0 0 && sleep 1.0
     set_brightness 0 1 && sleep 1.0
   done
 
   set_brightness 0 1 && sleep 3.0
 
-  for i in {0..2}
-  do
+  for i in {0..2}; do
     set_brightness 0 1 && sleep 0.075
     set_brightness 0 0 && sleep 0.075
     set_brightness 1 1 && sleep 0.075
@@ -500,24 +488,21 @@ function eid {
 
   set_brightness 1 0 && set_brightness 0 0 && sleep 1
 
-  for i in {0..2}
-  do
+  for i in {0..2}; do
     set_brightness 1 1 && sleep 0.075
     set_brightness 1 0 && sleep 0.075
   done
 
   set_brightness 1 1 && sleep 3
 
-  for i in {0..2}
-  do
+  for i in {0..2}; do
     set_brightness 0 1 && sleep 0.075
     set_brightness 0 0 && sleep 0.075
   done
 
   set_brightness 0 1 && sleep 2
 
-  for i in {0..4}
-  do
+  for i in {0..4}; do
     set_brightness 1 1 && set_brightness 0 1 && sleep 0.075
     set_brightness 1 0 && set_brightness 0 0 && sleep 0.075
   done
@@ -546,10 +531,8 @@ function onam {
 
   set_brightness 0 0 && set_brightness 1 0
   counter=1
-  while [ $counter -le 2 ]
-  do
-    for i in {1..5}
-    do
+  while [ $counter -le 2 ]; do
+    for i in {1..5}; do
       set_brightness 0 1 && set_brightness 1 0
       sleep 0.5
       set_brightness 0 0 && set_brightness 1 0
@@ -557,8 +540,7 @@ function onam {
     done
     set_brightness 0 0 && set_brightness 1 0
     sleep 1
-    for i in {1..5}
-    do
+    for i in {1..5}; do
       set_brightness 0 0 && set_brightness 1 1
       sleep 0.5
       set_brightness 0 0 && set_brightness 1 0
@@ -575,22 +557,18 @@ function diwali {
   current_green=$(led "green")
   current_red=$(led "red")
 
-  for i in {0..4}                            # Green LED
-  do
+  for i in {0..4}; do                            # Green LED
     set_brightness 0 1 && sleep 0.025        # green on
     set_brightness 0 0 && sleep 0.025        # green OFF
   done
 
-  for i in {0..4}                            # Red LED
-  do
+  for i in {0..4}; do                            # Red LED
     set_brightness 1 1 && sleep 0.025        # red on
     set_brightness 1 0 && sleep 0.025        # red OFF
   done
 
-  for i in {0..4}                            # Both LEDs
-  do
-    for j in {0..9}
-    do
+  for i in {0..4}; do                            # Both LEDs
+    for j in {0..9}; do
       set_brightness 1 1 && set_brightness 0 1
       sleep 0.025
       set_brightness 1 0 && set_brightness 0 0
@@ -608,10 +586,8 @@ function dragonboat {
   current_red=$(led "red")
 
   time=0.01
-  for i in {0..2}
-  do
-    for j in {1..10}
-    do
+  for i in {0..2}; do
+    for j in {1..10}; do
       set_brightness 0 0 && set_brightness 1 0
       sleep "$(echo "$j*$time" | bc)"
       set_brightness 0 1 && set_brightness 1 1
@@ -630,18 +606,15 @@ function labourday {
   current_red=$(led "red")
 
   set_brightness 1 0 
-  for i in {0..1}
-  do
-    for j in {1..5}
-    do
+  for i in {0..1}; do
+    for j in {1..5}; do
       set_brightness 0 0
       sleep 0.5
       set_brightness 0 1
       sleep 0.5
     done
     set_brightness 0 0
-    for j in {1..2}
-    do
+    for j in {1..2}; do
       set_brightness 1 0
       sleep 0.2
       set_brightness 1 1
@@ -662,8 +635,7 @@ function independenceday {
   current_green=$(led "green")
 
   set_brightness 0 0 && set_brightness 1 0
-  for i in {0..1}
-  do
+  for i in {0..1}; do
     set_brightness 0 0 && set_brightness 1 1
     sleep 1.5
     set_brightness 0 1 && set_brightness 1 0
@@ -673,8 +645,7 @@ function independenceday {
   set_brightness 0 0 && set_brightness 1 0
   sleep 1.0
 
-  for i in {0..6}
-  do
+  for i in {0..6}; do
     set_brightness 0 0 && set_brightness 1 1
     sleep 0.1
     set_brightness 0 1 && set_brightness 1 0
@@ -708,8 +679,7 @@ function thanksgiving {
   set_brightness 0 1 && sleep 0.25
   set_brightness 1 1 && sleep 0.5
 
-  for i in {0..1}
-  do
+  for i in {0..1}; do
     set_brightness 1 0
     set_brightness 0 0 && sleep 0.25
     set_brightness 1 1
@@ -770,8 +740,7 @@ function heavymetal {
   set_brightness 0 0 && sleep 0.5    # green off
   set_brightness 1 0 && sleep 0.5    # red off
 
-  for i in {0..19}
-  do
+  for i in {0..19}; do
     set_brightness 0 1 && sleep 0.025
     set_brightness 0 0 && sleep 0.025
     set_brightness 1 1 && sleep 0.025
@@ -786,36 +755,31 @@ function kecak {
   current_green=$(led "green")
   current_red=$(led "red")
 
-  for i in {0..1}
-  do
+  for i in {0..1}; do
     set_brightness 0 1 && set_brightness 1 1 && sleep 1
     set_brightness 0 0 && set_brightness 1 0 && sleep 1
   done
 
-  for i in {0..19}
-  do 
+  for i in {0..19}; do
     set_brightness 0 1 && sleep 0.1
     set_brightness 0 0
     set_brightness 1 1 && sleep 0.1
     set_brightness 1 0 
   done
   
-  for i in {0..1}
-  do
+  for i in {0..1}; do
     set_brightness 0 1 && set_brightness 1 1 && sleep 1
     set_brightness 0 0 && set_brightness 1 0 && sleep 1
   done
 
-  for i in {0..19}
-  do
+  for i in {0..19}; do
     set_brightness 0 1 && sleep 0.1
     set_brightness 0 0
     set_brightness 1 1 && sleep 0.1
     set_brightness 1 0 
   done
 
-  for i in {0..1}
-  do
+  for i in {0..1}; do
     set_brightness 0 1 && set_brightness 1 1 && sleep 1
     set_brightness 0 0 && set_brightness 1 0 && sleep 1
   done

@@ -825,91 +825,91 @@ function kecak {
 }
 
 function sandstorm {
-    current_green=$(led "green")
-    current_red=$(led "red")
+  current_green=$(led "green")
+  current_red=$(led "red")
 
-    set_brightness 0 0  && set_brightness 1 0 # green and red off
-    sleep 0.5
+  set_brightness 0 0  && set_brightness 1 0 # green and red off
+  sleep 0.5
 
-    #intro
-    x=0
-    while [ $x -le 2 ]; do
-      for ((i=0;i<6;i++)); do
-        set_brightness 0 1  && set_brightness 1 0 # green on and red off
-        sleep 0.125
-        set_brightness 0 0  && set_brightness 1 1 # green off and red on
-        sleep 0.125
-      done
+  #intro
+  x=0
+  while [ $x -le 2 ]; do
+    for ((i=0;i<6;i++)); do
       set_brightness 0 1  && set_brightness 1 0 # green on and red off
-      sleep 1.0 
-      x=$(( x + 1 ))
-    done
-
-    #bridge
-    x=0
-    while [ $x -le 3 ]; do
-      for ((i=0;i<6;i++)); do
-        set_brightness 0 1  && set_brightness 1 0 # green on and red off
-        sleep 0.0625
-        set_brightness 0 0  && set_brightness 1 1 # green off and red on
-        sleep 0.0625
-      done
-      set_brightness 0 1  && set_brightness 1 0 # green on and red off
-      sleep .15
-      x=$(( x + 1 ))
-    done
-    
-    x=0
-    while [ $x -le 3 ]; do
-      for ((i=0;i<5;i++)); do
-        set_brightness 0 1  && set_brightness 1 0 # green on and red off
-        sleep 0.03125
-        set_brightness 0 0  && set_brightness 1 1 # green off and red on
-        sleep 0.03125
-      done
-      set_brightness 0 1  && set_brightness 1 0 # green on and red off
-      x=$(( x + 1 ))
-    done
-
-    #chorus
-    x=0
-    while [ $x -le 2 ]; do
-      for ((i=0;i<6;i++)); do
-        set_brightness 0 1  && set_brightness 1 0 # green on and red off
-        sleep 0.08
-        set_brightness 0 0  && set_brightness 1 1 # green off and red on
-        sleep 0.08
-      done
-      set_brightness 0 1  && set_brightness 1 0 # green on and red off
-      sleep .10
-      x=$(( x + 1 ))
-    done
-    
-    x=0
-    while [ $x -le 1 ]; do
-      for ((i=0;i<6;i++)); do
-        set_brightness 0 0  && set_brightness 1 1 # green off and red on
-        sleep 0.08
-        set_brightness 0 1  && set_brightness 1 0 # green on and red off
-        sleep 0.08
-      done
+      sleep 0.125
       set_brightness 0 0  && set_brightness 1 1 # green off and red on
-      sleep .20
-      x=$(( x + 1 ))
+      sleep 0.125
     done
+    set_brightness 0 1  && set_brightness 1 0 # green on and red off
+    sleep 1.0 
+    x=$(( x + 1 ))
+  done
 
-    x=0
-    while [ $x -le 3 ]; do
-      for ((i=0;i<6;i++)); do
-        set_brightness 0 1  && set_brightness 1 0 # green on and red off
-        sleep 0.08
-        set_brightness 0 0  && set_brightness 1 1 # green off and red on
-        sleep 0.08
-      done
+  #bridge
+  x=0
+  while [ $x -le 3 ]; do
+    for ((i=0;i<6;i++)); do
       set_brightness 0 1  && set_brightness 1 0 # green on and red off
-      sleep .10
-      x=$(( x + 1 ))
+      sleep 0.0625
+      set_brightness 0 0  && set_brightness 1 1 # green off and red on
+      sleep 0.0625
     done
+    set_brightness 0 1  && set_brightness 1 0 # green on and red off
+    sleep .15
+    x=$(( x + 1 ))
+  done
+    
+  x=0
+  while [ $x -le 3 ]; do
+    for ((i=0;i<5;i++)); do
+      set_brightness 0 1  && set_brightness 1 0 # green on and red off
+      sleep 0.03125
+      set_brightness 0 0  && set_brightness 1 1 # green off and red on
+      sleep 0.03125
+    done
+    set_brightness 0 1  && set_brightness 1 0 # green on and red off
+    x=$(( x + 1 ))
+  done
+
+  #chorus
+  x=0
+  while [ $x -le 2 ]; do
+    for ((i=0;i<6;i++)); do
+      set_brightness 0 1  && set_brightness 1 0 # green on and red off
+      sleep 0.08
+      set_brightness 0 0  && set_brightness 1 1 # green off and red on
+      sleep 0.08
+    done
+    set_brightness 0 1  && set_brightness 1 0 # green on and red off
+    sleep .10
+    x=$(( x + 1 ))
+  done
+    
+  x=0
+  while [ $x -le 1 ]; do
+    for ((i=0;i<6;i++)); do
+      set_brightness 0 0  && set_brightness 1 1 # green off and red on
+      sleep 0.08
+      set_brightness 0 1  && set_brightness 1 0 # green on and red off
+      sleep 0.08
+    done
+    set_brightness 0 0  && set_brightness 1 1 # green off and red on
+    sleep .20
+    x=$(( x + 1 ))
+  done
+
+  x=0
+  while [ $x -le 3 ]; do
+    for ((i=0;i<6;i++)); do
+      set_brightness 0 1  && set_brightness 1 0 # green on and red off
+      sleep 0.08
+      set_brightness 0 0  && set_brightness 1 1 # green off and red on
+      sleep 0.08
+    done
+    set_brightness 0 1  && set_brightness 1 0 # green on and red off
+    sleep .10
+    x=$(( x + 1 ))
+  done
 
   led green "$current_green"
   led red "$current_red"

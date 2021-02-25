@@ -40,22 +40,23 @@ treehouses button bluetooth
 treehouses button off
 treehouses camera
 treehouses camera capture
+treehouses camera detect
 treehouses camera off
 treehouses camera on
-treehouses camera detect
 treehouses changelog
-treehouses changelog view
 treehouses changelog compare
+treehouses changelog view
 treehouses clone
+treehouses config
+treehouses config add
+treehouses config clear
+treehouses config delete
+treehouses config update
 treehouses container
 treehouses container balena
 treehouses container docker
 treehouses container none
-treehouses config
-treehouses config update
-treehouses config add
-treehouses config delete
-treehouses config clear
+treehouses convert
 treehouses coralenv demo-always-on
 treehouses coralenv demo-off
 treehouses coralenv demo-on
@@ -73,8 +74,8 @@ treehouses default network
 treehouses default notice
 treehouses default tunnel
 treehouses detect
-treehouses detect arm
 treehouses detect arch
+treehouses detect arm
 treehouses detect bluetooth
 treehouses detect rpi
 treehouses detect rpi full
@@ -167,6 +168,9 @@ treehouses led blackhistorymonth
 treehouses led carnival
 treehouses led christmas
 treehouses led dance
+treehouses led diwali
+treehouses led dragonboat
+treehouses led easter
 treehouses led eid
 treehouses led green
 treehouses led green backlight
@@ -179,14 +183,15 @@ treehouses led green kbd-
 treehouses led green none
 treehouses led green oneshot
 treehouses led green timer
+treehouses led heavymetal
+treehouses led independenceday
 treehouses led kecak
+treehouses led labourday
+treehouses led lantern
 treehouses led lunarnewyear
 treehouses led newyear
 treehouses led onam
-treehouses led diwali
-treehouses led dragonboat
-treehouses led labourday
-treehouses led independenceday
+treehouses led random
 treehouses led red
 treehouses led red backlight
 treehouses led red cpu0
@@ -199,13 +204,9 @@ treehouses led red none
 treehouses led red oneshot
 treehouses led red timer
 treehouses led sandstorm
+treehouses led stpatricks
 treehouses led thanksgiving
 treehouses led valentine
-treehouses led heavymetal
-treehouses led stpatricks
-treehouses led easter
-treehouses led lantern
-treehouses led random
 treehouses locale
 treehouses log
 treehouses log 0
@@ -220,31 +221,31 @@ treehouses magazines available
 treehouses magazines downloaded
 $(magazines_cmds)
 treehouses memory
-treehouses memory gb
-treehouses memory mb
 treehouses memory free
 treehouses memory free gb
 treehouses memory free mb
+treehouses memory gb
+treehouses memory mb
 treehouses memory total
 treehouses memory total gb
 treehouses memory total mb
 treehouses memory used
 treehouses memory used gb
 treehouses memory used mb
-treehouses message gitter apitoken
-treehouses message gitter authorize
-treehouses message gitter send
-treehouses message gitter show
-treehouses message gitter read
-treehouses message gitter mark
-treehouses message slack apitoken
-treehouses message slack channels
-treehouses message slack send
-treehouses message slack show
-treehouses message slack mark
-treehouses message slack read
 treehouses message discord apitoken
 treehouses message discord authorize
+treehouses message gitter apitoken
+treehouses message gitter authorize
+treehouses message gitter mark
+treehouses message gitter read
+treehouses message gitter send
+treehouses message gitter show
+treehouses message slack apitoken
+treehouses message slack channels
+treehouses message slack mark
+treehouses message slack read
+treehouses message slack send
+treehouses message slack show
 treehouses networkmode
 treehouses networkmode info
 treehouses ntp internet
@@ -262,31 +263,6 @@ treehouses openvpn show
 treehouses openvpn start
 treehouses openvpn stop
 treehouses openvpn use
-treehouses shadowsocks
-treehouses shadowsocks add
-treehouses shadowsocks disable
-treehouses shadowsocks enable
-treehouses shadowsocks enter
-treehouses shadowsocks list
-treehouses shadowsocks restart
-treehouses shadowsocks remove
-treehouses shadowsocks start
-treehouses shadowsocks stop
-treehouses storage gb
-treehouses storage mb
-treehouses storage kb
-treehouses storage free
-treehouses storage free gb
-treehouses storage free mb
-treehouses storage free kb
-treehouses storage total
-treehouses storage total gb
-treehouses storage total mb
-treehouses storage total kb
-treehouses storage used
-treehouses storage used gb
-treehouses storage used mb
-treehouses storage used kb
 treehouses password
 treehouses password disable
 treehouses password enable
@@ -321,12 +297,13 @@ treehouses remote key send
 treehouses remote services available
 treehouses remote services installed
 treehouses remote services running
+treehouses remote ssh2fa
 treehouses remote status
 treehouses remote statuspage
-treehouses remote ssh2fa
 treehouses remote upgrade
 treehouses remote version
 treehouses rename
+treehouses resolution
 treehouses restore
 treehouses rtc off
 treehouses rtc on
@@ -340,10 +317,20 @@ $(services_cmds)
 treehouses services ports
 treehouses services running
 treehouses services running full
+treehouses shadowsocks
+treehouses shadowsocks add
+treehouses shadowsocks disable
+treehouses shadowsocks enable
+treehouses shadowsocks enter
+treehouses shadowsocks list
+treehouses shadowsocks remove
+treehouses shadowsocks restart
+treehouses shadowsocks start
+treehouses shadowsocks stop
 treehouses shutdown
-treehouses shutdown now
-treehouses shutdown in
 treehouses shutdown force
+treehouses shutdown in
+treehouses shutdown now
 treehouses speedtest
 treehouses speedtest -h
 treehouses ssh
@@ -383,12 +370,36 @@ treehouses sshtunnel notice list
 treehouses sshtunnel notice now
 treehouses sshtunnel notice off
 treehouses sshtunnel notice on
-treehouses sshtunnel refresh
 treehouses sshtunnel ports
+treehouses sshtunnel refresh
 treehouses sshtunnel remove all
 treehouses sshtunnel remove host
 treehouses sshtunnel remove port
 treehouses staticwifi
+treehouses storage free
+treehouses storage free gb
+treehouses storage free kb
+treehouses storage free mb
+treehouses storage gb
+treehouses storage kb
+treehouses storage mb
+treehouses storage total
+treehouses storage total gb
+treehouses storage total kb
+treehouses storage total mb
+treehouses storage used
+treehouses storage used gb
+treehouses storage used kb
+treehouses storage used mb
+treehouses system
+treehouses system all
+treehouses system cpu
+treehouses system cputask
+treehouses system disk
+treehouses system ram
+treehouses system ramtask
+treehouses system temperature
+treehouses system volt
 treehouses temperature
 treehouses temperature celsius
 treehouses temperature fahrenheit
@@ -401,7 +412,6 @@ treehouses tor delete
 treehouses tor deleteall
 treehouses tor destroy
 treehouses tor list
-treehouses tor ports
 treehouses tor notice
 treehouses tor notice add
 treehouses tor notice delete
@@ -409,20 +419,21 @@ treehouses tor notice list
 treehouses tor notice now
 treehouses tor notice off
 treehouses tor notice on
+treehouses tor ports
 treehouses tor refresh
 treehouses tor start
 treehouses tor status
 treehouses tor stop
 treehouses upgrade
-treehouses upgrade cli
-treehouses upgrade force
 treehouses upgrade bluetooth
 treehouses upgrade check
+treehouses upgrade cli
+treehouses upgrade force
 treehouses uptime
 treehouses uptime boot
+treehouses uptime log
 treehouses uptime start
 treehouses uptime stop
-treehouses uptime log
 treehouses usb
 treehouses usb off
 treehouses usb on
@@ -433,28 +444,17 @@ treehouses version
 treehouses version contributors
 treehouses version remote
 treehouses vnc
+treehouses vnc auth info
+treehouses vnc auth system
+treehouses vnc auth vnc
 treehouses vnc info
 treehouses vnc off
 treehouses vnc on
-treehouses vnc auth system
-treehouses vnc auth vnc
-treehouses vnc auth info
 treehouses vnc password
 treehouses wifi
 treehouses wificountry
 treehouses wifihidden
 treehouses wifistatus
-treehouses convert
-treehouses resolution
-treehouses system
-treehouses system all
-treehouses system cpu
-treehouses system cputask
-treehouses system disk
-treehouses system ram
-treehouses system ramtask
-treehouses system temperature
-treehouses system volt
 EOF
 # COMP_LINE is the line you typed in terminal
 # COMP_WORDS is array form of COMP_LINE

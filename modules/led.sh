@@ -258,7 +258,7 @@ function led {
 
     if [ "$color" = "green" ]; then
       echo -e "$green: $newValue"
-    elif [ "$color" = "red" ]; then
+    if [ "$color" = "red" ]; then
       echo -e "$red: $newValue"
     fi
   fi

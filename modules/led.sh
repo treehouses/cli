@@ -881,12 +881,12 @@ function sandstorm {
 
 function random {
   echo "selecting from: "
-  led_help | grep "\[" | cut -d "[" -f2 | cut -d "]" -f1  | sed -n '1!p'| head -2 | sed 's/|/ /g'| sed -e 's/ random//'
+  led_help | grep "\[" | cut -d "[" -f2 | cut -d "]" -f1  | sed -n '1!p'| head -3 | sed 's/|/ /g'| sed -e 's/ random//'
   rando="$(led_help | grep "\[" \
     | cut -d "[" -f2 \
     | cut -d "]" -f1 \
     | sed -n '1!p' \
-    | head -2 \
+    | head -3 \
     | sed 's/|/\n/g' \
     | sed -e 's/ random//' \
     | shuf -n 1)"

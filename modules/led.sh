@@ -886,7 +886,7 @@ function random {
     | cut -d "[" -f2 \
     | cut -d "]" -f1 \
     | sed -n '1!p' \
-    | head -2 \
+    | head -3 \
     | sed 's/|/\n/g' \
     | sed -e 's/ random//' \
     | shuf -n 1)"

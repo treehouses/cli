@@ -75,6 +75,12 @@ function checkwifi {
   fi
 }
 
+function warningsign {
+  if ! [[ $(pstree -ps $$) == *"python"* ]]; then
+      echo -ne "\e[0;33m\U26A0 \e[0m"
+  fi
+}
+
 function restart_hotspot {
   restart_service dhcpcd || true
   ifdown wlan0 || true

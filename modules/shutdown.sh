@@ -19,7 +19,7 @@ function shutdown {
       /sbin/shutdown -f
       ;;
     *)
-       echo "Error: only now, in and force options are supported."
+       echo "Error: only the options 'now', 'in', and 'force' are supported"
        ;;
   esac
 }

@@ -3,7 +3,7 @@ function shutdown {
   checkroot
   case "$1" in
     "")
-      echo "Shutting down in 60 seconds. Press ctrl+c to cancel"
+      echo "Shutting down in 60 seconds. Press ctrl+c to cancel."
       sleep 60
       /sbin/shutdown now
        ;;
@@ -11,7 +11,7 @@ function shutdown {
       /sbin/shutdown now
       ;;
     "in")
-      echo "Shutting down in $2 seconds. Press ctrl+c to cancel"
+      echo "Shutting down in $2 seconds. Press ctrl+c to cancel."
       sleep "$2"
       /sbin/shutdown now
       ;;
@@ -19,7 +19,7 @@ function shutdown {
       /sbin/shutdown -f
       ;;
     *)
-       echo "Error: only now, in and force options are supported"
+       echo "Error: only now, in and force options are supported."
        ;;
   esac
 }
@@ -32,13 +32,13 @@ function shutdown_help {
   echo
   echo "Example:"
   echo "  $BASENAME shutdown"
-  echo "      System shutdown in 60 seconds. Press ctrl+c to cancel"
+  echo "      System shutdown in 60 seconds. Press ctrl+c to cancel."
   echo
   echo "  $BASENAME shutdown now"
   echo "      System shutdown immediately"
   echo
   echo "  $BASENAME shutdown in <time in seconds>"
-  echo "      System will shutdown after the specified time. Press ctrl+c to cancel"
+  echo "      System will shutdown after the specified time. Press ctrl+c to cancel."
   echo
   echo "  $BASENAME shutdown force"
   echo "      System will force shutdown"

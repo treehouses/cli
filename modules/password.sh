@@ -2,16 +2,22 @@ function password {
   checkrpi
   checkroot
   checkargn $# 1
-  if [[ $1 == "" ]]; then
+
+  case "$1" in
+  "")
     log_and_exit1 "Error: Password not entered"
-  elif [ $1 == "disable" ]; then
-    disablepassword 
-  elif [ $1 == "enable" ]; then
+    ;;
+  "disable")
+    disablepassword
+    ;;
+  "enable")
     enablepassword
-  else
+    ;;
+  *)
     chpasswd <<< "pi:$1"
     echo "Success: the password has been changed"
-  fi
+    ;;
+  esac
 }
 
 function disablepassword {

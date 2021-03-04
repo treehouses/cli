@@ -3,7 +3,7 @@ function password {
   checkroot
   checkargn $# 1
 
-  case "$1" in
+  case "$options" in
   "")
     log_and_exit1 "Error: Password not entered"
     ;;
@@ -14,7 +14,7 @@ function password {
     enablepassword
     ;;
   *)
-    chpasswd <<< "pi:$1"
+    chpasswd <<< "pi:$options"
     echo "Success: the password has been changed"
     ;;
   esac

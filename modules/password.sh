@@ -2,7 +2,7 @@ function password {
   checkrpi
   checkroot
   checkargn $# 1
-
+  options="$1"
   case "$options" in
   "")
     log_and_exit1 "Error: Password not entered"

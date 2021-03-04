@@ -1,41 +1,29 @@
 function start_service {
   if [ "$(systemctl is-active "$1" 2>"$LOGFILE")" = "inactive" ]; then
-    systemctl start "$1" >"$LOGFILE" 2>"$LOGFILE"
-    if [ $? -ne 0 ]; then
-      log_comment_and_exit1 "Failed to start service $1"
-    fi
+    systemctl start "$1" >"$LOGFILE" 2>"$LOGFILE" || log_and_exit1 "Failed to start service $1"
   fi
 }
 
 function restart_service {
-  systemctl stop "$1" >"$LOGFILE" 2>"$LOGFILE"
-  systemctl start "$1" >"$LOGFILE" 2>"$LOGFILE"
+  systemctl stop "$1" >"$LOGFILE" 2>"$LOGFILE" || log_and_exit1 "Failed to stop service $1"
+  systemctl start "$1" >"$LOGFILE" 2>"$LOGFILE" || log_and_exit1 "Failed to start service $1"
 }
 
 function stop_service {
   if [ "$(systemctl is-active "$1" 2>"$LOGFILE")" = "active" ]; then
-    systemctl stop "$1" >"$LOGFILE" 2>"$LOGFILE"
-    if [ $? -ne 0 ]; then
-      log_comment_and_exit1 "Failed to stop service $1"
-    fi
+    systemctl stop "$1" >"$LOGFILE" 2>"$LOGFILE" || log_and_exit1 "Failed to stop service $1"
   fi
 }
 
 function enable_service {
   if [ "$(systemctl is-enabled "$1" 2>"$LOGFILE")" = "disabled" ]; then
-    systemctl enable "$1" >"$LOGFILE" 2>"$LOGFILE"
-    if [ $? -ne 0 ]; then
-      log_comment_and_exit1 "Failed to enable service $1"
-    fi
+    systemctl enable "$1" >"$LOGFILE" 2>"$LOGFILE" || log_and_exit1 "Failed to enable service $1"
   fi
 }
 
 function disable_service {
   if [ "$(systemctl is-enabled "$1" 2>"$LOGFILE")" = "enabled" ]; then
-    systemctl disable "$1" >"$LOGFILE" 2>"$LOGFILE"
-    if [ $? -ne 0 ]; then
-      log_comment_and_exit1 "Failed to disable service $1"
-    fi
+    systemctl disable "$1" >"$LOGFILE" 2>"$LOGFILE" || log_and_exit1 "Failed to disable service $1"
   fi
 }
 

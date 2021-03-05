@@ -60,19 +60,19 @@ function camera {
       if ! grep -q "start_x=1" ${config} ; then
         log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
       fi
-      case "$2" in 
+      case "$2" in
         "")
           echo "Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
           let length=$length*1000
           raspivid -o "${viddir}$BASENAME-${timestamp}.h264" -t "${length}" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
           convert ${viddir}$BASENAME-${timestamp}.h264 ${viddir}$BASENAME-${timestamp}.${vidtype}
           rm ${viddir}$BASENAME-${timestamp}.h264
-          ;;       
-        
+          ;;
+
         *)
           if ! [[ "$2" =~ ^[1-9][0-9]*$ ]] ; then #^[0-9]+$ to accept 0 for indefinite recording
             log_and_exit1 "Error: positive integers only."
-          else        
+          else
             echo "Camera is recording ${2} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."
             let length=$2*1000
             raspivid -o "${viddir}$BASENAME-${timestamp}.h264" -t "${length}" && echo "Success: Video captured" && echo "Converting video to ${vidtype}"
@@ -80,9 +80,11 @@ function camera {
             rm ${viddir}$BASENAME-${timestamp}.h264
           fi
           ;;
-      esac
-      ;;
-      
+    *)
+      echo "Error: The only supported options are 'on', 'off', 'detect', 'capture', and 'record'."
+    ;;
+  esac
+
     "detect")
       mkdir -p ${directory}
       if ! grep -q "start_x=1" ${config} ; then

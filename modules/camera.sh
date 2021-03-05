@@ -80,10 +80,6 @@ function camera {
             rm ${viddir}$BASENAME-${timestamp}.h264
           fi
           ;;
-    *)
-      echo "Error: The only supported options are 'on', 'off', 'detect', 'capture', and 'record'."
-    ;;
-  esac
 
     "detect")
       mkdir -p ${directory}
@@ -115,8 +111,8 @@ function camera {
     fi
     ;;
 
-    "*")
-      camera_help
+    *)
+      echo "Error: The only supported options are 'on', 'off', 'detect', 'capture', and 'record'."
     ;;
   esac
 }

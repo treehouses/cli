@@ -76,7 +76,7 @@ function remote {
         do
           cmd_str+="\"$line\","
         done <<< "$reverse"
-        printf "{\"%s\"}\n" "${cmd_str::-1}"
+        printf "{%s}\n" "${cmd_str::-1}"
       ;;
     "allservices")
       checkargn $# 1

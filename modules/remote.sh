@@ -75,7 +75,7 @@ function remote {
         while IFS= read -r line;
         do
           cmd_str+="\"$line\","
-        done <<< "$every_reverse"
+        done <<< "$reverse"
         printf "{\"commands\":["%s"]}\n" "${cmd_str::-1}"
       ;;
     "allservices")

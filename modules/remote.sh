@@ -69,6 +69,22 @@ function remote {
         log_and_exit1 "Usage: $BASENAME remote commands [json]"
       fi
       ;;
+    "reverse")
+      checkargn $# 2
+      export reverse=$(treehouses internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f4)
+      if [ -z "$2" ]; then
+        echo "$every_command"
+      elif [ "$2" = "json" ]; then
+        while IFS= read -r line;
+        do
+          cmd_str+="\"$line\","
+        done <<< "$every_command"
+        printf "{\"commands\":["%s"]}\n" "${cmd_str::-1}"
+      else
+        echo "Error: incorrect command"
+        log_and_exit1 "Usage: $BASENAME remote commands [json]"
+      fi
+      ;;
     "allservices")
       checkargn $# 1
       json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"},\"usesEnv\":{"%s"},\"size\":{"%s"}}\n"

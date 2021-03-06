@@ -115,6 +115,7 @@ function camera {
 
     *)
       echo "Error: The only supported options are 'on', 'off', 'detect, 'capture', and 'record'."
+      camera_help
     ;;
   esac
 }

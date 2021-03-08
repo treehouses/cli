@@ -1,11 +1,11 @@
 function password {
   checkrpi
   checkroot
+  checkargn $# 2
   options="$1"
 
   case "$options" in
   "change")
-    checkargn $# 2
     case "$2" in
       "")
         log_and_exit1 "Error: Password not entered"
@@ -25,7 +25,6 @@ function password {
     enablepassword
     ;;
   *)
-    checkargn $# 1
     log_and_exit1 "Error: Must use an option to 'change', 'disable', or 'enable'"
     ;;
   esac

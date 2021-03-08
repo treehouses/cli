@@ -17,7 +17,7 @@ function internet {
 
     $postal="$info" | grep -E '"(postal)"'
 
-    if [-z $postal]; then
+    if [ -z $postal ]; then
       echo "$info" | grep -E '"(ip)"'
       echo "$info" | grep -E '"(city|country)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'
       echo ", \"postal\": \"n/a\""

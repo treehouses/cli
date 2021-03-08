@@ -203,7 +203,7 @@ function autorun_helper {
 
 function remote_help {
   echo
-  echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | statuspage | ssh2fa | help | key>"
+  echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | reverse | allservices | statuspage | ssh2fa | help | key>"
   echo
   echo "Returns a string representation of the current status of the Raspberry Pi"
   echo "Used for Treehouses Remote"
@@ -238,6 +238,9 @@ function remote_help {
   echo
   echo "$BASENAME remote commands [json]"
   echo "returns a list of all commands for tab completion"
+  echo
+  echo "$BASENAME remote reverse"
+  echo "returns the device's internet location information"
   echo
   echo "$BASENAME remote allservices"
   echo "returns json string of services"

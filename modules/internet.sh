@@ -15,7 +15,7 @@ function internet {
     fi
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
 
-    $postal="$info" | grep -E '"(postal)"'
+    postal=$("$info" | grep -E '"(postal)"')
 
     if [ -z $postal ]; then
       echo "$info" | grep -E '"(ip)"'

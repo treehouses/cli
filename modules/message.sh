@@ -504,11 +504,11 @@ function message {
 
 function message_help {
   echo
-  echo "Usage: $BASENAME message <chats> 
-                          [<apitoken>|<oauth key> <redirect URL> | 
-                           <authorize> <code> <oauth secret> | 
-                           <send> <group> <message> | 
-                           <show|read|mark> <group>]"
+  echo "Usage: $BASENAME message <chats>" 
+  echo "                   [<apitoken>|<oauth key> <redirect URL> |"
+  echo "                    <authorize> <code> <oauth secret> |"
+  echo "                    <send> <group> <message> |"
+  echo "                    <show|read|mark> <group>]"
   echo
   echo "You can get your token from:"
   echo "https://developer.gitter.im/docs/welcome"

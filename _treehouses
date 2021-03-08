@@ -263,7 +263,7 @@ treehouses openvpn show
 treehouses openvpn start
 treehouses openvpn stop
 treehouses openvpn use
-treehouses password
+treehouses password change
 treehouses password disable
 treehouses password enable
 treehouses picture

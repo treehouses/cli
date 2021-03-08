@@ -1,11 +1,12 @@
 function password {
   checkrpi
   checkroot
-  checkargn $# 1
+  checkargn $# 2
   options="$1"
   case "$options" in
-  "")
-    log_and_exit1 "Error: Password not entered"
+  "change")
+    chpasswd <<< "pi:$options"
+    echo "Success: the password has been changed"
     ;;
   "disable")
     disablepassword
@@ -14,8 +15,7 @@ function password {
     enablepassword
     ;;
   *)
-    chpasswd <<< "pi:$options"
-    echo "Success: the password has been changed"
+    log_and_exit1 "Error: Add an option 'change', 'disable', or 'enable'"
     ;;
   esac
 }
@@ -34,13 +34,13 @@ function enablepassword {
 
 function password_help () {
   echo
-  echo "Usage: $BASENAME password <password>"
+  echo "Usage: $BASENAME password change <password>"
   echo "       $BASENAME password [disable|enable]"
   echo
   echo "Changes the password for 'pi' user"
   echo
   echo "Example:"
-  echo "  $BASENAME password ABC"
+  echo "  $BASENAME change password ABC"
   echo "      Sets the password for 'pi' user to 'ABC'."
   echo
   echo "  $BASENAME password disable"

@@ -6,12 +6,12 @@ function password {
   case "$options" in
   "change")
     checkargn $# 2
-    case "$password" in
+    case "$2" in
       "")
         log_and_exit1 "Error: Password not entered"
         ;;
       *)
-        chpasswd <<< "pi:$password"
+        chpasswd <<< "pi:$2"
         echo "Success: the password has been changed"
         ;;
     esac

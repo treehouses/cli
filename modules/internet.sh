@@ -15,9 +15,9 @@ function internet {
     fi
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
 
-    postal=$("$info" | grep -E '"(postal)"')
+    postal=$("$info" | grep -E '"(postal)"') #assigns postal value
 
-    if [ -z $postal ]; then
+    if [ -z $postal ]; then #if no postal, echoes n/a for postal
       echo "$info" | grep -E '"(ip)"'
       echo "$info" | grep -E '"(city|country)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'
       echo ", \"postal\": \"n/a\""

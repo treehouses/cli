@@ -14,6 +14,7 @@ function password {
         echo "Success: the password has been changed"
         ;;
     esac
+    ;;
   "disable")
     disablepassword
     ;;

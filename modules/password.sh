@@ -5,9 +5,15 @@ function password {
   options="$1"
   case "$options" in
   "change")
-    chpasswd <<< "pi:$options"
-    echo "Success: the password has been changed"
-    ;;
+    case "$password" in
+      "")
+        log_and_exit1 "Error: Password not entered"
+        ;;
+      *)
+        chpasswd <<< "pi:$password"
+        echo "Success: the password has been changed"
+        ;;
+      esac
   "disable")
     disablepassword
     ;;
@@ -15,7 +21,7 @@ function password {
     enablepassword
     ;;
   *)
-    log_and_exit1 "Error: Add an option 'change', 'disable', or 'enable'"
+    log_and_exit1 "Error: Must use an option 'change', 'disable', or 'enable'"
     ;;
   esac
 }

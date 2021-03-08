@@ -13,7 +13,7 @@ function password {
         chpasswd <<< "pi:$password"
         echo "Success: the password has been changed"
         ;;
-      esac
+    esac
   "disable")
     disablepassword
     ;;

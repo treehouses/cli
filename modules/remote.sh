@@ -72,8 +72,7 @@ function remote {
     "reverse")
       checkargn $# 2
       reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f4)
-        while IFS= read -r line;
-        do
+        while IFS= read -r line; do
           cmd_str+="\"$line\","
         done <<< "$reverse"
         printf "[%s]\n" "${cmd_str::-1}"

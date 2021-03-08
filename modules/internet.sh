@@ -14,9 +14,20 @@ function internet {
       log_and_exit1 "Error: no internet found"
     fi
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
-    echo "$info" | grep -E '"(ip)"'
-    echo "$info" | grep -E '"(city|country|postal)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'
-    echo "$info" | grep -E '"(org|timezone)"'
+
+    $postal="$info" | grep -E '"(postal)"'
+
+    if [-z $postal]; then
+      echo "$info" | grep -E '"(ip)"'
+      echo "$info" | grep -E '"(city|country)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'
+      echo ", \"postal\": \"n/a\""
+      echo "$info" | grep -E '"(org|timezone)"'
+
+    else
+      echo "$info" | grep -E '"(ip)"'
+      echo "$info" | grep -E '"(city|country|postal)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'
+      echo "$info" | grep -E '"(org|timezone)"'
+    fi
     ;;
   *)
     log_help_and_exit1 "ERROR: incorrect command" internet

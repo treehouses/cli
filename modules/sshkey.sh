@@ -121,7 +121,7 @@ function sshkey_help () {
   echo
   echo "Example:"
   echo "  $BASENAME sshkey add \"\""
-  echo "      The public key between quotes will be added to authorized_keys so user can login without password for both 'pi' and 'root' user."
+  echo "      The public key between quotes will be added to authorized_keys, so the user can login without a password for both 'pi' and 'root' user."
   echo
   echo "  $BASENAME sshkey list"
   echo "      Will output the content of the root and pi users keys"
@@ -137,7 +137,7 @@ function sshkey_help () {
   echo
   echo "  $BASENAME sshkey github addteam <organization> <team_name> <access_token>"
   echo "      Downloads the public keys of the group members and adds them to authorized_keys"
-  echo "      A access_token is required to make this work, it can be generated in the following link"
+  echo "      An access_token is required to make this work, it can be generated in the following link"
   echo "      https://github.com/settings/tokens"
   echo
 }

@@ -17,10 +17,10 @@ function internet {
 
     postal=$(echo "$info" | grep -E '"(postal)"') #assigns postal value
 
-    echo -n "$info" | grep -E '"(ip)"'
+    echo "$info" | grep -E '"(ip)"' | tr -d \n
 
     if [ -z "$postal" ]; then #if no postal, echoes n/a for postal
-      echo -n "$info" | grep -E '"(city|country)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'
+      echo "$info" | grep -E '"(city|country)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g' | tr -d \n
       echo ', "postal": "n/a"'
     else
       echo "$info" | grep -E '"(city|country|postal)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'

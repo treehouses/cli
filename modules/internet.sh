@@ -19,7 +19,7 @@ function internet {
 
     echo "$info" | grep -E '"(ip)"'
 
-    if [ -z $postal ]; then #if no postal, echoes n/a for postal
+    if [ -z "$postal" ]; then #if no postal, echoes n/a for postal
       echo -n "$info" | grep -E '"(city|country)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'
       echo ', "postal": "n/a"'
     else

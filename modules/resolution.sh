@@ -89,10 +89,10 @@ function resolution_help {
   echo "screen resolution set to the specified hdmi_group and hdmi_mode"
   echo
   echo "Example:"
-  echo "  $BASENAME resolution cea 1"
-  echo "  System will set the resolution to CEA 640X480"
+  echo "  $BASENAME resolution cea 4"
+  echo "  System will set the resolution to CEA 1280x720"
   echo
-  echo "  $BASENAME resolution dmt 9"
-  echo "  System will set the resolution to DMT 800X600"
+  echo "  $BASENAME resolution dmt 4"
+  echo "  System will set the resolution to DMT 640x480"
   echo
 }

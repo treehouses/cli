@@ -2,7 +2,7 @@ function clone {
   local device a b
   checkrpi
   checkroot
-  checkargn $# 2
+  checkargn $# 1
   device="$1"
 
   case $2 in
@@ -10,7 +10,6 @@ function clone {
     echo 'These are the devices you can clone into (treehouses clone [DEVICE PATH]):'; fdisk -l | grep -o '^/dev/sd[a-z]' | sort -u
 
     *)
-      checkargn $# 1
       if [ -z "$device" ]; then
         device="/dev/sdb"
       fi

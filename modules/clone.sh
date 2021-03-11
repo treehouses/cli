@@ -6,6 +6,9 @@ function clone {
   device="$1"
 
   case $options in
+    "detect")
+      fdisk -l | grep -o '^/dev/sd[a-z]' | sort -u
+
     *)
       if [ -z "$device" ]; then
       device="/dev/sdb"

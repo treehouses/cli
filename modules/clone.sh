@@ -4,12 +4,12 @@ function clone {
   checkroot
   checkargn $# 1
   argument="$1"
-  path="fdisk -l | grep -o '^/dev/sd[a-z]' | sort -u"
+  path="fdisk -l | grep -o '^/dev/sd[a-z]' | sort -u | tr '\n' '\0'"
 
   case $argument in
 
     "detect")
-      if "$path" | grep "dev" -q; then
+      if [[ -z "$path" ]]; then
         echo "Error: Could not detect any devices. Try plugging your device into a different slot."
 
       else

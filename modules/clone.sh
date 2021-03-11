@@ -7,7 +7,8 @@ function clone {
 
   case "$options" in
     "detect")
-    echo 'These are the devices you can clone into (treehouses clone [DEVICE PATH]):'; fdisk -l | grep -o '^/dev/sd[a-z]' | sort -u
+      echo 'These are the devices you can clone into (treehouses clone [DEVICE PATH]):'; fdisk -l | grep -o '^/dev/sd[a-z]' | sort -u
+      ;;
 
     *)
       if [ -z "$device" ]; then
@@ -37,6 +38,8 @@ function clone {
       fi
 
       echo ; echo "A reboot is needed to re-enable write permissions to OS."
+      ;;
+    esac
 }
 
 function clone_help {

@@ -8,6 +8,7 @@ function clone {
   case $argument in
 
     "detect")
+      echo "The following devices are connected to your Pi:"
       fdisk -l | grep -o '^/dev/sd[a-z]' | sort -u
       ;;
 

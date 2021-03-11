@@ -1,5 +1,4 @@
 function clone {
-  local device a b
   checkrpi
   checkroot
   checkargn $# 1
@@ -12,6 +11,7 @@ function clone {
       ;;
 
     *)
+      local device a b
       if [ -z "$device" ]; then
       device="/dev/sdb"
       fi

@@ -51,13 +51,16 @@ function clone {
 
 function clone_help {
   echo
-  echo "Usage: $BASENAME clone [device path]"
+  echo "Usage: $BASENAME clone [detect|device path]"
   echo
   echo "clones your treehouses image to an SDCard"
   echo
   echo "Example:"
   echo "  $BASENAME clone"
   echo "      Will clone the current system to /dev/sdb (by default)."
+  echo
+  echo "  $BASENAME clone detect"
+  echo "      Will display the paths for connected devices (e.g. /dev/sda)"
   echo
   echo "  $BASENAME clone /dev/sda"
   echo "      Will clone the current system to /dev/sda"

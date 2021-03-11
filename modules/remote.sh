@@ -69,6 +69,14 @@ function remote {
         log_and_exit1 "Usage: $BASENAME remote commands [json]"
       fi
       ;;
+    "reverse")
+      checkargn $# 2
+      reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f4)
+        while IFS= read -r line; do
+          cmd_str+="\"$line\","
+        done <<< "$reverse"
+        printf "[%s]\n" "${cmd_str::-1}"
+      ;;
     "allservices")
       checkargn $# 1
       json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"},\"usesEnv\":{"%s"},\"size\":{"%s"}}\n"
@@ -168,7 +176,7 @@ function remote {
       ;;
     *)
       echo "Unknown command option"
-      echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | statuspage | ssh2fa | help | key>"
+      echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | reverse | allservices | statuspage | ssh2fa | help | key>"
       ;;
   esac
 }
@@ -194,7 +202,7 @@ function autorun_helper {
 
 function remote_help {
   echo
-  echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | statuspage | ssh2fa | help | key>"
+  echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | reverse | allservices | statuspage | ssh2fa | help | key>"
   echo
   echo "Returns a string representation of the current status of the Raspberry Pi"
   echo "Used for Treehouses Remote"
@@ -229,6 +237,9 @@ function remote_help {
   echo
   echo "$BASENAME remote commands [json]"
   echo "returns a list of all commands for tab completion"
+  echo
+  echo "$BASENAME remote reverse"
+  echo "returns the device's internet location information"
   echo
   echo "$BASENAME remote allservices"
   echo "returns json string of services"

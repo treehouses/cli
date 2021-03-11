@@ -9,11 +9,11 @@ function clone {
   case $argument in
 
     "detect")
-      if [ -n "$path" ]; then
-        eval $path
+      if [ "$path" == "" ]; then
+        echo "Error: Could not detect any devices. Try plugging your device into a different slot."
 
       else
-        echo "Error: Could not detect any devices. Try plugging your device into a different slot."
+        eval $path
       fi
       ;;
 

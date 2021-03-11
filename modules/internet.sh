@@ -16,7 +16,7 @@ function internet {
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
     echo "$info" | grep -E '"(ip)"'
     if ! echo "$info" | grep -E 'postal'; then
-      echo "$info" | grep -E '"(city|country)"' | tr '\n' ',' | sed 's/,$/, "postal": "N\/A"\n/' | sed 's/\",\"/\", \"/g'
+      echo "$info" | grep -E '"(city|country)"' | tr '\n' ',' | sed 's/,$/, "postal": "n\/a"\n/' | sed 's/\",\"/\", \"/g'
     else
       echo "$info" | grep -E '"(city|country|postal)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'
     fi

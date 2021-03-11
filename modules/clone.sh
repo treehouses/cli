@@ -9,7 +9,7 @@ function clone {
   case $argument in
 
     "detect")
-      if [ -n eval $path ]; then
+      if [ -n "$path" ]; then
         eval $path
 
       else

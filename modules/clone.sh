@@ -9,7 +9,7 @@ function clone {
   case $argument in
 
     "detect")
-      if [ "$path" == "" ]; then
+      if [[ -n "$path" ]]; then
         echo "Error: Could not detect any devices. Try plugging your device into a different slot."
 
       else

@@ -26,6 +26,7 @@ function password {
     ;;
   *)
     log_and_exit1 "Error: Must use an option to 'change', 'disable', or 'enable'"
+    help_password
     ;;
   esac
 }

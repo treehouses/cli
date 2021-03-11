@@ -22,7 +22,7 @@ function clone {
       #echo "$b - /dev/sdb"
 
       if [ -z "$a" ] || [ -z "$b" ]; then
-        echo "Error: the device $device wasn't detected. Please use 'treehouses clone detect' to display the device name."
+        echo "Error: the device $device wasn't detected. Please use '$BASENAME clone detect' to display the device name."
         return 1
       fi
 

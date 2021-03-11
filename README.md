@@ -34,8 +34,7 @@ help [command]                            gives you a more detailed info about t
 verbose <on|off>                          makes each command print more output (might not work with treehouses remote)
 expandfs                                  expands the partition of the RPI image to the maximum of the SD card
 rename <hostname>                         changes hostname
-password <change|disable|enable>          changes the password for 'pi' user or disables/enables password
-         [password]                       authentication
+password <disable|enable|change [passwd]> changes the password for 'pi' user or disables/enables password authentication
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
 version [contributors|remote]             returns the version of treehouses CLI, remote, or list of contributors
 image                                     returns version of the system image installed

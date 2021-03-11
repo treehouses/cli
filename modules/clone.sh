@@ -60,9 +60,9 @@ function clone_help {
   echo "      Will clone the current system to /dev/sdb (by default)."
   echo
   echo "  $BASENAME clone detect"
-  echo "      Will display the paths for connected devices (e.g. /dev/sda)"
+  echo "      Will display the paths for connected devices (e.g. /dev/sda)."
   echo
   echo "  $BASENAME clone /dev/sda"
-  echo "      Will clone the current system to /dev/sda"
+  echo "      Will clone the current system to /dev/sda."
   echo
 }

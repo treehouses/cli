@@ -46,16 +46,16 @@ function resolution() {
       fi
     done
       if [ $available == 1 ]; then
-      set_config_var hdmi_force_hotplug 1 $config
-      set_config_var hdmi_group $group $config
-      set_config_var hdmi_mode $mode $config
-      echo "Screen resolution set to $set_resolution"
-      reboot_needed
-      echo "reboot needed to see the changes"
+        set_config_var hdmi_force_hotplug 1 $config
+        set_config_var hdmi_group $group $config
+        set_config_var hdmi_mode $mode $config
+        echo "Screen resolution set to $set_resolution"
+        reboot_needed
+        echo "reboot needed to see the changes"
       else
-      echo "mode is not available  Possible modes are:"
-      tvservice -m DMT
-     fi
+        echo "mode is not available  Possible modes are:"
+        tvservice -m DMT
+      fi
   else
     echo "hdmi group should be either cea or dmt"
   fi
@@ -88,7 +88,12 @@ function resolution_help {
   echo
   echo "screen resolution set to the specified hdmi_group and hdmi_mode"
   echo
+  echo "mode number support will vary on the attached display device"
+  echo
   echo "Example:"
+  echo "  $BASENAME resolution cea"
+  echo "  System will provide all possible modes for the group cea"
+  echo
   echo "  $BASENAME resolution cea 4"
   echo "  System will set the resolution to CEA 1280x720"
   echo

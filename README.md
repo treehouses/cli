@@ -164,7 +164,7 @@ magazines                                 downloads specific magazine issue as a
    <magpi>            [number]            downloads issue [number] of magazine
    <wireframe>        [list]              lists downloaded magazines in tree format of specific magazine
                       [url]               shows the homepage URL of magazine
-resolution <cea|dmt [modes]>              sets the screen resolution
+resolution <cea|dmt [modes]>              sets the screen resolution depending on the attached display device
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves messages in gitter
                <send|show|read|mark>

@@ -294,6 +294,7 @@ treehouses remote commands
 treehouses remote help
 treehouses remote key receive
 treehouses remote key send
+treehouses remote reverse
 treehouses remote services available
 treehouses remote services installed
 treehouses remote services running

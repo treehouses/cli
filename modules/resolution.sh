@@ -95,9 +95,9 @@ function resolution_help {
   echo "  System will provide all possible modes for the group cea"
   echo
   echo "  $BASENAME resolution cea 4"
-  echo "  System will set the resolution to CEA 1280x720"
+  echo "  System will set the resolution to CEA 1280x720 (resolution may vary)"
   echo
   echo "  $BASENAME resolution dmt 4"
-  echo "  System will set the resolution to DMT 640x480"
+  echo "  System will set the resolution to DMT 640x480 (resolution may vary)"
   echo
 }

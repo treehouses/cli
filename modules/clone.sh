@@ -8,8 +8,10 @@ function clone {
   case $argument in
 
     "detect")
-      echo "The following devices are connected to your Pi:"
+      if [ -n echo "The following devices are connected to your Pi:" ]; then
       fdisk -l | grep -o '^/dev/sd[a-z]' | sort -u
+
+      else; echo "Error: Could not detect any devices. Try plugging your device into a different slot."
       ;;
 
     *)

@@ -5,9 +5,10 @@ function clone {
   checkargn $# 2
   device="$1"
 
-  case $1 in
+  case $2 in
     "detect")
     echo 'These are the devices you can clone into (treehouses clone [DEVICE PATH]):'; fdisk -l | grep -o '^/dev/sd[a-z]' | sort -u
+
     *)
       checkargn $# 1
       if [ -z "$device" ]; then

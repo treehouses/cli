@@ -10,7 +10,7 @@ help [command]                            gives you a more detailed info about t
 verbose <on|off>                          makes each command print more output (might not work with treehouses remote)
 expandfs                                  expands the partition of the RPI image to the maximum of the SD card
 rename <hostname>                         changes hostname
-password <password|disable|enable>        changes the password for 'pi' user or disables/enables password authentication
+password <disable|enable|change [passwd]> changes the password for 'pi' user or disables/enables password authentication
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
 version [contributors|remote]             returns the version of treehouses CLI, remote, or list of contributors
 image                                     returns version of the system image installed
@@ -140,7 +140,7 @@ magazines                                 downloads specific magazine issue as a
    <magpi>            [number]            downloads issue [number] of magazine
    <wireframe>        [list]              lists downloaded magazines in tree format of specific magazine
                       [url]               shows the homepage URL of magazine
-resolution <cea|dmt [modes]>              sets the screen resolution
+resolution <cea|dmt [modes]>              sets the screen resolution depending on the attached display device
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves messages in gitter
                <send|show|read|mark>

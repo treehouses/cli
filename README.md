@@ -166,11 +166,11 @@ magazines                                 downloads specific magazine issue as a
 resolution <cea|dmt [modes]>              sets the screen resolution
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message                                   sends message to chat service
-   <gitter>  <apitoken|authorize>         sets api/channel info in config file and sends/recieves messages in gitter
-             <send|show|read|mark>
+   <gitter>  <apitoken|authorize>         sets api/channel info in config file 
+             <send|show|read|mark>        sends/recieves messages in gitter
              <channels>
-   <slack>   <apitoken|channels>          sets api/channel info in config file and sends/recieves messages in slack
-             <send|show|read|mark>
+   <slack>   <apitoken|channels>          sets api/channel info in config file 
+             <send|show|read|mark>        sends/recieves messages in slack
    <discord> <apitoken|authorize>         sets api/channel info in config file
 shutdown [now|in|force]                   shutdown the system
 ```

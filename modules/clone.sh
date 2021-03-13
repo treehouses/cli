@@ -4,7 +4,7 @@ function clone {
   checkroot
   checkargn $# 1
   argument="$1"
-  path=$(fdisk -l | grep -o '^/dev/sd[a-z]' | sort -u)
+  path="$(lsblk -lp | awk '{print $1}' | grep -E '/dev/sd.*')"
 
   case $argument in
 

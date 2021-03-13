@@ -21,7 +21,7 @@ nssidname='Wifiname' nwifipass='wifipass' ./wifi.bats
 `test.sh` gives extra information ontop of running the tests using bats including
 Image release, CLI version, and git branch name
 ```bash
-./test.sh detect.bats # pick what you want
+./test.sh detect.bats version.bats # pick what you want
 ./test.sh all # test everything (variables inside test.sh as well)
 yes | ./test.sh all # skip pressing any key to move forward for network tests
 ./test.sh services
@@ -36,7 +36,7 @@ Note: Some tests are not included because they have restarts
 
 Example output:
 ```bash
-root@treehouses:~/cli/tests# ./test.sh detect.bats
+root@treehouses:~/cli/tests# ./test.sh detect.bats version.bats
 
 Branch  - master
 Image   - release-139
@@ -48,12 +48,15 @@ Version - 1.25.19
  ✓  detect rpi model
  ✓  detect wifi
  ✓  detect arm
+ ✓  version
+ ✓  version contributors
+ ✓  version contributors
 
-6 tests, 0 failures
+9 tests, 0 failures
 
-real    0m3.490s
-user    0m2.557s
-sys     0m1.178s
+real    0m49.013s
+user    0m5.294s
+sys     0m3.045s
 
 root@treehouses:~/cli/tests#
 ```

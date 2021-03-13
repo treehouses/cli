@@ -61,7 +61,7 @@ ntp <local|internet>                      sets rpi to host timing locally or to 
 networkmode                               outputs the current network mode
 button <off|bluetooth>                    gives the gpio pin 18 an action
 feedback <message>                        sends feedback
-clone [device path]                       clones the current SD card onto a secondary SD card or specified device
+clone [detect| device path]               clones the current SD card onto a secondary SD card or specified device
 restore [device path]                     restores a treehouses image to an SD card or specified device
 burn [device path]                        download and burns the latest treehouses image to the SD card or specified device
 rebootneeded                              shows if reboot is required to apply changes

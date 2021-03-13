@@ -13,6 +13,7 @@ function clone {
         echo "Error: Could not detect any devices. Try plugging your device into a different slot."
 
       else
+        echo "Detected the following devices:"
         echo $path
       fi
       ;;

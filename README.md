@@ -34,7 +34,7 @@ help [command]                            gives you a more detailed info about t
 verbose <on|off>                          makes each command print more output (might not work with treehouses remote)
 expandfs                                  expands the partition of the RPI image to the maximum of the SD card
 rename <hostname>                         changes hostname
-password <password|disable|enable>        changes the password for 'pi' user or disables/enables password authentication
+password <disable|enable|change [passwd]> changes the password for 'pi' user or disables/enables password authentication
 sshkey <add|list|delete|deleteall|github> used for adding or removing ssh keys for authentication
 version [contributors|remote]             returns the version of treehouses CLI, remote, or list of contributors
 image                                     returns version of the system image installed
@@ -147,8 +147,9 @@ cron [list|add|delete|deleteall]          adds, deletes a custom cron job or del
 usb [on|off]                              turns usb ports on or off
 redirect [add|list|remove|start]          redirects internet hostnames to rpi
 remote <check|status|upgrade|services>    helps with treehouses remote android app
-       <version|commands|allservices>
-       <statuspage|ssh2fa|help|key>
+       <version|commands|reverse>
+       <allservices|statuspage|ssh2fa>
+       <help|key>
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
@@ -163,7 +164,7 @@ magazines                                 downloads specific magazine issue as a
    <magpi>            [number]            downloads issue [number] of magazine
    <wireframe>        [list]              lists downloaded magazines in tree format of specific magazine
                       [url]               shows the homepage URL of magazine
-resolution <cea|dmt [modes]>              sets the screen resolution
+resolution <cea|dmt [modes]>              sets the screen resolution depending on the attached display device
 system [cpu|ram|disk|volt|temperature]    display real system informations
 message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves messages in gitter
                <send|show|read|mark>

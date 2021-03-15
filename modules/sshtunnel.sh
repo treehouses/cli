@@ -142,9 +142,6 @@ function sshtunnel {
                     if [ ! -z "$monitoringport" ] && [[ $line = *$host* ]]; then
                       break
                     fi
-                    if [ ! -z "$monitoringport" ] && [ -z "$line" ]; then
-                      monitoring=""
-                    fi
                   done < <(cat /etc/tunnel)
 
                   if [ "$monitoringport" -eq "$((portinterval + offset))" ] || [ "$((monitoringport + 1))" -eq "$((portinterval + offset))" ]; then
@@ -211,9 +208,6 @@ function sshtunnel {
                     fi
                     if [ ! -z "$monitoringport" ] && [[ $line = *$host* ]]; then
                       break
-                    fi
-                    if [ ! -z "$monitoringport" ] && [ -z "$line" ]; then
-                      monitoring=""
                     fi
                   done < <(cat /etc/tunnel)
 

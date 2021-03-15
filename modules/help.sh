@@ -61,7 +61,7 @@ ntp <local|internet>                      sets rpi to host timing locally or to 
 networkmode                               outputs the current network mode
 button <off|bluetooth>                    gives the gpio pin 18 an action
 feedback <message>                        sends feedback
-clone [device path]                       clones the current SD card onto a secondary SD card or specified device
+clone [detect| device path]               clones the current SD card onto a secondary SD card or specified device
 restore [device path]                     restores a treehouses image to an SD card or specified device
 burn [device path]                        download and burns the latest treehouses image to the SD card or specified device
 rebootneeded                              shows if reboot is required to apply changes
@@ -142,12 +142,13 @@ magazines                                 downloads specific magazine issue as a
                       [url]               shows the homepage URL of magazine
 resolution <cea|dmt [modes]>              sets the screen resolution depending on the attached display device
 system [cpu|ram|disk|volt|temperature]    display real system informations
-message gitter <apitoken|authorize>       sets api/channel info in config file and sends/recieves messages in gitter
-               <send|show|read|mark>
-               <channels>
-        slack <apitoken|channels>         sets api/channel info in config file and sends/recieves messages in slack
-              <send|show|read|mark>
-        discord <apitoken|authorize>.......sets api/channel info in config file
+message                                   sends message to chat service
+   <gitter>  <apitoken|authorize>         sets api/channel info in config file 
+             <send|show|read|mark>        sends/recieves messages in gitter
+             <channels>
+   <slack>   <apitoken|channels>          sets api/channel info in config file 
+             <send|show|read|mark>        sends/recieves messages in slack
+   <discord> <apitoken|authorize>         sets api/channel info in config file
 shutdown [now|in|force]                   shutdown the system
 EOF
   echo "$helpdefault"

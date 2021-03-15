@@ -21,11 +21,46 @@ function message {
     echo "$channel_names"
   }
   function get_channel_slack {
-    channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
-    channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
-    user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
-    users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
-    channel_names=$(echo -e "$channels\n$users")
+    if channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations); then
+      channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+    else
+      echo "Error: Failed to use some permissions"
+      echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
+      exit 1
+    fi
+
+    if channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"'); then
+      channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
+    else
+      echo "Error: Failed to use some permissions"
+      echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
+      exit 1
+    fi
+
+    if user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list); then
+      user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
+    else
+      echo "Error: Failed to use some permissions"
+      echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
+      exit 1
+    fi
+
+    if users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"'); then
+      users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
+    else
+      echo "Error: Failed to use some permissions"
+      echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
+      exit 1
+    fi
+
+    if channel_names=$(echo -e "$channels\n$users"); then
+      channel_names=$(echo -e "$channels\n$users")
+    else
+      echo "Error: Failed to use some permissions"
+      echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
+      exit 1
+    fi
+
     echo "$channel_names"
   }
   function check_group {

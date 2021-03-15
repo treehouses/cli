@@ -504,11 +504,22 @@ function message {
 
 function message_help {
   echo
-  echo "Usage: $BASENAME message <chats> <apitoken>|<oauth key> <redirect URL> | <authorize> <code> <oauth secret>| send <group> <message> | show|read|mark <group>"
+  echo "Usage: $BASENAME message <chats>" 
+  echo "                    <apitoken>"
+  echo "                    <oauth key> <redirect URL>"
+  echo "                    <authorize> <code> <oauth secret>"
+  echo "                    <send> <group> <message>"
+  echo "                    <show|read|mark> <group>"
   echo
-  echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
+  echo "You can get your token from:"
+  echo "https://developer.gitter.im/docs/welcome"
+  echo "by signing in."
   echo
-  echo "You must set your api key at least once every session before sending a message"
+  echo "It should show up immediately or by navigating to:"
+  echo "https://developer.gitter.im/apps"
+  echo
+  echo "You must set your api key at least once every session"
+  echo "before sending a message"
   echo
   echo "Send message to a chat service"
   echo
@@ -541,8 +552,8 @@ function message_help {
   echo "  $BASENAME message slack channels"
   echo "     check for channels"
   echo
-  echo "  $BASENAME message slack send \"channel_name or channel ID\" \"Hi, you are very awesome\""
-  echo "     Sends a message to a slack channel using channel name, eg, channel: #channel_name"
+  echo "  $BASENAME message slack send \"channel name or ID\" \"Hello!\""
+  echo "     Sends a message to a slack channel using channel ID/name"
   echo
   echo "  $BASENAME message slack show \"channel ID\""
   echo "     Shows messages of a slack channel using channel ID"

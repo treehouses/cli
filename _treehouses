@@ -47,6 +47,7 @@ treehouses changelog
 treehouses changelog compare
 treehouses changelog view
 treehouses clone
+treehouses clone detect
 treehouses config
 treehouses config add
 treehouses config clear
@@ -263,7 +264,7 @@ treehouses openvpn show
 treehouses openvpn start
 treehouses openvpn stop
 treehouses openvpn use
-treehouses password
+treehouses password change
 treehouses password disable
 treehouses password enable
 treehouses picture
@@ -294,6 +295,7 @@ treehouses remote commands
 treehouses remote help
 treehouses remote key receive
 treehouses remote key send
+treehouses remote reverse
 treehouses remote services available
 treehouses remote services installed
 treehouses remote services running

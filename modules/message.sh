@@ -280,7 +280,7 @@ function message {
             echo "1. Go to https://api.slack.com/apps"
             echo "2. Click \"Create New App\""
             echo "3. Type a name in \"App Name\""
-            echo "4. Select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
+            echo "4. Select the \"Development Slack Workspace\" (eg : Open Learning Exchange)\ from the drop-down"
             echo "5. Click \"OAuth & Permission\" under \"features \""
             echo "6. Under \"User Token Scopes\", click \"Add an OAuth Scope\""
             echo "7. Add the following permissions:"
@@ -295,8 +295,8 @@ function message {
             echo "  \"usergroups:read\""
             echo "  \"users:read\""
             echo "8. Under \"OAuth Tokens & Redirect URLs\", click \"Install to Workspace\""
-            echo "9. Click \"Allow\". This will give permissions in the redirected link and display the \"OAuth access token\""
-            echo "10. Run $BASENAME message slack apitoken <oauth access token>"
+            echo "9. Click \"Allow\". This will give permissions and display the User OAuth Token"
+            echo "10. Run $BASENAME message slack apitoken <User OAuth Token>"
           fi
           ;;
         channels)

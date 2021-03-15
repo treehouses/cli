@@ -275,12 +275,28 @@ function message {
           elif check_apitoken slack; then
             get_apitoken slack
           else
-            echo "To get an authorized access token"
+            echo "To get an authorized access token:"
             echo ""
-            echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
-            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\", \"channels:write\", \"channel:read\", \"channel:history\", \"groups:write\", \"group:read\", \"mpim:write\", \"im:write\", \"usergroups.read\" and \"users.read\" for the APP from the drop down list"
-            echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
-            echo "Run $BASENAME message slack apitoken <oauth access token>"
+            echo "1. Go to https://api.slack.com/apps"
+            echo "2. Click \"Create New App\""
+            echo "3. Type a name in \"App Name\""
+            echo "4. Select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
+            echo "5. Click \"OAuth & Permission\" under \"features \""
+            echo "6. Under \"User Token Scopes\", click \"Add an OAuth Scope\""
+            echo "7. Add the following permissions:"
+            echo "  \"chat:write\""
+            echo "  \"channels:write\""
+            echo "  \"channels:read\""
+            echo "  \"channels:history\""
+            echo "  \"groups:write\""
+            echo "  \"groups:read\""
+            echo "  \"im:write\""
+            echo "  \"mpim:write\""
+            echo "  \"usergroups:read\""
+            echo "  \"users:read\""
+            echo "8. Under \"OAuth Tokens & Redirect URLs\", click \"Install to Workspace\""
+            echo "9. Click \"Allow\". This will give permissions in the redirected link and display the \"OAuth access token\""
+            echo "10. Run $BASENAME message slack apitoken <oauth access token>"
           fi
           ;;
         channels)

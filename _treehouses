@@ -47,6 +47,7 @@ treehouses changelog
 treehouses changelog compare
 treehouses changelog view
 treehouses clone
+treehouses clone detect
 treehouses config
 treehouses config add
 treehouses config clear

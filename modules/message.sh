@@ -315,9 +315,13 @@ function message {
           if check_apitoken slack; then
 		  echo "1"
             channel_names=$(get_channel_slack)
+	    	 echo "2"
             echo "Channels Names"
+	    	echo "3"
             echo
+	    	echo "4"
             echo "$channel_names"
+	    	echo "5"
           else
 		  echo"2"
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"

@@ -22,18 +22,20 @@ function message {
   }
   function get_channel_slack {
 	echo $?
-    channel_list=$(echo "a")
-    	echo $?
-    channels=$(echo "b")
-    	echo $?
-    user_list=$(echo "c")
-    	echo $?
+    channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+	echo $?
+    channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+	echo $?
+    channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
+	echo $?
+    user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
+	echo $?
     users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
-    	echo $?
+	echo $?
     channel_names=$(echo -e "$channels\n$users")
-    	echo $?
+	echo $?
     echo "$channel_names"
-    	echo $?
+	echo $?
   }
   function check_group {
     group=$1

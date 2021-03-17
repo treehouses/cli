@@ -21,19 +21,19 @@ function message {
     echo "$channel_names"
   }
   function get_channel_slack {
-	echo "1"
+	echo $?
     channel_list=$(echo "a")
-    	echo "2"
+    	echo $?
     channels=$(echo "b")
-    	echo "3"
+    	echo $?
     user_list=$(echo "c")
-    	echo "4"
+    	echo $?
     users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
-    	echo "5"
+    	echo ?$
     channel_names=$(echo -e "$channels\n$users")
-    	echo "6"
+    	echo ?$
     echo "$channel_names"
-    	echo "7"
+    	echo ?$
   }
   function check_group {
     group=$1

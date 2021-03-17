@@ -15,13 +15,11 @@ function message {
     echo "Your API access token is $access_token"
     return 0
   }
-echo "get_channel_gitter"
   function get_channel_gitter {
     channel_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")
     channel_names=$(echo $channel_info | python -m json.tool | jq '.[].name' | tr -d '"')
     echo "$channel_names"
   }
-echo "get_channel_slack"
   function get_channel_slack {
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
     channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
@@ -30,7 +28,6 @@ echo "get_channel_slack"
     channel_names=$(echo -e "$channels\n$users")
     echo "$channel_names"
   }
-echo "function_check_group"
   function check_group {
     group=$1
     group_names=($(get_channel_gitter))
@@ -42,11 +39,12 @@ echo "function_check_group"
     done
     return 1
   }
-echo "case chats"
   case "$chats" in
     gitter)
+	    echo "gitter"
       case "$2" in
         apitoken)
+		echo "apitoken"
           if check_apitoken gitter; then
             get_apitoken gitter
           elif [[ $3 != "" ]] && [[ $4 != "" ]]; then
@@ -76,6 +74,7 @@ echo "case chats"
           fi
           ;;
         authorize)
+		echo "authorize"
           if [[ $3 == "" ]]; then
             echo "authorization code is missing"
           elif [[ $4 == "" ]]; then
@@ -93,6 +92,7 @@ echo "case chats"
           fi
           ;;
         channels)
+		echo "channels"
           if check_apitoken gitter; then
             channels_names=$(get_channel_gitter)
             echo "Channel Names:"
@@ -102,6 +102,7 @@ echo "case chats"
           fi
           ;;
         send)
+		echo "send"
           group=$3
           if check_apitoken gitter; then
             if [[ $3 == "" ]]; then
@@ -129,6 +130,7 @@ echo "case chats"
           fi
           ;;
         show)
+		echo "show"
           group=$3
           if check_apitoken gitter; then
             if [[ $group == "" ]]; then
@@ -167,6 +169,7 @@ echo "case chats"
           fi
           ;;
         read)
+		echo "read"
           group="$3"
           if check_apitoken gitter; then
             if [[ $group == "" ]]; then
@@ -206,6 +209,7 @@ echo "case chats"
           fi
           ;;
         mark)
+		echo "mark"
           group="$3"
           if check_apitoken gitter; then
             if [[ $group == "" ]]; then
@@ -241,6 +245,7 @@ echo "case chats"
       esac
       ;;
     slack)
+	    echo "slack"
       function check_channel {
         channel_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
         channel_list=($(echo $channel_list | python -m json.tool | jq '.channels[].id' | tr -d '"'))
@@ -268,6 +273,7 @@ echo "case chats"
       }
       case "$2" in
         apitoken)
+		echo "apitoken 2"
           if [[ $3 != "" ]]; then
             tempVar=$(echo $3 | cut -d "-" -f 1)
             if [[ $tempVar != "xoxp" ]]; then
@@ -304,6 +310,7 @@ echo "case chats"
           fi
           ;;
         channels)
+		echo "channels"
           if check_apitoken slack; then
             channel_names=$(get_channel_slack)
             echo "Channels Names:"
@@ -314,6 +321,7 @@ echo "case chats"
           fi
           ;;
         send)
+		echo "send"
           channel=$3
           if check_apitoken slack; then
             if [[ $channel == "" ]]; then
@@ -335,6 +343,7 @@ echo "case chats"
           fi
           ;;
         show)
+		echo "show"
           channel=$3
           if check_apitoken slack; then
             if [[ $channel == "" ]]; then
@@ -381,6 +390,7 @@ echo "case chats"
           fi
           ;;
         read)
+		echo "read"
           channel=$3
           if check_apitoken slack; then
             if [[ $channel == "" ]]; then
@@ -429,6 +439,7 @@ echo "case chats"
           fi
           ;;
         mark)
+		echo "mark"
           channel=$3
           if check_apitoken slack; then
             if [[ $channel == "" ]]; then
@@ -468,6 +479,7 @@ echo "case chats"
       esac
       ;;
     discord)
+	    echo "discord"
       case "$2" in
         apitoken)
           if check_apitoken discord; then
@@ -522,7 +534,6 @@ echo "case chats"
   esac
 }
 
-echo "function message_help"
 function message_help {
   echo
   echo "Usage: $BASENAME message <chats>" 

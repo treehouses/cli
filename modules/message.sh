@@ -100,6 +100,7 @@ function message {
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
           fi
+		echo "end channels"
           ;;
         send)
 		echo "send"

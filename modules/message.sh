@@ -21,46 +21,11 @@ function message {
     echo "$channel_names"
   }
   function get_channel_slack {
-    if channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations); then
-      channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
-    else
-      echo "Error: Failed to use some permissions"
-      echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
-      exit 1
-    fi
-
-    if channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"'); then
-      channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
-    else
-      echo "Error: Failed to use some permissions"
-      echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
-      exit 1
-    fi
-
-    if user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list); then
-      user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
-    else
-      echo "Error: Failed to use some permissions"
-      echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
-      exit 1
-    fi
-
-    if users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"'); then
-      users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
-    else
-      echo "Error: Failed to use some permissions"
-      echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
-      exit 1
-    fi
-
-    if channel_names=$(echo -e "$channels\n$users"); then
-      channel_names=$(echo -e "$channels\n$users")
-    else
-      echo "Error: Failed to use some permissions"
-      echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
-      exit 1
-    fi
-
+    channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+    channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
+    user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
+    users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
+    channel_names=$(echo -e "$channels\n$users")
     echo "$channel_names"
   }
   function check_group {
@@ -310,12 +275,29 @@ function message {
           elif check_apitoken slack; then
             get_apitoken slack
           else
-            echo "To get an authorized access token"
+            echo "To get an authorized access token:"
             echo ""
-            echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
-            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\", \"channels:write\", \"channel:read\", \"channel:history\", \"groups:write\", \"group:read\", \"mpim:write\", \"im:write\", \"usergroups.read\" and \"users.read\" for the APP from the drop down list"
-            echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
-            echo "Run $BASENAME message slack apitoken <oauth access token>"
+            echo "1. Go to https://api.slack.com/apps"
+            echo "2. Click \"Create New App\""
+            echo "3. Type a name in \"App Name\""
+            echo "4. Select the \"Development Slack Workspace\" (eg : Open Learning Exchange)\ from the drop-down"
+            echo "5. Click \"OAuth & Permission\" under \"features \""
+            echo "6. Under \"User Token Scopes\", click \"Add an OAuth Scope\""
+            echo "7. Add the following permissions:"
+            echo "  \"chat:write\""
+            echo "  \"channels:write\""
+            echo "  \"channels:read\""
+            echo "  \"channels:history\""
+            echo "  \"groups:write\""
+            echo "  \"groups:read\""
+            echo "  \"im:write\""
+echo 1 #debug
+            echo "  \"mpim:write\""
+            echo "  \"usergroups:read\""
+            echo "  \"users:read\""
+            echo "8. Under \"OAuth Tokens & Redirect URLs\", click \"Install to Workspace\""
+            echo "9. Click \"Allow\". This will give permissions and display the User OAuth Token"
+            echo "10. Run $BASENAME message slack apitoken <User OAuth Token>"
           fi
           ;;
         channels)

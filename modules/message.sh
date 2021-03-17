@@ -22,15 +22,15 @@ function message {
   }
   function get_channel_slack {
 	echo "1"
-    channel_list=$(echo "a" | curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+    channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations || echo "a")
     	echo "2"
-    channels=$(echo "b" | echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
+    channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"' || echo "b")
     	echo "3"
-    user_list=$(echo "c" | curl -s -F token=$access_token https://slack.com/api/users.list)
+    user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list || echo "c")
     	echo "4"
-    users=$(echo "d" | echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
+    users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"' || echo "d")
     	echo "5"
-    channel_names=$(echo "e" | echo -e "$channels\n$users")
+    channel_names=$(echo -e "$channels\n$users" || echo "e")
     	echo "6"
     echo "$channel_names"
     	echo "7"

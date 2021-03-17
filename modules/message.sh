@@ -21,12 +21,19 @@ function message {
     echo "$channel_names"
   }
   function get_channel_slack {
+	  echo "1"
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+    	echo "2"
     channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
+    	echo "3"
     user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
+    	echo "4"
     users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
+    	echo "5"
     channel_names=$(echo -e "$channels\n$users")
+    	echo "6"
     echo "$channel_names"
+    	echo "7"
   }
   function check_group {
     group=$1
@@ -41,10 +48,8 @@ function message {
   }
   case "$chats" in
     gitter)
-	    echo "gitter"
       case "$2" in
         apitoken)
-		echo "apitoken"
           if check_apitoken gitter; then
             get_apitoken gitter
           elif [[ $3 != "" ]] && [[ $4 != "" ]]; then
@@ -74,7 +79,6 @@ function message {
           fi
           ;;
         authorize)
-		echo "authorize"
           if [[ $3 == "" ]]; then
             echo "authorization code is missing"
           elif [[ $4 == "" ]]; then
@@ -92,7 +96,6 @@ function message {
           fi
           ;;
         channels)
-		echo "channels"
           if check_apitoken gitter; then
             channels_names=$(get_channel_gitter)
             echo "Channel Names:"
@@ -100,10 +103,8 @@ function message {
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message gitter apitoken"
           fi
-		echo "end channels"
           ;;
         send)
-		echo "send"
           group=$3
           if check_apitoken gitter; then
             if [[ $3 == "" ]]; then
@@ -131,7 +132,6 @@ function message {
           fi
           ;;
         show)
-		echo "show"
           group=$3
           if check_apitoken gitter; then
             if [[ $group == "" ]]; then
@@ -170,7 +170,6 @@ function message {
           fi
           ;;
         read)
-		echo "read"
           group="$3"
           if check_apitoken gitter; then
             if [[ $group == "" ]]; then
@@ -210,7 +209,6 @@ function message {
           fi
           ;;
         mark)
-		echo "mark"
           group="$3"
           if check_apitoken gitter; then
             if [[ $group == "" ]]; then
@@ -246,7 +244,6 @@ function message {
       esac
       ;;
     slack)
-	    echo "slack"
       function check_channel {
         channel_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
         channel_list=($(echo $channel_list | python -m json.tool | jq '.channels[].id' | tr -d '"'))
@@ -274,7 +271,6 @@ function message {
       }
       case "$2" in
         apitoken)
-		echo "apitoken 2"
           if [[ $3 != "" ]]; then
             tempVar=$(echo $3 | cut -d "-" -f 1)
             if [[ $tempVar != "xoxp" ]]; then
@@ -311,25 +307,16 @@ function message {
           fi
           ;;
         channels)
-		echo "real channels"
           if check_apitoken slack; then
-		  echo "1"
             channel_names=$(get_channel_slack)
-	    	 echo "2"
-            echo "Channels Names"
-	    	echo "3"
+            echo "Channels Names:"
             echo
-	    	echo "4"
             echo "$channel_names"
-	    	echo "5"
           else
-		  echo"2"
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
           fi
-		echo "end real channels"
           ;;
         send)
-		echo "send"
           channel=$3
           if check_apitoken slack; then
             if [[ $channel == "" ]]; then
@@ -351,7 +338,6 @@ function message {
           fi
           ;;
         show)
-		echo "show"
           channel=$3
           if check_apitoken slack; then
             if [[ $channel == "" ]]; then
@@ -398,7 +384,6 @@ function message {
           fi
           ;;
         read)
-		echo "read"
           channel=$3
           if check_apitoken slack; then
             if [[ $channel == "" ]]; then
@@ -447,7 +432,6 @@ function message {
           fi
           ;;
         mark)
-		echo "mark"
           channel=$3
           if check_apitoken slack; then
             if [[ $channel == "" ]]; then
@@ -487,7 +471,6 @@ function message {
       esac
       ;;
     discord)
-	    echo "discord"
       case "$2" in
         apitoken)
           if check_apitoken discord; then

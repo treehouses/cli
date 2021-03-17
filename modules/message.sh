@@ -253,6 +253,7 @@ function message {
       count=0
       conversation_list=$(curl -s -F token=$access_token https://slack.com/api/conversations.list)
       channel_name=($(echo $conversation_list | python -m json.tool | jq '.channels[].name' | tr -d '"'))
+echo 1 #debug
       for i in "${channel_name[@]}"; do
         if [[ $name == "$i" ]]; then
           channel_id=$(echo $conversation_list | python -m json.tool | jq '.channels['$count'].id' | tr -d '"')
@@ -291,7 +292,6 @@ function message {
             echo "  \"groups:write\""
             echo "  \"groups:read\""
             echo "  \"im:write\""
-echo 1 #debug
             echo "  \"mpim:write\""
             echo "  \"usergroups:read\""
             echo "  \"users:read\""

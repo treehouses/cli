@@ -17,7 +17,9 @@ function message {
   }
   function get_channel_gitter {
     channel_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")
+echo a #debug
     channel_names=$(echo $channel_info | python -m json.tool | jq '.[].name' | tr -d '"')
+echo b #debug
     echo "$channel_names"
   }
   function get_channel_slack {
@@ -90,7 +92,9 @@ echo 7 #debug
             client_id=$(config | grep "$gitter_clientid" | cut -d "=" -f2)
             redirect_uri=$(config | grep "$gitter_redirecturl" | cut -d "=" -f2)
             api_info=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" "https://gitter.im/login/oauth/token" -d '{"client_id": "'$client_id'", "client_secret": "'$client_key'", "code": "'$code'", "redirect_uri": "'$redirect_uri'", "grant_type": "authorization_code"}')
+echo c #debug
             token_info=$(echo $api_info | python -m json.tool | jq '.access_token' | tr -d '"')
+echo d #debug
             conf_var_update "gitter_apitoken" "$token_info"
             echo "Your API access token is $token_info"
           fi
@@ -115,7 +119,9 @@ echo 7 #debug
               curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}'>"$LOGFILE"
               channelinfo=$(curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms" -d '{"uri":"'$group'"}')
               #finds channel id and removes double quotes
+echo e #debug
               channelid=$(echo $channelinfo | python -m json.tool | jq '.id' | tr -d '"')
+echo f #debug
               shift; shift; shift;
               message="$*"
               if ! [[ -z "$message" ]]; then

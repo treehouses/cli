@@ -26,7 +26,7 @@ function message {
     	echo "2"
     channels=$(echo "b")
     	echo "3"
-    user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
+    user_list=$(echo "c")
     	echo "4"
     users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
     	echo "5"

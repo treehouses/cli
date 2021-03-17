@@ -22,7 +22,7 @@ function message {
   }
   function get_channel_slack {
 	echo "1"
-    channel_list=$("a")
+    channel_list=$(echo "a")
     	echo "2"
     channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
     	echo "3"

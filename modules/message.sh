@@ -29,11 +29,11 @@ function message {
     user_list=$(echo "c")
     	echo $?
     users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
-    	echo ?$
+    	echo $?
     channel_names=$(echo -e "$channels\n$users")
-    	echo ?$
+    	echo $?
     echo "$channel_names"
-    	echo ?$
+    	echo $?
   }
   function check_group {
     group=$1

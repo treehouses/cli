@@ -26,29 +26,13 @@ function message {
     error=$(echo $channel_list | jq '."error"')
     needed=$(echo $channel_list | jq '."needed"')
 
-      if echo $needed | grep -q "channels:read"; then
-        echo "missing channels:read"
-      fi
-      if echo $needed | grep -q "groups:read"; then
-        echo "missing groups:read"
-      fi
-      if echo $needed | grep -q "mpim:read"; then
-        echo "missing mpim:read"
-      fi
-      if echo $needed | grep -q "im:read"; then
-        echo "missing im:read"
-      fi
-
     if echo $ok | grep -q "false"; then
       return 1
     fi
     if echo $error | grep -q "missing_scope"; then #needs to check if any error message, and echo errors in general
       return 1
     fi
-    #echo $channel_list | jq '."ok"'
-    #echo $channel_list | jq '.error'
-    #echo $channel_list | jq '.needed'
-    #echo $channel_list
+
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversation)
     channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
     user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
@@ -335,18 +319,19 @@ function message {
               echo
               echo "$channel_names"
             else
-              echo "Error: Missing the following permissions:"
+              echo "Error: Failed to use the following permissions"
               if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "channels:read"; then
-                echo "missing channels:read"
+                echo "channels:read"
               fi
               if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "groups:read"; then
-                echo "missing groups:read"
+                echo "groups:read"
               fi
               if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "mpim:read"; then
-                echo "missing mpim:read"
+                echo "mpim:read"
               fi
               if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "im:read"; then
-                echo "missing im:read"
+                echo "im:read"
+              echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
               fi
             fi
           else

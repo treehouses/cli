@@ -26,7 +26,6 @@ function message {
     error=$(echo $channel_list | jq '."error"')
     needed=$(echo $channel_list | jq '."needed"')
 
-      echo "ASDFIOVJAOWERJADSRF"
       if echo $needed | grep -q "channels:read"; then
         echo "missing channels:read"
       fi
@@ -41,35 +40,10 @@ function message {
       fi
 
     if echo $ok | grep -q "false"; then
-      echo "Error: Missing the following permissions:"
-      echo "ASDFIOVJAOWERJADSRF"
-      if echo $needed | grep -q "channels:read"; then
-        echo "missing channels:read"
-      fi
-      if echo $needed | grep -q "groups:read"; then
-        echo "missing groups:read"
-      fi
-      if echo $needed | grep -q "mpim:read"; then
-        echo "missing mpim:read"
-      fi
-      if echo $needed | grep -q "im:read"; then
-        echo "missing im:read"
-      fi
+      return 1
     fi
     if echo $error | grep -q "missing_scope"; then #needs to check if any error message, and echo errors in general
-      echo "Error: Missing the following permissions:"
-      if echo $needed | grep -q "channels:read"; then
-        echo "missing channels:read"
-      fi
-      if echo $needed | grep -q "groups:read"; then
-        echo "missing groups:read"
-      fi
-      if echo $needed | grep -q "mpim:read"; then
-        echo "missing mpim:read"
-      fi
-      if echo $needed | grep -q "im:read"; then
-        echo "missing im:read"
-      fi
+      return 1
     fi
     #echo $channel_list | jq '."ok"'
     #echo $channel_list | jq '.error'
@@ -360,6 +334,20 @@ function message {
               echo "Channels Names:"
               echo
               echo "$channel_names"
+            else
+              echo "Error: Missing the following permissions:"
+              if echo $needed | grep -q "channels:read"; then
+                echo "missing channels:read"
+              fi
+              if echo $needed | grep -q "groups:read"; then
+                echo "missing groups:read"
+              fi
+              if echo $needed | grep -q "mpim:read"; then
+                echo "missing mpim:read"
+              fi
+              if echo $needed | grep -q "im:read"; then
+                echo "missing im:read"
+              fi
             fi
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"

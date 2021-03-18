@@ -40,7 +40,7 @@ function message {
    if echo $channel_list | grep -q "im:read"; then
       echo "missing im:read"
     fi
-    echo $channel_list | jq '.ok'
+    echo $channel_list | jq '."ok"'
     echo $channel_list | jq '.error'
     echo $channel_list | jq '.needed'
     echo $channel_list

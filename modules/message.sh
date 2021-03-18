@@ -25,8 +25,8 @@ function message {
     if ! echo $channel_list | jq '."ok"'; then
       echo "this is not ok"
     fi
-    error=$(echo $channel_list | jq '.error')
-    needed=$(echo $channel_list | jq '."error"')
+    error=$(echo $channel_list | jq '."error"')
+    needed=$(echo $channel_list | jq '."needed"')
 
     if echo $error | grep -q "missing_scope"; then #needs to check if any error message, and echo errors in general
       echo "this is missing the scope"

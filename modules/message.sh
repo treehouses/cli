@@ -27,7 +27,7 @@ function message {
     needed=$(echo $channel_list | jq '."needed"')
 
     if echo $ok | grep -q "false"; then
-      echo "this is not ok"
+      break
     fi
     if echo $error | grep -q "missing_scope"; then #needs to check if any error message, and echo errors in general
       echo "this is missing the scope"
@@ -329,6 +329,10 @@ function message {
           ;;
         channels)
           if check_apitoken slack; then
+#            if echo $ok | grep -q "false"; then
+#      echo "this is not ok"
+#    fi
+
 		echo "0"
             channel_names=$(get_channel_slack)
 	    	echo "99"

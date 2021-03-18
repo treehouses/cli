@@ -332,6 +332,11 @@ function message {
 #            if echo $ok | grep -q "false"; then
 #      echo "this is not ok"
 #    fi
+            if $(get_channel_slack); then
+		echo "IT WORKS???"
+	    else
+		echo "ERROR OMG"
+	    fi
 
 		echo "0"
             channel_names=$(get_channel_slack)

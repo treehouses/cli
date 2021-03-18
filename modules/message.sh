@@ -26,6 +26,20 @@ function message {
     error=$(echo $channel_list | jq '."error"')
     needed=$(echo $channel_list | jq '."needed"')
 
+      echo "ASDFIOVJAOWERJADSRF"
+      if echo $needed | grep -q "channels:read"; then
+        echo "missing channels:read"
+      fi
+      if echo $needed | grep -q "groups:read"; then
+        echo "missing groups:read"
+      fi
+      if echo $needed | grep -q "mpim:read"; then
+        echo "missing mpim:read"
+      fi
+      if echo $needed | grep -q "im:read"; then
+        echo "missing im:read"
+      fi
+
     if echo $ok | grep -q "false"; then
       echo "Error: Missing the following permissions:"
       echo "ASDFIOVJAOWERJADSRF"

@@ -55,7 +55,6 @@ function message {
       if echo $needed | grep -q "im:read"; then
         echo "missing im:read"
       fi
-      return 1
     fi
     if echo $error | grep -q "missing_scope"; then #needs to check if any error message, and echo errors in general
       echo "Error: Missing the following permissions:"
@@ -71,7 +70,6 @@ function message {
       if echo $needed | grep -q "im:read"; then
         echo "missing im:read"
       fi
-      return 1
     fi
     #echo $channel_list | jq '."ok"'
     #echo $channel_list | jq '.error'

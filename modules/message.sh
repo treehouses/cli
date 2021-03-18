@@ -25,22 +25,22 @@ function message {
     if ! echo $channel_list | jq '."ok"'; then
       echo "this is not ok"
     fi
-    needed=$(echo $channel_list | jq '.error')
-    echo $needed
+    error=$(echo $channel_list | jq '.error')
+    needed=$(echo $channel_list | jq '."error"')
 
-    if echo $channel_list | grep -q "missing_scope"; then
+    if echo $error | grep -q "missing_scope"; then #needs to check if any error message, and echo errors in general
       echo "this is missing the scope"
     fi
-    if echo $channel_list | grep -q "channels:read"; then
+    if echo $needed | grep -q "channels:read"; then
       echo "missing channels:read"
     fi
-    if echo $channel_list | grep -q "groups:read"; then
+    if echo $needed | grep -q "groups:read"; then
       echo "missing groups:read"
     fi
-    if echo $channel_list | grep -q "mpim:read"; then
+    if echo $needed | grep -q "mpim:read"; then
       echo "missing mpim:read"
     fi
-   if echo $channel_list | grep -q "im:read"; then
+   if echo $needed | grep -q "im:read"; then
       echo "missing im:read"
     fi
     echo $channel_list | jq '."ok"'

@@ -313,8 +313,7 @@ function message {
           ;;
         channels)
           if check_apitoken slack; then
-            channel_names=$(get_channel_slack)
-            if [ "$?" -eq "0" ]; then
+            if channel_names=$(get_channel_slack); then
               echo "Channels Names:"
               echo
               echo "$channel_names"

@@ -333,7 +333,7 @@ function message {
 #      echo "this is not ok"
 #    fi
             channel_names=$(get_channel_slack)
-            if ($? != 0); then
+            if [ "$?" -ne "0" ]; then
               echo "Channels Names:"
               echo
               echo "$channel_names"

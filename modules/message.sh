@@ -23,11 +23,11 @@ function message {
   function get_channel_slack {
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
     channel_list_ok=$(echo $channel_list | jq '.ok' == *"false"*)
-    if $channel_list | grep -q "false"; then
+    if echo $channel_list | grep -q "false"; then
       echo "this is false"
     fi
 
-    if $channel_list_ok | grep -q "false"; then
+    if echo $channel_list_ok | grep -q "false"; then
       echo "this is false too"
     fi
     echo $channel_list | jq '.ok'

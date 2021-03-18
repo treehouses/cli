@@ -270,7 +270,8 @@ function message {
               log_comment_and_exit1 "invalid token"
             else
               conf_var_update "slack_apitoken" "$3"
-              echo "your apitoken is $3"
+              echo "Your slack apitoken ($3) has been added to \"treehouses config\""
+              echo "You can now use $BASENAME message slack [channels|send|show|read|mark]"
             fi
           elif check_apitoken slack; then
             get_apitoken slack

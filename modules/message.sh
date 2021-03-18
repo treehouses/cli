@@ -320,16 +320,16 @@ function message {
               echo "$channel_names"
             else
               echo "Error: Failed to use the following permissions"
-              if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "  channels:read"; then
+              if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "channels:read"; then
                 echo "channels:read"
               fi
-              if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "  groups:read"; then
+              if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "groups:read"; then
                 echo "groups:read"
               fi
-              if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "  mpim:read"; then
+              if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "mpim:read"; then
                 echo "mpim:read"
               fi
-              if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "  im:read"; then
+              if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "im:read"; then
                 echo "im:read"
               echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
               fi

@@ -23,15 +23,15 @@ function message {
   function get_channel_slack {
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
     echo $channel_list | jq '.ok'
-    echo $channel_list
-    echo $channel_list
+    echo $channel_list | jq '.error'
+    echo $channel_list | jq '.needed'
     echo $channel_list
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversation)
     channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
     user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
     users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
     channel_names=$(echo -e "$channels\n$users")
-    echo "$channel_names"; echo $?
+    echo "$channel_names"
   }
   function check_group {
     group=$1

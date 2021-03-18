@@ -28,6 +28,7 @@ function message {
 
     if echo $ok | grep -q "false"; then
       echo "Error: Missing the following permissions:"
+      echo "ASDFIOVJAOWERJADSRF"
       if echo $needed | grep -q "channels:read"; then
         echo "missing channels:read"
       fi

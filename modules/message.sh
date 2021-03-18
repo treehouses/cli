@@ -335,7 +335,7 @@ function message {
               echo
               echo "$channel_names"
             else
-              needed=$(echo $channel_list | jq '."needed"')
+              needed=$(echo $channel_names | jq '."needed"')
               echo "Error: Missing the following permissions:"
               if echo $needed | grep -q "channels:read"; then
                 echo "missing channels:read"

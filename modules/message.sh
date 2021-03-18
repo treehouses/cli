@@ -22,12 +22,13 @@ function message {
   }
   function get_channel_slack {
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
-    if ! echo $channel_list | jq '."ok"'; then
-      echo "this is not ok"
-    fi
+    ok=$(echo $channel_list | jq '."ok"')
     error=$(echo $channel_list | jq '."error"')
     needed=$(echo $channel_list | jq '."needed"')
 
+    if $ok | grep -q "false"; then
+      echo "this is not ok"
+    fi
     if echo $error | grep -q "missing_scope"; then #needs to check if any error message, and echo errors in general
       echo "this is missing the scope"
     fi
@@ -43,6 +44,7 @@ function message {
    if echo $needed | grep -q "im:read"; then
       echo "missing im:read"
     fi
+
     #echo $channel_list | jq '."ok"'
     #echo $channel_list | jq '.error'
     #echo $channel_list | jq '.needed'

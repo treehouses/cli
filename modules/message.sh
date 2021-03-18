@@ -21,35 +21,17 @@ function message {
     echo "$channel_names"
   }
   function get_channel_slack {
-	echo 1
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
-    echo $channel_list | jq "ok"
+    echo $channel_list | jq '.ok'
     echo $channel_list
     echo $channel_list
     echo $channel_list
-	echo 2
-    channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
-    curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations
-    echo $?
-	echo 3
+    channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversation)
     channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
-    echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"'
-    echo $?
-	echo 4
     user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
-    curl -s -F token=$access_token https://slack.com/api/users.list
-    echo $?
-	echo 5
     users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
-    echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"'
-    echo $?
-	echo 6
     channel_names=$(echo -e "$channels\n$users")
-    echo -e "$channels\n$users"
-    echo $?
-	echo 7
     echo "$channel_names"; echo $?
-	echo 8
   }
   function check_group {
     group=$1

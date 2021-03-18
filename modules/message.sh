@@ -336,16 +336,16 @@ function message {
               echo "$channel_names"
             else
               echo "Error: Missing the following permissions:"
-              if echo $needed | grep -q "channels:read"; then
+              if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "channels:read"; then
                 echo "missing channels:read"
               fi
-              if echo $needed | grep -q "groups:read"; then
+              if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "groups:read"; then
                 echo "missing groups:read"
               fi
-              if echo $needed | grep -q "mpim:read"; then
+              if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "mpim:read"; then
                 echo "missing mpim:read"
               fi
-              if echo $needed | grep -q "im:read"; then
+              if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "im:read"; then
                 echo "missing im:read"
               fi
             fi

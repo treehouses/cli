@@ -23,7 +23,22 @@ function message {
   function get_channel_slack {
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
     if echo $channel_list | grep -q "false"; then
-      echo "this is false"
+      echo "this is not ok"
+    fi
+    if echo $channel_list | grep -q "missing_scope"; then
+      echo "this is missing the scope"
+    fi
+    if echo $channel_list | grep -q "channels:read"; then
+      echo "missing channels:read"
+    fi
+    if echo $channel_list | grep -q "groups:read"; then
+      echo "missing groups:read"
+    fi
+    if echo $channel_list | grep -q "mpim:read"; then
+      echo "missing mpim:read"
+    fi
+   if echo $channel_list | grep -q "im:read"; then
+      echo "missing im:read"
     fi
     echo $channel_list | jq '.ok'
     echo $channel_list | jq '.error'

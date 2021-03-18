@@ -24,7 +24,6 @@ function message {
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
     ok=$(echo $channel_list | jq '."ok"')
     error=$(echo $channel_list | jq '."error"')
-    needed=$(echo $channel_list | jq '."needed"')
 
     if echo $ok | grep -q "false"; then
       return 1

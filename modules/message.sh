@@ -43,10 +43,10 @@ function message {
    if echo $needed | grep -q "im:read"; then
       echo "missing im:read"
     fi
-    echo $channel_list | jq '."ok"'
-    echo $channel_list | jq '.error'
-    echo $channel_list | jq '.needed'
-    echo $channel_list
+    #echo $channel_list | jq '."ok"'
+    #echo $channel_list | jq '.error'
+    #echo $channel_list | jq '.needed'
+    #echo $channel_list
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversation)
     channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
     user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)

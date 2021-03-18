@@ -319,7 +319,7 @@ function message {
               echo
               echo "$channel_names"
             else
-              echo "Error: Failed to use the following permissions"
+              echo "Error: Failed to use the following permissions:"
               if echo $(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations) | grep -q "channels:read"; then
                 echo "  channels:read"
               fi

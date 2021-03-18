@@ -23,6 +23,9 @@ function message {
   function get_channel_slack {
 	echo 1
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+    echo $channel_list | jq "ok"
+    echo $channel_list
+    echo $channel_list
     echo $channel_list
 	echo 2
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)

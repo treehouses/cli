@@ -28,7 +28,7 @@ function message {
     if echo $ok | grep -q "false"; then
       return 1
     fi
-    if echo $error | grep -q "missing_scope"; then #needs to check if any error message, and echo errors in general
+    if echo $error | grep -q "missing_scope"; then #needs to check if not successful instead of specific error
       return 1
     fi
 
@@ -317,17 +317,18 @@ function message {
               echo
               echo "$channel_names"
             else
+              needed=$(echo curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."needed"')
               echo "Error: Failed to use the following permissions:"
-              if curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | grep -q "channels:read"; then
+              if $needed | grep -q "channels:read"; then
                 echo "  channels:read"
               fi
-              if curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | grep -q "groups:read"; then
+              if $needed | grep -q "groups:read"; then
                 echo "  groups:read"
               fi
-              if curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | grep -q "mpim:read"; then
+              if $needed | grep -q "mpim:read"; then
                 echo "  mpim:read"
               fi
-              if curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | grep -q "im:read"; then
+              if $needed | grep -q "im:read"; then
                 echo "  im:read"
               echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
               fi

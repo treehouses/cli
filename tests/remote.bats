@@ -29,4 +29,8 @@ load test-helper
 @test "$clinom remote commands" {
   run "${clicmd}" remote commands
   assert_success
+
+@test "$clinom remote commands json" {
+  run "${clicmd}" remote commands json
+  assert_success
 }

@@ -337,8 +337,8 @@ function message {
 	      echo 6
               if $needed | grep -q "im:read"; then
                 echo "  im:read"
-              echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
               fi
+              echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
 	      echo 7
             fi
 	    echo 8

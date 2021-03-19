@@ -319,6 +319,7 @@ function message {
             else
 		    echo 1
               needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."needed"')
+	      echo $needed
 	      	echo 2
               echo "Error: Failed to use the following permissions:"
               if $needed | grep -q "channels:read"; then

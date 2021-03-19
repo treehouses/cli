@@ -316,32 +316,25 @@ function message {
               echo "Channels Names:"
               echo
               echo "$channel_names"
-	      	echo 0
             else
 		    echo 1
-              needed=$(echo curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."needed"')
+              needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."needed"')
 	      	echo 2
               echo "Error: Failed to use the following permissions:"
-	      	echo 3
               if $needed | grep -q "channels:read"; then
                 echo "  channels:read"
               fi
-	      echo 4
               if $needed | grep -q "groups:read"; then
                 echo "  groups:read"
               fi
-	      echo 5
               if $needed | grep -q "mpim:read"; then
                 echo "  mpim:read"
               fi
-	      echo 6
               if $needed | grep -q "im:read"; then
                 echo "  im:read"
               fi
               echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
-	      echo 7
             fi
-	    echo 8
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
           fi

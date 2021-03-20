@@ -7,7 +7,7 @@ load test-helper
 }
 
 @test "$clinom message slack apitoken (create token)" {
-  "${clicmd}" config delete xoxp-fake-token
+  run "${clicmd}" config delete xoxp-fake-token
   run "${clicmd}" message slack apitoken xoxp-fake-token
   assert_output --partial 'Your slack apitoken'
   "${clicmd}" config delete xoxp-fake-token

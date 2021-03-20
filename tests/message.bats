@@ -31,7 +31,7 @@ load test-helper
   run "${clicmd}" message slack apitoken xoxp-fake-token
   run "${clicmd}" message slack apitoken
   assert_output --partial 'Your API access token is'
-  "${clicmd}" config delete xoxp-fake-token
+  run "${clicmd}" config delete xoxp-fake-token
 }
 
 @test "$clinom message slack apitoken (after invalid token)" {
@@ -39,5 +39,5 @@ load test-helper
   run "${clicmd}" message slack apitoken fake-token
   run "${clicmd}" message slack apitoken
   assert_output --partial 'api.slack.com/apps'
-  "${clicmd}" config delete fake-token
+  run "${clicmd}" config delete fake-token
 }

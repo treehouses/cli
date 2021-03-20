@@ -32,7 +32,7 @@ load test-helper
   treehouses config clear
 }
 
-@test "$clinom message slack apitoken [token]" {
+@test "$clinom message slack apitoken [bad token]" {
   treehouses config clear
   run "${clicmd}" message slack apitoken fake-token
   assert_failure

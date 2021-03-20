@@ -14,8 +14,7 @@ load test-helper
 }
 
 @test "$clinom message slack apitoken (create invalid token)" {
-  "${clicmd}" config delete xoxp-fake-token
-  run "${clicmd}" message slack apitoken fake-token
+  bash -c [[ run "${clicmd}" config delete xoxp-fake-token && "${clicmd}" message slack apitoken fake-token ]]
   assert_output --partial 'invalid token'
   "${clicmd}" config delete xoxp-fake-token
 }

@@ -12,7 +12,7 @@ load test-helper
   treehouses config clear
 }
 
-REM Needs to 'store' previous tokens and re-add them
+# Needs to 'store' previous tokens and re-add them
 @test "$clinom message slack apitoken (no token)" {
   treehouses config clear
   run "${clicmd}" message slack apitoken

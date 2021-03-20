@@ -44,5 +44,7 @@ load test-helper
   run "${clicmd}" message slack apitoken
   assert_output --partial 'api.slack.com/apps'
   run "${clicmd}" config delete fake-token
-  run "${clicmd}" message slack apitoken "$(slack)"
+  run if [ -z "$tokens" ];
+        "${clicmd}" message slack apitoken "$(slack)"
+      fi
 }

@@ -39,11 +39,3 @@ load test-helper
   assert_failure
   "${clicmd}" config delete fake-token
 }
-
-#debugging
-@test "$clinom message slack apitoken [bad token]" {
-  "${clicmd}" config clear
-  run "${clicmd}" message slack apitoken fake-token
-  assert_success
-  "${clicmd}" config delete fake-token
-}

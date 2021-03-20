@@ -17,7 +17,7 @@ load test-helper
   run "${clicmd}" config delete fake-token
   run "${clicmd}" message slack apitoken fake-token
   assert_output --partial 'invalid token'
-  "${clicmd}" config delete fake-token
+  run "${clicmd}" config delete fake-token
 }
 
 # Needs to 'store' previous tokens and re-add them

@@ -36,7 +36,7 @@ load test-helper
 
 @test "$clinom message slack apitoken (after invalid token)" {
   run tokens=$(treehouses config)
-  run if [ -z "$tokens" ]; then
+  run if [ -z "$tokens" ];
         slack=${"$tokens#"#slack_apitoken="}
       fi
   run "${clicmd}" config clear

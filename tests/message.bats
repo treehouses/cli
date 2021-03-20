@@ -14,7 +14,7 @@ load test-helper
 }
 
 @test "$clinom message slack apitoken (create invalid token)" {
-  "${clicmd}" config delete xoxp-fake-token
+  run "${clicmd}" config delete xoxp-fake-token
   run "${clicmd}" message slack apitoken fake-token
   assert_output --partial 'invalid token'
   "${clicmd}" config delete xoxp-fake-token
@@ -22,7 +22,7 @@ load test-helper
 
 # Needs to 'store' previous tokens and re-add them
 @test "$clinom message slack apitoken (no token)" {
-  "${clicmd}" config clear
+  run "${clicmd}" config clear
   run "${clicmd}" message slack apitoken
   assert_output --partial 'api.slack.com/apps'
 }
@@ -35,7 +35,7 @@ load test-helper
 }
 
 @test "$clinom message slack apitoken (after invalid token)" {
-  "${clicmd}" config clear
+  run "${clicmd}" config clear
   run "${clicmd}" message slack apitoken fake-token
   run "${clicmd}" message slack apitoken
   assert_output --partial 'api.slack.com/apps'

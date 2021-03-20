@@ -9,7 +9,14 @@ load test-helper
 @test "$clinom message slack apitoken (create token)" {
   "${clicmd}" config delete xoxp-fake-token
   run "${clicmd}" message slack apitoken xoxp-fake-token
-  assert_success
+  assert_output --partial 'Your slack apitoken'
+  "${clicmd}" config delete xoxp-fake-token
+}
+
+@test "$clinom message slack apitoken (create invalid token)" {
+  "${clicmd}" config delete xoxp-fake-token
+  run "${clicmd}" message slack apitoken fake-token
+  assert_output --partial 'invalid token'
   "${clicmd}" config delete xoxp-fake-token
 }
 
@@ -17,20 +24,20 @@ load test-helper
 @test "$clinom message slack apitoken (no token)" {
   "${clicmd}" config clear
   run "${clicmd}" message slack apitoken
-  assert_success
+  assert_output --partial 'api.slack.com/apps'
 }
 
 @test "$clinom message slack apitoken (with token)" {
   run "${clicmd}" message slack apitoken xoxp-fake-token
   run "${clicmd}" message slack apitoken
-  assert_success
+  assert_output --partial 'Your API access token is'
   "${clicmd}" config delete xoxp-fake-token
 }
 
-@test "$clinom message slack apitoken [bad token]" {
+@test "$clinom message slack apitoken (after invalid token)" {
   "${clicmd}" config clear
   run "${clicmd}" message slack apitoken fake-token
   run "${clicmd}" message slack apitoken
-  assert_output --partial 'Error'
+  assert_output --partial 'api.slack.com/apps'
   "${clicmd}" config delete fake-token
 }

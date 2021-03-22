@@ -20,6 +20,7 @@ function ledtest () {
       current="$currentRed"
       ;;
     newyear)
+	    echo "1st echos"
 	    echo $led
 	    echo $current
 	    echo $currentGreen
@@ -32,12 +33,14 @@ function ledtest () {
       echo "Red LED: 0.5 on; 0.5 off"
       echo "Both LED: flash 2 times"
       newyear > "$LOGFILE"
+	    echo "2nd echos"
 	    echo $led
 	    echo $current
 	    echo $currentGreen
 	    echo $currentRed
       ;;
   esac
+	    echo "3rd echos"
 	    echo $led
 	    echo $current
 	    echo $currentGreen
@@ -51,6 +54,7 @@ function ledtest () {
   if [ -z "$trigger" ]; then
     echo "$current"
   else
+	    echo "4th echos"
 	    echo $led
 	    echo $current
 	    echo $currentGreen
@@ -71,16 +75,19 @@ function ledtest () {
     fi
     if [ ! -z "$currentRed" ]; then
       echo -e "$red: $newValue"
+	    echo "5th echos"
 	    echo $led
 	    echo $current
 	    echo $currentGreen
 	    echo $currentRed
     fi
+	    echo "6th echos"
 	    echo $led
 	    echo $current
 	    echo $currentGreen
 	    echo $currentRed
   fi
+	    echo "7th echos"
 	    echo $led
 	    echo $current
 	    echo $currentGreen

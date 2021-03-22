@@ -20,6 +20,8 @@ function ledtest () {
       current="$currentRed"
       ;;
     newyear)
+  		current_green=$(led "green")
+	      current_red=$(led "red")
 	    debug
       checkroot
       echo "leds are set to newyear mode."
@@ -68,11 +70,6 @@ function set_brightness {
 
 function newyear {
 	echo "  START function"
-	debug
-  current_green=$(led "green")
-  	debug
-  current_red=$(led "red")
-  	debug
 
   set_brightness 0 0 && set_brightness 1 0
   sleep 1

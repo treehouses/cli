@@ -32,7 +32,6 @@ function ledtest () {
 	    debug
       ;;
   esac
-	    debug
 
   if [ ! -d "$led" ]; then
     echo -e "${RED}Error:${NC} led '$color' is not present"
@@ -42,7 +41,6 @@ function ledtest () {
   if [ -z "$trigger" ]; then
     echo "$current"
   else
-	    debug
     checkroot
 
     if ! grep -q "$trigger" "$led/trigger" 2>"$LOGFILE"; then
@@ -61,9 +59,7 @@ function ledtest () {
       echo -e "$red: $newValue"
 	    debug
     fi
-	    debug
   fi
-	   debug
 }
 
 function set_brightness {
@@ -71,8 +67,11 @@ function set_brightness {
 }
 
 function newyear {
+	debug
   current_green=$(led "green")
+  	debug
   current_red=$(led "red")
+  	debug
 
   set_brightness 0 0 && set_brightness 1 0
   sleep 1
@@ -100,8 +99,11 @@ function newyear {
     counter=$(( counter + 1 ))
   done
 
+  	debug
   led green "$current_green"
+  	debug
   led red "$current_red"
+  	debug
 }
 
 function debug {

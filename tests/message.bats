@@ -22,6 +22,11 @@ load test-helper
   assert_output --partial 'Your slack apitoken'
 }
 
+@test "$clinom message slack apitoken (TEST)" {
+  run "${clicmd}" message slack apitoken
+  assert_output --partial 'Your slack apitoken (xoxp-fake-token)'
+}
+
 @test "$clinom message slack apitoken (overrite token)" {
   run "${clicmd}" message slack apitoken xoxp-another-fake-token
   assert_output --partial 'Your slack apitoken (xoxp-another-fake-token)'

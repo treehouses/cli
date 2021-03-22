@@ -105,6 +105,6 @@ function newyear {
 }
 
 function debug {
-	    echo "  Green: $currentGreen"
-	    echo "  Red:  $currentRed"
+      echo -e "  TEST $green: $newValue"
+      echo -e "  TEST $red: $newValue"
     }

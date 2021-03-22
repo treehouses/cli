@@ -1,4 +1,4 @@
-function led {
+function ledtest () {
   checkrpi
   checkargn $# 2
   color="$1"

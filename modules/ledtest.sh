@@ -55,10 +55,10 @@ function ledtest () {
     set_brightness "${led: -1}" 1
 
     if [ ! -z "$currentGreen" ]; then
-      echo -e "$green: $newValue"
+      echo -e "$green: $currentGreen"
     fi
     if [ ! -z "$currentRed" ]; then
-      echo -e "$red: $newValue"
+      echo -e "$red: $currentRed"
 	    debug
     fi
   fi

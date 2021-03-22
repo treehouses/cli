@@ -3,19 +3,12 @@ function led {
   checkargn $# 2
   color="$1"
   trigger="$2"
-	echo "1"
   gLed="/sys/class/leds/led0"
-  	echo "2"
   rLed="/sys/class/leds/led1"
-  	echo "3"
   currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$gLed/trigger")
-  	echo "4"
   currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$rLed/trigger")
-  	echo "5"
   green="${GREEN}green led${NC}"
-  	echo "6"
   red="${RED}red led${NC}"
-  	echo "7"
 
   case "$color" in
     green)

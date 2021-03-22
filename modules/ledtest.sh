@@ -67,6 +67,7 @@ function set_brightness {
 }
 
 function newyear {
+	echo "  START function"
 	debug
   current_green=$(led "green")
   	debug
@@ -104,6 +105,7 @@ function newyear {
   	debug
   led red "$current_red"
   	debug
+	echo "  END function"
 }
 
 function debug {

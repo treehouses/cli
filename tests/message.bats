@@ -7,7 +7,7 @@ load test-helper
 }
 
 @test "$clinom message gitter apitoken" {
-  run "${clicmd}" config add gitter_apitoken add gitter_apitoken 123 
+  run "${clicmd}" config add gitter_apitoken 123 
   run "${clicmd}" message gitter apitoken
   assert_success 
 }

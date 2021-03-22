@@ -109,6 +109,8 @@ function newyear {
 }
 
 function debug {
+  current_green=$(led "green")
+  current_red=$(led "red")
       echo -e "  TEST $green: $newValue"
       echo -e "  TEST $red: $newValue"
     }

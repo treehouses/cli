@@ -6,13 +6,7 @@ load test-helper
   assert_success
 }
 
-@test "$clinom message slack apitoken (TEST)" {
-  run "${clicmd}" message slack apitoken
-  assert_output --partial 'Your API access token is'
-}
-
 @test "$clinom message slack apitoken (create invalid token)" {
-  run "${clicmd}" config delete slack_apitoken
   run "${clicmd}" message slack apitoken fake-token
   assert_output --partial 'invalid token'
 }

@@ -20,6 +20,10 @@ function ledtest () {
       current="$currentRed"
       ;;
     newyear)
+	    echo $led
+	    echo $current
+	    echo $currentGreen
+	    echo $currentRed
       checkroot
       echo "leds are set to newyear mode."
       echo "Look at your RPi leds, both leds will be in this pattern..."
@@ -28,8 +32,16 @@ function ledtest () {
       echo "Red LED: 0.5 on; 0.5 off"
       echo "Both LED: flash 2 times"
       newyear > "$LOGFILE"
+	    echo $led
+	    echo $current
+	    echo $currentGreen
+	    echo $currentRed
       ;;
   esac
+	    echo $led
+	    echo $current
+	    echo $currentGreen
+	    echo $currentRed
 
   if [ ! -d "$led" ]; then
     echo -e "${RED}Error:${NC} led '$color' is not present"
@@ -39,6 +51,10 @@ function ledtest () {
   if [ -z "$trigger" ]; then
     echo "$current"
   else
+	    echo $led
+	    echo $current
+	    echo $currentGreen
+	    echo $currentRed
     checkroot
 
     if ! grep -q "$trigger" "$led/trigger" 2>"$LOGFILE"; then
@@ -55,8 +71,20 @@ function ledtest () {
     fi
     if [ ! -z "$currentRed" ]; then
       echo -e "$red: $newValue"
+	    echo $led
+	    echo $current
+	    echo $currentGreen
+	    echo $currentRed
     fi
+	    echo $led
+	    echo $current
+	    echo $currentGreen
+	    echo $currentRed
   fi
+	    echo $led
+	    echo $current
+	    echo $currentGreen
+	    echo $currentRed
 }
 
 function set_brightness {

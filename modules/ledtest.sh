@@ -98,9 +98,9 @@ function newyear {
   done
 
   	debug
-  led green "$current_green"
+  led green "$currentGreen"
   	debug
-  led red "$current_red"
+  led red "$currentRed"
   	debug
 	echo "  END function"
 }

@@ -75,7 +75,7 @@ function camera {
             percent=$(bc <<< "scale=2; ($line / $frames) * 100")
             echo -ne "  [$percent%] completed"\\r
           fi
-        done < <(ffmpeg -y -i $inputFile $outputFile -loglevel error -hide_banner -max_error_rate 0.0 -progress - -nostats | grep -oP --line-buffered '(?<=frame=)[0-9]+'; printf "" "${PIPESTATUS[0]}")
+        done < <(ffmpeg -y -i $inputFile $outputFile -loglevel error -hide_banner -max_error_rate 0.0 -progress - -nostats | grep -oP --line-buffered '(?<=frame=)[0-9]+'; printf "${PIPESTATUS[0]}")
         # be careful not to delete line-buffered
         if [ "$status" = 0 ]; then
           echo "$inputFile has been successfully converted to $outputFile"

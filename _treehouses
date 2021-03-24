@@ -40,9 +40,11 @@ treehouses button bluetooth
 treehouses button off
 treehouses camera
 treehouses camera capture
+treehouses camera convert
 treehouses camera detect
 treehouses camera off
 treehouses camera on
+treehouses camera record
 treehouses changelog
 treehouses changelog compare
 treehouses changelog view
@@ -57,7 +59,6 @@ treehouses container
 treehouses container balena
 treehouses container docker
 treehouses container none
-treehouses convert
 treehouses coralenv demo-always-on
 treehouses coralenv demo-off
 treehouses coralenv demo-on

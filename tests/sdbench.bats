@@ -3,5 +3,5 @@ load test-helper
 
 @test "$clinom sdbench" {
   run "${clicmd}" sdbench
-  assert_success && assert_output --partial 'read -' && assert_output --partial 'write -'
+  assert_success && assert_output --partial 'read  -' && assert_output --partial 'write -'
 }

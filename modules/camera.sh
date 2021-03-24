@@ -1,7 +1,7 @@
 function camera {
   local directory timestamp config configtemp savetype
   checkrpi
-  checkargn $# 2
+  checkargn $# 4
   directory="/home/pi/Pictures/"
   viddir="/home/pi/Videos/"
   timestamp=$(date +"%Y%m%d-%H%M%S")
@@ -13,6 +13,7 @@ function camera {
 
   case "$1" in
     "")
+      checkargn $# 2
       if grep -q "start_x=1" ${config} ; then
           echo "Config file has Camera settings which are currently enabled. Use \"$BASENAME help camera\" for more commands."
       else
@@ -21,6 +22,7 @@ function camera {
     ;;
 
     "on")
+      checkargn $# 2
       if ! grep -q "start_x=1" ${config} ; then
         raspi-config nonint do_camera 0
         echo "Camera settings have been enabled. A reboot is needed in order to use the camera."
@@ -34,6 +36,7 @@ function camera {
     ;;
 
     "off")
+      checkargn $# 2
       if grep -q "start_x=1" ${config} ; then
         raspi-config nonint do_camera 1
         echo "Camera has been disabled. A reboot is needed in order to use the camera."
@@ -46,6 +49,7 @@ function camera {
     ;;
 
     "capture")
+      checkargn $# 2
       mkdir -p ${directory}
       if ! grep -q "start_x=1" ${config} ; then
         log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
@@ -57,7 +61,6 @@ function camera {
 
     "convert")
       local frames percent status
-      checkargn $# 4
       inputFile="$1"
       outputFile="$2"
       if [ -e "$inputFile" ] && [[ "$outputFile" != "" ]]; then
@@ -85,6 +88,7 @@ function camera {
     ;;
 
     "record")
+      checkargn $# 2
       mkdir -p ${viddir}
       if ! grep -q "start_x=1" ${config} ; then
         log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
@@ -113,6 +117,7 @@ function camera {
       ;;
 
     "detect")
+      checkargn $# 2
       mkdir -p ${directory}
       if ! grep -q "start_x=1" ${config} ; then
         log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
@@ -143,6 +148,7 @@ function camera {
     ;;
 
     *)
+      checkargn $# 2
       echo "Error: The only supported options are 'on', 'off', 'detect, 'capture', and 'record'."
       camera_help
     ;;

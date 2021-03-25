@@ -76,7 +76,7 @@ function remote {
           cmd_str+="\"$line\","
         done <<< "$reverse"
         printf "{%s}\n" "${cmd_str::-1}"
-        ip=$(printf "{%s}\n" "${cmd_str::-1}" | awk '/^"ip":"/,/^"/')
+        ip=$(printf "{%s}\n" "${cmd_str::-1}" | sed -n '/"ip":"/,/"/p')
         echo "  TEST: $ip"
       ;;
     "allservices")

@@ -71,7 +71,7 @@ function remote {
       ;;
     "reverse")
       checkargn $# 2
-      reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f4)
+      reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g')
         while IFS= read -r line; do
           cmd_str+="\"$line\","
         done <<< "$reverse"
@@ -99,8 +99,8 @@ function remote {
       printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}" "${env_str::-1}" "${size_str::-1}"
       ;;
     "statuspage")
-			countryonly=$(wificountry)
-			checkargn $# 1
+      countryonly=$(wificountry)
+      checkargn $# 1
       json_statusfmt="{\"status\":\"$(remote status)\",\"hostname\":\"$(hostname)\",\"arm\":\"$(detect arm)\",\"internet\":\"$(internet)\",\"memory_total\":\"$(memory total gb)\",\"memory_used\":\"$(memory used gb)\",\"temperature\":\"$(temperature)\",\"networkmode\":\"$(networkmode)\",\"info\":\"$(networkmode info | tr '\n' ' ')\",\"storage\":\"$(system disk | tr '\n' ' ' | sed 's/^[[:space:]]*//;s/ \{1,\}/ /g;s/[[:space:]]*$//')\",\"wificountry\":\"${countryonly:8}\"}"
 
       printf '%s\n' "${json_statusfmt}"
@@ -141,7 +141,6 @@ function remote {
         send)
           checkargn $# 3
           profile=$3
-          
           public_key=$(sshtunnel key send public $profile)
           private_key=$(sshtunnel key send private $profile | tr '\n' ' ') 
 

@@ -509,6 +509,45 @@ function message {
             echo "you have successfully authorized and your access token is $access_token "
           fi
           ;;
+        webhook)
+          webhook_url=$3
+          declare -A discordVariables
+          discordVariables[botname]="jq .name"
+          discordVariables[webhookid]="jq .id"
+          discordVariables[webhooktoken]="jq .token"
+          discordVariables[server]="jq .guild_id"
+          discordVariables[channel]="jq .channel_id"
+          getinfo=$(curl -s -X GET  "$webhook_url")
+
+          #"$(echo "$getinfo" | ${discordVariables[$key]} )"
+          #"discord_${discordVariables[server]}_${discordVariables[channel]}_${key}"
+
+          for key in "${!discordVariables[@]}"; do
+            if [ "$key" == "botname" ] ; then
+              discordVariables[$key]=$(echo "$getinfo" | ${discordVariables[$key]} )
+            else
+              discordVariables[$key]=$(echo "$getinfo" | ${discordVariables[$key]} | sed 's/\"//g' )
+            fi
+          done
+          
+          for key in "${!discordVariables[@]}"; do
+            config add "discord_${discordVariables[server]}_${discordVariables[channel]}_${key}" "${discordVariables[$key]}"
+          done
+
+          echo "Your webhook url is $webhook_url"
+          ;;
+        send)
+          shift; shift;
+          message=$*
+          webhookid=$(config | grep "webhookid" | cut -d "=" -f2)
+          webhooktoken=$(config | grep "webhooktoken" | cut -d "=" -f2)
+          message_response=$(curl -s -X POST -H "Content-Type: application/json" -d "{\"content\": \"$message\"}" "https://discord.com/api/webhooks/${webhookid}/${webhooktoken}")
+          if $message_response ; then
+            echo "message successfully delivered to Discord"
+          else
+            log_comment_and_exit1 "ERROR: message not delivered"
+          fi
+          ;;
         *)
           log_help_and_exit1 "Error: This command does not exist" message
       esac

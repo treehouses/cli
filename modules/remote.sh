@@ -76,10 +76,18 @@ function remote {
           cmd_str+="\"$line\","
         done <<< "$reverse"
         printf "{%s}\n" "${cmd_str::-1}"
-        ip=$(printf "{%s}\n" "${cmd_str::-1}" | grep -oP '(?<={).*?(?=,)')
+        ip=$(printf "{%s}\n" "${cmd_str::-1}" | cut -d',' -f 1)
         postal=$(printf "{%s}\n" "${cmd_str::-1}" | cut -d',' -f 2)
         city=$(printf "{%s}\n" "${cmd_str::-1}" | cut -d',' -f 3)
-        echo "  TEST: $city"
+        country=$(printf "{%s}\n" "${cmd_str::-1}" | cut -d',' -f 4)
+        org=$(printf "{%s}\n" "${cmd_str::-1}" | cut -d',' -f 5)
+        timezone=$(printf "{%s}\n" "${cmd_str::-1}" | cut -d',' -f 6)
+        echo "  IP: $ip"
+	echo "  POSTAL: $postal"
+	echo "  CITY: $city"
+	echo "  COUNTRY: $country"
+	echo "  ORG: $org"
+	echo "  TIMEZONE: $timezone"
       ;;
     "allservices")
       checkargn $# 1

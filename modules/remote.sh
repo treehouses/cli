@@ -82,8 +82,8 @@ function remote {
         org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
         timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
 
-      concat="{$ip,$org,$country,$city,$postal,$timezone}"
-	echo "  CONCAT: $concat"
+        json="{$ip,$org,$country,$city,$postal,$timezone}"
+      echo "$json"
       ;;
     "allservices")
       checkargn $# 1

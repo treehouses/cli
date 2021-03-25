@@ -519,9 +519,6 @@ function message {
           discordVariables[channel]="jq .channel_id"
           getinfo=$(curl -s -X GET  "$webhook_url")
 
-          #"$(echo "$getinfo" | ${discordVariables[$key]} )"
-          #"discord_${discordVariables[server]}_${discordVariables[channel]}_${key}"
-
           for key in "${!discordVariables[@]}"; do
             if [ "$key" == "botname" ] ; then
               discordVariables[$key]=$(echo "$getinfo" | ${discordVariables[$key]} )

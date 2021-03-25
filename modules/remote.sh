@@ -72,15 +72,15 @@ function remote {
     "reverse")
       checkargn $# 2
       reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g' | awk '!x[$0]++')
-        while IFS= read -r line; do
-          cmd_str+="\"$line\","
-        done <<< "$reverse"
-        ip=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 1)
-        postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
-        city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)
-        country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
-        org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
-        timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
+      while IFS= read -r line; do
+        cmd_str+="\"$line\","
+      done <<< "$reverse"
+      ip=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 1)
+      postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
+      city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)
+      country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
+      org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
+      timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
 
       json="{$ip,$org,$country,$city,$postal,$timezone}"
       echo "$json"

@@ -82,8 +82,7 @@ function remote {
       postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
       timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
 
-      json="{$ip,$org,$country,$city,$postal,$timezone}"
-      echo "$json"
+      echo"{$ip,$org,$country,$city,$postal,$timezone}"
       ;;
     "allservices")
       checkargn $# 1

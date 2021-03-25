@@ -83,6 +83,9 @@ function remote {
         org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
         timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
 
+      concat="$ip, $postal, $city, $country, $org, $timezone"
+	echo "  CONCAT: $concat"
+
       test=$("$ip, $postal, $city, $country, $org, $timezone" | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g' | awk '!x[$0]++')
 
       echo "  TEST: $test"

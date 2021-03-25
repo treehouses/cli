@@ -71,11 +71,18 @@ function remote {
       ;;
     "reverse")
       checkargn $# 2
-      reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g')
-        while IFS= read -r line; do
-          cmd_str+="\"$line\","
-        done <<< "$reverse"
-        printf "{%s}\n" "${cmd_str::-1}"
+      reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g' | awk '!x[$0]++')
+      while IFS= read -r line; do
+        cmd_str+="\"$line\","
+      done <<< "$reverse"
+      ip=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 1)
+      org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
+      country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
+      city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)
+      postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
+      timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
+
+      echo "{$ip,$org,$country,$city,$postal,$timezone}"
       ;;
     "allservices")
       checkargn $# 1

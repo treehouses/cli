@@ -78,6 +78,8 @@ function remote {
           cmd_str+="\"$line\","
         done <<< "$reverse"
         printf "{%s}\n" "${cmd_str::-1}"
+      test=$(printf "{%s}\n" "${cmd_str::-1}")
+      echo "test $test"
       ;;
     "allservices")
       checkargn $# 1

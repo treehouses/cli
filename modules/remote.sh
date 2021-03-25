@@ -77,7 +77,6 @@ function remote {
         done <<< "$reverse"
         printf "{%s}\n" "${cmd_str::-1}"
         ip=$(printf "{%s}\n" "${cmd_str::-1}")
-        echo "$ip"
       ;;
     "allservices")
       checkargn $# 1

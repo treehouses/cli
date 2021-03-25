@@ -72,7 +72,8 @@ function remote {
     "reverse")
       checkargn $# 2
       reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g' | awk '!x[$0]++')
-      IP=$(echo "$reverse" | awk '/^IP/,/^"/')
+      echo $reverse
+      IP=$(internet reverse | awk '/^"ip": "/,/^"/')
       echo $IP
         while IFS= read -r line; do
           cmd_str+="\"$line\","

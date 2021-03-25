@@ -78,7 +78,8 @@ function remote {
         printf "{%s}\n" "${cmd_str::-1}"
         ip=$(printf "{%s}\n" "${cmd_str::-1}" | grep -oP '(?<={).*?(?=,)')
         postal=$(printf "{%s}\n" "${cmd_str::-1}" | cut -d',' -f 2)
-        echo "  TEST: $postal"
+        city=$(printf "{%s}\n" "${cmd_str::-1}" | cut -d',' -f 3)
+        echo "  TEST: $city"
       ;;
     "allservices")
       checkargn $# 1

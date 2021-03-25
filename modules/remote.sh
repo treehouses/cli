@@ -77,7 +77,8 @@ function remote {
         done <<< "$reverse"
         printf "{%s}\n" "${cmd_str::-1}"
         ip=$(printf "{%s}\n" "${cmd_str::-1}" | grep -oP '(?<={).*?(?=,)')
-        echo "  TEST: $ip"
+        postal=$(printf "{%s}\n" "${cmd_str::-1}" | cut -d',' -f 2)
+        echo "  TEST: $postal"
       ;;
     "allservices")
       checkargn $# 1

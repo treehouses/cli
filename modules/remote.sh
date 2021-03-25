@@ -82,12 +82,11 @@ function remote {
         country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
         org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
         timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
-        echo "  IP: $ip"
-	echo "  POSTAL: $postal"
-	echo "  CITY: $city"
-	echo "  COUNTRY: $country"
-	echo "  ORG: $org"
-	echo "  TIMEZONE: $timezone"
+
+      test=$("$ip, $postal, $city, $country, $org, $timezone" | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g' | awk '!x[$0]++')
+
+      echo "  TEST: $test"
+
       ;;
     "allservices")
       checkargn $# 1

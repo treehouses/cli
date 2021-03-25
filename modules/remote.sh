@@ -75,7 +75,6 @@ function remote {
         while IFS= read -r line; do
           cmd_str+="\"$line\","
         done <<< "$reverse"
-        printf "{%s}\n" "${cmd_str::-1}"
         ip=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 1)
         postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
         city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)

@@ -76,7 +76,8 @@ function remote {
           cmd_str+="\"$line\","
         done <<< "$reverse"
         printf "{%s}\n" "${cmd_str::-1}"
-        ip=$(printf "{%s}\n" "${cmd_str::-1}")
+        ip=$(printf "{%s}\n" "${cmd_str::-1}" | awk '/^"ip":"/,/^"/')
+        echo "  TEST: $test"
       ;;
     "allservices")
       checkargn $# 1

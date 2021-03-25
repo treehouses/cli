@@ -71,7 +71,7 @@ function remote {
       ;;
     "reverse")
       checkargn $# 2
-      reverse=$(internet reverse | sort -u | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g')
+      reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g' | tr ' ' '\n' | sort -u | xargs )
         while IFS= read -r line; do
           cmd_str+="\"$line\","
         done <<< "$reverse"

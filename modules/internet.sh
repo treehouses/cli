@@ -23,7 +23,7 @@ function internet {
 
     echo "$ip"
     echo "$org"
-    if $info | grep -q -E 'postal'; then
+    if echo $info | grep -q -E 'postal'; then
       echo "$country, $city, $postal"
     else
       echo "$country, $city, \"postal\": \"n/a\""

@@ -17,10 +17,8 @@ function internet {
     echo "$info" | grep -E '"(ip)"'
     echo "$info" | grep -E '"(org)"'
     echo "1"
-    echo "$info" | grep -E '"(country)"'
+    echo "$info" | grep -E '"(country|city|postal)"'
     echo "2"
-    echo "$info" | grep -E '"(city)"'
-    echo "$info" | grep -E '"(postal)"'
     if ! echo "$info" | grep -E 'postal'; then
       echo "$info" | grep -E '"(country|city)"' | tr '\n' ',' | sed 's/,$/, "postal": "n\/a"\n/' | sed 's/\",\"/\", \"/g'
     else

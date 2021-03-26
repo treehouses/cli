@@ -17,7 +17,7 @@ function internet {
     ip=$(echo "$info" | grep -E '"(ip)"')
     org=$(echo "$info" | grep -E '"(org)"')
     country=$(echo "$info" | grep -E '"(country)"')
-    city=$(echo $info | grep -E '"(city)"'
+    city=$(echo $info | grep -E '"(city)"')
     postal=$(echo $postal | grep -E '"(postal)"')
     timezone=$(echo $postal | grep -E '"(timezone)"')
 

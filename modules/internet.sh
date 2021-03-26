@@ -20,7 +20,7 @@ function internet {
     echo "$info" | grep -E '"(country)"'
     echo "2"
     echo "$info" | grep -E '"(city)"'
-    echo "3"
+    echo "$info" | grep -E '"(postal)"'
     if ! echo "$info" | grep -E 'postal'; then
       echo "$info" | grep -E '"(country|city)"' | tr '\n' ',' | sed 's/,$/, "postal": "n\/a"\n/' | sed 's/\",\"/\", \"/g'
     else

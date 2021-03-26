@@ -23,10 +23,10 @@ function internet {
 
     echo "$ip"
     echo "$org"
-    if [[ ! echo "$info" | grep -E 'postal' ]]; then
-      echo "$country, $city, \"postal\": \"n/a\""
-    else
+    if $info | grep -q -E 'postal'; then
       echo "$country, $city, $postal"
+    else
+      echo "$country, $city, \"postal\": \"n/a\""
     fi
     echo "$timezone"
     ;;

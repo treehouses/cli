@@ -14,9 +14,13 @@ function internet {
       log_and_exit1 "Error: no internet found"
     fi
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
-    echo "  INFO: $info"
     echo "$info" | grep -E '"(ip)"'
     echo "$info" | grep -E '"(org)"'
+    echo "1"
+    echo "$info" | grep -E '"(country)"'
+    echo "2"
+    echo "$info" | grep -E '"(city)"'
+    echo "3"
     if ! echo "$info" | grep -E 'postal'; then
       echo "$info" | grep -E '"(country|city)"' | tr '\n' ',' | sed 's/,$/, "postal": "n\/a"\n/' | sed 's/\",\"/\", \"/g'
     else

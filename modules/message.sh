@@ -233,30 +233,26 @@ function message {
           ;;
         "")
           if check_apitoken gitter; then
-
-
-          echo "You must provide a subcommand for $BASENAME message gitter listed below:"
-          echo "  $BASENAME message gitter apitoken"
-          echo "     Check for API token for gitter"
-          echo
-          echo "  $BASENAME message gitter authorize \"1234567890\""
-          echo "     Sets and saves API token"
-          echo
-          echo "  $BASENAME message gitter channels"
-          echo "     check for channels"
-          echo
-          echo "  $BASENAME message gitter send treehouses/Lobby \"Hi, you are very awesome\""
-          echo "     Sends a message to a gitter channel"
-          echo
-          echo "  $BASENAME message gitter show treehouses/Lobby"
-          echo "     Marks unread messages from a gitter channel to read"
-          echo
-          echo "  $BASENAME message gitter read treehouses/Lobby"
-          echo "     Receives and displays unread messages from a gitter channel"
-          echo
-          echo "  $BASENAME message gitter mark treehouses/Lobby"
-          echo "     Marks unread messages from a gitter channel to read"
-          echo
+            get_apitoken gitter
+            echo
+            echo "You have successfully configured your Gitter apitoken."
+            echo "Now you must provide a subcommand for $BASENAME message gitter listed below:"
+            echo
+            echo "  $BASENAME message gitter channels"
+            echo "     check for channels"
+            echo
+            echo "  $BASENAME message gitter send treehouses/Lobby \"Hi, you are very awesome\""
+            echo "     Sends a message to a gitter channel"
+            echo
+            echo "  $BASENAME message gitter show treehouses/Lobby"
+            echo "     Marks unread messages from a gitter channel to read"
+            echo
+            echo "  $BASENAME message gitter read treehouses/Lobby"
+            echo "     Receives and displays unread messages from a gitter channel"
+            echo
+            echo "  $BASENAME message gitter mark treehouses/Lobby"
+            echo "     Marks unread messages from a gitter channel to read"
+            echo
           else
             echo "You do not have a gitter apitoken setup."
             echo "For instructions to configure your gitter apitoken"

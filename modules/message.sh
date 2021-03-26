@@ -526,8 +526,8 @@ function message {
         channels)
           if check_apitoken discord; then
             server_name=$3
-            channel_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
-            channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${channel_id}/channels)
+            server_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
+            channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
             channel_names=$(echo $channel_info | python -m json.tool | jq '.[].name' | tr -d '"')
             echo "Channel Names:"
             echo "$channel_names"
@@ -535,15 +535,20 @@ function message {
             log_comment_and_exit1 "Error: You do not have an authorized access token"
           fi
           ;;
-        send)
+        read)
           if check_apitoken discord; then
             server_name=$3
-
+            channel_name=$4
+            server_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
+            channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
+            channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${channel_name}\")" | jq .id | tr -d '"')
+            channel_messages=$(curl -s -X POST -H "Authorization: $TOKEN" -H "Content-Type: application/json" -d '{"content": "sent through vs"}' https://discordapp.com/api/channels/${channel_id}/messages)
+            echo $channel_messages
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token"
           fi
           ;;
-        read)  
+        send)  
           ;;
         *)
           log_help_and_exit1 "Error: This command does not exist" message

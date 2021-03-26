@@ -23,12 +23,12 @@ function internet {
 
 #    	echo "  INFO: $info"
 #	echo ""
-#	echo "  IP: $ip"
-#	echo "  ORG: $org"
-#	echo "  COUNTRY: $country"
-#	echo "  CITY: $city"
-#	echo "  POSTAL: $postal"
-#	echo "  TIMEZONE: $timezone"
+	echo "  IP: $ip"
+	echo "  ORG: $org"
+	echo "  COUNTRY: $country"
+	echo "  CITY: $city"
+	echo "  POSTAL: $postal"
+	echo "  TIMEZONE: $timezone"
 
 
     echo "$ip"

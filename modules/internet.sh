@@ -21,6 +21,8 @@ function internet {
     postal=$(echo $postal | grep -e '"postal": "')
     timezone=$(echo $postal | grep -e '"timezone": "')
 
+    	echo "  INFO: $info"
+	echo ""
 	echo "  IP: $ip"
 	echo "  ORG: $org"
 	echo "  COUNTRY: $country"

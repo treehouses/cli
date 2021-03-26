@@ -23,17 +23,17 @@ function internet {
 
 #    	echo "  INFO: $info"
 #	echo ""
-	echo "  IP: $ip"
-	echo "  ORG: $org"
-	echo "  COUNTRY: $country"
-	echo "  CITY: $city"
-	echo "  POSTAL: $postal"
-	echo "  TIMEZONE: $timezone"
+#	echo "  IP: $ip"
+#	echo "  ORG: $org"
+#	echo "  COUNTRY: $country"
+#	echo "  CITY: $city"
+#	echo "  POSTAL: $postal"
+#	echo "  TIMEZONE: $timezone"
 
 
     echo "$ip"
     echo "$org"
-    if [ -z $postal ]; then
+    if [ -z "$postal" ]; then
       echo "$country, $city, \"postal\": \"n/a\""
     else
       echo "$country, $city, $postal"

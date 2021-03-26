@@ -13,7 +13,6 @@ function internet {
     if ! nc -w 10 -z 8.8.8.8 53 >/dev/null 1>&2; then
       log_and_exit1 "Error: no internet found"
     fi
-    # I can't even
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
     ip=$(echo "$info" | grep -e '"ip": "')
     org=$(echo "$info" | grep -e '"org": "')
@@ -22,13 +21,13 @@ function internet {
     postal=$(echo $info | grep -o '"postal": "[^;]*' | cut -d '"' -f 4)
     timezone=$(echo $info | grep -o '"timezone": "[^;]*' | cut -d '"' -f 4)
 
+    if [ -z "$postal" ]; then
+      postal="n/a"
+    fi
+
     echo "$ip"
     echo "$org"
-    if [ -z "$postal" ]; then
-      echo "$country, \"city\": \"$city\", \"postal\": \"n/a\""
-    else
-      echo "$country, \"city\": \"$city\", \"postal\": \"$postal\""
-    fi
+    echo "$country, \"city\": \"$city\", \"postal\": \"$postal\""
     echo "\"timezone\": \"$timezone\""
     ;;
   *)

@@ -8,7 +8,7 @@ function internet {
       exit 0
     fi
     echo "false"
-    ;;  
+    ;;
   "reverse")
     if ! nc -w 10 -z 8.8.8.8 53 >/dev/null 1>&2; then
       log_and_exit1 "Error: no internet found"

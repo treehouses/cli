@@ -18,8 +18,8 @@ function internet {
     org=$(echo "$info" | grep -e '"org": "')
     country=$(echo "$info" | grep -o '"country": "[^;]*')
     city=$(echo $info | grep -o '"city": "[^;]*')
-    postal=$(echo $postal | grep -o '"postal": "[^;]*')
-    timezone=$(echo $postal | grep -o '"timezone": "[^;]*')
+    postal=$(echo $info | grep -o '"postal": "[^;]*')
+    timezone=$(echo $info | grep -o '"timezone": "[^;]*')
 
 #    	echo "  INFO: $info"
 #	echo ""

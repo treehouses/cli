@@ -22,11 +22,11 @@ function internet {
     timezone=$(echo $postal | grep -E '"(timezone)"')
 
 	echo "  IP: $ip"
-	echo "  IP: $org"
-	echo "  IP: $country"
-	echo "  IP: $city"
-	echo "  IP: $postal"
-	echo "  IP: $timezone"
+	echo "  ORG: $org"
+	echo "  COUNTRY: $country"
+	echo "  CITY: $city"
+	echo "  POSTAL: $postal"
+	echo "  TIMEZONE: $timezone"
 
 
     echo "$ip"

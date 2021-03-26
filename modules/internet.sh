@@ -13,7 +13,7 @@ function internet {
     if ! nc -w 10 -z 8.8.8.8 53 >/dev/null 1>&2; then
       log_and_exit1 "Error: no internet found"
     fi
-    # I can't even.
+    # I can't even
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
     ip=$(echo "$info" | grep -e '"ip": "')
     org=$(echo "$info" | grep -e '"org": "')

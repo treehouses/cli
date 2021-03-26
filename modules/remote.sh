@@ -76,15 +76,11 @@ function remote {
         cmd_str+="\"$line\","
       done <<< "$reverse"
       ip=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 1)
-      org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
-      country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)
-      city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
-      postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
+      org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
+      country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
+      city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)
+      postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
       timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
-
-	echo $(internet reverse)
-	echo "  CITY: $city"
-	echo "  POSTAL: $postal"
 
       echo "{$ip,$org,$country,$city,$postal,$timezone}"
       ;;
@@ -219,20 +215,20 @@ function remote_help {
   echo
   echo "$BASENAME remote check"
   echo "<bluetooth mac> <image> <version> <detectrpi>"
-  echo "     │            │           │        │"
-  echo "     │            │           │        └── model number of rpi"
-  echo "     │            │           └─────────── current cli version"
-  echo "     │            └─────────────────────── current treehouses image version"
-  echo "     └──────────────────────────────────── bluetooth mac address"
+  echo "     �            �           �        �"
+  echo "     �            �           �        +-- model number of rpi"
+  echo "     �            �           +----------- current cli version"
+  echo "     �            +----------------------- current treehouses image version"
+  echo "     +------------------------------------ bluetooth mac address"
   echo
   echo "$BASENAME remote status"
   echo "<internet> <bluetooth mac> <image> <version> <detectrpi>"
-  echo "     │            │           │        │          │"
-  echo "     │            │           │        │          └── model number of rpi"
-  echo "     │            │           │        └───────────── current cli version"
-  echo "     │            │           └────────────────────── current treehouses image version"
-  echo "     │            └────────────────────────────────── bluetooth mac address"
-  echo "     └─────────────────────────────────────────────── internet connection status"
+  echo "     �            �           �        �          �"
+  echo "     �            �           �        �          +-- model number of rpi"
+  echo "     �            �           �        +------------- current cli version"
+  echo "     �            �           +---------------------- current treehouses image version"
+  echo "     �            +---------------------------------- bluetooth mac address"
+  echo "     +----------------------------------------------- internet connection status"
   echo
   echo "$BASENAME remote upgrade"
   echo "true if an upgrade is available"

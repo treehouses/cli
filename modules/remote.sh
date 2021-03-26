@@ -75,12 +75,12 @@ function remote {
       while IFS= read -r line; do
         cmd_str+="\"$line\","
       done <<< "$reverse"
-      ip=$(printf "%s\n" "${cmd_str::-1}" | grep -e '"ip": "')
-      org=$(printf "%s\n" "${cmd_str::-1}" | grep -e '"org": "')
-      country=$(printf "%s\n" "${cmd_str::-1}" | grep -o '"country": "[^;]*')
-      city=$(printf "%s\n" "${cmd_str::-1}" | grep -o '"city": "[^;]*')
-      postal=$(printf "%s\n" "${cmd_str::-1}" | grep -o '"postal": "[^;]*')
-      timezone=$(printf "%s\n" "${cmd_str::-1}" | grep -o '"timezone": "[^;]*')
+      ip=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 1)
+      org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
+      country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)
+      city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
+      postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
+      timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
 
       echo "{$ip,$org,$country,$city,$postal,$timezone}"
       ;;

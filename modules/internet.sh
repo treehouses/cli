@@ -15,12 +15,13 @@ function internet {
     fi
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
     echo "$info" | grep -E '"(ip)"'
+    echo "$info" | grep -E '"(org)"'
     if ! echo "$info" | grep -E 'postal'; then
-      echo "$info" | grep -E '"(city|country)"' | tr '\n' ',' | sed 's/,$/, "postal": "n\/a"\n/' | sed 's/\",\"/\", \"/g'
+      echo "$info" | grep -E '"(country|city)"' | tr '\n' ',' | sed 's/,$/, "postal": "n\/a"\n/' | sed 's/\",\"/\", \"/g'
     else
-      echo "$info" | grep -E '"(city|country|postal)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'
+      echo "$info" | grep -E '"(country|city|postal)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'
     fi
-    echo "$info" | grep -E '"(org|timezone)"'
+    echo "$info" | grep -E '"(timezone)"'
     ;;
   *)
     log_help_and_exit1 "ERROR: incorrect command" internet

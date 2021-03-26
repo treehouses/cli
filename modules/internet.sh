@@ -21,16 +21,6 @@ function internet {
     postal=$(echo $info | grep -o '"postal": "[^;]*' | cut -d ' ' -f 1,2)
     timezone=$(echo $info | grep -o '"timezone": "[^;]*' | cut -d ' ' -f 1,2)
 
-#    	echo "  INFO: $info"
-#	echo ""
-#	echo "  IP: $ip"
-#	echo "  ORG: $org"
-#	echo "  COUNTRY: $country"
-#	echo "  CITY: $city"
-#	echo "  POSTAL: $postal"
-#	echo "  TIMEZONE: $timezone"
-
-
     echo "$ip"
     echo "$org"
     if [ -z "$postal" ]; then

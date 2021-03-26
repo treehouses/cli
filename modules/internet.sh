@@ -14,12 +14,12 @@ function internet {
       log_and_exit1 "Error: no internet found"
     fi
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
-    ip=$(echo "$info" | grep -e 'ip')
-    org=$(echo "$info" | grep -e 'org')
-    country=$(echo "$info" | grep -e 'country')
-    city=$(echo $info | grep -e 'city')
-    postal=$(echo $postal | grep -e 'postal')
-    timezone=$(echo $postal | grep -e 'timezone')
+    ip=$(echo "$info" | grep -e '"ip": "')
+    org=$(echo "$info" | grep -e '"org": "')
+    country=$(echo "$info" | grep -e '"country": "')
+    city=$(echo $info | grep -e '"city": "')
+    postal=$(echo $postal | grep -e '"postal": "')
+    timezone=$(echo $postal | grep -e '"timezone": "')
 
 	echo "  IP: $ip"
 	echo "  ORG: $org"

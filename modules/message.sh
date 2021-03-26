@@ -15,6 +15,11 @@ function message {
     echo "Your API access token is $access_token"
     return 0
   }
+  function get_server_discord {
+    server_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds)
+    server_names=$(echo $server_info | python -m json.tool | jq '.[].name' | tr -d '"')
+    echo "$server_names"
+  }
   function get_channel_gitter {
     channel_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")
     channel_names=$(echo $channel_info | python -m json.tool | jq '.[].name' | tr -d '"')
@@ -508,6 +513,37 @@ function message {
             conf_var_update "discord_apitoken" "$access_token"
             echo "you have successfully authorized and your access token is $access_token "
           fi
+          ;;
+        servers)
+          if check_apitoken discord; then
+            server_names=$(get_server_discord)
+            echo "Server Names:"
+            echo "$server_names"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token"
+          fi
+          ;;
+        channels)
+          if check_apitoken discord; then
+            server_name=$3
+            channel_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
+            channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${channel_id}/channels)
+            channel_names=$(echo $channel_info | python -m json.tool | jq '.[].name' | tr -d '"')
+            echo "Channel Names:"
+            echo "$channel_names"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token"
+          fi
+          ;;
+        send)
+          if check_apitoken discord; then
+            server_name=$3
+
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token"
+          fi
+          ;;
+        read)  
           ;;
         *)
           log_help_and_exit1 "Error: This command does not exist" message

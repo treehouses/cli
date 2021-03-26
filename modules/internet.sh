@@ -17,15 +17,15 @@ function internet {
     ip=$(echo "$info" | grep -e '"ip": "')
     org=$(echo "$info" | grep -e '"org": "')
     country=$(echo "$info" | grep -o '"country": "[^;]*')
-    city=$(echo $info | grep -e '"city": "')
-    postal=$(echo $postal | grep -e '"postal": "')
-    timezone=$(echo $postal | grep -e '"timezone": "')
+    city=$(echo $info | grep -o '"city": "[^;]*')
+    postal=$(echo $postal | grep -o '"postal": "[^;]*')
+    timezone=$(echo $postal | grep -o '"timezone": "[^;]*')
 
 #    	echo "  INFO: $info"
 #	echo ""
 #	echo "  IP: $ip"
 #	echo "  ORG: $org"
-	echo "  COUNTRY: $country"
+#	echo "  COUNTRY: $country"
 #	echo "  CITY: $city"
 #	echo "  POSTAL: $postal"
 #	echo "  TIMEZONE: $timezone"

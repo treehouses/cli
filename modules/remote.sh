@@ -82,7 +82,7 @@ function remote {
       postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
       timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
 
-	echo $(printf "%s\n" "${cmd_str::-1}")
+	echo $(internet reverse)
 	echo "  CITY: $city"
 	echo "  POSTAL: $postal"
 

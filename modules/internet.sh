@@ -14,17 +14,21 @@ function internet {
       log_and_exit1 "Error: no internet found"
     fi
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
-    echo "$info" | grep -E '"(ip)"'
-    echo "$info" | grep -E '"(org)"'
-    echo "1"
-    echo "$info" | grep -E '"(country)"' | grep -E '"(city)"' | grep -E '"(postal)"'
-    echo "2"
+    ip=$(echo "$info" | grep -E '"(ip)"')
+    org=$(echo "$info" | grep -E '"(org)"')
+    country=$(echo "$info" | grep -E '"(country)"')
+    city=$(echo $info | grep -E '"(city)"'
+    postal=$(echo $postal | grep -E '"(postal)"')
+    timezone=$(echo $postal | grep -E '"(timezone)"')
+
+    echo "$ip"
+    echo "$org"
     if ! echo "$info" | grep -E 'postal'; then
-      echo "$info" | grep -E '"(country|city)"' | tr '\n' ',' | sed 's/,$/, "postal": "n\/a"\n/' | sed 's/\",\"/\", \"/g'
+      echo "$country, $city, \"postal\": \"n/a\""
     else
-      echo "$info" | grep -E '"(country|city|postal)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'
+      echo "$country, $city, $postal"
     fi
-    echo "$info" | grep -E '"(timezone)"'
+    echo "$timezone"
     ;;
   *)
     log_help_and_exit1 "ERROR: incorrect command" internet

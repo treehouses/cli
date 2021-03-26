@@ -16,19 +16,19 @@ function internet {
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
     ip=$(echo "$info" | grep -e '"ip": "')
     org=$(echo "$info" | grep -e '"org": "')
-    country=$(echo "$info" | grep -e '"country": "')
+    country=$(echo "$info" | grep -o '"country": "[^;]*')
     city=$(echo $info | grep -e '"city": "')
     postal=$(echo $postal | grep -e '"postal": "')
     timezone=$(echo $postal | grep -e '"timezone": "')
 
-    	echo "  INFO: $info"
-	echo ""
-	echo "  IP: $ip"
-	echo "  ORG: $org"
+#    	echo "  INFO: $info"
+#	echo ""
+#	echo "  IP: $ip"
+#	echo "  ORG: $org"
 	echo "  COUNTRY: $country"
-	echo "  CITY: $city"
-	echo "  POSTAL: $postal"
-	echo "  TIMEZONE: $timezone"
+#	echo "  CITY: $city"
+#	echo "  POSTAL: $postal"
+#	echo "  TIMEZONE: $timezone"
 
 
     echo "$ip"

@@ -549,6 +549,18 @@ function message {
           fi
           ;;
         send)  
+          if check_apitoken discord; then
+            server_name=$3
+            channel_name=$4
+            message=$5
+            server_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
+            channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
+            channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${channel_name}\")" | jq .id | tr -d '"')
+            send_messages=$(curl -s -X POST -H "Authorization: $access_token" -H "Content-Type: application/json" -d "{\"content\": \"${message}\"}" https://discordapp.com/api/channels/${channel_id}/messages | jq .)
+            echo "$send_messages"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token"
+          fi
           ;;
         *)
           log_help_and_exit1 "Error: This command does not exist" message

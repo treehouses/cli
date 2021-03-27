@@ -319,7 +319,6 @@ function message {
         ((count=count+1))
       done
       }
-echo 0
       case "$2" in
         apitoken)
           if [[ $3 != "" ]]; then
@@ -359,9 +358,7 @@ echo 0
           ;;
         channels)
           if check_apitoken slack; then
-		  echo 2
             if channel_names=$(get_channel_slack); then
-		    echo 3
               echo "Channels Names:"
               echo
               echo "$channel_names"

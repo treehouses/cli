@@ -32,12 +32,9 @@ function message {
       return 1
     fi
 
-    	echo $channel_list | python -m json.tool | tr -d '"'
-
-    channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversation)
     channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
     user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
-#    users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
+    users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
     channel_names=$(echo -e "$channels\n$users")
     echo "$channel_names"
   }

@@ -76,10 +76,10 @@ function remote {
         cmd_str+="\"$line\","
       done <<< "$reverse"
       ip=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $1}')
-      org=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $2}')
-      country=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $3}')
-      city=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $4}')
-      postal=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $5}')
+      org=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $5}')
+      country=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $4}')
+      city=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $3}')
+      postal=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $2}')
       timezone=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $6}')
 
       echo "{$ip\",\"$org\",\"$country\",\"$city\",\"$postal\",\"$timezone}"

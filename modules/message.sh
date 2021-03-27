@@ -273,6 +273,7 @@ function message {
         ((count=count+1))
       done
       }
+echo 0
       case "$2" in
         apitoken)
           if [[ $3 != "" ]]; then
@@ -311,17 +312,16 @@ function message {
           fi
           ;;
         channels)
+		echo 1
           if check_apitoken slack; then
+		  echo 2
             if channel_names=$(get_channel_slack); then
-needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
-              echo "  DEBUG: $needed"
-
+		    echo 3
               echo "Channels Names:"
               echo
               echo "$channel_names"
             else
               needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."needed"')
-              echo "  DEBUG: $needed"
               echo "Error: Failed to use the following permissions:"
               if echo $needed | grep -q "channels:read"; then
                 echo "  channels:read"
@@ -337,9 +337,11 @@ needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel 
               fi
               echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
             fi
+	    echo 4
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
           fi
+	  echo 5
           ;;
         send)
           channel=$3
@@ -548,6 +550,7 @@ needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel 
       log_help_and_exit1 "Error: This command does not exist" message
       ;;
   esac
+  echo 99
 }
 
 function message_help {

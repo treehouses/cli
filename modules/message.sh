@@ -21,14 +21,20 @@ function message {
     echo "$channel_names"
   }
   function get_channel_slack {
-    if channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations); then
-	channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
-    else
-	    echo 1
-	    exit
-    fi
+    channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+	if ok=$(echo $channel_list | jq '."ok"'); then
     ok=$(echo $channel_list | jq '."ok"')
+    	else
+		echo 1
+		exit
+	fi
+
+	if error=$(echo $channel_list | jq '."error"'); then
     error=$(echo $channel_list | jq '."error"')
+    	else
+		echo 2
+		exit
+	fi
 
     if echo $ok | grep -q "false"; then
       return 1
@@ -37,12 +43,46 @@ function message {
       return 1
     fi
 
+    	if channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversation); then
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversation)
+    	else
+		echo 3
+		exit
+	fi
+
+	if channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"'); then
     channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
+    	else
+		echo 4
+		exit
+	fi
+
+	if user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list); then
     user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
+    	else
+		echo 5
+		exit
+
+	if users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"'); then
     users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
+    	else
+		echo 6
+		exit
+	fi
+
+	if channel_names=$(echo -e "$channels\n$users"); then
     channel_names=$(echo -e "$channels\n$users")
+    	else
+		echo 7
+		exit
+	fi
+
+	if echo "$channel_names"; then
     echo "$channel_names"
+    	else
+		echo 8
+		exit
+	fi
   }
   function check_group {
     group=$1

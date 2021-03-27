@@ -62,6 +62,7 @@ function message {
     	else
 		echo 5
 		exit
+	fi
 
 	if users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"'); then
     users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')

@@ -542,8 +542,8 @@ function message {
             server_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
             channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
             channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${channel_name}\")" | jq .id | tr -d '"')
-            channel_messages=$(curl -s -X POST -H "Authorization: $TOKEN" -H "Content-Type: application/json" -d '{"content": "sent through vs"}' https://discordapp.com/api/channels/${channel_id}/messages)
-            echo $channel_messages
+            channel_messages=$(curl -s -H "Authorization: $access_token" -H "Content-Type: application/json" https://discordapp.com/api/channels/${channel_id}/messages | jq '.[].content')
+            echo "$channel_messages"
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token"
           fi

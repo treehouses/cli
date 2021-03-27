@@ -313,7 +313,7 @@ function message {
         channels)
           if check_apitoken slack; then
             if channel_names=$(get_channel_slack); then
-		                  needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."needed"')
+needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
               echo "  DEBUG: $needed"
 
               echo "Channels Names:"

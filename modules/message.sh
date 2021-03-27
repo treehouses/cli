@@ -22,19 +22,15 @@ function message {
   }
   function get_channel_slack {
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
-    if echo $channel_list | jq '."ok"'; then
-      ok=$(echo $channel_list | jq '."ok"')
-    fi
-    if echo $channel_list | jq '."error"'; then
-      error=$(echo $channel_list | jq '."error"')
-    fi
+#    ok=$(echo $channel_list | jq '."ok"')
+#    error=$(echo $channel_list | jq '."error"')
 
-    if echo $ok | grep -q "false"; then
-      return 1
-    fi
-    if echo $error | grep -q "missing_scope"; then #needs to check if not successful instead of specific error
-      return 1
-    fi
+#    if echo $ok | grep -q "false"; then
+#      return 1
+#    fi
+#    if echo $error | grep -q "missing_scope"; then #needs to check if not successful instead of specific error
+#      return 1
+#    fi
 
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversation)
     channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')

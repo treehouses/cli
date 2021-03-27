@@ -21,7 +21,12 @@ function message {
     echo "$channel_names"
   }
   function get_channel_slack {
-    channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+    if channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations); then
+	channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+    else
+	    echo 1
+	    exit
+    fi
     ok=$(echo $channel_list | jq '."ok"')
     error=$(echo $channel_list | jq '."error"')
 
@@ -312,7 +317,6 @@ echo 0
           fi
           ;;
         channels)
-		echo 1
           if check_apitoken slack; then
 		  echo 2
             if channel_names=$(get_channel_slack); then
@@ -337,11 +341,9 @@ echo 0
               fi
               echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
             fi
-	    echo 4
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
           fi
-	  echo 5
           ;;
         send)
           channel=$3
@@ -550,7 +552,6 @@ echo 0
       log_help_and_exit1 "Error: This command does not exist" message
       ;;
   esac
-  echo 99
 }
 
 function message_help {

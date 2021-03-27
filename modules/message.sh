@@ -236,7 +236,7 @@ function message {
             get_apitoken gitter
             echo
             echo "You have successfully configured your Gitter apitoken."
-            echo "Now you must provide a subcommand for $BASENAME message gitter listed below:"
+            echo "Now you must provide a subcommand for $BASENAME message gitter [channels|send|show|read|mark] listed below:"
             echo
             echo "  $BASENAME message gitter channels"
             echo "     check for channels"
@@ -254,9 +254,7 @@ function message {
             echo "     Marks unread messages from a gitter channel to read"
             echo
           else
-            echo "You do not have a gitter apitoken setup."
-            echo "For instructions to configure your gitter apitoken"
-            echo "Please run: $BASENAME message gitter apitoken"
+            ./$BASENAME message gitter apitoken
           fi
           ;;
         *)

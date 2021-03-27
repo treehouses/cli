@@ -75,14 +75,14 @@ function remote {
       while IFS= read -r line; do
         cmd_str+="\"$line\","
       done <<< "$reverse"
-      ip=$(printf "%s\n" "${cmd_str::-1}" | grep -e '"ip":"')
-      org=$(printf "%s\n" "${cmd_str::-1}" | grep -e '"org":"')
-      country=$(printf "%s\n" "${cmd_str::-1}" | grep -o '"country":"[^;]*')
-      city=$(printf "%s\n" "${cmd_str::-1}" | grep -o '"city":"[^;]*' | cut -d '"' -f 4)
-      postal=$(printf "%s\n" "${cmd_str::-1}" | grep -o '"postal":"[^;]*' | cut -d '"' -f 4)
-      timezone=$(printf "%s\n" "${cmd_str::-1}" | grep -o '"timezone":"[^;]*' | cut -d '"' -f 4)
+      ip=$(printf "%s\n" "${cmd_str::-1}" | awk -F',"' '{print $1}')
+      org=$(printf "%s\n" "${cmd_str::-1}" | awk -F',"' '{print $2}')
+      country=$(printf "%s\n" "${cmd_str::-1}" | awk -F',"' '{print $3}')
+      city=$(printf "%s\n" "${cmd_str::-1}" | awk -F',"' '{print $4}')
+      postal=$(printf "%s\n" "${cmd_str::-1}" | awk -F',"' '{print $5}')
+      timezone=$(printf "%s\n" "${cmd_str::-1}" | awk -F',"' '{print $6}')
 
-      echo "{$ip,$org,$country,$city,$postal,$timezone}"
+      echo "{$ip,\"$org,\"$country,\"$city,\"$postal,\"$timezone}"
       ;;
     "allservices")
       checkargn $# 1

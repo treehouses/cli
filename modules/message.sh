@@ -22,8 +22,12 @@ function message {
   }
   function get_channel_slack {
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
-    ok=$(echo $channel_list | jq '."ok"')
-    error=$(echo $channel_list | jq '."error"')
+    if echo $channel_list | jq '."ok"'; then
+      ok=$(echo $channel_list | jq '."ok"')
+    fi
+    if echo $channel_list | jq '."error"'; then
+      error=$(echo $channel_list | jq '."error"')
+    fi
 
     if echo $ok | grep -q "false"; then
       return 1

@@ -556,8 +556,12 @@ function message {
             server_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
             channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
             channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${channel_name}\")" | jq .id | tr -d '"')
-            send_messages=$(curl -s -X POST -H "Authorization: $access_token" -H "Content-Type: application/json" -d "{\"content\": \"${message}\"}" https://discordapp.com/api/channels/${channel_id}/messages | jq .)
-            echo "$send_messages"
+            message_response=$(curl -s -X POST -H "Authorization: $access_token" -H "Content-Type: application/json" -d "{\"content\": \"${message}\"}" https://discordapp.com/api/channels/${channel_id}/messages | python -m json.tool | jq '.code' | tr -d '"')
+            if [[ $message_response == 0 ]]; then
+              log_comment_and_exit1 "Error: message not delivered"
+            else
+              echo "You successfully send a message to Discord"
+            fi
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token"
           fi

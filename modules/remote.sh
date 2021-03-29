@@ -76,17 +76,17 @@ function remote {
 	echo "$reverse"
 	echo "  END REVERSE"
 
-      ip=$("$reverse" | grep 'ip":"')
+      ip=$(echo "$reverse" | grep 'ip":"')
 	echo "  IP: $ip"
-      org=$("$reverse" | grep 'postal":"')
+      org=$(echo "$reverse" | grep 'postal":"')
 	echo "  ORG: $org"
-      country=$("$reverse" | grep 'country":"')
+      country=$(echo "$reverse" | grep 'country":"')
 	echo "  COUNTRY: $country"
-      city=$("$reverse" | grep 'city":"')
+      city=$(echo "$reverse" | grep 'city":"')
 	echo "  CITY: $city"
-      postal=$("$reverse" | grep 'postal":"')
+      postal=$(echo "$reverse" | grep 'postal":"')
 	echo "  POSTAL: $postal"
-      timezone=$("$reverse" | grep 'timezone":"')
+      timezone=$(echo "$reverse" | grep 'timezone":"')
 	echo "  TIMEZONE: $timezone"
 
 

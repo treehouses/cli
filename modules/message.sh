@@ -526,6 +526,9 @@ function message {
         channels)
           if check_apitoken discord; then
             server_name=$3
+            if [[ $server_name == "" ]]; then
+              log_comment_and_exit1 "ERROR: Channel information is missing" "usage: $BASENAME message discord channels \"server name\""
+            fi
             server_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
             channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
             channel_names=$(echo $channel_info | python -m json.tool | jq '.[].name' | tr -d '"')

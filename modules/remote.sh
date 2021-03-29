@@ -72,32 +72,21 @@ function remote {
     "reverse")
       checkargn $# 2
       reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g' | awk '!x[$0]++')
-	echo "  START REVERSE"
-	echo "$reverse"
-	echo "  END REVERSE"
 
       ip=$(echo "$reverse" | grep 'ip":"')
-	echo "  IP: $ip"
       org=$(echo "$reverse" | grep 'org":"')
-	echo "  ORG: $org"
       country=$(echo "$reverse" | grep 'country":"')
-	echo "  COUNTRY: $country"
       city=$(echo "$reverse" | grep 'city":"')
-	echo "  CITY: $city"
       postal=$(echo "$reverse" | grep 'postal":"')
-	echo "  POSTAL: $postal"
       timezone=$(echo "$reverse" | grep 'timezone":"')
-	echo "  TIMEZONE: $timezone"
 
+# this can automate most of the formatting
+#     while IFS= read -r line; do
+#       cmd_str+="\"$line\","
+#     done <<< "$reverse"
+#     printf "%s\n" "${cmd_str::-1}"
 
-      while IFS= read -r line; do
-        cmd_str+="\"$line\","
-      done <<< "$reverse"
-
-	echo "  START REVERSE"
-printf "%s\n" "${cmd_str::-1}"
-	echo "  END REVERSE"
-
+# this could be automated
       echo "{$ip\",\"$org\",\"$country\",\"$city\",\"$postal\",\"$timezone}"
       ;;
     "allservices")

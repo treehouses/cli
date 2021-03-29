@@ -291,7 +291,7 @@ function message {
             echo "2. Click \"Create New App\" (or \"Create an App\")"
             echo "3. Type a name in \"App Name\""
             echo "4. Select the \"Development Slack Workspace\" (eg : Open Learning Exchange)\ from the drop-down"
-            echo "5. Under \"features \", click \"OAuth & Permission\""
+            echo "5. Under \"Features \", click \"OAuth & Permission\""
             echo "6. Under \"User Token Scopes\", click \"Add an OAuth Scope\""
             echo "7. Add the following permissions:"
             echo "  \"chat:write\""
@@ -318,29 +318,13 @@ function message {
             else
               needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."needed"')
               error=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."error"')
-
-# Needs to account for:
-#	      if [[ -z "$needed" ]]; then
-#		      echo "  WARNING: NEEDED IS NULL"
-#		      echo "  START"
-#		      echo "$debug"
-#		      echo "  END"
-#		fi
-#		if echo $needed | grep -q "null"; then
-#               echo "  WARNING: HAS STRING 'NULL'"
-#		      echo "  START"
-#		      echo "$debug"
-#		      echo "  END"
-#              fi
-#		echo " NEEDED: $needed"
-
               if echo $needed | grep -q "null" || [[ -z "$needed" ]]; then
                 if echo $error | grep -q "token_revoked"; then
                   echo "Error: Token is revoked. Please grant app permissions again:"
                   echo "  1. Go to https://api.slack.com/apps"
                   echo "  2a. Under \"App Name\", click your app"
                   echo "  2b. If you don't see your app, then run $BASENAME config clear. Then, run $BASENAME message slack apitoken. (Follow the steps from there)"
-                  echo "  3. Under \"features \", click \"OAuth & Permission\""
+                  echo "  3. Under \"Features \", click \"OAuth & Permission\""
                   echo "  4. Under \"OAuth Tokens & Redirect URLs\", click \"(Re)Install to Workspace\""
                   echo "  5. Click \"Allow\". This will give permissions and display the User OAuth Token"
                   echo "  6. Copy the new User OAuth Token"

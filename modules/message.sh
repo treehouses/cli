@@ -345,7 +345,7 @@ function message {
                 fi
               else
                 echo "Error: Failed to use the following permissions:"
-                echo $needed | sed 's/"/\n/g' | sed 's/,/\n/g' | sed '/^[[:space:]]*$/d' | sed 's/^/  /'
+                echo $needed | sed 's/"//g' | sed 's/,/\n/g' | sed 's/^/  /'
                 echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
               fi
             fi

@@ -94,6 +94,10 @@ function remote {
         cmd_str+="\"$line\","
       done <<< "$reverse"
 
+	echo "  START REVERSE"
+	echo "$reverse"
+	echo "  END REVERSE"
+
       echo "{$ip\",\"$org\",\"$country\",\"$city\",\"$postal\",\"$timezone}"
       ;;
     "allservices")

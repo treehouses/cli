@@ -319,14 +319,6 @@ function message {
               needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."needed"')
               error=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."error"')
 
-
-# DEBUGGING:
-# Needs to account for:
-#{
-#  "ok": false,
-#  "error": "token_revoked"
-#}
-
 # Needs to account for:
 #	      if [[ -z "$needed" ]]; then
 #		      echo "  WARNING: NEEDED IS NULL"
@@ -346,7 +338,8 @@ function message {
                 if echo $error | grep -q "token_revoked"; then
                   echo "Error: Token is revoked. Please grant app permissions again:"
                   echo "  1. Go to https://api.slack.com/apps"
-                  echo "  2. Under \"App Name\", click your app"
+                  echo "  2a. Under \"App Name\", click your app"
+                  echo "  2b. If you don't see your app, then run $BASENAME config clear. Then, run $BASENAME message slack apitoken. (Follow the steps from there)"
                   echo "  3. Under \"features \", click \"OAuth & Permission\""
                   echo "  4. Under \"OAuth Tokens & Redirect URLs\", click \"(Re)Install to Workspace\""
                   echo "  5. Click \"Allow\". This will give permissions and display the User OAuth Token"

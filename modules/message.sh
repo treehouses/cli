@@ -325,6 +325,7 @@ function message {
 #  "error": "token_revoked"
 #}
 
+# Needs to account for:
 #	      if [[ -z "$needed" ]]; then
 #		      echo "  WARNING: NEEDED IS NULL"
 #		      echo "  START"
@@ -341,7 +342,7 @@ function message {
 
               echo "Error: Failed to use the following permissions:"
 
-              echo $needed | sed 's/"/\n/g' | sed '/^[[:space:]]*$/d' | sed 's/^/  /'
+              echo $needed | sed 's/"/\n/g' | sed 's/,/\n/g' | sed '/^[[:space:]]*$/d' | sed 's/^/  /'
 
 #             DELETE AFTER TESTING
 #              if echo $needed | grep -q "channels:read"; then

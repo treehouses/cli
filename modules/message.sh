@@ -346,10 +346,12 @@ function message {
                 if echo $error | grep -q "token_revoked"; then
                   echo "Error: Token is revoked. Please grant app permissions again:"
                   echo "  1. Go to https://api.slack.com/apps"
-                  echo "  2. Under \"OAuth Tokens & Redirect URLs\", click \"Reinstall to Workspace\""
-                  echo "  3. Click \"Allow\". This will give permissions and display the User OAuth Token"
-                  echo "  4. Copy the new User OAuth Token"
-                  echo "  5. Run $BASENAME message slack apitoken <User OAuth Token>"
+                  echo "  2. Under \"App Name\", click your app"
+                  echo "  3. Click \"OAuth & Permission\" under \"features \""
+                  echo "  4. Under \"OAuth Tokens & Redirect URLs\", click \"Reinstall to Workspace\""
+                  echo "  5. Click \"Allow\". This will give permissions and display the User OAuth Token"
+                  echo "  6. Copy the new User OAuth Token"
+                  echo "  7. Run $BASENAME message slack apitoken <User OAuth Token>"
                 elif echo $error | grep -q "null" || [[ -z "$error" ]]; then
                   echo "Error: Cannot display Slack channels."
                   echo "Please try the following steps:"

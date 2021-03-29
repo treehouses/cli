@@ -95,7 +95,7 @@ function remote {
       done <<< "$reverse"
 
 	echo "  START REVERSE"
-	echo "$reverse"
+printf "%s\n" "${cmd_str::-1}"
 	echo "  END REVERSE"
 
       echo "{$ip\",\"$org\",\"$country\",\"$city\",\"$postal\",\"$timezone}"

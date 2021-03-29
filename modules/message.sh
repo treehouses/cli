@@ -531,7 +531,8 @@ function message {
             fi
             server_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
             channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
-            channel_names=$(echo $channel_info | python -m json.tool | jq '.[].name' | tr -d '"')
+            channel_type=$(echo "$channel_info" | jq ".[] | select(.type==0)")
+            channel_names=$(echo "$channel_type" | jq '.name' | tr -d '"')
             echo "Channel Names:"
             echo "$channel_names"
           else

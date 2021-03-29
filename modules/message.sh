@@ -318,7 +318,7 @@ function message {
             else
               needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."needed"')
 
-	      if [[ -z $needed ]]; then
+	      if [[ -z "$needed" ]]; then
 		      echo "  WARNING: NEEDED IS NULL"
 		fi
 		echo " NEEDED: $needed"

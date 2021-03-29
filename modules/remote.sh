@@ -75,12 +75,12 @@ function remote {
       while IFS= read -r line; do
         cmd_str+="\"$line\","
       done <<< "$reverse"
-      ip=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $1}')
-      org=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $5}')
-      country=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $4}')
-      city=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $3}')
-      postal=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $2}')
-      timezone=$(printf "%s\n" "${cmd_str::-1}" | awk -F'","' '{print $6}')
+      ip=$(printf "%s\n" "${cmd_str::-1}" | awk -F'/"ip:" "/,/"/' '{print $1}')
+      org=$(printf "%s\n" "${cmd_str::-1}" | awk -F'/"org:" "/,/"/' '{print $5}')
+      country=$(printf "%s\n" "${cmd_str::-1}" | awk -F'/"country:" "/,/"/' '{print $4}')
+      city=$(printf "%s\n" "${cmd_str::-1}" | awk -F'/"city:" "/,/"/' '{print $3}')
+      postal=$(printf "%s\n" "${cmd_str::-1}" | awk -F'/"postal:" "/,/"/' '{print $2}')
+      timezone=$(printf "%s\n" "${cmd_str::-1}" | awk -F'/"timezone:" "/,/"/' '{print $6}')
 
       echo "{$ip\",\"$org\",\"$country\",\"$city\",\"$postal\",\"$timezone}"
       ;;

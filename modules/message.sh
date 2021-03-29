@@ -369,6 +369,7 @@ function message {
                 echo $needed | sed 's/"/\n/g' | sed 's/,/\n/g' | sed '/^[[:space:]]*$/d' | sed 's/^/  /'
                 echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
               fi
+            fi
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
           fi

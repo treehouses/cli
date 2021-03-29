@@ -317,9 +317,10 @@ function message {
               echo "$channel_names"
             else
               needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."needed"')
+              error=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."error"')
+
 
 # DEBUGGING:
-#	      debug=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '.')
 # Needs to account for:
 #{
 #  "ok": false,
@@ -341,10 +342,33 @@ function message {
 #              fi
 #		echo " NEEDED: $needed"
 
-              echo "Error: Failed to use the following permissions:"
-              echo $needed | sed 's/"/\n/g' | sed 's/,/\n/g' | sed '/^[[:space:]]*$/d' | sed 's/^/  /'
-              echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
-            fi
+              if echo $needed | grep -q "null" || [[ -z "$needed" ]]; then
+                if echo $error | grep -q "token_revoked"; then
+                  echo "Error: Token is revoked. Please grant app permissions again:"
+                  echo "  1. Go to https://api.slack.com/apps"
+                  echo "  2. Under \"OAuth Tokens & Redirect URLs\", click \"Reinstall to Workspace\""
+                  echo "  3. Click \"Allow\". This will give permissions and display the User OAuth Token"
+                  echo "  4. Copy the new User OAuth Token"
+                  echo "  5. Run $BASENAME message slack apitoken <User OAuth Token>"
+                elif echo $error | grep -q "null" || [[ -z "$error" ]]; then
+                  echo "Error: Cannot display Slack channels."
+                  echo "Please try the following steps:"
+                  echo "  1. Run $BASENAME upgrade"
+                  echo "  2. Run $BASENAME config clear"
+                  echo "  3. Go to https://api.slack.com/apps"
+                  echo "  4. Under \"App Name\", click your app"
+                  echo "  5. Under \"Delete App\", click \"Delete App\""
+                  echo "  6. Run $BASENAME message slack apitoken"
+                  echo "  7. Follow the steps from there"
+                else
+                  echo "Error: Cannot display Slack channels due to the following error(s):"
+                  echo "  $error"
+                fi
+              else
+                echo "Error: Failed to use the following permissions:"
+                echo $needed | sed 's/"/\n/g' | sed 's/,/\n/g' | sed '/^[[:space:]]*$/d' | sed 's/^/  /'
+                echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
+              fi
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
           fi

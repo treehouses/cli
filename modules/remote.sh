@@ -75,7 +75,7 @@ function remote {
       while IFS= read -r line; do
         cmd_str+="\"$line\","
       done <<< "$reverse"
-      ip=$(printf "%s\n" "${cmd_str::-1}" | awk '/^"ip:" ".*"$/')
+      ip=$(printf "%s\n" "${cmd_str::-1}" | grep '^"ip:" ".*"$')
       org=$(printf "%s\n" "${cmd_str::-1}" | awk '/"org:" "/,/"/')
       country=$(printf "%s\n" "${cmd_str::-1}" | awk '/"country:" "/,/"/')
       city=$(printf "%s\n" "${cmd_str::-1}" | awk '/"city:" "/,/"/')

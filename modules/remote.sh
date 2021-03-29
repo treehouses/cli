@@ -75,15 +75,24 @@ function remote {
 	echo "  START REVERSE"
 	echo "$reverse"
 	echo "  END REVERSE"
+
+      ip=$("$reverse" | grep '^ip":".')
+	echo "  IP: $ip"
+      org=$("$reverse" | awk '/org":"/')
+	echo "  ORG: $org"
+      country=$("$reverse" | awk '/"country": "/,/"/')
+	echo "  COUNTRY: $country"
+      city=$("$reverse" | awk '/"city:" "/,/"/')
+	echo "  CITY: $city"
+      postal=$("$reverse" | awk '/"postal:" "/,/"/')
+	echo "  POSTAL: $postal"
+      timezone=$("$reverse" | awk '/"timezone:" "/,/"/')
+	echo "  TIMEZONE: $timezone"
+
+
       while IFS= read -r line; do
         cmd_str+="\"$line\","
       done <<< "$reverse"
-      ip=$(printf "%s\n" "${cmd_str::-1}" | grep '^"ip:" ".*"$')
-      org=$(printf "%s\n" "${cmd_str::-1}" | awk '/"org:" "/,/"/')
-      country=$(printf "%s\n" "${cmd_str::-1}" | awk '/"country:" "/,/"/')
-      city=$(printf "%s\n" "${cmd_str::-1}" | awk '/"city:" "/,/"/')
-      postal=$(printf "%s\n" "${cmd_str::-1}" | awk '/"postal:" "/,/"/')
-      timezone=$(printf "%s\n" "${cmd_str::-1}" | awk '/"timezone:" "/,/"/')
 
       echo "{$ip\",\"$org\",\"$country\",\"$city\",\"$postal\",\"$timezone}"
       ;;

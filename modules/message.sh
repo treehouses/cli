@@ -538,10 +538,10 @@ function message {
         read)
           if check_apitoken discord; then
             server_name=$3
-            channel_name=$4
+            discord_channel=$4
             server_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
             channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
-            channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${channel_name}\")" | jq .id | tr -d '"')
+            channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${discord_channel}\")" | jq .id | tr -d '"')
             channel_messages=$(curl -s -H "Authorization: $access_token" -H "Content-Type: application/json" https://discordapp.com/api/channels/${channel_id}/messages | jq '.[].content')
             echo "$channel_messages"
           else
@@ -551,11 +551,11 @@ function message {
         send)  
           if check_apitoken discord; then
             server_name=$3
-            channel_name=$4
+            discord_channel=$4
             message=$5
             server_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
             channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
-            channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${channel_name}\")" | jq .id | tr -d '"')
+            channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${discord_channel}\")" | jq .id | tr -d '"')
             message_response=$(curl -s -X POST -H "Authorization: $access_token" -H "Content-Type: application/json" -d "{\"content\": \"${message}\"}" https://discordapp.com/api/channels/${channel_id}/messages | python -m json.tool | jq '.code' | tr -d '"')
             if [[ $message_response == 0 ]]; then
               log_comment_and_exit1 "Error: message not delivered"

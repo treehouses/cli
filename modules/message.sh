@@ -341,7 +341,7 @@ function message {
 
               echo "Error: Failed to use the following permissions:"
 
-              echo $needed | sed 's/"/\n/g' | sed '/^[[:space:]]*$/d'
+              echo $needed | sed 's/"/\n/g' | sed '/^[[:space:]]*$/d' | sed 's/^/  /'
 
 #             DELETE AFTER TESTING
 #              if echo $needed | grep -q "channels:read"; then

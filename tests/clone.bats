@@ -8,3 +8,8 @@ load test-helper
   fi
   assert_success && assert_output -p 'A reboot is needed'
 }
+
+@test "$clinom clone detect" {
+  run "${clicmd}" detect
+  assert_success
+}

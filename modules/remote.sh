@@ -78,7 +78,7 @@ function remote {
 
       ip=$(echo "$reverse" | grep 'ip":"')
 	echo "  IP: $ip"
-      org=$(echo "$reverse" | grep 'postal":"')
+      org=$(echo "$reverse" | grep 'org":"')
 	echo "  ORG: $org"
       country=$(echo "$reverse" | grep 'country":"')
 	echo "  COUNTRY: $country"

@@ -288,7 +288,7 @@ function message {
             echo "To get an authorized access token:"
             echo ""
             echo "1. Go to https://api.slack.com/apps"
-            echo "2. Click \"Create New App\" (sometimes it's \"Create an App\")"
+            echo "2. Click \"Create New App\" (or \"Create an App\")"
             echo "3. Type a name in \"App Name\""
             echo "4. Select the \"Development Slack Workspace\" (eg : Open Learning Exchange)\ from the drop-down"
             echo "5. Under \"features \", click \"OAuth & Permission\""

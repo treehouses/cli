@@ -76,17 +76,17 @@ function remote {
 	echo "$reverse"
 	echo "  END REVERSE"
 
-      ip=$("$reverse" | grep '^ip":".')
+      ip=$(printf "%s\n" "${cmd_str::-1}" | grep '^ip":".')
 	echo "  IP: $ip"
-      org=$("$reverse" | awk '/org":"/')
+      org=$(printf "%s\n" "${cmd_str::-1}" | awk '/org":"/')
 	echo "  ORG: $org"
-      country=$("$reverse" | awk '/"country": "/,/"/')
+      country=$(printf "%s\n" "${cmd_str::-1}" | awk '/"country": "/,/"/')
 	echo "  COUNTRY: $country"
-      city=$("$reverse" | awk '/"city:" "/,/"/')
+      city=$(printf "%s\n" "${cmd_str::-1}" | awk '/"city:" "/,/"/')
 	echo "  CITY: $city"
-      postal=$("$reverse" | awk '/"postal:" "/,/"/')
+      postal=$(printf "%s\n" "${cmd_str::-1}" | awk '/"postal:" "/,/"/')
 	echo "  POSTAL: $postal"
-      timezone=$("$reverse" | awk '/"timezone:" "/,/"/')
+      timezone=$(printf "%s\n" "${cmd_str::-1}" | awk '/"timezone:" "/,/"/')
 	echo "  TIMEZONE: $timezone"
 
 

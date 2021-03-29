@@ -321,9 +321,8 @@ function message {
 	      if [[ -z $needed ]]; then
 		      echo "  WARNING: NEEDED IS NULL"
 		fi
-
+		echo " NEEDED: $needed"
 	      echo "Error: Failed to use the following permissions:"
-	      echo $needed
               if echo $needed | grep -q "channels:read"; then
                 echo "  channels:read"
               fi

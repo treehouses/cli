@@ -653,5 +653,3 @@ function message_help {
   echo "     Sends a message using server and channel name"
   echo
 }
-
-}

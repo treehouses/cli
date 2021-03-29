@@ -640,4 +640,18 @@ function message_help {
   echo "  $BASENAME message discord authorize \"1234567890\""
   echo "     Sets and saves API token"
   echo
+  echo "  $BASENAME message discord server"
+  echo "     List all servers the user is in"
+  echo
+  echo "  $BASENAME message discord channels \"server name\""
+  echo "     List all channels in the server the user specified"
+  echo
+  echo "  $BASENAME message discord read \"server name\" \"channel name\""
+  echo "     Reads messages using server and channel name"
+  echo
+  echo "  $BASENAME message discord send \"server name\" \"channel name\" \"message\""
+  echo "     Sends a message using server and channel name"
+  echo
+}
+
 }

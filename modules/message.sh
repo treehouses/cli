@@ -348,7 +348,7 @@ function message {
                   echo "  1. Go to https://api.slack.com/apps"
                   echo "  2. Under \"App Name\", click your app"
                   echo "  3. Under \"features \", click \"OAuth & Permission\""
-                  echo "  4. Under \"OAuth Tokens & Redirect URLs\", click \"Reinstall to Workspace\""
+                  echo "  4. Under \"OAuth Tokens & Redirect URLs\", click \"(Re)Install to Workspace\""
                   echo "  5. Click \"Allow\". This will give permissions and display the User OAuth Token"
                   echo "  6. Copy the new User OAuth Token"
                   echo "  7. Run $BASENAME message slack apitoken <User OAuth Token>"

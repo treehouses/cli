@@ -20,8 +20,8 @@ function ledtest () {
       current="$currentRed"
       ;;
     newyear)
-  		current_green=$(led "green")
-	      current_red=$(led "red")
+  		current_green=$(ledtest "green")
+	      current_red=$(ledtest "red")
 	    debug
       checkroot
       echo "leds are set to newyear mode."
@@ -36,7 +36,7 @@ function ledtest () {
   esac
 
   if [ ! -d "$led" ]; then
-    echo -e "${RED}Error:${NC} led '$color' is not present"
+    echo -e "${RED}Error:${NC} ledtest '$color' is not present"
     exit 1
   fi
 
@@ -106,8 +106,8 @@ function newyear {
 }
 
 function debug {
-  current_green=$(led "green")
-  current_red=$(led "red")
+  current_green=$(ledtest "green")
+  current_red=$(ledtest "red")
       echo -e "  TEST $green: $currentGreen"
       echo -e "  TEST $red: $currentRed"
     }

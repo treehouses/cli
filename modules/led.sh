@@ -269,8 +269,8 @@ function set_brightness {
 }
 
 function newyear {
-  current_green=$(led "green")
-  current_red=$(led "red")
+#  current_green=$(led "green")
+#  current_red=$(led "red")
 
   set_brightness 0 0 && set_brightness 1 0
   sleep 1
@@ -298,8 +298,10 @@ function newyear {
     counter=$(( counter + 1 ))
   done
 
-  led green "$current_green"
-  led red "$current_red"
+#  led green "$current_green"
+  led green "$currentGreen"
+#  led red "$current_red"
+  led red "$currentRed"
 }
 
 function blackhistorymonth {

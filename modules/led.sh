@@ -10,6 +10,8 @@ function led {
   green="${GREEN}green led${NC}"
   red="${RED}red led${NC}"
 	# delete after debugging
+  config add storeGreen ""
+  config add storeRed ""
 	debug
 	config add storeGreen $currentGreen
 	config add storeRed $currentRed

@@ -249,8 +249,8 @@ function led {
 
 	# delete after debugging
 	debug
-	currentGreen=$(storeGreen.txt)
-	currentRed=$(storeRed.txt)
+	currentGreen=$(cat storeGreen.txt)
+	currentRed=$(cat storeRed.txt)
 	debug
 
   if [ ! -d "$led" ]; then

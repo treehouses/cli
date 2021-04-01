@@ -261,7 +261,7 @@ function led {
       echo -e "$red: $currentRed"
     elif [ "$color" = "red" ]; then
       echo -e "$green: $currentGreen"
-      echo -e "  TEST $green: $currentGreen"
+      echo -e "$red: $newValue"
     fi
   fi
 }

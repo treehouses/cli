@@ -78,8 +78,8 @@ function led {
   fi
 
 	#delete after debugging
-	#function led green $(cat storeGreen.txt)
-	#function led red $(cat storeRed.txt)
+	led green $(cat storeGreen.txt)
+	led red $(cat storeRed.txt)
 
 }
 

@@ -45,21 +45,7 @@ function led {
 
 # delete after debugging
 	debug
-#	currentGreen=$(config | grep "storeGreen" | cut -d "=" -f2)
-#	currentRed=$(config | grep "storeRed" | cut -d "=" -f2)
-	#currentGreen=$(cat storeGreen.txt)
-	#currentRed=$(cat storeRed.txt)
-#  gLed="/sys/class/leds/led0"
-#  rLed="/sys/class/leds/led1"
-#  currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$gLed/trigger")
-#  currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$rLed/trigger")
-#  green="${GREEN}green led${NC}"
-#  red="${RED}red led${NC}"
-#      led="$gLed"
-#      current="$currentGreen"
-#      led="$rLed"
-#      current="$currentRed"
-#	debug
+
 
   if [ ! -d "$led" ]; then
     echo -e "${RED}Error:${NC} led '$color' is not present"
@@ -87,9 +73,6 @@ function led {
       echo -e "$red: $newValue"
     fi
   fi
-
-	# delete after debugging
-	#currentGreen=$(config | grep "storeGreen" | cut -d "=" -f2)
 }
 
 function set_brightness {
@@ -128,10 +111,6 @@ function newyear {
 
   led green "$current_green"
   led red "$current_red"
-
-	# delete after debugging
-	#access_token=$(config | grep "$channelname" | cut -d "=" -f2)
-	#led red $(cat storeRed.txt)
 }
 
 function led_help {

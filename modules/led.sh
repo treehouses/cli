@@ -76,11 +76,6 @@ function led {
       echo -e "$red: $currentRed"
     fi
   fi
-
-	#delete after debugging
-	led green $(cat storeGreen.txt)
-	led red $(cat storeRed.txt)
-
 }
 
 function set_brightness {
@@ -118,9 +113,11 @@ function newyear {
   done
 
 #  led green "$current_green"
-#  led green "$currentGreen"
 #  led red "$current_red"
-#  led red "$currentRed"
+
+	# delete after debugging
+	led green $(cat storeGreen.txt)
+	led red $(cat storeRed.txt)
 }
 
 function led_help {

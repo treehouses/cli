@@ -10,13 +10,6 @@ function led {
   currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$rLed/trigger")
   green="${GREEN}green led${NC}"
   red="${RED}red led${NC}"
-	# delete after debugging
-  config add storeGreen "g"
-  config add storeRed "r"
-	debug
-	config add storeGreen $currentGreen
-	config add storeRed $currentRed
-	debug
 
   case "$color" in
     green)
@@ -28,8 +21,6 @@ function led {
       current="$currentRed"
       ;;
     newyear)
-	# delete after debugging
-	debug
       checkroot
       echo "leds are set to newyear mode."
       echo "Look at your RPi leds, both leds will be in this pattern..."
@@ -38,14 +29,8 @@ function led {
       echo "Red LED: 0.5 on; 0.5 off"
       echo "Both LED: flash 2 times"
       newyear > "$LOGFILE"
-	# delete after debugging
-	debug
       ;;
     esac
-
-# delete after debugging
-	debug
-
 
   if [ ! -d "$led" ]; then
     echo -e "${RED}Error:${NC} led '$color' is not present"
@@ -230,8 +215,8 @@ function led_help {
 }
 
 # delete after debugging
-function debug {
-      echo -e "  TEST $green: $currentGreen"
-      echo -e "  TEST $red: $currentRed"
-      config
-}
+#function debug {
+#      echo -e "  TEST $green: $currentGreen"
+#      echo -e "  TEST $red: $currentRed"
+#      config
+#}

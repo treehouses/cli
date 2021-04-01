@@ -50,6 +50,16 @@ function led {
 	#currentRed=$(config | grep "storeRed" | cut -d "=" -f2)
 	#currentGreen=$(cat storeGreen.txt)
 	#currentRed=$(cat storeRed.txt)
+  gLed="/sys/class/leds/led0"
+  rLed="/sys/class/leds/led1"
+  currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$gLed/trigger")
+  currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$rLed/trigger")
+  green="${GREEN}green led${NC}"
+  red="${RED}red led${NC}"
+      led="$gLed"
+      current="$currentGreen"
+      led="$rLed"
+      current="$currentRed"
 	debug
 
   if [ ! -d "$led" ]; then
@@ -81,14 +91,6 @@ function led {
 
 	# delete after debugging
 	#currentGreen=$(config | grep "storeGreen" | cut -d "=" -f2)
-	gLed="/sys/class/leds/led0"
-  	rLed="/sys/class/leds/led1"
- 	currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$gLed/trigger")
-  	currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$rLed/trigger")
-      	led="$gLed"
-      	current="$currentGreen"
-      	led="$rLed"
-      	current="$currentRed"
 }
 
 function set_brightness {

@@ -11,12 +11,10 @@ function led {
   red="${RED}red led${NC}"
 	# delete after debugging
 	debug
-	> storeGreen.txt
-	> storeRed.txt
-	echo $currentGreen > storeGreen.txt
-	echo $currentRed > storeRed.txt
-	current="$currentGreen"
-	current="$currentRed"
+	config add storeGreen $currentGreen
+	config add storeRed $currentRed
+#	current="$currentGreen"
+#	current="$currentRed"
 	debug
 
   case "$color" in
@@ -46,8 +44,10 @@ function led {
 
 # delete after debugging
 	debug
-	currentGreen=$(cat storeGreen.txt)
-	currentRed=$(cat storeRed.txt)
+	currentGreen=$(config | grep "storeGreen" | cut -d "=" -f2)
+	currentRed=$(config | grep "storeRed" | cut -d "=" -f2)
+	#currentGreen=$(cat storeGreen.txt)
+	#currentRed=$(cat storeRed.txt)
 	debug
 
 #  if [ ! -d "$led" ]; then
@@ -116,8 +116,8 @@ function newyear {
 #  led red "$current_red"
 
 	# delete after debugging
-	led green $(cat storeGreen.txt)
-	led red $(cat storeRed.txt)
+	#access_token=$(config | grep "$channelname" | cut -d "=" -f2)
+	#led red $(cat storeRed.txt)
 }
 
 function led_help {
@@ -240,9 +240,5 @@ function led_help {
 function debug {
       echo -e "  TEST $green: $currentGreen"
       echo -e "  TEST $red: $currentRed"
-      echo "storeGreen:"
-      cat storeGreen.txt
-      echo "storeRed:"
-      cat storeRed.txt
-      echo "    END DEBUG"
+      config
 }

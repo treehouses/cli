@@ -316,9 +316,9 @@ function newyear {
   done
 
 #  led green "$current_green"
-  led green "$currentGreen"
+#  led green "$currentGreen"
 #  led red "$current_red"
-  led red "$currentRed"
+#  led red "$currentRed"
 }
 
 function blackhistorymonth {

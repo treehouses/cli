@@ -8,15 +8,29 @@ function internet {
       exit 0
     fi
     echo "false"
-    ;;  
+    ;;
   "reverse")
     if ! nc -w 10 -z 8.8.8.8 53 >/dev/null 1>&2; then
       log_and_exit1 "Error: no internet found"
     fi
     info="$(curl -s ipinfo.io | grep -o '"[^"]*"\s*:\s*"[^"]*"')"
-    echo "$info" | grep -E '"(ip)"'
-    echo "$info" | grep -E '"(city|country|postal)"' | tr '\n' ',' | sed 's/,$/\n/' | sed 's/\",\"/\", \"/g'
-    echo "$info" | grep -E '"(org|timezone)"'
+    ip=$(echo "$info" | grep -e '"ip": "')
+    org=$(echo "$info" | grep -e '"org": "')
+    country=$(echo "$info" | grep -o '"country": "[^;]*')
+    city=$(echo $info | grep -o '"city": "[^;]*' | cut -d '"' -f 4)
+    postal=$(echo $info | grep -o '"postal": "[^;]*' | cut -d '"' -f 4)
+    timezone=$(echo $info | grep -o '"timezone": "[^;]*' | cut -d '"' -f 4)
+
+    if [ -z "$postal" ]; then
+      postal="n/a"
+    fi
+
+    echo "$ip"
+    echo "$org"
+    echo "$country"
+    echo "\"city\": \"$city\""
+    echo "\"postal\": \"$postal\""
+    echo "\"timezone\": \"$timezone\""
     ;;
   *)
     log_help_and_exit1 "ERROR: incorrect command" internet

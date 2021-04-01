@@ -69,6 +69,21 @@ function remote {
         log_and_exit1 "Usage: $BASENAME remote commands [json]"
       fi
       ;;
+    "reverse")
+      checkargn $# 2
+      reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g' | awk '!x[$0]++')
+      while IFS= read -r line; do
+        cmd_str+="\"$line\","
+      done <<< "$reverse"
+      ip=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 1)
+      org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
+      country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)
+      city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
+      postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
+      timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
+
+      echo "{$ip,$org,$country,$city,$postal,$timezone}"
+      ;;
     "allservices")
       checkargn $# 1
       json_fmt="{\"available\":["%s"],\"installed\":["%s"],\"running\":["%s"],\"icon\":{"%s"},\"info\":{"%s"},\"autorun\":{"%s"},\"usesEnv\":{"%s"},\"size\":{"%s"}}\n"
@@ -91,8 +106,8 @@ function remote {
       printf "$json_fmt" "$available_str" "$installed_str" "$running_str" "${icon_str::-1}" "${info_str::-1}" "${autorun_str::-1}" "${env_str::-1}" "${size_str::-1}"
       ;;
     "statuspage")
-			countryonly=$(wificountry)
-			checkargn $# 1
+      countryonly=$(wificountry)
+      checkargn $# 1
       json_statusfmt="{\"status\":\"$(remote status)\",\"hostname\":\"$(hostname)\",\"arm\":\"$(detect arm)\",\"internet\":\"$(internet)\",\"memory_total\":\"$(memory total gb)\",\"memory_used\":\"$(memory used gb)\",\"temperature\":\"$(temperature)\",\"networkmode\":\"$(networkmode)\",\"info\":\"$(networkmode info | tr '\n' ' ')\",\"storage\":\"$(system disk | tr '\n' ' ' | sed 's/^[[:space:]]*//;s/ \{1,\}/ /g;s/[[:space:]]*$//')\",\"wificountry\":\"${countryonly:8}\"}"
 
       printf '%s\n' "${json_statusfmt}"
@@ -105,13 +120,13 @@ function remote {
         showuser=$(ssh 2fa show $user)
         if [[ "$showuser" == "SSH 2FA for $user is disabled." ]]; then
           outputpart="\"$user\":\"disabled\","
-        else        
+        else
           secret="$(echo "$showuser" | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
           scratch="$(echo "$showuser" | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
           outputpart="\"$user\":{\"secret key\":\"$secret\",\"scratch codes\":[$scratch]},"
         fi
         output="$output$outputpart"
-      done      
+      done
       echo "{${output::-1}}"
       ;;
     "help")
@@ -133,7 +148,6 @@ function remote {
         send)
           checkargn $# 3
           profile=$3
-          
           public_key=$(sshtunnel key send public $profile)
           private_key=$(sshtunnel key send private $profile | tr '\n' ' ') 
 
@@ -168,7 +182,7 @@ function remote {
       ;;
     *)
       echo "Unknown command option"
-      echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | statuspage | ssh2fa | help | key>"
+      echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | reverse | allservices | statuspage | ssh2fa | help | key>"
       ;;
   esac
 }
@@ -194,7 +208,7 @@ function autorun_helper {
 
 function remote_help {
   echo
-  echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | allservices | statuspage | ssh2fa | help | key>"
+  echo "Usage: $BASENAME remote <check | status | upgrade | services | version | commands | reverse | allservices | statuspage | ssh2fa | help | key>"
   echo
   echo "Returns a string representation of the current status of the Raspberry Pi"
   echo "Used for Treehouses Remote"
@@ -229,6 +243,9 @@ function remote_help {
   echo
   echo "$BASENAME remote commands [json]"
   echo "returns a list of all commands for tab completion"
+  echo
+  echo "$BASENAME remote reverse"
+  echo "returns the device's internet location information"
   echo
   echo "$BASENAME remote allservices"
   echo "returns json string of services"

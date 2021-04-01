@@ -1,41 +1,58 @@
 function clone {
-  local device a b
+  local argument a b
   checkrpi
   checkroot
   checkargn $# 1
-  device="$1"
-  if [ -z "$device" ]; then
-    device="/dev/sdb"
-  fi
+  argument="$1"
+  path="$(lsblk -lp | awk '{print $1}' | grep -o '/dev/sd[a-z]' | sort -u)"
 
-  a=$(fdisk -l |grep /dev/mmcblk0: | grep -P '\d+ (?=bytes)' -o)
-  #echo "$a - /dev/mmcblk0"
+  case $argument in
 
-  b=$(fdisk -l |grep "$device": | grep -P '\d+ (?=bytes)' -o)
-  #echo "$b - /dev/sdb"
+    "detect")
+      if [[ $path != *"dev"* ]]; then
+        echo "Error: Could not detect any devices. Try plugging your device into a different slot."
 
-  if [ -z "$a" ] || [ -z "$b" ]; then
-    echo "Error: the device $device wasn't detected"
-    return 1
-  fi
+      else
+        echo "Detected the following devices:"
+        echo $path
+      fi
+      ;;
 
-  if [ $b -lt $a ]; then
-    echo "Error: the device $device is not big enough"
-    return 1
-  fi
+    *)
+      if [ -z "$argument" ]; then
+      argument="/dev/sdb"
+      fi
 
-  if [ $a -eq $b ] || [ $a -lt $b ]; then
-    echo "copying...."
-    echo u > /proc/sysrq-trigger
-    dd if=/dev/mmcblk0 bs=1M of="$device" status=progress
-  fi
+      a=$(fdisk -l |grep /dev/mmcblk0: | grep -P '\d+ (?=bytes)' -o)
+      #echo "$a - /dev/mmcblk0"
 
-  echo ; echo "A reboot is needed to re-enable write permissions to OS."
+      b=$(fdisk -l |grep "$argument": | grep -P '\d+ (?=bytes)' -o)
+      #echo "$b - /dev/sdb"
+
+      if [ -z "$a" ] || [ -z "$b" ]; then
+        echo "Error: the device $argument wasn't detected. Please use '$BASENAME clone detect' to find the device name."
+        return 1
+      fi
+
+      if [ $b -lt $a ]; then
+        echo "Error: the device $argument is not big enough"
+        return 1
+      fi
+
+      if [ $a -eq $b ] || [ $a -lt $b ]; then
+        echo "copying...."
+        echo u > /proc/sysrq-trigger
+        dd if=/dev/mmcblk0 bs=1M of="$argument" status=progress
+      fi
+
+      echo ; echo "A reboot is needed to re-enable write permissions to OS."
+      ;;
+    esac
 }
 
 function clone_help {
   echo
-  echo "Usage: $BASENAME clone [device path]"
+  echo "Usage: $BASENAME clone [detect|device path]"
   echo
   echo "clones your treehouses image to an SDCard"
   echo
@@ -43,7 +60,10 @@ function clone_help {
   echo "  $BASENAME clone"
   echo "      Will clone the current system to /dev/sdb (by default)."
   echo
+  echo "  $BASENAME clone detect"
+  echo "      Will display the paths for connected devices (e.g. /dev/sda)."
+  echo
   echo "  $BASENAME clone /dev/sda"
-  echo "      Will clone the current system to /dev/sda"
+  echo "      Will clone the current system to /dev/sda."
   echo
 }

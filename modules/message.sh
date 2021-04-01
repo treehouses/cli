@@ -270,17 +270,34 @@ function message {
               log_comment_and_exit1 "invalid token"
             else
               conf_var_update "slack_apitoken" "$3"
-              echo "your apitoken is $3"
+              echo "Your slack apitoken ($3) has been added to \"treehouses config\""
+              echo "You can now use $BASENAME message slack [channels|send|show|read|mark]"
             fi
           elif check_apitoken slack; then
             get_apitoken slack
           else
-            echo "To get an authorized access token"
+            echo "To get an authorized access token:"
             echo ""
-            echo "Navigate to https://api.slack.com/apps and create an APP. Provide a name for the APP and select the \"Development Slack Workspace (eg : Open Learning Exchange)\" from the drop down list"
-            echo "Go to \"OAuth & Permission\" under \"features \" and select the scope under \"User Token Scopes\" and add \"chat:write\", \"channels:write\", \"channel:read\", \"channel:history\", \"groups:write\", \"group:read\", \"mpim:write\", \"im:write\", \"usergroups.read\" and \"users.read\" for the APP from the drop down list"
-            echo "Then install APP to the workspace and click the allow button to give permissions in the redirected link and then you will get the \"OAuth access token\""
-            echo "Run $BASENAME message slack apitoken <oauth access token>"
+            echo "1. Go to https://api.slack.com/apps"
+            echo "2. Click \"Create New App\""
+            echo "3. Type a name in \"App Name\""
+            echo "4. Select the \"Development Slack Workspace\" (eg : Open Learning Exchange)\ from the drop-down"
+            echo "5. Click \"OAuth & Permission\" under \"features \""
+            echo "6. Under \"User Token Scopes\", click \"Add an OAuth Scope\""
+            echo "7. Add the following permissions:"
+            echo "  \"chat:write\""
+            echo "  \"channels:write\""
+            echo "  \"channels:read\""
+            echo "  \"channels:history\""
+            echo "  \"groups:write\""
+            echo "  \"groups:read\""
+            echo "  \"im:write\""
+            echo "  \"mpim:write\""
+            echo "  \"usergroups:read\""
+            echo "  \"users:read\""
+            echo "8. Under \"OAuth Tokens & Redirect URLs\", click \"Install to Workspace\""
+            echo "9. Click \"Allow\". This will give permissions and display the User OAuth Token"
+            echo "10. Run $BASENAME message slack apitoken <User OAuth Token>"
           fi
           ;;
         channels)
@@ -504,11 +521,22 @@ function message {
 
 function message_help {
   echo
-  echo "Usage: $BASENAME message <chats> <apitoken>|<oauth key> <redirect URL> | <authorize> <code> <oauth secret>| send <group> <message> | show|read|mark <group>"
+  echo "Usage: $BASENAME message <chats>" 
+  echo "                    <apitoken>"
+  echo "                    <oauth key> <redirect URL>"
+  echo "                    <authorize> <code> <oauth secret>"
+  echo "                    <send> <group> <message>"
+  echo "                    <show|read|mark> <group>"
   echo
-  echo "You can get your token from https://developer.gitter.im/docs/welcome by signing in, it should show up immediately or by navigating to https://developer.gitter.im/apps"
+  echo "You can get your token from:"
+  echo "https://developer.gitter.im/docs/welcome"
+  echo "by signing in."
   echo
-  echo "You must set your api key at least once every session before sending a message"
+  echo "It should show up immediately or by navigating to:"
+  echo "https://developer.gitter.im/apps"
+  echo
+  echo "You must set your api key at least once every session"
+  echo "before sending a message"
   echo
   echo "Send message to a chat service"
   echo
@@ -541,8 +569,8 @@ function message_help {
   echo "  $BASENAME message slack channels"
   echo "     check for channels"
   echo
-  echo "  $BASENAME message slack send \"channel_name or channel ID\" \"Hi, you are very awesome\""
-  echo "     Sends a message to a slack channel using channel name, eg, channel: #channel_name"
+  echo "  $BASENAME message slack send \"channel name or ID\" \"Hello!\""
+  echo "     Sends a message to a slack channel using channel ID/name"
   echo
   echo "  $BASENAME message slack show \"channel ID\""
   echo "     Shows messages of a slack channel using channel ID"

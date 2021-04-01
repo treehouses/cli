@@ -71,22 +71,13 @@ function remote {
       ;;
     "reverse")
       checkargn $# 2
-      reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g' | awk '!x[$0]++')
-
+      reverse=$(internet reverse | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g')
       ip=$(echo "$reverse" | grep 'ip":"')
       org=$(echo "$reverse" | grep 'org":"')
       country=$(echo "$reverse" | grep 'country":"')
       city=$(echo "$reverse" | grep 'city":"')
       postal=$(echo "$reverse" | grep 'postal":"')
       timezone=$(echo "$reverse" | grep 'timezone":"')
-
-# this can automate most of the formatting
-#     while IFS= read -r line; do
-#       cmd_str+="\"$line\","
-#     done <<< "$reverse"
-#     printf "%s\n" "${cmd_str::-1}"
-
-# this could be automated
       echo "{$ip\",\"$org\",\"$country\",\"$city\",\"$postal\",\"$timezone}"
       ;;
     "allservices")

@@ -1066,6 +1066,6 @@ function led_help {
 function debug {
       echo -e "  TEST $green: $currentGreen"
       echo -e "  TEST $red: $currentRed"
-      echo -e "  TEST GREEN STORE: $storeGreen"
-      echo -e "  TEST RED STORE: $storeRed"
+      echo "  TEST GREEN STORE: $storeGreen"
+      echo "  TEST RED STORE: $storeRed"
     }

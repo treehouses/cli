@@ -52,10 +52,10 @@ function led {
 	#currentRed=$(cat storeRed.txt)
 	debug
 
-#  if [ ! -d "$led" ]; then
-#    echo -e "${RED}Error:${NC} led '$color' is not present"
-#    exit 1
-#  fi
+  if [ ! -d "$led" ]; then
+    echo -e "${RED}Error:${NC} led '$color' is not present"
+    exit 1
+  fi
 
   if [ -z "$trigger" ]; then
     echo "$current"

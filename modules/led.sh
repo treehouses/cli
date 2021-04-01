@@ -607,7 +607,7 @@ function labourday {
   current_green=$(led "green")
   current_red=$(led "red")
 
-  set_brightness 1 0 
+  set_brightness 1 0
   for i in {0..1}; do
     for j in {1..5}; do
       set_brightness 0 0
@@ -766,9 +766,9 @@ function kecak {
     set_brightness 0 1 && sleep 0.1
     set_brightness 0 0
     set_brightness 1 1 && sleep 0.1
-    set_brightness 1 0 
+    set_brightness 1 0
   done
-  
+
   for i in {0..1}; do
     set_brightness 0 1 && set_brightness 1 1 && sleep 1
     set_brightness 0 0 && set_brightness 1 0 && sleep 1
@@ -778,7 +778,7 @@ function kecak {
     set_brightness 0 1 && sleep 0.1
     set_brightness 0 0
     set_brightness 1 1 && sleep 0.1
-    set_brightness 1 0 
+    set_brightness 1 0
   done
 
   for i in {0..1}; do
@@ -807,7 +807,7 @@ function sandstorm {
       sleep 0.125
     done
     set_brightness 0 1 && set_brightness 1 0 # green on and red off
-    sleep 1.0 
+    sleep 1.0
     x=$(( x + 1 ))
   done
 
@@ -824,7 +824,7 @@ function sandstorm {
     sleep .15
     x=$(( x + 1 ))
   done
-    
+
   x=0
   while [ $x -le 3 ]; do
     for ((i=0;i<5;i++)); do
@@ -850,7 +850,7 @@ function sandstorm {
     sleep .10
     x=$(( x + 1 ))
   done
-    
+
   x=0
   while [ $x -le 1 ]; do
     for ((i=0;i<6;i++)); do

@@ -27,7 +27,9 @@ function internet {
 
     echo "$ip"
     echo "$org"
-    echo "$country, \"city\": \"$city\", \"postal\": \"$postal\""
+    echo "$country"
+    echo "\"city\": \"$city\""
+    echo "\"postal\": \"$postal\""
     echo "\"timezone\": \"$timezone\""
     ;;
   *)

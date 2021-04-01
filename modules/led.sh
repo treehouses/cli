@@ -253,32 +253,32 @@ function led {
 	currentRed=$(cat storeRed.txt)
 	debug
 
-  if [ ! -d "$led" ]; then
-    echo -e "${RED}Error:${NC} led '$color' is not present"
-    exit 1
-  fi
+#  if [ ! -d "$led" ]; then
+#    echo -e "${RED}Error:${NC} led '$color' is not present"
+#    exit 1
+#  fi
 
-  if [ -z "$trigger" ]; then
-    echo "$current"
-  else
-    checkroot
+#  if [ -z "$trigger" ]; then
+#    echo "$current"
+#  else
+#    checkroot
 
-    if ! grep -q "$trigger" "$led/trigger" 2>"$LOGFILE"; then
-      echo -e "${RED}Error:${NC} unknown led mode '$trigger'"
-      exit 1
-    fi
+#    if ! grep -q "$trigger" "$led/trigger" 2>"$LOGFILE"; then
+#      echo -e "${RED}Error:${NC} unknown led mode '$trigger'"
+#      exit 1
+#    fi
 
-    echo "$trigger" > "$led/trigger"
-    newValue=$(sed 's/.*\[\(.*\)\].*/\1/g' < "$led/trigger")
-    set_brightness "${led: -1}" 1
+#    echo "$trigger" > "$led/trigger"
+#    newValue=$(sed 's/.*\[\(.*\)\].*/\1/g' < "$led/trigger")
+#    set_brightness "${led: -1}" 1
 
-    if [ ! -z "$currentGreen" ]; then
-      echo -e "$green: $currentGreen"
-    fi
-    if [ ! -z "$currentRed" ]; then
-      echo -e "$red: $currentRed"
-    fi
-  fi
+#    if [ ! -z "$currentGreen" ]; then
+#      echo -e "$green: $currentGreen"
+#    fi
+#    if [ ! -z "$currentRed" ]; then
+#      echo -e "$red: $currentRed"
+#    fi
+#  fi
 }
 
 function set_brightness {

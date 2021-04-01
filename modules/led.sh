@@ -20,6 +20,8 @@ function led {
       current="$currentRed"
       ;;
     newyear)
+	# delete after debugging
+	debug
       checkroot
       echo "leds are set to newyear mode."
       echo "Look at your RPi leds, both leds will be in this pattern..."
@@ -28,6 +30,8 @@ function led {
       echo "Red LED: 0.5 on; 0.5 off"
       echo "Both LED: flash 2 times"
       newyear > "$LOGFILE"
+	# delete after debugging
+	debug
       ;;
     blackhistorymonth)
       checkroot
@@ -1046,3 +1050,11 @@ function led_help {
   echo "     This will set the mode of the led to one of the above festivities"
   echo
 }
+
+# delete after debugging
+function debug {
+  current_green=$(ledtest "green")
+  current_red=$(ledtest "red")
+      echo -e "  TEST $green: $currentGreen"
+      echo -e "  TEST $red: $currentRed"
+    }

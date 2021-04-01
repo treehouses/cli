@@ -76,10 +76,10 @@ function remote {
         cmd_str+="\"$line\","
       done <<< "$reverse"
       ip=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 1)
-      org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
-      country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
-      city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)
-      postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
+      org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
+      country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)
+      city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
+      postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
       timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
 
       echo "{$ip,$org,$country,$city,$postal,$timezone}"
@@ -120,13 +120,13 @@ function remote {
         showuser=$(ssh 2fa show $user)
         if [[ "$showuser" == "SSH 2FA for $user is disabled." ]]; then
           outputpart="\"$user\":\"disabled\","
-        else        
+        else
           secret="$(echo "$showuser" | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
           scratch="$(echo "$showuser" | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
           outputpart="\"$user\":{\"secret key\":\"$secret\",\"scratch codes\":[$scratch]},"
         fi
         output="$output$outputpart"
-      done      
+      done
       echo "{${output::-1}}"
       ;;
     "help")

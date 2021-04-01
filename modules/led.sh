@@ -46,8 +46,8 @@ function led {
 
 # delete after debugging
 	debug
-	currentGreen=$(config | grep "storeGreen" | cut -d "=" -f2)
-	currentRed=$(config | grep "storeRed" | cut -d "=" -f2)
+	#currentGreen=$(config | grep "storeGreen" | cut -d "=" -f2)
+	#currentRed=$(config | grep "storeRed" | cut -d "=" -f2)
 	#currentGreen=$(cat storeGreen.txt)
 	#currentRed=$(cat storeRed.txt)
 	debug
@@ -78,6 +78,13 @@ function led {
       echo -e "$red: $currentRed"
     fi
   fi
+
+	# delete after debugging
+	#currentGreen=$(config | grep "storeGreen" | cut -d "=" -f2)
+      	led="$gLed"
+      	current="$currentGreen"
+      led="$rLed"
+      current="$currentRed"
 }
 
 function set_brightness {

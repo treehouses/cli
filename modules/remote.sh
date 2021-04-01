@@ -71,14 +71,18 @@ function remote {
       ;;
     "reverse")
       checkargn $# 2
-      reverse=$(internet reverse | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g')
-      ip=$(echo "$reverse" | grep 'ip":"')
-      org=$(echo "$reverse" | grep 'org":"')
-      country=$(echo "$reverse" | grep 'country":"')
-      city=$(echo "$reverse" | grep 'city":"')
-      postal=$(echo "$reverse" | grep 'postal":"')
-      timezone=$(echo "$reverse" | grep 'timezone":"')
-      echo "{$ip\",\"$org\",\"$country\",\"$city\",\"$postal\",\"$timezone}"
+      reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g')
+      while IFS= read -r line; do
+        cmd_str+="\"$line\","
+      done <<< "$reverse"
+      ip=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 1)
+      org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
+      country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)
+      city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
+      postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
+      timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
+
+      echo "{$ip,$org,$country,$city,$postal,$timezone}"
       ;;
     "allservices")
       checkargn $# 1

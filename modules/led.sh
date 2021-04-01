@@ -53,8 +53,10 @@ function led {
 
     if [ "$color" = "green" ]; then
       echo -e "$green: $newValue"
+      echo -e "$red: $currentRed"
     fi
     if [ "$color" = "red" ]; then
+      echo -e "$green: $currentGreen"
       echo -e "$red: $newValue"
     fi
   fi

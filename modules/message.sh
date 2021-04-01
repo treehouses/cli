@@ -467,48 +467,104 @@ function message {
     discord)
       case "$2" in
         apitoken)
-          if check_apitoken discord; then
-            get_apitoken discord
-          elif [[ $3 != "" ]] && [[ $4 != "" ]]; then
-            client_id=$3
-            if [[ $4 == http?(s)://* ]]; then
-              redirect_uri=$4
-            else
-              log_and_exit1 "Invalid URL"
-            fi
-            conf_var_update "discord_clientid" "$client_id"
-            conf_var_update "discord_redirecturl" "$redirect_uri"
-            authorization_url=$(curl -Ls -o /dev/null -w %'{'url_effective'}' https://discord.com/api/oauth2/authorize?response_type=token\&client_id=${client_id}\&scope=identify)
-            echo "To get the access token, navigate to"
-            echo
-            echo "$authorization_url"
-            echo
-            echo "Then, click \"Authorize\" to provide permissions for your app"
-            echo "From the redirected link , you will get your access token for discord"
-            echo
-            echo "For example, if redirected link is \"http://localhost/token_type=Bearer&access_token=1234567890&expires_in=604800&scope=identify\"' then the access token is \"1234567890\""
-            echo "Then, run $BASENAME message discord authorize <access_token>"
-          else
-            echo "You do not have an authorized access token"
-            echo ""
-            echo "To get an authorized access token"
-            echo ""
-            echo "Navigate to https://discord.com/developers/applications. Create an APP by clicking \"New Application\" and provide a suitable name for your APP."
-            echo "Then move to the option \"OAuth2\" below \"General Information\" and add a redirect URL ( For eg: http://localhost/ ) by clicking \"Add Redirect\" below \"Redirects\"."
-            echo "Then, save the settings by pressing green save button at the bottom of the page."
-            echo "Note both the CLIENT ID and your Redirect URL"
-            echo "Run $BASENAME message discord apitoken <client_id> <redirect_url>"
-          fi
-            ;;
-        authorize)
           if [[ $3 == "" ]]; then
-            echo "authorization code is missing"
+            echo "bot token is missing"
           else
           access_token=$3
             conf_var_update "discord_apitoken" "$access_token"
-            echo "you have successfully authorized and your access token is $access_token "
+            echo "you have successfully added your bot token and your bot token is $access_token "
           fi
           ;;
+        authorize)
+          if check_apitoken discord; then
+            if [[ $3 != "" ]]; then
+              client_id=$3
+              conf_var_update "discord_clientid" "$client_id"
+              authorization_url=$(curl -Ls -o /dev/null -w %'{'url_effective'}' https://discord.com/oauth2/authorize?client_id=${client_id}\&scope=bot\&permissions=671165489)
+              echo "To authorize your bot, navigate to"
+              echo
+              echo "$authorization_url"
+              echo
+              echo "Then, click \"Continue\" to provide the permissions for your bot"
+              echo
+            else
+              echo "You did not provide a client id"
+              echo ""
+              echo "To get a client id"
+              echo ""
+              echo "Navigate to https://discord.com/developers/applications. Navigate to your APP that contains your bot."
+              echo 
+              echo "Click on the \"Oauth\" tab, then copy the client id by clicking on the blue \"Copy\" button under \"CLIENT ID\""
+            fi
+          else
+            echo "You do not have an authorized bot token"
+            echo ""
+            echo "To get an authorized bot token"
+            echo ""
+            echo "Navigate to https://discord.com/developers/applications. Create an APP by clicking \"New Application\" and provide a suitable name for your APP."
+            echo "Then move to the option \"Bot\" below \"General Information\" and add a bot by clicking on the \"Add Bot\" button."
+            echo "Confirm Yes on the dialog box and click on the \"Copy\" button below the \"TOKEN\" label."
+            echo "Run $BASENAME message discord apitoken <bot token>"
+          fi
+          ;;
+        servers)
+          if check_apitoken discord; then
+            server_info=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/users/@me/guilds)
+            server_names=$(echo $server_info | python -m json.tool | jq '.[].name' | tr -d '"')
+            echo "$server_names"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized bot token"
+          fi
+        ;;
+        channels)
+          if check_apitoken discord; then
+            server_name=$3
+            if [[ $server_name == "" ]]; then
+              log_comment_and_exit1 "ERROR: Channel information is missing" "usage: $BASENAME message discord channels \"server name\""
+            fi
+            server_id=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
+            channel_info=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
+            channel_type=$(echo "$channel_info" | jq ".[] | select(.type==0)")
+            channel_names=$(echo "$channel_type" | jq '.name' | tr -d '"')
+            echo "Channel Names:"
+            echo "$channel_names"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized bot token"
+          fi
+        ;;
+        read)
+          if check_apitoken discord; then
+            server_name=$3
+            discord_channel=$4
+            server_id=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
+            channel_info=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
+            channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${discord_channel}\")" | jq .id | tr -d '"')
+            channel_messages=$(curl -s -H "Authorization: Bot $access_token" -H "Content-Type: application/json" https://discordapp.com/api/channels/${channel_id}/messages | jq '.[].content')
+            echo "$channel_messages"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized bot token"
+          fi
+        ;;
+        send)
+          if check_apitoken discord; then
+            server_name=$3
+            discord_channel=$4
+            message=$5
+            server_id=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
+            channel_info=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
+            channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${discord_channel}\")" | jq .id | tr -d '"')
+            webhook_id=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/guilds/${server_id}/webhooks | jq ".[] | select(.channel_id==\"${channel_id}\")" | jq .id | tr -d '"')
+            webhook_token=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/guilds/${server_id}/webhooks | jq ".[] | select(.channel_id==\"${channel_id}\")" | jq .token | tr -d '"')
+            message_response=$(curl -s -X POST -H "Content-Type: application/json" -d "{\"content\": \"${message}\"}" "https://discord.com/api/webhooks/${webhook_id}/${webhook_token}" | jq '.code' | tr -d '"')
+            if [[ $message_response == 0 ]]; then
+              log_comment_and_exit1 "Error: message not delivered"
+            else
+              echo "You successfully sent a message to Discord"
+            fi
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized bot token"
+          fi
+        ;;
         *)
           log_help_and_exit1 "Error: This command does not exist" message
       esac
@@ -581,10 +637,22 @@ function message_help {
   echo "  $BASENAME message slack mark \"channel ID\""
   echo "     Marks messages of a slack channel using channel ID"
   echo
-  echo "  $BASENAME message discord apitoken"
-  echo "     Check for API token for discord"
+  echo "  $BASENAME message discord apitoken \"bot token\""
+  echo "     Adds the bot token for discord"
   echo
-  echo "  $BASENAME message discord authorize \"1234567890\""
-  echo "     Sets and saves API token"
+  echo "  $BASENAME message discord authorize \"client id\""
+  echo "     Authorize the discord bot to communicate with the client"
+  echo
+  echo "  $BASENAME message discord server"
+  echo "     List all servers the user is in"
+  echo
+  echo "  $BASENAME message discord channels \"server name\""
+  echo "     List all channels in the server the user specified"
+  echo
+  echo "  $BASENAME message discord read \"server name\" \"channel name\""
+  echo "     Reads messages using server and channel name"
+  echo
+  echo "  $BASENAME message discord send \"server name\" \"channel name\" \"message\""
+  echo "     Sends a message using server and channel name"
   echo
 }

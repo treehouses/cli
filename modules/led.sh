@@ -45,21 +45,21 @@ function led {
 
 # delete after debugging
 	debug
-	currentGreen=$(config | grep "storeGreen" | cut -d "=" -f2)
-	currentRed=$(config | grep "storeRed" | cut -d "=" -f2)
+#	currentGreen=$(config | grep "storeGreen" | cut -d "=" -f2)
+#	currentRed=$(config | grep "storeRed" | cut -d "=" -f2)
 	#currentGreen=$(cat storeGreen.txt)
 	#currentRed=$(cat storeRed.txt)
-  gLed="/sys/class/leds/led0"
-  rLed="/sys/class/leds/led1"
+#  gLed="/sys/class/leds/led0"
+#  rLed="/sys/class/leds/led1"
 #  currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$gLed/trigger")
 #  currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$rLed/trigger")
-  green="${GREEN}green led${NC}"
-  red="${RED}red led${NC}"
-      led="$gLed"
-      current="$currentGreen"
-      led="$rLed"
-      current="$currentRed"
-	debug
+#  green="${GREEN}green led${NC}"
+#  red="${RED}red led${NC}"
+#      led="$gLed"
+#      current="$currentGreen"
+#      led="$rLed"
+#      current="$currentRed"
+#	debug
 
   if [ ! -d "$led" ]; then
     echo -e "${RED}Error:${NC} led '$color' is not present"
@@ -80,11 +80,11 @@ function led {
     newValue=$(sed 's/.*\[\(.*\)\].*/\1/g' < "$led/trigger")
     set_brightness "${led: -1}" 1
 
-    if [ -n "$currentGreen" ]; then
-      echo -e "$green: $currentGreen"
+    if [ "$color" = "green" ]; then
+      echo -e "$green: $newValue"
     fi
-    if [ -n "$currentRed" ]; then
-      echo -e "$red: $currentRed"
+    if [ "$color" = "red" ]; then
+      echo -e "$red: $newValue"
     fi
   fi
 
@@ -97,8 +97,8 @@ function set_brightness {
 }
 
 function newyear {
-#  current_green=$(led "green")
-#  current_red=$(led "red")
+  current_green=$(led "green")
+  current_red=$(led "red")
 
   set_brightness 0 0 && set_brightness 1 0
   sleep 1
@@ -126,8 +126,8 @@ function newyear {
     counter=$(( counter + 1 ))
   done
 
-#  led green "$current_green"
-#  led red "$current_red"
+  led green "$current_green"
+  led red "$current_red"
 
 	# delete after debugging
 	#access_token=$(config | grep "$channelname" | cut -d "=" -f2)

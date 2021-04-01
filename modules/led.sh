@@ -1064,6 +1064,6 @@ function led_help {
 
 # delete after debugging
 function debug {
-      echo "  TEST $green: $currentGreen; $storeGreen"
-      echo "  TEST $red: $currentRed; $storeRed"
+      echo "  TEST $storeGreen $green: $currentGreen; $storeGreen"
+      echo "  TEST $storeRed $red: $currentRed; $storeRed"
     }

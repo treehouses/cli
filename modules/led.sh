@@ -9,6 +9,11 @@ function led {
   currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$rLed/trigger")
   green="${GREEN}green led${NC}"
   red="${RED}red led${NC}"
+	# delete after debugging
+	debug
+	storeGreen=$currentGreen
+	storeRed=$currentRed
+	debug
 
   case "$color" in
     green)
@@ -239,6 +244,12 @@ function led {
       exit 1
       ;;
   esac
+
+	# delete after debugging
+	debug
+	currentGreen=$storeGreen
+	currentRed=$storeRed
+	debug
 
   if [ ! -d "$led" ]; then
     echo -e "${RED}Error:${NC} led '$color' is not present"

@@ -75,6 +75,10 @@ function remote {
       while IFS= read -r line; do
         cmd_str+="\"$line\","
       done <<< "$reverse"
+	debug=$(printf "%s\n" "${cmd_str::-1}")
+	echo "  START DEBUG"
+	echo $debug
+	echo "  END DEBUG"
       ip=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 1)
       org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
       country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)

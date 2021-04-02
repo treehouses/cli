@@ -82,7 +82,7 @@ function remote {
       postal=$(echo "$reverse" | grep 'postal":"')
       timezone=$(echo "$reverse" | grep 'timezone":"')
 
-      echo "{$ip\",\"$org\",\"$country\",\"$city\",\"$postal\",\"$timezone}"
+      echo "{\"$ip\",\"$org\",\"$country\",\"$city\",\"$postal\",\"$timezone\"}"
       ;;
     "allservices")
       checkargn $# 1

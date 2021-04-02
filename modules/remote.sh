@@ -75,18 +75,14 @@ function remote {
       while IFS= read -r line; do
         cmd_str+="\"$line\","
       done <<< "$reverse"
-	debug=$(printf "%s\n" "${cmd_str::-1}")
-	echo "  START DEBUG"
-	echo $debug
-	echo "  END DEBUG"
-      ip=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 1)
-      org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
-      country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)
-      city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
-      postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
-      timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
+      ip=$(echo "$reverse" | grep 'ip":"')
+      org=$(echo "$reverse" | grep 'org":"')
+      country=$(echo "$reverse" | grep 'country":"')
+      city=$(echo "$reverse" | grep 'city":"')
+      postal=$(echo "$reverse" | grep 'postal":"')
+      timezone=$(echo "$reverse" | grep 'timezone":"')
 
-      echo "{$ip,$org,$country,$city,$postal,$timezone}"
+      echo "{$ip\",\"$org\",\"$country\",\"$city\",\"$postal\",\"$timezone}"
       ;;
     "allservices")
       checkargn $# 1

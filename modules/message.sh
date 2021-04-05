@@ -1,4 +1,5 @@
 function message {
+  check_missing_binary "wscat" "wscat not installed, please use: npm install -g wscat"
   chats="$1"
   function check_apitoken {
     channelname=$1_apitoken
@@ -509,13 +510,16 @@ function message {
           ;;
         ws)
           if check_apitoken discord; then
-            echo '{"op":2,"d":{"token":"'"$TOKEN"'",' \
-            '"properties":{"$os":"linux","$browser":"treehouses","$device":"RaspberryPI"},' \
-            '"compress":false,"large_threshold":250}}'
-            | wscat --connect wss://gateway.discord.gg/
+            {
+              sleep 1
+              echo '{"op":2,"d":{"token":"'"$access_token"'",' \
+              '"properties":{"$os":"linux","$browser":"treehouses","$device":"RaspberryPI"},' \
+              '"compress":false,"large_threshold":250}}'
+             } | wscat --connect wss://gateway.discord.gg/
           else
             log_comment_and_exit1 "Error: You do not have an authorized bot token"
           fi
+          ;;
         servers)
           if check_apitoken discord; then
             server_info=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/users/@me/guilds)
@@ -562,18 +566,16 @@ function message {
             server_id=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
             channel_info=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
             channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${discord_channel}\")" | jq .id | tr -d '"')
-            webhook_id=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/guilds/${server_id}/webhooks | jq ".[] | select(.channel_id==\"${channel_id}\")" | jq .id | tr -d '"')
-            webhook_token=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/guilds/${server_id}/webhooks | jq ".[] | select(.channel_id==\"${channel_id}\")" | jq .token | tr -d '"')
-            message_response=$(curl -s -X POST -H "Content-Type: application/json" -d "{\"content\": \"${message}\"}" "https://discord.com/api/webhooks/${webhook_id}/${webhook_token}" | jq '.code' | tr -d '"')
+            message_response=$(curl -s -X POST -H "Authorization: Bot $access_token" -H "Content-Type: application/json" -d "{\"content\": \"${message}\"}" https://discordapp.com/api/channels/${channel_id}/messages | python -m json.tool | jq '.code' | tr -d '"')
             if [[ $message_response == 0 ]]; then
               log_comment_and_exit1 "Error: message not delivered"
             else
               echo "You successfully sent a message to Discord"
             fi
           else
-            log_comment_and_exit1 "Error: You do not have an authorized bot token"
+            log_comment_and_exit1 "Error: You do not have an authorized access token"
           fi
-        ;;
+          ;;
         *)
           log_help_and_exit1 "Error: This command does not exist" message
       esac

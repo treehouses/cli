@@ -1,7 +1,7 @@
 #!/bin/bash
 
   # runs gitlab on docker
-  docker run -d --hostname 192.168.86.47 -p 443:443 -p 80:80 -p 2222:22 --name gitlab -v /srv/gitlab/config:/etc/gitlab -v /srv/gitlab/logs:/var/log/gitlab -v /srv/gitlab/data:/var/opt/gitlab --privileged ulm0/gitlab
+#  docker run -d --hostname 192.168.86.47 -p 443:443 -p 80:80 -p 2222:22 --name gitlab -v /srv/gitlab/config:/etc/gitlab -v /srv/gitlab/logs:/var/log/gitlab -v /srv/gitlab/data:/var/opt/gitlab --privileged ulm0/gitlab
 
 function install {
   # create service directory
@@ -26,52 +26,62 @@ services:
   # create .env with default values
 
   # add autorun
-#  cat << EOF > /srv/gitlab/autorun
-#gitlab_autorun=true
+  cat << EOF > /srv/gitlab/autorun
+gitlab_autorun=true
 
-#if [ "$gitlab_autorun" = true ]; then
-#  treehouses services gitlab up
-#fi
-#EOF
+if [ "$gitlab_autorun" = true ]; then
+  treehouses services gitlab up
+fi
+
+
+EOF
 }
 
 # environment var
+	# NEEDS REVIEW FOR ACCURACY
 function uses_env {
   echo false
 }
 
 # add supported arch(es)
-#function supported_arches {
-#  echo "armv7l"
-#  echo "aarch64"
+	# NEEDS TO BE CHANGED TO GITLAB
+function supported_arches {
+  echo "armv7l"
+  echo "aarch64"
 }
 
 # add port(s)
-#function get_ports {
-#  echo "8082"
-#}
+	# NEEDS REVIEW FOR ACCURACY
+function get_ports {
+  echo "443"
+  echo "80"
+  echo "2222"
+}
 
 # add size (in MB)
-#function get_size {
-#  echo "350"
-#}
+	# NEEDS REVIEW FOR ACCURACY
+function get_size {
+  echo "1982"
+}
 
 # add description
-#function get_description {
-#  echo "GitLab is a web-based DevOps lifecycle tool that provides a Git-repository manager providing wiki, issue-tracking and continuous integration and deployment pipeline features, using an open-source license"
+function get_description {
+  echo "GitLab is a web-based DevOps lifecycle tool that provides a Git-repository manager providing wiki, issue-tracking, continuous integration, and deployment pipeline features; all using an open-source license"
 }
 
 # add info
+	# NEEDS REVIEW FOR FORMATTING
 function get_info {
-  echo "https://github.com/treehouses/moodole"
+  echo "https://github.com/treehouses/gitlab"
   echo
-  echo "\"Moodle <https://moodle.org> is a learning platform designed to"
-  echo "provide educators, administrators and learners with a single robust,"
-  echo "secure and integrated system to create personalised learning"
-  echo "environments.\""
+  echo "\"GitLab <https://about.gitlab.com/> is an open core company which"
+  echo "develops software for the software development lifecycle used by"
+  echo "more than 100,000 organizations, 30 million estimated registered users,"
+  echo "and has an active community of more than 3000 contributors.\""
 }
 
 # add svg icon
+	# NEEDS TO BE CHANGED TO GITLAB
 function get_icon {
   cat <<EOF
 <?xml version="1.0" encoding="UTF-8"?>

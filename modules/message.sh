@@ -507,6 +507,15 @@ function message {
             echo "Run $BASENAME message discord apitoken <bot token>"
           fi
           ;;
+        ws)
+          if check_apitoken discord; then
+            echo '{"op":2,"d":{"token":"'"$TOKEN"'",' \
+            '"properties":{"$os":"linux","$browser":"treehouses","$device":"RaspberryPI"},' \
+            '"compress":false,"large_threshold":250}}'
+            | wscat --connect wss://gateway.discord.gg/
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized bot token"
+          fi
         servers)
           if check_apitoken discord; then
             server_info=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/users/@me/guilds)

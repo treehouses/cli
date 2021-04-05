@@ -49,7 +49,6 @@ function uses_env {
 	# NEEDS TO BE CHANGED TO GITLAB
 function supported_arches {
   echo "armv7l"
-  echo "aarch64"
 }
 
 # add port(s)
@@ -87,7 +86,15 @@ function get_info {
 function get_icon {
   cat <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Layer_1" x="0px" y="0px" viewBox="0 0 1231.2 315.2" style="enable-background:new 0 0 1231.2 315.2;" xml:space="preserve">
+<svg width="65" height="60" viewBox="0 0 210 194" class="footer-logo">
+<path d="M105.0614,193.655 L105.0614,193.655 L143.7014,74.734 L66.4214,74.734 L105.0614,193.655 L105.0614,193.655 Z" fill="#E24329" class="logo-svg-shape logo-dark-orange-shape"></path>
+<path d="M105.0614,193.6548 L66.4214,74.7338 L12.2684,74.7338 L105.0614,193.6548 Z" fill="#FC6D26" class="logo-svg-shape logo-orange-shape"></path>
+<path d="M12.2685,74.7341 L12.2685,74.7341 L0.5265,110.8731 C-0.5445,114.1691 0.6285,117.7801 3.4325,119.8171 L105.0615,193.6551 L12.2685,74.7341 Z" fill="#FCA326" class="logo-svg-shape logo-light-orange-shape"></path>
+<path d="M12.2685,74.7342 L66.4215,74.7342 L43.1485,3.1092 C41.9515,-0.5768 36.7375,-0.5758 35.5405,3.1092 L12.2685,74.7342 Z" fill="#E24329" class="logo-svg-shape logo-dark-orange-shape"></path>
+<path d="M105.0614,193.6548 L143.7014,74.7338 L197.8544,74.7338 L105.0614,193.6548 Z" fill="#FC6D26" class="logo-svg-shape logo-orange-shape"></path>
+<path d="M197.8544,74.7341 L197.8544,74.7341 L209.5964,110.8731 C210.6674,114.1691 209.4944,117.7801 206.6904,119.8171 L105.0614,193.6551 L197.8544,74.7341 Z" fill="#FCA326" class="logo-svg-shape logo-light-orange-shape"></path>
+<path d="M197.8544,74.7342 L143.7014,74.7342 L166.9744,3.1092 C168.1714,-0.5768 173.3854,-0.5758 174.5824,3.1092 L197.8544,74.7342 Z" fill="#E24329" class="logo-svg-shape logo-dark-orange-shape"></path>
+</svg>
   <g>
     <path style="fill:#F98012;" d="M289.6,309.8V201.5c0-22.6-9.4-34-28-34c-18.7,0-28.1,11.3-28.1,34v108.3h-55.1V201.5 c0-22.6-9.2-34-27.6-34c-18.7,0-28,11.3-28,34v108.3H67.7V195.1c0-23.6,8.2-41.5,24.6-53.6c14.4-10.8,34-16.3,58.6-16.3 c24.9,0,43.3,6.4,55.1,19.2c10.2-12.8,28.7-19.2,55.6-19.2c24.6,0,44.1,5.4,58.5,16.3c16.4,12.1,24.6,30,24.6,53.6v114.7H289.6z"></path>
     <path style="fill:#F98012;" d="M965.1,309.3V0h55.2v309.3H965.1z"></path>

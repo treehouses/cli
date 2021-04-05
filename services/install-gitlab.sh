@@ -8,19 +8,21 @@ function install {
   mkdir -p /srv/gitlab
 
   # create yml(s)
-  {version: '3.3'
-services:
-    gitlab:
-        ports:
-            - '443:443'
-            - '80:80'
-            - '2222:22'
-        volumes:
-            - '/srv/gitlab/config:/etc/gitlab'
-            - '/srv/gitlab/logs:/var/log/gitlab'
-            - '/srv/gitlab/data:/var/opt/gitlab'
-        privileged: true
-        image: ulm0/gitlab
+	# NEEDS REVIEW FOR FORMATTING
+  {
+    echo "version: '3.3'"
+    echo "services:"
+    echo "  gitlab:"
+    echo "    ports:"
+    echo "      - '443:443'"
+    echo "      - '80:80'"
+    echo "      - '2222:22'"
+    echo "    volumes:"
+    echo "      - '/srv/gitlab/config:/etc/gitlab'"
+    echo "      - '/srv/gitlab/logs:/var/log/gitlab'"
+    echo "      - '/srv/gitlab/data:/var/opt/gitlab'"
+    echo "    privileged: true"
+    echo "    image: ulm0/gitlab"
 } > /srv/gitlab/gitlab.yml
 
   # create .env with default values

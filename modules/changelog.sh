@@ -29,7 +29,7 @@ case "$displaymode" in
         case "$version2" in
          "")
           checkargn $# 2
-          if [[ "$CURRENT" > "$version1" ]]; then
+          if [[ $CURRENT > $version1 ]]; then
             sed "/^### $CURRENT/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH #grabs text between version numbers, print bottom to top
           else # Needs to specify previous version instead of current
             echo "ERROR: Must specify a previous version (less than $CURRENT)"
@@ -37,9 +37,9 @@ case "$displaymode" in
           ;;
         *)
           checkargn $# 3
-          if [[ "$version2" > "$version1" ]]; then
+          if [[ $version2 > $version1 ]]; then
             sed "/^### $version2/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH
-          elif [[ "$version2" = "$version1" ]]; then
+          elif [[ $version2 = $version1 ]]; then
             echo "ERROR: Must specify different versions for comparisons (cannot compare same version to itself)"
           else
             sed "/^### $version1/!d;s//&\n/;s/.*\n//;:a;/^### $version2/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH

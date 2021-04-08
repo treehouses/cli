@@ -28,18 +28,26 @@ case "$displaymode" in
       *)
         case "$version2" in
          "")
+          CURA=$(echo $CURRENT | cut -d "." 1-2)
+          CURB=$(echo $CURRENT | cut -d "." 3)
+          VER1A=$(echo $version1 | cut -d "." 1-2)
+          VER1B=$(echo $version1 | cut -d "." 3)
           checkargn $# 2
-          if [[ $CURRENT > $version1 ]]; then
+          if [[ $CURA -gt $VER1A ]] || [[ $CURA -eq $VER1A && $CURB -gt $VER1B ]]; then
             sed "/^### $CURRENT/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH #grabs text between version numbers, print bottom to top
           else # Needs to specify previous version instead of current
             echo "ERROR: Must specify a previous version (less than $CURRENT)"
           fi
           ;;
         *)
+          VER2A=$(echo $version2 | cut -d "." 1-2)
+          VER2B=$(echo $version2 | cut -d "." 3)
+          VER1A=$(echo $version1 | cut -d "." 1-2)
+          VER1B=$(echo $version1 | cut -d "." 3)
           checkargn $# 3
-          if [[ $version2 > $version1 ]]; then
+          if [[ $VER2A -gt $VER1A ]] || [[ $VER2A -eq $VER1A && $VER2B -gt $VER1B ]]; then
             sed "/^### $version2/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH
-          elif [[ $version2 = $version1 ]]; then
+          elif [[ $VER2A -eq $VER1A && $VER2B -eq $VER1B ]]; then
             echo "ERROR: Must specify different versions for comparisons (cannot compare same version to itself)"
           else
             sed "/^### $version1/!d;s//&\n/;s/.*\n//;:a;/^### $version2/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH

@@ -512,7 +512,7 @@ function message {
             {
               sleep 1
               echo '{"op":2,"d":{"token":"'"$access_token"'",' \
-              '"properties":{"$os":"linux","$browser":"treehouses","$device":"RaspberryPI"},' \
+              "properties":{\"$os\":\"linux\",\"$browser\":\"treehouses\",\"$device\":\"RaspberryPI\"}, \ # The properties are not variables!!
               '"compress":false,"large_threshold":250}}'
             } | wsdump.py -r wss://gateway.discord.gg/
           else

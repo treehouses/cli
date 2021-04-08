@@ -468,7 +468,7 @@ function message {
       case "$2" in
         apitoken)
           if [[ $3 == "" ]]; then
-            echo "bot token is missing"
+            get_apitoken discord
           else
           access_token=$3
             conf_var_update "discord_apitoken" "$access_token"

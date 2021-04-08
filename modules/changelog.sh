@@ -33,7 +33,7 @@ case "$displaymode" in
             sed "/^### $CURRENT/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH #grabs text between version numbers, print bottom to top
           else # Needs to specify previous version instead of current
             echo "ERROR: Must specify a previous version (less than $CURRENT)"
-          esac
+          fi
           ;;
         *)
           checkargn $# 3
@@ -44,7 +44,7 @@ case "$displaymode" in
           else
             sed "/^### $version1/!d;s//&\n/;s/.*\n//;:a;/^### $version2/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH
             echo "Did you mean: $BASENAME changelog compare $version2 $version1"
-          esac
+          fi
           ;;
         esac
         ;;

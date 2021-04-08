@@ -38,6 +38,10 @@ case "$displaymode" in
           else # Needs to specify previous version instead of current
             echo "ERROR: Must specify a previous version (less than $CURRENT)"
           fi
+		echo "  CURA: $CURA"
+		echo "  CURB: $CURB"
+		echo "  VER1A: $VER1A"
+		echo "  VER1B: $VER1B"
           ;;
         *)
           VER2A=$(echo $version2 | cut -d "." 1-2)

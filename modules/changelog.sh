@@ -39,7 +39,7 @@ case "$displaymode" in
           checkargn $# 3
           if [[ "$version2" > "$version1" ]]; then
             sed "/^### $version2/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH
-          elif [[ "$version2" -q "$version1" ]]; then
+          elif [[ "$version2" = "$version1" ]]; then
             echo "ERROR: Must specify different versions for comparisons (cannot compare same version to itself)"
           else
             sed "/^### $version1/!d;s//&\n/;s/.*\n//;:a;/^### $version2/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH

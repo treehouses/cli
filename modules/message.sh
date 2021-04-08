@@ -1,5 +1,4 @@
 function message {
-  check_missing_binary "wscat" "wscat not installed, please use: npm install -g wscat"
   chats="$1"
   function check_apitoken {
     channelname=$1_apitoken
@@ -515,7 +514,7 @@ function message {
               echo '{"op":2,"d":{"token":"'"$access_token"'",' \
               '"properties":{"$os":"linux","$browser":"treehouses","$device":"RaspberryPI"},' \
               '"compress":false,"large_threshold":250}}'
-             } | wscat --connect wss://gateway.discord.gg/
+            } | wsdump.py -r wss://gateway.discord.gg/
           else
             log_comment_and_exit1 "Error: You do not have an authorized bot token"
           fi

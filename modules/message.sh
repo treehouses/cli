@@ -507,18 +507,6 @@ function message {
             echo "Run $BASENAME message discord apitoken <bot token>"
           fi
           ;;
-        ws)
-          if check_apitoken discord; then
-            {
-              sleep 1
-              echo '{"op":2,"d":{"token":"'"$access_token"'",' \
-              "properties":{\"$os\":\"linux\",\"$browser\":\"treehouses\",\"$device\":\"RaspberryPI\"}, \ # The properties are not variables!!
-              '"compress":false,"large_threshold":250}}'
-            } | wsdump.py -r wss://gateway.discord.gg/
-          else
-            log_comment_and_exit1 "Error: You do not have an authorized bot token"
-          fi
-          ;;
         servers)
           if check_apitoken discord; then
             server_info=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/users/@me/guilds)
@@ -562,6 +550,12 @@ function message {
             server_name=$3
             discord_channel=$4
             message=$5
+            {
+              # The properties are not variables!!
+              sleep 1
+              echo '{"op":2,"d":{"token":"'"$access_token"'",' \
+              "properties":{\"$os\":\"linux\",\"$browser\":\"treehouses\",\"$device\":\"RaspberryPI\"}, '"compress":false,"large_threshold":250}}' 
+            } | wsdump.py -r wss://gateway.discord.gg/ > /dev/null
             server_id=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
             channel_info=$(curl -s -H "Authorization: Bot $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
             channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${discord_channel}\")" | jq .id | tr -d '"')

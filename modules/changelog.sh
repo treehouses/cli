@@ -1,5 +1,6 @@
 function changelog {
 cp "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md" ../.
+cp "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md" .
 local LOGPATH displaymode version1 version2 CURRENT
 CURRENT=$(treehouses version)
 LOGPATH="$SCRIPTFOLDER/CHANGELOG.md"
@@ -16,7 +17,7 @@ case "$displaymode" in
   view)
       checkargn $# 1
       view $LOGPATH
-      ;;
+      ;;<LeftMouse>
   "")
       checkargn $# 0
       cat $LOGPATH
@@ -39,18 +40,10 @@ case "$displaymode" in
           else # Needs to specify previous version instead of current
             echo "ERROR: Must specify a previous version (less than $CURRENT)"
           fi
-		echo "  CURA: $CURA"
-		echo "  CURB: $CURB"
-		echo "  VER1A: $VER1A"
-		echo "  VER1B: $VER1B"
           ;;
         *)
-          VER2A=$(echo $version2 | cut -d "." 1-2)
-          VER2B=$(echo $version2 | cut -d "." 3)
-          VER1A=$(echo $version1 | cut -d "." 1-2)
-          VER1B=$(echo $version1 | cut -d "." 3)
           checkargn $# 3
-          if [[ $VER2A -gt $VER1A ]] || [[ $VER2A -eq $VER1A && $VER2B -gt $VER1B ]]; then
+          if [[ $(dpkg --compare-versions "$version2" "gt" "$version1") -eq 0 ]] || [[ $VER2A -eq $VER1A && $VER2B -gt $VER1B ]]; then
             sed "/^### $version2/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH
           elif [[ $VER2A -eq $VER1A && $VER2B -eq $VER1B ]]; then
             echo "ERROR: Must specify different versions for comparisons (cannot compare same version to itself)"

@@ -17,7 +17,7 @@ case "$displaymode" in
   view)
       checkargn $# 1
       view $LOGPATH
-      ;;<LeftMouse>
+      ;;
   "")
       checkargn $# 0
       cat $LOGPATH

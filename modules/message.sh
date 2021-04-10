@@ -468,9 +468,20 @@ function message {
       case "$2" in
         apitoken)
           if [[ $3 == "" ]]; then
-            get_apitoken discord
+            if check_apitoken ; then
+              get_apitoken discord
+            else
+              echo "You do not have an authorized bot token"
+              echo ""
+              echo "To get an authorized bot token"
+              echo ""
+              echo "Navigate to https://discord.com/developers/applications. Create an APP by clicking \"New Application\" and provide a suitable name for your APP."
+              echo "Then move to the option \"Bot\" below \"General Information\" and add a bot by clicking on the \"Add Bot\" button."
+              echo "Confirm Yes on the dialog box and click on the \"Copy\" button below the \"TOKEN\" label."
+              echo "Run $BASENAME message discord apitoken <bot token>"
+            fi
           else
-          access_token=$3
+            access_token=$3
             conf_var_update "discord_apitoken" "$access_token"
             echo "you have successfully added your bot token and your bot token is $access_token "
           fi
@@ -551,7 +562,7 @@ function message {
             discord_channel=$4
             message=$5
             {
-              # The properties are not variables!!
+              # The properties(excluding acces_token) are not variables!!
               sleep 1
               echo '{"op":2,"d":{"token":"'"$access_token"'",' \
               "properties":{\"$os\":\"linux\",\"$browser\":\"treehouses\",\"$device\":\"RaspberryPI\"}, '"compress":false,"large_threshold":250}}' 

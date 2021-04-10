@@ -1,6 +1,9 @@
 function changelog {
-cp "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md" ../.
-cp "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md" .
+if [ -d "tests" ]
+  cp "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md" .
+else
+  cp "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md" ../.
+fi
 local LOGPATH displaymode version1 version2 CURRENT
 CURRENT=$(treehouses version)
 LOGPATH="$SCRIPTFOLDER/CHANGELOG.md"

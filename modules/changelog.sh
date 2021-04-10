@@ -32,7 +32,7 @@ case "$displaymode" in
          "")
           checkargn $# 2
           dpkg --compare-versions "$CURRENT" "gt" "$version1"
-          gt=$(echo $?)
+          gt="$?"
           if [[ $gt -eq 0 ]]; then
             sed "/^### $CURRENT/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH #grabs text between version numbers, print bottom to top
           else # Needs to specify previous version instead of current
@@ -42,9 +42,9 @@ case "$displaymode" in
         *)
           checkargn $# 3
           dpkg --compare-versions "$version2" "gt" "$version1"
-          gt=$(echo $?)
+          gt="$?"
           dpkg --compare-versions "$version2" "eq" "$version1"
-          eq=$(echo $?)
+          eq="$?"
           if [[ $gt -eq 0 ]]; then
             sed "/^### $version2/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH
           elif [[ $eq -eq 0 ]]; then

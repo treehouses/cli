@@ -1,5 +1,5 @@
 function changelog {
-if [ -d "tests" ]
+if [ -d "tests" ]; then
   cp "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md" .
 else
   cp "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md" ../.

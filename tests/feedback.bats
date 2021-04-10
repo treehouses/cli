@@ -3,7 +3,7 @@ load test-helper
 
 @test "$clinom feedback (no feedback)" {
   run "${clicmd}" feedback
-  assert_success && assert_output --partial 'No feedback was submitted.'
+  assert_failure && assert_output --partial 'No feedback was submitted.'
 }
 
 @test "$clinom feedback foo (with feedback)" {

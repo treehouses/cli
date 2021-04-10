@@ -658,7 +658,7 @@ function message_help {
   echo "  $BASENAME message discord authorize \"client id\""
   echo "     Authorize the discord bot to communicate with the client"
   echo
-  echo "  $BASENAME message discord server"
+  echo "  $BASENAME message discord servers"
   echo "     List all servers the user is in"
   echo
   echo "  $BASENAME message discord channels \"server name\""

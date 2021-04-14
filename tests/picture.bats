@@ -3,7 +3,7 @@ load test-helper
 
 @test "$clinom picture" {
   run "${clicmd}" picture
-  assert_success && assert_output -p 'Usage: ${clicmd} picture' && assert_output -p 'Views a picture in the terminal.'
+  assert_success && assert_output -p 'Usage: $BASENAME picture' && assert_output -p 'Views a picture in the terminal.'
 }
 
 @test "$clinom picture foo.png (invalid image)" {

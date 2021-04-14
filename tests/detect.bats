@@ -36,7 +36,7 @@ load test-helper
   assert_failure && assert_output --partial "commands supported"
 }
 
-@test "$clinom detect <option> <an extra unnecessary option>(too many arguments)" {
+@test "$clinom detect <option> <an extra unnecessary option> (too many arguments)" {
   run "${clicmd}" detect wifi foobar
   assert_failure && assert_output --partial "Too many arguments"
 }

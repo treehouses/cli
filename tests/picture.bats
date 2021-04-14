@@ -10,5 +10,3 @@ load test-helper
   run "${clicmd}" picture HasAnyoneReallyBeenFarEvenasDecidedtoUseEvenGoWanttodoLookMoreLike.png
   assert_success && assert_output -p "Can't open file (permission?):"
 }
-
-

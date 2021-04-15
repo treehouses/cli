@@ -71,18 +71,18 @@ function remote {
       ;;
     "reverse")
       checkargn $# 2
-      reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g' | awk '!x[$0]++')
+      reverse=$(internet reverse | sed -e 's#",\ "#"\n"#g' | cut -d'"' -f 2,3,4 | sed 's#\:[[:space:]]\"#:\"#g')
       while IFS= read -r line; do
         cmd_str+="\"$line\","
       done <<< "$reverse"
-      ip=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 1)
-      org=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 5)
-      country=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 4)
-      city=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 3)
-      postal=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 2)
-      timezone=$(printf "%s\n" "${cmd_str::-1}" | cut -d',' -f 6)
+      ip=$(echo "$reverse" | grep 'ip":"')
+      org=$(echo "$reverse" | grep 'org":"')
+      country=$(echo "$reverse" | grep 'country":"')
+      city=$(echo "$reverse" | grep 'city":"')
+      postal=$(echo "$reverse" | grep 'postal":"')
+      timezone=$(echo "$reverse" | grep 'timezone":"')
 
-      echo "{$ip,$org,$country,$city,$postal,$timezone}"
+      echo "{\"$ip\",\"$org\",\"$country\",\"$city\",\"$postal\",\"$timezone\"}"
       ;;
     "allservices")
       checkargn $# 1
@@ -120,13 +120,13 @@ function remote {
         showuser=$(ssh 2fa show $user)
         if [[ "$showuser" == "SSH 2FA for $user is disabled." ]]; then
           outputpart="\"$user\":\"disabled\","
-        else        
+        else
           secret="$(echo "$showuser" | head -n 1 | sed 's/Secret Key://g' | sed -r 's/\s+//g')"
           scratch="$(echo "$showuser" | awk 'NR>3' | sed 's/.*/"&"/' | awk '{printf "%s"",",$0}' | sed 's/,$//')"
           outputpart="\"$user\":{\"secret key\":\"$secret\",\"scratch codes\":[$scratch]},"
         fi
         output="$output$outputpart"
-      done      
+      done
       echo "{${output::-1}}"
       ;;
     "help")

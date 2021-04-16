@@ -13,15 +13,15 @@ load test-helper
 
 @test "$clinom memory total" {
   run "${clicmd}" memory total
-  assert_success && assert_output --regexp '^-?[0-9]+$'
+  assert_success && assert_output --regexp '^[1-9][0-9]*$'
 }
 
 @test "$clinom memory used" {
   run "${clicmd}" memory used
-  assert_success && assert_output --regexp '^-?[0-9]+$'
+  assert_success && assert_output --regexp '^[1-9][0-9]*$'
 }
 
 @test "$clinom memory free mb" {
   run "${clicmd}" memory free mb
-  assert_success && assert_output --regexp '^-?[0-9]+$'
+  assert_success && assert_output --regexp '^[1-9][0-9]*$'
 }

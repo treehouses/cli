@@ -23,5 +23,5 @@ load test-helper
 
 @test "$clinom memory free mb" {
   run "${clicmd}" memory free mb
-  assert_success && assert_output --regexp '^[0-9]*$'
+  assert_success && assert_output --regexp '^[0-9]+$'
 }

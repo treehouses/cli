@@ -8,12 +8,12 @@ load test-helper
 
 @test "$clinom rtc on PCF8523" {
   run "${clicmd}" rtc on PCF8523
-  assert_success && assert_output -p 'Success: clock changed. Please reboot'
+  assert_failure && assert_output -p 'Error: the clock is not supported.'
 }
 
 @test "$clinom rtc on DS1307" {
   run "${clicmd}" rtc on DS1307
-  assert_success && assert_output -p 'Success: clock changed. Please reboot'
+  assert_failure && assert_output -p 'Error: the clock is not supported.'
 }
 
 @test "$clinom rtc on ds3231" {

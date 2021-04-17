@@ -1,7 +1,9 @@
 name: GitHub Actions Demo
 on:
-  [push]
-  [pull_request]
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest

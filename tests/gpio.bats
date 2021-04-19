@@ -23,5 +23,5 @@ load test-helper
   && assert_output -p "GPIO13 (33) (34) GND" \
   && assert_output -p "GPIO19 (35) (36) GPIO16" \
   && assert_output -p "GPIO26 (37) (38) GPIO20" \
-  && assert_output -p "GND (39) (40) GPIO21
+  && assert_output -p "GND (39) (40) GPIO21"
 }

@@ -3,7 +3,7 @@ load test-helper
 
 @test "$clinom image" {
   run "${clicmd}" image
-  assert_success && assert_output -p 'release'
+  assert_success && assert_output -p 'release-'
 }
 
 @test "$clinom image (too many arguments)" {

@@ -1,9 +1,9 @@
 function changelog {
 if [ -d "tests" ]; then
-  cp -f "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md" .
+  cp -f "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md" . 2>/dev/null || true
   rm -f "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md"
 else
-  cp -f "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md" ../.
+  cp -f "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md" ../. 2>/dev/null || true
   rm -f "/usr/lib/node_modules/@treehouses/cli/CHANGELOG.md"
 fi
 local LOGPATH displaymode version1 version2 CURRENT

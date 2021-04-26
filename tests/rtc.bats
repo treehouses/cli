@@ -1,19 +1,19 @@
 #!/usr/bin/env bats
 load test-helper
 
-@test "$clinom rtc on rasclock" {
-  run "${clicmd}" rtc on rasclock
-  assert_success && assert_output -p 'Success: clock changed. Please reboot'
-}
-
-@test "$clinom rtc on PCF8523" {
+@test "$clinom rtc on PCF8523 (not supported)" {
   run "${clicmd}" rtc on PCF8523
   assert_failure && assert_output -p 'Error: the clock is not supported.'
 }
 
-@test "$clinom rtc on DS1307" {
+@test "$clinom rtc on DS1307 (not supported)" {
   run "${clicmd}" rtc on DS1307
   assert_failure && assert_output -p 'Error: the clock is not supported.'
+}
+
+@test "$clinom rtc on rasclock" {
+  run "${clicmd}" rtc on rasclock
+  assert_success && assert_output -p 'Success: clock changed. Please reboot'
 }
 
 @test "$clinom rtc on ds3231" {

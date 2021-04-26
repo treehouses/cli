@@ -7,12 +7,12 @@ load test-helper
 }
 
 @test "$clinom rename (invalid characters)" {
-  run "${clicmd}" rename ####
+  run "${clicmd}" rename -treehouses
   assert_failure && assert_output -p 'Unsuccessful'
 }
 
-@test "$clinom rename (entering a variable)" {
-  run "${clicmd}" rename $USER
+@test "$clinom rename (too many characters)" {
+  run "${clicmd}" rename treehousestreehousestreehousestreehousestreehousestreehousestreehouses
   assert_failure && assert_output -p 'Unsuccessful'
 }
 

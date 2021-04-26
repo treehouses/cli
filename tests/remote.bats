@@ -35,3 +35,8 @@ load test-helper
   run "${clicmd}" remote commands json
   assert_success
 }
+
+@test "$clinom remote reverse" {
+  run "${clicmd}" remote reverse
+  assert_output --partial '"ip"' && assert_output --partial '"org"' && assert_output --partial '"country"' && assert_output --partial '"city"' && assert_output --partial '"postal"' && assert_output --partial '"timezone"'
+}

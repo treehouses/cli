@@ -4,6 +4,7 @@ function wificountry {
   checkroot
   checkargn $# 1
   country=$1
+  country=${country^^}
   country_codes=(US CA JP DE NL IT PT LU NO FI DK CH CZ ES GB KR CN FR HK SG TW BR
                  IL SA LB AE ZA AR AU AT BO CL GR IS IN IE KW LI LT MX MA NZ PL PR
                  SK SI TH UY PA RU KW LI LT MX MA NZ PL PR SK SI TH UY PA RU EG TT

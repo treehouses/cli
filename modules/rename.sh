@@ -9,7 +9,7 @@ function rename () {
     [[ ${#1} -gt "64" ]] || #Checks for length greater than 64
     [ -z "$1" ]; #Checks if variable is empty
   then
-    echo "Unsuccessful: Make sure to remove special characters."
+    log_and_exit1 "Unsuccessful: Make sure to remove special characters."
   else
     CURRENT_HOSTNAME=$(< /etc/hostname tr -d " \\t\\n\\r")
     echo "$1" > /etc/hostname

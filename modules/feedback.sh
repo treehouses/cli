@@ -16,7 +16,7 @@ function feedback {
     curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token"   "$channel" -d  "$body"> "$LOGFILE"
     echo "Thanks for the feedback!"
   else
-    echo "No feedback was submitted."
+    log_and_exit1 "No feedback was submitted."
   fi
 }
 

@@ -90,7 +90,7 @@ function get_info {
 function get_icon {
   cat <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 300">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 244">
   <defs/>
   <defs>
     <linearGradient id="a" x1="24" x2="246" y1="238" y2="16" gradientUnits="userSpaceOnUse">

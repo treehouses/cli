@@ -207,7 +207,7 @@ function start_spinner() {
            led clone restore burn services speedtest usb"
   carg="$(echo $SCRIPTARGS | cut -d' ' -f1)"
   if [[ $tree == *"python"* ]] || [[ $tree == *"cron"* ]] || \
-     [[ ! "$cstring" == *"$carg"* ]]
+     [[ $tree == *"provisioner"* ]] || [[ ! "$cstring" == *"$carg"* ]]
   then
     NOSPIN=1
     return

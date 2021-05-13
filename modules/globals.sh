@@ -220,7 +220,7 @@ function start_spinner() {
 }
 
 function cd_cli() {
-  if [ ! -d '/home/pi/cli/']; then
+  if [ ! -d '/home/pi/cli/' ]; then
     cd /home/pi/cli/
   fi
 }

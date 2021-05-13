@@ -288,19 +288,16 @@ function services {
               do
                 local_url="$base_url:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
 		echo "  0"
-                if [ ! -d "services" ]; then
+                cd_cli
 		echo "  1"
-                  source cd /home/pi/cli/
-                fi
-		echo "  2"
                 if source services/install-${service_name}.sh && type -t get_paths >/dev/null; then
-		echo "  3"
+		echo "  2"
                   local_url+=$(source $SERVICES/install-${service_name}.sh && get_paths | sed -n "$i p")
-		echo "  4"
+		echo "  3"
                 fi
-		echo "  5"
+		echo "  4"
                 echo $local_url
-		echo "  6"
+		echo "  5"
               done
             elif [ "$command_option" = "tor" ]; then
               if [ "$(tor status)" = "active" ]; then

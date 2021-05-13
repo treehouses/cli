@@ -288,6 +288,9 @@ function services {
               do
                 local_url="$base_url:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
                 if source services/install-${service_name}.sh && type -t get_paths >/dev/null; then
+                  if [ ! -d "services" ]; then
+                    source cd /home/pi/cli/
+                  fi
                   local_url+=$(source $SERVICES/install-${service_name}.sh && get_paths | sed -n "$i p")
                 fi
                 echo $local_url

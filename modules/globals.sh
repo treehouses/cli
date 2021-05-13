@@ -218,9 +218,3 @@ function start_spinner() {
   SPINPID=$!
   disown
 }
-
-function cd_cli() {
-  if [ ! -d '/home/pi/cli/' ]; then
-    cd /home/pi/cli/
-  fi
-}

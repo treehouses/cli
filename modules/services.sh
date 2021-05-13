@@ -287,15 +287,10 @@ function services {
               for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
               do
                 local_url="$base_url:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
-		echo "  0"
                 if source $SCRIPTFOLDER/services/install-${service_name}.sh && type -t get_paths >/dev/null; then
-		echo "  1"
                   local_url+=$(source $SERVICES/install-${service_name}.sh && get_paths | sed -n "$i p")
-		echo "  2"
                 fi
-		echo "  3"
                 echo $local_url
-		echo "  4"
               done
             elif [ "$command_option" = "tor" ]; then
               if [ "$(tor status)" = "active" ]; then

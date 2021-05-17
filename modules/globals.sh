@@ -202,12 +202,12 @@ function kill_spinner() {
 
 function start_spinner() {
   local tree carg cstring
-  tree=$(pstree -ps $$)
+  tree=$(pstree $$)
   cstring="discover wifi wifihidden bridge container upgrade
            led clone restore burn services speedtest usb"
   carg="$(echo $SCRIPTARGS | cut -d' ' -f1)"
   if [[ $tree == *"python"* ]] || [[ $tree == *"cron"* ]] || \
-     [[ $tree == *"provisioner"* ]] || [[ ! "$cstring" == *"$carg"* ]]
+     [[ $tree == *"provisioner"* ]] || [[ $tree == *"runner"* ]] || [[ ! "$cstring" == *"$carg"* ]]
   then
     NOSPIN=1
     return

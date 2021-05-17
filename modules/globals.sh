@@ -205,7 +205,7 @@ function start_spinner() {
   tree=$(pstree $$)
   cstring="discover wifi wifihidden bridge container upgrade
            led clone restore burn services speedtest usb
-           tor sshkey"
+           tor sshkey config"
   carg="$(echo $SCRIPTARGS | cut -d' ' -f1)"
   if [[ $tree == *"python"* ]] || [[ $tree == *"cron"* ]] || \
      [[ $tree == *"provisioner"* ]] || [[ $tree == *"runner"* ]] || [[ ! "$cstring" == *"$carg"* ]]

@@ -5,7 +5,7 @@ function tor {
   #check_missing_packages "tor" "curl"
 
   if { [ ! -d "/var/lib/tor/treehouses" ] || [ ! -f "/var/lib/tor/treehouses/hostname" ]; } && [ "$1" != "start" ] && [ "$1" != "add" ]; then
-    if [ -z "$(grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g')" ]; then
+    if [ -z "$(grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /usr/local/etc/tor/torrc.sample | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g')" ]; then
       echo "Error: there are no tor ports added."
       echo "'$BASENAME add [localPort]' to add a port and be able to use the service"
     else
@@ -23,11 +23,11 @@ function tor {
   case "$1" in
     list)
       echo "external <=> local"
-      grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g'
+      grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /usr/local/etc/tor/torrc.sample | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g'
       ;;
 
     ports)
-      ports=$(grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /etc/tor/torrc | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g' | sed "s/  <=> /:/g" | tr "\n" " " | sed "s/ $/\n/")
+      ports=$(grep -Poi "^HiddenServicePort \\K(.*) 127.0.0.1:(.*)\\b" /usr/local/etc/tor/torrc.sample | tac | sed -r 's/(.*?)127.0.0.1:(.*?)/\1 <=> \2/g' | sed "s/  <=> /:/g" | tr "\n" " " | sed "s/ $/\n/")
       if [[ $ports ]]; then
         echo $ports
       else
@@ -36,8 +36,8 @@ function tor {
       ;;
 
     add)
-      if ! grep -Pq "^HiddenServiceDir .*" "/etc/tor/torrc"; then
-        echo "HiddenServiceDir /var/lib/tor/treehouses" >> /etc/tor/torrc
+      if ! grep -Pq "^HiddenServiceDir .*" "/usr/local/etc/tor/torrc.sample"; then
+        echo "HiddenServiceDir /var/lib/tor/treehouses" >> /usr/local/etc/tor/torrc.sample
       fi
 
       port="$2"

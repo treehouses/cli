@@ -72,9 +72,11 @@ function sshkey () {
         log_and_exit1 "Usage: $BASENAME sshkey adduser <username>"
       fi
       shift; shift
+      echo "\$3: $3"
       for user in "$@"; do
         echo $user
       done
+      echo "\$3: $3"
       keys=$(curl -s "https://github.com/$3.keys")
       if [ ! -z "$keys" ]; then
         keys=$(sed 's#$# '$3'#' <<< $keys)

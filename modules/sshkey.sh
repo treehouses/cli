@@ -71,8 +71,8 @@ function sshkey () {
         echo "Error: missing argument"
         log_and_exit1 "Usage: $BASENAME sshkey adduser <username>"
       fi
-      shift; shift
       echo "\$3: $3"
+      shift; shift
       for user in "$@"; do
         echo $user
       done

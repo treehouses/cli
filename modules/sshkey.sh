@@ -73,13 +73,13 @@ function sshkey () {
       fi
       shift; shift
       for user in "$@"; do
-        echo "Attempting to add the following user: $user"
+        echo "  Attempting to add the following user: $user"
         keys=$(curl -s "https://github.com/$user.keys")
         if [ ! -z "$keys" ]; then
           keys=$(sed 's#$# '$user'#' <<< $keys)
           sshkey add "$keys"
         fi
-        echo "Successfully added user: $user"
+        echo "  Successfully added user: $user"
       done
     elif [ "$2" == "deleteuser" ]; then
       if [ -z "$3" ]; then

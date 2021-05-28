@@ -71,17 +71,15 @@ function sshkey () {
         echo "Error: missing argument"
         log_and_exit1 "Usage: $BASENAME sshkey adduser <username>"
       fi
-      echo "\$3: $3"
       shift; shift
       for user in "$@"; do
         echo $user
+        keys=$(curl -s "https://github.com/$user.keys")
+        if [ ! -z "$keys" ]; then
+          keys=$(sed 's#$# '$user'#' <<< $keys)
+          sshkey add "$keys"
+        fi
       done
-      echo "\$3: $3"
-      keys=$(curl -s "https://github.com/$3.keys")
-      if [ ! -z "$keys" ]; then
-        keys=$(sed 's#$# '$3'#' <<< $keys)
-        sshkey add "$keys"
-      fi
     elif [ "$2" == "deleteuser" ]; then
       if [ -z "$3" ]; then
         echo "Error: missing argument"

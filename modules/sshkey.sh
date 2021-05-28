@@ -71,6 +71,9 @@ function sshkey () {
         echo "Error: missing argument"
         log_and_exit1 "Usage: $BASENAME sshkey adduser <username>"
       fi
+      for user in "$@"; do
+        echo $user
+      done
       keys=$(curl -s "https://github.com/$3.keys")
       if [ ! -z "$keys" ]; then
         keys=$(sed 's#$# '$3'#' <<< $keys)

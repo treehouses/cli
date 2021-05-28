@@ -1,8 +1,8 @@
 function sshkey () {
   local keys githubusername auth_files teams team_id members
   checkroot
-  checkargn $# 5
   if [ "$1" == "add" ]; then
+    checkargn $# 5
     shift
     temp_file=$(mktemp)
     echo "$@" >> $temp_file
@@ -26,6 +26,7 @@ function sshkey () {
       log_and_exit1 "ERROR: invalid public key"
     fi
   elif [ "$1" == "list" ]; then
+    checkargn $# 5
     echo "==== root keys ===="
     cat /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then
@@ -33,6 +34,7 @@ function sshkey () {
       cat /home/pi/.ssh/authorized_keys
     fi
   elif [ "$1" == "delete" ]; then
+    checkargn $# 5
     if [ -z "$2" ]; then
       echo "Error: missing argument"
       log_and_exit1 "Usage: $BASENAME sshkey delete \"<key>\""
@@ -53,6 +55,7 @@ function sshkey () {
       fi
     fi
   elif [ "$1" == "deleteall" ]; then
+    checkargn $# 5
     rm /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then
       rm /home/pi/.ssh/authorized_keys
@@ -84,7 +87,7 @@ function sshkey () {
         if [ -f "$file" ]; then
           if grep -q " $githubusername$" $file; then
             sed -i "/ $githubusername$/d" $file
-	    echo "$githubusername's key(s) deleted from $file"
+            echo "$githubusername's key(s) deleted from $file"
           else
             echo "$githubusername does not exist"
           fi

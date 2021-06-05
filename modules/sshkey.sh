@@ -1,8 +1,8 @@
 function sshkey () {
   local keys githubusername auth_files teams team_id members
   checkroot
-  checkargn $# 5
   if [ "$1" == "add" ]; then
+    checkargn $# 4
     shift
     temp_file=$(mktemp)
     echo "$@" >> $temp_file
@@ -26,6 +26,7 @@ function sshkey () {
       log_and_exit1 "ERROR: invalid public key"
     fi
   elif [ "$1" == "list" ]; then
+    checkargn $# 1
     echo "==== root keys ===="
     cat /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then
@@ -33,6 +34,7 @@ function sshkey () {
       cat /home/pi/.ssh/authorized_keys
     fi
   elif [ "$1" == "delete" ]; then
+    checkargn $# 2
     if [ -z "$2" ]; then
       echo "Error: missing argument"
       log_and_exit1 "Usage: $BASENAME sshkey delete \"<key>\""
@@ -53,6 +55,7 @@ function sshkey () {
       fi
     fi
   elif [ "$1" == "deleteall" ]; then
+    checkargn $# 1
     rm /root/.ssh/authorized_keys
     if [ "$(detectrpi)" != "nonrpi" ]; then
       rm /home/pi/.ssh/authorized_keys
@@ -68,11 +71,16 @@ function sshkey () {
         echo "Error: missing argument"
         log_and_exit1 "Usage: $BASENAME sshkey adduser <username>"
       fi
-      keys=$(curl -s "https://github.com/$3.keys")
-      if [ ! -z "$keys" ]; then
-        keys=$(sed 's#$# '$3'#' <<< $keys)
-        sshkey add "$keys"
-      fi
+      shift; shift
+      for user in "$@"; do
+        echo "  Attempting to add the following user: $user"
+        keys=$(curl -s "https://github.com/$user.keys")
+        if [ ! -z "$keys" ]; then
+          keys=$(sed 's#$# '$user'#' <<< $keys)
+          sshkey add "$keys"
+        fi
+        echo "  Successfully added user: $user"
+      done
     elif [ "$2" == "deleteuser" ]; then
       if [ -z "$3" ]; then
         echo "Error: missing argument"
@@ -84,7 +92,7 @@ function sshkey () {
         if [ -f "$file" ]; then
           if grep -q " $githubusername$" $file; then
             sed -i "/ $githubusername$/d" $file
-	    echo "$githubusername's key(s) deleted from $file"
+            echo "$githubusername's key(s) deleted from $file"
           else
             echo "$githubusername does not exist"
           fi
@@ -93,6 +101,7 @@ function sshkey () {
         fi
       done
     elif [ "$2" == "addteam" ]; then
+      checkargn $# 5
       if [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
         echo "Error: missing arguments"
         log_and_exit1 "Usage: $BASENAME sshkey github addteam <organization> <team_name> <access_token>"

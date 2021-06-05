@@ -105,6 +105,7 @@ function sshkey () {
         echo "Error: missing arguments"
         log_and_exit1 "Usage: $BASENAME sshkey github addteam <organization> <team_name> <access_token>"
       fi
+      checkargn $# 4
       teams=$(curl -s -X GET "https://api.github.com/orgs/$3/teams" -H "Authorization: token $5")
       team_id=$(echo "$teams" | jq ".[] | select(.name==\"$4\").id")
       members=$(curl -s -X GET "https://api.github.com/teams/$team_id/members" -H "Authorization: token $5" | jq ".[].login" -r)

@@ -298,7 +298,7 @@ function services {
                 for i in $(seq 1 "$(source $SERVICES/install-${service_name}.sh && get_ports | wc -l)")
                 do
                   tor_url="$base_tor:$(source $SERVICES/install-${service_name}.sh && get_ports | sed -n "$i p")"
-                  if source $SCRIPTFOLDER/services/install-${service_name}.sh && type -t get_paths >/dev/null; then
+                  if source $SERVICES/install-${service_name}.sh && type -t get_paths >/dev/null; then
                     tor_url+=$(source $SERVICES/install-${service_name}.sh && get_paths | sed -n "$i p")
                   fi
                   echo $tor_url

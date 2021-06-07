@@ -130,7 +130,7 @@ function sshkey () {
         *)
           echo "Error: unsupported command"
           log_and_exit1 "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
-          ;;
+        ;;
         esac
       *)
         echo "Error: unsupported command"

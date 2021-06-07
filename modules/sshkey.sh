@@ -39,6 +39,7 @@ function sshkey () {
         echo "==== pi keys ===="
         cat /home/pi/.ssh/authorized_keys
       fi
+      ;;
     "delete")
       checkargn $# 2
       if [ -z "$2" ]; then

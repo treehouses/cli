@@ -131,12 +131,12 @@ function sshkey () {
           echo "Error: unsupported command"
           log_and_exit1 "Usage: $BASENAME sshkey github <adduser|deleteuser|addteam>"
         ;;
-        esac
+      esac
       *)
         echo "Error: unsupported command"
         log_and_exit1 "Usage: $BASENAME sshkey <add|list|delete|deleteall|github>"
         ;;
-      esac
+    esac
 }
 
 function sshkey_help () {

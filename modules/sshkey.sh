@@ -5,7 +5,6 @@ function sshkey () {
   arg2="$2"
 
   case $argument in
-
     "add")
       checkargn $# 4
       shift

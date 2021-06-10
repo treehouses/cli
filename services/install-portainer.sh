@@ -8,7 +8,7 @@ function install {
   {
     echo "services:"
     echo "  portainer:"
-    echo "    image: portainer/portainer"
+    echo "    image: portainer/portainer:alpine"
     echo "    ports:"
     echo "      - \"9000:9000\""
     echo "    volumes:"
@@ -38,6 +38,7 @@ function uses_env {
 
 # add supported arch(es)
 function supported_arches {
+  echo "aarch64"
   echo "armv7l"
   echo "armv6l"
   echo "x86_64"

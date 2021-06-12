@@ -71,6 +71,7 @@ function uses_env {
 function supported_arches {
   echo "armv7l"
   echo "armv6l"
+  echo "aarch64"
 }
 
 # add port(s)

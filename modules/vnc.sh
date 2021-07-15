@@ -147,7 +147,7 @@ function vnc {
       	echo "Creating password of VNC service mode for VNC password authentication..."
 	echo $2 | vncpasswd -service
       else
-	echo "Please provide a password. Run 'treehouses vnc password {password}."
+      	echo "Please provide a password. Run 'treehouses vnc password {password}."
       fi
       ;;
     *)

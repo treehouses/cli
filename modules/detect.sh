@@ -51,6 +51,10 @@ function detectrpi {
   rpimodels["c03112"]="RPI4B" # 4gb
   rpimodels["c03114"]="RPI4B" # 4gb
   rpimodels["d03114"]="RPI4B" # 8gb
+  rpimodels["a03140"]="CM4" # 1gb
+  rpimodels["b03140"]="CM4" # 2gb
+  rpimodels["c03140"]="CM4" # 4gb
+  rpimodels["d03140"]="CM4" # 8gb
   rpimodels["c03130"]="RPI400" # 4gb
   # more at: https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#new-style-revision-codes-in-use
 

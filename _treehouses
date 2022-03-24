@@ -82,6 +82,8 @@ treehouses detect rpi
 treehouses detect rpi full
 treehouses detect rpi model
 treehouses detect wifi
+treehouses dhcp list
+treehouses dhcp status
 treehouses discover gateway
 treehouses discover gateway list
 treehouses discover interface

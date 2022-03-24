@@ -12,7 +12,7 @@ function restart_vnc_service {
 function vnc {
   local option bootoptionstatus vncservicestatus xservicestatus ipaddress isgraphical
   checkroot
-  checkargn $# 2
+  checkargn $# 4
   option=$1
   auth=$2
   bootoptionstatus=$(systemctl is-enabled graphical.target)
@@ -34,6 +34,7 @@ function vnc {
 
   case "$option" in
     "")
+      checkargn $# 2
       if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "inactive" ]; then
         echo "VNC is disabled."
         echo "To enable it, use $BASENAME vnc on"
@@ -50,6 +51,7 @@ function vnc {
       fi
       ;;
     "on")
+      checkargn $# 2
       grep -qF 'hdmi_group=2' '/boot/config.txt' || echo 'hdmi_group=2' | tee -a '/boot/config.txt'
       grep -qF 'hdmi_mode=82' '/boot/config.txt' || echo 'hdmi_mode=82' | tee -a '/boot/config.txt'
       sed -i 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' /boot/config.txt
@@ -62,6 +64,7 @@ function vnc {
       echo "You can then remotely access the system with a VNC client using the IP address: $ipaddress"
       ;;
     "off")
+      checkargn $# 2
       sed -i '/hdmi_group=2/d' /boot/config.txt
       sed -i '/hdmi_mode=82/d' /boot/config.txt
       sed -i 's/hdmi_force_hotplug=1/#hdmi_force_hotplug=1/' /boot/config.txt
@@ -73,6 +76,7 @@ function vnc {
       echo "Please reboot the system for changes to take effect."
       ;;
     "info")
+      checkargn $# 2
       echo "The system boots into $isgraphical"
       echo "The VNC service is $vncservicestatus"
       echo "The X window service is $xservicestatus"
@@ -142,10 +146,12 @@ function vnc {
       esac
       ;;
     "password")
+      checkargn $# 2
       echo "Creating password of VNC service mode for VNC password authentication..."
       vncpasswd -service
       ;;
     *)
+      checkargn $# 2
       log_and_exit1 "Error: only 'on', 'off', 'info', 'auth', 'password' options are supported"
       ;;
   esac

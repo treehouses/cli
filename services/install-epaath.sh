@@ -9,7 +9,7 @@ function install {
     echo "version: '3'"
     echo "services:"
     echo "  epaath:"
-    echo "    image: olenepal/epaath"
+    echo "    image: olenepal/epaath:arm"
     echo "    ports:"
     echo "      - 8089:80"
   } > /srv/epaath/epaath.yml
@@ -43,7 +43,7 @@ function get_ports {
 
 # add size (in MB)
 function get_size {
-  echo "214"
+  echo "5555"
 }
 
 # add description
@@ -53,10 +53,8 @@ function get_description {
 
 # add info
 function get_info {
-#  echo "https://github.com/treehouses/turtleblocksjs"
   echo
-  echo "E-Paath is educationl activity \"turtle\""
-#  echo "that draws colorful art based on snap-together visual programming elements."
+  echo "E-Paath is educationl activity from grade 1 to 8"
 }
 
 # add svg icon

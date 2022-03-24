@@ -1,3 +1,4 @@
+
 function services {
   check_missing_binary docker-compose "docker-compose is missing\ninstall instructions can be found in\nhttps://github.com/docker/compose"
 
@@ -121,24 +122,28 @@ function services {
                 log_and_exit1 "ERROR: cannot run install script"
               fi
             elif source $SERVICES/install-${service_name}.sh && install ; then
-              retries=0
-              while [ "$retries" -lt 5 ];
-              do
-                if ! docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml pull ; then
-                  if [ "$retries" -lt 4 ]; then
-                    echo "retrying pull in 6 seconds"
-                    sleep 6
+              if [ ! -s /srv/${service_name}/${service_name}.yml ] ; then
+                echo "${service_name} installed"
+              else
+                retries=0
+                while [ "$retries" -lt 5 ];
+                do
+                  if ! docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml pull ; then
+                    if [ "$retries" -lt 4 ]; then
+                      echo "retrying pull in 6 seconds"
+                      sleep 6
+                    fi
+                    ((retries+=1))
+                  else
+                    echo "${service_name} installed"
+                    if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
+                      echo "modify default environment variables by running '$BASENAME services ${service_name} config edit'"
+                    fi
+                    exit 0
                   fi
-                  ((retries+=1))
-                else
-                  echo "${service_name} installed"
-                  if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
-                    echo "modify default environment variables by running '$BASENAME services ${service_name} config edit'"
-                  fi
-                  exit 0
-                fi
-              done
-              log_and_exit1 "ERROR: cannot pull docker image"
+                done
+                log_and_exit1 "ERROR: cannot pull docker image"
+              fi
             else
               log_and_exit1 "ERROR: cannot run install script"
             fi
@@ -159,12 +164,18 @@ function services {
                   log_and_exit1 "ERROR: cannot build planet"
                 fi
               fi
-            else
+            elif source $SERVICES/install-${service_name}.sh && ! type -t up > /dev/null ; then
               check_space $service_name
               if [ "$(source $SERVICES/install-${service_name}.sh && uses_env)" = "true" ]; then
                 validate_yml $service_name
               fi
               docker_compose_up $service_name
+            else
+              if source $SERVICES/install-${service_name}.sh && up ; then
+                echo "${service_name} build and started"
+              else
+                echo "${service_name} not work"
+              fi
             fi
             for i in $(seq 1 "$(services $service_name port | wc -l)")
             do
@@ -175,15 +186,28 @@ function services {
             checkargn $# 2
             if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
               echo "${service_name}.yml not found"
-            else
+            elif source $SERVICES/install-${service_name}.sh && ! type -t down > /dev/null ; then
               docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down
               remove_tor_port
               echo "${service_name} stopped and removed"
+            else
+              if source $SERVICES/install-${service_name}.sh && down ; then
+                remove_tor_port
+                echo "${service_name} stopped and removed"
+              else
+                echo "${service_name} not work"
+              fi
             fi
             ;;
           start)
             checkargn $# 2
-            if docker ps -a | grep -q $service_name; then
+            if source $SERVICES/install-${service_name}.sh && type -t start > /dev/null ; then
+              if source $SERVICES/install-${service_name}.sh && start ; then
+                echo "${service_name} started"
+              else
+                echo "${service_name} not work"
+              fi
+            elif docker ps -a | grep -q $service_name; then
               if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
                 log_comment_and_exit1 "ERROR: /srv/${service_name}/${service_name}.yml not found" "try running '$BASENAME services ${service_name} install' first"
               else
@@ -200,9 +224,15 @@ function services {
             if docker ps -a | grep -q $service_name; then
               if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
                 log_comment_and_exit1 "ERROR: /srv/${service_name}/${service_name}.yml not found" "try running '$BASENAME services ${service_name} install' first"
-              else
+              elif source $SERVICES/install-${service_name}.sh && ! type -t stop > /dev/null ; then
                 if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml stop; then
                   echo "${service_name} stopped"
+                fi
+              else
+                if source $SERVICES/install-${service_name}.sh && stop ; then
+                  echo "${service_name} stopped"
+                else
+                  echo "${service_name} not work"
                 fi
               fi
             else
@@ -210,9 +240,17 @@ function services {
             fi
             ;;
           restart)
-            checkargn $# 2
-            services $service_name stop
-            services $service_name up
+            if source $SERVICES/install-${service_name}.sh && ! type -t restart ; then
+              checkargn $# 2
+              services $service_name stop
+              services $service_name up
+            else
+              if source $SERVICES/install-${service_name}.sh && restart ; then
+                echo "${service_name} restart"
+              else
+                echo "${service_name} not work"
+              fi
+            fi
             ;;
           autorun)
             checkargn $# 3
@@ -337,9 +375,15 @@ function services {
             fi
             if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
               log_comment_and_exit1 "ERROR: ${service_name}.yml not found" "try running '$BASENAME services ${service_name} install' first"
-            else
-              docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml --log-level ERROR down -v --rmi all --remove-orphans
+            elif source $SERVICES/install-${service_name}.sh && ! type -t cleanup > /dev/null ; then
+              docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down -v --rmi all --remove-orphans
               echo "${service_name} stopped and removed"
+            else
+              if source $SERVICES/install-${service_name}.sh && cleanup ; then
+                echo "${service_name} stopped and removed"
+              else
+                echo "${service_name} not work"
+              fi
             fi
             remove_tor_port
             rm -rf /srv/${service_name}

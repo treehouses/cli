@@ -11,7 +11,7 @@ function install {
     echo "  epaath:"
     echo "    image: olenepal/epaath:arm"
     echo "    ports:"
-    echo "      - 8089:80"
+    echo "      - 8100:80"
   } > /srv/epaath/epaath.yml
 
   # add autorun

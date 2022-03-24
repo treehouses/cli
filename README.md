@@ -125,6 +125,7 @@ services                                  executes the given command on the spec
    [rutorrent]                            Rutorrent is a popular rtorrent client with a webui for ease of use
    [webssh]                               Webssh is a simple web application to be used as an ssh client to connect to your ssh servers
    [sysmon]                               Sysmon is an intuitive system performance monitoring and task management tool for servers
+   [epaath]                               Epaath is an interactive educational activity
 tor [list|ports|add|delete|deleteall]     deals with services on tor hidden network
     [start|stop|destroy|notice]
     [status|refresh]

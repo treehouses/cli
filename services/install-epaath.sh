@@ -38,7 +38,7 @@ function supported_arches {
 
 # add port(s)
 function get_ports {
-  echo "8089"
+  echo "8100"
 }
 
 # add size (in MB)

@@ -48,13 +48,13 @@ function get_size {
 
 # add description
 function get_description {
-  echo "Epaath is educational activity \"epaath\" "
+  echo "E-Paath is a collection of digital interactive learning activities for grade 1 - 8. \"epaath\" "
 }
 
 # add info
 function get_info {
   echo
-  echo "E-Paath is educationl activity from grade 1 to 8"
+  echo "E-Paath is a collection of digital interactive learning activities for grade 1 - 8"
 }
 
 # add svg icon

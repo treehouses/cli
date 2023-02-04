@@ -8,6 +8,7 @@ function sshtunnel {
   fi
 
   re='^[0-9]+$'
+  SSHKeyName=`treehouses config | grep keyName | sed "s/${keyName}=//"`
 
   case "$1" in
     add)
@@ -46,10 +47,10 @@ function sshtunnel {
           portweb=$((portinterval + 80 - portint_offset))
           portnewcouchdb=$((portinterval + 82 - portint_offset))
 
-          if [ ! -f "/root/.ssh/id_rsa" ]; then
+          if [ ! -f "/root/.ssh/$SSHKeyName" ]; then
             ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
           fi
-          cat /root/.ssh/id_rsa.pub
+          cat /root/.ssh/$SSHKeyName.pub
           echo "Port successfully added"
 
           keys=$(ssh-keyscan -H "$hostname" 2>"$LOGFILE")
@@ -453,15 +454,15 @@ function sshtunnel {
     key)
       case "$2" in
         "")
-          if [ ! -f "/root/.ssh/id_rsa" ]; then
+          if [ ! -f "/root/.ssh/$SSHKeyName" ]; then
               ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
           fi
-          cat /root/.ssh/id_rsa.pub
+          cat /root/.ssh/$SSHKeyName.pub
           ;;
         verify)
           checkargn $# 2
-          if [ -f "/root/.ssh/id_rsa" ] && [ -f "/root/.ssh/id_rsa.pub" ]; then
-            verify=$(diff <( ssh-keygen -y -e -f "/root/.ssh/id_rsa" ) <( ssh-keygen -y -e -f "/root/.ssh/id_rsa.pub" ))
+          if [ -f "/root/.ssh/$SSHKeyName" ] && [ -f "/root/.ssh/$SSHKeyName.pub" ]; then
+            verify=$(diff <( ssh-keygen -y -e -f "/root/.ssh/$SSHKeyName" ) <( ssh-keygen -y -e -f "/root/.ssh/$SSHKeyName.pub" ))
             if [ "$verify" != "" ]; then
               echo -e "Public and private rsa keys ${RED}do not match${NC}"
             else
@@ -487,8 +488,8 @@ function sshtunnel {
                 tag=".pub"
               fi
 
-              if [ -f /root/.ssh/id_rsa${profile}${tag} ]; then
-                cat /root/.ssh/id_rsa${profile}${tag}
+              if [ -f /root/.ssh/${SSHKeyName}${profile}${tag} ]; then
+                cat /root/.ssh/${SSHKeyName}${profile}${tag}
               else
                 log_and_exit1 "No $3 key found"
               fi
@@ -515,21 +516,33 @@ function sshtunnel {
                 tag=".pub"
               fi
 
-              if [ -f /root/.ssh/id_rsa${profile}${tag} ]; then
+              if [ -f /root/.ssh/${SSHKeyName}${profile}${tag} ]; then
                 timestamp=$(date +%Y%m%d%H%M)
-                mv "/root/.ssh/id_rsa${profile}${tag}" "/root/.ssh/id_rsa${profile}.${timestamp}${tag}"
-                echo "Created backup of 'id_rsa${profile}${tag}' as 'id_rsa${profile}.${timestamp}${tag}'"
+                mv "/root/.ssh/${SSHKeyName}${profile}${tag}" "/root/.ssh/${SSHKeyName}${profile}.${timestamp}${tag}"
+                echo "Created backup of '${SSHKeyName}${profile}${tag}' as '${SSHKeyName}${profile}.${timestamp}${tag}'"
               fi
 
-              echo -e "$key" > "/root/.ssh/id_rsa${profile}${tag}"
-              echo "Saved $3 key to 'id_rsa${profile}${tag}'"
+              echo -e "$key" > "/root/.ssh/${SSHKeyName}${profile}${tag}"
+              echo "Saved $3 key to '${SSHKeyName}${profile}${tag}'"
               ;;
             *)
               log_comment_and_exit1 "Error: unknown command" "Usage: $BASENAME sshtunnel key receive <public | private> <\$key> [profile]"
               ;;
           esac
           ;;
-        *)
+  	name)
+	  case "$3" in
+	    "")
+	      CurrentName=`echo $SSHKeyName | cut -d '=' -f 2`
+	      echo "Current SSH key name: $CurrentName"
+	      ;;
+	    *)
+	      treehouses config update keyName "$3"
+	      echo "Set the SSH key name to: $3"
+	      ;;
+	    esac
+	  ;;
+  	*)
           log_comment_and_exit1 "Error: unknown command" "Usage: $BASENAME sshtunnel key [verify | send | receive]"
           ;;
       esac

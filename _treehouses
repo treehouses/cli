@@ -361,6 +361,7 @@ treehouses sshtunnel check
 treehouses sshtunnel key
 treehouses sshtunnel key receive private
 treehouses sshtunnel key receive public
+treehouses sshtunnel key name
 treehouses sshtunnel key send private
 treehouses sshtunnel key send public
 treehouses sshtunnel key verify

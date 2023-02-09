@@ -8,7 +8,10 @@ function sshtunnel {
   fi
 
   re='^[0-9]+$'
-  SSHKeyName=`treehouses config | grep keyName | sed "s/${keyName}=//"`
+  SSHKeyName=`treehouses config | grep keyName | sed "s/keyName=//"`
+  if [ -z "$SSHKeyName" ]; then
+    $SSHKeyName='rsa_id'
+  fi
 
   case "$1" in
     add)
@@ -533,8 +536,7 @@ function sshtunnel {
   	name)
 	  case "$3" in
 	    "")
-	      CurrentName=`echo $SSHKeyName | cut -d '=' -f 2`
-	      echo "Current SSH key name: $CurrentName"
+	      echo "Current SSH key name: $SSHKeyName"
 	      ;;
 	    *)
 	      treehouses config update keyName "$3"

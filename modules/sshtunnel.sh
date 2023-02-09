@@ -10,7 +10,7 @@ function sshtunnel {
   re='^[0-9]+$'
   SSHKeyName=`treehouses config | grep keyName | sed "s/keyName=//"`
   if [ -z "$SSHKeyName" ]; then
-    $SSHKeyName="rsa_id"
+    SSHKeyName="rsa_id"
   fi
 
   case "$1" in

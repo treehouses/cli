@@ -525,8 +525,8 @@ function sshtunnel {
                 echo "Created backup of '${sshkeyname}${profile}${tag}' as '${sshkeyname}${profile}.${timestamp}${tag}'"
               fi
 
-              echo -e "$key" > "/root/.ssh/${SSHKeyName}${profile}${tag}"
-              echo "Saved $3 key to '${SSHKeyName}${profile}${tag}'"
+              echo -e "$key" > "/root/.ssh/${sshkeyname}${profile}${tag}"
+              echo "Saved $3 key to '${sshkeyname}${profile}${tag}'"
               ;;
             *)
               log_comment_and_exit1 "Error: unknown command" "Usage: $BASENAME sshtunnel key receive <public | private> <\$key> [profile]"

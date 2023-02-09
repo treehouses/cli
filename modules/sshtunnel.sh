@@ -8,8 +8,8 @@ function sshtunnel {
   fi
 
   re='^[0-9]+$'
-  SSHKeyName=`treehouses config | grep keyName | sed "s/keyName=//"`
-  if [ -z "$SSHKeyName" ]; then
+  sshkeyname=`treehouses config | grep keyName | sed "s/keyName=//"`
+  if [ -z "$sshkeyname" ]; then
     SSHKeyName="rsa_id"
   fi
 
@@ -50,10 +50,10 @@ function sshtunnel {
           portweb=$((portinterval + 80 - portint_offset))
           portnewcouchdb=$((portinterval + 82 - portint_offset))
 
-          if [ ! -f "/root/.ssh/$SSHKeyName" ]; then
+          if [ ! -f "/root/.ssh/$sshkeyname" ]; then
             ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
           fi
-          cat /root/.ssh/$SSHKeyName.pub
+          cat /root/.ssh/$sshkeyname.pub
           echo "Port successfully added"
 
           keys=$(ssh-keyscan -H "$hostname" 2>"$LOGFILE")

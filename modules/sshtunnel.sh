@@ -723,10 +723,10 @@ function sshtunnel_help {
   echo "  check                                    runs a checklist of tests"
   echo
   echo "  key                                      shows the public key"
+  echo "      [name] [sshkeyfile]                              sets default SSH key to desired filename"
   echo "      [verify]                                         verifies that the public and private rsa keys match"
   echo "      [send] <public | private> [profile]              sends public / private key"
   echo "      [receive] <public | private> <\$key> [profile]    saves \$key as public / private key"
-  echo "      [name] [SSH key name]                sets default SSH key to desired file"
   echo
   echo "  notice                                   returns whether auto-reporting sshtunnel ports to gitter is on or off"
   echo "      on                                       turns on auto-reporting to gitter"

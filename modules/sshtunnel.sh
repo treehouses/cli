@@ -10,7 +10,7 @@ function sshtunnel {
   re='^[0-9]+$'
   SSHKeyName=`treehouses config | grep keyName | sed "s/keyName=//"`
   if [ -z "$SSHKeyName" ]; then
-    $SSHKeyName='rsa_id'
+    $SSHKeyName="rsa_id"
   fi
 
   case "$1" in
@@ -726,6 +726,7 @@ function sshtunnel_help {
   echo "      [verify]                                         verifies that the public and private rsa keys match"
   echo "      [send] <public | private> [profile]              sends public / private key"
   echo "      [receive] <public | private> <\$key> [profile]    saves \$key as public / private key"
+  echo "      [name] [SSH key name]                sets default SSH key to desired file"
   echo
   echo "  notice                                   returns whether auto-reporting sshtunnel ports to gitter is on or off"
   echo "      on                                       turns on auto-reporting to gitter"

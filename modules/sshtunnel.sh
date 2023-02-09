@@ -10,7 +10,7 @@ function sshtunnel {
   re='^[0-9]+$'
   sshkeyname=`treehouses config | grep keyName | sed "s/keyName=//"`
   if [ -z "$sshkeyname" ]; then
-    SSHKeyName="rsa_id"
+    sshkeyname="rsa_id"
   fi
 
   case "$1" in
@@ -522,7 +522,7 @@ function sshtunnel {
               if [ -f /root/.ssh/${sshkeyname}${profile}${tag} ]; then
                 timestamp=$(date +%Y%m%d%H%M)
                 mv "/root/.ssh/${sshkeyname}${profile}${tag}" "/root/.ssh/${sshkeyname}${profile}.${timestamp}${tag}"
-                echo "Created backup of '${SSHKeyName}${profile}${tag}' as '${sshkeyname}${profile}.${timestamp}${tag}'"
+                echo "Created backup of '${sshkeyname}${profile}${tag}' as '${sshkeyname}${profile}.${timestamp}${tag}'"
               fi
 
               echo -e "$key" > "/root/.ssh/${SSHKeyName}${profile}${tag}"

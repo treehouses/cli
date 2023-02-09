@@ -457,15 +457,15 @@ function sshtunnel {
     key)
       case "$2" in
         "")
-          if [ ! -f "/root/.ssh/$SSHKeyName" ]; then
+          if [ ! -f "/root/.ssh/$sshkeyname" ]; then
               ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
           fi
-          cat /root/.ssh/$SSHKeyName.pub
+          cat /root/.ssh/$sshkeyname.pub
           ;;
         verify)
           checkargn $# 2
-          if [ -f "/root/.ssh/$SSHKeyName" ] && [ -f "/root/.ssh/$SSHKeyName.pub" ]; then
-            verify=$(diff <( ssh-keygen -y -e -f "/root/.ssh/$SSHKeyName" ) <( ssh-keygen -y -e -f "/root/.ssh/$SSHKeyName.pub" ))
+          if [ -f "/root/.ssh/$sshkeyname" ] && [ -f "/root/.ssh/$sshkeyname.pub" ]; then
+            verify=$(diff <( ssh-keygen -y -e -f "/root/.ssh/$sshkeyname" ) <( ssh-keygen -y -e -f "/root/.ssh/$sshkeyname.pub" ))
             if [ "$verify" != "" ]; then
               echo -e "Public and private rsa keys ${RED}do not match${NC}"
             else
@@ -491,8 +491,8 @@ function sshtunnel {
                 tag=".pub"
               fi
 
-              if [ -f /root/.ssh/${SSHKeyName}${profile}${tag} ]; then
-                cat /root/.ssh/${SSHKeyName}${profile}${tag}
+              if [ -f /root/.ssh/${sshkeyname}${profile}${tag} ]; then
+                cat /root/.ssh/${sshkeyname}${profile}${tag}
               else
                 log_and_exit1 "No $3 key found"
               fi
@@ -519,10 +519,10 @@ function sshtunnel {
                 tag=".pub"
               fi
 
-              if [ -f /root/.ssh/${SSHKeyName}${profile}${tag} ]; then
+              if [ -f /root/.ssh/${sshkeyname}${profile}${tag} ]; then
                 timestamp=$(date +%Y%m%d%H%M)
-                mv "/root/.ssh/${SSHKeyName}${profile}${tag}" "/root/.ssh/${SSHKeyName}${profile}.${timestamp}${tag}"
-                echo "Created backup of '${SSHKeyName}${profile}${tag}' as '${SSHKeyName}${profile}.${timestamp}${tag}'"
+                mv "/root/.ssh/${sshkeyname}${profile}${tag}" "/root/.ssh/${sshkeyname}${profile}.${timestamp}${tag}"
+                echo "Created backup of '${SSHKeyName}${profile}${tag}' as '${sshkeyname}${profile}.${timestamp}${tag}'"
               fi
 
               echo -e "$key" > "/root/.ssh/${SSHKeyName}${profile}${tag}"
@@ -536,7 +536,7 @@ function sshtunnel {
   	name)
 	  case "$3" in
 	    "")
-	      echo "Current SSH key name: $SSHKeyName"
+	      echo "Current SSH key name: $sshkeyname"
 	      ;;
 	    *)
 	      treehouses config update keyName "$3"

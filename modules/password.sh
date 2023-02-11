@@ -50,7 +50,7 @@ function password_help () {
   echo "Changes the password for 'pi' user"
   echo
   echo "Example:"
-  echo "  $BASENAME change password ABC"
+  echo "  $BASENAME password change ABC"
   echo "      Sets the password for 'pi' user to 'ABC'."
   echo
   echo "  $BASENAME password disable"

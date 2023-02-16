@@ -65,9 +65,10 @@ function sshtunnel {
             } > /etc/tunnel
           fi
 
+          sshkey=`treehouses sshtunnel key name | cut -d ' ' -f 5`
           {
             echo
-            echo "/usr/bin/autossh -f -T -N -q -4 -M $portinterval \\"
+            echo "/usr/bin/autossh -i ~/.ssh/$sshkey -f -T -N -q -4 -M $portinterval \\"
             echo "-R $portssh:127.0.1.1:22 \\"
             echo "-R $portweb:127.0.1.1:80 \\"
             echo "-R $portnewcouchdb:127.0.1.1:2200 \\"

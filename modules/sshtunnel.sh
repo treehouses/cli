@@ -8,6 +8,10 @@ function sshtunnel {
   fi
 
   re='^[0-9]+$'
+  sshkeyname=$(treehouses config | grep keyName | sed "s/keyName=//")
+  if [ -z "$sshkeyname" ]; then
+    sshkeyname="rsa_id"
+  fi
 
   case "$1" in
     add)
@@ -46,10 +50,10 @@ function sshtunnel {
           portweb=$((portinterval + 80 - portint_offset))
           portnewcouchdb=$((portinterval + 82 - portint_offset))
 
-          if [ ! -f "/root/.ssh/id_rsa" ]; then
+          if [ ! -f "/root/.ssh/$sshkeyname" ]; then
             ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
           fi
-          cat /root/.ssh/id_rsa.pub
+          cat /root/.ssh/$sshkeyname.pub
           echo "Port successfully added"
 
           keys=$(ssh-keyscan -H "$hostname" 2>"$LOGFILE")
@@ -454,15 +458,15 @@ function sshtunnel {
     key)
       case "$2" in
         "")
-          if [ ! -f "/root/.ssh/id_rsa" ]; then
+          if [ ! -f "/root/.ssh/$sshkeyname" ]; then
               ssh-keygen -q -N "" > "$LOGFILE" < /dev/zero
           fi
-          cat /root/.ssh/id_rsa.pub
+          cat /root/.ssh/$sshkeyname.pub
           ;;
         verify)
           checkargn $# 2
-          if [ -f "/root/.ssh/id_rsa" ] && [ -f "/root/.ssh/id_rsa.pub" ]; then
-            verify=$(diff <( ssh-keygen -y -e -f "/root/.ssh/id_rsa" ) <( ssh-keygen -y -e -f "/root/.ssh/id_rsa.pub" ))
+          if [ -f "/root/.ssh/$sshkeyname" ] && [ -f "/root/.ssh/$sshkeyname.pub" ]; then
+            verify=$(diff <( ssh-keygen -y -e -f "/root/.ssh/$sshkeyname" ) <( ssh-keygen -y -e -f "/root/.ssh/$sshkeyname.pub" ))
             if [ "$verify" != "" ]; then
               echo -e "Public and private rsa keys ${RED}do not match${NC}"
             else
@@ -488,8 +492,8 @@ function sshtunnel {
                 tag=".pub"
               fi
 
-              if [ -f /root/.ssh/id_rsa${profile}${tag} ]; then
-                cat /root/.ssh/id_rsa${profile}${tag}
+              if [ -f /root/.ssh/${sshkeyname}${profile}${tag} ]; then
+                cat /root/.ssh/${sshkeyname}${profile}${tag}
               else
                 log_and_exit1 "No $3 key found"
               fi
@@ -516,21 +520,32 @@ function sshtunnel {
                 tag=".pub"
               fi
 
-              if [ -f /root/.ssh/id_rsa${profile}${tag} ]; then
+              if [ -f /root/.ssh/${sshkeyname}${profile}${tag} ]; then
                 timestamp=$(date +%Y%m%d%H%M)
-                mv "/root/.ssh/id_rsa${profile}${tag}" "/root/.ssh/id_rsa${profile}.${timestamp}${tag}"
-                echo "Created backup of 'id_rsa${profile}${tag}' as 'id_rsa${profile}.${timestamp}${tag}'"
+                mv "/root/.ssh/${sshkeyname}${profile}${tag}" "/root/.ssh/${sshkeyname}${profile}.${timestamp}${tag}"
+                echo "Created backup of '${sshkeyname}${profile}${tag}' as '${sshkeyname}${profile}.${timestamp}${tag}'"
               fi
 
-              echo -e "$key" > "/root/.ssh/id_rsa${profile}${tag}"
-              echo "Saved $3 key to 'id_rsa${profile}${tag}'"
+              echo -e "$key" > "/root/.ssh/${sshkeyname}${profile}${tag}"
+              echo "Saved $3 key to '${sshkeyname}${profile}${tag}'"
               ;;
             *)
               log_comment_and_exit1 "Error: unknown command" "Usage: $BASENAME sshtunnel key receive <public | private> <\$key> [profile]"
               ;;
           esac
           ;;
-        *)
+  	name)
+	  case "$3" in
+	    "")
+	      echo "Current SSH key name: $sshkeyname"
+	      ;;
+	    *)
+	      treehouses config update keyName "$3"
+	      echo "Set the SSH key name to: $3"
+	      ;;
+	    esac
+	  ;;
+  	*)
           log_comment_and_exit1 "Error: unknown command" "Usage: $BASENAME sshtunnel key [verify | send | receive]"
           ;;
       esac
@@ -709,6 +724,7 @@ function sshtunnel_help {
   echo "  check                                    runs a checklist of tests"
   echo
   echo "  key                                      shows the public key"
+  echo "      [name] [sshkeyfile]                              sets default SSH key to desired filename"
   echo "      [verify]                                         verifies that the public and private rsa keys match"
   echo "      [send] <public | private> [profile]              sends public / private key"
   echo "      [receive] <public | private> <\$key> [profile]    saves \$key as public / private key"

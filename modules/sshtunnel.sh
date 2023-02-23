@@ -71,7 +71,7 @@ function sshtunnel {
             echo "/usr/bin/autossh -f -T -N -q -4 -M $portinterval \\"
             echo "-R $portssh:127.0.1.1:22 \\"
             echo "-R $portweb:127.0.1.1:80 \\"
-            echo "-i ~/.ssh/$sshkey \\"
+            echo "-i /root/.ssh/$sshkey \\"
             echo "-R $portnewcouchdb:127.0.1.1:2200 \\"
             echo "$host # $((portinterval - portint_offset))"
           } >> /etc/tunnel

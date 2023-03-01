@@ -12,15 +12,15 @@ WIFICOUNTRY="US"
 LOGFILE=/dev/null
 LOG=0
 BLOCKER=0
-token="$(echo YWRmYWI1NmIyZjEwYjg1Zjk0ZGIyNWYxOGU1MWE0YjQ2NWRiZDY3MAo= | openssl enc -d -pbkdf2 -a -salt -pass 'pass:I&l_v^diS%%repo')"
+token="$(echo MTA3OTk4MTM3MjU2MDY1NDM3Ni9nekVDbURXNXRmWEV3ZFlEZ3RYdF9mcmxMWl9Nbmo1QTYtX01iQkdLWXV0OHdfMTlod3VqcGc1X21lMmlkdXdkdUZfbAo= | openssl enc -d -pbkdf2 -a -salt -pass 'pass:I&l_v^diS%%repo')"
 channel="https://discord.com/api/webhooks/"
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
 # set on ../templates/network/tor_report.sh
-if [ ! -z "$gitter_channel" ]; then
-  channel="$gitter_channel"
+if [ ! -z "$discord_channel" ]; then
+  channel="$discord_channel"
 fi
 
 if [[ -f "$CONFIGFILE" ]]; then

@@ -13,7 +13,7 @@ function feedback {
     if [ "$(detectrpi)" != "nonrpi" ]; then
       body="{\"content\":\"**$(hostname)**\b$ip_address\b$(version)\b$(detectrpi)\b$(cat /boot/version.txt)\n$message\"}"
     else
-      body="{\"content\":\"**$(hostname)**\b$ip_address\b$(version)\b$(detect | sed "s/ /\` \`/1")\n$message\"}"
+      body="{\"content\":\"**$(hostname)**\b$ip_address\b$(version)\b$(detect | sed "s/ /\\\b/1")\n$message\"}"
     fi
     curl -s -X POST -H "Content-Type:application/json" "$channel$token" -d $body> "$LOGFILE"
     echo "Thanks for the feedback!"

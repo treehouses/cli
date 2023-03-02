@@ -8,12 +8,14 @@ function feedback {
     if [[ ! $ip_address =~ $ip6_regex ]] && [[ ! $ip_address =~ $ip4_regex ]]; then
       ip_address="invalid address"
     fi
+    message="${message//\`/}"
+    message="${message// /\\b}"
     if [ "$(detectrpi)" != "nonrpi" ]; then
-      body="{\"text\":\"\`$(hostname)\` \`$ip_address\` \`$(version)\` \`$(detectrpi)\` \`$(cat /boot/version.txt)  \`:\\n$message\"}"
+      body="{\"content\":\"**$(hostname)**\b$ip_address\b$(version)\b$(detectrpi)\b$(cat /boot/version.txt)\n$message\"}"
     else
-      body="{\"text\":\"\`$(hostname)\` \`$ip_address\` \`$(version)\` \`$(detect | sed "s/ /\` \`/1")\`:\\n$message\"}"
+      body="{\"content\":\"**$(hostname)**\b$ip_address\b$(version)\b$(detect | sed "s/ /\\\b/1")\n$message\"}"
     fi
-    curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer $token"   "$channel" -d  "$body"> "$LOGFILE"
+    curl -s -X POST -H "Content-Type:application/json" "$chat$hook" -d $body> "$LOGFILE"
     echo "Thanks for the feedback!"
   else
     log_and_exit1 "No feedback was submitted."

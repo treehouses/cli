@@ -15,7 +15,6 @@ function feedback {
     else
       body="{\"content\":\"**$(hostname)**\b$ip_address\b$(version)\b$(detect | sed "s/ /\` \`/1")\n$message\"}"
     fi
-    echo $body
     curl -s -X POST -H "Content-Type:application/json" "$channel$token" -d $body> "$LOGFILE"
     echo "Thanks for the feedback!"
   else

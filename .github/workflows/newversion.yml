@@ -2,8 +2,8 @@ name: new version
 
 on:
   push:
-    tags:
-      - '*.*.*'
+#    tags:
+#      - '*.*.*'
 
 jobs:
   build:
@@ -28,18 +28,23 @@ jobs:
           sed -i -e "s#&lt;#<#g" CHANGELOG.md
           sed -i -e "s#&gt;#>#g" CHANGELOG.md
           ls -al
-      - name: release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          body: |
-            ${{ github.event.head_commit.message }}
-          draft: false
-          prerelease: false
-      - name: publish
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+#      - name: release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ github.ref }}
+#          release_name: ${{ github.ref }}
+#          body: |
+#            ${{ github.event.head_commit.message }}
+#          draft: false
+#          prerelease: false
+#      - name: publish
+#        run: npm publish
+#        env:
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: report
+        run: |
+          sudo npm install -g @treehouses/cli
+          export discord_channel="${{ secrets.CHANNEL }}"
+#          https://www.npmjs.com/package/@treehouses/cli/v/1.26.10

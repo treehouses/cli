@@ -47,5 +47,5 @@ jobs:
         run: |
           sudo npm install -g @treehouses/cli
           export discord_channel="${{ secrets.CHANNEL }}"
-          treehouses feedback "🏴‍☠️"
+          treehouses feedback "${{ github.ref }}🏴‍☠️"
 #          https://www.npmjs.com/package/@treehouses/cli/v/1.26.10

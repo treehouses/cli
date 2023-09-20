@@ -9,7 +9,6 @@ function feedback {
       ip_address="invalid address"
     fi
     message="${message//\`/}"
-#    message="${message// /\\b}"
     if [ "$(detectrpi)" != "nonrpi" ]; then
       body="{\"content\":\"**$(hostname)** $ip_address $(version) $(detectrpi) $(cat /boot/version.txt)\n$message\"}"
     else

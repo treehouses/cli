@@ -44,6 +44,11 @@ case "$1" in
          ./expandfs* ./h* ./image* ./l* ./m* ./n* \
          ./p* ./r* ./temperature* ./timezone* ./usb.bats ./verbose* ./version*
   ;;
+  nonrpi)
+    time bats ./services/* ./magazines/* ./wifi* ./blocker* ./cron* \
+         ./detect.bats ./h* ./image* ./l* ./m* ./networkmode* ./picture* \
+         ./reb* ./ren* ./timezone* ./usb.bats ./verbose* ./version*
+  ;;
   *)
     echo "Only 'all', 'services', 'led', 'magazine', 'wifi', 'ap', 'nonet', 'nonetblue' options are supported"
     exit 1

@@ -10,6 +10,8 @@ function detectrpi {
   rpimodels["0007"]="RPIA"
   rpimodels["0008"]="RPIA"
   rpimodels["0009"]="RPIA"
+  rpimodels["0012"]="RPIA+"
+  rpimodels["0015"]="RPIA+"
   rpimodels["900021"]="RPIA+"
 
   # Raspberry Pi B models

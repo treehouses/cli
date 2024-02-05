@@ -79,7 +79,7 @@ function detectrpi {
   rpimodels["920092"]="RPIZ"
   rpimodels["920093"]="RPIZ"
   rpimodels["9000c1"]="RPIZW"
-  rpimodels["902120"]="RPIZ2W
+  rpimodels["902120"]="RPIZ2W"
 
   # more at: https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#new-style-revision-codes-in-use
 

@@ -153,6 +153,7 @@ remote <check|status|upgrade|services>    helps with treehouses remote android a
        <help|key>
 log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
+localtunnel <port>												tunnels local port to the internet	
 sdbench                                   displays read and write speed of micro SD card
 inspire [fact|joke|qotd|random]           displays quote based on user input
 convert <input file> <output file>        converts video and audio files

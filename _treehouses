@@ -5,6 +5,8 @@ _treehouses_complete()
   local idx subcmds
   every_command=""
   read -r -d '' every_command <<EOF || true
+treehouses addwifibridge off
+treehouses addwifibridge on
 treehouses ap internet
 treehouses ap local
 treehouses apchannel

@@ -117,7 +117,7 @@ function vnc {
               echo "Authentication=VncAuth" >> /root/.vnc/config.d/vncserver-x11
             fi
             restart_vnc_service > /dev/null 2>&1
-            echo "Create your password, run 'treehouses vnc passwd'."
+            echo "Create your password, run 'treehouses vnc password'."
             echo "Please reboot the system for changes to take effect."
           else
             echo "Please create a password first, run 'treehouses vnc password'."

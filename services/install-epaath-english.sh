@@ -2,7 +2,7 @@
 
 function install {
   # create service directory
-  mkdir -p /srv/epaath
+  mkdir -p /srv/epaath-english
 
   # create yml(s)
   {
@@ -12,18 +12,18 @@ function install {
     echo "    image: olenepal/epaath:english-arm"
     echo "    ports:"
     echo "      - 8100:80"
-  } > /srv/epaath/epaath-english.yml
+  } > /srv/epaath-english/epaath-english.yml
 
   # add autorun
   {
     echo "epaath_autorun=true"
     echo
     echo "if [ \"\$_autorun\" = true ]; then"
-    echo "  treehouses services epaath up"
+    echo "  treehouses services epaath-english up"
     echo "fi"
     echo
     echo
-  } > /srv/epaath/autorun
+  } > /srv/epaath-english/autorun
 }
 
 # environment var
@@ -48,12 +48,11 @@ function get_size {
 
 # add description
 function get_description {
-  echo "E-Paath is a collection of digital interactive learning activities for grade 1 - 8. \"epaath\" "
+  echo "E-Paath is a collection of digital interactive learning activities for grade 1 - 8."
 }
 
 # add info
 function get_info {
-  echo
   echo "E-Paath is a collection of digital interactive learning activities for grade 1 - 8"
 }
 

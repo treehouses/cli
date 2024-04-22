@@ -4,8 +4,8 @@ function led {
   color="$1"
   trigger="$2"
 
-  gLed="/sys/class/leds/led0"
-  rLed="/sys/class/leds/led1"
+  gLed="/sys/class/leds/ACT"  # old led0
+  rLed="/sys/class/leds/PWR"  # old led1
   currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$gLed/trigger")
   currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$rLed/trigger")
   green="${GREEN}green led${NC}"
@@ -254,7 +254,7 @@ function led {
 
     echo "$trigger" > "$led/trigger"
     newValue=$(sed 's/.*\[\(.*\)\].*/\1/g' < "$led/trigger")
-    set_brightness "${led: -1}" 1
+    set_brightness "${led}" 1
 
     if [ "$color" = "green" ]; then
       echo -e "$green: $newValue"
@@ -267,7 +267,11 @@ function led {
 }
 
 function set_brightness {
-  echo "$2" > "/sys/class/leds/led$1/brightness"
+  if [[ "$led" = "ACT" || "$1" = "0" ]]; then
+    echo "$2" > "/sys/class/leds/ACT/brightness"
+  elif [[ "$led" = "PWR" || "$1" = "1" ]]; then
+    echo "$2" > "/sys/class/leds/PWR/brightness"
+  fi
 }
 
 function newyear {
@@ -630,8 +634,6 @@ function labourday {
   led red "$current_red"
 }
 
-
-
 function independenceday {
   current_red=$(led "red")
   current_green=$(led "green")
@@ -906,7 +908,7 @@ function led_help {
   echo
   echo "This will help a user to identify a raspberry pi (if a user is working on many of raspberry pis)"
   echo
-  echo " Where to find all modes: cat /sys/class/leds/led0/trigger"
+  echo " Where to find all modes: cat /sys/class/leds/ACT/trigger"
   echo
   echo " OPTIONS OF MODES: "
   echo "  default-on                 turns LED on"

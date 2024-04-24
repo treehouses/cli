@@ -265,7 +265,7 @@ function led {
   fi
 }
 
-function determine_and_set_led_path {
+function initialize {
   if [ -d "/sys/class/leds/PWR" ]; then
     rLed="/sys/class/leds/PWR"
   elif [ -d "/sys/class/leds/led1" ]; then

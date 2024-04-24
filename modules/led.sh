@@ -4,8 +4,7 @@ function led {
   color="$1"
   trigger="$2"
 
-  gLed="/sys/class/leds/led0"
-  rLed="/sys/class/leds/led1"
+  initialize
   currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$gLed/trigger")
   currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$rLed/trigger")
   green="${GREEN}green led${NC}"
@@ -266,8 +265,32 @@ function led {
   fi
 }
 
+function initialize {
+  if [ -d "/sys/class/leds/PWR" ]; then
+    rLed="/sys/class/leds/PWR"
+  elif [ -d "/sys/class/leds/led1" ]; then
+    rLed="/sys/class/leds/led1"
+  else
+    echo "Error: Could not find a valid path for the red LED"
+    exit 1
+  fi
+
+  if [ -d "/sys/class/leds/ACT" ]; then
+    gLed="/sys/class/leds/ACT"
+  elif [ -d "/sys/class/leds/led0" ]; then
+    gLed="/sys/class/leds/led0"
+  else
+    echo "Error: Could not find a valid path for the green LED"
+    exit 1
+  fi
+}
+
 function set_brightness {
-  echo "$2" > "/sys/class/leds/led$1/brightness"
+  if [[ "$1" = "T" || "$1" = "0" ]]; then  # ACT/led0
+    echo "$2" > "$gLed/brightness"
+  elif [[ "$1" = "R" || "$1" = "1" ]]; then  # PWR/led1
+    echo "$2" > "$rLed/brightness"
+  fi
 }
 
 function newyear {
@@ -630,8 +653,6 @@ function labourday {
   led red "$current_red"
 }
 
-
-
 function independenceday {
   current_red=$(led "red")
   current_green=$(led "green")
@@ -906,7 +927,7 @@ function led_help {
   echo
   echo "This will help a user to identify a raspberry pi (if a user is working on many of raspberry pis)"
   echo
-  echo " Where to find all modes: cat /sys/class/leds/led0/trigger"
+  echo " Where to find all modes: cat $gLed/trigger"
   echo
   echo " OPTIONS OF MODES: "
   echo "  default-on                 turns LED on"

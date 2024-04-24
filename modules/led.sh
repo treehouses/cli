@@ -4,7 +4,7 @@ function led {
   color="$1"
   trigger="$2"
 
-  determine_and_set_led_path
+  initialize
   currentGreen=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$gLed/trigger")
   currentRed=$(sed 's/.*\[\(.*\)\].*/\1/g' 2>"$LOGFILE" < "$rLed/trigger")
   green="${GREEN}green led${NC}"

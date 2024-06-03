@@ -1,5 +1,15 @@
 function services {
-  check_missing_binary docker-compose "docker-compose is missing\ninstall instructions can be found in\nhttps://github.com/docker/compose"
+  # check_missing_binary docker-compose "docker-compose is missing\ninstall instructions can be found in\nhttps://github.com/docker/compose"
+
+  if docker-compose version 2>/dev/null | grep -q "Docker Compose version"; then
+    dockercompose="docker compose"
+  elif docker-compose version 2>/dev/null | grep -q "docker-compose version"; then
+    dockercompose="docker-compose"
+  else
+    echo "Neither docker-compose nor docker compose found."
+    echo "Installation instructions can be found at https://github.com/docker/compose"
+    exit 1
+  fi
 
   local service_name command command_option service results installed
   local array running port_string found local_url tor_url
@@ -124,7 +134,7 @@ function services {
               retries=0
               while [ "$retries" -lt 5 ];
               do
-                if ! docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml pull ; then
+                if ! $dockercompose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml pull ; then
                   if [ "$retries" -lt 4 ]; then
                     echo "retrying pull in 6 seconds"
                     sleep 6
@@ -147,13 +157,13 @@ function services {
             checkargn $# 2
             if [ "$service_name" = "planet" ]; then
               if [ -f /srv/planet/pwd/credentials.yml ]; then
-                if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
+                if $dockercompose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -f /srv/planet/pwd/credentials.yml -p planet up -d ; then
                   echo "planet built and started"
                 else
                   log_and_exit1 "ERROR: cannot build planet"
                 fi
               else
-                if docker-compose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d ; then
+                if $dockercompose -f /srv/planet/planet.yml -f /srv/planet/volumes.yml -p planet up -d ; then
                   echo "planet built and started"
                 else
                   log_and_exit1 "ERROR: cannot build planet"
@@ -176,7 +186,7 @@ function services {
             if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
               echo "${service_name}.yml not found"
             else
-              docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down
+              $dockercompose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml down
               remove_tor_port
               echo "${service_name} stopped and removed"
             fi
@@ -187,7 +197,7 @@ function services {
               if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
                 log_comment_and_exit1 "ERROR: /srv/${service_name}/${service_name}.yml not found" "try running '$BASENAME services ${service_name} install' first"
               else
-                if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml start; then
+                if $dockercompose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml start; then
                   echo "${service_name} started"
                 fi
               fi
@@ -201,7 +211,7 @@ function services {
               if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
                 log_comment_and_exit1 "ERROR: /srv/${service_name}/${service_name}.yml not found" "try running '$BASENAME services ${service_name} install' first"
               else
-                if docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml stop; then
+                if $dockercompose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml stop; then
                   echo "${service_name} stopped"
                 fi
               fi
@@ -338,7 +348,7 @@ function services {
             if [ ! -f /srv/${service_name}/${service_name}.yml ]; then
               log_comment_and_exit1 "ERROR: ${service_name}.yml not found" "try running '$BASENAME services ${service_name} install' first"
             else
-              docker-compose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml --log-level ERROR down -v --rmi all --remove-orphans
+              $dockercompose --project-directory /srv/$service_name -f /srv/${service_name}/${service_name}.yml --log-level ERROR down -v --rmi all --remove-orphans
               echo "${service_name} stopped and removed"
             fi
             remove_tor_port
@@ -359,7 +369,7 @@ function services {
                 seperator="--------------------"
                 case $command_option in
                   "")
-                    docker-compose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
+                    $dockercompose --project-directory /srv/$service_name -f /srv/$service_name/$service_name.yml config
                     ;;
                   "new")
                     checkargn $# 4
@@ -546,7 +556,7 @@ function check_tor {
 function docker_compose_up {
   if [ ! -f /srv/${1}/${1}.yml ]; then
     log_comment_and_exit1 "ERROR: /srv/${1}/${1}.yml not found" "try running '$BASENAME services ${1} install' first"
-  elif docker-compose --project-directory /srv/${1} -f /srv/${1}/${1}.yml -p ${1} up -d ; then
+  elif $dockercompose --project-directory /srv/${1} -f /srv/${1}/${1}.yml -p ${1} up -d ; then
     echo "${1} built and started"
   else
     log_and_exit1 "ERROR: cannot build ${1}"

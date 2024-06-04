@@ -1,10 +1,10 @@
 function services {
   # check_missing_binary docker-compose "docker-compose is missing\ninstall instructions can be found in\nhttps://github.com/docker/compose"
 
-  if docker-compose version 2>/dev/null | grep -q "Docker Compose version"; then
-    dockercompose="docker compose"
-  elif docker-compose version 2>/dev/null | grep -q "docker-compose version"; then
+  if which docker-compose; then
     dockercompose="docker-compose"
+  elif docker compose | grep -q "Usage"; then
+    dokcercompose="docker compose"
   else
     echo "Neither docker-compose nor docker compose found."
     echo "Installation instructions can be found at https://github.com/docker/compose"

@@ -6,8 +6,8 @@ function services {
   elif docker compose | grep -q "Usage"; then
     dockercompose="docker compose"
   else
-    echo "Neither docker-compose nor docker compose found."
-    echo "Installation instructions can be found at https://github.com/docker/compose"
+    echo "neither docker-compose nor docker compose found."
+    echo "installation instructions can be found at https://github.com/docker/compose"
     exit 1
   fi
 

@@ -1,7 +1,7 @@
 function services {
   check_missing_binary docker "docker is missing\ninstallation instructions can be found at\nhttps://docs.docker.com/engine/install/"
 
-  if which docker-compose; then
+  if which docker-compose > /dev/null 2>&1; then
     dockercompose="docker-compose"
   elif docker compose | grep -q "Usage"; then
     dockercompose="docker compose"

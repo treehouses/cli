@@ -917,6 +917,7 @@ function random {
 }
 
 function led_help {
+  initialize
   echo
   echo "Usage: $BASENAME led [green|red] [mode]"
   echo "       $BASENAME led [newyear|blackhistorymonth|lunarnewyear|valentine|carnival|lantern|stpatricks]"

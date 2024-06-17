@@ -117,10 +117,10 @@ function vnc {
               echo "Authentication=VncAuth" >> /root/.vnc/config.d/vncserver-x11
             fi
             restart_vnc_service > /dev/null 2>&1
-            echo "Create your password, run 'treehouses vnc passwd'."
+            echo "Create your password, run 'treehouses vnc password {password}'."
             echo "Please reboot the system for changes to take effect."
           else
-            echo "Please create a password first, run 'treehouses vnc password'."
+            echo "Please create a password first, run 'treehouses vnc password {password}'."
           fi
           ;;
         "info")
@@ -142,8 +142,13 @@ function vnc {
       esac
       ;;
     "password")
-      echo "Creating password of VNC service mode for VNC password authentication..."
-      vncpasswd -service
+      if [[ $2 ]]
+      then
+        echo "Creating password of VNC service mode for VNC password authentication..."
+        echo $2 | vncpasswd -service
+      else
+        echo "Please provide a password. Run 'treehouses vnc password {password}."
+      fi
       ;;
     *)
       log_and_exit1 "Error: only 'on', 'off', 'info', 'auth', 'password' options are supported"
@@ -173,7 +178,7 @@ function vnc_help {
   echo "  $BASENAME vnc auth <system|vnc|info>"
   echo "      Change the VNC server authentication way (system default or vnc password)."
   echo
-  echo "  $BASENAME vnc password"
+  echo "  $BASENAME vnc password {password}"
   echo "      Create password of VNC service mode for VNC password authentication."
   echo
 }

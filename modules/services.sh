@@ -1,5 +1,5 @@
 function services {
-  # check_missing_binary docker-compose "docker-compose is missing\ninstall instructions can be found in\nhttps://github.com/docker/compose"
+  check_missing_binary docker "docker is missing\ninstallation instructions can be found at\nhttps://docs.docker.com/engine/install/"
 
   if which docker-compose; then
     dockercompose="docker-compose"

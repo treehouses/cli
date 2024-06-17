@@ -53,20 +53,6 @@ function apmain {
   cp "$TEMPLATES/network/10-wpa_supplicant" /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
   rm -rf /etc/udev/rules.d/90-wireless.rules
 
-  if [ -n "$password" ];
-  then
-    cp "$TEMPLATES/network/hostapd/password$hide" /etc/hostapd/hostapd.conf
-    sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
-    sed -i "s/PASSWORD/$password/g" /etc/hostapd/hostapd.conf
-    sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
-    restart_hotspot >"$LOGFILE" 2>"$LOGFILE"
-  else
-    cp "$TEMPLATES/network/hostapd/no_password$hide" /etc/hostapd/hostapd.conf
-    sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
-    sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
-    restart_hotspot >"$LOGFILE" 2>"$LOGFILE"
-  fi
-
   if [ -n "$base_24" ];
   then
     sed -i "s/BASE_24/$base_24/g" /etc/dnsmasq.conf
@@ -75,6 +61,19 @@ function apmain {
     sed -i "s/BASE_24/192.168.2/g" /etc/dnsmasq.conf
     sed -i "s/BASE_24/192.168.2/g" /etc/network/interfaces.d/wlan0
   fi
+
+  if [ -n "$password" ];
+  then
+    cp "$TEMPLATES/network/hostapd/password$hide" /etc/hostapd/hostapd.conf
+    sed -i "s/PASSWORD/$password/g" /etc/hostapd/hostapd.conf
+  else
+    cp "$TEMPLATES/network/hostapd/no_password$hide" /etc/hostapd/hostapd.conf
+  fi
+  
+  sed -i "s/ESSID/$essid/g" /etc/hostapd/hostapd.conf
+  sed -i "s/CHANNEL/$channel/g" /etc/hostapd/hostapd.conf
+  sync; sync; sync
+  restart_hotspot >"$LOGFILE" 2>"$LOGFILE"
 
   echo "This pirateship has anchored successfully!"
 }

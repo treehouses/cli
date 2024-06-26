@@ -46,7 +46,7 @@ function vnc {
         echo "Please reboot your system."
       else
         echo "VNC server is not configured correctly. Please try $BASENAME vnc on to enable it, or $BASENAME vnc off to disable it."
-        echo "Alternatively, you may try $BASENAME vnc status-service to verify the status of each specific required service."
+        echo "Alternatively, you may try $BASENAME vnc info to verify the status of each specific required service."
       fi
       ;;
     "on")
@@ -117,7 +117,7 @@ function vnc {
               echo "Authentication=VncAuth" >> /root/.vnc/config.d/vncserver-x11
             fi
             restart_vnc_service > /dev/null 2>&1
-            echo "Create your password, run 'treehouses vnc passwd'."
+            echo "Create your password, run 'treehouses vnc password'."
             echo "Please reboot the system for changes to take effect."
           else
             echo "Please create a password first, run 'treehouses vnc password'."

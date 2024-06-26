@@ -148,6 +148,9 @@ function ssh_help {
   echo "  $BASENAME ssh 2fa enable/disable"
   echo "      Enable/Disable two factor authentication for SSH service."
   echo
+  echo "  $BASENAME ssh 2fa show <user>"
+  echo "      Show ssh 2fa status of a user."
+  echo
   echo "  $BASENAME ssh 2fa list"
   echo "      List ssh 2fa status of every user."
   echo

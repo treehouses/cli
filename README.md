@@ -62,8 +62,8 @@ apchannel [channel]                       sets or prints the current ap channel
 timezone <timezone>                       sets the timezone of the system
 locale <locale>                           sets the system locale
 ssh [on|off|fingerprint]                  enables or disables the ssh service,
-    [2fa] <add|enable|disable>            prints out fingerprint of the ssh daemon
-          <remove|show>                   and deals with two factor authentication
+    [2fa] <add|remove|enable|disable>     prints out fingerprint of the ssh daemon
+          <show|list>                     and deals with two factor authentication
 vnc [on|off|info|auth|password]           enables or disables the vnc server service
 default [network|notice|tunnel]           sets a raspbian back to default configuration
 wificountry <country>                     sets the wifi country

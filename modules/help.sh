@@ -27,6 +27,7 @@ staticwifi <ip> <mask> <gateway> <dns>    configures rpi wifi interface to a sta
 wifistatus                                displays signal strength in dBm and layman nomenclature
 bridge <ESSID> <hotspotESSID>             configures the rpi to bridge the wlan interface over a hotspot
        [password] [hotspotPassword]
+dhcp [list|status]                        displays dhcp status and devices
 config [update|add|delete|clear]          commands for interacting with config file
 container <none|docker|balena>            enables (and start) the desired container
 bluetooth [on|off|pause|restart|button]   switches bluetooth from regular to hotspot mode and shows id or MAC address

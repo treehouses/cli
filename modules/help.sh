@@ -151,6 +151,7 @@ message                                   sends message to chat service
              <send|show|read|mark>        sends/recieves messages in slack
    <discord> <apitoken|authorize>         sets api/channel info in config file
 shutdown [now|in|force]                   shutdown the system
+torproxy [on|off]                         set raspberry pi as a torproxy
 EOF
   echo "$helpdefault"
 }

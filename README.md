@@ -141,7 +141,9 @@ memory [total|used|free] [gb|mb]          displays the total memory of the devic
 storage [total|used|free] [gb|mb|kb]      displays the total storage of the device, the storage used as well as the available free storage
 temperature [celsius|fahrenheit|kelvin]   displays raspberry pi's CPU temperature
 speedtest                                 tests internet download and upload speed
-camera [on|off|detect|capture|record]     enables and disables camera, detects camera module version, captures photo, records video
+camera [on|off|detect|capture|record]     enables and disables camera, detects camera
+       [convert] <in file> <out file>     module version, captures photo, records video,
+                                          and converts video and audio files
 picture [file|url]                        displays a picture in the terminal
 cron [list|add|delete|deleteall]          adds, deletes a custom cron job or deletes, lists all cron jobs
      [0W|tor|timestamp]                   adds premade cron job (or removes it if already active)
@@ -155,7 +157,6 @@ log <0|1|2|3|4|show|max>                  gets/sets log level and shows log
 blocker <0|1|2|3|4||max>                  website blocking levels using /etc/hosts
 sdbench                                   displays read and write speed of micro SD card
 inspire [fact|joke|qotd|random]           displays quote based on user input
-convert <input file> <output file>        converts video and audio files
 gpio                                      displays raspberry pi model and corresponding GPIO ports
 changelog [view|compare]                  displays the most recent changes to treehouses
 magazines                                 downloads specific magazine issue as a pdf based on user input

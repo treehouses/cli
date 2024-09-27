@@ -169,8 +169,8 @@ function sshtunnel {
               ;;
             actual)
               checkargn $# 6
-              actual=$4
-              port=$5
+              port=$4
+              actual=$5
               host=$6
 
               if [ -z "$actual" ] || [[ ! $actual =~ $re ]]; then
@@ -756,7 +756,7 @@ function sshtunnel_help {
   echo
   echo "Adding a port directly:"
   echo "  To add local port 100 with external port 20000, run"
-  echo "      '$BASENAME sshtunnel add port actual 100 20000 [host]'"
+  echo "      '$BASENAME sshtunnel add port actual 20000 100 [host]'"
   echo
   echo "  The script will directly insert into /etc/tunnel"
   echo "      '-R 20000:127.0.1.1:100 \\'"

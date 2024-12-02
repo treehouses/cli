@@ -235,6 +235,10 @@ treehouses memory used gb
 treehouses memory used mb
 treehouses message discord apitoken
 treehouses message discord authorize
+treehouses message discord channels
+treehouses message discord read
+treehouses message discord send
+treehouses message discord servers
 treehouses message gitter apitoken
 treehouses message gitter authorize
 treehouses message gitter mark

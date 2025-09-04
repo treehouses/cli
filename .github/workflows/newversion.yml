@@ -10,12 +10,12 @@ jobs:
     name: treehouses/cli
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
-          node-version: 10
+          node-version: 20
           registry-url: https://registry.npmjs.org/
       - name: build
         run: |
@@ -43,3 +43,8 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: report
+        run: |
+          sudo npm install -g @treehouses/cli
+          export discord_channel="${{ secrets.CHANNEL }}"
+          treehouses feedback "new [treehouses/cli](https://github.com/treehouses/cli) release **[$( echo ${{ github.ref }} | cut -d'/' -f3 )](https://www.npmjs.com/package/@treehouses/cli/v/$( echo ${{ github.ref }} | cut -d'/' -f3 ))**"

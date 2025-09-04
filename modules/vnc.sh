@@ -46,7 +46,7 @@ function vnc {
         echo "Please reboot your system."
       else
         echo "VNC server is not configured correctly. Please try $BASENAME vnc on to enable it, or $BASENAME vnc off to disable it."
-        echo "Alternatively, you may try $BASENAME vnc status-service to verify the status of each specific required service."
+        echo "Alternatively, you may try $BASENAME vnc info to verify the status of each specific required service."
       fi
       ;;
     "on")

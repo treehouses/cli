@@ -17,6 +17,10 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
+      - name: prepare environment
+        run: |
+          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> "$GITHUB_ENV"
+          echo "discord_channel=${{ secrets.CHANNEL }}" >> "$GITHUB_ENV"
       - name: build
         run: |
           ./templates/blocker/blocker.sh
@@ -33,8 +37,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          tag_name: ${{ env.TAG_NAME }}
+          release_name: ${{ env.TAG_NAME }}
           body: |
             ${{ github.event.head_commit.message }}
           draft: false
@@ -46,5 +50,4 @@ jobs:
       - name: report
         run: |
           sudo npm install -g @treehouses/cli
-          export discord_channel="${{ secrets.CHANNEL }}"
-          treehouses feedback "new [treehouses/cli](https://github.com/treehouses/cli) release **[$( echo ${{ github.ref }} | cut -d'/' -f3 )](https://www.npmjs.com/package/@treehouses/cli/v/$( echo ${{ github.ref }} | cut -d'/' -f3 ))**"
+          treehouses feedback "new [treehouses/cli](https://github.com/treehouses/cli) release **[${TAG_NAME}](https://www.npmjs.com/package/@treehouses/cli/v/${TAG_NAME})**"

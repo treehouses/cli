@@ -218,6 +218,9 @@ treehouses log 4
 treehouses log max
 treehouses log show
 treehouses log show 5
+treehouses log2ram off
+treehouses log2ram on
+treehouses log2ram status
 treehouses magazines available
 treehouses magazines downloaded
 $(magazines_cmds)

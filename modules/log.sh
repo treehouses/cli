@@ -122,6 +122,24 @@ function log {
       LOG=max
       logit "log X: level set to max" "" "DEBUG"
       ;;
+    "ram")
+      if [ "$2" = "" ]; then
+        if df -h | grep log > /dev/null 2>&1
+	then
+	  echo "log2ram is on"
+	else
+	  echo "log2ram is off"
+	fi
+      elif [ "$2" = "on" ]; then
+        systemctl enable log2ram
+	systemctl start log2ram
+	logit "log2ram has been turned on"
+      elif [ "$2" = "off" ]; then
+        systemctl stop log2ram
+	systemctl disable log2ram
+	logit "log2ram has been turned off"
+      fi
+      ;;
     *)
       log_and_exit1 "Error: only '0' '1' '2' '3' '4' 'show' 'max' options are supported"
       ;;

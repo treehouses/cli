@@ -35,15 +35,18 @@ function vnc {
   case "$option" in
     "")
       if [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "inactive" ]; then
-        echo "VNC is disabled."
+	echo "VNC is disabled (off)"
         echo "To enable it, use $BASENAME vnc on"
       elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "active" ]; then
+	echo "VNC is enabled (on)"
         echo "You can now remotely access the system with a VNC client using the IP address: $ipaddress"
         echo "To disable it, use $BASENAME vnc off"
       elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "failed" ]; then
-        echo "Please reboot your system."
+        echo "failed, raise issue on treehouses cli and describe behavior to get to here, thank you"
       elif [ "$bootoptionstatus" = "static" ] && [ "$vncservicestatus" = "inactive" ] && [ "$xservicestatus" = "active" ]; then
-        echo "Please reboot your system."
+	echo "Please reboot your system (pre-off)."
+      elif [ "$bootoptionstatus" = "indirect" ] && [ "$vncservicestatus" = "active" ] && [ "$xservicestatus" = "inactive" ]; then
+	echo "Please reboot your system (pre-on)."
       else
         echo "VNC server is not configured correctly. Please try $BASENAME vnc on to enable it, or $BASENAME vnc off to disable it."
         echo "Alternatively, you may try $BASENAME vnc info to verify the status of each specific required service."
@@ -58,7 +61,7 @@ function vnc {
       systemctl set-default graphical.target
       reboot_needed
       echo "Success: the vnc service has been started and enabled when the system boots."
-      echo "Please reboot the system for changes to take effect."
+      echo "Please reboot the system for changes (pre-on) to take effect."
       echo "You can then remotely access the system with a VNC client using the IP address: $ipaddress"
       ;;
     "off")
@@ -70,7 +73,7 @@ function vnc {
       systemctl set-default multi-user.target
       reboot_needed
       echo "Success: the vnc service has been stopped and disabled when the system boots."
-      echo "Please reboot the system for changes to take effect."
+      echo "Please reboot the system for changes (pre-off) to take effect."
       ;;
     "info")
       echo "The system boots into $isgraphical"
@@ -166,6 +169,8 @@ function vnc_help {
   echo
   echo "  $BASENAME vnc off"
   echo "      VNC services will be disabled."
+  echo
+  echo "Enables or disables the VNC server service"
   echo
   echo "  $BASENAME vnc info"
   echo "      Prints a detailed configuration of each required component (boot option, vnc service, x service)."

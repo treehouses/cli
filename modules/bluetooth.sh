@@ -96,6 +96,27 @@ function bluetooth {
       button bluetooth
       ;;
 
+    "loglevel")
+      if [ "$2" = "critical" ]; then
+        config update bluetoothloglevel 5
+        echo "run treehouses bluetooth restart for changes to take effect"
+      elif [ "$2" = "error" ]; then
+        config update bluetoothloglevel 4
+        echo "run treehouses bluetooth restart for changes to take effect"
+      elif [ "$2" = "warning" ]; then
+        config update bluetoothloglevel 3
+        echo "run treehouses bluetooth restart for changes to take effect"
+      elif [ "$2" = "info" ]; then
+        config update bluetoothloglevel 2
+        echo "run treehouses bluetooth restart for changes to take effect"
+      elif [ "$2" = "debug" ]; then
+        config update bluetoothloglevel 1
+        echo "run treehouses bluetooth restart for changes to take effect"
+      else
+        echo "you have to specify debug, info, warning, error, critical"
+      fi
+      ;;
+
     "log")
       if [ "$2" = "" ]; then
         checkargn $# 1
@@ -103,6 +124,12 @@ function bluetooth {
       elif [ "$2" = "follow" ]; then
         echo "press (ctrl + c) to exit"
         journalctl -u rpibluetooth -u bluetooth -f
+      elif [ "$2" = "on" ]; then
+        config update bluetoothlog 1
+        echo "run treehouses bluetooth restart for changes to take effect"
+      elif [ "$2" = "off" ]; then
+        config update bluetoothlog 0
+        echo "run treehouses bluetooth restart for changes to take effect"
       else
         log_and_exit1 "Argument not valid; leave blank or use \"follow\""
       fi

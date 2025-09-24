@@ -1,7 +1,7 @@
 function camera {
   local directory timestamp config configtemp savetype
   checkrpi
-  checkargn $# 2
+  checkargn $# 4
   directory="/home/pi/Pictures/"
   viddir="/home/pi/Videos/"
   timestamp=$(date +"%Y%m%d-%H%M%S")
@@ -13,6 +13,7 @@ function camera {
 
   case "$1" in
     "")
+      checkargn $# 2
       if grep -q "start_x=1" ${config} ; then
           echo "Config file has Camera settings which are currently enabled. Use \"$BASENAME help camera\" for more commands."
       else
@@ -21,6 +22,7 @@ function camera {
     ;;
 
     "on")
+      checkargn $# 2
       if ! grep -q "start_x=1" ${config} ; then
         raspi-config nonint do_camera 0
         echo "Camera settings have been enabled. A reboot is needed in order to use the camera."
@@ -34,6 +36,7 @@ function camera {
     ;;
 
     "off")
+      checkargn $# 2
       if grep -q "start_x=1" ${config} ; then
         raspi-config nonint do_camera 1
         echo "Camera has been disabled. A reboot is needed in order to use the camera."
@@ -46,6 +49,7 @@ function camera {
     ;;
 
     "capture")
+      checkargn $# 2
       mkdir -p ${directory}
       if ! grep -q "start_x=1" ${config} ; then
         log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
@@ -55,7 +59,36 @@ function camera {
       fi
     ;;
 
+    "convert")
+      local frames percent status
+      inputFile="$1"
+      outputFile="$2"
+      if [ -e "$inputFile" ] && [[ "$outputFile" != "" ]]; then
+        frames=$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of default=nokey=1:noprint_wrappers=1 $inputFile)
+        if ! [[ $frames =~ ^[0-9]+$ ]]; then
+          frames=""
+        fi
+        while read -r line || { status=$line && break; }; do
+          if [ -z $frames ]; then
+            echo -ne "conversion running"\\r
+          else
+            percent=$(bc <<< "scale=2; ($line / $frames) * 100")
+            echo -ne "  [$percent%] completed"\\r
+          fi
+        done < <(ffmpeg -y -i $inputFile $outputFile -loglevel error -hide_banner -max_error_rate 0.0 -progress - -nostats | grep -oP --line-buffered '(?<=frame=)[0-9]+'; printf "${PIPESTATUS[0]}")
+        # be careful not to delete line-buffered
+        if [ "$status" = 0 ]; then
+          echo "$inputFile has been successfully converted to $outputFile"
+        else
+          echo "conversion unsuccessful"
+        fi
+      else
+        log_and_exit1 "Error: invalid arguments"
+      fi
+    ;;
+
     "record")
+      checkargn $# 2
       mkdir -p ${viddir}
       if ! grep -q "start_x=1" ${config} ; then
         log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
@@ -84,6 +117,7 @@ function camera {
       ;;
 
     "detect")
+      checkargn $# 2
       mkdir -p ${directory}
       if ! grep -q "start_x=1" ${config} ; then
         log_and_exit1 "Error: you need to enable AND reboot first in order to take pictures."
@@ -96,7 +130,7 @@ function camera {
           echo "Camera Module v1 detected."
           rm ${directory}$BASENAME-${timestamp}.png
         elif file ${directory}$BASENAME-${timestamp}.png | grep -q "2582 x 1933" ; then
-          echo "Coral Camera Module detected." 
+          echo "Coral Camera Module detected."
           rm ${directory}$BASENAME-${timestamp}.png
         elif file ${directory}$BASENAME-${timestamp}.png | grep -q "3280 x 2464" ; then
           echo "Camera Module v2 detected."
@@ -106,7 +140,7 @@ function camera {
           rm ${directory}$BASENAME-${timestamp}.png
         else
           echo "Unknown Camera detected. Something went wrong!"
-          file ${directory}$BASENAME-${timestamp}.png 
+          file ${directory}$BASENAME-${timestamp}.png
           rm ${directory}$BASENAME-${timestamp}.png
         fi
       fi
@@ -114,6 +148,7 @@ function camera {
     ;;
 
     *)
+      checkargn $# 2
       echo "Error: The only supported options are 'on', 'off', 'detect, 'capture', and 'record'."
       camera_help
     ;;
@@ -122,7 +157,7 @@ function camera {
 
 function camera_help {
   echo
-  echo "Usage: $BASENAME camera [on|off|detect|capture|record]"
+  echo "Usage: $BASENAME camera [on|off|detect|capture|convert|record]"
   echo
   echo "Example:"
   echo "  $BASENAME camera"
@@ -141,6 +176,12 @@ function camera_help {
   echo
   echo "  $BASENAME camera capture"
   echo "    Camera is capturing and storing a time-stamped photo in ${directory}."
+  echo
+  echo "  $BASENAME camera convert <input file> <output file>"
+  echo
+  echo "    Example:"
+  echo "      $BASENAME convert video.mp4 video.mp3"
+  echo "          convert video mp4 file to mp3 format"
   echo
   echo "  $BASENAME camera record"
   echo "    Camera is recording ${length} seconds of video and storing a time-stamped ${vidtype} video in ${viddir}."

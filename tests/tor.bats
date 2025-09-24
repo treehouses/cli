@@ -49,10 +49,25 @@ load test-helper
 
 @test "$clinom tor add 22" {
   run "${clicmd}" tor add 22
+  run "${clicmd}" tor add 22
   assert_success && assert_output -p 'Success'
 }
 
 @test "$clinom tor notice now" {
   run "${clicmd}" tor notice now
   assert_success && assert_output -p 'Thanks'
+}
+
+@test "$clinom tor deleteall" {
+  run "${clicmd}" tor add 22
+  run "${clicmd}" tor deleteall
+  assert_success && assert_output -p 'All ports have been deleted'
+}
+
+@test "$clinom tor destroy" {
+  run "${clicmd}" tor add 22
+  run "${clicmd}" tor start
+  sleep 5
+  run "${clicmd}" tor destroy
+  assert_success && assert_output -p 'Success: the tor service has been destroyed'
 }

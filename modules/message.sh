@@ -22,6 +22,16 @@ function message {
   }
   function get_channel_slack {
     channel_list=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations)
+    ok=$(echo $channel_list | jq '."ok"')
+    error=$(echo $channel_list | jq '."error"')
+
+    if echo $ok | grep -q "false"; then
+      return 1
+    fi
+    if echo $error | grep -q "missing_scope"; then #needs to check if not successful instead of specific error
+      return 1
+    fi
+
     channels=$(echo $channel_list | python -m json.tool | jq '.channels[].name' | tr -d '"')
     user_list=$(curl -s -F token=$access_token https://slack.com/api/users.list)
     users=$(echo $user_list | python -m json.tool | jq '.members[].name' | tr -d '"')
@@ -279,10 +289,10 @@ function message {
             echo "To get an authorized access token:"
             echo ""
             echo "1. Go to https://api.slack.com/apps"
-            echo "2. Click \"Create New App\""
+            echo "2. Click \"Create New App\" (or \"Create an App\")"
             echo "3. Type a name in \"App Name\""
             echo "4. Select the \"Development Slack Workspace\" (eg : Open Learning Exchange)\ from the drop-down"
-            echo "5. Click \"OAuth & Permission\" under \"features \""
+            echo "5. Under \"Features \", click \"OAuth & Permission\""
             echo "6. Under \"User Token Scopes\", click \"Add an OAuth Scope\""
             echo "7. Add the following permissions:"
             echo "  \"chat:write\""
@@ -302,10 +312,44 @@ function message {
           ;;
         channels)
           if check_apitoken slack; then
-            channel_names=$(get_channel_slack)
-            echo "Channels Names:"
-            echo
-            echo "$channel_names"
+            if channel_names=$(get_channel_slack); then
+              echo "Channels Names:"
+              echo
+              echo "$channel_names"
+            else
+              needed=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."needed"')
+              error=$(curl -s -F token=$access_token -F types=public_channel,private_channel https://slack.com/api/users.conversations | jq '."error"')
+              if echo $needed | grep -q "null" || [[ -z "$needed" ]]; then
+                if echo $error | grep -q "token_revoked"; then
+                  echo "Error: Token is revoked. Please grant app permissions again:"
+                  echo "  1. Go to https://api.slack.com/apps"
+                  echo "  2a. Under \"App Name\", click your app"
+                  echo "  2b. If you don't see your app, then run $BASENAME config clear. Then, run $BASENAME message slack apitoken. (Follow the steps from there)"
+                  echo "  3. Under \"Features \", click \"OAuth & Permission\""
+                  echo "  4. Under \"OAuth Tokens & Redirect URLs\", click \"(Re)Install to Workspace\""
+                  echo "  5. Click \"Allow\". This will give permissions and display the User OAuth Token"
+                  echo "  6. Copy the new User OAuth Token"
+                  echo "  7. Run $BASENAME message slack apitoken <User OAuth Token>"
+                elif echo $error | grep -q "null" || [[ -z "$error" ]]; then
+                  echo "Error: Cannot display Slack channels."
+                  echo "Please try the following steps:"
+                  echo "  1. Run $BASENAME upgrade"
+                  echo "  2. Run $BASENAME config clear"
+                  echo "  3. Go to https://api.slack.com/apps"
+                  echo "  4. Under \"App Name\", click your app"
+                  echo "  5. Under \"Delete App\", click \"Delete App\""
+                  echo "  6. Run $BASENAME message slack apitoken"
+                  echo "  7. Follow the steps from there"
+                else
+                  echo "Error: Cannot display Slack channels due to the following error(s):"
+                  echo "  $error"
+                fi
+              else
+                echo "Error: Failed to use the following permissions:"
+                echo $needed | sed 's/"//g' | sed 's/,/\n/g' | sed 's/^/  /'
+                echo "Go to api.slack.com/apps, then click 'OAuth & Permissions' under 'Features' to check if the above permissions have been added."
+              fi
+            fi
           else
             log_comment_and_exit1 "Error: You do not have an authorized access token" "To get access token, run $BASENAME message slack apitoken"
           fi
@@ -521,7 +565,7 @@ function message {
 
 function message_help {
   echo
-  echo "Usage: $BASENAME message <chats>" 
+  echo "Usage: $BASENAME message <chats>"
   echo "                    <apitoken>"
   echo "                    <oauth key> <redirect URL>"
   echo "                    <authorize> <code> <oauth secret>"

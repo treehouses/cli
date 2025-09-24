@@ -428,6 +428,8 @@ treehouses tor refresh
 treehouses tor start
 treehouses tor status
 treehouses tor stop
+treehouses torproxy on
+treehouses torproxy off
 treehouses upgrade
 treehouses upgrade bluetooth
 treehouses upgrade check

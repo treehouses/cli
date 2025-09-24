@@ -15,6 +15,11 @@ function message {
     echo "Your API access token is $access_token"
     return 0
   }
+  function get_server_discord {
+    server_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds)
+    server_names=$(echo $server_info | python -m json.tool | jq '.[].name' | tr -d '"')
+    echo "$server_names"
+  }
   function get_channel_gitter {
     channel_info=$(curl -s -H "Accept: application/json" -H "Authorization: Bearer $access_token" "https://api.gitter.im/v1/rooms")
     channel_names=$(echo $channel_info | python -m json.tool | jq '.[].name' | tr -d '"')
@@ -509,6 +514,62 @@ function message {
             echo "you have successfully authorized and your access token is $access_token "
           fi
           ;;
+        servers)
+          if check_apitoken discord; then
+            server_names=$(get_server_discord)
+            echo "Server Names:"
+            echo "$server_names"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token"
+          fi
+          ;;
+        channels)
+          if check_apitoken discord; then
+            server_name=$3
+            if [[ $server_name == "" ]]; then
+              log_comment_and_exit1 "ERROR: Channel information is missing" "usage: $BASENAME message discord channels \"server name\""
+            fi
+            server_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
+            channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
+            channel_type=$(echo "$channel_info" | jq ".[] | select(.type==0)")
+            channel_names=$(echo "$channel_type" | jq '.name' | tr -d '"')
+            echo "Channel Names:"
+            echo "$channel_names"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token"
+          fi
+          ;;
+        read)
+          if check_apitoken discord; then
+            server_name=$3
+            discord_channel=$4
+            server_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
+            channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
+            channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${discord_channel}\")" | jq .id | tr -d '"')
+            channel_messages=$(curl -s -H "Authorization: $access_token" -H "Content-Type: application/json" https://discordapp.com/api/channels/${channel_id}/messages | jq '.[].content')
+            echo "$channel_messages"
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token"
+          fi
+          ;;
+        send)  
+          if check_apitoken discord; then
+            server_name=$3
+            discord_channel=$4
+            message=$5
+            server_id=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/users/@me/guilds | jq ".[] | select(.name==\"${server_name}\")" | jq .id | tr -d '"')
+            channel_info=$(curl -s -H "Authorization: $access_token" https://discordapp.com/api/guilds/${server_id}/channels)
+            channel_id=$(echo $channel_info | jq ".[] | select(.name==\"${discord_channel}\")" | jq .id | tr -d '"')
+            message_response=$(curl -s -X POST -H "Authorization: $access_token" -H "Content-Type: application/json" -d "{\"content\": \"${message}\"}" https://discordapp.com/api/channels/${channel_id}/messages | python -m json.tool | jq '.code' | tr -d '"')
+            if [[ $message_response == 0 ]]; then
+              log_comment_and_exit1 "Error: message not delivered"
+            else
+              echo "You successfully send a message to Discord"
+            fi
+          else
+            log_comment_and_exit1 "Error: You do not have an authorized access token"
+          fi
+          ;;
         *)
           log_help_and_exit1 "Error: This command does not exist" message
       esac
@@ -586,5 +647,17 @@ function message_help {
   echo
   echo "  $BASENAME message discord authorize \"1234567890\""
   echo "     Sets and saves API token"
+  echo
+  echo "  $BASENAME message discord server"
+  echo "     List all servers the user is in"
+  echo
+  echo "  $BASENAME message discord channels \"server name\""
+  echo "     List all channels in the server the user specified"
+  echo
+  echo "  $BASENAME message discord read \"server name\" \"channel name\""
+  echo "     Reads messages using server and channel name"
+  echo
+  echo "  $BASENAME message discord send \"server name\" \"channel name\" \"message\""
+  echo "     Sends a message using server and channel name"
   echo
 }

@@ -174,6 +174,8 @@ message                                   sends message to chat service
    <slack>   <apitoken|channels>          sets api/channel info in config file 
              <send|show|read|mark>        sends/recieves messages in slack
    <discord> <apitoken|authorize>         sets api/channel info in config file
+             <servers|channels>           list servers/channels in discord
+             <read|send>                  reads/sends messages in discord
 shutdown [now|in|force]                   shutdown the system
 ```
 

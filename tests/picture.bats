@@ -2,6 +2,11 @@
 load test-helper
 
 @test "$clinom picture" {
-  run "${clicmd}" picture https://treehouses.io/images/OLE_RPi.png
-  assert_success
+  run "${clicmd}" picture
+  assert_success && assert_output -p 'Usage:' && assert_output -p 'Views a picture in the terminal.'
+}
+
+@test "$clinom picture foo.png (invalid image)" {
+  run "${clicmd}" picture HasAnyoneReallyBeenFarEvenasDecidedtoUseEvenGoWanttodoLookMoreLike.png
+  assert_success && assert_output -p "Can't open file (permission?):"
 }

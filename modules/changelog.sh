@@ -29,11 +29,27 @@ case "$displaymode" in
         case "$version2" in
          "")
           checkargn $# 2
-          sed "/^### $CURRENT/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH #grabs text between version numbers, print bottom to top
+          dpkg --compare-versions "$CURRENT" "gt" "$version1"
+          gt="$?"
+          if [[ $gt -eq 0 ]]; then
+            sed "/^### $CURRENT/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH #grabs text between version numbers, print bottom to top
+          else # Needs to specify previous version instead of current
+            echo "ERROR: Must specify a previous version (less than $CURRENT)"
+          fi
           ;;
         *)
           checkargn $# 3
-          sed "/^### $version2/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH
+          dpkg --compare-versions "$version2" "gt" "$version1"
+          gt="$?"
+          dpkg --compare-versions "$version2" "eq" "$version1"
+          eq="$?"
+          if [[ $gt -eq 0 ]]; then
+            sed "/^### $version2/!d;s//&\n/;s/.*\n//;:a;/^### $version1/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH
+          elif [[ $eq -eq 0 ]]; then
+            echo "ERROR: Must specify different versions for comparisons (cannot compare same version to itself)"
+          else
+            sed "/^### $version1/!d;s//&\n/;s/.*\n//;:a;/^### $version2/bb;\$!{n;ba};:b;s//\n&/;P;D" $LOGPATH
+          fi
           ;;
         esac
         ;;
